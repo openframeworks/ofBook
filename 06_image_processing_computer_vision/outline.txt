@@ -69,7 +69,7 @@ Some previous reference materials here:
    -- Background subtraction with depth images
    -- Remarks about gradients 
    
-3.6. Suggestions for further experimentation: 
+3.7. Suggestions for further experimentation: 
    -- Tracking multiple blobs with ofxCv.tracker
    -- Box2D polygons using OpenCV contours, e.g. https://vimeo.com/9951522
    
