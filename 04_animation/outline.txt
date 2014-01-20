@@ -1,5 +1,4 @@
-
-raw notes from titanpad: 
+raw notes from titanpad (to be expanded shortly): 
 
 - https://github.com/ofZach/algo2012
 - frame rate, update and render loop
