@@ -1,10 +1,10 @@
-
 1. Introduction 
 
 [This outline is based on workshops Golan taught with Kyle.]
 Some previous reference materials here:
 -- http://futuretheater.net/wiki/Vision_Workshop
 -- http://piratepad.net/resonate-cv 
+-- http://www.flong.com/texts/essays/essay_cvad/
 
 ========================================================
 2. Preliminaries
@@ -65,7 +65,12 @@ Some previous reference materials here:
    -- Convexity defects, contourFinder.getConvexityDefects()
    -- Other shape metrics; shape recognition 
    
-3.6. Suggestions for further experimentation: 
+3.6. Using Kinect depth images
+   -- Finding the "fore-point" (foremost point)
+   -- Background subtraction with depth images
+   -- Remarks about gradients 
+   
+3.7. Suggestions for further experimentation: 
    -- Tracking multiple blobs with ofxCv.tracker
    -- Box2D polygons using OpenCV contours, e.g. https://vimeo.com/9951522
    
