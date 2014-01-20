@@ -1,0 +1,12 @@
+
+raw notes from titanpad: 
+
+- https://github.com/ofZach/algo2012
+- frame rate, update and render loop
+- point object
+- variables -> movement
+- pct linear interpolation 0-1, easing functions, powf
+- sin / cos
+- simulation, forces 
+- particles systems
+- noise
