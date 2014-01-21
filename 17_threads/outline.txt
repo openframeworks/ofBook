@@ -1,0 +1,5 @@
+1. what's a thread when to use it
+2. ofThread
+3. threads and openGL
+4. ofMutex
+5. Poco::Condition

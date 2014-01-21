@@ -1,0 +1,8 @@
+1. OF history
+2. OF structure
+3. project generator
+4. .h and .cpp
+5. setup/update/draw
+6. first project a circle moving in the screen
+7. scary things in OF code (#ifdefs pragma once...)
+8. preprocessor/compiler/linker

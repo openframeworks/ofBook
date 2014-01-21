@@ -1,0 +1,6 @@
+1. computer memory, variables
+2. stack variables, variables in functions vs variables in class/object
+3. variables in heap, pointers and references
+4. memory structures, arrays vs vectors
+5. other memory structures, maps, sets and lists
+6. smart pointers

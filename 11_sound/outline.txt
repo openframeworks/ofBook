@@ -1,0 +1,28 @@
+Sound
+=====
+- Why -1 to 1?
+- Time domain vs Freq domain
+- Sound files
+- Threading and buffering concerns (probably introduce circular buffers here)
+- Addon ecosystem
+- Basic audio reactive toolbox
+  - RMS
+  - FFT
+  - Pitch detection, Onset detection
+  - Mel scale, Decibels
+- Basic audio synthesis toolbox
+  - ADSR
+  - Reacting to MIDI
+  - Working with external sound applications
+  - Overview of non-insane synthesis techniques (i.e. http://en.wikipedia.org/wiki/Category:Sound_synthesis_types )
+- Gotchas
+  - Sample rates, Nyquist, aliasing
+  - Popping, clipping 
+  - Latency
+
+Advanced sidebars
+-----------------
+- DSP stuff (windowing, filtering...)
+- Tricks for human voices (cepstrum and friends) 
+- Constant Q (and why raw FFT can be not-so-great for music) 
+- Maybe some insane synthesis techniques
