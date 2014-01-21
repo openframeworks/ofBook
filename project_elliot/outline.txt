@@ -1,0 +1,37 @@
+- Brief documentation of install  (2 pages)
+	- Images
+	- Intentions of work
+		- Lineage of work
+			- Inspiration
+			- Previous relevant work
+			- Digital Emulsion concept
+- Technical solution (1 page)
+	- External constraints
+	- System diagram
+	- Hardware choices
+	- Software choices
+		- Online vs offline apps
+		- Mixing with other frameworks
+	- Development timeline retrospective (in reference to design timeline)
+- Design time apps (2 pages)
+	- Mixing custom and existing applications into workflows
+	- Creating an interface for collaborators to use
+	- addLinesToRoom app (a CAD app made in oF to design the install)
+		- Problem
+		- Speedy solution
+		- Screenshots
+		- Code snippets of nice features
+		- Feedback from users back into install
+		- Value for final install
+- Calibration time apps (2 pages)
+	- Requirements
+	- Brief introduction to triangulation + structured light for Digital Emulsion projects
+	- triangulateAProjector.app
+		- Screenshots
+		- Code snippets
+	- mapLinesInRoom.app
+		- Screenshots
+		- Iterative design
+		- Communicating with other frameworks
+	- matchMapToScan.app
+		- Screenshots
