@@ -1,0 +1,33 @@
+Hardware
+
+-- -- --
+
+- Anatomy of the Arduino hardware + IDE
+- Basic intro of voltage, “high” and “low”, PWM
+- Digital and analog hardware communication
+
+-- -- --
+
+- Bits, bytes, and serial communication
+- Baud rate, USB serial access, communication “frequency”
+
+-- -- --
+
+- Basic serial communication: reading and writing bytes
+ 	- looking for devices
+	- checking serial availability
+	
+-- -- --
+
+- Firmata overview
+- Compare LED blink with Arduino IDE / LED blink with OF
+
+- Digital input and output with Firmata / ofArduino
+
+- Analog input and output with FIrmata / ofArduino
+
+- Servo control with OF
+
+-- -- --
+
+- Creating a headless app for hardware control
