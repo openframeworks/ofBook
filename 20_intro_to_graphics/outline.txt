@@ -12,8 +12,10 @@ Drawing Shapes
 Coordinate Systems
   - ofPushMatrix, ofPopMatrix
   - ofRotate, ofScale, ofTranslate
+  
+[Still working on what exactly the corresponding code will be for these sections.  Will insert before Monday.]
 
-Documenting Your Work 
+Documenting/Sharing Your Work 
   - Stationary Images
     - ofSaveScreen()
     - ofBeginSaveScreenAsPDF()
@@ -32,7 +34,7 @@ Meshes
     - A way to think about creating a generative mesh
     - ofEasyCam
 
-Linking to Addons
+Links to Addons
   - Adding Physics
     - ofxBullet
     - ofxBox2d
@@ -44,5 +46,4 @@ Linking to Addons
 Where to learn more
   - I'll sort this out in more detail once I have an idea of what the other chapters in the book will look like
   - Book will already have computer vision and shaders, so I'd like to point to resources on particle systems, opengl, vector math, and whatever else fits. 
-
-Links to visual projects made with openFrameworks
+  - Links to cool openFrameworks projects
