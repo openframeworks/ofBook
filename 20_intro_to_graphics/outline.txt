@@ -3,12 +3,10 @@ Simple Graphics Loop
   - Background
   - Foreground
   
-Drawing of Basic Shapes
+Drawing Shapes
   - ofLine, ofRect, ofCircle, ofEllipse
   - Fill and stroke concepts
   - Specifying color (grayscale, RGB, RGBA, HSB)
-  
-Advanced Shapes
   - Curve, beziers, and custom shape
   
 Coordinate Systems
@@ -23,9 +21,16 @@ Documenting Your Work
     - ofxGifEncoder
     - ofxVideoRecorder
     - Since these haven't worked well for me on windows, possibly a quick aside on alternative/custom solutions:
-      - For interactive works: 3rd party recording software
-      - For noninteractive works: Creating a 'rendering' mode, saving frames and stiching them together using ffmpeg
+      - For interactive works, 3rd party recording software
+      - For noninteractive works, creating a 'rendering' mode, saving frames and stiching them together using ffmpeg (or photoshop/gimp)
 
+Meshes
+  - This may end up pushing the limits on what can fit in a chapter, but I'd love to see some coverage of 3D basics and meshes in the book
+  - I could attempt to shorten up the generative mesh tutorial (http://openframeworks.cc/tutorials/graphics/generativemesh.html) and include it
+  - That would add:
+    - Background on meshes
+    - A way to think about creating a generative mesh
+    - ofEasyCam
 
 Linking to Addons
   - Adding Physics
