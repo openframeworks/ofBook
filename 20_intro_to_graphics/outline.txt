@@ -36,6 +36,8 @@ Linking to Addons
   - Vector Graphics
     - ofxSVG or ofxVectorGraphics
 
-Where to learn more?
+Where to learn more
+  - I'll sort this out in more detail once I have an idea of what the other chapters in the book will look like
+  - Book will already have computer vision and shaders, so I'd like to point to resources on particle systems, opengl, vector math, and whatever else fits. 
 
-Links to projects
+Links to visual projects made with openFrameworks
