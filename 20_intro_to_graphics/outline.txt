@@ -15,19 +15,26 @@ Coordinate Systems
   - ofPushMatrix, ofPopMatrix
   - ofRotate, ofScale, ofTranslate
 
+Documenting Your Work 
+  - Stationary Images
+    - ofSaveScreen()
+    - ofBeginSaveScreenAsPDF()
+  - Animation/Video
+    - ofxGifEncoder
+    - ofxVideoRecorder
+    - Since these haven't worked well for me on windows, possibly a quick aside on alternative/custom solutions:
+      - For interactive works: 3rd party recording software
+      - For noninteractive works: Creating a 'rendering' mode, saving frames and stiching them together using ffmpeg
 
 
-Addons to point to?
-  - Adding physics
+Linking to Addons
+  - Adding Physics
     - ofxBullet
     - ofxBox2d
   - Computer Vision
     - ofxCv or ofxOpenCv
   - Vector Graphics
     - ofxSVG or ofxVectorGraphics
-  - Documenting Work 
-    - ofxGifEncoder
-    - ofxVideoRecorder
 
 Where to learn more?
 
