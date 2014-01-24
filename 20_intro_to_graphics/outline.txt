@@ -1,0 +1,34 @@
+Simple Graphics Loop
+  - Framerate
+  - Background
+  - Foreground
+  
+Drawing of Basic Shapes
+  - ofLine, ofRect, ofCircle, ofEllipse
+  - Fill and stroke concepts
+  - Specifying color (grayscale, RGB, RGBA, HSB)
+  
+Advanced Shapes
+  - Curve, beziers, and custom shape
+  
+Coordinate Systems
+  - ofPushMatrix, ofPopMatrix
+  - ofRotate, ofScale, ofTranslate
+
+
+
+Addons to point to?
+  - Adding physics
+    - ofxBullet
+    - ofxBox2d
+  - Computer Vision
+    - ofxCv or ofxOpenCv
+  - Vector Graphics
+    - ofxSVG or ofxVectorGraphics
+  - Documenting Work 
+    - ofxGifEncoder
+    - ofxVideoRecorder
+
+Where to learn more?
+
+Links to projects
