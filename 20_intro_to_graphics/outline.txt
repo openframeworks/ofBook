@@ -1,19 +1,28 @@
 Simple Graphics Loop
-  - Framerate
-  - Background
-  - Foreground
+  - Simple section to get comfortable the update/draw loops and timing
+  - Clearing the screen with a background
+  - Drawing a circle on top of the background at the mouse position
+  - Transparency and simple trail effect (using setBackgroundAuto() and clearing the screen with a transparent rect)
+  - Controlling framerate
   
-Drawing Shapes
-  - ofLine, ofRect, ofCircle, ofEllipse
-  - Fill and stroke concepts
-  - Specifying color (grayscale, RGB, RGBA, HSB)
-  - Curve, beziers, and custom shape
+2D Graphics
+  - A section about the possibilities of mixing code and visuals
+  - Cover topics in this order:
+    - ofLine, ofRect, ofCircle, ofEllipse
+    - Fill and stroke concepts
+    - Specifying color (grayscale, RGB, RGBA, HSB)
+    - Curve, beziers, and custom shape
+  - Teach in the context of a project with generative visuals, like:
+    - A cellular automata like Conway's Game of Life
+    - Custom generative brushes
+    - Using a movie or image to drive the creation of a ton of simple shapes
+    - [I will sort out which type of project before Monday]
   
-Coordinate Systems
-  - ofPushMatrix, ofPopMatrix
-  - ofRotate, ofScale, ofTranslate
-  
-[Still working on what exactly the corresponding code will be for these sections.  Will insert before Monday.]
+Coordinate Systems Transformations
+  - Cover these topics:
+    - ofPushMatrix, ofPopMatrix
+    - ofRotate, ofScale, ofTranslate
+  - Teach using scale, rotate and translate to generate animated, spiralling rectangles like in CoordSystem.png
 
 Documenting/Sharing Your Work 
   - Stationary Images
@@ -30,9 +39,13 @@ Meshes
   - This may end up pushing the limits on what can fit in a chapter, but I'd love to see some coverage of 3D basics and meshes in the book
   - I could attempt to shorten up the generative mesh tutorial (http://openframeworks.cc/tutorials/graphics/generativemesh.html) and include it
   - That would add:
-    - Background on meshes
-    - A way to think about creating a generative mesh
-    - ofEasyCam
+    - Basics of meshes
+      - Modes, indicies, vertices
+    - One way to think about creating a generative mesh
+      - Loading image, getting pixels, using them as source data
+      - Applying rules to the data to generate vertices and connections
+    - ofEasyCam to navigate
+    - How to handle the mesh to create simple animation and interactivity
 
 Links to Addons
   - Adding Physics
