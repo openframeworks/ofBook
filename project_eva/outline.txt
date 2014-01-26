@@ -1,0 +1,56 @@
+Case Study
+"Choreographies for Humans and Stars"
+(@dailyTLJ project)
+
+
+1. Project 
+	- summary, image
+	- background story: client, call, competition
+	- timeline: from competition, ideation, prototyping, production, to opening
+	- team: all the people involved
+2. Ideation
+	- process: work with choreographer
+	- narrative: sequential structure
+	- content: kids workshops, analog animation techniques
+	- physical presence to define stage (steles)
+3. Technical Solution
+	- site, challenges (weather, camera placement, projector placement, trees, city network)
+	- hardware choices, specs (camera, projector, computer)
+	- system diagram
+	- choice of tracking software > blobserver
+		- method of tracking (HOG, background)
+		- finetuning of tracking (challenges: weather, kids, overlapping)
+		- screenshot camera view with tracking windows
+	- choice of visualization software > OF
+	- additional software used: processing, gstreamer, switcher, oscdump, ..
+4. Viz Software (OF)
+	- development setup: linux, codeblocks, sublime, github
+	- externals used: ofxOsc, ofxOpenCv, ofxGui, ofEvents
+	- input: tracking data
+		- OSC communication: dealing with fsp diff, dummies for testing
+		- blobs data structure with std::map, updating 
+		- perspective transformation
+	- implementing video content
+		- content preparation (quest for right format, tools used)
+		- dynamic video elements (ofVideoPlayer, ofPtr)
+		- preloading versus dynamic loading
+	- sequential structure
+		- structure with scenes, segments
+		- transitioning with timers and/or events
+	- event-driven animation
+		- blob events (onEnterStage, onLost, onFreeze, onSteady, ..) driving video content
+	- finetuning interaction
+		- calibration of final behavior (importance of GUI)
+		- screenshot of debug GUI
+5. Fail-safes and dirty fixes!
+	- worst case scenarios, the messiness of the real-world and how fixing bugs creates more bugs
+	- segmentation faults: how to keep your app alife nevertheless
+		- supervise (linux)
+		- options for win/mac: launchd, lingon, ..
+	- variables FPS: update animation with fps-dependent value
+	- memory leaks, dropping FPS: regularly terminate app, seamless transitions
+	- put limits on your number of objects (blobs, video elements)
+	- video glitches on low FPS
+	- optimizing: replace video with opengl-animation
+	- investigate: ofLogToFile with dynamic date
+	- investigate: monitor process times for operations to find the bottleneck
