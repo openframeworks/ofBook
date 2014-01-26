@@ -6,3 +6,8 @@
 6. first project a circle moving in the screen
 7. scary things in OF code (#ifdefs pragma once...)
 8. preprocessor/compiler/linker
+
+
+
+
+
