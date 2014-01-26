@@ -1,0 +1,14 @@
+Possible inclusion in other places?
+
+CSM Course
+http://joelgethinlewis.com/visualmachines/
+
+Basics of binary numbers, types, and intro to OF
+
+Case Studies:
+
+Divide by Zero - http://www.hellicarandlewis.com/2010/09/20/divide-by-zero/
+FeelTV - http://www.intworks.com/work/nike-feel-london
+Greenpeace Save The Arctic installation - http://www.youtube.com/watch?v=LwokmKqT0og&list=UUDYkJZXrR9gv6sQ2FQMeYYw&index=29
+
+In each case, the planning documents, development schedule and eventual technical solution, with links to source.
