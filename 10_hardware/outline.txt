@@ -10,6 +10,7 @@ Hardware
 
 - Bits, bytes, and serial communication
 - Baud rate, USB serial access, communication “frequency”
+- Serial RS-232 to TTL communication
 
 -- -- --
 
@@ -31,3 +32,20 @@ Hardware
 -- -- --
 
 - Creating a headless app for hardware control
+- Serial communication on a single board computer (rPI/Beaglebone)
+
+-- -- --
+
+- Introduction to DMX
+- Hooking up a DMX interface
+- Controlling DMX hardware using OF
+- Case Study: Controlling LEDs using DMX on an rPI
+
+-- -- --
+
+- Introduction to Networking
+- TCP/IP protocol
+- Routers/Switches/Hubs
+- Open Sound Control (OSC) - networking made easy
+- Communicate OF with an Arduino over ethernet
+- Case Study: Sending wireless OSC packets on an rPI
