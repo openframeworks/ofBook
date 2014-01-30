@@ -24,7 +24,8 @@ also explaining the physical setup of such installations, IR lighting, filters..
    -- subtracting two images
    -- multiplying an image by a constant
    -- mentioning ROI 
-   -- Example: creating an average of several images
+   -- Example: creating an average of several images (e.g. Jason Salavon)
+   -- Example: creating a circular alpha-mask from a computed Blinn spot
    
 2.3. Convolution Filtering
    -- Blurring an image
@@ -48,7 +49,7 @@ also explaining the physical setup of such installations, IR lighting, filters..
    -- Detecting presence with Background subtraction
    -- Detecting motion with frame-differencing
    -- Binarization, blob detection and contour extraction
-      -- Area settings on contour extraction
+      -- Area thresholds for contour extraction (min plausible area, max plausible area, as % of capture size)
       -- Finding negative vs. positive contours
    
 3.3. Image Processing Refinements
@@ -64,15 +65,16 @@ also explaining the physical setup of such installations, IR lighting, filters..
 3.5. The Vector space: Extracting information from Blob Contours
    -- Area, Perimeter, Centroids, Bounding box
    -- Calculcating blob orientation (central axis)
-   -- Locating corners in contours
-   -- 1D Filtering of contours to eliminate noise. 
+   -- Locating corners in contours, estimating local curvature
+   -- 1D Filtering of contours to eliminate noise, i.e local averaging. 
    -- Convexity defects, contourFinder.getConvexityDefects()
-   -- Other shape metrics; shape recognition 
+   -- Other shape metrics; shape recognition
    
 3.6. Using Kinect depth images
    -- Finding the "fore-point" (foremost point)
    -- Background subtraction with depth images
-   -- Remarks about gradients 
+   -- Hole-filling in depth images
+   -- Computing normals from depth gradients
    
 3.7. Suggestions for further experimentation: 
    -- Tracking multiple blobs with ofxCv.tracker
@@ -83,12 +85,14 @@ also explaining the physical setup of such installations, IR lighting, filters..
 
 4.1. Overview
    -- Some examples of projects that use face-tracking
+      -- Golan & Zach's Re:Face
       -- Mary Huang's face typography
       -- Kyle & Arturo, face swapping
    
 4.2. A basic face detector. 
    -- Face detection with classic OpenCV viola-Jones detector
    -- How it works, and considerations when using it. 
+   -- cvDazzle; Kyle & Aram ("How to Avoid Facial Recognition"
    
 4.3. Advanced face analysis with the Saraghi FaceTracker
 
