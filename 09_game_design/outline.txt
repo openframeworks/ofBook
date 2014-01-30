@@ -1,0 +1,21 @@
+Integrating OSC with oF for Games
+Category: advanced specialist chapter
+
+Introduction:
+This chapter explains how OSC can be implemented in openFrameworks, allowing developers to enable wireless communication between multimedia devices for real-time control. The project in this chapter is a game for 2 players, controlled by two OSC-enabled devices (e.g. smartphones with OSC apps). Player 1 uses their controller to manipulate their on-screen avatar; Player 2 uses their controller to add difficulty to the game (adding enemies, manipulating speeds, etc.). OSC is a useful tool for any oF developer interested in being able to remotely control their app’s properties (visuals, sounds, etc.) without having to build their own custom controller.
+
+Terms:
+OSC
+Routing
+IP addresses/ports
+
+Outline
+Historical overview of OSC
+Overview in general of how OSC works
+OSC apps for smartphones/tablets
+Setting up OSC
+Types of messages
+How routing messages works
+Implement P1 controls
+Implement P2 controls
+Other projects made with OSC/further resources
