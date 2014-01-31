@@ -13,6 +13,8 @@ e) Does the ordering look right, where should the case studies fit?
 
 ****************************************
 
+#introduction
+
 - OF history
 - OF philosophy
   - Collaborative
@@ -35,7 +37,7 @@ e) Does the ordering look right, where should the case studies fit?
 
 ****************************************
 
-02_c++_basics (JTNimoy)
+#c++_basics (JTNimoy)
 
 func
 
