@@ -13,7 +13,8 @@ e) Does the ordering look right, where should the case studies fit?
 
 ****************************************
 
-#introduction
+introduction
+=========
 
 - OF history
 - OF philosophy
@@ -34,7 +35,9 @@ e) Does the ordering look right, where should the case studies fit?
 
 (note, some of the text I wrote on http://openframeworks.cc/about/ re: philosophy would be useful in this chapter)
 
-#c++_basics (JTNimoy)
+
+c++_basics (JTNimoy)
+=========
 
 func
 
@@ -84,7 +87,8 @@ public
 
 inheritance
 
-#OOPs!(Rui)
+OOPs!(Rui)
+=========
 
 OOPs! _ Object Orient Programming, OOP: a practical approach in OF
 notes:
@@ -123,55 +127,38 @@ make a simple class (simple particle?)
 
 make different objects from the same class
 
-#animation (Zach)
+animation (Zach)
+=========
 
-note this will be loosely based on this class / code https://github.com/ofZach/algo2012
+note this will be loosely based on this class / code
+https://github.com/ofZach/algo2012
 
-brief notes about animation and movement
+- brief notes about animation and movement
+- central question: how can we make things move in a lifelike and compelling way?
+- animation in OF basics: 
+    - frame rate
+    - update and render loop
+    - point object
+- variables for movement
+    - pct based animation
+    - linear interpolation 0-1, 
+    - easing functions, powf
+    - zeno
+- sin / cos based movement
+- simulation
+    - vector vs point (and disambiguate with std::vector)
+    - particles system
+    - attraction repulsion
+    - vector field
+- noise
+- where to go further
+    - more complex forces (ie: springs)
+    - mixing forces (ie: flocking)
+    - libraries (ie: box2d)
 
-central question: how can we make things move in a lifelike and compelling way?
 
-animation in OF basics:
-
-frame rate
-
-update and render loop
-
-point object
-
-variables for movement
-
-pct based animation
-
-linear interpolation 0-1,
-
-easing functions, powf
-
-zeno
-
-sin / cos based movement
-
-simulation
-
-vector vs point (and disambiguate with std::vector)
-
-particles system
-
-attraction repulsion
-
-vector field
-
-noise
-
-where to go further
-
-more complex forces (ie: springs)
-
-mixing forces (ie: flocking)
-
-libraries (ie: box2d)
-
-#image_processing_computer_vision (Golan)
+image_processing_computer_vision (Golan)
+=========
 
 1. Introduction 
 
@@ -284,7 +271,8 @@ Sometimes people lack the terminology to know what to google for.
 -- Camera calibration. 
 -- Homography transforms and re-projection. 
 
-#game_design (Phoenix)
+game_design (Phoenix)
+=========
 
 Integrating OSC with oF for Games
 Category: advanced specialist chapter
@@ -321,7 +309,8 @@ Outline
 
 ●        Other projects made with OSC/further resources
 
-#hardware (Caitlin/Pierre)
+hardware (Caitlin/Pierre)
+=========
 -- -- --
 
 
@@ -373,7 +362,8 @@ Outline
 - Communicate OF with an Arduino over ethernet
 - Case Study: Sending wireless OSC packets on an rPI
 
-#sound (Adam)
+sound (Adam)
+=========
  
 Sound
 =====
@@ -404,7 +394,8 @@ Advanced sidebars
 - Constant Q (and why raw FFT can be not-so-great for music) 
 - Maybe some insane synthesis techniques
 
-#ios (Lukasz)
+ios (Lukasz)
+=========
  
 iOS
 ===
@@ -428,7 +419,8 @@ Advanced sidebars
 - GCD, blocks, "the main queue"
 - ARC and C++
 
-#android (Arturo)
+android (Arturo)
+=========
 
 1. setup guide
 2. android specifics, java/c++
@@ -438,7 +430,8 @@ Advanced sidebars
 6. ABIs
 7. packaging for release
 
-#memory (Arturo)
+memory (Arturo)
+=========
 
 1. computer memory, variables
 2. stack variables, variables in functions vs variables in class/object
@@ -447,7 +440,8 @@ Advanced sidebars
 5. other memory structures, maps, sets and lists
 6. smart pointers
 
-#threads (Arturo)
+threads (Arturo)
+=========
 
 1. what's a thread when to use it
 2. ofThread
@@ -455,7 +449,8 @@ Advanced sidebars
 4. ofMutex
 5. Poco::Condition
 
-#introduction_to_version_control_with_git (Christoph)
+introduction_to_version_control_with_git (Christoph)
+=========
 
 Chapter: Introduction to version control with Git (Christoph Buchner)
 This chapter will give a high-level overview over a pretty complex topic with a generous amount of links to more material to enable readers to easily find appropriate information. It's quite difficult to do it in anything approaching completeness in only a couple of pages, and a high-level overview will be more useful to the reader.
@@ -521,7 +516,8 @@ Where/how do you get help if things go wrong? (Stack Overflow, Git homepage, goo
 
 (more tools?)
 
-#shaders (Patricio)
+shaders (Patricio)
+=========
 
 Intro
 
@@ -743,7 +739,8 @@ ofBook will already have computer vision and shaders, so I'd like to point to re
 
 Links to cool openFrameworks projects
 
-#project_elliot
+project_elliot
+=========
 
 - Brief documentation of install  (2 pages)
 
@@ -821,7 +818,8 @@ Links to cool openFrameworks projects
                 
                 
                 
-#project_eva
+project_eva
+=========
 Case Study
 "Choreographies for Humans and Stars"
 (@dailyTLJ project)
@@ -879,7 +877,8 @@ Case Study
         - investigate: ofLogToFile with dynamic date
         - investigate: monitor process times for operations to find the bottleneck
         
-#project_joel
+project_joel
+=========
 
 Possible inclusion in other places?
 
@@ -896,7 +895,8 @@ Greenpeace Save The Arctic installation - http://www.youtube.com/watch?v=LwokmKq
 
 In each case, the planning documents, development schedule and eventual technical solution, with links to source.
 
-#project_memo
+project_memo
+=========
 
 0. intro
 
