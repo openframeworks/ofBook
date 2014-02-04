@@ -39,51 +39,28 @@ Introduction (Zach)
 C++_basics (JTNimoy)
 =========
 - func
-
   returning early
-
 - origin from Bell Labs, timing, intentions
-
 - modern role of C++ amongst other languages
-
 - C versus C++.
-
 - Why did C become C++?
-
 - other flavors of C, and why they exist.
-
 - Variables
-
 - calling functions
-
     - arguments
-
     - return
-
 - defining your own functions
-
 - conditionals
-
 - for loop
-
 - while loop
-
     - break
-
     - continue
-
 - arrays
-
 - header files
-
 - structs
-
 - classes
-
     - private
-
     - public
-
     - inheritance
     
 
@@ -95,37 +72,21 @@ OOPs! _ Object Orient Programming, OOP: a practical approach in OF
 notes:
 
 - trying to not be redundant with Josh's Chapter, this would be a direct approach / practical example to OOP in OF
-
 - this will be loosely based on and extended from the OOPs tutorialhttp://www.openframeworks.cc/tutorials/first%20steps/003_ooops_object_oriented_programming.html
-
 - brief notes about OOP:
-
     - what is OOP
-
         - Objects and Classes
-
         - example of basic class and object
-
             - make a very simple class with setup, update and draw methods (simple particle ?)
-
             - make your object from the class
-
             - make multiple objects the hard way
-
             - make an array of objects (the easy way) _ using a CONSTANT
-
             - make an array of objects (the easy way) _ array using pointers
-
             - make an array of objects (the easy way) _ dynamic size of array using stl::vector
-
             - make an array of objects (the easy way) _ dynamic size of array using stl::vector and destroying objects if they leave the screen
-
     - more OOPs! : Polymorphism -What is it / what does it mean ?
-
         - example of basic class and object (polymorphism)
-
             - make a simple class (simple particle?)
-
             - make different objects from the same class
 
 Animation (Zach)
@@ -272,7 +233,6 @@ Sometimes people lack the terminology to know what to google for.
 
 - Camera calibration. 
 - Homography transforms and re-projection. 
--- -- --
 
 Game_Design (Phoenix)
 =========
@@ -287,32 +247,21 @@ This chapter explains how OSC can be implemented in openFrameworks, allowing dev
 Terms:
 
 ●        OSC
-
 ●        Routing
-
 ●        IP addresses/ports
 
 
 ###Outline
 
 ●        Historical overview of OSC
-
 ●        Overview in general of how OSC works
-
 ●        OSC apps for smartphones/tablets
-
 ●        Setting up OSC
-
 ●        Types of messages
-
 ●        How routing messages works
-
 ●        Implement P1 controls
-
 ●        Implement P2 controls
-
 ●        Other projects made with OSC/further resources
-
 
 
 Hardware (Caitlin/Pierre)
@@ -323,32 +272,18 @@ Hardware (Caitlin/Pierre)
 - Anatomy of the Arduino hardware + IDE
 - Basic intro of voltage, “high” and “low”, PWM
 - Digital and analog hardware communication
-
-
-
 - Bits, bytes, and serial communication
 - Baud rate, USB serial access, communication “frequency”
 - Serial RS-232 to TTL communication
-
-
-
 - Basic serial communication: reading and writing bytes
     - looking for devices
     - checking serial availability
-        
--- -- --
-
 - Firmata overview
 - Compare LED blink with Arduino IDE / LED blink with OF
-
 - Digital input and output with Firmata / ofArduino
-
 - Analog input and output with FIrmata / ofArduino
-
 - Servo control with OF
-
--- -- --
-
+- 
 - Creating a headless app for hardware control
 - Serial communication on a single board computer (rPI/Beaglebone)
 
@@ -511,53 +446,36 @@ Shaders (Patricio)
 ###Intro
 
 - The birth of the render pipeline and a brief history of the GPU
-
 - Explanation of Vertex Shader and Frag shader
 
 
 ###Fragment Shader
 
 - What are they for? How do they work? Comparison with old pixel-by-pixel operations. References
-
 - First example: all red billboard (+ basic explanation of how to make a QUAD mesh with texCoords)
-
 - Second example: make a grayscale // make a checkerboard using shaders
-
 - Uniforms
-
 - Third example: using 'uniform float’ to make animated patterns (passing ofGetElipsetime() sin() cos() to make interesting patterns)
-
 - Fourth example: using ‘uniform vec2’ to get mouse interaction
-
 - Fifth example: using ‘uniform texture2DRect’ to alpha mask and multi texturing (explanation of OF examples)
-
 - Exercise: make simple shaders that emulate basic openCV operations such as: grayscale, brightness, contrast, threshold, absDiff
 
 
 ###Vertex Shader
 
 - What are they for? How do they work?
-
 - Varings
-
 - Example: cheap DOF passing the alpha value from the vertex shader
-
 
 ###Advanced
 
 - The Programmable-Render on OF
-
 - Differences between openGL2, openGL ES and openGL3
-
 - Using GPU not for rendering, instead using textures to pass information
-
 - Sixth example: simple particle system (explanation of OF example)
-
 - Exercise: Implement cool shaders from shaderToy in OF
--- -- --
 
 #Intro_to_Graphics (Mike)
-
 
 ###Programming Graphics
 Personal goals for chapter:
@@ -656,81 +574,49 @@ Project_Elliot
 =========
 
 - Brief documentation of install  (2 pages)
-
     - Images
-
     - Intentions of work
-
         - Lineage of work
-
             - Inspiration
-
             - Previous relevant work
-
             - Digital Emulsion concept
 
 - Technical solution (1 page)
-
     - External constraints
-
     - System diagram
-
     - Hardware choices
-
     - Software choices
-
         - Online vs offline apps
-
         - Mixing with other frameworks
-
     - Development timeline retrospective (in reference to design timeline)
 
 - Design time apps (2 pages)
-
     - Mixing custom and existing applications into workflows
-
     - Creating an interface for collaborators to use
-
     - addLinesToRoom app (a CAD app made in oF to design the install)
-
         - Problem
-
         - Speedy solution
-
         - Screenshots
-
         - Code snippets of nice features
-
         - Feedback from users back into install
-
         - Value for final install
 
 - Calibration time apps (2 pages)
-
     - Requirements
-
     - Brief introduction to triangulation + structured light for Digital Emulsion projects
-
     - triangulateAProjector.app
-
         - Screenshots
-
         - Code snippets
 
     - mapLinesInRoom.app
-
         - Screenshots
-
         - Iterative design
-
         - Communicating with other frameworks
 
     - matchMapToScan.app
-
          - Screenshots
                 
-                
-                
+            
 
 Project_Eva
 =========
