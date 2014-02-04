@@ -1,0 +1,27 @@
+This chapter introduces some basic information visualisation techniques using OF.
+
+It is a very brief overview of dealing with data in OF. It overviews how to load and store datasets, useful functions for converting data and some examples of how to build basic plots.
+
+1. Intro 
+- 1.1 What is data/information? Some contextual background on what these terms mean. 
+- 1.2 Defintition of terms and chapter structure 
+- 1.3 Steps of visualising data ( as per ben fry) .
+
+2. Working with data 
+- 2.1 Loading and saving data 
+- 2.2 Using classes or structs to store data. 
+- 2.3 Conversion functions (ofSplitString, ofToString, ofToInt) 
+- 2.4 Quick overview of some common file structures. -tsv, csv, html, xml, json, svg 
+- 2.5 Notes on Parsing Data.
+
+3. Basic examples of data visualisation 
+3.1 Creating basic time series plots 
+3.2 Scatter plot example 
+3.3 Geolocated data example
+
+4. Working with Real time data 
+- 4.1 What are APIs? 
+- 4.2 Interacting with URLS 
+- 4.3 Using this data real time in an animation
+
+5. Challenges and further resources
