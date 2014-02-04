@@ -2,4 +2,5 @@
 2. ofThread
 3. threads and openGL
 4. ofMutex
+5. ofScopedLock
 5. Poco::Condition
