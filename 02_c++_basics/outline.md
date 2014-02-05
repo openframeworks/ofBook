@@ -65,3 +65,5 @@
 + possibly show them local terminal-based C++ in cygwin/linux/bsd
 + possibly weave in basic GLUT/OpenGL to make this all more fun?
 
++ learning C++ "for real" (book recommendations)
+
