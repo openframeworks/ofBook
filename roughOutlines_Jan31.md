@@ -14,6 +14,8 @@ d) Are there any gaps?
 e) Does the ordering look right, where should the case studies fit?  
 
 
+
+
 Introduction (Zach)
 =========
 
@@ -35,6 +37,8 @@ Introduction (Zach)
 - preprocessor/compiler/linker
 
 (note, some of the text I wrote on http://openframeworks.cc/about/ re: philosophy would be useful in this chapter)
+
+
 
 C++_basics (JTNimoy)
 =========
@@ -89,6 +93,8 @@ notes:
             - make a simple class (simple particle?)
             - make different objects from the same class
 
+
+
 Animation (Zach)
 =========
 
@@ -118,6 +124,37 @@ https://github.com/ofZach/algo2012
     - mixing forces (ie: flocking)
     - libraries (ie: box2d)
 -- -- --
+
+
+
+Advanced graphics (Arturo & ??)
+==============
+
+- 2D
+- immediate mode vs ofPolyline/ofPath
+
+- 3D
+- Transformation matrices
+    - ofTranslate/Rotate/Scale using ofMatrix4x4
+    - ofNode
+- ofCamera
+- ofMesh
+- ofVboMesh
+- of3dPrimitive
+- Applying simple textures to 3d primitives and ofFbo
+
+
+
+
+Network (Arturo)
+============
+
+1. TCP vs UDP
+2. OSC
+
+
+
+
 
 Image_Processing_Computer_Vision (Golan)
 =========
@@ -234,6 +271,9 @@ Sometimes people lack the terminology to know what to google for.
 - Camera calibration. 
 - Homography transforms and re-projection. 
 
+
+
+
 =========================================================
 Information Visualization (Tega)
 =========================================================
@@ -267,6 +307,9 @@ It is a very brief overview of dealing with data in OF. It overviews how to load
 5. Challenges and further resources
 
 
+
+
+
 Game_Design (Phoenix)
 =========
 
@@ -297,10 +340,11 @@ Terms:
 ●        Other projects made with OSC/further resources
 
 
+
+
+
 Hardware (Caitlin/Pierre)
 =========
-
-
 
 - Anatomy of the Arduino hardware + IDE
 - Basic intro of voltage, “high” and “low”, PWM
@@ -337,6 +381,8 @@ Hardware (Caitlin/Pierre)
 - Case Study: Sending wireless OSC packets on an rPI
 
 
+
+
 Sound (Adam)
 =====
 
@@ -368,6 +414,8 @@ Sound (Adam)
     - Maybe some insane synthesis techniques
 
 
+
+
 iOS (Lukasz)
 ===
 
@@ -394,6 +442,8 @@ iOS (Lukasz)
     - ARC and C++
   
 
+
+
 Android (Arturo)
 =========
 
@@ -407,6 +457,9 @@ Android (Arturo)
 7. packaging for release
 -- -- --
 
+
+
+
 Memory (Arturo)
 =========
 
@@ -419,6 +472,9 @@ Memory (Arturo)
 6. smart pointers
 -- -- --  
 
+
+
+
 Threads (Arturo)
 =========
 
@@ -429,6 +485,9 @@ Threads (Arturo)
 4. ofMutex
 5. Poco::Condition
 -- -- --  
+
+
+
 
 Introduction_to_version_control_with_git (Christoph)
 =========
@@ -472,6 +531,10 @@ Introduction_to_version_control_with_git (Christoph)
 * (more tools?)
 -- -- --
 
+
+
+
+
 Shaders (Patricio)
 =========
 
@@ -507,6 +570,10 @@ Shaders (Patricio)
 - Using GPU not for rendering, instead using textures to pass information
 - Sixth example: simple particle system (explanation of OF example)
 - Exercise: Implement cool shaders from shaderToy in OF
+
+
+
+
 
 #Intro_to_Graphics (Mike)
 
@@ -603,6 +670,10 @@ Personal goals for chapter:
   * Links to cool openFrameworks projects
 -- -- --
 
+
+
+
+
 Project_Elliot
 =========
 
@@ -650,6 +721,9 @@ Project_Elliot
          - Screenshots
                 
             
+
+
+
 
 Project_Eva
 =========
@@ -712,6 +786,10 @@ Project_Eva
     - investigate: ofLogToFile with dynamic date
     - investigate: monitor process times for operations to find the bottleneck
 -- -- --        
+
+
+
+
 Project_Joel
 =========
 -- -- --
@@ -729,6 +807,9 @@ http://joelgethinlewis.com/visualmachines/
 - Greenpeace Save The Arctic installation - http://www.youtube.com/watch?v=LwokmKqT0og&list=UUDYkJZXrR9gv6sQ2FQMeYYw&index=29
 
 In each case, the planning documents, development schedule and eventual technical solution, with links to source.
+
+
+
 
 
 Project_Memo
