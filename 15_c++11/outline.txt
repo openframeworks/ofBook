@@ -1,0 +1,28 @@
+* introduction
+* making life easier with c++11
+  * auto
+    * what the problem was
+    * what the solution is
+    * what auto is
+    * what auto isn't
+    * cute example
+  * for (auto thing : listOfThings)
+    * what the problem was
+    * the solution
+    * what this is
+    * what this isn't
+    * particle example
+  * lambda functions
+    * your first lambda
+      * making it
+      * calling it
+      * passing it around as a variable
+    * variable scope
+    * replacing events with lambdas
+    * what this is
+    * what this isn't
+    * button event example
+* more advanced c++11
+  * std::move
+  * a few other new things
+  
