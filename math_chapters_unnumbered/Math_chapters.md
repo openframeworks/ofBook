@@ -24,12 +24,12 @@ With the `lerp` function, you can take any two quantites, in our case `start` an
  $$\text{lerp}\left(a,b,t\right) = t\cdot b+\left(1-t\right)\cdot a$$ 
 
 ##### Note: What does _linear_ really mean?
-Engineers, Programmers and English Speakers like to think of _linear_ as _anything you can put on a line_. Mathematicians, having to deal with all the conceptual mess the former group of people creates, define it _anything you can put on a line **that begins at (0,0)**_. There's  good reasoning behind that, which we will see in the discussion about Linear Algebra. In the meantime, think of it this way: if our transformation is taking a line that has a value 0 at the point 0 and returning a line with the same property, (thus in the form $f\left(x\right)=ax$), It's _linear_. If it returns a value different from 0 at $x=0$ (in the form $f\left(x\right)=ax + b$), it's _affine_. 
+Engineers, Programmers and English Speakers like to think of _linear_ as _anything you can put on a line_. Mathematicians, having to deal with all the conceptual mess the former group of people creates, define it _anything you can put on a line **that begins at (0,0)**_. There's  good reasoning behind that, which we will see in the discussion about Linear Algebra. In the meantime, think of it this way: if our transformation is taking a line that has a value 0 at the point 0 and returning a line with the same property, (thus in the form $$$f\left(x\right)=ax$$$), It's _linear_. If it returns a value different from 0 at $$$x=0$$$ (in the form $$$f\left(x\right)=ax + b$$$), it's _affine_. 
 
 ##### Exercise: Save NASA's Mars Lander 
 In 1999, an masterpiece of engineering was making its final approach to Mars. All instruments were showing that the approach distance matched the speed, and that it's just about to get there and do some science. But instead, it did something rather rude: it crashed into the red planet. An investigation made later by NASA revealed that while designing the lander, one team worked with their test equipment set to _centimiters_, while the other had theirs set to _inches_. **By the way, this is all true.**
 
-Help the NASA teams work together: write a function that convers centimeters to inches. For reference, $1_{\text{in}} = 2.54_{\text{cm}}$. Test your result against three different real-world values.
+Help the NASA teams work together: write a function that convers centimeters to inches. For reference, $$$1\_{\text{in}} = 2.54\_{\text{cm}}$$$. Test your result against three different real-world values.
 
 **Think:**
 
@@ -43,7 +43,7 @@ In the last discussion, we saw how by using `lerp`, any value between two points
 However, when dealing with real world problems, programmers run into domains of values that they wish to map to other ranges of values, neither of which are confined to 0 and 1. For example, someone trying to convert the temperature in Celsius to Farenheit won't be able to use  Surely, the way of doing that must involve a `lerp`, but it needs a little help:
 
 If we want to use the `lerp` function, we're aiming to get it to the range between 0 and 1. We can do that by knocking `inputMin` off the input `value` so that it starts at 0, then dividing by the size of the domain: $$x=\frac{\text{value}-\text{inputMin}}{\text{inputMax}-\text{inputMin}}$$
-Now that we've tamed the input domain to be between 0 and 1, we do the exact opposite to the output: `ofMap(value, inputMin, inputMax, outputMin, outputMax)` $=\frac{\text{value}-\text{inputMin}}{\text{inputMax}-\text{inputMin}}\cdot\left(\text{outputMax}-\text{outputMin}\right)+\text{outputMin}$
+Now that we've tamed the input domain to be between 0 and 1, we do the exact opposite to the output: `ofMap(value, inputMin, inputMax, outputMin, outputMax)` $$$=\frac{\text{value}-\text{inputMin}}{\text{inputMax}-\text{inputMin}}\cdot\left(\text{outputMax}-\text{outputMin}\right)+\text{outputMin}$$$
 
 Now you'll notice that we're missing the `clamp` parameter. This may not matter to us if we're using the `ofMap` function in the range that we defined, but suppose we select a `value` smaller than `inputMin`: would it be ok if the result was also smaller than `outputMin`? If our program is telling an elevator which floor to go to, that might be a problem. That's why we add `true` to the tail of this function whenever we need to be careful.
 
@@ -68,10 +68,10 @@ This function used a defined range and a parameter to create `a1`, then used ano
 We've done something remarkable here. We used the way one parameter changes on two fixed lines to control a third, totally mobile line, and draw one point on it at each point in time between 0 and 1. In Mathspeak, it looks like this:
  
 $$
-\text{lerp}\left(t,\text{lerp}\left(t,5,8\right),\text{lerp}\left(t,2,9\right)\right)\\
-= \text{lerp}\left(t,8\cdot t+5\cdot\left(1-t\right),9\cdot t+2\cdot\left(1-t\right)\right)\\
-= \left(9\cdot t+2\cdot\left(1-t\right)\right)\cdot t+\left(8\cdot t+5\cdot\left(1-t\right)\right)\cdot\left(1-t\right)\\
-= \left(9t^{2}+2t-2t^{2}\right)+\left(8t+5-5t\right)-\left(8t^{2}+5t-5t^{2}\right)\\
+\text{lerp}\left(t,\text{lerp}\left(t,5,8\right),\text{lerp}\left(t,2,9\right)\right)\\\\
+= \text{lerp}\left(t,8\cdot t+5\cdot\left(1-t\right),9\cdot t+2\cdot\left(1-t\right)\right)\\\\
+= \left(9\cdot t+2\cdot\left(1-t\right)\right)\cdot t+\left(8\cdot t+5\cdot\left(1-t\right)\right)\cdot\left(1-t\right)\\\\
+= \left(9t^{2}+2t-2t^{2}\right)+\left(8t+5-5t\right)-\left(8t^{2}+5t-5t^{2}\right)\\\\
 = 4t^{2}+5
 $$
 
@@ -80,8 +80,28 @@ Something interesting happened here. Without noticing, we introduced a second or
 **Exercise:** Find three rulers and plot this line.
 
 #### Cubic splines
+The same manipulation can be applied for a third order:
+
+```
+
+float foo (float t){
+	float a1 = ofLerp(t, 5, 8);
+	float a2 = ofLerp(t, 2, 9);
+	float a3 = ofLerp(t, 3, -11);
+	float a4 = ofLerp(t, -2, 4);
+	float b1 = ofLerp(t, a1, a2);
+	float b2 = ofLerp(t, a3, a4);
+	float c = ofLerp(t, b1, b2);
+	return c;
+	}
+```
+For obvious reasons, we'll skip the entire process, and just tell reveal that the result will appear in the form of $$ax^{3} + bx^{2} + cx + d$$
+
+
 ### Tweening
-* Example: How to make a ball bounce, an eye blink, and a door to slam from the wind.
+** //TODO: Write this **
+#### Example:
+Make a ball bounce, an eye blink, and a door to slam from the wind.
 
 ## More dimensions: Some Linear Algebra
 
@@ -89,7 +109,55 @@ Those of you who haven't run into any post-high school math may find this new.
 
 ### The Vector
 #### Scalar operations
+##### A Note About Operator Overloading
+Just like we had to define the meaning of a product of a scalar quantity and a vector, $$a\left(\begin{array}{c}
+x\\\\
+y\\\\
+z
+\end{array}\right)=\left(\begin{array}{c}
+ax\\\\
+ay\\\\
+az
+\end{array}\right)$$ programming languages - working on abastract representations of mathematical objects, also need to have definitions of such an operation built in. C++ takes special care of these cases, using a feature called _Operator Overloading_: defining the `*` operation to accept a scalar quantity and a vector as left-had side and right-hand side arguments:
+
+```
+ofVec3f operator*( float f, const ofVec3f& vec ) {
+    return ofVec3f( f*vec.x, f*vec.y, f*vec.z );
+}
+```
+
+The same is defined, for example, between two instances of `ofVec3f`:
+
+```
+ofVec3f ofVec3f::operator+( const ofVec3f& pnt ) const {
+	return ofVec3f( x+pnt.x, y+pnt.y, z+pnt.z );
+}
+```
+
+naturally representing the idea of vector addition: 
+
+$$\left(\begin{array}{c}
+x\_{1}\\\\
+y\_{1}\\\\
+z\_{1}
+\end{array}\right)+\left(\begin{array}{c}
+x\_{2}\\\\
+y\_{2}\\\\
+z\_{2}
+\end{array}\right)=\left(\begin{array}{c}
+x\_{1}+x\_{2}\\\\
+y\_{1}+y\_{2}\\\\
+z\_{1}+z\_{2}
+\end{array}\right)$$ 
+
+The basic arithmetic operations, `+`, `-`, `*`, `/`,`+=`, `-=`, `*=`, `/=`, exist for both combinations of `ofVec2f`, `ofVec3f` and `ofVec4f`s and between any vector object and a scalar quantity.
+
+As with previous discussions, some details have been omitted from the source code. _Viewing the ofMath and ofVec3f sources is encouraged_.
+
 #### Vector Length
+```
+float ofVec3f::length() const
+```
 #### Distance between points
 * Example: `ofVec2f` as position
 * Example: `ofVec2f` as velocity
