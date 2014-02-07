@@ -46,6 +46,7 @@ However, when dealing with real world problems, programmers run into domains of 
 If we want to use the `lerp` function, we're aiming to get it to the range between 0 and 1. We can do that by knocking `inputMin` off the input `value` so that it starts at 0, then dividing by the size of the domain: $$x=\frac{\text{value}-\text{inputMin}}{\text{inputMax}-\text{inputMin}}$$
 Now that we've tamed the input domain to be between 0 and 1, we do the exact opposite to the output: `ofMap(value, inputMin, inputMax, outputMin, outputMax)` $$$=\frac{\text{value}-\text{inputMin}}{\text{inputMax}-\text{inputMin}}\cdot\left(\text{outputMax}-\text{outputMin}\right)+\text{outputMin}$$$
 
+#### Range Utilities
 ##### Clamping
 You'll notice that the previous explanation is missing the `clamp` parameter. This may not matter to us if we're using the `ofMap` function in the range that we defined, but suppose we select a `value` smaller than `inputMin`: would it be ok if the result was also smaller than `outputMin`? If our program is telling an elevator which floor to go to, that might be a problem. That's why we add `true` to the tail of this function whenever we need to be careful.
 
@@ -53,13 +54,26 @@ Just in case, oF offers another specific clamp function:
 ```
 float ofClamp(float value, float min, float max)
 ```
+##### Range Checking
+Two important functions we unjustly left out of this episode;
 
+```
+bool ofInRange(float t, float min, float max);
+```
+Tells you whether a number `t` is between `min` and `max`. 
+
+```
+float ofSign(float n);
+```
+Returns the sign of a number, as `-1.0` or `1.0`. Simple, eh?
 
 ### Beyond Linear: Changing Change
-** // TODO: Write intro **
+
 So far we've discussed change that is bound to a line. But in Real Life™ there's more than just straight lines. 
 
-#### Quadratic and Cubic Changes
+In this discussion, we're about to see how we can describe higher orders of complexity, via a cunning use of `lerp`s. Keep in mind that some of the code here is conceptual, not necessarily efficient.
+
+#### Quadratic and Cubic Change Rates
 Consider this function:
 
 ```
@@ -105,27 +119,45 @@ float foo (float t){
 We'll skip the entire solution, and just reveal that the result will appear in the form of $$ax^{3} + bx^{2} + cx + d$$
 See the pattern here? The highest exponent is the number of successive `ofLerp`s we applied, i.e. the number of successive times we changed using our parameter $$$t$$$.
 
+**//TODO: Add thanks to Steven Wittens for the idea of lerping**
+
 ##### …And So On
 The general notion in Uni level Calculus is that _you can do anything if you have enough of something_. So fittingly, there's a curious little idea in Mathematics which allows us, with enough of these nested control points, to approximate any curve segment we can imagine. In the original formulation of that idea (called a _Taylor Series_), we only reach a good approximation if the amount of degrees (successive `lerp`s we applied) is close to infinity.
 
 In Computer Graphics, as you're about to see - 3 is close enough.
 
 ### Splines
-
-
+Look, we've done here something quite remarkable.
+** //TODO: Write this **
 ### Tweening
 ** //TODO: Write this **
 #### Example:
 Make a ball bounce, an eye blink, and a door to slam from the wind.
 
 ## More Dimensions: Some Linear Algebra
+Until now, we explored several ideas on how to change what's going on the number line. That's cool, but we want to know how to do graphics, and graphics has more than one dimension. Our ancient Mathematician ancestors (Just kidding, most important Mathematicians die before 30. Not kidding) also faced this problem when trying to address the space of shapes and structures, and invented some complex machinery to do so. The fancy name for this machinery is _Linear Algebra_, which is exactly what it sounds like: using algebraic operations (add and multiply, mostly), in order to control many lines. 
 
-Those of you who haven't run into any post-high school math may find this new.
+In this part you're going to learn many concepts in how to store and manipulate multidimensional information. You'll later be able to use that information to control realtime 3d graphics using OpenGL, and impress the opposite (or same) sex with your mastery of geometry.
 
 ### The Vector
-#### Scalar operations
-##### A Note About Operator Overloading
-Just like we had to define the meaning of a product of a scalar quantity and a vector, $$a\left(\begin{array}{c}
+You may have heard of vectors before when discussing directions or position, and after understanding that they can represent both, may have gotten a little confused. Here's The Truth About Vectors™: 
+	
+	A vector is just an array that stores multiple pieces of the same type information. 
+
+Seriously, that's all it is. Quit hiding.
+
+This simplicity is also their great power. Just like The number 5 can be used to describe five Kilometres, the result of subtracting 12 and 7, or the number of cookies in a jar - the same works with vectors.
+
+It's up to the user of that mathematical object to choose what it is used as. The vector $$$v=\left(5,-3,1\right)$$$ can represent a point in space, a direction of a moving object, a force applied to your game character, or just three numbers. And just like with numbers, algebraic operations such as addition and multiplication may be applied to vectors. 
+
+Oh, but there's a catch. You see, everyone was taught what $$$a + b$$$ means. In order to go on with vectors, we need to define that.
+
+#### Vector Algebra
+Generally speaking, when dealing with Algebra of numerical structures that aren't numbers, we need to pay close attention to the _type_ of things we're cooking together. In the case of vectors, we'll make a distinction between _per-component_ and _per-vector_ operations.
+
+##### Scalar Multiplication
+The product between a vector and a scalar is defined as: 
+$$a\left(\begin{array}{c}
 x\\\\
 y\\\\
 z
@@ -133,7 +165,28 @@ z
 ax\\\\
 ay\\\\
 az
-\end{array}\right)$$ programming languages - working on abstract representations of mathematical objects, also need to have definitions of such an operation built in. C++ takes special care of these cases, using a feature called _Operator Overloading_: defining the `*` operation to accept a scalar quantity and a vector as left-had side and right-hand side arguments:
+\end{array}\right)$$
+That falls into the category of _per-vector_ operations, because the entire vector undergoes the same operation. Note that this operation is just a scaling.  
+
+```
+ofVec3f a(1,2,3);
+cout << ofToString( a * 2 ) << endl; 
+//prints (2,4,6)
+```
+
+##### Vector Operations
+Adding vectors is pretty straightforward: it's a _per-component_ operation:
+
+```
+ofVec3f a(10,20,30);
+ofVec3f b(4,5,6);
+cout << ofToString( a + b ) << endl; 
+//prints (14,25,36)
+```
+
+
+##### Note: C++ Operator Overloading
+Just like we had to define the meaning of a product of a scalar quantity and a vector, programming languages - working on abstract representations of mathematical objects, also need to have definitions of such an operation built in. C++ takes special care of these cases, using a feature called _Operator Overloading_: defining the `*` operation to accept a scalar quantity and a vector as left-had side and right-hand side arguments:
 
 ```
 ofVec3f operator*( float f, const ofVec3f& vec ) {
@@ -165,22 +218,13 @@ y\_{1}+y\_{2}\\\\
 z\_{1}+z\_{2}
 \end{array}\right)$$ 
 
-Therefore: 
-
-```
-ofVec3f a(10,20,30);
-ofVec3f b(4,5,6);
-cout << ofToString( a + b ) << endl; 
-//prints (14,25,36)
-```
-
 The basic arithmetic operations, `+`, `-`, `*`, `/`,`+=`, `-=`, `*=`, `/=`, exist for both combinations of `ofVec2f`, `ofVec3f` and `ofVec4f`s and between any vector object and a scalar quantity.
 
 As with previous discussions, some details have been omitted from the code presented here. If you want to know what's really going on with the operators, have a look at the `ofMath` and `ofVec` source files.
 
 **Warning: Overloading operators will make you go blind.** Programmers use operators without checking what they do, so bugs resulting from bad overloads take a long time to catch. If the expression `a + b` returns a reference instead of a copy, a `null` instead of a value, or doing a complex operation which may crash, you've entered a world of pain. Unless the operator can do one arithmetic thing and that alone, don't change operators. Go to Appendix III and sign a form saying you understand that.
 
-#### Distance Between Points
+##### Distance Between Points
 ```
 float ofVec3f::distance( const ofVec3f& pnt) const
 float ofVec3f::squareDistance( const ofVec3f& pnt ) const
@@ -208,19 +252,13 @@ y\_{b}\\\\
 z\_{b}
 \end{array}\right)\right)=\sqrt{\left(x\_{b}-x\_{a}\right)^{2}+\left(y\_{b}-y\_{a}\right)^{2}+\left(z\_{b}-z\_{a}\right)^{2}}$$
 
-One thing that's confusing about vectors is their ability to represent many different things. Specifically, they may represent a direction in space, but also a point. The confusing part? You can't tell which is which. Here's the ground truth: 
-	
-	A vector is just an array of numbers.
-
-That's it. It's up to the user of that mathematical object to choose what it is used as. But is that really surprising? The number 5 can be used to describe five Kilometres, the result of subtracting 12 and 7, or the number of cookies in a jar - the same works with vectors. The vector $$$v=\left(5,-3,1\right)$$$ can represent a point in space, a direction of a moving object, a force applied to your game character, or just three numbers.
-
 
 Vector Length
 
 
-##### Example: `ofVec2f` as position
-##### Example: `ofVec2f` as velocity
-#### The Dot Product
+###### Example: `ofVec2f` as position
+###### Example: `ofVec2f` as velocity
+##### The Dot Product
 ```
 float ofVec3f::dot( const ofVec3f& vec )
 ```
