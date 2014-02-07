@@ -39,19 +39,27 @@ Help the NASA teams work together: write a function that converts centimetres to
 #### Affine Mapping: The `ofMap`
 `float ofMap(float value, float inputMin, float inputMax, float outputMin, float outputMax, bool clamp = false)`
 
+
 In the last discussion, we saw how by using `lerp`, any value between two points can be _linearly_ addressed as a value between 0 and 1. That's very convenient, and therefore the reason we build most of our arbitrary numerical ranges (`ofFloatColor`, for example) in the domain of 0 and 1. 
 However, when dealing with real world problems, programmers run into domains of values that they wish to map to other ranges of values, neither of which are confined to 0 and 1. For example, someone trying to convert the temperature in Celsius to Fahrenheit won't be able to use  Surely, the way of doing that must involve a `lerp`, but it needs a little help:
 
 If we want to use the `lerp` function, we're aiming to get it to the range between 0 and 1. We can do that by knocking `inputMin` off the input `value` so that it starts at 0, then dividing by the size of the domain: $$x=\frac{\text{value}-\text{inputMin}}{\text{inputMax}-\text{inputMin}}$$
 Now that we've tamed the input domain to be between 0 and 1, we do the exact opposite to the output: `ofMap(value, inputMin, inputMax, outputMin, outputMax)` $$$=\frac{\text{value}-\text{inputMin}}{\text{inputMax}-\text{inputMin}}\cdot\left(\text{outputMax}-\text{outputMin}\right)+\text{outputMin}$$$
 
-Now you'll notice that we're missing the `clamp` parameter. This may not matter to us if we're using the `ofMap` function in the range that we defined, but suppose we select a `value` smaller than `inputMin`: would it be ok if the result was also smaller than `outputMin`? If our program is telling an elevator which floor to go to, that might be a problem. That's why we add `true` to the tail of this function whenever we need to be careful.
+##### Clamping
+You'll notice that the previous explanation is missing the `clamp` parameter. This may not matter to us if we're using the `ofMap` function in the range that we defined, but suppose we select a `value` smaller than `inputMin`: would it be ok if the result was also smaller than `outputMin`? If our program is telling an elevator which floor to go to, that might be a problem. That's why we add `true` to the tail of this function whenever we need to be careful.
+
+Just in case, oF offers another specific clamp function: 
+```
+float ofClamp(float value, float min, float max)
+```
 
 
 ### Beyond Linear: Changing Change
 ** // TODO: Write intro **
-The notion of _linear_ is where most math begins. 
-#### Quadratic Splines
+So far we've discussed change that is bound to a line. But in Real Life™ there's more than just straight lines. 
+
+#### Quadratic and Cubic Changes
 Consider this function:
 
 ```
@@ -63,7 +71,8 @@ float foo (float t){
 	}
 ```
 This function used a defined range and a parameter to create `a1`, then used another defined range with the _same_ parameter to create `a2`. Their result looks surprising:
-** // TODO: Draw cubic spline **
+
+**//TODO: Draw quadratic eqn**
 
 We've done something remarkable here. We used the way one parameter changes on two fixed lines to control a third, totally mobile line, and draw one point on it at each point in time between 0 and 1. In Mathspeak, it looks like this:
  
@@ -77,13 +86,11 @@ $$
 
 Something interesting happened here. Without noticing, we introduced a second order of complexity, a _quadratic_ one. If you don't find this relationship remarkable, please give this book to someone who does.
 
-**Exercise:** Find three rulers and plot this line.
+**//TODO: Write code for this example**
 
-#### Cubic splines
 The same manipulation can be applied for a third order:
 
 ```
-
 float foo (float t){
 	float a1 = ofLerp(t, 5, 8);
 	float a2 = ofLerp(t, 2, 9);
@@ -95,7 +102,15 @@ float foo (float t){
 	return c;
 	}
 ```
-For obvious reasons, we'll skip the entire process, and just tell reveal that the result will appear in the form of $$ax^{3} + bx^{2} + cx + d$$
+We'll skip the entire solution, and just reveal that the result will appear in the form of $$ax^{3} + bx^{2} + cx + d$$
+See the pattern here? The highest exponent is the number of successive `ofLerp`s we applied, i.e. the number of successive times we changed using our parameter $$$t$$$.
+
+##### …And So On
+The general notion in Uni level Calculus is that _you can do anything if you have enough of something_. So fittingly, there's a curious little idea in Mathematics which allows us, with enough of these nested control points, to approximate any curve segment we can imagine. In the original formulation of that idea (called a _Taylor Series_), we only reach a good approximation if the amount of degrees (successive `lerp`s we applied) is close to infinity.
+
+In Computer Graphics, as you're about to see - 3 is close enough.
+
+### Splines
 
 
 ### Tweening
@@ -150,6 +165,15 @@ y\_{1}+y\_{2}\\\\
 z\_{1}+z\_{2}
 \end{array}\right)$$ 
 
+Therefore: 
+
+```
+ofVec3f a(10,20,30);
+ofVec3f b(4,5,6);
+cout << ofToString( a + b ) << endl; 
+//prints (14,25,36)
+```
+
 The basic arithmetic operations, `+`, `-`, `*`, `/`,`+=`, `-=`, `*=`, `/=`, exist for both combinations of `ofVec2f`, `ofVec3f` and `ofVec4f`s and between any vector object and a scalar quantity.
 
 As with previous discussions, some details have been omitted from the code presented here. If you want to know what's really going on with the operators, have a look at the `ofMath` and `ofVec` source files.
@@ -161,15 +185,28 @@ As with previous discussions, some details have been omitted from the code prese
 float ofVec3f::distance( const ofVec3f& pnt) const
 float ofVec3f::squareDistance( const ofVec3f& pnt ) const
 float ofVec3f::length() const
+float ofDist(float x1, float y1, float x2, float y2);
+float ofDistSquared(float x1, float y1, float x2, float y2);
 ```
-Let's start by a definition. You may remember the Pythagorean theorem, saying that the distance between two points is:
+Let's start by a definition. You may remember the _Pythagorean Theorem_, stating that the length of a line between point $$$a$$$ and $$$b$$$ is:
 $$\text{Distance}\left(\left(\begin{array}{c}
-x\_{1}\\\\
-y\_{1}
+x\_{a}\\\\
+y\_{a}
 \end{array}\right),\left(\begin{array}{c}
-x\_{2}\\\\
-y\_{2}
-\end{array}\right)\right)=\sqrt{\left(x\_{2}-x\_{1}\right)^{2}+\left(y\_{2}-y\_{1}\right)^{2}}$$
+x\_{b}\\\\
+y\_{b}
+\end{array}\right)\right)=\sqrt{\left(x\_{b}-x\_{a}\right)^{2}+\left(y\_{b}-y\_{a}\right)^{2}}$$
+
+Here's the good news: It's the exact same definition in three dimensions! just add the $$$z$$$ term.
+$$\text{Distance}\left(\left(\begin{array}{c}
+x\_{a}\\\\
+y\_{a}\\\\
+z\_{a}
+\end{array}\right),\left(\begin{array}{c}
+x\_{b}\\\\
+y\_{b}\\\\
+z\_{b}
+\end{array}\right)\right)=\sqrt{\left(x\_{b}-x\_{a}\right)^{2}+\left(y\_{b}-y\_{a}\right)^{2}+\left(z\_{b}-z\_{a}\right)^{2}}$$
 
 One thing that's confusing about vectors is their ability to represent many different things. Specifically, they may represent a direction in space, but also a point. The confusing part? You can't tell which is which. Here's the ground truth: 
 	
