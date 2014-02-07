@@ -14,33 +14,33 @@ When bringing math to innocent readers, most programming books will try to expla
 ** // TODO: Write intro **
 ### Interpolation
 #### Linear Interpolation: The `ofLerp`
-`float ofLerp(float start, float stop, float amt)`
+```float ofLerp(float start, float stop, float amt)```
 
 As xkcd once put it, if you've seen a number larger than 7, you're not doing real math.
 
 Those of you that have already done a little time-based or space-based work have probably noticed that you can often describe elements of your work as sitting on a line between two known points. A frame on a timeline is at a known location between 00:00:00 and the runtime of the film, a scrollbar is pointing to a known location between the beginning and the end of a page. That's exactly what `lerp` does.
 
-With the `lerp` function, you can take any two quantites, in our case `start` and `stop`, and find any point between them, using amounts (`amt`) between 0 and 1. To be verbose: 
+With the `lerp` function, you can take any two quantities, in our case `start` and `stop`, and find any point between them, using amounts (`amt`) between 0 and 1. To be verbose: 
  $$\text{lerp}\left(a,b,t\right) = t\cdot b+\left(1-t\right)\cdot a$$ 
 
 ##### Note: What does _linear_ really mean?
 Engineers, Programmers and English Speakers like to think of _linear_ as _anything you can put on a line_. Mathematicians, having to deal with all the conceptual mess the former group of people creates, define it _anything you can put on a line **that begins at (0,0)**_. There's  good reasoning behind that, which we will see in the discussion about Linear Algebra. In the meantime, think of it this way: if our transformation is taking a line that has a value 0 at the point 0 and returning a line with the same property, (thus in the form $$$f\left(x\right)=ax$$$), It's _linear_. If it returns a value different from 0 at $$$x=0$$$ (in the form $$$f\left(x\right)=ax + b$$$), it's _affine_. 
 
 ##### Exercise: Save NASA's Mars Lander 
-In 1999, an masterpiece of engineering was making its final approach to Mars. All instruments were showing that the approach distance matched the speed, and that it's just about to get there and do some science. But instead, it did something rather rude: it crashed into the red planet. An investigation made later by NASA revealed that while designing the lander, one team worked with their test equipment set to _centimiters_, while the other had theirs set to _inches_. **By the way, this is all true.**
+In 1999, an masterpiece of engineering was making its final approach to Mars. All instruments were showing that the approach distance matched the speed, and that it's just about to get there and do some science. But instead, it did something rather rude: it crashed into the red planet. An investigation made later by NASA revealed that while designing the lander, one team worked with their test equipment set to _centimetres_, while the other had theirs set to _inches_. **By the way, this is all true.**
 
-Help the NASA teams work together: write a function that convers centimeters to inches. For reference, $$$1\_{\text{in}} = 2.54\_{\text{cm}}$$$. Test your result against three different real-world values.
+Help the NASA teams work together: write a function that converts centimetres to inches. For reference, $$$1\_{\text{in}} = 2.54\_{\text{cm}}$$$. Test your result against three different real-world values.
 
 **Think:**
 
 1. Why can we use `lerp` outside the range of 0 and 1?
-2. What would it take to write a function that converts inches into centimeters?
+2. What would it take to write a function that converts inches into centimetres?
 
 #### Affine Mapping: The `ofMap`
 `float ofMap(float value, float inputMin, float inputMax, float outputMin, float outputMax, bool clamp = false)`
 
-In the last discussion, we saw how by using `lerp`, any value between two points can be _linearly_ adressed as a value between 0 and 1. That's very convient, and therefore the reason we build most of our arbitrary numerical ranges (`ofFloatColor`, for example) in the domain of 0 and 1. 
-However, when dealing with real world problems, programmers run into domains of values that they wish to map to other ranges of values, neither of which are confined to 0 and 1. For example, someone trying to convert the temperature in Celsius to Farenheit won't be able to use  Surely, the way of doing that must involve a `lerp`, but it needs a little help:
+In the last discussion, we saw how by using `lerp`, any value between two points can be _linearly_ addressed as a value between 0 and 1. That's very convenient, and therefore the reason we build most of our arbitrary numerical ranges (`ofFloatColor`, for example) in the domain of 0 and 1. 
+However, when dealing with real world problems, programmers run into domains of values that they wish to map to other ranges of values, neither of which are confined to 0 and 1. For example, someone trying to convert the temperature in Celsius to Fahrenheit won't be able to use  Surely, the way of doing that must involve a `lerp`, but it needs a little help:
 
 If we want to use the `lerp` function, we're aiming to get it to the range between 0 and 1. We can do that by knocking `inputMin` off the input `value` so that it starts at 0, then dividing by the size of the domain: $$x=\frac{\text{value}-\text{inputMin}}{\text{inputMax}-\text{inputMin}}$$
 Now that we've tamed the input domain to be between 0 and 1, we do the exact opposite to the output: `ofMap(value, inputMin, inputMax, outputMin, outputMax)` $$$=\frac{\text{value}-\text{inputMin}}{\text{inputMax}-\text{inputMin}}\cdot\left(\text{outputMax}-\text{outputMin}\right)+\text{outputMin}$$$
@@ -63,7 +63,7 @@ float foo (float t){
 	}
 ```
 This function used a defined range and a parameter to create `a1`, then used another defined range with the _same_ parameter to create `a2`. Their result looks surprising:
-** // TODO: Draw cublic spline **
+** // TODO: Draw cubic spline **
 
 We've done something remarkable here. We used the way one parameter changes on two fixed lines to control a third, totally mobile line, and draw one point on it at each point in time between 0 and 1. In Mathspeak, it looks like this:
  
@@ -103,7 +103,7 @@ For obvious reasons, we'll skip the entire process, and just tell reveal that th
 #### Example:
 Make a ball bounce, an eye blink, and a door to slam from the wind.
 
-## More dimensions: Some Linear Algebra
+## More Dimensions: Some Linear Algebra
 
 Those of you who haven't run into any post-high school math may find this new.
 
@@ -118,7 +118,7 @@ z
 ax\\\\
 ay\\\\
 az
-\end{array}\right)$$ programming languages - working on abastract representations of mathematical objects, also need to have definitions of such an operation built in. C++ takes special care of these cases, using a feature called _Operator Overloading_: defining the `*` operation to accept a scalar quantity and a vector as left-had side and right-hand side arguments:
+\end{array}\right)$$ programming languages - working on abstract representations of mathematical objects, also need to have definitions of such an operation built in. C++ takes special care of these cases, using a feature called _Operator Overloading_: defining the `*` operation to accept a scalar quantity and a vector as left-had side and right-hand side arguments:
 
 ```
 ofVec3f operator*( float f, const ofVec3f& vec ) {
@@ -152,17 +152,42 @@ z\_{1}+z\_{2}
 
 The basic arithmetic operations, `+`, `-`, `*`, `/`,`+=`, `-=`, `*=`, `/=`, exist for both combinations of `ofVec2f`, `ofVec3f` and `ofVec4f`s and between any vector object and a scalar quantity.
 
-As with previous discussions, some details have been omitted from the source code. _Viewing the ofMath and ofVec3f sources is encouraged_.
+As with previous discussions, some details have been omitted from the code presented here. If you want to know what's really going on with the operators, have a look at the `ofMath` and `ofVec` source files.
 
-#### Vector Length
+**Warning: Overloading operators will make you go blind.** Programmers use operators without checking what they do, so bugs resulting from bad overloads take a long time to catch. If the expression `a + b` returns a reference instead of a copy, a `null` instead of a value, or doing a complex operation which may crash, you've entered a world of pain. Unless the operator can do one arithmetic thing and that alone, don't change operators. Go to Appendix III and sign a form saying you understand that.
+
+#### Distance Between Points
 ```
+float ofVec3f::distance( const ofVec3f& pnt) const
+float ofVec3f::squareDistance( const ofVec3f& pnt ) const
 float ofVec3f::length() const
 ```
-#### Distance between points
-* Example: `ofVec2f` as position
-* Example: `ofVec2f` as velocity
+Let's start by a definition. You may remember the Pythagorean theorem, saying that the distance between two points is:
+$$\text{Distance}\left(\left(\begin{array}{c}
+x\_{1}\\\\
+y\_{1}
+\end{array}\right),\left(\begin{array}{c}
+x\_{2}\\\\
+y\_{2}
+\end{array}\right)\right)=\sqrt{\left(x\_{2}-x\_{1}\right)^{2}+\left(y\_{2}-y\_{1}\right)^{2}}$$
+
+One thing that's confusing about vectors is their ability to represent many different things. Specifically, they may represent a direction in space, but also a point. The confusing part? You can't tell which is which. Here's the ground truth: 
+	
+	A vector is just an array of numbers.
+
+That's it. It's up to the user of that mathematical object to choose what it is used as. But is that really surprising? The number 5 can be used to describe five Kilometres, the result of subtracting 12 and 7, or the number of cookies in a jar - the same works with vectors. The vector $$$v=\left(5,-3,1\right)$$$ can represent a point in space, a direction of a moving object, a force applied to your game character, or just three numbers.
+
+
+Vector Length
+
+
+##### Example: `ofVec2f` as position
+##### Example: `ofVec2f` as velocity
 #### The Dot Product
-* Example: Dot product for playing billiards in 2D
+```
+float ofVec3f::dot( const ofVec3f& vec )
+```
+##### Example: Dot product for playing billiards in 2D
 
 ### The Matrix (TM)
 #### Matrix Multiplication as a dot product
