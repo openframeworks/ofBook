@@ -127,7 +127,7 @@ The general notion in Uni level Calculus is that _you can do anything if you hav
 In Computer Graphics, as you're about to see - 3 is close enough.
 
 ### Splines
-Look, we've done here something quite remarkable.
+What we've done in the previous chapter is really quite remarkable. We have built a series of control points for 
 ** //TODO: Write this **
 ### Tweening
 ** //TODO: Write this **
@@ -174,35 +174,8 @@ cout << ofToString( a * 2 ) << endl;
 //prints (2,4,6)
 ```
 
-##### Vector Operations
+##### Vector Addition
 Adding vectors is pretty straightforward: it's a _per-component_ operation:
-
-```
-ofVec3f a(10,20,30);
-ofVec3f b(4,5,6);
-cout << ofToString( a + b ) << endl; 
-//prints (14,25,36)
-```
-
-
-##### Note: C++ Operator Overloading
-Just like we had to define the meaning of a product of a scalar quantity and a vector, programming languages - working on abstract representations of mathematical objects, also need to have definitions of such an operation built in. C++ takes special care of these cases, using a feature called _Operator Overloading_: defining the `*` operation to accept a scalar quantity and a vector as left-had side and right-hand side arguments:
-
-```
-ofVec3f operator*( float f, const ofVec3f& vec ) {
-    return ofVec3f( f*vec.x, f*vec.y, f*vec.z );
-}
-```
-
-The same is defined, for example, between two instances of `ofVec3f`:
-
-```
-ofVec3f ofVec3f::operator+( const ofVec3f& pnt ) const {
-	return ofVec3f( x+pnt.x, y+pnt.y, z+pnt.z );
-}
-```
-
-naturally representing the idea of vector addition: 
 
 $$\left(\begin{array}{c}
 x\_{1}\\\\
@@ -218,9 +191,74 @@ y\_{1}+y\_{2}\\\\
 z\_{1}+z\_{2}
 \end{array}\right)$$ 
 
+
+```
+ofVec3f a(10,20,30);
+ofVec3f b(4,5,6);
+cout << ofToString( a + b ) << endl; 
+//prints (14,25,36)
+```
+###### Example: `ofVec2f` as position
+Vector addition serves many simple roles. In this example, we're trying to track our friend Gary as he makes his way home from a pub. Trouble is, Gary's a little drunk. He knows he lives south of the pub, so he ventures south; But since he can't walk straight, he might end up somewhere else.
+
+```
+/* in Gary.h: */
+class Gary {
+public:
+	void setPosition(ofVec2f initialPosition){ position = initialPosition; }
+	void step(ofVec2f direction){ position += direction; }
+	ofVec2f getPosition(){ return position; }
+	void draw(){
+		//TODO: Fill this
+	}
+private:
+	ofVec2f position;
+}
+
+/* in testApp.h: */
+Gary gary;
+
+/* in testApp.cpp: */
+void testApp::setup(){
+	ofVec2f garysStartingPoint( ofGetWidth() / 2., ofGetHeight() / 3. );
+	gary.setPosition( garysStartingPoint );
+}
+
+void testApp::update(){
+	if (gary.position.y < ofGetHeight * 2. / 3.){
+		ofVec2f nextStep(ofRandom(-1.,1.),1.); //Take one step south, Gary
+		gary.step();
+	}
+}
+
+void testApp::draw(){ gary.draw(); }
+
+```
+
+###### Example: `ofVec2f` as velocity
+
+##### Note: C++ Operator Overloading
+Just like we had to define the meaning of a product of a scalar quantity and a vector, programming languages - working with abstract representations of mathematical objects, also need to have definitions of such an operation built in. C++ takes special care of these cases, using a feature called _Operator Overloading_: defining the `*` operation to accept a scalar quantity and a vector as left-had side and right-hand side arguments:
+
+```
+ofVec3f operator*( float f, const ofVec3f& vec ) {
+    return ofVec3f( f*vec.x, f*vec.y, f*vec.z );
+}
+```
+
+The same is defined, for example, between two instances of `ofVec3f`:
+
+```
+ofVec3f ofVec3f::operator+( const ofVec3f& pnt ) const {
+	return ofVec3f( x+pnt.x, y+pnt.y, z+pnt.z );
+}
+```
+
+naturally representing the idea of vector addition.
+
 The basic arithmetic operations, `+`, `-`, `*`, `/`,`+=`, `-=`, `*=`, `/=`, exist for both combinations of `ofVec2f`, `ofVec3f` and `ofVec4f`s and between any vector object and a scalar quantity.
 
-As with previous discussions, some details have been omitted from the code presented here. If you want to know what's really going on with the operators, have a look at the `ofMath` and `ofVec` source files.
+Some excellent examples of operator overloading done right exist in the source files for the `ofVec` types. It's encouraged to check them out.
 
 **Warning: Overloading operators will make you go blind.** Programmers use operators without checking what they do, so bugs resulting from bad overloads take a long time to catch. If the expression `a + b` returns a reference instead of a copy, a `null` instead of a value, or doing a complex operation which may crash, you've entered a world of pain. Unless the operator can do one arithmetic thing and that alone, don't change operators. Go to Appendix III and sign a form saying you understand that.
 
@@ -253,36 +291,73 @@ z\_{b}
 \end{array}\right)\right)=\sqrt{\left(x\_{b}-x\_{a}\right)^{2}+\left(y\_{b}-y\_{a}\right)^{2}+\left(z\_{b}-z\_{a}\right)^{2}}$$
 
 
-Vector Length
+Vector Length, then, can be naturally defined as the distance between the vector and the point $$$\left(0,0,0\right)$$$:
+$$\text{Length}\left(\begin{array}{c}
+x\\\\
+y\\\\
+z
+\end{array}\right)=\sqrt{x^{2} + y^{2} + z^{2}}$$
 
+And that's exactly what using `.length()` as a property of any `ofVec` will give you.
 
-###### Example: `ofVec2f` as position
-###### Example: `ofVec2f` as velocity
+##### Vector Products: There's More Than One
+So you're multiplying two numbers. Simple, right? Five million and seven times three equals something you know. Even if you need a calculator for the result, you still know _it's a number_ that's not the case with vectors. If we just want to resize vectors (the way we do with numbers), we multiply a vector by a scalar and it grows. But what does it mean, geometrically, to multiply by a vector?
+
+If we were to follow the _per-component_ convention that we created, we would get an operation like this:
+```
+cout << ofToString(ofVec3f(1,2,3) * ofVec3f(1,2,3)) << endl;
+//prints (1,4,9)
+```
+It's also known as the _Hadamard product_. It's intuitive, but not particularly useful. One case it is useful for is if we want to scale something individually in every dimension.
+
+In the next section we describe something more helpful.
+
 ##### The Dot Product
 ```
 float ofVec3f::dot( const ofVec3f& vec )
 ```
+The dot product of two vectors has a definition that's not too clear at first. On the one hand, the operation can be defined as $$$v\_{a}\bullet v\_{b}=x_{a}\cdot x\_{b}+y\_{a}\cdot y\_{b}+z\_{a}\cdot z\_{b}$$$, which is really easy to implement, on the other hand, it can also bet defined as $$$v\_{a}\bullet v\_{b}=\left\Vert v\_{a}\right\Vert \cdot\left\Vert v\_{b}\right\Vert \cdot\cos\theta$$$, where $$$\theta$$$ is the angle between the two vectors.
+
+For reasons you'll learn soon, it's a rather surprising coincidence.
+
+**//TODO: Finish this**
+
+
 ##### Example: Dot product for playing billiards in 2D
 
-### The Matrix (TM)
+### The Matrix™ 
+In the computer world, a program needs the two things to function: Algorithms and Data Structures (it also needs I/O, but we're talking Turings, not Perlins). In the 3D Maths world it's exactly the same: we call our data structures 'vectors' and our algorithms are operations. 
+
+At the core of the heavy machinery built to control 3d space, a matrix is just a data structure, like a vector. However, the 'algorithms' applied to this data structure (operations, in Mathland) make it an extremely powerful one. All of the _affine_ operations we care about in 3D can be described in the form of a matrix: translation, rotation, scaling, inversion, squeezing, shearing, projection and more and more.
+
+As a convention, we'll be marking vectors with lowercase letters and matrices with uppercase letters.
+
+ 
 #### Matrix Multiplication as a dot product
-#### Some operations with Matrices
+The easiest way to look at a matrix is to look at it as a bunch of vectors. Depending on what we care about, we can either look at the columns or rows as vectors. 
+
+**//TODO: 2x2 example**
+
 ##### Identity
 ##### Scale
 ##### Rotation matrices
+
 1. in 2D
 1. in 3D
 	* Example: Vibrating a brick-phone in 3D.
+	
 #### The inverse matrix
 ### "The Full Stack"
 #### Homogenous coordinates: Hacking 3d in 4d
 #### Translation matrices
 #### SRT (Scale-Rotate-Translate) operations
 * Example: a pack of sharks swimming
+
 ### Really using normals
 #### The cross product
 #### Normals for lighting
 * Example: Dot product for lighting
+
 #### Normals for directions
                 
                 
