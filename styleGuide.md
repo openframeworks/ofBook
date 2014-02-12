@@ -19,7 +19,7 @@ Header tags will make cross linking awesome and fun, and will make the text easi
 
 ## code ##
 
-please use the github markdown for code.  indent code if it's multiline
+please use standard markdown for code.  indent code if it's multiline
 
         float minArea = 1000000;
         float minIndex = -1;
