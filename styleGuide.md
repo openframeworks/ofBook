@@ -11,7 +11,7 @@ https://github.com/progit/progit/blob/master/en/02-git-basics/01-chapter2.markdo
 
 and this: 
 
-https://github.com/progit/progit/edit/master/en/02-git-basics/01-chapter2.markdown
+https://raw2.github.com/progit/progit/master/en/02-git-basics/01-chapter2.markdown
 
 for good refences.  You'll want to consider how often and what level of tag to give, the pro-git book does a good job of giving some guidance there.  We should use it as a reference.
 
