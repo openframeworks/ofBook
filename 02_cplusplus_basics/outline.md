@@ -5,23 +5,18 @@
 	+ programming is an iterative cycle
 	+ compiling helloworld on ideone.com
 	+ code is in a fixed-width font, this book uses fonts to denote code vs. prose
-	+ deconstructing the helloworld piece by piece
-		+ commenting out code
-		+ pre-processor directives
-		+ compiler errors
-		+ namespaces
-		+ functions
-			+ calling them
-			+ arguments
-			+ return
-			+ defining your own
++ deconstructing the helloworld piece by piece
+	+ commenting out code
+	+ pre-processor directives
+	+ compiler errors
+	+ namespaces
+	+ functions
+		+ calling them
+		+ arguments
+		+ return
+		+ defining your own
 	+ encapsulation of complexity
 		+ high level vs. low level
-		
-		
-===
-	
-# things i still need to talk about
 
 + social history
 	+ origin from Bell Labs, timing, intentions
@@ -30,7 +25,11 @@
 	+ other flavors of C, and why they exist.
 	+ C versus other languages
 		+ note to self: don't bash java
-		
+	
+===
+	
+# things i still need to talk about
+
 + Variables
 	+ some basic data types (int, char, float)
 	+ counting example
@@ -44,6 +43,7 @@
 	+ converting between these data types
 	
 + conditionals
++ returning early from a function
 + for loop
 + while loop
 	+ break
