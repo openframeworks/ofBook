@@ -339,16 +339,131 @@ The easiest way to look at a matrix is to look at it as a bunch of vectors. Depe
 **//TODO: 2x2 example**
 
 ##### Identity
-##### Scale
-##### Rotation matrices
+Let's start from the simplest case. Just like with numbers, it is a very important property of any algebraic structure to have a _neutral_ member for each operation. For example, in Numberland, multiplication of any $$$x$$$ by 1 returns $$$x$$$, same goes for addition to 0.
+In Matrixland, that identity element is a matrix with 1s along the diagonal zeroes elsewhere:
+**//TODO: Make example**
 
-1. in 2D
-1. in 3D
-	* Example: Vibrating a brick-phone in 3D.
+##### Scale
+You might remember that when scaling a vector (i.e point in space and/or velocity and/or force and/or brightness value for a colour, etc), we may choose to scale it uniformly by scalar multiplication **/\* TODO:Example \*/** or, because of a weird language design choice, most graphics applications will allow you to scale non-uniformly on a per-component basis: **/\* TODO:Example \*/**
+
+To put an end to this insanity, scaling in matrix multiplication is well-defined (_sidenote_: well defined means blah blah) in openFrameworks (also in math!). It goes like this: The matrix $$$S$$$ that scales $$$\left(x,y,z\right)^{T}$$$ to $$$\left(ax,by,cz\right)^{T}$$$ is: $$S\cdot \left(\begin{array}{c}
+x\\\\
+y\\\\
+z
+\end{array}\right)=\left(\begin{array}{ccc}
+a & 0 & 0\\\\
+0 & b & 0\\\\
+0 & 0 & c
+\end{array}\right)
+\cdot \left(\begin{array}{c}
+x\\\\
+y\\\\
+z
+\end{array}\right) = 
+\left(\begin{array}{c}
+ax\\\\
+by\\\\
+cz
+\end{array}\right)$$
+
+There's logic behind this. Recall that a vector multiplied by a matrix, $$$M\cdot v$$$ is just a collection of dot products: 
+$$
+M\cdot v=\left(\begin{array}{c}
+M\_{1}\\\\
+M\_{2}\\\\
+M\_{3}
+\end{array}\right)\cdot v=\left(\begin{array}{c}
+\begin{array}{c}
+M\_{1}\cdot v\\\\
+M\_{2}\cdot v\\\\
+M\_{3}\cdot v
+\end{array}\end{array}\right)
+$$
+
+**//TODO: Improve this**
+
+So, in order to get a multiplication through that only affects $$$x$$$, we tune the vector (upper row of the matrix) $$$M\_{1}$$$ to be zero anywhere but the interface with $$$x$$$: $$M\_{1} = \left(a,0,0\right)$$ so the entire calculation would be:
+
+**//TODO: Write this**
+
+Scalar multiplication of any matrix $$$M$$$ becomes really easy, then: it's essentially right multiplication by a diagonal matrix full of $$$a$$$'s: $$a\cdot M = a \cdot I \cdot M$$
+ 
+##### Rotation matrices
+We now see that any operation in Matrixland can really be expressed in a collection of vectors. We also know that dot products of vectors express the angle between two vectors times their magnitude. A slightly surprising fact is that those two properties are enough to describe any rotation.
+
+In order to grok this last statement, let's first explain how rotating one vector works. Let's suppose for now our vector has length 1 (it's generally a good thing to start from, as it is then neutral to scaling), and that we would like to rotate the vector by an angle $$$\theta$$$, starting from a point on the x axis. The rotated vector would be $$v\_{\theta}=\left(\begin{array}{c}
+\cos\theta\\\\
+\sin\theta
+\end{array}\right)$$
+
+Let's look at that for a moment. 
+**//TODO: write what the cosine and sine is**
+Now we found a target for the $$$x$$$ axis to go to. In order to find a new home for the old $$$y$$$ axis, we only need to know the angle between them. Luckily, we all know that it's 90 degrees, or in radians: $$$\frac{\pi}{2}$$$. The new home will then have to be at angle $$$\theta + \frac{\pi}{2}$$$ from the x axis (angle 0):
+
+$$
+y\_{\theta}=\left(\begin{array}{c}
+\cos\left(\theta+\frac{\pi}{2}\right)\\\\
+\sin\left(\theta+\frac{\pi}{2}\right)
+\end{array}\right) = \left(\begin{array}{c}
+-\sin\theta\\\\
+\cos\theta
+\end{array}\right)
+$$
+
+That last equality is due to trigonometric equalities. 
+###### 2D Rotation Matrices
+We now have all of the information we need to build a matrix that moves the vectors $$$\left\{ \left(\begin{array}{c}
+1\\\\
+0
+\end{array}\right),\left(\begin{array}{c}
+0\\\\
+1
+\end{array}\right)\right\}$$$ to $$$\left\{ \left(\begin{array}{c}
+\cos\theta\\\\
+\sin\theta
+\end{array}\right),\left(\begin{array}{c}
+-\sin\theta\\\\
+\cos\theta
+\end{array}\right)\right\}$$$ :
+
+**//TODO: Write a 2D rotation matrix**
+
+Now, hold on. Check out what we did here: we placed the targets for the source vectors as _columns_ in the matrix, and then we took the resulting _rows_ of the matrix to do the rotation. Why did we do that? 
+
+Recall that a matrix is just a stack of dot products. How did we construct these dot products?  We just aligned all of the entries that should be affecting the _resulting_ entry in one row of the matrix. That means that when considering the resulting $$$y$$$ entry, our vectors defined _the mixture of $$$y$$$ components_ from the target vectors that we would like to see in the resulting operation. This makes sense: Think of the vectors that compose the matrix as a new coordinate system, and what we're calculating is how the 'natural' coordinate system is projected onto them.
+
+###### 3D Rotation Matrices
+**//TODO: OH GOD WRITE THIS**
+
+* Example: Vibrating a brick-phone in 3D.
 	
-#### The inverse matrix
+#### Matrix Algebra
+This chapter introduced a different kind of math from what you were used to. But while introducing _a new thing to do things with_ we opened up a lot of unexplored dangers. Notice that we always multiplied vectors by matrices in a certain order: It's always the vector _after_ the matrix, the vector is always transposed, and any new operation applied to an existing situation always happens with a matrix to the left of our result. There's a reason for all of that: Commutativity.
+
+##### Commmumamitativiwha?
+In high school Algebra, we used to think that $$$a\cdot b=b\cdot a$$$. No reason not to think that: The amount of uranium rods that you have times the amount of specially trained monkeys that I have equals the same amount of casualties, no matter the order of multiplication. That's because quantities are commutative, the order in which they apply operations to each other doesn't matter.
+
+But, in matrixland we're not talking about things we counted - instead, we're talking about operations. And there's a difference between scaling a square by x and then rotating it by 90 degrees and doing it the other way around:
+
+**//TODO: Draw this**
+
+What's more, doing it the other way around is not always defined. Matrices and vectors with unequal sizes have very special conditions in which they could be multiplied. We're not dealing with them now, so I'll let you read about it in Wikipedia.
+
+Now grab a pack of ice, place it on your head for 15 minutes and go on reading the next part.
+
+
 ### "The Full Stack"
 #### Homogenous coordinates: Hacking 3d in 4d
+If you recall the comment in the beginning of this chapter, mathematicians are very careful when calling things linear. To a mathematician, a linear operation can do a combination of these 2 things: Rotation and Scaling (including negative scaling - "mirroring"). 
+The reason for this is that these are all operations that can be done in n dimensions to any n-dimensional shape (replace n with 3 for our example).
+
+If the entire shape lifts itself magically and moves away from the origin - it can't be done with a matrix, therefore it's not linear. This presents a problem to people who want to use matrices as an algebraic system for controlling 3d: in real life we need to move some stuff around.
+
+This problem has caused hundreds of years of agony to the openFrameworks community, until in 1827 a hacker called Möbius pushed an update to the ofMath repo: use them 4 dimensions to control a 3 dimensional shape. Here's the shtick: a 3d operation can be described as a 4d operation which doesn't do anything to the 4th dimension. Written as a matrix, we can describe it like this:
+
+**//TODO: do**
+
+	
 #### Translation matrices
 #### SRT (Scale-Rotate-Translate) operations
 * Example: a pack of sharks swimming
@@ -382,7 +497,7 @@ The easiest way to look at a matrix is to look at it as a bunch of vectors. Depe
 		* Example: White noise
 	1. Octaves: The construction of white noise
 	1. Building things with `ofNoise`
-		* Example: FDM
+		* Example: FB	M
 		* Example: Generative terrain
 		* Example: Flickering lights
 
