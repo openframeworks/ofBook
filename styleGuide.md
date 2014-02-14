@@ -47,7 +47,17 @@ produces this:
 
 You don't have to include titles if you don't want.  It's just useful in some instances. 
 
-Please also consider how you might want to link to other parts of the text.  Since those link might not make sense now, feel free to add a comment or note about where you might want to link to **note: link to eva's chapter** 
+Please also consider how you might want to link to other parts of the text.  Since those link might not make sense now, feel free to add a comment or note about where you might want to link to **[note: link to eva's chapter]** 
+
+## notes ##
+
+for now, let's use bold and square brackets for notes, so they are easy to spot on both the raw and rendered copy.  **[will add more here!]**.  If you are leaving a note on someone elses text, please use your initials **[zl:maybe link to this addon]**
+
+## content ##
+
+for your chapter, feel free to make two folders, "code" and "images" to store your assets for now.  For images, don't worry about naming, we'll standardize a figure naming scheme once chapter order is locked down.   I imagine code will also be shuffled, so that it can be in one compileable package, but it's useful for now just to have each chapter self contained.  Feel free to put other text as well in your chapter folder, and any other assets you think you might need. 
+
+
 
 
 
