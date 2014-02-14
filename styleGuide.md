@@ -57,7 +57,18 @@ for now, let's use bold and square brackets for notes, so they are easy to spot 
 
 for your chapter, feel free to make two folders, "code" and "images" to store your assets for now.  For images, don't worry about naming, we'll standardize a figure naming scheme once chapter order is locked down.   I imagine code will also be shuffled, so that it can be in one compileable package, but it's useful for now just to have each chapter self contained.  Feel free to put other text as well in your chapter folder, and any other assets you think you might need. 
 
+## newlines ##
 
+Between paragraphs include one empty line of whitespace, as per the markdown spec. 
+
+Feel free to experiment with newlines in a paragraph. If it makese sense for you, you can write your paragphs with a newline after every sentence.  Be careful to not have whitespace after the period, since two writespaces gets turned into a `<\br> tag. for example: 
+
+	Feel free to experiment with newlines.
+	If it makese sense, you can write your paragphs with a newline after every sentence.
+	Be careful to not have whitespace after the period, since two writespaces gets turned into a `<\br> tag. 
+	for example: 
+
+The benifits of this is that it makes github changes significantly easier to read, and will help you identify long sentences.  The drawbacks is that it might be less intuitive to write and read.  Do what feels right. 
 
 
 
