@@ -16,7 +16,9 @@ When bringing math to innocent readers, most programming books will try to expla
 **// TODO: Write intro**
 ### Interpolation
 #### Linear Interpolation: The `ofLerp`
-```float ofLerp(float start, float stop, float amt)```
+```cpp 
+float ofLerp(float start, float stop, float amt)
+```
 
 As xkcd once put it, if you've seen a number larger than 7, you're not doing real math.
 
@@ -31,7 +33,7 @@ Engineers, Programmers and English Speakers like to think of _linear_ as _anythi
 ##### Exercise: Save NASA's Mars Lander 
 In 1999, an masterpiece of engineering was making its final approach to Mars. All instruments were showing that the approach distance matched the speed, and that it's just about to get there and do some science. But instead, it did something rather rude: it crashed into the red planet. An investigation made later by NASA revealed that while designing the lander, one team worked with their test equipment set to _centimetres_, while the other had theirs set to _inches_. **By the way, this is all true.**
 
-Help the NASA teams work together: write a function that converts centimetres to inches. For reference, $1\_{\text{in}} = 2.54\_{\text{cm}}$. Test your result against three different real-world values.
+Help the NASA teams work together: write a function that converts centimetres to inches. For reference, $1_{\text{in}} = 2.54_{\text{cm}}$. Test your result against three different real-world values.
 
 **Think:**
 
@@ -39,7 +41,9 @@ Help the NASA teams work together: write a function that converts centimetres to
 2. What would it take to write a function that converts inches into centimetres?
 
 #### Affine Mapping: The `ofMap`
-`float ofMap(float value, float inputMin, float inputMax, float outputMin, float outputMax, bool clamp = false)`
+```cpp
+float ofMap(float value, float inputMin, float inputMax, float outputMin, float outputMax, bool clamp = false)
+```
 
 
 In the last discussion, we saw how by using `lerp`, any value between two points can be _linearly_ addressed as a value between 0 and 1. That's very convenient, and therefore the reason we build most of our arbitrary numerical ranges (`ofFloatColor`, for example) in the domain of 0 and 1. 
@@ -53,20 +57,25 @@ Now that we've tamed the input domain to be between 0 and 1, we do the exact opp
 You'll notice that the previous explanation is missing the `clamp` parameter. This may not matter to us if we're using the `ofMap` function in the range that we defined, but suppose we select a `value` smaller than `inputMin`: would it be ok if the result was also smaller than `outputMin`? If our program is telling an elevator which floor to go to, that might be a problem. That's why we add `true` to the tail of this function whenever we need to be careful.
 
 Just in case, oF offers another specific clamp function: 
-```
+
+```cpp
 float ofClamp(float value, float min, float max)
 ```
+
 ##### Range Checking
+
 Two important functions we unjustly left out of this episode;
 
-```
+```cpp
 bool ofInRange(float t, float min, float max);
 ```
+
 Tells you whether a number `t` is between `min` and `max`. 
 
-```
+```cpp
 float ofSign(float n);
 ```
+
 Returns the sign of a number, as `-1.0` or `1.0`. Simple, eh?
 
 ### Beyond Linear: Changing Change
@@ -78,7 +87,7 @@ In this discussion, we're about to see how we can describe higher orders of comp
 #### Quadratic and Cubic Change Rates
 Consider this function:
 
-```
+```cpp
 float foo (float t){
 	float a1 = ofLerp(t, 5, 8);
 	float a2 = ofLerp(t, 2, 9);
@@ -86,6 +95,7 @@ float foo (float t){
 	return b;
 	}
 ```
+
 This function used a defined range and a parameter to create `a1`, then used another defined range with the _same_ parameter to create `a2`. Their result looks surprising:
 
 **//TODO: Draw quadratic eqn**
@@ -106,7 +116,7 @@ Something interesting happened here. Without noticing, we introduced a second or
 
 The same manipulation can be applied for a third order:
 
-```
+```cpp
 float foo (float t){
 	float a1 = ofLerp(t, 5, 8);
 	float a2 = ofLerp(t, 2, 9);
@@ -118,6 +128,7 @@ float foo (float t){
 	return c;
 	}
 ```
+
 We'll skip the entire solution, and just reveal that the result will appear in the form of $$ax^{3} + bx^{2} + cx + d$$
 See the pattern here? The highest exponent is the number of successive `ofLerp`s we applied, i.e. the number of successive times we changed using our parameter $t$.
 
@@ -159,6 +170,7 @@ Generally speaking, when dealing with Algebra of numerical structures that aren'
 
 ##### Scalar Multiplication
 The product between a vector and a scalar is defined as: 
+
 $$a\left(\begin{array}{c}
 x\\
 y\\
@@ -168,9 +180,10 @@ ax\\
 ay\\
 az
 \end{array}\right)$$
+
 That falls into the category of _per-vector_ operations, because the entire vector undergoes the same operation. Note that this operation is just a scaling.  
 
-```
+```cpp
 ofVec3f a(1,2,3);
 cout << ofToString( a * 2 ) << endl; 
 //prints (2,4,6)
@@ -180,30 +193,32 @@ cout << ofToString( a * 2 ) << endl;
 Adding vectors is pretty straightforward: it's a _per-component_ operation:
 
 $$\left(\begin{array}{c}
-x\_{1}\\
-y\_{1}\\
-z\_{1}
+x_{1}\\
+y_{1}\\
+z_{1}
 \end{array}\right)+\left(\begin{array}{c}
-x\_{2}\\
-y\_{2}\\
-z\_{2}
+x_{2}\\
+y_{2}\\
+z_{2}
 \end{array}\right)=\left(\begin{array}{c}
-x\_{1}+x\_{2}\\
-y\_{1}+y\_{2}\\
-z\_{1}+z\_{2}
+x_{1}+x_{2}\\
+y_{1}+y_{2}\\
+z_{1}+z_{2}
 \end{array}\right)$$ 
 
 
-```
+```cpp
 ofVec3f a(10,20,30);
 ofVec3f b(4,5,6);
 cout << ofToString( a + b ) << endl; 
 //prints (14,25,36)
 ```
+
 ###### Example: `ofVec2f` as position
+
 Vector addition serves many simple roles. In this example, we're trying to track our friend Gary as he makes his way home from a pub. Trouble is, Gary's a little drunk. He knows he lives south of the pub, so he ventures south; But since he can't walk straight, he might end up somewhere else.
 
-```
+```cpp
 /* in Gary.h: */
 class Gary {
 public:
@@ -234,7 +249,6 @@ void testApp::update(){
 }
 
 void testApp::draw(){ gary.draw(); }
-
 ```
 
 ###### Example: `ofVec2f` as velocity
@@ -242,7 +256,7 @@ void testApp::draw(){ gary.draw(); }
 ##### Note: C++ Operator Overloading
 Just like we had to define the meaning of a product of a scalar quantity and a vector, programming languages - working with abstract representations of mathematical objects, also need to have definitions of such an operation built in. C++ takes special care of these cases, using a feature called _Operator Overloading_: defining the `*` operation to accept a scalar quantity and a vector as left-had side and right-hand side arguments:
 
-```
+```cpp
 ofVec3f operator*( float f, const ofVec3f& vec ) {
     return ofVec3f( f*vec.x, f*vec.y, f*vec.z );
 }
@@ -250,7 +264,7 @@ ofVec3f operator*( float f, const ofVec3f& vec ) {
 
 The same is defined, for example, between two instances of `ofVec3f`:
 
-```
+```cpp
 ofVec3f ofVec3f::operator+( const ofVec3f& pnt ) const {
 	return ofVec3f( x+pnt.x, y+pnt.y, z+pnt.z );
 }
@@ -265,32 +279,34 @@ Some excellent examples of operator overloading done right exist in the source f
 **Warning: Overloading operators will make you go blind.** Programmers use operators without checking what they do, so bugs resulting from bad overloads take a long time to catch. If the expression `a + b` returns a reference instead of a copy, a `null` instead of a value, or doing a complex operation which may crash, you've entered a world of pain. Unless the operator can do one arithmetic thing and that alone, don't change operators. Go to Appendix III and sign a form saying you understand that.
 
 ##### Distance Between Points
-```
+
+```cpp
 float ofVec3f::distance( const ofVec3f& pnt) const
 float ofVec3f::squareDistance( const ofVec3f& pnt ) const
 float ofVec3f::length() const
 float ofDist(float x1, float y1, float x2, float y2);
 float ofDistSquared(float x1, float y1, float x2, float y2);
 ```
+
 Let's start by a definition. You may remember the _Pythagorean Theorem_, stating that the length of a line between point $a$ and $b$ is:
 $$\text{Distance}\left(\left(\begin{array}{c}
-x\_{a}\\
-y\_{a}
+x_{a}\\
+y_{a}
 \end{array}\right),\left(\begin{array}{c}
-x\_{b}\\
-y\_{b}
-\end{array}\right)\right)=\sqrt{\left(x\_{b}-x\_{a}\right)^{2}+\left(y\_{b}-y\_{a}\right)^{2}}$$
+x_{b}\\
+y_{b}
+\end{array}\right)\right)=\sqrt{\left(x_{b}-x_{a}\right)^{2}+\left(y_{b}-y_{a}\right)^{2}}$$
 
 Here's the good news: It's the exact same definition in three dimensions! just add the $z$ term.
 $$\text{Distance}\left(\left(\begin{array}{c}
-x\_{a}\\
-y\_{a}\\
-z\_{a}
+x_{a}\\
+y_{a}\\
+z_{a}
 \end{array}\right),\left(\begin{array}{c}
-x\_{b}\\
-y\_{b}\\
-z\_{b}
-\end{array}\right)\right)=\sqrt{\left(x\_{b}-x\_{a}\right)^{2}+\left(y\_{b}-y\_{a}\right)^{2}+\left(z\_{b}-z\_{a}\right)^{2}}$$
+x_{b}\\
+y_{b}\\
+z_{b}
+\end{array}\right)\right)=\sqrt{\left(x_{b}-x_{a}\right)^{2}+\left(y_{b}-y_{a}\right)^{2}+\left(z_{b}-z_{a}\right)^{2}}$$
 
 
 Vector Length, then, can be naturally defined as the distance between the vector and the point $\left(0,0,0\right)$:
@@ -306,19 +322,23 @@ And that's exactly what using `.length()` as a property of any `ofVec` will give
 So you're multiplying two numbers. Simple, right? Five million and seven times three equals something you know. Even if you need a calculator for the result, you still know _it's a number_ that's not the case with vectors. If we just want to resize vectors (the way we do with numbers), we multiply a vector by a scalar and it grows. But what does it mean, geometrically, to multiply by a vector?
 
 If we were to follow the _per-component_ convention that we created, we would get an operation like this:
-```
+
+```cpp
 cout << ofToString(ofVec3f(1,2,3) * ofVec3f(1,2,3)) << endl;
 //prints (1,4,9)
 ```
+
 It's also known as the _Hadamard product_. It's intuitive, but not particularly useful. One case it is useful for is if we want to scale something individually in every dimension.
 
 In the next section we describe something more helpful.
 
 ##### The Dot Product
-```
+
+```cpp
 float ofVec3f::dot( const ofVec3f& vec )
 ```
-The dot product of two vectors has a definition that's not too clear at first. On the one hand, the operation can be defined as $v\_{a}\bullet v\_{b}=x_{a}\cdot x\_{b}+y\_{a}\cdot y\_{b}+z\_{a}\cdot z\_{b}$, which is really easy to implement, on the other hand, it can also bet defined as $v\_{a}\bullet v\_{b}=\left\Vert v\_{a}\right\Vert \cdot\left\Vert v\_{b}\right\Vert \cdot\cos\theta$, where $\theta$ is the angle between the two vectors.
+
+The dot product of two vectors has a definition that's not too clear at first. On the one hand, the operation can be defined as $v_{a}\bullet v_{b}=x_{a}\cdot x_{b}+y_{a}\cdot y_{b}+z_{a}\cdot z_{b}$, which is really easy to implement, on the other hand, it can also bet defined as $v_{a}\bullet v_{b}=\left\Vert v_{a}\right\Vert \cdot\left\Vert v_{b}\right\Vert \cdot\cos\theta$, where $\theta$ is the angle between the two vectors.
 
 For reasons you'll learn soon, it's a rather surprising coincidence.
 
@@ -371,20 +391,20 @@ cz
 There's logic behind this. Recall that a vector multiplied by a matrix, $M\cdot v$ is just a collection of dot products: 
 $$
 M\cdot v=\left(\begin{array}{c}
-M\_{1}\\
-M\_{2}\\
-M\_{3}
+M_{1}\\
+M_{2}\\
+M_{3}
 \end{array}\right)\cdot v=\left(\begin{array}{c}
 \begin{array}{c}
-M\_{1}\cdot v\\
-M\_{2}\cdot v\\
-M\_{3}\cdot v
+M_{1}\cdot v\\
+M_{2}\cdot v\\
+M_{3}\cdot v
 \end{array}\end{array}\right)
 $$
 
 **//TODO: Improve this**
 
-So, in order to get a multiplication through that only affects $x$, we tune the vector (upper row of the matrix) $M\_{1}$ to be zero anywhere but the interface with $x$: $$M\_{1} = \left(a,0,0\right)$$ so the entire calculation would be:
+So, in order to get a multiplication through that only affects $x$, we tune the vector (upper row of the matrix) $M_{1}$ to be zero anywhere but the interface with $x$: $$M_{1} = \left(a,0,0\right)$$ so the entire calculation would be:
 
 **//TODO: Write this**
 
@@ -396,7 +416,7 @@ Scalar multiplication of any matrix $M$ becomes really easy, then: it's essentia
 ##### Rotation matrices
 We now see that any operation in Matrixland can really be expressed in a collection of vectors. We also know that dot products of vectors express the angle between two vectors times their magnitude. A slightly surprising fact is that those two properties are enough to describe any rotation.
 
-In order to grok this last statement, let's first explain how rotating one vector works. Let's suppose for now our vector has length 1 (it's generally a good thing to start from, as it is then neutral to scaling), and that we would like to rotate the vector by an angle $\theta$, starting from a point on the x axis. The rotated vector would be $$v\_{\theta}=\left(\begin{array}{c}
+In order to grok this last statement, let's first explain how rotating one vector works. Let's suppose for now our vector has length 1 (it's generally a good thing to start from, as it is then neutral to scaling), and that we would like to rotate the vector by an angle $\theta$, starting from a point on the x axis. The rotated vector would be $$v_{\theta}=\left(\begin{array}{c}
 \cos\theta\\
 \sin\theta
 \end{array}\right)$$
@@ -406,7 +426,7 @@ Let's look at that for a moment.
 Now we found a target for the $x$ axis to go to. In order to find a new home for the old $y$ axis, we only need to know the angle between them. Luckily, we all know that it's 90 degrees, or in radians: $\frac{\pi}{2}$. The new home will then have to be at angle $\theta + \frac{\pi}{2}$ from the x axis (angle 0):
 
 $$
-y\_{\theta}=\left(\begin{array}{c}
+y_{\theta}=\left(\begin{array}{c}
 \cos\left(\theta+\frac{\pi}{2}\right)\\
 \sin\left(\theta+\frac{\pi}{2}\right)
 \end{array}\right) = \left(\begin{array}{c}
@@ -484,30 +504,3 @@ Now we already know that a 1-dimension Skew can move all lines in that axis in a
 
 #### Normals for directions
                 
-                
-                
-# Making your software generate (aka That other math chapter)
-
-1. Probability
-	1. How artists use probability
-	1. Some interesting properties of probability
-		1. Always sum to 1
-		1. Expectation, Average
-			* Example: Flocking, via finding the average of points.
-		1. Probability as a density
-			* Example: Cell colony in 2D
-1. Randomness
-	1. Different types of random functions: Uniform, Gaussian, etc
-		* Example: Circle packing using `ofRandom`
-	1. Markov Chains
-		 * Example: ?
-1. Noise
-	1. From random numbers to streams:
-		* Example: White noise
-	1. Octaves: The construction of white noise
-	1. Building things with `ofNoise`
-		* Example: FB	M
-		* Example: Generative terrain
-		* Example: Flickering lights
-
-
