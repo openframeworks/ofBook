@@ -2,11 +2,14 @@
 
 ###inspirational quote candidates:
 
-+ A hero is someone who understands the responsibility that comes with his freedom. **--Bob Dylan**
+> A hero is someone who understands the responsibility that comes with his freedom.
+>
+> **--Bob Dylan**
 
-+ Differences of habit and language are nothing at all if our aims are identical and our hearts are open. **--Albus Dumbledore**
 
-+ The magician of the future will use mathematical formulas. **--Aleister Crowley** [1 vote]
+> The magician of the future will use mathematical formulas.
+>
+> **--Aleister Crowley** [1 vote]
 
 
 
@@ -112,8 +115,9 @@ Now press the green "ideone it!" button at the bottom right corner and watch the
 
 ![Figure 8](img/hello-world.png "Figure 8: Hello World appears in output window")
 
-If you made it this far, then give yourself a great big hug. You just wrote your first line of C++ code, you analyzed it, compiled it, ran it, and saw the output. Please send word of your recent success so that we may heed your triumph. Tweet the following: **cout << "Hello World" << endl; #ofBook
-**
+If you made it this far, then give yourself a great big hug. You just wrote your first line of C++ code, you analyzed it, compiled it, ran it, and saw the output. Please send word of your recent success so that we may heed your triumph. Tweet the following:
+
+**cout << "Hello World" << endl; #ofBook**
 
 
 ##Beyond Hello World
@@ -121,7 +125,7 @@ If you made it this far, then give yourself a great big hug. You just wrote your
 Now that we've gotten our feet wet, let's go back and analyze the other parts of the code. The first line is an include statement:
 
 ```C++
-#include <iostream.h>
+#include <iostream>
 ```
 
 Similar to *import* in Java and CSS, `#include` is like telling the compiler to cut and paste some other useful code from a file called *iostream.h* at that position in the file, so you can depend on its code in your new code. In this case, iostream.h *provides* `cout` and `endl` as tools I can use in my code, just by typing their names. In C++, a filename ending in **.h** is called a header file, and it contains code you would include in an actual C++ implementation file, whose filename would end in **.cpp**. There are many standard headers built into C++ that provide various basic services – in fact too many to mention here. If that wasn't enough, it's also commonplace to add an external library to your project, including its headers. You may also define your own header files as part of the code you write, but the syntax is slightly different:
@@ -167,7 +171,7 @@ prog.cpp:5:27: error: ‘endl’ was not declared in this scope
                            ^
 ```
 
-The compiler found an error and did not run the program. Instead, it's showing you  where it got confused in attempt to help you fix it. The first part, *prog.cpp*: tells you the file that contains the error. In this case, ideone.com saved your code into that default file name. Next, it says `In function ‘int main()’`: file showing you the specific section of the code that contains the error, in this case, between the {curly brackets} of a function called *main*. (We will talk about functions and curly brackets later). On the next line, we see `prog.cpp:5:2:`. The 5 is how many lines from the top of the file, and 2 is how many characters rightward from the beginning of the line. Next, we see `error: ‘cout’ was not declared in this scope`. That is a message describing what it believes it wrong in the code. In this case, it's fairly correct. iostream.h is gone, and therefore no `cout` is provided to us, and so when we try to send "Hello World", the compile fails. On the next couple of lines, you see the line of code containing the fallacious `cout`, plus an extra little up-caret character on the line beneath it, and that is supposed to be an arrow pointing at a character in the code. In this case, the arrow should be sitting beneath the 'c' in `cout`. The system is showing you visually which token is at fault. A second error is shown, and this time, the compiler complains that there is no endl. Of course, we know that in order to fix the error, we need to include <iostream.h> so let us do that now. Please un-comment line 1 and re-run the code.
+The compiler found an error and did not run the program. Instead, it's showing you  where it got confused in attempt to help you fix it. The first part, *prog.cpp*: tells you the file that contains the error. In this case, ideone.com saved your code into that default file name. Next, it says `In function ‘int main()’`: file showing you the specific section of the code that contains the error, in this case, between the {curly brace} of a function called *main*. (We will talk about functions and curly braces later). On the next line, we see `prog.cpp:5:2:`. The 5 is how many lines from the top of the file, and 2 is how many characters rightward from the beginning of the line. Next, we see `error: ‘cout’ was not declared in this scope`. That is a message describing what it believes it wrong in the code. In this case, it's fairly correct. iostream.h is gone, and therefore no `cout` is provided to us, and so when we try to send "Hello World", the compile fails. On the next couple of lines, you see the line of code containing the fallacious `cout`, plus an extra little up-caret character on the line beneath it, and that is supposed to be an arrow pointing at a character in the code. In this case, the arrow should be sitting beneath the 'c' in `cout`. The system is showing you visually which token is at fault. A second error is shown, and this time, the compiler complains that there is no endl. Of course, we know that in order to fix the error, we need to include <iostream.h> so let us do that now. Please un-comment line 1 and re-run the code.
 
 ```C++
 #include <iostream>
@@ -220,7 +224,7 @@ Moving on, let us take a look at line 4:
 int main() {
 ```
 
-This is the first piece of code that has a beginning and an end, such that it "wraps around" another piece of code. But more importantly, a function *represents* the statements enclosed within it. The closing end of this *function* is the closing curly bracket on line 7:
+This is the first piece of code that has a beginning and an end, such that it "wraps around" another piece of code. But more importantly, a function *represents* the statements enclosed within it. The closing end of this *function* is the closing curly brace on line 7:
 
 ```C++
 }
@@ -313,12 +317,18 @@ Since establishing the C++ standard, there have been a variety of direct derivat
 
 Although OS X promotes Objective-C and Windows promotes C#, both XCode and Visual Studio will still compile C and C++ along side Linux because the C and C++ language compilers are in higher demand than their proprietary strains. It can be useful to combine code files written in these various languages in order to create a flexible solution that reduces the amount of re-invention you must do. Fundamentally, OpenFrameworks bases its cross-platform portability on the portability of the C++ language. Theoretically, you should be able to write your OpenFrameworks app once, on one platform, then see it compile and run identically in other environments. 
 
-##Variables
+### Conversational Slang
+
+Sometimes I say C, and sometimes I say C++. Since they are closely related, perhaps you can understand how they are almost synonymous. I also leave out the ++ because I am talking about both languages! C++ is almost a superset of C (see figure 17), so when I talk about the properties of C, I am usually also talking about the properties of C++. To make things worse, the greater slang of C applies to all the C-something languages. Let's say you are a famous code artist presenting at the EyeO festival and a member of the audience asks you to talk about the programming of your piece. You may have used a combination of C++, C, and Objective-C on Mac OS X to make your OpenFrameworks project happen (not to mention Java and C# on your Linode server), but because simplicity is elegant, and because you only have 2 minutes left before they kick you off stage, your answer is shortened - and you say "I wrote it in C". Perhaps later when that audience member buys you a drink, you can be more specific about all the strains of C-language you actually used. Like most slang, relaxed conversational use of "C" is also context-sensitive. Sometimes preemptively simplifying speech like that is inappropriate when you are speaking to known engineers, developers, and hackers. In that case, saying C when you mean C++ might be construed as fronting!
+
+![Figure 17. C++ is a non-strict superset of C](img/non-strict-superset.png "Figure 17. C++ is a non-strict superset of C")
+
+##Variables (part 1)
 
 Please enter the following program into ideone and run it.
 
 ```C++
-include <iostream.h>
+#include <iostream>
 using namespace std;
 
 int main(){
@@ -329,6 +339,284 @@ int main(){
 }
 ```
 
+The output looks like this:
+
+```
+My friend is 42 years old.
+The answer to the life the universe and everything is 42.
+That number plus 1 is 43.
+```
+
+We understand from a previous lesson that stuff you put between the `<<` operators will get formatted into the `cout` object, and magically end up in the output console. Notice in the last line, I put a bit of light arithmetic (42+1) in-between parentheses, and it evaluated to 43. That is called an *expression*, in the mathematics sense. These three lines of code all say something about the number 42, and so they all contain a literal integer. If I want to change that number, I can do what I know from word processing, and "find-and-replace" the 42 to a new value. Now what if I had 100,000 particles in a 3d world. Some have 42's that need changing, but other 42's that should not be changed? Things can get both heavy and complex when you write code. The most obvious application of *variables* is that they are a very powerful find-and-replace mechanism, but you'll see that variables are useful for more than that. So let's declare an integer at the top of the code and use it in place of the literal 42's.
+
+```C++
+#include <iostream>
+using namespace std;
+
+int main(){
+	
+	int answer = 42;
+	
+	cout << "My friend is " << answer << " years old." << endl;
+	cout << "The answer to the life the universe and everything is " << answer << "." << endl;
+	cout << "That number plus 1 is " << (answer+1) << "." << endl;
+	return 0;
+}
+```
+
+Now that I am using the variable `answer`, I only need to change that one number in my code, and it will show up in all three sentences as 42. That can be more elegant than find-and-replace. Figure 18 shows the syntax explanation for declaring and initializing a variable on the same line.
+
+![Figure 18. Variable declaration and initialization](img/variable-declaration.png "Figure 18. Variable declaration and initialization")
+
+It is also possible to declare a variable and initialize it on two separate lines. That would look like:
+
+```C++
+int answer;
+answer = 42;
+```
+
+In this case, there is a moment after you declare that variable when its answer may be unpredictable and glitchy because in C (unlike Java), fresh variables are not set to zero for free - you need to do it. Instead, the variable is occupied with what ever old computer memory happens to be sitting there at the time. So, unless you intend to make glitch art, please always initialize your variable to some number upon declaring it, even if that number is zero.
+
+### Naming your variable
+
+Notice the arrow below saying "must be a valid name". We invent new names to give our namespaces, functions, variables, and other constructs we define in code (classes, structs, enums, and other things I haven't taught you). The rules for defining a new identifier in code are strict in a similar way that choosing a password on a website might be.
+
++ Your identifier must contain only letters, numbers, and underscores.
++ it cannot begin with a number, but it can certainly begin with an underscore.
++ The name cannot be the same as one of the language keywords (for example, the word `void`)
+
+The following identifiers are okay.
+
+```
+a
+A
+counter1
+_x_axis
+perlin_noise_frequency
+_         // a single underscore is fine
+___       // several underscores are fine
+```
+
+Notice lowercase a is a different identifier than uppercase A. Identifiers in C++ are case-sensitive.
+The following identifiers are not okay.
+
+```C++
+1infiniteloop         // should not start with a number
+transient-mark-mode   // dashes should be underscores
+@jtnimoy              // should not contain an @
+the locH of sprite 1  // should not contain spaces
+void                  // should not be a reserved word
+int                   // should not be a reserved word
+```
+
+naming your variable `void_int`, although confusing, would not cause any compiler errors because the underscore joins the two keywords into a new identifier. Occasionally, you will find yourself running into `unqualified id` errors. Here is a list of C++ reserved keywords to avoid when naming variables. C++ needs them so that it can provide a complete programming language.
+
+```
+alignas alignof and and_eq asm auto bitand bitor bool break case catch
+char char16_t char32_t class compl const constexpr const_cast continue
+decltype default delete do double dynamic_cast else enum explicit
+export extern false final float for friend goto if inline int long
+mutable namespace new noexcept not not_eq nullptr operator or or_eq
+override private protected public register reinterpret_cast return
+short signed sizeof static static_assert static_cast struct switch
+template this thread_local throw true try typedef typeid typename
+union unsigned using virtual void volatile wchar_t while xor xor_eq
+```
+
+### Naming conventions
+
+> Differences of habit and language are nothing at all if our aims are identical and our hearts are open.
+>
+> **--Albus Dumbledore**
+
+
+Identifiers (variables included) are written with different styles to indicate their various properties, such as type of construct (variable, function, or class?), data type (integer or string?), scope (global or local?), level of privacy, etc. You may see some identifiers capitalized at the beginning and using `CamelCase`, whilst others remain all `lower_case_using_underscores_to_separate_the_words`. Global variables are found to be named with `ALL_CAPS_AND_UNDERSCORES`. Another way of doing lower-case naming is to start with a lowercase `letterThenCamelCaseFromThere`. You may also see a hybrid, like `ClassName__functionName__variable_name`. These different styles can indicate different categories of identifiers.
+
+More obsessively, programmers may sometimes use what is affectionately nicknamed *Hungarian Notation* adding character badges to an identifier to say things about it but also reduce the legibility, for example `dwLightYears` and `szLastName`. Naming conventions are not set in stone, and certainly not enforced by the compiler. Collaborators generally need to agree on these subtle naming conventions so that they don't confuse one another, and it takes discipline on everyone's part to remain consistent with whatever convention was decided. The subject of naming convention in code is still a comically heated debate amongst developers, just like deciding which line to put the curly brace, and whether to use tabs to indent. Like a lot of things in programming, someone will always tell you you're doing it wrong. That doesn't necessarily mean you are doing it wrong.
+
+### Variables change
+
+We call them variables because their values *vary* during runtime. They are most useful as a bucket where we put something (let's say water) for safe keeping. As that usually goes, we end up going back to the bucket and using some of the water, or mixing a chemical into the water, or topping up the bucket with more water, etc. A variable is like an empty bucket where you can put your stuff. Figure 19 shows a bucket from the game *Minecraft*.
+
+![Figure 19. Bucket, courtesy of Mojang AB](img/minecraft-bucket.png "Figure 19. Bucket, courtesy of Mojang AB")
+
+If a computer program is like a little brain, then a variable is like a basic unit of remembrance. Jotting down a small note in my sketchbook is like storing a value into a variable for later use. Let's see an example of a variable changing its value.
+
+```C++
+#include <iostream>
+using namespace std;
+
+int main(){
+	int counter = 0;
+	cout << counter;
+	counter = 1;
+	cout << counter;
+	counter = 2;
+	cout << counter;
+	counter = 3;
+	cout << counter;
+	counter = 4;
+	cout << counter;
+	counter = 5;
+	cout << counter;
+	return 0;
+}
+```
+
+The output should be `012345`. Notice the use of the equals sign. It is different than what we are accustomed to from arithmetic. In the traditional context, a single equal sign means the expressions on both sides would evaluate to the same value. In C, that is actually a double equal (==) and we will talk about it later. A single equal sign means "Solve the expression on the right side and store the answer into the variable named on the left side". It takes some getting used to if you haven't programmed before. If I were a beginning coder (as my inner child is perpetually), I would perhaps enjoy some alternative syntax to command the computer to store a value into a variable. Something along the lines of: `3 => counter` as found in the language *ChucK* by Princeton sound lab, or perhaps something a bit more visual, as my repurposing of the Minecraft crafting table in figure 20.
+
+![Figure 20. Minecraft crafting table repurposed for variable assignment](img/minechuck.png "Figure 20. Minecraft crafting table repurposed for variable assignment")
+
+Historically, C uses the = character that different way because it solves an otherwise verbose (and non-portable) assembly routine for storing a value into a variable.
+
+```asm
+mov ax, 4        ; store literal integer into working register
+mov bucket, ax  ; move contents of working register into RAM at address 'bucket'
+```
+
+In the above assembly code, the programmer needs to put the value into an intermediary called a *register* before it can go into the place in memory we know as a variable. The usefulness of having the variable name on the left side rather than the right becomes apparent in practice since the expressions get get quite lengthy! Beginning a line with `varname =` ends up being easier for the eyeball to scan because it's guaranteed to be 2 symbols long before starting in on whatever madness you plan on typing after the equals sign.
+
+Analyzing the previous code example, we see the number increments by 1 each time before it is output. I am repeatedly storing literal integers into the variable. Since a programming language knows basic arithmetic, let us now try the following modification:
+
+```C++
+#include <iostream>
+using namespace std;
+
+int main(){
+	int counter = 0;
+	cout << counter;
+	counter = counter + 1;
+	cout << counter;
+	counter = counter + 1;
+	cout << counter;
+	counter = counter + 1;
+	cout << counter;
+	counter = counter + 1;
+	cout << counter;
+	counter = counter + 1;
+	cout << counter;
+	return 0;
+}
+```
+
+The output should still be `012345`. By saying `counter = counter + 1`, I am incrementing `counter` by 1. More specifically, I am using `counter` in the right-hand "addition" expression, and the result of that (one moment later) gets stored into `counter`. This seems a bit funny because it talks about `counter` during two different times. It reminds me of the movie, *Back to the Future* when Marty McFly runs into past and future versions of himself. See Figure 21.
+
+![Figure 21. The future Marty uses the past Marty](img/futuremarty.png "Figure 21. The future Marty uses the past Marty")
+
+Great Scott, that could make someone dizzy! But after doing it a few times, you'll see it doesn't get much more complicated than what you see there. This is a highly *practical* use of science fiction, and you probably aren't attempting to challenge the fabric of spacetime (unless you are Kyle McDonald, or maybe a Haskell coder). The point here is to modify the contents of computer memory, so we have `counter` from one instruction ago, in the same way that there might already be water in our bucket when we go to add water to it. Figure 22 shows `bucket = bucket + water`.
+
+![Figure 22. bucket = bucket + water](img/minecraft-inc.png "Figure 22. bucket = bucket + water")
+
+Incrementing by one, or adding some value to a variable is in fact so commonplace in all programming that there is even syntactic sugar for it. *Syntactic Sugar* is a redundant grammar added to a programming language for reasons of convenience. It helps reduce typing, can increase comprehension or expressiveness, and (like sugar) makes the programmer happier. The following statements all add 1 to `counter`.
+
+```C++
+counter = counter + 1; // original form
+counter += 1;          // "increment self by" useful because it's less typing.
+counter++;             // "add 1 to self" useful because you don't need to type a 1.
+++counter;             // same as above, but with a subtle difference.
+```
+
+Let's test this in the program.
+
+```C++
+#include <iostream>
+using namespace std;
+
+int main(){
+	int counter = 0;
+	cout << counter;
+	counter++;
+	cout << counter;
+	counter++;
+	cout << counter;
+	counter++;
+	cout << counter;
+	counter++;
+	cout << counter;
+	counter++;
+	cout << counter;
+	return 0;
+}
+```
+
+Yes, it's a lot less typing, and there are many ways to make it more concise. Here is one way.
+
+```C++
+#include <iostream>
+using namespace std;
+
+int main(){
+	int counter = 0;
+	cout << counter++;
+	cout << counter++;
+	cout << counter++;
+	cout << counter++;
+	cout << counter++;
+	cout << counter++;
+	return 0;
+}
+```
+
+The answer is still `012345`. The postfix incrementing operator will increment the variable even while it sits inside an expression. Now let's try the prefix version.
+
+```C++
+#include <iostream>
+using namespace std;
+
+int main(){
+	int counter = 0;
+	cout << ++counter;
+	cout << ++counter;
+	cout << ++counter;
+	cout << ++counter;
+	cout << ++counter;
+	cout << ++counter;
+	return 0;
+}
+```
+
+If you got the answer `123456`, that is no mistake! The prefix incrementing operator is different from its postfix sister in this very way. With `counter` initialized as 0, `++counter` would evaluate to 1, whilst `counter++` would still evaluate to 0 (but an incremented version of `counter` would be left over for later use). The output for the following example is `1112`.
+
+```C++
+#include <iostream>
+using namespace std;
+
+int main(){
+	int counter = 0;
+	cout << ++counter; // 1: increments before evaluating
+	cout << counter;   // 1: has NOT changed.
+	cout << counter++; // 1: increments after evaluating
+	cout << counter;   // 2: evidence of change.
+	return 0;
+}
+```
+
+For arithmetic completeness, I should mention that the subtractive *decrementing* operator (counter--) also exists. Also, as you might have guessed by now, if one can say `counter + 1`, then a C compiler would also recognize the other classic arithmetic like `counter * 2` (asterisk is multiplication), `counter / 2` (division), and overriding the order of operations by using parentheses, such as `(counter + 1) / 2` evaluating to a different result than `counter + 1 / 2`. C extends this basic palette of maths operators with boolean logic and bitwise manipulation; I will introduce them in Variables part 2.
+
+There are a few more essentials to learn about variables, but we're going to take what we've learned so far and run with it in the name of fun. In the meantime, give yourself another pat on the back for making it this far! You learned what variables are, and how to perform basic arithmetic on them. Please give us a shout about your progress so that we may celebrate along with you. Tweet the following:
+
+**@stroustrup I know why you called it C++; #ofBook**
+
+## If-Then
+
+[coming up next!]
+
+
+
+
+
+
+## Variables (part 2)
+
+### Fundamental Types
+
+(lava and milk buckets)
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit
+
+### Variables have a scope.
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit
 
 # this chapter is in-progress. [see outline](outline.md) for upcoming subject matter.
 	
@@ -336,4 +624,7 @@ int main(){
 ###bibliography
 + "From the Beginning" - http://snap.nlc.dcccd.edu/learn/selena/history.html
 + "Dennis M. Ritchie" - http://cm.bell-labs.com/who/dmr
-
++ Carver, Cecily "Things I Wish Someone Had Told Me When I was Learning How to Code." *HACKER MONTHLY Issue 45* February 2014: Page 28 - 30. Print.
++ Cubbi, "C++ keywords." *cppreference.com* 29 November 2013. Web. 15 February 2014. http://en.cppreference.com/w/cpp/keyword
++ back to the future
++ minecraft
