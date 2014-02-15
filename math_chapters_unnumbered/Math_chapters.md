@@ -1,5 +1,7 @@
 # That Math Chapter: From 1D to 4D 
 
+**NOTE: This chapter is formatted with MD and LaTeX. Github won't render it properly. Try [stackedit.io](http://stackedit.io) instead**
+
 ## Intro: How Artists Approach Math
 ** // TODO: Write intro **
 
@@ -11,7 +13,7 @@ This chapter will be divided into _'numbers of D's'_ : we'll start from one dime
 When bringing math to innocent readers, most programming books will try to explain the idea, not necessarily the exact implementation. This book is no different. This chapter contains detailed breakdowns of concepts, but if you want to find out what's going on under the hood, there's no alternative to reading the source code - in fact, since all the math here is only a few lines long - it's actually _encouraged_ to have a look at the source.
 
 ## One Dimension: Using Change
-** // TODO: Write intro **
+**// TODO: Write intro**
 ### Interpolation
 #### Linear Interpolation: The `ofLerp`
 ```float ofLerp(float start, float stop, float amt)```
@@ -24,12 +26,12 @@ With the `lerp` function, you can take any two quantities, in our case `start` a
  $$\text{lerp}\left(a,b,t\right) = t\cdot b+\left(1-t\right)\cdot a$$ 
 
 ##### Note: What does _linear_ really mean?
-Engineers, Programmers and English Speakers like to think of _linear_ as _anything you can put on a line_. Mathematicians, having to deal with all the conceptual mess the former group of people creates, define it _anything you can put on a line **that begins at (0,0)**_. There's  good reasoning behind that, which we will see in the discussion about Linear Algebra. In the meantime, think of it this way: if our transformation is taking a line that has a value 0 at the point 0 and returning a line with the same property, (thus in the form $$$f\left(x\right)=ax$$$), It's _linear_. If it returns a value different from 0 at $$$x=0$$$ (in the form $$$f\left(x\right)=ax + b$$$), it's _affine_. 
+Engineers, Programmers and English Speakers like to think of _linear_ as _anything you can put on a line_. Mathematicians, having to deal with all the conceptual mess the former group of people creates, define it _anything you can put on a line **that begins at (0,0)**_. There's  good reasoning behind that, which we will see in the discussion about Linear Algebra. In the meantime, think of it this way: if our transformation is taking a line that has a value 0 at the point 0 and returning a line with the same property, (thus in the form $f\left(x\right)=ax$), It's _linear_. If it returns a value different from 0 at $x=0$ (in the form $f\left(x\right)=ax + b$), it's _affine_. 
 
 ##### Exercise: Save NASA's Mars Lander 
 In 1999, an masterpiece of engineering was making its final approach to Mars. All instruments were showing that the approach distance matched the speed, and that it's just about to get there and do some science. But instead, it did something rather rude: it crashed into the red planet. An investigation made later by NASA revealed that while designing the lander, one team worked with their test equipment set to _centimetres_, while the other had theirs set to _inches_. **By the way, this is all true.**
 
-Help the NASA teams work together: write a function that converts centimetres to inches. For reference, $$$1\_{\text{in}} = 2.54\_{\text{cm}}$$$. Test your result against three different real-world values.
+Help the NASA teams work together: write a function that converts centimetres to inches. For reference, $1\_{\text{in}} = 2.54\_{\text{cm}}$. Test your result against three different real-world values.
 
 **Think:**
 
@@ -44,7 +46,7 @@ In the last discussion, we saw how by using `lerp`, any value between two points
 However, when dealing with real world problems, programmers run into domains of values that they wish to map to other ranges of values, neither of which are confined to 0 and 1. For example, someone trying to convert the temperature in Celsius to Fahrenheit won't be able to use  Surely, the way of doing that must involve a `lerp`, but it needs a little help:
 
 If we want to use the `lerp` function, we're aiming to get it to the range between 0 and 1. We can do that by knocking `inputMin` off the input `value` so that it starts at 0, then dividing by the size of the domain: $$x=\frac{\text{value}-\text{inputMin}}{\text{inputMax}-\text{inputMin}}$$
-Now that we've tamed the input domain to be between 0 and 1, we do the exact opposite to the output: `ofMap(value, inputMin, inputMax, outputMin, outputMax)` $$$=\frac{\text{value}-\text{inputMin}}{\text{inputMax}-\text{inputMin}}\cdot\left(\text{outputMax}-\text{outputMin}\right)+\text{outputMin}$$$
+Now that we've tamed the input domain to be between 0 and 1, we do the exact opposite to the output: `ofMap(value, inputMin, inputMax, outputMin, outputMax)` $=\frac{\text{value}-\text{inputMin}}{\text{inputMax}-\text{inputMin}}\cdot\left(\text{outputMax}-\text{outputMin}\right)+\text{outputMin}$
 
 #### Range Utilities
 ##### Clamping
@@ -91,10 +93,10 @@ This function used a defined range and a parameter to create `a1`, then used ano
 We've done something remarkable here. We used the way one parameter changes on two fixed lines to control a third, totally mobile line, and draw one point on it at each point in time between 0 and 1. In Mathspeak, it looks like this:
  
 $$
-\text{lerp}\left(t,\text{lerp}\left(t,5,8\right),\text{lerp}\left(t,2,9\right)\right)\\\\
-= \text{lerp}\left(t,8\cdot t+5\cdot\left(1-t\right),9\cdot t+2\cdot\left(1-t\right)\right)\\\\
-= \left(9\cdot t+2\cdot\left(1-t\right)\right)\cdot t+\left(8\cdot t+5\cdot\left(1-t\right)\right)\cdot\left(1-t\right)\\\\
-= \left(9t^{2}+2t-2t^{2}\right)+\left(8t+5-5t\right)-\left(8t^{2}+5t-5t^{2}\right)\\\\
+\text{lerp}\left(t,\text{lerp}\left(t,5,8\right),\text{lerp}\left(t,2,9\right)\right)\\
+= \text{lerp}\left(t,8\cdot t+5\cdot\left(1-t\right),9\cdot t+2\cdot\left(1-t\right)\right)\\
+= \left(9\cdot t+2\cdot\left(1-t\right)\right)\cdot t+\left(8\cdot t+5\cdot\left(1-t\right)\right)\cdot\left(1-t\right)\\
+= \left(9t^{2}+2t-2t^{2}\right)+\left(8t+5-5t\right)-\left(8t^{2}+5t-5t^{2}\right)\\
 = 4t^{2}+5
 $$
 
@@ -117,7 +119,7 @@ float foo (float t){
 	}
 ```
 We'll skip the entire solution, and just reveal that the result will appear in the form of $$ax^{3} + bx^{2} + cx + d$$
-See the pattern here? The highest exponent is the number of successive `ofLerp`s we applied, i.e. the number of successive times we changed using our parameter $$$t$$$.
+See the pattern here? The highest exponent is the number of successive `ofLerp`s we applied, i.e. the number of successive times we changed using our parameter $t$.
 
 **//TODO: Add thanks to Steven Wittens for the idea of lerping**
 
@@ -148,9 +150,9 @@ Seriously, that's all it is. Quit hiding.
 
 This simplicity is also their great power. Just like The number 5 can be used to describe five Kilometres, the result of subtracting 12 and 7, or the number of cookies in a jar - the same works with vectors.
 
-It's up to the user of that mathematical object to choose what it is used as. The vector $$$v=\left(5,-3,1\right)$$$ can represent a point in space, a direction of a moving object, a force applied to your game character, or just three numbers. And just like with numbers, algebraic operations such as addition and multiplication may be applied to vectors. 
+It's up to the user of that mathematical object to choose what it is used as. The vector $v=\left(5,-3,1\right)$ can represent a point in space, a direction of a moving object, a force applied to your game character, or just three numbers. And just like with numbers, algebraic operations such as addition and multiplication may be applied to vectors. 
 
-Oh, but there's a catch. You see, everyone was taught what $$$a + b$$$ means. In order to go on with vectors, we need to define that.
+Oh, but there's a catch. You see, everyone was taught what $a + b$ means. In order to go on with vectors, we need to define that.
 
 #### Vector Algebra
 Generally speaking, when dealing with Algebra of numerical structures that aren't numbers, we need to pay close attention to the _type_ of things we're cooking together. In the case of vectors, we'll make a distinction between _per-component_ and _per-vector_ operations.
@@ -158,12 +160,12 @@ Generally speaking, when dealing with Algebra of numerical structures that aren'
 ##### Scalar Multiplication
 The product between a vector and a scalar is defined as: 
 $$a\left(\begin{array}{c}
-x\\\\
-y\\\\
+x\\
+y\\
 z
 \end{array}\right)=\left(\begin{array}{c}
-ax\\\\
-ay\\\\
+ax\\
+ay\\
 az
 \end{array}\right)$$
 That falls into the category of _per-vector_ operations, because the entire vector undergoes the same operation. Note that this operation is just a scaling.  
@@ -178,16 +180,16 @@ cout << ofToString( a * 2 ) << endl;
 Adding vectors is pretty straightforward: it's a _per-component_ operation:
 
 $$\left(\begin{array}{c}
-x\_{1}\\\\
-y\_{1}\\\\
+x\_{1}\\
+y\_{1}\\
 z\_{1}
 \end{array}\right)+\left(\begin{array}{c}
-x\_{2}\\\\
-y\_{2}\\\\
+x\_{2}\\
+y\_{2}\\
 z\_{2}
 \end{array}\right)=\left(\begin{array}{c}
-x\_{1}+x\_{2}\\\\
-y\_{1}+y\_{2}\\\\
+x\_{1}+x\_{2}\\
+y\_{1}+y\_{2}\\
 z\_{1}+z\_{2}
 \end{array}\right)$$ 
 
@@ -270,31 +272,31 @@ float ofVec3f::length() const
 float ofDist(float x1, float y1, float x2, float y2);
 float ofDistSquared(float x1, float y1, float x2, float y2);
 ```
-Let's start by a definition. You may remember the _Pythagorean Theorem_, stating that the length of a line between point $$$a$$$ and $$$b$$$ is:
+Let's start by a definition. You may remember the _Pythagorean Theorem_, stating that the length of a line between point $a$ and $b$ is:
 $$\text{Distance}\left(\left(\begin{array}{c}
-x\_{a}\\\\
+x\_{a}\\
 y\_{a}
 \end{array}\right),\left(\begin{array}{c}
-x\_{b}\\\\
+x\_{b}\\
 y\_{b}
 \end{array}\right)\right)=\sqrt{\left(x\_{b}-x\_{a}\right)^{2}+\left(y\_{b}-y\_{a}\right)^{2}}$$
 
-Here's the good news: It's the exact same definition in three dimensions! just add the $$$z$$$ term.
+Here's the good news: It's the exact same definition in three dimensions! just add the $z$ term.
 $$\text{Distance}\left(\left(\begin{array}{c}
-x\_{a}\\\\
-y\_{a}\\\\
+x\_{a}\\
+y\_{a}\\
 z\_{a}
 \end{array}\right),\left(\begin{array}{c}
-x\_{b}\\\\
-y\_{b}\\\\
+x\_{b}\\
+y\_{b}\\
 z\_{b}
 \end{array}\right)\right)=\sqrt{\left(x\_{b}-x\_{a}\right)^{2}+\left(y\_{b}-y\_{a}\right)^{2}+\left(z\_{b}-z\_{a}\right)^{2}}$$
 
 
-Vector Length, then, can be naturally defined as the distance between the vector and the point $$$\left(0,0,0\right)$$$:
+Vector Length, then, can be naturally defined as the distance between the vector and the point $\left(0,0,0\right)$:
 $$\text{Length}\left(\begin{array}{c}
-x\\\\
-y\\\\
+x\\
+y\\
 z
 \end{array}\right)=\sqrt{x^{2} + y^{2} + z^{2}}$$
 
@@ -316,7 +318,7 @@ In the next section we describe something more helpful.
 ```
 float ofVec3f::dot( const ofVec3f& vec )
 ```
-The dot product of two vectors has a definition that's not too clear at first. On the one hand, the operation can be defined as $$$v\_{a}\bullet v\_{b}=x_{a}\cdot x\_{b}+y\_{a}\cdot y\_{b}+z\_{a}\cdot z\_{b}$$$, which is really easy to implement, on the other hand, it can also bet defined as $$$v\_{a}\bullet v\_{b}=\left\Vert v\_{a}\right\Vert \cdot\left\Vert v\_{b}\right\Vert \cdot\cos\theta$$$, where $$$\theta$$$ is the angle between the two vectors.
+The dot product of two vectors has a definition that's not too clear at first. On the one hand, the operation can be defined as $v\_{a}\bullet v\_{b}=x_{a}\cdot x\_{b}+y\_{a}\cdot y\_{b}+z\_{a}\cdot z\_{b}$, which is really easy to implement, on the other hand, it can also bet defined as $v\_{a}\bullet v\_{b}=\left\Vert v\_{a}\right\Vert \cdot\left\Vert v\_{b}\right\Vert \cdot\cos\theta$, where $\theta$ is the angle between the two vectors.
 
 For reasons you'll learn soon, it's a rather surprising coincidence.
 
@@ -339,98 +341,101 @@ The easiest way to look at a matrix is to look at it as a bunch of vectors. Depe
 **//TODO: 2x2 example**
 
 ##### Identity
-Let's start from the simplest case. Just like with numbers, it is a very important property of any algebraic structure to have a _neutral_ member for each operation. For example, in Numberland, multiplication of any $$$x$$$ by 1 returns $$$x$$$, same goes for addition to 0.
+Let's start from the simplest case. Just like with numbers, it is a very important property of any algebraic structure to have a _neutral_ member for each operation. For example, in Numberland, multiplication of any $x$ by 1 returns $x$, same goes for addition to 0.
 In Matrixland, that identity element is a matrix with 1s along the diagonal zeroes elsewhere:
 **//TODO: Make example**
 
 ##### Scale
 You might remember that when scaling a vector (i.e point in space and/or velocity and/or force and/or brightness value for a colour, etc), we may choose to scale it uniformly by scalar multiplication **/\* TODO:Example \*/** or, because of a weird language design choice, most graphics applications will allow you to scale non-uniformly on a per-component basis: **/\* TODO:Example \*/**
 
-To put an end to this insanity, scaling in matrix multiplication is well-defined (_sidenote_: well defined means blah blah) in openFrameworks (also in math!). It goes like this: The matrix $$$S$$$ that scales $$$\left(x,y,z\right)^{T}$$$ to $$$\left(ax,by,cz\right)^{T}$$$ is: $$S\cdot \left(\begin{array}{c}
-x\\\\
-y\\\\
+To put an end to this insanity, scaling in matrix multiplication is well-defined (_sidenote_: well defined means blah blah) in openFrameworks (also in math!). It goes like this: The matrix $S$ that scales $\left(x,y,z\right)^{T}$ to $\left(ax,by,cz\right)^{T}$ is: $$S\cdot \left(\begin{array}{c}
+x\\
+y\\
 z
 \end{array}\right)=\left(\begin{array}{ccc}
-a & 0 & 0\\\\
-0 & b & 0\\\\
+a & 0 & 0\\
+0 & b & 0\\
 0 & 0 & c
 \end{array}\right)
 \cdot \left(\begin{array}{c}
-x\\\\
-y\\\\
+x\\
+y\\
 z
 \end{array}\right) = 
 \left(\begin{array}{c}
-ax\\\\
-by\\\\
+ax\\
+by\\
 cz
 \end{array}\right)$$
 
-There's logic behind this. Recall that a vector multiplied by a matrix, $$$M\cdot v$$$ is just a collection of dot products: 
+There's logic behind this. Recall that a vector multiplied by a matrix, $M\cdot v$ is just a collection of dot products: 
 $$
 M\cdot v=\left(\begin{array}{c}
-M\_{1}\\\\
-M\_{2}\\\\
+M\_{1}\\
+M\_{2}\\
 M\_{3}
 \end{array}\right)\cdot v=\left(\begin{array}{c}
 \begin{array}{c}
-M\_{1}\cdot v\\\\
-M\_{2}\cdot v\\\\
+M\_{1}\cdot v\\
+M\_{2}\cdot v\\
 M\_{3}\cdot v
 \end{array}\end{array}\right)
 $$
 
 **//TODO: Improve this**
 
-So, in order to get a multiplication through that only affects $$$x$$$, we tune the vector (upper row of the matrix) $$$M\_{1}$$$ to be zero anywhere but the interface with $$$x$$$: $$M\_{1} = \left(a,0,0\right)$$ so the entire calculation would be:
+So, in order to get a multiplication through that only affects $x$, we tune the vector (upper row of the matrix) $M\_{1}$ to be zero anywhere but the interface with $x$: $$M\_{1} = \left(a,0,0\right)$$ so the entire calculation would be:
 
 **//TODO: Write this**
 
-Scalar multiplication of any matrix $$$M$$$ becomes really easy, then: it's essentially right multiplication by a diagonal matrix full of $$$a$$$'s: $$a\cdot M = a \cdot I \cdot M$$
+Scalar multiplication of any matrix $M$ becomes really easy, then: it's essentially right multiplication by a diagonal matrix full of $a$'s: $$a\cdot M = a \cdot I \cdot M$$
+
+##### Skew matrices
+
  
 ##### Rotation matrices
 We now see that any operation in Matrixland can really be expressed in a collection of vectors. We also know that dot products of vectors express the angle between two vectors times their magnitude. A slightly surprising fact is that those two properties are enough to describe any rotation.
 
-In order to grok this last statement, let's first explain how rotating one vector works. Let's suppose for now our vector has length 1 (it's generally a good thing to start from, as it is then neutral to scaling), and that we would like to rotate the vector by an angle $$$\theta$$$, starting from a point on the x axis. The rotated vector would be $$v\_{\theta}=\left(\begin{array}{c}
-\cos\theta\\\\
+In order to grok this last statement, let's first explain how rotating one vector works. Let's suppose for now our vector has length 1 (it's generally a good thing to start from, as it is then neutral to scaling), and that we would like to rotate the vector by an angle $\theta$, starting from a point on the x axis. The rotated vector would be $$v\_{\theta}=\left(\begin{array}{c}
+\cos\theta\\
 \sin\theta
 \end{array}\right)$$
 
 Let's look at that for a moment. 
 **//TODO: write what the cosine and sine is**
-Now we found a target for the $$$x$$$ axis to go to. In order to find a new home for the old $$$y$$$ axis, we only need to know the angle between them. Luckily, we all know that it's 90 degrees, or in radians: $$$\frac{\pi}{2}$$$. The new home will then have to be at angle $$$\theta + \frac{\pi}{2}$$$ from the x axis (angle 0):
+Now we found a target for the $x$ axis to go to. In order to find a new home for the old $y$ axis, we only need to know the angle between them. Luckily, we all know that it's 90 degrees, or in radians: $\frac{\pi}{2}$. The new home will then have to be at angle $\theta + \frac{\pi}{2}$ from the x axis (angle 0):
 
 $$
 y\_{\theta}=\left(\begin{array}{c}
-\cos\left(\theta+\frac{\pi}{2}\right)\\\\
+\cos\left(\theta+\frac{\pi}{2}\right)\\
 \sin\left(\theta+\frac{\pi}{2}\right)
 \end{array}\right) = \left(\begin{array}{c}
--\sin\theta\\\\
+-\sin\theta\\
 \cos\theta
 \end{array}\right)
 $$
 
 That last equality is due to trigonometric equalities. 
 ###### 2D Rotation Matrices
-We now have all of the information we need to build a matrix that moves the vectors $$$\left\{ \left(\begin{array}{c}
-1\\\\
+We now have all of the information we need to build a matrix that moves the vectors $\left\{ \left(\begin{array}{c}
+1\\
 0
 \end{array}\right),\left(\begin{array}{c}
-0\\\\
+0\\
 1
-\end{array}\right)\right\}$$$ to $$$\left\{ \left(\begin{array}{c}
-\cos\theta\\\\
+\end{array}\right)\right\}$ to $\left\{ \left(\begin{array}{c}
+\cos\theta\\
 \sin\theta
 \end{array}\right),\left(\begin{array}{c}
--\sin\theta\\\\
+-\sin\theta\\
 \cos\theta
-\end{array}\right)\right\}$$$ :
+\end{array}\right)\right\}$ :
 
 **//TODO: Write a 2D rotation matrix**
 
 Now, hold on. Check out what we did here: we placed the targets for the source vectors as _columns_ in the matrix, and then we took the resulting _rows_ of the matrix to do the rotation. Why did we do that? 
 
-Recall that a matrix is just a stack of dot products. How did we construct these dot products?  We just aligned all of the entries that should be affecting the _resulting_ entry in one row of the matrix. That means that when considering the resulting $$$y$$$ entry, our vectors defined _the mixture of $$$y$$$ components_ from the target vectors that we would like to see in the resulting operation. This makes sense: Think of the vectors that compose the matrix as a new coordinate system, and what we're calculating is how the 'natural' coordinate system is projected onto them.
+Recall that a matrix is just a stack of dot products. How did we construct these dot products?  We just aligned all of the entries that should be affecting the _resulting_ entry in one row of the matrix. That means that when considering the resulting $y$ entry, our vectors defined _the mixture of $y$ components_ from the target vectors that we would like to see in the resulting operation. This makes sense: Think of the vectors that compose the matrix as a new coordinate system, and what we're calculating is how the 'natural' coordinate system is projected onto them.
 
 ###### 3D Rotation Matrices
 **//TODO: OH GOD WRITE THIS**
@@ -441,7 +446,7 @@ Recall that a matrix is just a stack of dot products. How did we construct these
 This chapter introduced a different kind of math from what you were used to. But while introducing _a new thing to do things with_ we opened up a lot of unexplored dangers. Notice that we always multiplied vectors by matrices in a certain order: It's always the vector _after_ the matrix, the vector is always transposed, and any new operation applied to an existing situation always happens with a matrix to the left of our result. There's a reason for all of that: Commutativity.
 
 ##### Commmumamitativiwha?
-In high school Algebra, we used to think that $$$a\cdot b=b\cdot a$$$. No reason not to think that: The amount of uranium rods that you have times the amount of specially trained monkeys that I have equals the same amount of casualties, no matter the order of multiplication. That's because quantities are commutative, the order in which they apply operations to each other doesn't matter.
+In high school Algebra, we used to think that $a\cdot b=b\cdot a$. No reason not to think that: The amount of uranium rods that you have times the amount of specially trained monkeys that I have equals the same amount of casualties, no matter the order of multiplication. That's because quantities are commutative, the order in which they apply operations to each other doesn't matter.
 
 But, in matrixland we're not talking about things we counted - instead, we're talking about operations. And there's a difference between scaling a square by x and then rotating it by 90 degrees and doing it the other way around:
 
@@ -449,20 +454,24 @@ But, in matrixland we're not talking about things we counted - instead, we're ta
 
 What's more, doing it the other way around is not always defined. Matrices and vectors with unequal sizes have very special conditions in which they could be multiplied. We're not dealing with them now, so I'll let you read about it in Wikipedia.
 
+##### What else is weird?
+Nothing.
+
 Now grab a pack of ice, place it on your head for 15 minutes and go on reading the next part.
 
 
 ### "The Full Stack"
 #### Homogenous coordinates: Hacking 3d in 4d
-If you recall the comment in the beginning of this chapter, mathematicians are very careful when calling things linear. To a mathematician, a linear operation can do a combination of these 2 things: Rotation and Scaling (including negative scaling - "mirroring"). 
+If you recall the comment in the beginning of this chapter, mathematicians are very careful when calling things linear. In 2D, a linear operation can basically do 2 things: Rotation and Scaling (including negative scaling - "mirroring"). 
 The reason for this is that these are all operations that can be done in n dimensions to any n-dimensional shape (replace n with 3 for our example).
 
 If the entire shape lifts itself magically and moves away from the origin - it can't be done with a matrix, therefore it's not linear. This presents a problem to people who want to use matrices as an algebraic system for controlling 3d: in real life we need to move some stuff around.
 
-This problem has caused hundreds of years of agony to the openFrameworks community, until in 1827 a hacker called Möbius pushed an update to the ofMath repo: use them 4 dimensions to control a 3 dimensional shape. Here's the shtick: a 3d operation can be described as a 4d operation which doesn't do anything to the 4th dimension. Written as a matrix, we can describe it like this:
+This problem has caused hundreds of years of agony to the openFrameworks community, until in 1827 a hacker called Möbius pushed an update to the ofMäth SVN repo: use them 4 dimensions to control a 3 dimensional shape. Here's the shtick: a 3d operation can be described as a 4d operation which doesn't do anything to the 4th dimension. Written as a matrix, we can describe it like this:
 
 **//TODO: do**
 
+Now we already know that a 1-dimension Skew can move all lines in that axis in a certain direction, and that a 2D skew will do that for all things on a certain plane, so it's easy to imagine that a 3D skew will do that to 3D spaces. That's what 
 	
 #### Translation matrices
 #### SRT (Scale-Rotate-Translate) operations
