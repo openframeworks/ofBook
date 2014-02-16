@@ -499,7 +499,7 @@ int main(){
 }
 ```
 
-The output should still be `012345`. By saying `counter = counter + 1`, I am incrementing `counter` by 1. More specifically, I am using `counter` in the right-hand "addition" expression, and the result of that (one moment later) gets stored into `counter`. This seems a bit funny because it talks about `counter` during two different times. It reminds me of the movie, *Back to the Future* when Marty McFly runs into past and future versions of himself. See Figure 21.
+The output should still be `012345`. By saying `counter = counter + 1`, I am incrementing `counter` by 1. More specifically, I am using `counter` in the right-hand "addition" expression, and the result of that (one moment later) gets stored into `counter`. This seems a bit funny because it talks about `counter` during two different times. It reminds me of the movie series, *Back to the Future* in which Marty McFly runs into past and future versions of himself. See Figure 21.
 
 ![Figure 21. The future Marty uses the past Marty](img/futuremarty.png "Figure 21. The future Marty uses the past Marty")
 
@@ -599,11 +599,211 @@ There are a few more essentials to learn about variables, but we're going to tak
 
 ## If-Then
 
-[coming up next!]
+> Life is a multiple-choice, choose-your-own-adventure. *--my girlfriend Becca*
+
+Imagine riding your bicycle in the streets of your city. When you encounter intersections or forks in the road, you must decide whether to turn, go straight, or turn around based on where you are going, your urgency in getting home, and other places you may want to stop at. The next day, you may take the same route but end up taking very different streets based on the domino effect of your decisions.
+
+Your ability to judge a situation and change your behavior based on your analysis is a kind of prediction behavior that defines intelligence. A computer program can also stop, analyze, and decide how to act in a more simplified way. *Conditionals* or *branching* in code are what provides this kind of simple yet useful intelligence. With just a little bit if *If-Then-Else* in your code, you can automate very complex decision making.
+
+Figure 23 shows a generative, interactive cluster of neurons coded in OpenFrameworks for the CLOUDS Interactive Documentary.
+
+![Figure 23. Neuron simulation from CLOUDS Interactive Documentary](img/vsneurons.png "Figure 23. Neuron simulation from CLOUDS Interactive Documentary")
+
+In beginning to understand how code branches, let's imagine the code is a shopping list (code I run on myself). I've been sent to the supermarket by my grandma Ceil to pick up ingredients for *Kreplach*, the (Ashkenazi) Jewish wonton. We have family visiting from Closter, NJ and since they had the chutzpah to schlep all the way to Brighton Beach, we're going to give them the works - kugel, brisket, and even tzibele kichel to nosh while she finishes cooking (instead of the stale hamantaschen from last Purim). But the only job I have is buying the ingredients for Kreplach. Here is the shopping list:
+
+```
+flour
+kosher salt
+dozen giant brown organic eggs
+1 bottle corn oil
+4 sweet onions
+ground beef
+parsley
+pepper
+garlic
+potatoes
+scallions
+carrots
+```
+
+An experienced shopper knows that products and preferred brands are not always in stock, and so we notate the shopping list with alternative purchases in case the primary preference is not available.
+
+```
+Heckers unbleached all purpose flour (pillsbury or gold medal would be fine)
+Morton Kosher Salt
+dozen giant brown organic eggs (white eggs ok too)
+1 bottle Mazola corn oil
+4 sweet onions (white onions would be acceptable)
+ground beef (ground chicken also ok, but NO traif!)
+parsley
+pepper
+garlic
+potatoes (red rose, white rose, yukon gold) NOT Idaho or Russet, not too much shmutz
+scallions (chives will do but call me)
+carrots
+```
+
+Although the above is more realistically how one would express conditionals in a shopping list (placing them after the primary product topic), let us refactor the shopping list to C-style conditionals by using indentation, and by "wrapping" code inside some if-braces.
+
+```
+if ( they have Heckers unbleached all purpose flour ){
+	get that;
+}else if( they only have Heckers BLEACHED flour){
+	i'll settle for that over the other brands;
+}else{
+	get the pillsbury or gold metal brands;
+}
+
+get Morton Kosher Salt;
+
+if ( there are giant brown organic eggs ){
+	get a dozen of those;
+}else{
+	get a dozen of whatever eggs;
+}
+
+get 1 bottle Mazola corn oil;
+
+if ( there are sweet onions ){
+	get 4 of those;
+}
+//otherwise do nothing, I have white onions in the apartment.
+
+if(the butcher has chop meat AND that meat is not traif AND (it is chicken or it is beef) ){
+	get 2 lb of it;
+}else{
+	Boychik, call me and i'll direct you another kosher butcher in our hood;
+}
+
+get parsley;
+get pepper;
+get garlic;
+
+if(they have red rose, white rose, or yukon potatoes and they don't have a lot of shmutz){
+	get 8 of them;
+}
+
+if(they don't have scallions){
+	get chives;
+}else{
+	get scallions;
+}
+
+get carrots;
+
+```
+
+Perhaps you noticed a pattern in the above *pseudo-code*, where I define a bracing structure that looks similar to a function in that it has parentheses and curly braces. Those are if-then-else statements, and they are a type of *flow control*. Figure 24 explains the parts.
+
+![Figure 24. Anatomy of a conditional](img/conditional-anatomy.png "Figure 24. Anatomy of a conditional")
+
+The part labelled `test` is a *boolean logic* expression, and that means it ultimately results in a TRUE or FALSE answer. Let us look at some real code to see how boolean logic looks in context.
+
+```C++
+#include <math.h>
+#include <iostream>
+using namespace std;
+
+int main(){
+	int counter = 0;
+	
+	counter++;
+	cout << counter;
+	if(counter > 1){
+		cout << " is greater than 1";
+	}
+	cout << endl;
+
+	counter++;
+	cout << counter;
+	if(counter > 1){
+		cout << " is greater than 1";
+	}
+	cout << endl;
+
+	counter++;
+	cout << counter;
+	if(counter > 1){
+		cout << " is greater than 1";
+	}
+	cout << endl;
+
+	return 0;	
+}
+```
+
+Each time, I am checking to see if `counter` is greater than 1, and if that is the case, then a bit of extra text gets printed to the console. If you run this code (and I highly encourage you to do so), you would see the following output.
+
+```
+1
+2 is greater than 1
+3 is greater than 1
+```
+
+The first time it evaluates `counter > 1`, the result is false, and so the indented code does not execute. There are a couple other pieces of the if-structure worth introducing. One important one is `else`, which opens up a second block of code to execute if the condition is false.
+
+```C++
+
+if(true){
+	// this code happens if the condition is true
+}else{
+	// this code happens if it is false
+}
+```
+
+This is different from simply putting an un-braced line of code beneath the if-clause since that free-roaming line of code would execute *whether or not* the condition were true. So `else` turns out to be pretty convenient. Another similar piece is `else if` that allows you to cascade your if-then clauses in a way similar to CSS.
+
+```
+
+if(condition1){
+	// this code happens if condition1 is TRUE, then the rest is skipped.
+}else if(condition2){
+	// this code happens if condition1 was FALSE, however condition2 is TRUE.
+}else if(condition3){
+	// this code happens if condition2 and condition1 were both FALSE, however condition3 is TRUE.
+}else{
+	// this code happens if none of the 3 conditions are true
+}
+
+```
+
+Using `else if`, it's easy to build a flexible filter system for decision making.
+
+### Syntactic Sugar for Conditionals
+
+The following is debated as something worth avoiding by folks like JSLint (who are also strict about whitespace). The reason I introduce it here is because you'll see it in OpenFrameworks related code, and I want you to recognize what you are seeing. If-statements can be expressed more concisely by using the single-line syntax, which is less flexible.
+
+```C++
+if (counter > 1) cout << "yes, it's greater";
+```
+
+An if-statement with no curly braces will only "limit" the one immediately following line of code. Even with the other snap-in parts, the same "next line only" rules apply.
+
+```C++
+if (counter > 1) cout << "yes, it's greater";
+else if (counter < 10) cout << "well, it's still smaller than 10";
+else cout << "The counter was outside the 2-10 range.";
+```
+
+The above code will do the exact same thing as:
+
+```C++
+if (counter > 1) {
+	cout << "yes, it's greater";
+} else if (counter < 10) {
+	cout << "well, it's still smaller than 10";
+} else {
+	cout << "The counter was outside the 2-10 range.";
+}
+```
+
+You can even mix and match which parts of the clause are "braced" and which ones are one-liners.
+If at all possible, I recommend using the fully braced syntax for all new code in the name of fast eyeball scanning.
 
 
+### Boolean Logic
 
-
+[coming up next]
 
 
 ## Variables (part 2)
