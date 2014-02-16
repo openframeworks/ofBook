@@ -5,7 +5,7 @@ The word animation is a mideval term stemming from the Latin animare, which mean
 
 As a side note, I studied fine arts, painting and printmaking, and it was accidental that I started using computers.  The moment that I saw how you could write code to move something across the screen, even as simple as silly rectangle, I was hooked.  I began during the first dot com era working with flash / actionscript and lingo / director and have never looked back. 
 
-## animation in OF
+## animation in OF / useful concepts: 
 
 ### draw cycle 
 The first point to make about animation is that it's based on successive still frame.  In openFrameworks we have a certain loop cycle that's based roughly on game programming paradigms.  It goes like: 
@@ -50,6 +50,22 @@ Finally, there are a few functions that are useful generally for knowing about t
 - `ofGetElapsedTimeMillis()` similarly returns the elapsed time starting from 0 in milliseconds
 - `ofGetFrameNum()` returns the number of frames the software has drawn
 
+## linear movement
 
+One of the most important things to think about when it comes to animation is answering the simple question:
+
+*how do you get from point a to point b*.  
+
+For the most part in this chapter we will look at animating movement (changing position over time) but we very well could be animating any other numeric property, such as color, the width or height of a drawn shape, etc.  
+
+We will 
+
+## sin cos based movement
+
+## simulation
+
+## noise
+
+## where to go further
 
 
