@@ -272,11 +272,11 @@ ofVec3f ofVec3f::operator+( const ofVec3f& pnt ) const {
 
 naturally representing the idea of vector addition.
 
-The basic arithmetic operations, `+`, `-`, `*`, `/`,`+=`, `-=`, `*=`, `/=`, exist for both combinations of `ofVec2f`, `ofVec3f` and `ofVec4f`s and between any vector object and a scalar quantity.
+The basic arithmetic operations, `+`, `-`, `*`, `/`,`+=`, `-=`, `*=`, `/=`, exist for both combinations of `ofVec2f`, `ofVec3f` and `ofVec4f`s and between any vector object and a scalar quantity. Whenever an operation is postfixed with `=`, it modifies the left-hand side with the operation, _and only then_. The operations `+`,`-`,`*`,`/` will _always_ return a copy.
 
 Some excellent examples of operator overloading done right exist in the source files for the `ofVec` types. It's encouraged to check them out.
 
-**Warning: Overloading operators will make you go blind.** Programmers use operators without checking what they do, so bugs resulting from bad overloads take a long time to catch. If the expression `a + b` returns a reference instead of a copy, a `null` instead of a value, or doing a complex operation which may crash, you've entered a world of pain. Unless the operator can do one arithmetic thing and that alone, don't change operators. Go to Appendix III and sign a form saying you understand that.
+**Warning: Overloading operators will make you go blind.** Programmers use operators without checking what they do, so bugs resulting from bad overloads take a long time to catch. If the expression `a + b` returns a reference instead of a copy, a `null` instead of a value, or modifies one of the input values – someone will use it one day, and that someone will cry for many days. Unless the operator can do one arithmetic thing and that alone, do not overload it with a different meaning. openFrameworks may or may not have a feature that tweets for you whenever you've written a silly operator overload. [No one knows](https://code.google.com/p/keytweeter/).
 
 ##### Distance Between Points
 
@@ -466,35 +466,90 @@ Recall that a matrix is just a stack of dot products. How did we construct these
 This chapter introduced a different kind of math from what you were used to. But while introducing _a new thing to do things with_ we opened up a lot of unexplored dangers. Notice that we always multiplied vectors by matrices in a certain order: It's always the vector _after_ the matrix, the vector is always transposed, and any new operation applied to an existing situation always happens with a matrix to the left of our result. There's a reason for all of that: Commutativity.
 
 ##### Commmumamitativiwha?
-In high school Algebra, we used to think that $a\cdot b=b\cdot a$. No reason not to think that: The amount of uranium rods that you have times the amount of specially trained monkeys that I have equals the same amount of casualties, no matter the order of multiplication. That's because quantities are commutative, the order in which they apply operations to each other doesn't matter.
+In high school Algebra, we used to think that $a\cdot b=b\cdot a$. No reason not to think that: The amount of uranium rods that you have times the amount of specially trained monkeys that I have equals the same amount of casualties, no matter the order of multiplication. That's because quantities are _commutative_, the order in which they apply operations to each other doesn't matter.
 
-But, in matrixland we're not talking about things we counted - instead, we're talking about operations. And there's a difference between scaling a square by x and then rotating it by 90 degrees and doing it the other way around:
+But, in matrixland we're not talking about things we counted - instead, we're talking about operations, and _operations are generally not commutative_. because there's a difference between scaling a square by x and then rotating it by 90 degrees and doing it the other way around:
 
 **//TODO: Draw this**
 
-What's more, doing it the other way around is not always defined. Matrices and vectors with unequal sizes have very special conditions in which they could be multiplied. We're not dealing with them now, so I'll let you read about it in Wikipedia.
+What's more, doing it the other way around is not always defined. Matrices and vectors with unequal sizes have very special conditions in which they could be multiplied. We're not dealing with them now, so I'll let you read about it in Wikipedia, but it's important to know that whenever using matrices for manipulating a space, order of operands is really important.
 
 ##### What else is weird?
-Nothing.
+**Nothing.** We can still multiply the matrices and vectors in any order that we want to: $$M_{1}⋅M_{2}⋅v = \left(M_{1}⋅M_{2}\right)⋅v = M_{1}⋅\left(M_{2}⋅v\right)$$ as long as we don't change the order in which they appear. That property is called _Associativity_, and it's one of the defining properties of algebraic structures that describe geometric operations, structures which mathematicians call _Groups_. _Commutativity_ is an optional property for groups, it just happens to be a given when dealing with operations between numbers, which is why you've never been told that you need it. There's a lesson here: simulations take a lot of properties for granted. It's sometimes good to ask why.
 
 Now grab a pack of ice, place it on your head for 15 minutes and go on reading the next part.
 
 
 ### "The Full Stack"
-#### Homogenous coordinates: Hacking 3d in 4d
+#### Translation matrices
+
 If you recall the comment in the beginning of this chapter, mathematicians are very careful when calling things linear. In 2D, a linear operation can basically do 2 things: Rotation and Scaling (including negative scaling - "mirroring"). 
 The reason for this is that these are all operations that can be done in n dimensions to any n-dimensional shape (replace n with 3 for our example).
 
 If the entire shape lifts itself magically and moves away from the origin - it can't be done with a matrix, therefore it's not linear. This presents a problem to people who want to use matrices as an algebraic system for controlling 3d: in real life we need to move some stuff around.
 
+##### Homogenous coordinates: Hacking 3d in 4d
 This problem has caused hundreds of years of agony to the openFrameworks community, until in 1827 a hacker called Möbius pushed an update to the ofMäth SVN repo: use them 4 dimensions to control a 3 dimensional shape. Here's the shtick: a 3d operation can be described as a 4d operation which doesn't do anything to the 4th dimension. Written as a matrix, we can describe it like this:
 
 **//TODO: do**
 
-Now we already know that a 1-dimension Skew can move all lines in that axis in a certain direction, and that a 2D skew will do that for all things on a certain plane, so it's easy to imagine that a 3D skew will do that to 3D spaces. That's what 
-	
-#### Translation matrices
+Now we already know that a 1D Skew can move all lines in that axis in a certain direction without affecting the other dimensions, and that a 2D skew will do that for all things on a certain plane, so it's easy to imagine that a 3D skew will do that to 3D spaces embedded in a space with more dimension. Möbius figured that feature is useful, and he proposed on the bianual openFrämeworks meeting in Tübingen that all operations will be conducted in 4D space, and then projected back into 3D space, like this:
+
+$$\left(\begin{array}{ccc|c}
+1 & 0 & 0 & t_{x}\\
+0 & 1 & 0 & t_{y}\\
+0 & 0 & 1 & t_{z}\\
+\hline 0 & 0 & 0 & 1
+\end{array}\right)$$
+
+The 3D Transform vector $t$ is placed in the 4th dimension, with it's 4th entry as 1 (because 1 is neutral to multiplication). The bottom row that is added has zeroes in the $x,y,z$ entries, in order to avoid interfering with other operations. Check out what happens when a vector is multiplied by this matrix: 
+
+$$\left(\begin{array}{ccc|c}
+1 & 0 & 0 & t_{x}\\
+0 & 1 & 0 & t_{y}\\
+0 & 0 & 1 & t_{z}\\
+\hline 0 & 0 & 0 & 1
+\end{array}\right)\cdot\left(\begin{array}{c}
+x\\
+y\\
+z\\
+\hline 1
+\end{array}\right)=\left(\begin{array}{c}
+x+t_{x}\\
+y+t_{y}\\
+z+t_{z}\\
+\hline 1
+\end{array}\right)$$
+
+Now all we need to do is discard the 4th dimension to get our translated point. Quite cool, innit?
+
+Notice that because we placed a 1 at the $w$ (4th) dimension, all of the multiplication operations went through that component transparently. This trick became the standard of most computer geometry systems. Möbius actually has a lot more going in this theory: if we change that 1 into something else, we're able to simulate a projection into a camera pinhole. This chapter won't cover that fascinating part of math, but when you get to building cameras in OpenGL, keep this amazing hack in mind.
+
 #### SRT (Scale-Rotate-Translate) operations
+Now we've defined the operations we like the most to describe (sort-of) real world objects moved around in space. Let's spend a few paragraphs talking about how to combine all of the operations together.
+
+If you recall, geometric operations are _non-commutative_, which means that if we defined them in a specific order, there's no guarantee that changing the order will provide us with similar results. That means that when building a graphics system we need to exercise systematic vigilance when executing human stuff like "Turn that spindle around so I
+may see its refractions of the sun" without accidentally turning the sun around its' axis, incinerating the good people of Uranus.
+
+The way we execute that vigilance is by a predefined order for handling objects. If you grab a pen and paper it won't take too long to figure that order out:
+1. Modify the scale (if need be).
+2. Modify the orientation (if need be).
+3. Modify the position (if need be).
+4. Rejoice.
+
+Any other order will cause weird effects, like things growing and spinning off their axes (anchor point / pivot, if animation is your jam). This may seem like common sense, but Ken Perlin notes that it was only the late 80s when that system became a standard for 3d. 
+
+This set of operations is called _SRT_, or _Scale-Rotate-Translate_, because it can be described by the following sequence of matrices: $$T⋅R⋅S⋅v$$
+If you recall, we can multiply all of these matrices to get one matrix representing all the entire operation:  $$M = T⋅R⋅S$$
+
+Note that the order is from the closest to the multiplied vector to the furthest.
+
+We call this matrix $M$, because it places objects we give it in their place in the _Model_. Whenever you call `ofTranslate()`, `ofRotate()`, `ofScale()` (or equivalent) on an object, that operation is applied to the **currently active _Model_ matrix**. Whenever you execute `ofPushMatrix()`, a copy of that matrix is saved in _the matrix stack_, so that you can go back to it when neccessary. And when necessary, you will then use `ofPopMatrix()`, which will cause the current matrix $M$ to be deleted and replace it with a matrix from the top of the matrix stack. That is the entire mystery about matrices. That's it. 
+
+Later you'll learn about two similar matrices: 
+* The _View_ matrix tramsforms the result of the _Model_ matrix to simulate where our camera is supposed to be at.
+* The _Projection_ matrix applies the optical properties of the camera we defined and turns the result of the _View_ matrix from a 3D space to a 2D image. The Projection matrix is built slightly different than the _Model-View_ matrix, but if you've made it this far, you won't have trouble reading about it in a special Graphics topic.
+
 * Example: a pack of sharks swimming
 
 ### Really using normals
