@@ -753,7 +753,7 @@ if(true){
 
 This is different from simply putting an un-braced line of code beneath the if-clause since that free-roaming line of code would execute *whether or not* the condition were true. So `else` turns out to be pretty convenient. Another similar piece is `else if` that allows you to cascade your if-then clauses in a way similar to CSS.
 
-```
+```C++
 
 if(condition1){
 	// this code happens if condition1 is TRUE, then the rest is skipped.
