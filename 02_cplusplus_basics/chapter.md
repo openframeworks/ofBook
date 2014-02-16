@@ -798,13 +798,49 @@ if (counter > 1) {
 ```
 
 You can even mix and match which parts of the clause are "braced" and which ones are one-liners.
-If at all possible, I recommend using the fully braced syntax for all new code in the name of fast eyeball scanning.
+If at all possible, I recommend using the fully braced syntax for all new code in the name of fast eyeball scanning. There is also something called a *ternary operator* that looks like `a > b ? x : y`. I'll let you google that on your own if you are genuinely curious, but I should discourage the use of ternary-ifs as well because they are esoteric, not terribly portable, difficult to scale or nest, and can get confusing fast. On the other hand, I do recommend you get to know ternaries in case you run into someone else's.
 
+### Inequality Operators
+
+So far, I've glossed over that part that goes `counter > 1`. Perhaps you recall a moment in third grade when the teacher taught you the "pacman" rule of inequality, where greedy pacman wants to go chomp the bigger number, so he faces in that direction. Comparison operators in C are based on that.
+
+```C++
+a > b // a is greater than b
+a < b // a is less than b
+a >= b // a is greater-than-or-equal-to b
+a <= b // a is less-than-or-equal-to b
+a == b // a is equal to b
+```
+You will notice the use of double-equal sign to mean the original thing you thought an equal sign was supposed to be used for. A common mistake for beginning coders is the blending between single and double equal signs. Please take the time to know this difference because it will save you some mind-numbingly mysterious errors in the future.
 
 ### Boolean Logic
 
-[coming up next]
+Inequalities can be joined together with logical operators called AND, OR, and NOT, which do much the same thing they are already doing in natural English.
 
++ todo: note for artists about philosophical logic
++ todo: wisecrack about Captain Spock
+
+AND is typed out as the `&&` operator, while OR is the `||` operator. NOT is a prefixed exclamation mark, and it inverts the truth state of an expression. Here are some boolean logic expressions.
+
+```C++
+true || false             // true
+false || false            // false
+true || false || false    // true
+
+false && true             // false
+true && true              // true
+false && false            // false
+
+!true                     // false
+!false                    // true
+
+true && !(true || false)  // false
+false || true && !false   // true
+```
+
++ todo: brief history about george bool, and how he's one father of computing
++ todo: connection between numbers and booleans
++ todo: final amazing if-then-else example that uses complex boolean expressions.
 
 ## Variables (part 2)
 
