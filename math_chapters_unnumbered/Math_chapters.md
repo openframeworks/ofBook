@@ -539,8 +539,10 @@ The way we execute that vigilance is by a predefined order for handling objects.
 
 Any other order will cause weird effects, like things growing and spinning off their axes (anchor point / pivot, if animation is your jam). This may seem like common sense, but Ken Perlin notes that it was only the late 80s when that system became a standard for 3d. 
 
-This set of operations is called _SRT_, or _Scale-Rotate-Translate_, because it can be described by the following sequence of matrices: $$S⋅R⋅T⋅v$$
-If you recall, we can multiply all of these matrices to get one matrix representing all the entire operation:  $$M = S⋅R⋅T$$
+This set of operations is called _SRT_, or _Scale-Rotate-Translate_, because it can be described by the following sequence of matrices: $$T⋅R⋅S⋅v$$
+If you recall, we can multiply all of these matrices to get one matrix representing all the entire operation:  $$M = T⋅R⋅S$$
+
+Note that the order is from the closest to the multiplied vector to the furthest.
 
 We call this matrix $M$, because it places objects we give it in their place in the _Model_. Whenever you call `ofTranslate()`, `ofRotate()`, `ofScale()` (or equivalent) on an object, that operation is applied to the **currently active _Model_ matrix**. Whenever you execute `ofPushMatrix()`, a copy of that matrix is saved in _the matrix stack_, so that you can go back to it when neccessary. And when necessary, you will then use `ofPopMatrix()`, which will cause the current matrix $M$ to be deleted and replace it with a matrix from the top of the matrix stack. That is the entire mystery about matrices. That's it. 
 
