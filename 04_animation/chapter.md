@@ -52,10 +52,12 @@ Finally, there are a few functions that are useful generally for knowing about t
 
 ### objects
 
- 
-
+* ofPoint
+* object w/ update and draw functions
 
 ## linear movement
+
+### getting from point a to point b
 
 One of the most important things to think about when it comes to animation is answering the simple question:
 
@@ -84,6 +86,28 @@ which is 75% of A + 25% of B.   Essentially by taking a mix, you get from one to
 **[note: linear example code here]**
 
 *(as a side note, the function `ofMap`, which maps between an input range, uses pct internally.  it takes a value, converts it into a percentage based on the input range, and then uses that pct to find the point between the output range)*  **[note: see omer's chapter]**
+
+### curves
+
+One of the interesting properties of numbers between 0 and 1 is that they can be easily adjusted / curved.  
+
+The easiest way to see this is by raising the number to a power.  a power, as you might remember from math class, is multiplying a number by itself.  ie, 2^3 **[note: latex helpful here?]**  = `2*2*2 = 8`. Numbers between 0 and 1 have some interesting properties -- if you raise 0 to any power it equals 0 (`0x0x0x0 = 0`).  The same thing is true for 1 (`1*1*1*1 = 1`).  But if you raise a number between 0 and 1 to a power, it changes.  0.5 to the 2nd power = 0.25.
+
+Let's look at a plot of pct raised to the second power: 
+
+**[note: plot grpahic here]**
+
+**[note: better explanation of how to read the chart]**
+Think about the x value of the plot as the input and y value as the output.  If put in 0, we get out a y value of 0, if we put in 0.1, we get out a y value of 0.01, all the way to putting in a value of 1 and getting out a value of 1.   
+
+The interesting thing is is that things in the world don't move linearly.  They don't take even steps.  Roll a ball on the floor, it slows down.  It's deccellerating.  Something things speed up, like a baseball bat going from resting to swinging.  Curving pct helps us.... **[note:more]**
+
+If you raise it to a larger power it looks more extreme.  
+The second example shows an animation which uses pct again, but in this case, pct is raised to a power 
+
+http://en.wikipedia.org/wiki/12_basic_principles_of_animation#Slow_in_and_slow_out
+
+**[note: can we get rights for a screenshot of masahiko sato curves DVD ? ]**
 
 ## sin cos based movement
 
