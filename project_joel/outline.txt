@@ -9,6 +9,7 @@ Greenpeace Save The Arctic installation - http://www.youtube.com/watch?v=LwokmKq
 	- Budget and Strategy
 	- Hardware selection
 2. Development
+	- Development Hardware and Software setup
 	- Connectivity issues
 	- Edited development notes
 	- Addons used/rejected
