@@ -50,6 +50,11 @@ Finally, there are a few functions that are useful generally for knowing about t
 - `ofGetElapsedTimeMillis()` similarly returns the elapsed time starting from 0 in milliseconds
 - `ofGetFrameNum()` returns the number of frames the software has drawn
 
+### objects
+
+ 
+
+
 ## linear movement
 
 One of the most important things to think about when it comes to animation is answering the simple question:
@@ -74,7 +79,7 @@ which simplifies to `(1*A + 0*B)` or A.  If we are 25 percent of the way, it loo
 
     ((1-0.75) * A) + (0.25 * B)
     
-which is 75% of A + 25% of B.   Essentially by taking a mix, you get from one to the other.  The first example shows this
+which is 75% of A + 25% of B.   Essentially by taking a mix, you get from one to the other.  The first example shows how this is done.
 
 **[note: linear example code here]**
 
