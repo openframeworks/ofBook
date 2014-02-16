@@ -56,9 +56,29 @@ One of the most important things to think about when it comes to animation is an
 
 *how do you get from point a to point b*.  
 
-For the most part in this chapter we will look at animating movement (changing position over time) but we very well could be animating any other numeric property, such as color, the width or height of a drawn shape, etc.  
+For the most part in this chapter we will look at animating movement (changing position over time) but we very well could be animating any other numeric property, such as color, the width or height of a drawn shape, radius of a circle, etc.  
 
-We will 
+The first and probably most important lesson of animation is that we **love** numbers between 0 and 1. 
+
+**[note: love picture here]**
+
+The thing about numbers between 0 and 1 is that they are super easy to use in interesting ways.  We typically refer to these kinds of numbers as percent, and you'll see me use the shorthand `pct` in the code -- this is a floting point number between 0 and 1. If we wanted to get from point A to point B, we could use this number to figure out how much of one point and how much of another point to use.  The formula is this: 
+
+    ((1-pct) * A) + (pct * B)
+    
+to add some detail if we are 0 pct of the way from A to B, we calculate: 
+
+    ((1-0) * A) + (0 * B)
+    
+which simplifies to `(1*A + 0*B)` or A.  If we are 25 percent of the way, it looks like: 
+
+    ((1-0.75) * A) + (0.25 * B)
+    
+which is 75% of A + 25% of B.   Essentially by taking a mix, you get from one to the other.  The first example shows this
+
+**[note: linear example code here]**
+
+*(as a side note, the function `ofMap`, which maps between an input range, uses pct internally.  it takes a value, converts it into a percentage based on the input range, and then uses that pct to find the point between the output range)*  **[note: see omer's chapter]**
 
 ## sin cos based movement
 
