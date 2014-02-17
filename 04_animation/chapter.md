@@ -152,9 +152,15 @@ In Zeno's paradox, you never actually get to the target, since there's always so
 http://sol.gfxile.net/interpolation/#c1
 http://easings.net/
 
-## sin cos based movement
+## function based movement
 
-### all you need to know about sin and cos in one graph:
+### sin cos
+#### all you need to know about sin and cos in one graph:
+#### lisajous figures
+#### circular movement
+### noise
+
+
 
 ## simulation
 
@@ -196,7 +202,6 @@ In shorthand, `F = M x A`.  This means force and acceleration are linearly relat
 
 The cool, amazing, beautiful thing is that are plenty of forces we can apply to an object, such as spring forces, repulsion forces, alignment forces, etc. 
 
-## noise
 
 ## where to go further
 
