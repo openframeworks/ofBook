@@ -25,15 +25,37 @@
 	+ other flavors of C, and why they exist.
 	+ C versus other languages
 		+ note to self: don't bash java
++ Variables I
+	+ counting example
+	+ fundamental math operators ( + - * / )
+
++ conditionals
+	+ Syntactic Sugar
+	+ Inequality Operators
+	+ Boolean Logic
+
++ while loop
+	+ break
+	+ continue
++ for loop
+	+ break
+	+ continue
+
++ returning early from a function
+
 	
 ===
 	
 # things i still need to talk about
 
-+ Variables
+
+
+
+
+    
++ Variables II
 	+ some basic data types (int, char, float)
-	+ counting example
-	+ fundamental math operators ( + - * / )
+	
 	+ computer science operators
 		+  modulo
 		+ bitwise math
@@ -42,12 +64,7 @@
 	+ some less basic data types (unsigned, double, long, short)
 	+ converting between these data types
 	
-+ conditionals
-+ returning early from a function
-+ for loop
-+ while loop
-	+ break
-	+ continue
+
 + memory addressing
 	+ arrays
 	+ stack vs. heap
