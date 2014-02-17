@@ -145,7 +145,7 @@ int * p = &i;
 
 And what we get in memory is something like:
 
-<img src="https://rawgithub.com/openframeworks/ofBook/master/16_memory/int_i_equals_0.svg" height="300"/>
+<img src="https://rawgithub.com/openframeworks/ofBook/master/16_memory/pointer.svg" height="300"/>
 
 A pointer usually occupies 4 bytes, we are representing it as 1 byte only to make things easier to understand, but as you can see it's just another variable, that instead of containing a value contains a memory address that points to a value that's why it's called pointer.
 
