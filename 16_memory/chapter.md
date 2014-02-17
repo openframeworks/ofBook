@@ -54,7 +54,7 @@ When you create variables in a program, even in c++, you can't really access all
 
 How does that happen usually? Well most of the time you just don't try to access memory addresses by their number, so how's it possible that sometimes you try to access a variable and you get a segmentation fault. Most of the time this happens because you try to access a varible that doesn't exist anymore, usually because you stored a pointer to a memory area and then free or move that memory somewhere else. We'll talk in more detail about this later
 
-## Stack variables, variables in functions vs variables in objects ## 
+## Stack variables, variables in functions vs variables in objects 
 
 As we said at the beginning of the chapter there's two types of memory in c++ the stack and the heap. Let's talk first about the stack since that's the easiest type of memory to use and what you'll use more frequently in openFrameworks.
 
