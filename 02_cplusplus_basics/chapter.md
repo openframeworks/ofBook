@@ -2081,6 +2081,17 @@ You may have noticed something different in the bouncing ball example. There wer
 Lorem ipsum dolor sit amet, consectetur adipisicing elit
 
 
++ some basic data types (int, char, float)
+
++ computer science operators
+	+  modulo
+	+ bitwise math
+		+ interlude about how `cout` overloads `<<`
+	+ boolean logic
++ some less basic data types (unsigned, double, long, short)
++ converting between these data types
+
+
 ===
 
 + memory addressing

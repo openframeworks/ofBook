@@ -33,12 +33,6 @@
 	+ Syntactic Sugar
 	+ Inequality Operators
 	+ Boolean Logic
-	
-===
-	
-# things i still need to talk about
-
-
 
 + while loop
 	+ break
@@ -48,6 +42,14 @@
 	+ continue
 
 + returning early from a function
+
+	
+===
+	
+# things i still need to talk about
+
+
+
 
 
     
