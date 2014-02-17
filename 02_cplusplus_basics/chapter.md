@@ -303,7 +303,7 @@ If I ask my father nicely, he will tell stories about his days at Bell Labs in M
 ![Figure 15. Bell Labs punch card from the mid-1960s, courtesy of Lucent](img/bell1.gif "Figure 15. Bell Labs punch card from the mid-1960s, courtesy of Lucent")
 
 
-Thompson and Ritchie initiated the development of the Unix operating system in effort to improve these original problems (and provide a useful jig with which they could create their game "Space Travel"). Part of what made Unix attractive was that its heart was written in C, instead of the lower level assembly language - and that made it more portable. The birth of the C language happened along-side the birth of Unix. Hence, the present-day ubiquity of Unix-like OSes may explain the importance of C and its derivative languages.
+Thompson and Ritchie initiated the development of the Unix operating system in effort to improve these original problems (and provide a useful jig with which they could create their game "Space Travel"). Part of what made Unix attractive was that its heart was written in C, instead of the lower level assembly language - and that made it more portable. Back then, every new machine invented needed to have an assembly language specific to it - that was always the first job of its users. Because Thompson and Ritche ported Unix over to C, it made Unix very portable - giving it a very good chance to spread virally. The birth of the C language happened along-side the birth of Unix. Hence, the present-day ubiquity of Unix-like OSes may explain the importance of C and its derivative languages.
 
 A decade later, Bjarne Stroustrup created a new strain of the C language in order to update it with a new paradigm called *object oriented programming* which introduces an intermediary container between the function and its program called a *class*. The class system allows a program to do special skateboard tricks that you can read about in the ***OOPS!*** chapter. Since C++ is close enough to C, compiling compatibly with it (if you know what you're doing), C++ rides the popularity of C and Unix. C++ gets its name because putting `++` after something in C means adding 1 to it (or *incrementing* it). C++ is the C language, plus one paradigm. C++ is considered by many to be the most popular programming language of all time.
 
@@ -2051,7 +2051,7 @@ If you were able to follow along this far, then give yourself another hug becaus
 
 ## Next Steps
 
-What you know so far is powerful enough to write a bouncing ball, but we still have more to go. What if we want the ball to travel slower than 1 pixel per frame? We would need to use fractions somehow. What if we want the ball to leave trails? We would need some way of remembering the pixel values. These skills and more are coming up before the end of the chapter. The previous bouncing ball excercise was a way for you to test yourself and see if you understand each part of the language. It was also a way for you to put all those pieces together and see how they work as one. If you found it intimidating or confusing, please go back and try to review the parts of this chapter that cover those topics you are fuzzy about before continuing. On the other hand, if you feel like you've got this and want to practice, then here are some bonus excercises to help you develop your C++ skills.
+What you know so far is powerful enough to write a bouncing ball, but we still have more to go. What if we want the ball to travel slower than 1 pixel per frame? We would need to use fractions somehow. What if we want the ball to leave trails? We would need some way of remembering the pixel values. These skills and more are coming up before the end of the chapter. The previous bouncing ball excercise was a way for you to test yourself and see if you understand each part of the language. It was also a way for you to put all those pieces together and see how they work as one. If you found it intimidating or confusing, please go back and try to review the parts of this chapter that cover those topics you are fuzzy about before continuing. On the other hand, if you feel like you have got this and want to practice, then here are some bonus excercises to help you develop your C++ skills.
 
 + Expand the canvas and render the ball like the below example, adjusting the scene so no part of the ball falls out of frame.
 ```
@@ -2062,7 +2062,7 @@ What you know so far is powerful enough to write a bouncing ball, but we still h
 .......
 ```
 
-+ Change the diagonal pattern of the ball so it's not always travelling in 45 degree angles.
++ Change the diagonal pattern of the ball so it is not always travelling in 45 degree angles.
 + Try adding a second ball to the scene and render it differently than the first.
 + If the two balls ever collide, print "YOU WIN" and stop the program.
 + Try rendering the balls as larger circles using the `distance()` function from a previous example.
@@ -2072,7 +2072,23 @@ What you know so far is powerful enough to write a bouncing ball, but we still h
 
 ### Variables have a scope.
 
-You may have noticed something different in the bouncing ball example. There were variables declared outside of the functions. 
+You may have noticed something different in the bouncing ball example. There were variables declared outside of the functions. In previous examples, I had declared variables inside the functions. Other variables were declared inside the parentheses of functions as arguments, and inside the for-loop as an iterator. These variables are declared in different *scopes* of the code. We talk about scope by saying a variable is *local* (existing only inside my immediate curly braces) or *global* (existing for the entire program). Intuitively, we can think about global and local variables in the geographic sense of the words "local" and "global." Let us apply this idea to musical trends.
+
+Something that is local (a local concert by a local band) will happen in a smaller, lesser known location - and will happen by a lesser known (but just as important!) local band. A world traveller may come to see the show but since she goes to so many shows in so many locations, she forgets about our local band. Because she forgets about the local band, it gives the band an opportunity to change their name from "From First to Last" to "Skrillex", and adopt a fresher musical genre. When our world traveller returns to the same city to see the the same local band, it has benefited from a fresh new start. This fresh new start is why we use local variables. Their ability to reset (their values forgotten quickly) is incredibly useful to us. Global variables, on the other hand, are classical musicians like Ludwig van Beethoven or Wolfgang Amadeus Mozart, whose names ring far and wide about the Earth (and possibly beyond), never to be forgotten. Their music was appreciated long ago and will continue to be appreciated, in many countries. Their musician names are known globally, and persist globally. This absolute stability of a global variable is what makes them so useful, in contrast to a more local variable. We need both global and local variables to make the whole system work, just like we need both global and local musicians for the health of music!
+
+![Figure 26. Global versus Local, with apologies to Sonny Moore ](img/global-local.png "Figure 26. Global versus Local with apologies to Sonny Moore")
+
+### Apologies
+
+I know it is hip to hate on Skrillex, so remember that his career has just begun. He has gone from local to global in a small amount of time, which is impressive. I am sure he will transform into an even more globally recognized musician than he already is, and then we will all stop hating on him. On the other hand, people have been hating on Mozart's appearance and character for 256 years (a more globally persisting rejection). Like making music, someone will always tell you you're not a real coder. Don't let that stop you. Having read the book "Coders at Work" in which Peter Seibel interviews the top programmers and computer scientists, I was pleasantly surprised to learn that people came from a diversity of backgrounds, and some saw themselves as architects or writers. 
+
+Variables at a more local scope are incredibly impactful and important because they deal with that which is closest to us, a bit like being closer to ones nerves. If we did everything using global variables all the time, we would have collisions - and perhaps remember too much garbage. Code and computer memory would grow tangled like the ratty hair of electronic musician. The idea of a local variable is newer, and was introduced for organization reasons. Programmers have made good efforts to avoid tangled, confusing code - and one way to do it is through keeping variables local.
+
+When dealing with nested clauses in code, global and local are less black and white. A variable declared at various locations within the curly brace garden can be viewed as "slightly more global" or "much more local", as in figure 27.
+
+![Figure 27. Locality](img/global-local-circles.png "Figure 27. Locality")
+
+Let us see how this looks in code.
 
 ### Fundamental Types
 
@@ -2080,14 +2096,12 @@ You may have noticed something different in the bouncing ball example. There wer
 
 Lorem ipsum dolor sit amet, consectetur adipisicing elit
 
+===
 
 + some basic data types (int, char, float)
-
 + computer science operators
-	+  modulo
 	+ bitwise math
 		+ interlude about how `cout` overloads `<<`
-	+ boolean logic
 + some less basic data types (unsigned, double, long, short)
 + converting between these data types
 
