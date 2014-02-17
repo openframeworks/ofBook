@@ -44,7 +44,7 @@ i = 0;
 
 Our memory will look like:
 
-<img src="int_i_equals_0.svg" height="100"/>
+<img src="https://rawgithub.com/openframeworks/ofBook/master/16_memory/int_i_equals_0.svg" height="300"/>
 
 The order in which the bytes that form the int are layed out in the memory depends on the architecture of our computer, you'll prpbably seen [little endian and big endian](http://en.wikipedia.org/wiki/Endianness) mentioned sometime. Those terms refer to how the bytes of a data type are ordered in memory, if the most significative bytes come first or last. Most of the time we don't really need to know about this order but most modern computer architectures use little endian.
 
