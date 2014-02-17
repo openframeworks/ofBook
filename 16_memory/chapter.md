@@ -440,7 +440,6 @@ ofVec2f averagePosition(const vector<Particle> & ps){
     }
     return average/float(ps.size());
 }
-
 vector<Particle> ps;
 ...
 ofVec2f averagePos = averagePosition(ps);
