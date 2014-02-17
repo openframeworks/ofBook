@@ -297,7 +297,7 @@ p2 = p1;
 Well as before c++ will copy the contents of p1 on p2, the contents of p1 are an ofVec2f which consits of 2 floats x and y and then a pointer to a ParticleSystem, and that'w what gets copied, the ParticleSystem itself won't get copied only the pointer to it, so p2 will end up having a copy of the position of p2 and a pointer to the same ParticleSystem but we'll have only 1 particle system.
 
 
-<img src="https://rawgithub.com/openframeworks/ofBook/master/16_memory/object_with_pointers.svg" height="300"/>
+<img src="https://rawgithub.com/openframeworks/ofBook/master/16_memory/object_pointers.svg" height="300"/>
 
 The fact that things are copied by default and that objects can be stored in the stack as oposed to being always pointer has certain adavantages. For example, in c++ a vector or an array of particles like the ones we've used in the last example will look like:
 
