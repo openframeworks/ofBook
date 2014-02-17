@@ -28,21 +28,31 @@ Arduino has a built-in library which handles most of the back-end processes for 
 
 The speed at which data is transmitted between the Arduino and your software is measured in bits per second, or bps, a fairly self-explanatory unit of measurement.  The rate of bits per second is commonly referred to as the baud rate, and will vary based on your application.  For example, the standard baud rate of 9600bps will transfer data more slowly than a rate of 115200, but the faster baud rate may have more issues with byte scrambling.
 
-Serial library + serial communication
-Baud rate = bits per second = serial "frequency"
-Serial.println("Hello world!");
 
 **DIGITAL AND ANALOG INPUT / OUTPUT**
 
-Digital read / write - will also be binary (1 or 0) -- use a pushbutton
-Analog read - ADC analog-digital converter chip on pins A0-A5
-use a photoresistor / light sensor - this will convert the resistance coming in to a value between 0 and 1KB, or 0 and 1023
-** delay as a clearing tool - delay 5 or 10 ms between loops for the converter to settle / clear
+*basic notes - flesh this section out more*
 
-delay because of electrical noise / jitter from the Atmega analog pin
+Digital read / write - will also be binary (1 or 0) -- use a pushbutton
+
+Analog read - ADC analog-digital converter chip on pins A0-A5; requires small delay because of electrical noise / jitter from the Atmega analog pin
+
+use a photoresistor / light sensor - this will convert the resistance coming in to a value between 0 and 1KB, or 0 and 1023
+
+**USING SERIAL MONITOR WITH ARDUINO**
+
+*basic notes - flesh this section out more*
+
+The Arduino IDE has a built-in Serial monitor, which enables you to "tune in" to the data coming across a serial port at a specified baud rate. 
+
+Serial.println("Hello world!");
+
 Serial.println(incoming value)
+
 Convert incoming value to an outgoing value
+
 PWM (pulse width modulation) - on pwm pins
+
 map()
 
 **USING SERIAL FOR COMMUNICATION BETWEEN OPENFRAMEWORKS AND ARDUINO**
@@ -153,3 +163,11 @@ Because I'm controlling activity with keyboard keys, I'm going to use the `void 
 	}
 	
 When all the parts are together, run the app and toggle your UP and DOWN arrow keys to turn the on-board LED on your Arduino on and off!  You can also put in a 3mm or 5mm LED on pin 13 to make the effect more obvious.  Remember that pin 13 is the only Arduino pin with a built-in resistor, so if you want to add LEDs or other components on other pins, you'll need to build a full circuit with resistors to avoid burning out your parts.
+
+**still to come**
+
+*checking for pin activity*
+
+*analog input, example with receiving input and mapping it into a program graphic (potentiometer game)*
+
+*servo control with mouse*
