@@ -475,6 +475,7 @@ ofVec2f & averagePosition(const vector<Particle> & ps){
     average/=float(ps.size());
     return average;
 }
+```
 
 Will actually compile but will probably result in a segmentation fault at some point or even just work but will get weird values when calling this funciton. The problem is that we are creating the variable `average` in the stack so when the function returns it'll be deleted from memory, the reference we return will be pointing to a memory area that is not reserved anymore for average and as soon as it get overwritten we'll get invalid values or a pointer to a memory area that doesn't belong to our program anymore.
 
@@ -482,7 +483,7 @@ This is one of the most annoying problems in c++ it's called dangling pointers o
 
 More modern langauges solve this with diferent strategies, for example Java won't let this happen since objects are only deleted once the last reference to them goes out of scope but it uses something called a garbage collector that from time to time goes through the memory looking for objects which have no more references pointing to them, and deletes them. This solves the problem but makes it hard to know when objects are going to get really deleted. c++ in it's latest version, c++11, and more modern languages try to solve this using new kinds of pointers that define ownership of the object, will talk about it in the latest section of this chpater, smart pointers.
 
-## Variables in heap,  ##
+## Variables in the heap ##
 
 Now that we now the syntax and semantics of pointers lets see how to use the heap. The heap is an area of memory common to all of our application, any function can create variables in this space and share it with others, to use it we need a new keyword `new`:
 
