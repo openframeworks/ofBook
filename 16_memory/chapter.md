@@ -265,7 +265,7 @@ In c++, instead when we do `b2 = b1` we are actually copying the values of the v
 
 This is more or less what memory would look like in Java and C++:
 
-<img src="https://rawgithub.com/openframeworks/ofBook/master/16_memory/objects_java_c++.svg" height="300"/>
+<img src="https://rawgithub.com/openframeworks/ofBook/master/16_memory/objects_java_c.svg" height="300"/>
 
 As you can see in c++ objects in memory are just all their member variables one after another. When we make an object variable equal to another, by default, c++ copies all the object to the left side of the equal operator.
 
