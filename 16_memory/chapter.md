@@ -26,7 +26,7 @@ Internally the computer doens't really now about that memory area as i but as a 
 
 When we create a variable like `int i` we are telling our program to reserve 4 bytes of memory, associate the address of the first byte of those 4 to the variable name `i` and restrict the type of data that we are going to store in those 4 bytes to only ints.
 
-![int i](int_i.svg)
+<img src="https://rawgithub.com/openframeworks/ofBook/master/16_memory/int_i.svg" height="100"/>
 
 Usually memory addresses are represented in [hexadecimal](http://en.wikipedia.org/wiki/Hexadecimal). In c++ you can get the memory address of a variable by using the `&` operator, like:
 
