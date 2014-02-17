@@ -145,7 +145,7 @@ int * p = &i;
 
 And what we get in memory is something like:
 
-<img src="int_i_equals_0.svg" height="100"/>
+<img src="https://rawgithub.com/openframeworks/ofBook/master/16_memory/int_i_equals_0.svg" height="300"/>
 
 A pointer usually occupies 4 bytes, we are representing it as 1 byte only to make things easier to understand, but as you can see it's just another variable, that instead of containing a value contains a memory address that points to a value that's why it's called pointer.
 
@@ -158,7 +158,7 @@ int i;
 ```
 We get a memory layout like:
 
-<img src="int_i.svg" height="100"/>
+<img src="https://rawgithub.com/openframeworks/ofBook/master/16_memory/int_i.svg" height="300"/>
 
 As we see there's no value in that memory area yet. In other languages like processing doing something like:
 
@@ -265,7 +265,7 @@ In c++, instead when we do `b2 = b1` we are actually copying the values of the v
 
 This is more or less what memory would look like in Java and C++:
 
-<img src="objects_java_c++.svg" height="100"/>
+<img src="https://rawgithub.com/openframeworks/ofBook/master/16_memory/objects_java_c++.svg" height="300"/>
 
 As you can see in c++ objects in memory are just all their member variables one after another. When we make an object variable equal to another, by default, c++ copies all the object to the left side of the equal operator.
 
@@ -297,7 +297,7 @@ p2 = p1;
 Well as before c++ will copy the contents of p1 on p2, the contents of p1 are an ofVec2f which consits of 2 floats x and y and then a pointer to a ParticleSystem, and that'w what gets copied, the ParticleSystem itself won't get copied only the pointer to it, so p2 will end up having a copy of the position of p2 and a pointer to the same ParticleSystem but we'll have only 1 particle system.
 
 
-<img src="object_with_pointers.svg" height="120"/>
+<img src="https://rawgithub.com/openframeworks/ofBook/master/16_memory/object_with_pointers.svg" height="300"/>
 
 The fact that things are copied by default and that objects can be stored in the stack as oposed to being always pointer has certain adavantages. For example, in c++ a vector or an array of particles like the ones we've used in the last example will look like:
 
