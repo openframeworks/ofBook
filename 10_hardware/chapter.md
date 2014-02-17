@@ -153,3 +153,11 @@ Because I'm controlling activity with keyboard keys, I'm going to use the `void 
 	}
 	
 When all the parts are together, run the app and toggle your UP and DOWN arrow keys to turn the on-board LED on your Arduino on and off!  You can also put in a 3mm or 5mm LED on pin 13 to make the effect more obvious.  Remember that pin 13 is the only Arduino pin with a built-in resistor, so if you want to add LEDs or other components on other pins, you'll need to build a full circuit with resistors to avoid burning out your parts.
+
+**still to come**
+
+*checking for pin activity*
+
+*analog input, example with receiving input and mapping it into a program graphic (potentiometer game)*
+
+*servo control with mouse*
