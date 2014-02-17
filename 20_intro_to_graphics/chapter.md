@@ -137,11 +137,11 @@ And add this into the `setup` function of your source file (.cpp):
 Now that the boolean variable is set up, add these lines to your `mousePressed` and `mouseReleased` functions:
 
 	void testApp::mousePressed(int x, int y, int button){
-	    if (button == OF_MOUSE_BUTTON_LEFT) isLeftMousePressed = true;
+		if (button == OF_MOUSE_BUTTON_LEFT) isLeftMousePressed = true;
 	}
 	
 	void testApp::mouseReleased(int x, int y, int button){
-	    if (button == OF_MOUSE_BUTTON_LEFT) isLeftMousePressed = false;
+		if (button == OF_MOUSE_BUTTON_LEFT) isLeftMousePressed = false;
 	}
 
 Whenever a button on the mouse is pressed or released, we want to check if that button is the left mouse button.  If it is, then we can adjust our `isLefMousePressed` boolean appropriately.  The `button` variable is an integer that identifies which button is pressed/released, and openFrameworks provides some handy constants that we can use to identify the button in a human-readable way (`OF_MOUSE_BUTTON_LEFT`, `OF_MOUSE_BUTTON_MIDDLE` and `OF_MOUSE_BUTTON_RIGHT`).  If you really wanted, you *could* just say `button == 0` to test for whether the pressed/released button is the left mouse button.
@@ -149,9 +149,9 @@ Whenever a button on the mouse is pressed or released, we want to check if that 
 Let's hop into the `draw` function and start making use of our mouse information:
 
 	if (isLeftMousePressed) {
-	    ofSetColor(255);
-	    ofSetRectMode(OF_RECTMODE_CENTER);
-	    ofRect(mouseX, mouseY, 50, 50);
+		ofSetColor(255);
+		ofSetRectMode(OF_RECTMODE_CENTER);
+		ofRect(mouseX, mouseY, 50, 50);
 	}
 
 [`ofSetRectMode`](http://www.openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofSetRectMode "ofSetRectMode Documentation Page") allows us to control how the x and y positions we pass into `ofRect` are used to draw a rectangle.  Like with the mouse button constants, openFrameworks provides some rectangle mode constants for us to use: `OF_RECTMODE_CORNER` and `OF_RECTMODE_CENTER`.  By default rectangles are drawn by interpreting the x and y values you pass to it as the coordinates of the upper left corner (`OF_RECTMODE_CORNER`).  For our purposes, it is more convient for us to specify the center of the rectangle (`OF_RECTMODE_CENTER`) so that our rectangle is centered over the mouse position.  So we draw the center of our white, 50 x 50 rectangle at the mouse position using `mouseX` and `mouseY`.
@@ -177,16 +177,16 @@ Remember that we are using grayscale colors and that they take on values between
 So whenever you are done drawing weird rectangle snakes, we can move on to adding repetition.  Instead of drawing a single rectangle every frame during which the left mouse button is pressed, we can draw a burst of randomized rectangles.  To create that burst, we are going use a for loop to generate a set some number of rectangles where each rectangle's parameters are randomly chosen from a set of values.  So what can we randomize?  Grayscale color, width and height are easy candidates.  We can also use a small positive or negative value to randomly offset each rectangle from mouse position.  Modify your `draw` function to look like this:  
 
 	if (isLeftMousePressed) {
-	    ofSetRectMode(OF_RECTMODE_CENTER);
-	    int numRects = 10;
-	    for (int r=0; r<numRects; r++) {
-	        ofSetColor(ofRandom(50, 255));
-	        float width = ofRandom(5, 20);
-	        float height = ofRandom(5, 20);
-	        float xoffset = ofRandom(-40, 40);
-	        float yoffset = ofRandom(-40, 40);
-	        ofRect(mouseX+xoffset, mouseY+yoffset, width, height);
-	    }
+		ofSetRectMode(OF_RECTMODE_CENTER);
+		int numRects = 10;
+		for (int r=0; r<numRects; r++) {
+			ofSetColor(ofRandom(50, 255));
+			float width = ofRandom(5, 20);
+			float height = ofRandom(5, 20);
+			float xoffset = ofRandom(-40, 40);
+			float yoffset = ofRandom(-40, 40);
+			ofRect(mouseX+xoffset, mouseY+yoffset, width, height);
+		}
 	}
 
 But let's add one more thing before you hit run.  Into `setup`, add:
@@ -208,14 +208,14 @@ So where does this leave us in terms of our code?  If we start at the mouse posi
 **[Note: Explain the trig conversion from polar to cartesian, or point to the math chapter section?]**
 
 	for (int r=0; r<numRects; r++) {
-	    ofSetColor(ofRandom(50, 255));
-	    float width = ofRandom(5, 20);
-	    float height = ofRandom(5, 20);
-	    float angle = ofRandom(2.0*PI);
-	    float distance = ofRandom(35);
-	    float xoffset = cos(angle) * distance;
-	    float yoffset = sin(angle) * distance;
-	    ofRect(mouseX+xoffset, mouseY+yoffset, width, height);
+		ofSetColor(ofRandom(50, 255));
+		float width = ofRandom(5, 20);
+		float height = ofRandom(5, 20);
+		float angle = ofRandom(2.0*PI);
+		float distance = ofRandom(35);
+		float xoffset = cos(angle) * distance;
+		float yoffset = sin(angle) * distance;
+		ofRect(mouseX+xoffset, mouseY+yoffset, width, height);
 	}
 
 **[Note: explain radians vs degrees]**
@@ -268,18 +268,18 @@ We are going to reorganize the `draw` function, so that it looks like this:
 	// If left mouse button pressed, draw the appropriate brush
 	if (isLeftMousePressed) {
 	
-	if (drawingMode == rectangleMode) {
-	    // Insert the rectangle drawing code you wrote here
-	}
-	
-	else if (drawingMode == circleMode) {
-	}
-	
-	else if (drawingMode == lineMode) {
-	}
-	
-	else if (drawingMode == triangleMode) {
-	}
+		if (drawingMode == rectangleMode) {
+			// Insert the rectangle drawing code you wrote here
+		}
+		
+		else if (drawingMode == circleMode) {
+		}
+		
+		else if (drawingMode == lineMode) {
+		}
+		
+		else if (drawingMode == triangleMode) {
+		}
 	}
 
 And for getting keyboard inputs, we are going to make use of the [`keyPressed(int key)`](http://openframeworks.cc/documentation/application/ofBaseApp.html#!show_keyPressed keyPressed "Documentation Page") function that is already built into your openFrameworks code.  Like `mousePressed`, this function is called any time a key is pressed.  We just need to use that integer that is passed in to keyPressed to switch our `drawingMode`.  "r" for rectangle mode, "c" for circle mode, etc.  
@@ -312,12 +312,12 @@ Now we can start working on our `draw` function.  We will use the `angle`, `dist
 	int alpha = 3;
 	int maxOffsetDistance = 100;
 	for (int radius=maxRadius; radius>0; radius-=radiusStepSize) {
-	    float angle = ofRandom(2.0*PI);
-	    float distance = ofRandom(maxOffsetDistance);
-	    float xoffset = cos(angle) * distance;
-	    float yoffset = sin(angle) * distance;
-	    ofSetColor(255, alpha);
-	    ofCircle(mouseX+xoffset, mouseY+yoffset, radius);
+		float angle = ofRandom(2.0*PI);
+		float distance = ofRandom(maxOffsetDistance);
+		float xoffset = cos(angle) * distance;
+		float yoffset = sin(angle) * distance;
+		ofSetColor(255, alpha);
+		ofCircle(mouseX+xoffset, mouseY+yoffset, radius);
 	}
 
 The result is something like drawing with glowing light.  You can play with the maxRadius, radiusStepSize, alpha and maxOffsetDistance to get make that glowing effect stronger, weaker, narrower or wider.
@@ -380,18 +380,178 @@ What about using outlines instead of solid shapes inserting `ofNoFill();` into y
 
 **[Note: Why does the hue break when using alpha == 1?]**
 
-	int numShapes = 50;
-	int minLength = 50;
-	int maxLength = 250;
-	for (int i=0; i<numShapes; ++i) {
-	    float distance = ofRandom(minLength, maxLength);
-	    float angle = ofRandom(2.0*PI);
-	    float xoffset = cos(angle) * distance;
-	    float yoffset = sin(angle) * distance;
-	    float alpha = ofMap(distance, minLength, maxLength, 50, 0);
-	    ofSetColor(255, alpha);
-	    ofLine(mouseX-xoffset/2.0, mouseY-yoffset/2.0, mouseX+xoffset/2.0, mouseY+yoffset/2.0);
+Rectangles, check.  Circle and ellipses, check.  Lines.  We're all familiar with an asterisk, right?  We are going to create a brush that draws a bunch of lines that all intersect at their midpoints - something like an asterisk - and look like a twinkling star.  
+
+The code you've used before is almost all that you need to create this brush.  We will draw a set of randomly sized lines that extend out from the mouse position in random directions.  One new wrinkle, if we want our brush to look "twinkly", is that we want our brush to be brightest in the center and fade towards the periphery.  So let's add this in the line brush section of the `draw` function:
+
+	int numLines = 30;
+	int minRadius = 25;
+	int maxRadius = 125;
+	for (int i=0; i<numLines; ++i) {
+		float distance = ofRandom(minRadius, maxRadius);
+		float angle = ofRandom(2.0*PI);
+		float xoffset = cos(angle) * distance;
+		float yoffset = sin(angle) * distance;
+		float alpha = ofMap(distance, minRadius, maxRadius, 50, 0);
+		ofSetColor(255, alpha);
+		ofLine(mouseX, mouseY, mouseX+xoffset, mouseY+yoffset);
 	}
+
+What have we done with the alpha?  We've introduced a new function called ['ofMap'](http://www.openframeworks.cc/documentation/math/ofMath.html#show_ofMap "ofMap Documentation Page").  This provides a quick way to do a linear interpolation **[note: link to math]**.  To get a "twinkle," We want our shortest lines to be the most opaque and our longer lines to be the most transparent.  We want to tie the alpha parameter to the distance parameter.  `ofMap` takes a value from one range and maps it into another range like this: `ofMap(float value, float inputMin, float inputMax, float outputMin, float outputMax)`.  We tell it that distance is a value in-between minRadius and maxRadius and that we want it mapped such a distance value of 125 (maxRadius) yields an alpha value of 50 and a distance value of 25 (minRadius) yields an alpha value of 0.  The longer the line, the more transparent the color.
+
+If you wanted to, you could also play with the line thickness:
+	
+	ofSetLineWidth(ofRandom(1.0, 5.0));
+
+Just remember that if you change the line width here, you will need to go to your other brushes and set the line width back to 1. 
+
+**[Note: maybe expand upon linking variables together - now that you know how to do this, what could you have done with your prior brushes to make them cooler?]**
+
+![Line Star Brush](images/intrographics_linestars.png "Results of using the line brush")
+
+Whew, time for the last brush from predefined shapes - the triangle!  The general idea for this brush is to draw a bunch of randomized triangles that appear to be directed out from the mouse position.  Like this:
+
+![Triangle Brush Sample](images/intrographics_trianglebrushsample.png "Sample how the triangle brush will look")
+
+But to be able to get to that, we will need to introduce [`ofVec2f`](http://openframeworks.cc/documentation/math/ofVec2f.html "ofVec2f Documentation Page").  We've been defining a point in space by keeping two separate variables - one for the x position and one for the y position.  A triangle is defined by three points, so we would end up with six separate variables if we continued with our current tactic.  `ofVec2f` is a vector, and it allows us to hold both the x and y coordinates in one variable (and comes with some handy math operations).  You can use an ofVec2f variable like this:
+
+	ofVec2f mousePos(mouseX, mouseY);
+	
+	// Access the x and y coordinates like this: 
+	cout << "Mouse X: " << mousePos.x << endl;
+	cout << "Mouse Y: " << mousePos.y << endl;
+	
+	// Or you can modify the coordinates like this:
+	float xoffset = 10.0;
+	float yoffset = 30.0;
+	mousePos.x += xoffset;
+	mousePos.y += yoffset;
+	
+	// But you can do what we just did above by adding or subtracting two vectors directly
+	ofVec2f offset(10.0, 30.0);
+	mousePos += offset;
+	
+**[Note: this may need more description; division/mult, scaler vs vector]**
+
+ofVec2f isn't that scary, right?  And it is quite useful.  So let's start using it to build towards the triangle brush.  First step is to draw a triangle at the mouse cursor.  Specifically, we are going to draw an isoceles triangle:
+
+![Iscoceles Triangle](http://mathworld.wolfram.com/images/eps-gif/IsoscelesTriangle_800.gif "Image of an iscoceles triangle from wolfram")
+
+**[Note: Stolen graphics from wolfram, generate something similar later]**
+
+An isoceles triangle is one that has two sides that are of equal length (labeled as b) and one side of a different length (labeled a).  You can also see that the height (labeled h) is drawn in the figure.  We are going to use draw a skinny triangle using one side (a) and the height (h).  It will become important later, but we are going to draw our triangle starting from the mouse cursor and pointing to the right.  Add these lines to the triangle section of your `draw` function:
+
+	ofVec2f mousePos(mouseX, mouseY);
+	
+	// Define the parameters of the triangle
+	float triangleHeight = 100;
+	float triangleSide = triangleHeight/2.0;
+	
+	// Define a triangle around the origin (0,0)
+	ofVec2f p1(0, triangleSide/2.0);
+	ofVec2f p2(triangleHeight, 0);
+	ofVec2f p3(0, -triangleSide/2.0);
+	
+	// Shift the triangle to the mouse position
+	p1 += mousePos;
+	p2 += mousePos;
+	p3 += mousePos;
+	
+	ofSetColor(255, 50);
+	ofTriangle(p1, p2, p3);
+
+So we are defining the three points of the triangle using three points set relative to the mouse position.  If all goes well, you will end up with something like this:
+
+![Single Triangle Brush](images/intrographics_singletrianglebrush.png "Results of using the single triangle brush")
+
+You've used vectors!  Now, we are going to want to be able to rotate our triangles to point in any direction.  Previously, we've fearlessly used trigonometry (sin and cos) for our rotations.  But! `ofVec2f` has a [`rotate`](http://www.openframeworks.cc/documentation/math/ofVec2f.html#show_rotate "ofVec2f's rotate function documentation page") function.  Let's try adding a rotation into our code:
+
+	ofVec2f mousePos(mouseX, mouseY);
+	
+	// Define the parameters of the triangle
+	float triangleHeight = 100;
+	float triangleSide = triangleHeight/2.0;
+	
+	// Define a triangle around the origin (0,0)
+	ofVec2f p1(0, triangleSide/2.0);
+	ofVec2f p2(triangleHeight, 0);
+	ofVec2f p3(0, -triangleSide/2.0);
+	
+	// Rotate the triangle points around the origin
+	float rotation = ofRandom(360);
+	p1.rotate(rotation);	// Uses degrees!
+	p2.rotate(rotation);
+	p3.rotate(rotation);
+	
+	// Shift the triangle to the mouse position
+	p1 += mousePos;
+	p2 += mousePos;
+	p3 += mousePos;
+	
+	ofSetColor(255, 50);
+	ofTriangle(p1, p2, p3);
+
+
+![Rotating Triangle Brush](images/intrographics_rotatingtrianglebrush.png "Results of using the rotating triangle brush")
+
+See how ofVec2f simplifies your life?  (Or at least your code.)  If you were to move that rotation code to *after* we shifted the triangle to the mouse position, the code wouldn't work very nicely.  The way we are using `rotate` assumes that we want to rotate all of our points around the origin, which is (0,0).  But there is an alternate way to use `rotate` where you pass in two paramters: the rotation angle and a pivot point.  So you could shift your triangle to the mouse position and then use `p1.rotate(rotation, mousePos)` - everything would work just fine!
+
+We're getting there!  Next step, let's integrate this code into our prior approach of drawing multiple shapes that are offset from the mouse position:
+
+	ofVec2f mousePos(mouseX, mouseY);
+	
+	int numTriangles = 10;
+	int minOffset = 5;
+	int maxOffset = 70;
+	int minHeight = 6;
+	int maxHeight = 20;
+	int alpha = 150;
+	
+	for (int t=0; t<numTriangles; ++t) {
+		float offsetDistance = ofRandom(minOffset, maxOffset);
+		float triangleHeight = ofMap(offsetDistance, minOffset, maxOffset, maxHeight, minHeight);
+		float triangleSide = triangleHeight/2.0;
+		
+		ofVec2f p1(0, triangleSide/2.0);
+		ofVec2f p2(triangleHeight, 0);
+		ofVec2f p3(0, -triangleSide/2.0);
+		
+		float rotation = ofRandom(360);
+		p1.rotate(rotation);
+		p2.rotate(rotation);
+		p3.rotate(rotation);
+		
+		ofVec2f triangleOffset(offsetDistance, 0.0);
+		triangleOffset.rotate(rotation);
+		
+		p1 += mousePos + triangleOffset;
+		p2 += mousePos + triangleOffset;
+		p3 += mousePos + triangleOffset;
+		
+		ofSetColor(255, alpha);
+		ofTriangle(p1, p2, p3);
+	}
+
+So we are now using `of2Vec` to figure out our offset.  To do that, we need to create a vector that points rightward.  Why rightward?  Well, that's the 0 degree direction.  This is why we initially created our triangles pointing rightward from the mouse.  Both our offset and our triangle are pointing in the same direction.  So when we apply the same rotation to both of them, they stay in sync (i.e. both pointing away from the mouse cursor).  See what happens if you try doing `triangleOffset.rotate(rotation+90);`  You'll get a swirling blob of triangles.   Hey, you might even like that effect better than the original.  
+
+**[Note: this explanation may need clarification; also, possibly introduce vector length here?]**
+
+How about we add some color?  I won't get offended if you'd rather use your own colors.
+
+		ofColor aqua(0, 252, 255, alpha);
+		ofColor purple(198, 0, 205, alpha);
+		ofColor inbetween = aqua.getLerped(purple, ofRandom(1.0));
+		ofSetColor(inbetween);
+
+![Triangle Brush Final](images/intrographics_trianglebrushfinal.png "Results of using the final triangle brush")	
+
+And once again, you can play with turning off fill and changing line width if you like.
+
+But now you are a master of rectangles, circles, ellipses, lines and triangles, you can make other brushes that strike your fancy.  (Or you can go off and make something other than a brush.)  In the next section, we'll hop into freeform shapes and how you can use those to create paths out of your digital brush strokes.
+
+**Go back and add subheaders for each brush to better break up the sections and then title them with the concepts that will be introduced (and add that to the outline)**
+
+**Need a section on saving your final image**
 
 ### 1.2 Freeform Shapes ###
 
