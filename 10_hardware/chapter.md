@@ -1,4 +1,6 @@
-# INTRO
+#hardware
+
+## introduction
 
 This chapter will give you an introduction to working with openFrameworks outside of your computer screen and into the physical world.
 
@@ -8,7 +10,7 @@ This chapter assumes that you have the Arduino IDE installed, in addition to the
 
 Additionally, following along with the examples in this chapter requires you to have a few pieces of basic hardware.  You’ll need an Arduino (any generation; an Uno, Leonardo, or Duemilanove will look the most like the graphics in this chapter but any USB-connected Arduino will work just fine) and the appropriate USB cable to connect to your computer.  
 
-## PART 1: GETTING STARTED WITH SERIAL COMMUNICATION
+## getting started with serial communication
 
 
 
@@ -29,7 +31,7 @@ Arduino has a built-in library which handles most of the back-end processes for 
 The speed at which data is transmitted between the Arduino and your software is measured in bits per second, or bps, a fairly self-explanatory unit of measurement.  The rate of bits per second is commonly referred to as the baud rate, and will vary based on your application.  For example, the standard baud rate of 9600bps will transfer data more slowly than a rate of 115200, but the faster baud rate may have more issues with byte scrambling.
 
 
-**DIGITAL AND ANALOG INPUT / OUTPUT**
+## digital and analog communication
 
 *basic notes - flesh this section out more*
 
@@ -55,7 +57,7 @@ PWM (pulse width modulation) - on pwm pins
 
 map()
 
-**USING SERIAL FOR COMMUNICATION BETWEEN OPENFRAMEWORKS AND ARDUINO**
+## using serial for communication between arduino and openframeworks
 
 In the same way that Arduino uses Serial communication for communication between hardware and the Serial monitor, it can also use Serial communication to communicate between the Arduino board and any other running application, including openFrameworks.  This can be done quite simply using the ofSerial class, native to openFrameworks.  This class sets up a Serial listener at a specified baud rate and Serial port, giving it access to the same streaming data as the Serial library in the native Arduino IDE.  
 
