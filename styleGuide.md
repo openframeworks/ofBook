@@ -70,5 +70,8 @@ Feel free to experiment with newlines in a paragraph. If it makese sense for you
 
 The benifits of this is that it makes github changes significantly easier to read, and will help you identify long sentences.  The drawbacks is that it might be less intuitive to write and read.  Do what feels right. 
 
+## non markdown / extensions ##
+
+If you have a specific need, such as latex equations, use a simply available tool (and common format) and write a note at the top of your chapter.  Omer's math chapter is a good example, to view the equations you need to use stackedit.io.  In general try to use as minimal a deviation from vanilla markdown as possible. 
 
 
