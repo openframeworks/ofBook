@@ -1,5 +1,8 @@
 # Advanced graphics
 
+*by [Arturo Castro](http://arturocastro.net)*
+*<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/deed.en_US">Creative Commons Attribution-NonCommercial 4.0 International License</a>.*
+
 ## 2D, immediate mode vs ofPolyline/ofPath
 
 Traditionally in frameworks like openFrameworks or processing the way of drawing things have been something like:
@@ -232,6 +235,11 @@ The most important idea of this section is that when working with complex transf
 ### ofMesh
 
 
-- ofVboMesh
-- of3dPrimitive
-- Applying simple textures to 3d primitives and ofFbo
+### ofVboMesh
+
+
+### of3dPrimitive
+
+
+### Applying simple textures to 3d primitives and ofFbo
+
