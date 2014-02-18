@@ -323,7 +323,12 @@ Sometimes I say C, and sometimes I say C++. Since they are closely related, perh
 
 ![Figure 17. C++ is a non-strict superset of C](img/non-strict-superset.png "Figure 17. C++ is a non-strict superset of C")
 
-##Variables (part 1)
+## Variables (part 1)
+
+> A “thing” is a “think”, a unit of thought
+> 
+> -- Alan Watts
+
 
 Please enter the following program into ideone and run it.
 
@@ -2173,9 +2178,152 @@ Just the same, if I were to declare any variables inside the scope of that funct
 
 ### Fundamental Types
 
-(lava and milk buckets)
+Variables have different *types*, meaning they hold different kinds of information in them. Some take up more memory than others. Returning to the Minecraft metaphor, we can think about putting more than just water in more than just iron buckets.
 
-Lorem ipsum dolor sit amet, consectetur adipisicing elit
+![Figure 30. Minecraft Vessles](img/minecraft-vessles.png "Minecraft Vessles")
+
+In Minecraft, Buckets will hold milk and lava in addition to water. Furthermore, there are a few other kinds of containers meant for other liquids and other stuff. Requiring the correct container for the correctly according data makes C a *strictly typed* (or *strongly typed*) language because it is strict about which type of variable you use. Strictly typed variables are arguably a big virtue for a programming language, and are kept in as a matter of choice since they reduce errors, and greatly speed the app's performance. The issue of whether or not to use a strict or loosely typed language for a project is a very important decision to make, but whether or not one should devote ones career exclusively to strict or loose typing is an unhealthy sort of xenophobia. Both walks of life have their pros and cons.
+
+In the beginning of this chapter, we declared strings and since then, we've declared mostly integers with the keyword `int` just because they were a convenient general purpose data type for immediate gratification, but as I hinted during the bouncing ball exercise, an `int` has its limitations. Let me introduce a couple new types.
+
+```
+float myNumber = 340.1928; 
+char myLetter = 'E';
+```
+
+Unlike an `int`, A `float` allows decimal points, and so you can work at a higher resolution. A `char` holds a single ASCII character. It only needs to take up 8-bits of memory whilst the `float` and `int` take up more (therefore allowing them to express a wider range of values). I will touch briefly on the bits and bytes of memory when we get into bitwise operators, and then Arturo will give you much more in Chapter 16. Let's see the `float` in action!
+
+```C++
+#include <iostream>
+using namespace std;
+
+int main() {
+	float myNumber = 0.0;
+	for(int i=0;i<100;i++){
+		myNumber += 0.012;
+		cout << myNumber << endl;
+	}
+	return 0;
+}
+```
+
+The output is a stream of numbers that increment by 0.12.
+
+```
+0.012
+0.024
+0.036
+0.048
+0.06
+0.072
+0.084
+0.096
+0.108
+0.12
+0.132
+0.144
+0.156
+0.168
+0.18
+0.192
+0.204
+0.216
+0.228
+0.24
+0.252
+0.264
+0.276
+0.288
+0.3
+0.312
+0.324
+0.336
+0.348
+0.36
+0.372
+0.384
+0.396
+0.408
+0.42
+0.432
+0.444
+0.456
+0.468
+0.48
+0.492
+0.504
+0.516
+0.528
+0.54
+0.552
+0.564
+0.576
+0.588
+0.6
+0.612
+0.624
+0.636
+0.648
+0.66
+0.672
+0.684
+0.696
+0.708
+0.72
+0.732
+0.744
+0.756
+0.768
+0.78
+0.792
+0.804
+0.816
+0.828
+0.840001
+0.852001
+0.864001
+0.876001
+0.888001
+0.900001
+0.912001
+0.924001
+0.936001
+0.948001
+0.960001
+0.972001
+0.984001
+0.996001
+1.008
+1.02
+1.032
+1.044
+1.056
+1.068
+```
+
+Floating point values are useful because they allow us get in-between the piano keys of an integer, and that is why I call them the violin of variables. But notice in this list of fractionally incrementing values that a phantom 0.000001 is added for a little while, beginning around 0.840001. Sometimes you will see these minuscule errors when working with floating point numbers. This strange phenomenon is called a *floating point error* and is a fundamental problem with floating point technology at large, sometimes bringing a headache to a designer trying to render the number in a sane looking way. For the purposes of this chapter, I will not point out floating point errors when they arise, but please be comforted in knowing this is a hot topic in computer science, and there are certainly ways of remedying it, later.
+
+Look what happens when we go back to that code example and change the type from `float` to `int`.
+
+```C++
+#include <iostream>
+using namespace std;
+
+int main() {
+	int myNumber = 0.0;      // changed from float to int!
+	for(int i=0;i<100;i++){
+		myNumber += 0.012;
+		cout << myNumber << endl;
+	}
+	return 0;
+}
+```
+
+The output becomes a long, serene list of zeros since the `int` data type cannot handle a tiny fraction like 0.012. So during the moment it tries to add 0.012 to myNumber (which is an int), 0.012 gets automatically rounded down to an integer, which is zero every time. Now let's try the opposite example, storing ints into a float.
+
+```C++
+
+```
 
 ===
 
@@ -2188,8 +2336,9 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit
 + converting between these data types
 
 
-+ switch-case
-+ try/catch
++ include switch-case as syntactic sugar for if-then-else
+
++ try/catch?
 
 ===
 
