@@ -8,10 +8,13 @@ I'm aiming to make sure we don't lose any beginners, so I realize that this chap
 - 1. [Drawing Shapes. Then Drawing Many, Many, Many Shapes](#1-drawing-shapes--then-drawing-many-many-many-shapes)
 	- 1.1 [Predefined Shapes](#11-predefined-shapes)
 		-  1.1a [Drawing to the screen!](#11a-drawing-to-the-screen)
-		-  1.1b [Drawing to the screen! The fun bits.](#11b-drawing-to-the-screen-the-fun-bits)
-	- 1.2 Freeform Shapes
-		-  1.2a Drawing to the screen, again!
-		-  1.2b The fun bits, again!
+			- background, rectangles, circles, ellipses, lines, triangles, fill, antialiasing
+		-  1.1b [Drawing to the screen! (But now the fun bits.)](#11b-drawing-to-the-screen-but-now-the-fun-bits)
+			- rectangles, circles, ellipses, lines, triangles, mouse position, mouse clicks, keyboard input, randomness, RGB colors, transparency, linear interpolation, polar coordinates, ofVec2f  
+	- 1.2 [Freeform Shapes](#12-freeform-shapes)
+		-  1.2a [Hello Polyline](#12a-polyline)
+			- addVertex, curveTo, close  
+		-  1.2b [Polyline Brushes](#12b-polyline-brushes)
 - 2. Moving Coordinate System
 - 3. Recursion
 
@@ -105,7 +108,7 @@ Okay, so you've got the recipes for some basic shapes down.  Before we start put
 **[Note: Include something about RGB colors]**
 
 
-#### 1.1b Drawing to the screen! The fun bits. ####
+#### 1.1b Drawing to the screen! (But now the fun bits.) ####
 
 You surivived the boring bits!
 
@@ -553,11 +556,69 @@ But now you are a master of rectangles, circles, ellipses, lines and triangles, 
 
 **Need a section on saving your final image**
 
+**Need to include links to works by artists using these approaches**
+
 ### 1.2 Freeform Shapes ###
 
-#### 1.2a Drawing to the screen, again! ####
+In the last section, we drew our graphics directly onto the screen.  We were storing the graphics (the brush strokes) as pixels.  This is known as [raster graphics](http://en.wikipedia.org/wiki/Raster_graphics "Raster Graphics Wiki").  That means that it is hard for us to erase just the last brush stroke.  It also makes it hard for us to rescale graphics once they are drawn.  In contrast, there is something called [vector graphics](http://en.wikipedia.org/wiki/Vector_graphics "Vector Graphics Wiki").  The graphics that you draw as stored as a list of geometric objects (also called geometric primitives) instead of pixel values.  Those objects can be modified after you "place" them on your screen.  You can erase or rescale a brush stroke with ease.  You might already be familiar with the concept of vector graphics if you have used software like Adobe Illustrator, Inkscape, etc.
 
-#### 1.2b The fun bits, again! ####
+Why does any of that matter?  We are moving into the territory of vector graphics by using freeform shapes in openFrameworks.  We are going to be using structures that allow us to store and draw paths.
+
+#### 1.2a Hello Polyline ####
+
+Create a new project and call it something like PathBrush.  Say hello to [`ofPolyline`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html "ofPolyline Documentation Page"), who is about to become our buddy.  What's an ofPolyline?  It is a data structure that allows you to store a series of sequential points and then draw them to create a line or shape.  Like with `ofColor` and `ofVec2f`, `ofPolyline` gives you a bunch of handy helper functions to make life easier.
+
+How about we get acquainted with ofPolyline in the context of some code?  Let's define three `ofPolylines` in the header file (.h):
+
+	ofPolyline straightSegmentPolyline;
+	ofPolyline curvedSegmentPolyline;
+	ofPolyline closedShapePolyline;
+
+Now, we can fill those polylines with points in the `setup` function of the source file (.cpp):
+
+	straightSegmentPolyline.addVertex(100, 100);
+	straightSegmentPolyline.addVertex(150, 150);
+	straightSegmentPolyline.addVertex(200, 100);
+	straightSegmentPolyline.addVertex(250, 150);
+	straightSegmentPolyline.addVertex(300, 100);
+	
+	curvedSegmentPolyline.curveTo(350, 100); // Necessary Duplicate
+	curvedSegmentPolyline.curveTo(350, 100);
+	curvedSegmentPolyline.curveTo(400, 150);
+	curvedSegmentPolyline.curveTo(450, 100);
+	curvedSegmentPolyline.curveTo(500, 150);
+	curvedSegmentPolyline.curveTo(550, 100);
+	curvedSegmentPolyline.curveTo(550, 100); // Necessary Duplicate
+	
+	closedShapePolyline.addVertex(600, 125);
+	closedShapePolyline.addVertex(700, 100);
+	closedShapePolyline.addVertex(800, 125);
+	closedShapePolyline.addVertex(700, 150);
+	closedShapePolyline.close();
+	
+And finally, we can then draw our polylines in the `draw` function:
+
+	ofBackground(0);
+	ofSetLineWidth(2.0);
+	ofSetColor(255,100,0);
+	straightSegmentPolyline.draw();
+	curvedSegmentPolyline.draw();
+	closedShapePolyline.draw();
+
+So what did we do here?  We created three different types of polylines.  
+
+For the first one, `straightSegmentPolyline`, we used the [`addVertex`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html#show_addVertex "addVertex Documentation Page") function.  This allows us to add points that will be connected with a series of straight lines.  You can pass an `ofVec2f` (or `ofVec3f`) to `addVertex`, or you can pass in x and y (and an optional z) into the function in that order.  
+
+For the second one, `curvedSegmentPolyline` we use the same points, but we connect up the points with curved lines using ['curveTo'](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html#show_curveTo "curveTo Function Documentation Page"].  `curveTo` accepts the same types of inputs as `addVertex`.  Notice that we had to add the first vertex and last vertex twice.  The `curveTo` function, like its name suggests, curves from the last vertex to the vertex that you pass in.  **[note: explain why you need a first duplicate AND a last duplicate]**  
+
+For the final one, `closedShapePolyline`, we used straight line segments again, but we use the [`close`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html#show_close "close Function Documentation Page") function to connect our last vertex to our first vertex.  **[note: explain why you would want to close a polyline]**  
+
+After you created those polylines in `setup`, then you were able to draw them using the polyline's [`draw`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html#show_draw "draw Function Documentation Page") function to display them to the screen.  (Note that `ofSetLineWidth` works to adjust the thickness of polylines.)  And you ended up with something that looked like this:
+
+![Polyline Examples](images/intrographics_polylineexamples.png "Using basic polylines")
+
+So the advantage of drawing paths and shapes in this way (versus what we did in the last section) is that those polyline objects are stored and are modifiable.  We could move our vertices around on the fly.  We could add or delete vertices on the fly.  **[note: maybe put a little more effort to explain the power]** 
 
 
+#### 1.2b Polyline Brushes ####
 
