@@ -438,7 +438,8 @@ But to be able to get to that, we will need to introduce [`ofVec2f`](http://open
 
 ofVec2f isn't that scary, right?  And it is quite useful.  So let's start using it to build towards the triangle brush.  First step is to draw a triangle at the mouse cursor.  Specifically, we are going to draw an isoceles triangle:
 
-![Iscoceles Triangle](http://mathworld.wolfram.com/images/eps-gif/IsoscelesTriangle_800.gif "Image of an iscoceles triangle from wolfram")
+
+**[NOTE: gif removed here]**
 
 **[Note: Stolen graphics from wolfram, generate something similar later]**
 
