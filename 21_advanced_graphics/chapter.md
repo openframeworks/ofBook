@@ -57,7 +57,7 @@ ofPolyline polyline;
 //ofApp.cpp
 
 void ofApp::setup(){
-    polyline.moveTo(20,20);
+    polyline.lineTo(20,20);
     polyline.lineTo(40,20);
     polyline.lineTo(40,40);
     polyline.lineTo(20,40);
