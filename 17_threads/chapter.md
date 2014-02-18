@@ -557,4 +557,99 @@ In this case we could make a copy internally and return that later, but still wi
 
 ## Poco::Condition
 
+A condition in threads terminology, is an object that allows to synchronize 2 threads. The pattern is something like this: one thread waits for something to happen to start it's processing, when it finishes instead of finishing the thread, it locks in the condition and waits till there's new data to process. An example could be the image loader class we were working with some sections ago. Instead of starting one thread for every image we want to load we might have a queue of images to load, the main thread adds image paths into that queue and the auxiliary thread loads the images from that queue till is empty then locks on a condition till there's more images to load.
+
+Such an example would be too long to write in this book but if you are interested into how something like that might work take a look at ofxThreadedImageLoaded which does just that.
+
+Instead let's see a simple example, imagine a class where we can push urls so it pings those adresses in a different thread, something like:
+
+```cpp
+class ThreadedHTTPPing: public ofThread{
+    void pingServer(string url){
+        mutex.lock();
+        queueUrls.push(url);
+        mutex.unlock();
+    } 
+    
+    void threadedFunction(){
+        while(isThreadRunning()){
+            mutex.lock();
+            string nextUrl = queueUrls.front();
+            queueUrls.pop();
+            mutex.unlock();
+            
+            ofHttpUrlLoad(url);   
+        }
+    }
+    
+private:
+    queue<string> queueUrls;
+}
+```
+
+The problem with that example is that the auxiliary thread keeps running as fast as possible in a loop consuming a full cpu from our computer which is not a very good idea.
+
+A tipical solution to this problem is to sleep for a while at the end of each cycle like:
+
+```cpp
+class ThreadedHTTPPing: public ofThread{
+    void pingServer(string url){
+        mutex.lock();
+        queueUrls.push(url);
+        mutex.unlock();
+    } 
+    
+    void threadedFunction(){
+        while(isThreadRunning()){
+            mutex.lock();
+            string nextUrl = queueUrls.front();
+            queueUrls.pop();
+            mutex.unlock();
+            
+            ofHttpUrlLoad(url);
+            ofSleepMillis(100);   
+        }
+    }
+    
+private:
+    queue<string> queueUrls;
+}
+```
+
+That alleviates the problem slightly but not completely, the thread won't consume as much cpu now, but it sleeps for a while unnecesarily when there's still urls to load and continues to run in the background even when there's no more urls to ping. Specially in small devices powered by batteries like a phone this pattern will drain the battery in a few hours.
+
+The best solution to this problem is to use a condition:
+
+```cpp
+class ThreadedHTTPPing: public ofThread{
+    void pingServer(string url){
+        mutex.lock();
+        queueUrls.push(url);
+        condition.signal();
+        mutex.unlock();
+    } 
+    
+    void threadedFunction(){
+        while(isThreadRunning()){
+            mutex.lock();
+            if (queue.empty()){
+                condition.wait(mutex);
+            }
+            string nextUrl = queueUrls.front();
+            queueUrls.pop();
+            mutex.unlock();
+            
+            ofHttpUrlLoad(url);   
+        }
+    }
+    
+private:
+    Poco::Condition condition;
+    queue<string> queueUrls;
+}
+```
+
+When we call `condition.wait(mutex)` the mutex needs to be locked before, then the condition unlocks the mutex and blocks the execution of that thread until `condition.signal()` is called. When the condition awakes the thread because it's been signaled, it locks the mutex again and continues the execution, there, we can read the queue without problem because we know that the other thread won't be able to access it since we are holding the mutex, copy the next url to ping and unlock the mutex to keep the lock time to a minimum. Then outside the lock we ping the server and start the process again.
+
+Whenever the queue gets emptied the condition will block the execution of the thread avoiding to have to run it constantly in the background. 
 
