@@ -178,13 +178,381 @@ The reason this happens is that we don't know when thread 1 and 2 are going to r
 
 But before seeing mutexes let's see briefly how openGL and threads behave together.
 
-## threads and openGL
+## Threads and openGL
+
+You might have noticed in the previous examples:
+
+```cpp
+class ImageLoader: public ofThread{
+    ImageLoader(){
+        loaded = false;
+    }
+    void setup(string imagePath){
+        this->imagePath = imagePath;
+    }
+    
+    void threadedFunction(){
+        ofLoadImage(path,image);
+        loaded = true;
+    }
+    
+    ofPixels image;
+    string path;
+    bool loaded;
+}
+
+//ofApp.h
+ImageLoader imgLoader;
+ofImage img;
+
+// ofApp.cpp
+void ofApp::setup(){
+    loading = false;
+}
+
+void ofApp::update(){
+    if(imgLoader.loaded){
+        img.getPixelsRef() = imgLoader.img;
+        img.update();
+        imgLoader.loaded = false;
+    }
+}
+
+void ofApp::draw(){
+    img.draw(0,0);
+}
+
+void ofApp::keyPressed(int key){
+    if(!loading){
+        imgLoader.setup("someimage.png");
+        imgLoader.startThread();
+    }
+}
+```
+
+
+That instead of using an ofImage to load images, we are using an ofPixels and then in the main thread using an ofImage to put the contents of ofPixels into it. This is done like that because openGL, in principle can only work with 1 thread, that's why we call our main thread the GL thread.
+
+As we mention in the advanced graphics chapter and other parts of this book, openGL works asynchonously in some kind of client/server model, where our application is the client sending data and drawing instructions to the openGL server which will send them to the graphics card in it's own times.
+
+Because of that openGL knows how to work with one thread, the thread from which the openGL context was created, what we've been calling the main or GL thread. But if we try to do openGL calls from a different thread, will most surely crash the application or at least not get the desired results.
+
+When we call `img.loadImage(path)` on an ofImage, it'll actually do some openGL calls, mainly create a texture and upload to it the contents of the image. If we did that from a thread that it's not the GL thread our application will probably crash.
+
+There's a way to tell ofImage and most other objects that contain pixels and textures in openFrameworks to not use those textures and instead work only with pixels, that way we could use an ofImage to load the images to pixels and later in the main thread activate the textures to be able to draw the images:
+
+```cpp
+class ImageLoader: public ofThread{
+    ImageLoader(){
+        loaded = false;
+    }
+    void setup(string imagePath){
+        image.setUseTexture(false);
+        this->imagePath = imagePath;
+    }
+    
+    void threadedFunction(){
+        image.loadImage(path);
+        loaded = true;
+    }
+    
+    ofImage image;
+    string path;
+    bool loaded;
+}
+
+//ofApp.h
+ImageLoader imgLoader;
+
+// ofApp.cpp
+void ofApp::setup(){
+    loading = false;
+}
+
+void ofApp::update(){
+    if(imgLoader.loaded){
+        imgLoader.image.setUseTexture(true);
+        imgLoader.image.update();
+        imgLoader.loaded = false;
+    }
+}
+
+void ofApp::draw(){
+    imageLoader.image.draw(0,0);
+}
+
+void ofApp::keyPressed(int key){
+    if(!loading){
+        imgLoader.setup("someimage.png");
+        imgLoader.startThread();
+    }
+}
+```
+
+There's ways to use openGL from different threads, for example creating a shared context to upload textures in a different thread or using PBO's to map a memory area and later upload to that memory area from a different thread, but that's out of the scope of this chapter. In general remember that accessing openGL outside of the GL thread is not safe so in openFrameworks you should only do operations that involve openGL calls from the main thread, that is from the calls that happen in the setup/update/draw loop, the key and mouse events, and the related ofEvents. If you start a thread and call an ofEvent from it that call will also happen in the auxiliary thread so be careful to not do any GL calls from there.
+
+Also when working with sound in openFrameworks, mostly with ofSoundStream, sound API's create their own threads since sound needs that timing is super precise and nothing interrupts it or we might hear noises. So when working with ofSoundStream be careful to not use any openGL calls and in general apply the same logic as if you where inside the threadedFunction of an ofThread. Will see more about this in the next sections.
 
 
 ## ofMutex
 
+Before we started the openGL and threads section we were talking about how accessing the same memory area from 2 different threads cna cause problems mostly if we write from one of the threads causing the data structure to move in memory or make a location invalid. To avoid that we need something that allows us to lock the access to that data to only one thread for a while then unlock and let the other thread access to it. That lock is called a mutex and it works more or less like this:
+
+        thread 1: lock mutex
+        thread 1: pos = access memory to get position to write
+        thread 2: lock mutex <- now thread 2 will stop it's execution till thread 1 unlocks it so better be quick
+        thread 1: write to pos
+        thread 1: unlock mutex
+        thread 2: read memory
+        thread 2: unlock mutex
+        
+        
+As it's explained in the sequence of instructions, when we lock a mutex from one thread and another thread tries to lock it, that stops it's execution so we should try to do only fast operations while we have the mutex locked in order to not lock the execution of the main thread for too long.
+
+In openFrameworks we have a class called ofMutex that allows to do this kind of locking, the syntax for the previous sequence would be something like:
+
+        thread 1: mutex.lock();
+        thread 1: vec.push_back(something);
+        thread 2: mutex.lock(); // now thread 2 will stop it's execution till thread 1 unlocks it so better be quick
+        thread 1: // end of push_back()
+        thread 1: mutex.unlock();
+        thread 2: somevariable = vec[i];
+        thread 2: mutex.unlock();
+        
+As you can see, the execution of a thread can be interrupted even while doing something like a `push_back()`, when we try to call `push_back()`, the vector internally calculates the next position to write but then the operating system interrupts it and gives the execution to thread 1 which if it weren't for the mutex would try to access a possibly invalid location. since we have the mutex, the second thread is stopped at that point and the first thread can continue writing to the vector without problem.
+
+In multicpu machines like it's the norm nowadays both operations might be happening simultaneously but the mutex again prevents that from happening.
+
+ofThread, contains a mutex that we can use, we just need to call `lock()` and `unlock()` from inside our threadedFunction and from outside when trying to use shared memory:
+
+```cpp
+class NumberGenerator{
+public:
+    void threadedFunction(){
+        while (isThreadRunning()){
+            lock();
+            numbers.push_back(ofRandom(0,1000));
+            unlock();
+            ofSleepMillis(1000);
+        }
+    }
+    
+    vector<int> numbers;
+}
+
+// ofApp.h
+
+NumberGenerator numberGenerator;
+
+// ofApp.cpp
+
+void ofApp::setup(){
+    numberGenerator.startThread();
+}
+
+void ofApp::update(){
+    numberGenerator.lock();
+    while(!numberGenerator.empty()){
+        cout << numberGenerator.front() << endl;
+        numberGenerator.pop_front();
+    }
+    numberGenerator.unlock();
+}
+```
+
+This example is kind of useless :) but should explain the usage of the mutex in ofThread.
+
+As we've said before when we lock a mutex we stop the access from other threads so we should try to keep the lock time as small as possible.
+
+## External threads and double buffering
+
+Some times we don't have a thread that we've created ourselves but instead we are using a library that creates it's own thread and calls our application on a callback from that thread or threads. Let's see an example with an imaginary video library that calls us in callback whenever there's a new frame from the camera:
+
+```cpp
+class VideoReader{
+public:
+    void setup(){
+        pixels.allocate(640,480,3);
+        texture.allocate(640,480,GL_RGB);
+        videoLibrary::setCallback(&frame_cb);
+        videoLibrary::startCapture(640,480,"RGB");
+    }
+    
+    void update(){
+        if(newFrame){
+            texture.loadData(pixels);
+            newFrame = false;
+        }
+    }
+    
+    void draw(float x, float y){
+        texture.draw(x,y);
+    }
+    
+    static void frame_cb(unsigned char * frame, int w, int h){
+        pixels.setFromPixels(frame,w,h,3);
+        newFrame = true;
+    }
+    
+    ofPixels pixels;
+    bool newFrame;
+    ofTexture texture;
+}
+```
+
+Here, even if we don't use a mutex, our application won't crash, since the memory in pixels is preallocated in setup and it's size never changes so the memory won't move from it's original location. The problem is that both update and the frame_cb might be running at the same time so we will probably end up seeing [tearing](http://en.wikipedia.org/wiki/Screen_tearing), the same kind of efect we can see when we draw to the screen without activating the vertical sync.
+
+To avoid it we might want to use a mutex:
+
+```cpp
+class VideoReader{
+public:
+    void setup(){
+        pixels.allocate(640,480,3);
+        texture.allocate(640,480,GL_RGB);
+        videoLibrary::setCallback(&frame_cb);
+        videoLibrary::startCapture(640,480,"RGB");
+    }
+    
+    void update(){
+        mutex.lock();
+        if(newFrame){
+            texture.loadData(pixels);
+            newFrame = false;
+        }
+        mutex.unlock();
+    }
+    
+    void draw(float x, float y){
+        texture.draw(x,y);
+    }
+    
+    void frame_cb(unsigned char * frame, int w, int h){
+        mutex.lock();
+        pixels.setFromPixels(frame,w,h,3);
+        newFrame = true;
+        mutex.unlock();
+    }
+    
+    ofPixels pixels;
+    bool newFrame;
+    ofTexture texture;
+    ofMutex mutex;
+}
+```
+
+
+That will solve the tearing but we are stopping the main thread while the frame_cb is updating the pixels and stopping the camera thread while the main one is uploading the texture. For small images is usually ok but for bigger images it can make us loose some frames. A possible solution is use a technique called double or even triple buffering:
+
+```cpp
+class VideoReader{
+public:
+    void setup(){
+        pixelsBack.allocate(640,480,3);
+        pixelsFront.allocate(640,480,3);
+        texture.allocate(640,480,GL_RGB);
+        videoLibrary::setCallback(&frame_cb);
+        videoLibrary::startCapture(640,480,"RGB");
+    }
+
+    void update(){
+        bool wasNewFrame = false;
+        mutex.lock();
+        if(newFrame){
+            swap(pixelsFront,pixelsBack);
+            newFrame = false;
+            wasNewFrame = true;
+        }
+        mutex.unlock();
+
+        if(wasNewFrame) texture.loadData(pixelsFront);
+    }
+
+    void draw(float x, float y){
+        texture.draw(x,y);
+    }
+
+    void frame_cb(unsigned char * frame, int w, int h){
+        pixelsBack.setFromPixels(frame,w,h,3);
+        mutex.lock();
+        newFrame = true;
+        mutex.unlock();
+    }
+
+    ofPixels pixelsFront, pixelsBack;
+    bool newFrame;
+    ofTexture texture;
+    ofMutex mutex;
+}
+```
+
+With this we are locking the mutex for a really short time, in the frame callback only to set `newFrame = true` in the main thread, to check if there's a new frame and then to swap the front and back buffers, swap, is overrided for ofPixels and what it does is that it swaps the internal pointers to memory inside `frontPixels` and `backPixels` to point to one another, so after calling it, now `frontPixels` is now pointing to what `backPixels` was pointing before and viceversa. This operation only involves copying the values of a couple of memory addresses plus the size and number of channels so it's way faster than copying the whole image or uploading to a texture.
+
+Triple buffering is a similar technique that involves using 3 buffers instead of 2 and is useful in some cases but we won't see it in this chapter.
 
 ## ofScopedLock
+
+Some times we need to lock a function until it returns a function, or lock for the duration of a full block, that's what a scoped lock does, if you've read the memory chpater probably you remmeber about what we called stack semantics, or RAII [Resource Adquisition Is Initialization](http://en.wikipedia.org/wiki/Resource_Acquisition_Is_Initialization). A scoped lock makes use of that technique to lock a mutex while a block lasts:
+
+For example the previous example could be turned into:
+
+```cpp
+class VideoReader{
+public:
+    void setup(){
+        pixelsBack.allocate(640,480,3);
+        pixelsFront.allocate(640,480,3);
+        texture.allocate(640,480,GL_RGB);
+        videoLibrary::setCallback(&frame_cb);
+        videoLibrary::startCapture(640,480,"RGB");
+    }
+    
+    void update(){
+        bool wasNewFrame = false;
+        
+        { 
+        ofScopedLock lock(mutex); 
+            if(newFrame){
+                swap(fontPixels,backPixels);
+                newFrame = false;
+                wasNewFrame = true;
+            }
+        }
+        
+        if(wasNewFrame) texture.loadData(pixels);
+    }
+    
+    void draw(float x, float y){
+        texture.draw(x,y);
+    }
+    
+    static void frame_cb(unsigned char * frame, int w, int h){
+        pixelsBack.setFromPixels(frame,w,h,3);
+        ofScopedLock lock(mutex);
+        newFrame = true;
+    }
+    
+    ofPixels pixels;
+    bool newFrame;
+    ofTexture texture;
+    ofMutex mutex;
+}
+```
+
+As you can see in some cases it makes more sense than others but it's also a good way of avoiding problems because we forgot to unlock a mutex and allows us to usethe `{}` to define the duration of the lock which is more natural to c++.
+
+There's one case when the only way to properly lock is by using a scoped lock and that's when we want to return a value and keep the function locked until after the value was returned, in that case we can't use a normal lock:
+
+```cpp
+
+ofPixels accessSomeSharedData(){
+    ofScopedLock lock(mutex);
+    return modifiedPixels(pixels);
+}
+
+```
+
+In this case we could make a copy internally and return that later, but still with this pattern we avoid a copy and the syntax is shorter.
 
 
 ## Poco::Condition
