@@ -178,7 +178,15 @@ The reason this happens is that we don't know when thread 1 and 2 are going to r
 
 But before seeing mutexes let's see briefly how openGL and threads behave together.
 
-3. threads and openGL
-4. ofMutex
-5. ofScopedLock
-5. Poco::Condition
+## threads and openGL
+
+
+## ofMutex
+
+
+## ofScopedLock
+
+
+## Poco::Condition
+
+
