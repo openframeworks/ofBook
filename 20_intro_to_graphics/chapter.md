@@ -12,11 +12,11 @@ I'm aiming to make sure we don't lose any beginners, so I realize that this chap
 		-  1.1b [Drawing to the screen! (But now the fun bits.)](#11b-drawing-to-the-screen-but-now-the-fun-bits)
 			- rectangles, circles, ellipses, lines, triangles, mouse position, mouse clicks, keyboard input, randomness, RGB colors, transparency, linear interpolation, polar coordinates, ofVec2f  
 	- 1.2 [Freeform Shapes](#12-freeform-shapes)
-		-  1.2a [Hello Polyline](#12a-polyline)
+		-  1.2a [Hello Polyline](#12a-hello-polyline)
 			- addVertex, curveTo, close  
 		-  1.2b [Polyline Brushes](#12b-polyline-brushes)
-- 2. Moving Coordinate System
-- 3. Recursion
+- 2. Moving Coordinate System - described in outline.md
+- 3. Recursion Generative Color Compositions - described in outline.md
 
 ## 1. Drawing Shapes.  Then Drawing Many, Many, Many Shapes ##
 
@@ -609,7 +609,7 @@ So what did we do here?  We created three different types of polylines.
 
 For the first one, `straightSegmentPolyline`, we used the [`addVertex`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html#show_addVertex "addVertex Documentation Page") function.  This allows us to add points that will be connected with a series of straight lines.  You can pass an `ofVec2f` (or `ofVec3f`) to `addVertex`, or you can pass in x and y (and an optional z) into the function in that order.  
 
-For the second one, `curvedSegmentPolyline` we use the same points, but we connect up the points with curved lines using ['curveTo'](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html#show_curveTo "curveTo Function Documentation Page"].  `curveTo` accepts the same types of inputs as `addVertex`.  Notice that we had to add the first vertex and last vertex twice.  The `curveTo` function, like its name suggests, curves from the last vertex to the vertex that you pass in.  **[note: explain why you need a first duplicate AND a last duplicate]**  
+For the second one, `curvedSegmentPolyline` we use the same points, but we connect up the points with curved lines using [`curveTo`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html#show_curveTo "curveTo Function Documentation Page").  `curveTo` accepts the same types of inputs as `addVertex`.  Notice that we had to add the first vertex and last vertex twice.  The `curveTo` function, like its name suggests, curves from the last vertex to the vertex that you pass in.  **[note: explain why you need a first duplicate AND a last duplicate]**  
 
 For the final one, `closedShapePolyline`, we used straight line segments again, but we use the [`close`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html#show_close "close Function Documentation Page") function to connect our last vertex to our first vertex.  **[note: explain why you would want to close a polyline]**  
 
@@ -619,6 +619,132 @@ After you created those polylines in `setup`, then you were able to draw them us
 
 So the advantage of drawing paths and shapes in this way (versus what we did in the last section) is that those polyline objects are stored and are modifiable.  We could move our vertices around on the fly.  We could add or delete vertices on the fly.  **[note: maybe put a little more effort to explain the power]** 
 
-
 #### 1.2b Polyline Brushes ####
+
+Let's start using polylines to track brush "strokes."  When the left mouse button is held down, we will keep track of the mouse positions and add them to a polyline.  
+
+How should we go about that?  We are going to need a boolean to tell us whether the left mouse button is being held down.  If it is being held down, then we need to get the mouse position every frame.  It would be tempting to just add all of those mouse positions to a polyline, but that could cause some problems.  If we were to just hold the left mouse button down without moving the mouse, we would add a duplicate point to our polyline on every frame.  That could potentially add up to cause slowdowns or crashing, so it is best to plan ahead.  Instead of adding *every* mouse position, let's just add the mouse positions where the mouse has moved a sufficient distance away from the last point in our polyline.  
+
+We've got some idea of what we are going to do, so on to the code.  Put these lines into the header file (.h):
+
+	ofPolyline currentPolyline;
+	bool currentlyAddingPoints;
+	ofVec2f lastPoint;
+	float minDistance;
+	
+And put these lines into the `setup` function of the source file (.cpp):
+
+	minDistance = 10;
+	currentlyAddingPoints = false;
+	
+We've got our variables set up, so now we can start dealing with the mouse button presses in the `mousePressed` function:
+
+	if (button == OF_MOUSE_BUTTON_LEFT) {
+		leftMouseButtonPressed = true;
+		currentPolyline.addVertex(x, y);
+		lastPoint.set(x, y);
+	}
+	
+When the left mouse button is pressed, we update our variables.  Remember that the variables `x` and `y` in the `mousePressed` and `mouseReleased` functions give us the position of the mouse when a button is pressed/released.  
+
+Our `mouseReleased` function will be quite simple for the moment:
+
+	if (button == OF_MOUSE_BUTTON_LEFT) {
+		leftMouseButtonPressed = false;
+		currentPolyline.clear();	
+	}
+    
+We haven't talked about the polyline [`clear`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html#show_clear "clear Documentation Page") function yet, but it does was you might expect - remove all the points that are stored in the polyline.  This way we can start a new brush stroke with each click of the mouse.  
+
+Great, we've set up our variables and handled mouse button pressed, so here's the workhourse code that will go into the `update` function:
+
+	if (leftMouseButtonPressed) {
+		ofVec2f mousePos(mouseX, mouseY);
+		if (lastPoint.distance(mousePos) >= minDistance) {
+			currentPolyline.addVertex(mousePos);
+			lastPoint = mousePos;
+		}
+	}
+
+This code handles adding the mouse position to the polyline (and only does so when the mouse has moved a certain threshold amount away from the last point we added to the polyline).  Last thing to do is draw our polyline in the `draw` function:
+
+	ofBackground(0);    
+	ofSetLineWidth(2);
+	ofSetColor(255,100,0);
+	currentPolyline.draw();
+
+So you have a super basic pen.  Hooray?  Maybe it is a little too blocky for your tastes?  The polyline is made up of straight line segments at the moment...so let's change that by using `curveTo`.
+
+In `mousePressed`, instead of `currentPolyline.addVertex(x, y);`, try:
+	
+	currentPolyline.curveTo(x, y); // Necessary duplicate for first point when using curveTo
+	currentPolyline.curveTo(x, y);
+	
+In `update`, instead of `currentPolyline.addVertex(mousePos);`, use `currentPolyline.curveTo(mousePos);`.
+
+And lastly, in `mouseReleased`, add `currentPolyline.curveTo(x, y);` inside your if statement.  This provides our necessary duplicate of our last point.
+
+Your lines should be slightly more attractive (or in the case of my awful mouse control, much more attractive).  Now you've got a basic polyline drawing program, but you don't have the ability to save your polylines.  For that, we will turn to something called a `vector`.  
+
+This isn't the same kind of vector that we talked about earlier in the context of `of2Vecf`. **[Note: need to explain vector]**
+
+So we can use a `vector <ofPolylines>` to save our polyline brush strokes.  When we finish a stroke, we want to add the polyline to our vector.  So in the if statement inside of `mouseReleased`, let's add:
+
+	polylines.push_back(currentPolyline);
+
+Then we can draw our saved polylines in a different color than our current polyline.  So your `draw` function should look like this:
+
+	ofBackground(0);
+	ofSetLineWidth(2);
+	
+	ofSetColor(255);
+	for (int i=0; i<polylines.size(); ++i) {
+		ofPolyline polyline = polylines[i];
+		polyline.draw();
+	}
+	
+	ofSetColor(255,100,0);
+	currentPolyline.draw();
+	
+And you can draw a doopy smiley face:
+
+![Polyline Smile](images/intrographics_polylinesmile.png "Using a polyline pen to draw a smile")
+
+**[Note: could add a description of how to implement a delete/undo feature]**
+
+Now that we have the basic drawing in place, why don't we play with how we are rendering our polylines to the screen?  
+
+First, let's draw circles where the points in our polylines are.  Inside of the for loop in your `draw` function (after `polyline.draw();`, add this:
+
+	vector<ofVec3f> vertices = polyline.getVertices();
+	for (int vertexIndex=0; vertexIndex<vertices.size(); ++vertexIndex) {
+		ofVec3f vertex = vertices[vertexIndex];
+		ofCircle(vertex, 5);
+	}
+	
+**[Note: explain vector<ofVec3f>, getVertices, vertices.size()]**
+
+What happens when you run it?  Your white lines just look thicker?  That's because our polyline is jam-packed with vertices!  Every time we call the `curveTo` function, we create 20 extra vertices (by default).  These are needed to make a smooth-looking curve.  You can adjust how many vertices are added with an optional parameter (`curveResolution`) that you pass to `curveTo` (check out the [documentation page](http://openframeworks.cc/documentation/graphics/ofPolyline.html#show_curveTo "curveTo Documentation Page")).  We don't need quite that many vertices on our polylines, but instead of lowering the `curveResolution`, we can make use of another polyline function called [`simplify`](http://openframeworks.cc/documentation/graphics/ofPolyline.html#show_simplify "simplify Documentation Page").
+
+`simplify` is a function that will remove 'duplicate' points from your polyline.  You pass a single argument into it: `tolerance`, a value between 0.0 and 1.0.  The `tolerance` describes how dis-similar points must be in order to be considered 'unique' enough to not be deleted.  The higher the tolerance, the more points that will be removed.  So right before we save our polyline by putting it into our `polylines` vector, we will simplify it to reduce the number of vertices.  Inside of the if statment within `mouseReleased` (before `polylines.push_back(currentPolyline);`), add: `currentPolyline.simplify(0.75);`.  Now you should see something like this:
+
+![Polyline Vertices](images/intrographics_polylinevertices.png "Drawing circles at the vertices of a polyline")
+
+We can also sample points along the polyline using [`getPointAtPercent`](http://openframeworks.cc/documentation/graphics/ofPolyline.html#show_getPointAtPercent "getPointAtPercent Documentation Page").  **[Note: explain the function]**.  Inside the `draw` function, comment out the code that draws a circle at each vertex.  Below that, add: 
+
+        for (int p=0; p<=100; p+=10) {
+            ofVec3f point = polyline.getPointAtPercent(p/100.0);
+            ofCircle(point, 5);
+        }
+
+And now you have evenly spaced points:
+
+![Polyline Sampled Points](images/intrographics_polylinesampledpoints.png "Drawing circles at sampled points along a polyline")
+
+Additional extensions to write up:
+- Drawing normal lines
+- Drawing tangents lines
+- Drawing normal shape
+- Something fun to cap off all of the concepts
+
 
