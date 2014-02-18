@@ -27,13 +27,12 @@
 		+ note to self: don't bash java
 + Variables I
 	+ counting example
-
-
-===
-	
-# things i still need to talk about
+	+ fundamental math operators ( + - * / )
 
 + conditionals
+	+ Syntactic Sugar
+	+ Inequality Operators
+	+ Boolean Logic
 
 + while loop
 	+ break
@@ -44,11 +43,19 @@
 
 + returning early from a function
 
+	
+===
+	
+# things i still need to talk about
+
+
+
+
 
     
 + Variables II
 	+ some basic data types (int, char, float)
-	+ fundamental math operators ( + - * / )
+	
 	+ computer science operators
 		+  modulo
 		+ bitwise math

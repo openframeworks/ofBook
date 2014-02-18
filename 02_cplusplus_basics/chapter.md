@@ -303,7 +303,7 @@ If I ask my father nicely, he will tell stories about his days at Bell Labs in M
 ![Figure 15. Bell Labs punch card from the mid-1960s, courtesy of Lucent](img/bell1.gif "Figure 15. Bell Labs punch card from the mid-1960s, courtesy of Lucent")
 
 
-Thompson and Ritchie initiated the development of the Unix operating system in effort to improve these original problems (and provide a useful jig with which they could create their game "Space Travel"). Part of what made Unix attractive was that its heart was written in C, instead of the lower level assembly language - and that made it more portable. The birth of the C language happened along-side the birth of Unix. Hence, the present-day ubiquity of Unix-like OSes may explain the importance of C and its derivative languages.
+Thompson and Ritchie initiated the development of the Unix operating system in effort to improve these original problems (and provide a useful jig with which they could create their game "Space Travel"). Part of what made Unix attractive was that its heart was written in C, instead of the lower level assembly language - and that made it more portable. Back then, every new machine invented needed to have an assembly language specific to it - that was always the first job of its users. Because Thompson and Ritche ported Unix over to C, it made Unix very portable - giving it a very good chance to spread virally. The birth of the C language happened along-side the birth of Unix. Hence, the present-day ubiquity of Unix-like OSes may explain the importance of C and its derivative languages.
 
 A decade later, Bjarne Stroustrup created a new strain of the C language in order to update it with a new paradigm called *object oriented programming* which introduces an intermediary container between the function and its program called a *class*. The class system allows a program to do special skateboard tricks that you can read about in the ***OOPS!*** chapter. Since C++ is close enough to C, compiling compatibly with it (if you know what you're doing), C++ rides the popularity of C and Unix. C++ gets its name because putting `++` after something in C means adding 1 to it (or *incrementing* it). C++ is the C language, plus one paradigm. C++ is considered by many to be the most popular programming language of all time.
 
@@ -323,7 +323,12 @@ Sometimes I say C, and sometimes I say C++. Since they are closely related, perh
 
 ![Figure 17. C++ is a non-strict superset of C](img/non-strict-superset.png "Figure 17. C++ is a non-strict superset of C")
 
-##Variables (part 1)
+## Variables (part 1)
+
+> A “thing” is a “think”, a unit of thought
+> 
+> -- Alan Watts
+
 
 Please enter the following program into ideone and run it.
 
@@ -430,7 +435,7 @@ union unsigned using virtual void volatile wchar_t while xor xor_eq
 > **--Albus Dumbledore**
 
 
-Identifiers (variables included) are written with different styles to indicate their various properties, such as type of construct (variable, function, or class?), data type (integer or string?), scope (global or local?), level of privacy, etc. You may see some identifiers capitalized at the beginning and using `CamelCase`, whilst others remain all `lower_case_using_underscores_to_separate_the_words`. Global variables are found to be named with `ALL_CAPS_AND_UNDERSCORES`. Another way of doing lower-case naming is to start with a lowercase `letterThenCamelCaseFromThere`. You may also see a hybrid, like `ClassName__functionName__variable_name`. These different styles can indicate different categories of identifiers.
+Identifiers (variables included) are written with different styles to indicate their various properties, such as type of construct (variable, function, or class?), data type (integer or string?), scope (global or local?), level of privacy, etc. You may see some identifiers capitalized at the beginning and using `CamelCase`, whilst others remain all `lower_case_using_underscores_to_separate_the_words`. Global constants are found to be named with `ALL_CAPS_AND_UNDERSCORES`. Another way of doing lower-case naming is to start with a lowercase `letterThenCamelCaseFromThere`. You may also see a hybrid, like `ClassName__functionName__variable_name`. These different styles can indicate different categories of identifiers.
 
 More obsessively, programmers may sometimes use what is affectionately nicknamed *Hungarian Notation* adding character badges to an identifier to say things about it but also reduce the legibility, for example `dwLightYears` and `szLastName`. Naming conventions are not set in stone, and certainly not enforced by the compiler. Collaborators generally need to agree on these subtle naming conventions so that they don't confuse one another, and it takes discipline on everyone's part to remain consistent with whatever convention was decided. The subject of naming convention in code is still a comically heated debate amongst developers, just like deciding which line to put the curly brace, and whether to use tabs to indent. Like a lot of things in programming, someone will always tell you you're doing it wrong. That doesn't necessarily mean you are doing it wrong.
 
@@ -499,7 +504,7 @@ int main(){
 }
 ```
 
-The output should still be `012345`. By saying `counter = counter + 1`, I am incrementing `counter` by 1. More specifically, I am using `counter` in the right-hand "addition" expression, and the result of that (one moment later) gets stored into `counter`. This seems a bit funny because it talks about `counter` during two different times. It reminds me of the movie, *Back to the Future* when Marty McFly runs into past and future versions of himself. See Figure 21.
+The output should still be `012345`. By saying `counter = counter + 1`, I am incrementing `counter` by 1. More specifically, I am using `counter` in the right-hand "addition" expression, and the result of that (one moment later) gets stored into `counter`. This seems a bit funny because it talks about `counter` during two different times. It reminds me of the movie series, *Back to the Future* in which Marty McFly runs into past and future versions of himself. See Figure 21.
 
 ![Figure 21. The future Marty uses the past Marty](img/futuremarty.png "Figure 21. The future Marty uses the past Marty")
 
@@ -591,7 +596,7 @@ int main(){
 }
 ```
 
-For arithmetic completeness, I should mention that the subtractive *decrementing* operator (counter--) also exists. Also, as you might have guessed by now, if one can say `counter + 1`, then a C compiler would also recognize the other classic arithmetic like `counter * 2` (asterisk is multiplication), `counter / 2` (division), and overriding the order of operations by using parentheses, such as `(counter + 1) / 2` evaluating to a different result than `counter + 1 / 2`. C extends this basic palette of maths operators with boolean logic and bitwise manipulation; I will introduce them in Variables part 2.
+For arithmetic completeness, I should mention that the subtractive *decrementing* operator (counter--) also exists. Also, as you might have guessed by now, if one can say `counter + 1`, then a C compiler would also recognize the other classic arithmetic like `counter - 3` (subtraction), `counter * 2` (asterisk is multiplication), `counter / 2` (division), and overriding the order of operations by using parentheses, such as `(counter + 1) / 2` evaluating to a different result than `counter + 1 / 2`. Putting a negative sign before a variable will also do the right thing and negate it, as if it were being subtracted from zero. C extends this basic palette of maths operators with boolean logic and bitwise manipulation; I will introduce them in Variables part 2.
 
 There are a few more essentials to learn about variables, but we're going to take what we've learned so far and run with it in the name of fun. In the meantime, give yourself another pat on the back for making it this far! You learned what variables are, and how to perform basic arithmetic on them. Please give us a shout about your progress so that we may celebrate along with you. Tweet the following:
 
@@ -599,28 +604,1769 @@ There are a few more essentials to learn about variables, but we're going to tak
 
 ## If-Then
 
-[coming up next!]
+> Life is a multiple-choice, choose-your-own-adventure. *--my girlfriend Becca*
+
+Imagine riding your bicycle in the streets of your city. When you encounter intersections or forks in the road, you must decide whether to turn, go straight, or turn around based on where you are going, your urgency in getting home, and other places you may want to stop at. The next day, you may take the same route but end up taking very different streets based on the domino effect of your decisions.
+
+Your ability to judge a situation and change your behavior based on your analysis is a kind of prediction behavior that defines intelligence. A computer program can also stop, analyze, and decide how to act in a more simplified way. *Conditionals* or *branching* in code are what provides this kind of simple yet useful intelligence. With just a little bit if *If-Then-Else* in your code, you can automate very complex decision making.
+
+Figure 23 shows a generative, interactive cluster of neurons coded in OpenFrameworks for the CLOUDS Interactive Documentary.
+
+![Figure 23. Neuron simulation from CLOUDS Interactive Documentary](img/vsneurons.png "Figure 23. Neuron simulation from CLOUDS Interactive Documentary")
+
+In beginning to understand how code branches, let's imagine the code is a shopping list (code I run on myself). I've been sent to the supermarket by my grandma Ceil to pick up ingredients for *Kreplach*, the (Ashkenazi) Jewish wonton. We have family visiting from Closter, NJ and since they had the chutzpah to schlep all the way to Brighton Beach, we're going to give them the works - kugel, brisket, and even tzibele kichel to nosh while she finishes cooking (instead of the stale hamantaschen from last Purim). But the only job I have is buying the ingredients for Kreplach. Here is the shopping list:
+
+```
+flour
+kosher salt
+dozen giant brown organic eggs
+1 bottle corn oil
+4 sweet onions
+ground beef
+parsley
+pepper
+garlic
+potatoes
+scallions
+carrots
+```
+
+An experienced shopper knows that products and preferred brands are not always in stock, and so we notate the shopping list with alternative purchases in case the primary preference is not available.
+
+```
+Heckers unbleached all purpose flour (pillsbury or gold medal would be fine)
+Morton Kosher Salt
+dozen giant brown organic eggs (white eggs ok too)
+1 bottle Mazola corn oil
+4 sweet onions (white onions would be acceptable)
+ground beef (ground chicken also ok, but NO traif!)
+parsley
+pepper
+garlic
+potatoes (red rose, white rose, yukon gold) NOT Idaho or Russet, not too much shmutz
+scallions (chives will do but call me)
+carrots
+```
+
+Although the above is more realistically how one would express conditionals in a shopping list (placing them after the primary product topic), let us refactor the shopping list to C-style conditionals by using indentation, and by "wrapping" code inside some if-braces.
+
+```
+if ( they have Heckers unbleached all purpose flour ){
+	get that;
+}else if( they only have Heckers BLEACHED flour){
+	i'll settle for that over the other brands;
+}else{
+	get the pillsbury or gold metal brands;
+}
+
+get Morton Kosher Salt;
+
+if ( there are giant brown organic eggs ){
+	get a dozen of those;
+}else{
+	get a dozen of whatever eggs;
+}
+
+get 1 bottle Mazola corn oil;
+
+if ( there are sweet onions ){
+	get 4 of those;
+}
+//otherwise do nothing, I have white onions in the apartment.
+
+if(the butcher has chop meat AND that meat is not traif AND (it is chicken or it is beef) ){
+	get 2 lb of it;
+}else{
+	Boychik, call me and i'll direct you another kosher butcher in our hood;
+}
+
+get parsley;
+get pepper;
+get garlic;
+
+if(they have red rose, white rose, or yukon potatoes and they don't have a lot of shmutz){
+	get 8 of them;
+}
+
+if(they don't have scallions){
+	get chives;
+}else{
+	get scallions;
+}
+
+get carrots;
+
+```
+
+Perhaps you noticed a pattern in the above *pseudo-code*, where I define a bracing structure that looks similar to a function in that it has parentheses and curly braces. Those are if-then-else statements, and they are a type of *flow control*. Figure 24 explains the parts.
+
+![Figure 24. Anatomy of a conditional](img/conditional-anatomy.png "Figure 24. Anatomy of a conditional")
+
+The part labelled `test` is a *boolean logic* expression, and that means it ultimately results in a TRUE or FALSE answer. Let us look at some real code to see how a true or false test looks in context.
+
+```C++
+#include <math.h>
+#include <iostream>
+using namespace std;
+
+int main(){
+	int counter = 0;
+	
+	counter++;
+	cout << counter;
+	if(counter > 1){
+		cout << " is greater than 1";
+	}
+	cout << endl;
+
+	counter++;
+	cout << counter;
+	if(counter > 1){
+		cout << " is greater than 1";
+	}
+	cout << endl;
+
+	counter++;
+	cout << counter;
+	if(counter > 1){
+		cout << " is greater than 1";
+	}
+	cout << endl;
+
+	return 0;	
+}
+```
+
+Each time, I am checking to see if `counter` is greater than 1, and if that is the case, then a bit of extra text gets printed to the console. If you run this code (and I highly encourage you to do so), you would see the following output.
+
+```
+1
+2 is greater than 1
+3 is greater than 1
+```
+
+The first time it evaluates `counter > 1`, the result is false, and so the indented code does not execute. There are a couple other pieces of the if-structure worth introducing. One important one is `else`, which opens up a second block of code to execute if the condition is false.
+
+```C++
+
+if(true){
+	// this code happens if the condition is true
+}else{
+	// this code happens if it is false
+}
+```
+
+This is different from simply putting an un-braced line of code beneath the if-clause since that free-roaming line of code would execute *whether or not* the condition were true. So `else` turns out to be pretty convenient. Another similar piece is `else if` that allows you to cascade your if-then clauses in a way similar to CSS.
+
+```C++
+
+if(condition1){
+	// this code happens if condition1 is TRUE, then the rest is skipped.
+}else if(condition2){
+	// this code happens if condition1 was FALSE, however condition2 is TRUE.
+}else if(condition3){
+	// this code happens if condition2 and condition1 were both FALSE, however condition3 is TRUE.
+}else{
+	// this code happens if none of the 3 conditions are true
+}
+
+```
+
+Using `else if`, it's easy to build a flexible filter system for decision making.
+
+### Syntactic Sugar for Conditionals
+
+The following is debated as something worth avoiding by folks like JSLint (who are also strict about whitespace). The reason I introduce it here is because you'll see it in OpenFrameworks related code, and I want you to recognize what you are seeing. If-statements can be expressed more concisely by using the single-line syntax, which is less flexible.
+
+```C++
+if (counter > 1) cout << "yes, it's greater";
+```
+
+An if-statement with no curly braces will only "limit" the one immediately following line of code. Even with the other snap-in parts, the same "next line only" rules apply.
+
+```C++
+if (counter > 1) cout << "yes, it's greater";
+else if (counter < 10) cout << "well, it's still smaller than 10";
+else cout << "The counter was outside the 2-10 range.";
+```
+
+The above code will do the exact same thing as:
+
+```C++
+if (counter > 1) {
+	cout << "yes, it's greater";
+} else if (counter < 10) {
+	cout << "well, it's still smaller than 10";
+} else {
+	cout << "The counter was outside the 2-10 range.";
+}
+```
+
+You can even mix and match which parts of the clause are "braced" and which ones are one-liners.
+If at all possible, I recommend using the fully braced syntax for all new code in the name of fast eyeball scanning. There is also something called a *ternary operator* that looks like `a > b ? x : y`. I'll let you google that on your own if you are genuinely curious, but I should discourage the use of ternary-ifs as well because they are esoteric, not terribly portable, difficult to scale or nest, and can get confusing fast. On the other hand, I do recommend you get to know ternaries in case you run into someone else's.
+
+### Inequality Operators
+
+So far, I've glossed over that part that goes `counter > 1`. Perhaps you recall a moment in third grade when the teacher taught you the "pacman" rule of inequality, where greedy pacman wants to go chomp the bigger number, so he faces in that direction. Comparison operators in C are based on that.
+
+```C++
+a > b // a is greater than b
+a < b // a is less than b
+a >= b // a is greater-than-or-equal-to b
+a <= b // a is less-than-or-equal-to b
+a == b // a is equal to b
+a != b // a is not equal to b
+```
+You will notice the use of double-equal sign to mean the original thing you thought an equal sign was supposed to be used for. A common mistake for beginning coders is the blending between single and double equal signs. Please take the time to know this difference because it will save you some mind-numbingly mysterious errors in the future.
+
+### Boolean Logic
+
+Inequalities can be joined together with logical operators called AND, OR, and NOT, which do much the same thing they are already doing in natural English. AND is typed out as the `&&` operator, while OR is the `||` operator. NOT is a prefixed exclamation mark, and it inverts the truth state of an expression. Here are some boolean logic expressions.
+
+```C++
+true || false             // true
+false || false            // false
+true || false || false    // true
+
+false && true             // false
+true && true              // true
+false && false            // false
+
+!true                     // false
+!false                    // true
+
+true && !(true || false)  // false
+false || true && !false   // true
+```
+
+"Boolean" is named after George Boole, one of the fathers of computer science who worked out this sort of true/false maths. You'll find boolean logic in everything  partly because it powers the if-then clauses. The keywords `true` and `false` are considered *global constants*. Conveniently, any non-zero number qualify as true when placed in a boolean context, whilst all zero values qualify as false. In that way, you might set up your arithmetic to land on a zero or non-zero in formulating a testing expression for your if-then clause. In the following example of a conditional, you'll see boolean logic operators used to join numeric comparison.
+
+```C++
+if (counter > 10 && counter < 20) {
+	cout << "it's within the 10-20 range";
+} else if (counter <= 0) {
+	cout << "it's zero or less";
+} else {
+	cout << "all other cases";
+}
+```
+
+### Nesting
+
+If-then clauses may also be *nested* meaning you can place an entire if-then clause inside one of the code blocks of another. Of course, the indentation needs to observe proper recursion.
+
+```C++
+
+if( counter > 30 ){
+	
+	if(counter > 50){
+		// todo: do something
+	}
+	
+}else{
+
+	if(counter < 0){
+		
+		if(counter < -10){
+			//todo: do something
+		}
+		
+	}else{
+		//todo: do something else
+	}
+	
+}
+```
+
+The term *nesting* is the same concept as the Matryoshka doll, as shown in Figure 25. You can place the hollow Russian dolls inside one another until it appears like there is only one doll. It's trippy because of the concentric modules (recursion) but it is incredibly useful in crafting an algorithm.
+
+![Figure 25. Matryoshka nesting doll](img/Russian-Matroshka2.jpg "Figure 25. Matryoshka nesting doll")
+
+## Looping
+
+You may have noticed that the recent C++ example code had a lot of cutting and pasting in it. This brute-force way of forging repetitive behavior is not as flexible, and nowhere near as concise as simply telling your code to loop.
+
+```C++
+
+#include <math.h>
+#include <iostream>
+using namespace std;
+
+int main(){
+    int counter = 0;
+
+	while(true){
+    	counter	++;
+	    cout << counter << ", ";
+	}
+	
+    return 0;   
+}
+
+```
+
+If you run this code, the output starts like this . . .
+
+```
+1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37,
+38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54,
+55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71,
+72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88,
+89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104,
+105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118,
+119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132,
+133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146,
+147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160,
+161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174,
+175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188,
+189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202,
+203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214 . . .
+```
+
+. . . and continues to execute until ideone decides to kill the process (force quit) the program prematurely. Truth be told, if you were running the very same app directly on your laptop as you would be doing in a normal OpenFrameworks situation, the program would run forever - until the computer runs out of resources, reboots, or you kill the process yourself. The reason it keeps incrementing `counter` then prints its value to the console infinitely is because I placed a `true` into the parentheses. Figure 26 explains each part of the simple yet powerful `while` clause.
+
+![Figure 26. While Clause](img/while-anatomy.png "Figure 26. While Clause")
+
+Normally, you would not want your program to simply loop forever. Let's modify the code so that the loop knows to stop after hitting 100.
 
 
+```C++
+while(counter < 100){
+	counter	++;
+    cout << counter << ", ";
+}
+```
+
+I changed the contents of the `while`'s conditional expression so that it will only loop up to 100. The output is:
+
+```
+1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37,
+38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54,
+55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71,
+72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88,
+89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100,
+
+```
+
+This is not the only way to stop a while loop. Let us nest some if-then clauses into the while loop, so I can demonstrate the `break` and `continue` statements.
+
+```C++
+	while(true){
+    	counter	++;
+	    cout << counter << " ";
+	    if(counter==10){
+	    	break;	
+	    }
+	}
+```
+
+The output is `1 2 3 4 5 6 7 8 9 10 `. As I loop, I am repeatedly checking to see if counter is 10, and if that is the case, I `break` out of the loop. 
+
+### Modulo %
+
+For the next example, I'd like to introduce you to the modulo operator, which is not so common in basic arithmetic but turns out to be useful and fun in programming. It is the percent sign operator, placed between 2 numbers, and it computes the *remainder* from dividing the left number by the right number. Here are a few examples:
+
++ 4 % 2 is 0 because 4 / 2 ends up being 2 with no remainder.
++ 10 % 3 is 1
++ 10 % 4 is 2
++ 9 % 10 is 9
++ 10 % 10 is 0
++ 11 % 10 is 1
+
+Modulo is great for easily making patterns. The following example prints an alternating pattern of # and space, forever.
+
+```C++
+while(true){
+	counter	++;
+    if(counter % 2 == 0){
+    	cout << '#';
+    }else{
+    	cout << ' ';
+    }
+}
+```
+
+This outputs `# # # # # #`. The next modification prints out `# ## ## ## ## ##`.
+
+```C++
+while(true){
+	counter	++;
+    if(counter % 3 < 2){
+    	cout << '#';
+    }else{
+    	cout << ' ';
+    }
+}
+```
+
+Getting back to demonstrating the `continue` statement, I will use the % operator to "skip" only even numbers.
+
+```C++
+while(true){
+	counter	++;
+    if(counter % 2 == 0){
+    	continue;
+    }else{
+    	cout << counter << ' ';
+    }
+}
+```
+
+The output begins with `1 3 5 7 9 11 13 15 17 19 21 23 25 27 29 31 33 35 37 39 41 43 45 47`, only odd numbers. The `continue` statement is different from `break` because it only breaks out of that one instance of the loop and starts directly at the next. `break` will end the loop entirely.
+
+The following program uses a nested while-loop and an additional counter variable to generate a sawtooth wave pattern in ASCII art.
+
+```C++
+#include <math.h>
+#include <iostream>
+using namespace std;
+
+int main(){
+    int counter = 0;
+	int innerCounter = 0;
+	while(true){
+		counter	++;
+	    
+	    innerCounter = 0;
+	    while(innerCounter < (counter % 32) ){
+			innerCounter++;
+	    	cout << 'O';
+	    }
+	    cout << endl;
+	}
+	
+    return 0;   
+}
+```
+
+The output is:
+
+```
+O
+OO
+OOO
+OOOO
+OOOOO
+OOOOOO
+OOOOOOO
+OOOOOOOO
+OOOOOOOOO
+OOOOOOOOOO
+OOOOOOOOOOO
+OOOOOOOOOOOO
+OOOOOOOOOOOOO
+OOOOOOOOOOOOOO
+OOOOOOOOOOOOOOO
+OOOOOOOOOOOOOOOO
+OOOOOOOOOOOOOOOOO
+OOOOOOOOOOOOOOOOOO
+OOOOOOOOOOOOOOOOOOO
+OOOOOOOOOOOOOOOOOOOO
+OOOOOOOOOOOOOOOOOOOOO
+OOOOOOOOOOOOOOOOOOOOOO
+OOOOOOOOOOOOOOOOOOOOOOO
+OOOOOOOOOOOOOOOOOOOOOOOO
+OOOOOOOOOOOOOOOOOOOOOOOOO
+OOOOOOOOOOOOOOOOOOOOOOOOOO
+OOOOOOOOOOOOOOOOOOOOOOOOOOO
+OOOOOOOOOOOOOOOOOOOOOOOOOOOO
+OOOOOOOOOOOOOOOOOOOOOOOOOOOOO
+OOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
+OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
+
+O
+OO
+OOO
+OOOO
+OOOOO
+OOOOOO
+OOOOOOO
+OOOOOOOO
+OOOOOOOOO
+OOOOOOOOOO
+OOOOOOOOOOO
+OOOOOOOOOOOO
+OOOOOOOOOOOOO
+OOOOOOOOOOOOOO
+OOOOOOOOOOOOOOO
+OOOOOOOOOOOOOOOO
+OOOOOOOOOOOOOOOOO
+OOOOOOOOOOOOOOOOOO
+OOOOOOOOOOOOOOOOOOO
+OOOOOOOOOOOOOOOOOOOO
+OOOOOOOOOOOOOOOOOOOOO
+OOOOOOOOOOOOOOOOOOOOOO
+OOOOOOOOOOOOOOOOOOOOOOO
+OOOOOOOOOOOOOOOOOOOOOOOO
+OOOOOOOOOOOOOOOOOOOOOOOOO
+OOOOOOOOOOOOOOOOOOOOOOOOOO
+OOOOOOOOOOOOOOOOOOOOOOOOOOO
+OOOOOOOOOOOOOOOOOOOOOOOOOOOO
+OOOOOOOOOOOOOOOOOOOOOOOOOOOOO
+OOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
+OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
+
+O
+OO
+OOO
+OOOO
+OOOOO
+OOOOOO
+OOOOOOO
+OOOOOOOO
+OOOOOOOOO
+OOOOOOOOOO
+OOOOOOOOOOO
+OOOOOOOOOOOO
+OOOOOOOOOOOOO
+OOOOOOOOOOOOOO
+OOOOOOOOOOOOOOO
+OOOOOOOOOOOOOOOO
+OOOOOOOOOOOOOOOOO
+OOOOOOOOOOOOOOOOOO
+OOOOOOOOOOOOOOOOOOO
+OOOOOOOOOOOOOOOOOOOO
+OOOOOOOOOOOOOOOOOOOOO
+OOOOOOOOOOOOOOOOOOOOOO
+OOOOOOOOOOOOOOOOOOOOOOO
+OOOOOOOOOOOOOOOOOOOOOOOO
+OOOOOOOOOOOOOOOOOOOOOOOOO
+OOOOOOOOOOOOOOOOOOOOOOOOOO
+OOOOOOOOOOOOOOOOOOOOOOOOOOO
+OOOOOOOOOOOOOOOOOOOOOOOOOOOO
+OOOOOOOOOOOOOOOOOOOOOOOOOOOOO
+OOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
+OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
+```
+
+## For-Loop
+
+Because a *finite* loop is so common, there is syntactical sugar for it. This sugar is so common in every language that it ceases to be sugar. A for-loop allows you to concisely iterate through a counting range. The loops are considered safer because they prevent the whole "infinity" thing, and on the other hand, there are ways to trick a for-loop into looping infinitely. They are incredibly practical, and you see them everywhere. Figure 27 shows the syntax breakdown of a for-loop that iterates 100 times.
+
+![Figure 27. For-Loop Anatomy](img/for-anatomy.png "Figure 27. For-Loop Anatomy")
+
+That whole chunk of `for( int i = 0 ; i < 100 ; i++ )` seems confusing at first but you will get to know it pretty fast. it just means "do this 100 times", and it is worth practicing typing that very thing out a few times so you can commit it into muscle memory. Here are a few for-loops.
+
+```C++
+
+for(int i = 100 ; i >= 0 ; i--){
+	//iterates with i from 100 to 0
+}
+
+for( int i = 0 ; i < 100 ; i += 2){
+	//iterates with i from 0 to 100, skipping 2 each time.
+}
+
+for( int i = 0 ; i < 10 ; i++ ){
+	for( int j = 0 ; j < 10 ; j++ ){
+		for( int k = 0 ; k < 10 ; k++ ){
+			// a triple nested for-loop using variables i,j,k
+		}
+	}
+}
+
+```
+
+The iterating variable in a for-loop is commonly named `i`, the inner one is named `j`, and the one inside that is `k`. After that, the emerging standard starts to vary but I have seen `ii`,`jj`,`kk`, and then `iii`,`jjj`,`kkk`. programmers also just break down and start using more expressive variable names. In nested for-loops that iterate through pixels, you will commonly see `x`, `y`, and sometimes `z` as the iterator names. If you see the variable `i` in someone's code, chances are it's a local variable declared at the top of the for-loop. Just like the while-loop, a for-loop will respond to `break` and `continue` statements. Here is an example of a double for-loop that generates a 2-dimensional pattern into the console.
+
+```C++
+#include <iostream>
+using namespace std;
+
+int main(){
+    for( int y = 0; y < 20 ; y++ ){ 
+        for( int x = 0 ; x < 80 ; x++ ){
+            if(y%2==0){
+                if(x%2==0){
+                    cout << ')';
+                }else{
+                    cout << ' ';
+                }
+            }else{
+                if(x%2==0){
+                    cout << ' ';
+                }else{
+                    cout << '(';
+                }                
+            }
+        }
+        cout << endl;
+    }
+    return 0;
+}
+
+```
+
+And the output should look like this.
+
+```
+) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) 
+ ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( (
+) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) 
+ ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( (
+) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) 
+ ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( (
+) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) 
+ ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( (
+) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) 
+ ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( (
+) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) 
+ ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( (
+) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) 
+ ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( (
+) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) 
+ ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( (
+) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) 
+ ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( (
+) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) 
+ ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( (
+```
+
+Just for fun, I'm going to introduce a distance function. You don't need to understand the pythagorean theorem (unless you want to) but just paste the useful function into your code so you can measure distance.
 
 
+```C++
+#include <iostream>
+#include <math.h>
+using namespace std;
+
+int distance(int x1,int y1,int x2, int y2){
+    int xDelta = x1-x2;
+    int yDelta = y1-y2;
+    return sqrt(xDelta * xDelta + yDelta * yDelta);
+}
+
+int main(){
+    for( int y = 0; y < 20 ; y++ ){ 
+        for( int x = 0 ; x < 80 ; x++ ){
+	
+            if( distance(x,y,40,10) < 6 ){ // if this pixel is inside the hole
+                cout << ' '; // render only spaces.
+            }else if(y%2==0){ // otherwise do the usual wave thing.
+                if(x%2==0){
+                    cout << ')';
+                }else{
+                    cout << ' ';
+                }
+            }else{
+                if(x%2==0){
+                    cout << ' ';
+                }else{
+                    cout << '(';
+                }                
+            }
+        }
+        cout << endl;
+    }
+    return 0;
+}
+```
+
+The output looks like this:
+
+```
+) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) )
+ ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( (
+) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) )
+ ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( (
+) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) )
+ ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( (         ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( (
+) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) )           ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) )
+ ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( (             ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( (
+) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) )           ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) )
+ ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( (             ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( (
+) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) )           ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) )
+ ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( (             ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( (
+) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) )           ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) )
+ ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( (             ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( (
+) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) )           ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) )
+ ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( (         ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( (
+) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) )
+ ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( (
+) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) )
+ ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( (
+```
+
+The new if-statement measuring the distance from the circle's center allows us to render the inside of the circle with a different letter. The reason it looks tall and skinny is because in ACSII art, the characters are 2x taller, and we have not accounted for that in the code. We can fix that by multiplying the correct things by 2 in the arguments of `distance()` call.
+
+```C++
+            if( distance(x,y*2,40,20) < 17 ){ // Y and circle-center-Y both multiplied by 2
+```
+
+The output should be more circular, depending on the line-height of the font renderer.
+
+```
+) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) 
+ ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( (
+) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) )           ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) 
+ ( ( ( ( ( ( ( ( ( ( ( ( ( ( (                     ( ( ( ( ( ( ( ( ( ( ( ( ( ( (
+) ) ) ) ) ) ) ) ) ) ) ) ) )                           ) ) ) ) ) ) ) ) ) ) ) ) ) 
+ ( ( ( ( ( ( ( ( ( ( ( ( (                             ( ( ( ( ( ( ( ( ( ( ( ( (
+) ) ) ) ) ) ) ) ) ) ) ) )                               ) ) ) ) ) ) ) ) ) ) ) ) 
+ ( ( ( ( ( ( ( ( ( ( ( (                                 ( ( ( ( ( ( ( ( ( ( ( (
+) ) ) ) ) ) ) ) ) ) ) )                                   ) ) ) ) ) ) ) ) ) ) ) 
+ ( ( ( ( ( ( ( ( ( ( ( (                                 ( ( ( ( ( ( ( ( ( ( ( (
+) ) ) ) ) ) ) ) ) ) ) )                                   ) ) ) ) ) ) ) ) ) ) ) 
+ ( ( ( ( ( ( ( ( ( ( ( (                                 ( ( ( ( ( ( ( ( ( ( ( (
+) ) ) ) ) ) ) ) ) ) ) )                                   ) ) ) ) ) ) ) ) ) ) ) 
+ ( ( ( ( ( ( ( ( ( ( ( (                                 ( ( ( ( ( ( ( ( ( ( ( (
+) ) ) ) ) ) ) ) ) ) ) ) )                               ) ) ) ) ) ) ) ) ) ) ) ) 
+ ( ( ( ( ( ( ( ( ( ( ( ( (                             ( ( ( ( ( ( ( ( ( ( ( ( (
+) ) ) ) ) ) ) ) ) ) ) ) ) )                           ) ) ) ) ) ) ) ) ) ) ) ) ) 
+ ( ( ( ( ( ( ( ( ( ( ( ( ( ( (                     ( ( ( ( ( ( ( ( ( ( ( ( ( ( (
+) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) )           ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) 
+ ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( (
+
+```
+
+## Returning Early from a Function
+
+When I first introduced functions, we had not learned enough code statements to fill those functions with more than one line of code. Now that you've seen a bit more, I'd like to cover something I had omitted. You have seen how it is possible to `break` out of a loop. it is also possible to break out of an entire function with the special `return` statement, and this will skip the rest of the function and go directly back to the calling code.
+
+```C++
+void doSomething(int a){
+	if ( a <= 0 ) {
+		return;
+	} else {
+		for(int i=0;i<a;i++){
+			cout << '#';
+		}
+		cout << endl;
+	}
+}
+```
+
+The above function has a return type of `void` and so it is not required to return any value. You can see at the top that I am validating the value of `a` to make sure it is above zero before I render that many `#`s into the console. I call the `return` statement early, and it escapes from the function.
+
+
+## Bouncing Ball
+
+We will now combine our new knowledge of variables, conditionals, looping, and functions to render an animation of a ball bouncing. Let's start with an empty ASCII art picture and add a ball to it.
+
+```C++
+#include <iostream>
+using namespace std;
+
+int width = 20;
+int height = 6;
+
+void drawFrame(){
+	for(int y = 0 ; y < height; y++ ){
+		for(int x = 0 ; x < width; x++ ){
+			cout << '.'; // draw each column
+		}
+		cout << endl; // new row
+	}
+	cout << endl; // margin-bottom
+}
+
+int main(){
+	drawFrame();
+	return 0;
+}
+```
+The output should look like this.
+
+```
+....................
+....................
+....................
+....................
+....................
+....................
+```
+
+We have a function `drawFrame()` whose job it is to render 1 frame of animation into the console as ASCII art. Above that, we have a couple variables `width` and `height` to store the size of the canvas. Now let's add the ball. To do this, we add a couple more global variables below `width` and `height` to hold the ball's position, and then we add an if-statement to the renderer to make sure it makes a visual exception for the ball position, which is 1 character.
+
+```C++
+#include <iostream>
+using namespace std;
+
+int width = 20;
+int height = 6;
+int ballX = 10;                                   // new
+int ballY = 3;                                    // new
+
+void drawFrame(){
+	for(int y = 0 ; y < height; y++ ){
+		for(int x = 0 ; x < width; x++ ){
+			if ( x == ballX && y == ballY ) {     // new
+				cout << 'O';                      // new
+			} else {                              // new
+				cout << '.'; // draw each column
+			}
+			
+		}
+		cout << endl; // new row
+	}
+	cout << endl; // margin-bottom
+}
+
+int main(){
+	drawFrame();
+	return 0;
+}
+```
+
+The output changes to look like this.
+
+```
+....................
+....................
+....................
+..........O.........
+....................
+....................
+```
+
+Let's make the ball move left and right by adding a `force` global variable just for the x value of the ball, then start adding the force to the ball's position, rendering frame after frame.
+
+```C++
+#include <iostream>
+using namespace std;
+
+int width = 20;
+int height = 6;
+int ballX = 10;
+int ballY = 3;
+int forceX = 1;                   // new
+
+void updatePhysics(){             // new
+	ballX += forceX;              // new
+}                                 // new
+
+void drawFrame(){
+	for(int y = 0 ; y < height; y++ ){
+		for(int x = 0 ; x < width; x++ ){
+			if ( x == ballX && y == ballY ) {
+				cout << 'O'; // draw the ball
+			} else {
+				cout << '.'; // draw each column
+			}
+			
+		}
+		cout << endl; // new row
+	}
+	cout << endl; // margin-bottom
+}
+
+int main(){
+	while(true){                   // new
+		updatePhysics();           // new
+		drawFrame();
+	}                              // new
+	return 0;
+}
+```
+The output should start with this.
+
+```
+....................
+....................
+....................
+...........O........
+....................
+....................
+
+....................
+....................
+....................
+............O.......
+....................
+....................
+
+....................
+....................
+....................
+.............O......
+....................
+....................
+
+....................
+....................
+....................
+..............O.....
+....................
+....................
+
+....................
+....................
+....................
+...............O....
+....................
+....................
+
+....................
+....................
+....................
+................O...
+....................
+....................
+
+....................
+....................
+....................
+.................O..
+....................
+....................
+
+....................
+....................
+....................
+..................O.
+....................
+....................
+
+....................
+....................
+....................
+...................O
+....................
+....................
+
+....................
+....................
+....................
+....................
+....................
+....................
+
+....................
+....................
+....................
+....................
+....................
+....................
+```
+
+As you can see, the ball's position keeps getting 1 added to it, and eventually it falls off the canvas. To make it bounce off the walls, we must add conditions into `updatePhysics()` that detect the ball collision with the wall, and change the direction of its force.
+
+```C++
+void updatePhysics(){
+	if( (ballX+1) ==width || ballX==0){   // new
+		forceX = -forceX;           // new
+	}                               // new
+	ballX += forceX;
+}
+```
+
+The output will show the ball properly bouncing off the left and right walls.
+
+```
+....................
+....................
+....................
+...........O........
+....................
+....................
+
+....................
+....................
+....................
+............O.......
+....................
+....................
+
+....................
+....................
+....................
+.............O......
+....................
+....................
+
+....................
+....................
+....................
+..............O.....
+....................
+....................
+
+....................
+....................
+....................
+...............O....
+....................
+....................
+
+....................
+....................
+....................
+................O...
+....................
+....................
+
+....................
+....................
+....................
+.................O..
+....................
+....................
+
+....................
+....................
+....................
+..................O.
+....................
+....................
+
+....................
+....................
+....................
+...................O
+....................
+....................
+
+....................
+....................
+....................
+..................O.
+....................
+....................
+
+....................
+....................
+....................
+.................O..
+....................
+....................
+
+....................
+....................
+....................
+................O...
+....................
+....................
+
+....................
+....................
+....................
+...............O....
+....................
+....................
+
+....................
+....................
+....................
+..............O.....
+....................
+....................
+
+....................
+....................
+....................
+.............O......
+....................
+....................
+
+....................
+....................
+....................
+............O.......
+....................
+....................
+
+....................
+....................
+....................
+...........O........
+....................
+....................
+
+....................
+....................
+....................
+..........O.........
+....................
+....................
+
+....................
+....................
+....................
+.........O..........
+....................
+....................
+
+....................
+....................
+....................
+........O...........
+....................
+....................
+
+....................
+....................
+....................
+.......O............
+....................
+....................
+
+....................
+....................
+....................
+......O.............
+....................
+....................
+
+....................
+....................
+....................
+.....O..............
+....................
+....................
+
+....................
+....................
+....................
+....O...............
+....................
+....................
+
+....................
+....................
+....................
+...O................
+....................
+....................
+
+....................
+....................
+....................
+..O.................
+....................
+....................
+
+....................
+....................
+....................
+.O..................
+....................
+....................
+
+....................
+....................
+....................
+O...................
+....................
+....................
+
+....................
+....................
+....................
+.O..................
+....................
+....................
+
+....................
+....................
+....................
+..O.................
+....................
+....................
+
+....................
+....................
+....................
+...O................
+....................
+....................
+
+....................
+....................
+....................
+....O...............
+....................
+....................
+
+....................
+....................
+....................
+.....O..............
+....................
+....................
+
+....................
+....................
+....................
+......O.............
+....................
+....................
+
+....................
+....................
+....................
+.......O............
+....................
+....................
+```
+
+To make the ball move up and down in addition to left and right, we simply add a `forceY` and repeat the working algorithm over from the X behavior.
+
+```C++
+int forceX = 1;
+int forceY = 1;                           // new
+
+void updatePhysics(){
+	if( (ballX+1)==width || ballX==0){
+		forceX = -forceX;
+	}
+	
+	if( (ballY+1)==height || ballY==0){   // new
+		forceY = -forceY;                 // new
+	}                                     // new
+	
+	ballX += forceX;
+	ballY += forceY;                      // new
+}
+
+```
+
+The output will show the ball bouncing diagonally.
+
+```
+....................
+....................
+....................
+....................
+...........O........
+....................
+
+....................
+....................
+....................
+....................
+....................
+............O.......
+
+....................
+....................
+....................
+....................
+.............O......
+....................
+
+....................
+....................
+....................
+..............O.....
+....................
+....................
+
+....................
+....................
+...............O....
+....................
+....................
+....................
+
+....................
+................O...
+....................
+....................
+....................
+....................
+
+.................O..
+....................
+....................
+....................
+....................
+....................
+
+....................
+..................O.
+....................
+....................
+....................
+....................
+
+....................
+....................
+...................O
+....................
+....................
+....................
+
+....................
+....................
+....................
+..................O.
+....................
+....................
+
+....................
+....................
+....................
+....................
+.................O..
+....................
+
+....................
+....................
+....................
+....................
+....................
+................O...
+
+....................
+....................
+....................
+....................
+...............O....
+....................
+
+....................
+....................
+....................
+..............O.....
+....................
+....................
+
+....................
+....................
+.............O......
+....................
+....................
+....................
+
+....................
+............O.......
+....................
+....................
+....................
+....................
+
+...........O........
+....................
+....................
+....................
+....................
+....................
+
+....................
+..........O.........
+....................
+....................
+....................
+....................
+
+....................
+....................
+.........O..........
+....................
+....................
+....................
+
+....................
+....................
+....................
+........O...........
+....................
+....................
+
+....................
+....................
+....................
+....................
+.......O............
+....................
+
+....................
+....................
+....................
+....................
+....................
+......O.............
+
+....................
+....................
+....................
+....................
+.....O..............
+....................
+
+....................
+....................
+....................
+....O...............
+....................
+....................
+
+....................
+....................
+...O................
+....................
+....................
+....................
+
+....................
+..O.................
+....................
+....................
+....................
+....................
+
+.O..................
+....................
+....................
+....................
+....................
+....................
+
+....................
+O...................
+....................
+....................
+....................
+....................
+
+....................
+....................
+.O..................
+....................
+....................
+....................
+
+....................
+....................
+....................
+..O.................
+....................
+....................
+
+....................
+....................
+....................
+....................
+...O................
+....................
+
+....................
+....................
+....................
+....................
+....................
+....O...............
+```
+
+If you were able to follow along this far, then give yourself another hug because you just wrote a basic physics simulator and rendered it to the console frame by frame. Let us know you are awesome by tweeting this:
+
+**I made a ball bounce in code #ofBook**
+
+## Next Steps
+
+What you know so far is powerful enough to write a bouncing ball, but we still have more to go. What if we want the ball to travel slower than 1 pixel per frame? We would need to use fractions somehow. What if we want the ball to leave trails? We would need some way of remembering the pixel values. These skills and more are coming up before the end of the chapter. The previous bouncing ball excercise was a way for you to test yourself and see if you understand each part of the language. It was also a way for you to put all those pieces together and see how they work as one. If you found it intimidating or confusing, please go back and try to review the parts of this chapter that cover those topics you are fuzzy about before continuing. On the other hand, if you feel like you have got this and want to practice, then here are some bonus excercises to help you develop your C++ skills.
+
++ Expand the canvas and render the ball like the below example, adjusting the scene so no part of the ball falls out of frame.
+```
+.......
+..._...
+../ \..
+..\_/..
+.......
+```
+
++ Change the diagonal pattern of the ball so it is not always travelling in 45 degree angles.
++ Try adding a second ball to the scene and render it differently than the first.
++ If the two balls ever collide, print "YOU WIN" and stop the program.
++ Try rendering the balls as larger circles using the `distance()` function from a previous example.
 
 
 ## Variables (part 2)
 
-### Fundamental Types
-
-(lava and milk buckets)
-
-Lorem ipsum dolor sit amet, consectetur adipisicing elit
-
 ### Variables have a scope.
 
-Lorem ipsum dolor sit amet, consectetur adipisicing elit
+You may have noticed something different in the bouncing ball example. There were variables declared outside of the functions. In previous examples, I had declared variables inside the functions. Other variables were declared inside the parentheses of functions as arguments, and inside the for-loop as an iterator. These variables are declared in different *scopes* of the code. We talk about scope by saying a variable is *local* (existing only inside my immediate curly braces) or *global* (existing for the entire program). Intuitively, we can think about global and local variables in the geographic sense of the words "local" and "global." Let us apply this idea to musical trends.
+
+Something that is local (a local concert by a local band) will happen in a smaller, lesser known location - and will happen by a lesser known (but just as important!) local band. A world traveller may come to see the show but since she goes to so many shows in so many locations, she forgets about our local band. Because she forgets about the local band, it gives the band an opportunity to change their name from "From First to Last" to "Skrillex", and adopt a fresher musical genre. When our world traveller returns to the same city to see the same local band, it has benefited from a fresh new start. This fresh new start is why we use local variables. Their ability to reset (their values forgotten quickly) is incredibly useful to us. Global variables, on the other hand, are classical musicians like Ludwig van Beethoven or Wolfgang Amadeus Mozart, whose names ring far and wide about the Earth (and possibly beyond), never to be forgotten. Their music was appreciated long ago and will continue to be appreciated, in many countries. Their musician names are known globally, and persist (stay the same) globally. This absolute stability of a global variable is what makes them so useful, in contrast to a more local variable. We need both global and local variables to make the whole system work, just like we need both global and local musicians for the health of music!
+
+![Figure 26. Global versus Local, with apologies to Sonny Moore ](img/global-local.png "Figure 26. Global versus Local with apologies to Sonny Moore")
+
+### Apologies
+
+I know it is hip to hate on Skrillex, so remember that his career has just begun. He has gone from local to global in a small amount of time, which is impressive. I am sure he will transform into an even more globally recognized musician than he already is, and then we will all stop hating on him. On the other hand, people have been hating on Mozart's appearance and character for 256 years (a more globally persisting rejection). Like making music, someone will always tell you you're not a real coder. Do not let that stop you. Having read the book "Coders at Work" in which Peter Seibel interviews the top programmers and computer scientists, I was pleasantly surprised to learn that people came from a diversity of backgrounds, and some saw themselves as architects or writers. Being a good programmer is different from being a good computer scientist or mathematician!
+
+Variables at a more local scope are incredibly impactful and important because they deal with that which is closest to us, a bit like being closer to ones nerves. If we did everything using global variables all the time, we would have collisions - and perhaps remember too much garbage. Code and computer memory would grow tangled like the ratty hair of electronic musician. The idea of a local variable is newer, and was introduced for organization reasons. Programmers have made good efforts to avoid tangled, confusing code - and one way to do it is through keeping variables local.
+
+When dealing with nested clauses in code, global and local are less black and white since the *scope* is more than 2 matryoshka dolls deep. A variable declared at various locations within the curly brace garden can be viewed as "slightly more global" or "much more local", as in figure 27.
+
+![Figure 27. Locality](img/global-local-circles.png "Figure 27. Locality")
+
+Let us see how this looks in code.
+
+```C++
+#include <iostream>
+using namespace std;
+
+int myGlobal;
+
+void addOne(){
+	myGlobal += 1;
+}
+
+int main() {
+	for(int i=0;i<4;i++){
+		cout << myGlobal << ' ';
+		addOne();
+	}
+	cout << endl;
+	
+	return 0;
+}
+```
+
+The output is `0 1 2 3`. Notice `addOne()` and `main()` are *sharing* the global variable. Its value remains the same between them. Unfortunately, `myGlobal` is forgotten when the program is finished running, which makes it *local* within the scope of this program. To make its value even more persistent, we need to write it to a file, database, or share it over the network. That level of global-ness is one you will see explained in later chapters by other authors. Now let's deliberately cause an error.
+
+```C++
+#include <iostream>
+using namespace std;
+
+void addOne(){
+	cout << i;
+}
+
+int main() {
+	for(int i=0;i<4;i++){
+		addOne();
+	}
+	cout << endl;
+	return 0;
+}
+```
+
+The output is a compiler error.
+
+```
+prog.cpp: In function ‘void addOne()’:
+prog.cpp:5:10: error: ‘i’ was not declared in this scope
+  cout << i;
+          ^
+```
+
+The compiler has a problem understanding what you mean by `i` within the scope of `addOne()` because `i` is not a global variable (it only exists inside the for-loop of `main()`) and because no local variable `i` has been declared for the personal use of `addOne()`. If we wanted to access the value of `i` from within `addOne()`, the best thing to do would probably be to pass `i`'s value as an argument in the `addOne()` function.
+
+```C++
+#include <iostream>
+using namespace std;
+
+void addOne(int i){
+	i *= 2;
+	cout << i;
+}
+
+int main() {
+	for(int i=0;i<5;i++){
+		addOne(i);
+	}
+	cout << endl;
+	return 0;
+}
+```
+
+The output of this code is `02468`, not `026` as if `int i` were shared between the two functions. You see I added an argument/parameter to `addOne()` called `int i`. Notice I manipulate the value of `i` while inside `addOne()` by multiplying it by 2 before printing it out. Each time `addOne()` is called, the value of `i` passed to it is copied over from the `int i` in the for-loop of `main()`, as if it forgot that it was multiplied by 2 in `addOne()`. That is because there are 2 separate *local* versions of `int i`. See figure 28.
+
+![Figure 28. Two separate local variables named i](img/both-named-i.png "Figure 28. Two separate local variables named i")
+
+
+When I call `addOne()`, I am only passing the *value* of the first `i` so that it gets stored in the more temporary `int i` argument of `addOne()`. Figure 29 shows the lifespan of a function's argument, which is a certain type of local variable.
+
+![Figure 29. Lifespan of a local](img/local-born-die.png "Figure 29. Lifespan of a local")
+
+Just the same, if I were to declare any variables inside the scope of that function, those variables will also be forgotten when the function returns. They only exist inside that scope. In addition to *passing by value*, there is also such thing as *passing by reference* in which you are not only sharing the value of the variable, you are also sharing the actual place in computer memory - as if the variable were made global. memory pointers are an advanced topic better covered later, but the syntax looks like `void addOne(int& i){` with an ampersand specified before the variable name. if you made this slight modification to the above code example, you will see the output becomes `026`. 
+
+
+### Fundamental Types
+
+Variables have different *types*, meaning they hold different kinds of information in them. Some take up more memory than others. Returning to the Minecraft metaphor, we can think about putting more than just water in more than just iron buckets.
+
+![Figure 30. Minecraft Vessles](img/minecraft-vessles.png "Minecraft Vessles")
+
+In Minecraft, Buckets will hold milk and lava in addition to water. Furthermore, there are a few other kinds of containers meant for other liquids and other stuff. Requiring the correct container for the correctly according data makes C a *strictly typed* (or *strongly typed*) language because it is strict about which type of variable you use. Strictly typed variables are arguably a big virtue for a programming language, and are kept in as a matter of choice since they reduce errors, and greatly speed the app's performance. The issue of whether or not to use a strict or loosely typed language for a project is a very important decision to make, but whether or not one should devote ones career exclusively to strict or loose typing is an unhealthy sort of xenophobia. Both walks of life have their pros and cons.
+
+In the beginning of this chapter, we declared strings and since then, we've declared mostly integers with the keyword `int` just because they were a convenient general purpose data type for immediate gratification, but as I hinted during the bouncing ball exercise, an `int` has its limitations. Let me introduce a couple new types.
+
+```
+float myNumber = 340.1928; 
+char myLetter = 'E';
+```
+
+Unlike an `int`, A `float` allows decimal points, and so you can work at a higher resolution. A `char` holds a single ASCII character. It only needs to take up 8-bits of memory whilst the `float` and `int` take up more (therefore allowing them to express a wider range of values). I will touch briefly on the bits and bytes of memory when we get into bitwise operators, and then Arturo will give you much more in Chapter 16. Let's see the `float` in action!
+
+```C++
+#include <iostream>
+using namespace std;
+
+int main() {
+	float myNumber = 0.0;
+	for(int i=0;i<100;i++){
+		myNumber += 0.012;
+		cout << myNumber << endl;
+	}
+	return 0;
+}
+```
+
+The output is a stream of numbers that increment by 0.12.
+
+```
+0.012
+0.024
+0.036
+0.048
+0.06
+0.072
+0.084
+0.096
+0.108
+0.12
+0.132
+0.144
+0.156
+0.168
+0.18
+0.192
+0.204
+0.216
+0.228
+0.24
+0.252
+0.264
+0.276
+0.288
+0.3
+0.312
+0.324
+0.336
+0.348
+0.36
+0.372
+0.384
+0.396
+0.408
+0.42
+0.432
+0.444
+0.456
+0.468
+0.48
+0.492
+0.504
+0.516
+0.528
+0.54
+0.552
+0.564
+0.576
+0.588
+0.6
+0.612
+0.624
+0.636
+0.648
+0.66
+0.672
+0.684
+0.696
+0.708
+0.72
+0.732
+0.744
+0.756
+0.768
+0.78
+0.792
+0.804
+0.816
+0.828
+0.840001
+0.852001
+0.864001
+0.876001
+0.888001
+0.900001
+0.912001
+0.924001
+0.936001
+0.948001
+0.960001
+0.972001
+0.984001
+0.996001
+1.008
+1.02
+1.032
+1.044
+1.056
+1.068
+```
+
+Floating point values are useful because they allow us get in-between the piano keys of an integer, and that is why I call them the violin of variables. But notice in this list of fractionally incrementing values that a phantom 0.000001 is added for a little while, beginning around 0.840001. Sometimes you will see these minuscule errors when working with floating point numbers. This strange phenomenon is called a *floating point error* and is a fundamental problem with floating point technology at large, sometimes bringing a headache to a designer trying to render the number in a sane looking way. For the purposes of this chapter, I will not point out floating point errors when they arise, but please be comforted in knowing this is a hot topic in computer science, and there are certainly ways of remedying it, later.
+
+Look what happens when we go back to that code example and change the type from `float` to `int`.
+
+```C++
+#include <iostream>
+using namespace std;
+
+int main() {
+	int myNumber = 0.0;      // changed from float to int!
+	for(int i=0;i<100;i++){
+		myNumber += 0.012;
+		cout << myNumber << endl;
+	}
+	return 0;
+}
+```
+
+The output becomes a long, serene list of zeros since the `int` data type cannot handle a tiny fraction like 0.012. So during the moment it tries to add 0.012 to myNumber (which is an int), 0.012 gets automatically rounded down to an integer, which is zero every time. Now let's try the opposite example, storing ints into a float.
+
+```C++
+
+```
+
+===
+
+
++ some basic data types (int, char, float)
++ computer science operators
+	+ bitwise math
+		+ interlude about how `cout` overloads `<<`
++ some less basic data types (unsigned, double, long, short)
++ converting between these data types
+
+
++ include switch-case as syntactic sugar for if-then-else
+
++ try/catch?
+
+===
+
++ memory addressing
+	+ arrays
+	+ stack vs. heap
+	+ dynamic allocation
+	+ pointers
++ header files
++ abstraction
+	+ structs
+	+ classes
+		+ private
+		+ public
+		+ inheritance?
++ std::string
++ other STL?
++ possibly show them local terminal-based C++ in cygwin/linux/bsd
++ possibly weave in basic GLUT/OpenGL to make this all more fun?
+
++ learning C++ "for real" (book recommendations)
+
 
 # this chapter is in-progress. [see outline](outline.md) for upcoming subject matter.
+
+
 	
-	
+
 ###bibliography
 + "From the Beginning" - http://snap.nlc.dcccd.edu/learn/selena/history.html
 + "Dennis M. Ritchie" - http://cm.bell-labs.com/who/dmr
