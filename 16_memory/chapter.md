@@ -2,7 +2,7 @@
 
 *by [Arturo Castro](http://arturocastro.net)*
 
-*<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/deed.en_US">Creative Commons Attribution-NonCommercial 4.0 International License</a>.*
+*<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.en_US">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.*
 
 Correctly using the memory is one of the trickest parts of working with c++. The main difference with other languages like Java, Python and in general any language that works with a virtual machine is that in c++ we can explicitly reserve and destroy objects while in those an element called garbage collector does the work for us.
 
