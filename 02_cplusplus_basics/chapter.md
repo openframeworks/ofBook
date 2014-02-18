@@ -303,7 +303,7 @@ If I ask my father nicely, he will tell stories about his days at Bell Labs in M
 ![Figure 15. Bell Labs punch card from the mid-1960s, courtesy of Lucent](img/bell1.gif "Figure 15. Bell Labs punch card from the mid-1960s, courtesy of Lucent")
 
 
-Thompson and Ritchie initiated the development of the Unix operating system in effort to improve these original problems (and provide a useful jig with which they could create their game "Space Travel"). Part of what made Unix attractive was that its heart was written in C, instead of the lower level assembly language - and that made it more portable. The birth of the C language happened along-side the birth of Unix. Hence, the present-day ubiquity of Unix-like OSes may explain the importance of C and its derivative languages.
+Thompson and Ritchie initiated the development of the Unix operating system in effort to improve these original problems (and provide a useful jig with which they could create their game "Space Travel"). Part of what made Unix attractive was that its heart was written in C, instead of the lower level assembly language - and that made it more portable. Back then, every new machine invented needed to have an assembly language specific to it - that was always the first job of its users. Because Thompson and Ritche ported Unix over to C, it made Unix very portable - giving it a very good chance to spread virally. The birth of the C language happened along-side the birth of Unix. Hence, the present-day ubiquity of Unix-like OSes may explain the importance of C and its derivative languages.
 
 A decade later, Bjarne Stroustrup created a new strain of the C language in order to update it with a new paradigm called *object oriented programming* which introduces an intermediary container between the function and its program called a *class*. The class system allows a program to do special skateboard tricks that you can read about in the ***OOPS!*** chapter. Since C++ is close enough to C, compiling compatibly with it (if you know what you're doing), C++ rides the popularity of C and Unix. C++ gets its name because putting `++` after something in C means adding 1 to it (or *incrementing* it). C++ is the C language, plus one paradigm. C++ is considered by many to be the most popular programming language of all time.
 
@@ -323,7 +323,12 @@ Sometimes I say C, and sometimes I say C++. Since they are closely related, perh
 
 ![Figure 17. C++ is a non-strict superset of C](img/non-strict-superset.png "Figure 17. C++ is a non-strict superset of C")
 
-##Variables (part 1)
+## Variables (part 1)
+
+> A “thing” is a “think”, a unit of thought
+> 
+> -- Alan Watts
+
 
 Please enter the following program into ideone and run it.
 
@@ -430,7 +435,7 @@ union unsigned using virtual void volatile wchar_t while xor xor_eq
 > **--Albus Dumbledore**
 
 
-Identifiers (variables included) are written with different styles to indicate their various properties, such as type of construct (variable, function, or class?), data type (integer or string?), scope (global or local?), level of privacy, etc. You may see some identifiers capitalized at the beginning and using `CamelCase`, whilst others remain all `lower_case_using_underscores_to_separate_the_words`. Global variables are found to be named with `ALL_CAPS_AND_UNDERSCORES`. Another way of doing lower-case naming is to start with a lowercase `letterThenCamelCaseFromThere`. You may also see a hybrid, like `ClassName__functionName__variable_name`. These different styles can indicate different categories of identifiers.
+Identifiers (variables included) are written with different styles to indicate their various properties, such as type of construct (variable, function, or class?), data type (integer or string?), scope (global or local?), level of privacy, etc. You may see some identifiers capitalized at the beginning and using `CamelCase`, whilst others remain all `lower_case_using_underscores_to_separate_the_words`. Global constants are found to be named with `ALL_CAPS_AND_UNDERSCORES`. Another way of doing lower-case naming is to start with a lowercase `letterThenCamelCaseFromThere`. You may also see a hybrid, like `ClassName__functionName__variable_name`. These different styles can indicate different categories of identifiers.
 
 More obsessively, programmers may sometimes use what is affectionately nicknamed *Hungarian Notation* adding character badges to an identifier to say things about it but also reduce the legibility, for example `dwLightYears` and `szLastName`. Naming conventions are not set in stone, and certainly not enforced by the compiler. Collaborators generally need to agree on these subtle naming conventions so that they don't confuse one another, and it takes discipline on everyone's part to remain consistent with whatever convention was decided. The subject of naming convention in code is still a comically heated debate amongst developers, just like deciding which line to put the curly brace, and whether to use tabs to indent. Like a lot of things in programming, someone will always tell you you're doing it wrong. That doesn't necessarily mean you are doing it wrong.
 
@@ -2051,7 +2056,7 @@ If you were able to follow along this far, then give yourself another hug becaus
 
 ## Next Steps
 
-What you know so far is powerful enough to write a bouncing ball, but we still have more to go. What if we want the ball to travel slower than 1 pixel per frame? We would need to use fractions somehow. What if we want the ball to leave trails? We would need some way of remembering the pixel values. These skills and more are coming up before the end of the chapter. The previous bouncing ball excercise was a way for you to test yourself and see if you understand each part of the language. It was also a way for you to put all those pieces together and see how they work as one. If you found it intimidating or confusing, please go back and try to review the parts of this chapter that cover those topics you are fuzzy about before continuing. On the other hand, if you feel like you've got this and want to practice, then here are some bonus excercises to help you develop your C++ skills.
+What you know so far is powerful enough to write a bouncing ball, but we still have more to go. What if we want the ball to travel slower than 1 pixel per frame? We would need to use fractions somehow. What if we want the ball to leave trails? We would need some way of remembering the pixel values. These skills and more are coming up before the end of the chapter. The previous bouncing ball excercise was a way for you to test yourself and see if you understand each part of the language. It was also a way for you to put all those pieces together and see how they work as one. If you found it intimidating or confusing, please go back and try to review the parts of this chapter that cover those topics you are fuzzy about before continuing. On the other hand, if you feel like you have got this and want to practice, then here are some bonus excercises to help you develop your C++ skills.
 
 + Expand the canvas and render the ball like the below example, adjusting the scene so no part of the ball falls out of frame.
 ```
@@ -2062,7 +2067,7 @@ What you know so far is powerful enough to write a bouncing ball, but we still h
 .......
 ```
 
-+ Change the diagonal pattern of the ball so it's not always travelling in 45 degree angles.
++ Change the diagonal pattern of the ball so it is not always travelling in 45 degree angles.
 + Try adding a second ball to the scene and render it differently than the first.
 + If the two balls ever collide, print "YOU WIN" and stop the program.
 + Try rendering the balls as larger circles using the `distance()` function from a previous example.
@@ -2072,25 +2077,268 @@ What you know so far is powerful enough to write a bouncing ball, but we still h
 
 ### Variables have a scope.
 
-You may have noticed something different in the bouncing ball example. There were variables declared outside of the functions. 
+You may have noticed something different in the bouncing ball example. There were variables declared outside of the functions. In previous examples, I had declared variables inside the functions. Other variables were declared inside the parentheses of functions as arguments, and inside the for-loop as an iterator. These variables are declared in different *scopes* of the code. We talk about scope by saying a variable is *local* (existing only inside my immediate curly braces) or *global* (existing for the entire program). Intuitively, we can think about global and local variables in the geographic sense of the words "local" and "global." Let us apply this idea to musical trends.
+
+Something that is local (a local concert by a local band) will happen in a smaller, lesser known location - and will happen by a lesser known (but just as important!) local band. A world traveller may come to see the show but since she goes to so many shows in so many locations, she forgets about our local band. Because she forgets about the local band, it gives the band an opportunity to change their name from "From First to Last" to "Skrillex", and adopt a fresher musical genre. When our world traveller returns to the same city to see the same local band, it has benefited from a fresh new start. This fresh new start is why we use local variables. Their ability to reset (their values forgotten quickly) is incredibly useful to us. Global variables, on the other hand, are classical musicians like Ludwig van Beethoven or Wolfgang Amadeus Mozart, whose names ring far and wide about the Earth (and possibly beyond), never to be forgotten. Their music was appreciated long ago and will continue to be appreciated, in many countries. Their musician names are known globally, and persist (stay the same) globally. This absolute stability of a global variable is what makes them so useful, in contrast to a more local variable. We need both global and local variables to make the whole system work, just like we need both global and local musicians for the health of music!
+
+![Figure 26. Global versus Local, with apologies to Sonny Moore ](img/global-local.png "Figure 26. Global versus Local with apologies to Sonny Moore")
+
+### Apologies
+
+I know it is hip to hate on Skrillex, so remember that his career has just begun. He has gone from local to global in a small amount of time, which is impressive. I am sure he will transform into an even more globally recognized musician than he already is, and then we will all stop hating on him. On the other hand, people have been hating on Mozart's appearance and character for 256 years (a more globally persisting rejection). Like making music, someone will always tell you you're not a real coder. Do not let that stop you. Having read the book "Coders at Work" in which Peter Seibel interviews the top programmers and computer scientists, I was pleasantly surprised to learn that people came from a diversity of backgrounds, and some saw themselves as architects or writers. Being a good programmer is different from being a good computer scientist or mathematician!
+
+Variables at a more local scope are incredibly impactful and important because they deal with that which is closest to us, a bit like being closer to ones nerves. If we did everything using global variables all the time, we would have collisions - and perhaps remember too much garbage. Code and computer memory would grow tangled like the ratty hair of electronic musician. The idea of a local variable is newer, and was introduced for organization reasons. Programmers have made good efforts to avoid tangled, confusing code - and one way to do it is through keeping variables local.
+
+When dealing with nested clauses in code, global and local are less black and white since the *scope* is more than 2 matryoshka dolls deep. A variable declared at various locations within the curly brace garden can be viewed as "slightly more global" or "much more local", as in figure 27.
+
+![Figure 27. Locality](img/global-local-circles.png "Figure 27. Locality")
+
+Let us see how this looks in code.
+
+```C++
+#include <iostream>
+using namespace std;
+
+int myGlobal;
+
+void addOne(){
+	myGlobal += 1;
+}
+
+int main() {
+	for(int i=0;i<4;i++){
+		cout << myGlobal << ' ';
+		addOne();
+	}
+	cout << endl;
+	
+	return 0;
+}
+```
+
+The output is `0 1 2 3`. Notice `addOne()` and `main()` are *sharing* the global variable. Its value remains the same between them. Unfortunately, `myGlobal` is forgotten when the program is finished running, which makes it *local* within the scope of this program. To make its value even more persistent, we need to write it to a file, database, or share it over the network. That level of global-ness is one you will see explained in later chapters by other authors. Now let's deliberately cause an error.
+
+```C++
+#include <iostream>
+using namespace std;
+
+void addOne(){
+	cout << i;
+}
+
+int main() {
+	for(int i=0;i<4;i++){
+		addOne();
+	}
+	cout << endl;
+	return 0;
+}
+```
+
+The output is a compiler error.
+
+```
+prog.cpp: In function ‘void addOne()’:
+prog.cpp:5:10: error: ‘i’ was not declared in this scope
+  cout << i;
+          ^
+```
+
+The compiler has a problem understanding what you mean by `i` within the scope of `addOne()` because `i` is not a global variable (it only exists inside the for-loop of `main()`) and because no local variable `i` has been declared for the personal use of `addOne()`. If we wanted to access the value of `i` from within `addOne()`, the best thing to do would probably be to pass `i`'s value as an argument in the `addOne()` function.
+
+```C++
+#include <iostream>
+using namespace std;
+
+void addOne(int i){
+	i *= 2;
+	cout << i;
+}
+
+int main() {
+	for(int i=0;i<5;i++){
+		addOne(i);
+	}
+	cout << endl;
+	return 0;
+}
+```
+
+The output of this code is `02468`, not `026` as if `int i` were shared between the two functions. You see I added an argument/parameter to `addOne()` called `int i`. Notice I manipulate the value of `i` while inside `addOne()` by multiplying it by 2 before printing it out. Each time `addOne()` is called, the value of `i` passed to it is copied over from the `int i` in the for-loop of `main()`, as if it forgot that it was multiplied by 2 in `addOne()`. That is because there are 2 separate *local* versions of `int i`. See figure 28.
+
+![Figure 28. Two separate local variables named i](img/both-named-i.png "Figure 28. Two separate local variables named i")
+
+
+When I call `addOne()`, I am only passing the *value* of the first `i` so that it gets stored in the more temporary `int i` argument of `addOne()`. Figure 29 shows the lifespan of a function's argument, which is a certain type of local variable.
+
+![Figure 29. Lifespan of a local](img/local-born-die.png "Figure 29. Lifespan of a local")
+
+Just the same, if I were to declare any variables inside the scope of that function, those variables will also be forgotten when the function returns. They only exist inside that scope. In addition to *passing by value*, there is also such thing as *passing by reference* in which you are not only sharing the value of the variable, you are also sharing the actual place in computer memory - as if the variable were made global. memory pointers are an advanced topic better covered later, but the syntax looks like `void addOne(int& i){` with an ampersand specified before the variable name. if you made this slight modification to the above code example, you will see the output becomes `026`. 
+
 
 ### Fundamental Types
 
-(lava and milk buckets)
+Variables have different *types*, meaning they hold different kinds of information in them. Some take up more memory than others. Returning to the Minecraft metaphor, we can think about putting more than just water in more than just iron buckets.
 
-Lorem ipsum dolor sit amet, consectetur adipisicing elit
+![Figure 30. Minecraft Vessles](img/minecraft-vessles.png "Minecraft Vessles")
+
+In Minecraft, Buckets will hold milk and lava in addition to water. Furthermore, there are a few other kinds of containers meant for other liquids and other stuff. Requiring the correct container for the correctly according data makes C a *strictly typed* (or *strongly typed*) language because it is strict about which type of variable you use. Strictly typed variables are arguably a big virtue for a programming language, and are kept in as a matter of choice since they reduce errors, and greatly speed the app's performance. The issue of whether or not to use a strict or loosely typed language for a project is a very important decision to make, but whether or not one should devote ones career exclusively to strict or loose typing is an unhealthy sort of xenophobia. Both walks of life have their pros and cons.
+
+In the beginning of this chapter, we declared strings and since then, we've declared mostly integers with the keyword `int` just because they were a convenient general purpose data type for immediate gratification, but as I hinted during the bouncing ball exercise, an `int` has its limitations. Let me introduce a couple new types.
+
+```
+float myNumber = 340.1928; 
+char myLetter = 'E';
+```
+
+Unlike an `int`, A `float` allows decimal points, and so you can work at a higher resolution. A `char` holds a single ASCII character. It only needs to take up 8-bits of memory whilst the `float` and `int` take up more (therefore allowing them to express a wider range of values). I will touch briefly on the bits and bytes of memory when we get into bitwise operators, and then Arturo will give you much more in Chapter 16. Let's see the `float` in action!
+
+```C++
+#include <iostream>
+using namespace std;
+
+int main() {
+	float myNumber = 0.0;
+	for(int i=0;i<100;i++){
+		myNumber += 0.012;
+		cout << myNumber << endl;
+	}
+	return 0;
+}
+```
+
+The output is a stream of numbers that increment by 0.12.
+
+```
+0.012
+0.024
+0.036
+0.048
+0.06
+0.072
+0.084
+0.096
+0.108
+0.12
+0.132
+0.144
+0.156
+0.168
+0.18
+0.192
+0.204
+0.216
+0.228
+0.24
+0.252
+0.264
+0.276
+0.288
+0.3
+0.312
+0.324
+0.336
+0.348
+0.36
+0.372
+0.384
+0.396
+0.408
+0.42
+0.432
+0.444
+0.456
+0.468
+0.48
+0.492
+0.504
+0.516
+0.528
+0.54
+0.552
+0.564
+0.576
+0.588
+0.6
+0.612
+0.624
+0.636
+0.648
+0.66
+0.672
+0.684
+0.696
+0.708
+0.72
+0.732
+0.744
+0.756
+0.768
+0.78
+0.792
+0.804
+0.816
+0.828
+0.840001
+0.852001
+0.864001
+0.876001
+0.888001
+0.900001
+0.912001
+0.924001
+0.936001
+0.948001
+0.960001
+0.972001
+0.984001
+0.996001
+1.008
+1.02
+1.032
+1.044
+1.056
+1.068
+```
+
+Floating point values are useful because they allow us get in-between the piano keys of an integer, and that is why I call them the violin of variables. But notice in this list of fractionally incrementing values that a phantom 0.000001 is added for a little while, beginning around 0.840001. Sometimes you will see these minuscule errors when working with floating point numbers. This strange phenomenon is called a *floating point error* and is a fundamental problem with floating point technology at large, sometimes bringing a headache to a designer trying to render the number in a sane looking way. For the purposes of this chapter, I will not point out floating point errors when they arise, but please be comforted in knowing this is a hot topic in computer science, and there are certainly ways of remedying it, later.
+
+Look what happens when we go back to that code example and change the type from `float` to `int`.
+
+```C++
+#include <iostream>
+using namespace std;
+
+int main() {
+	int myNumber = 0.0;      // changed from float to int!
+	for(int i=0;i<100;i++){
+		myNumber += 0.012;
+		cout << myNumber << endl;
+	}
+	return 0;
+}
+```
+
+The output becomes a long, serene list of zeros since the `int` data type cannot handle a tiny fraction like 0.012. So during the moment it tries to add 0.012 to myNumber (which is an int), 0.012 gets automatically rounded down to an integer, which is zero every time. Now let's try the opposite example, storing ints into a float.
+
+```C++
+
+```
+
+===
 
 
 + some basic data types (int, char, float)
-
 + computer science operators
-	+  modulo
 	+ bitwise math
 		+ interlude about how `cout` overloads `<<`
-	+ boolean logic
 + some less basic data types (unsigned, double, long, short)
 + converting between these data types
 
+
++ include switch-case as syntactic sugar for if-then-else
+
++ try/catch?
 
 ===
 
