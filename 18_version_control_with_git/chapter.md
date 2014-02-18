@@ -1,4 +1,6 @@
-# Version control with Git (Christoph Buchner)
+# Version control with Git
+
+*by Christoph Buchner*
 
 In this chapter, you will learn about version control and why you should use it.
 You will get a short introduction to Git, the version control system of choice for openFrameworks.
