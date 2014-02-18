@@ -1,6 +1,7 @@
 # Case Study in the Making: Choreographies for Humans and Stars ** FAR FROM READY #
 
-Permanent? outdoor interactive installation developed by **daily tous les jours** for the Planetarium in Montreal, 2013.
+Permanent? outdoor interactive installation developed by **daily tous les jours** for the Planetarium in Montreal, 2013. 
+Chapter by Eva Schindling, Pierre Thirion
 
 ----------
 
@@ -12,7 +13,7 @@ Permanent? outdoor interactive installation developed by **daily tous les jours*
 ## Call, Competition and Commission ##
 The project started out as an official call by the City of Montreal. For the opening of the new Planetarium the city wanted to commission their first digital artwork. 
 
-Official brief? 
+Official brief? Possibly budget info?
 
 We passed two/three selection rounds and finally were commissioned by Espace Pour La Vie end of 2012? **[get more details]** 
 
@@ -37,7 +38,7 @@ From first brainstorms to final hand-over of the project it took X months? When 
 
 ## Everyone involved ##
 
-Credit lists quickly grow long. The internal DTLJ team includes Mouna and Melissa being the main artists with the vision, Eva handling software, Pierre being heavily involved with visual identity and video production, Michael handling the LEDs in the outdoor furniture. The list of external collaborators include a producer (Nicolas), a technical director (Frederic), a software engineer (Emmanuel), a film animator (Patrick), a choreographer (Dana), an industrial design studio (Dikini), a beton workshop (M3Beton), ... 
+Credit lists quickly grow long. The internal DTLJ team includes Mouna and Melissa being the main artists with the vision, Eva handling software, Pierre being heavily involved with visual identity and video production, Michael handling the LEDs in the outdoor furniture. The list of external collaborators include a producer (Nicolas), a technical director (Frederic), a software engineer (Emmanuel), a film animator (Patrick), a choreographer (Dana), an industrial design studio (Dikini), a graphic designer (Jacinthe), a beton workshop (M3Beton), ... 
 
 
 ----------
@@ -162,10 +163,18 @@ processing, gstreamer, switcher, oscdump, ..
 # Developing the Visualization Software #
 
 ### development setup ###
-linux, codeblocks, sublime, github
+The openFrameworks linux install (# ) is build for codeblocks, yet as i have come to like the code editor Sublime for its lightweightness and simplicity, i chose to program in Sublime and then compile by simply running the `make` command inside the terminal. (Also useful: Run software from terminal with `/bin/exampleApp`). On my laptop (win7) i code with Sublime, but compile and run the software from within Codeblocks. 
+
+Besides its purpose of providing a history of the code, i used this project's github repository mainly to push code between computers. And to search my own code history, as i still rarely dare to roll back and forth within the git repository itself. 
+
+My usual programming setup includes an open browser with tabs open on the openFrameworks forum, the openFrameworks documentation page, and github (to search specific function uses). 
 
 ### externals used ###
-ofxOsc, ofxOpenCv, ofxGui, ofEvents
+
+ - **ofEvents** ... for controlling the animation
+ - **ofxOsc** ... for communication btw. computers
+ - **ofxOpenCv** ... for running a perspective transformation
+ - **ofxGui** ... to build a GUI
 
 ## input tracking data ##
 - OSC communication: dealing with fsp diff, dummies for testing
