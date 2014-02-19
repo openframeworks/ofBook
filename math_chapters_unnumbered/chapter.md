@@ -458,6 +458,8 @@ Now, hold on. Check out what we did here: we placed the targets for the source v
 Recall that a matrix is just a stack of dot products. How did we construct these dot products?  We just aligned all of the entries that should be affecting the _resulting_ entry in one row of the matrix. That means that when considering the resulting $y$ entry, our vectors defined _the mixture of $y$ components_ from the target vectors that we would like to see in the resulting operation. This makes sense: Think of the vectors that compose the matrix as a new coordinate system, and what we're calculating is how the 'natural' coordinate system is projected onto them.
 
 ###### 3D Rotation Matrices
+
+The trick works the exact same way with 3d matrices: In order to rotate around on 
 **//TODO: OH GOD WRITE THIS**
 
 * Example: Vibrating a brick-phone in 3D.
@@ -540,9 +542,9 @@ The way we execute that vigilance is by a predefined order for handling objects.
 Any other order will cause weird effects, like things growing and spinning off their axes (anchor point / pivot, if animation is your jam). This may seem like common sense, but Ken Perlin notes that it was only the late 80s when that system became a standard for 3d. 
 
 This set of operations is called _SRT_, or _Scale-Rotate-Translate_, because it can be described by the following sequence of matrices: $$T⋅R⋅S⋅v$$
-If you recall, we can multiply all of these matrices to get one matrix representing all the entire operation:  $$M = T⋅R⋅S$$
+Where the first operation occuring is the one most adjacent to the vector $v$.
 
-Note that the order is from the closest to the multiplied vector to the furthest.
+If you recall, we can multiply all of these matrices to get one matrix representing all the entire operation:  $$M = T⋅R⋅S$$
 
 We call this matrix $M$, because it places objects we give it in their place in the _Model_. Whenever you call `ofTranslate()`, `ofRotate()`, `ofScale()` (or equivalent) on an object, that operation is applied to the **currently active _Model_ matrix**. Whenever you execute `ofPushMatrix()`, a copy of that matrix is saved in _the matrix stack_, so that you can go back to it when neccessary. And when necessary, you will then use `ofPopMatrix()`, which will cause the current matrix $M$ to be deleted and replace it with a matrix from the top of the matrix stack. That is the entire mystery about matrices. That's it. 
 
@@ -555,7 +557,8 @@ Later you'll learn about two similar matrices:
 ### Really using normals
 #### The cross product
 #### Normals for lighting
-* Example: Dot product for lighting
+* Example: Lambert and Phong shading
+
 
 #### Normals for directions
                 
