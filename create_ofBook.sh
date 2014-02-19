@@ -6,11 +6,8 @@
 #        ./create_ofBook.sh tex
 # List detected files:
 #        ./create_ofBook.sh debug
-
-# Generated files end up in the imgdump folder which gets recreated on each
-# run. Sadly, Pandoc is fragile w.r.t multiple input files and relative
-# paths in subdirectories
-
+#
+# requires Pandoc 1.12
 # Pandoc options here: http://johnmacfarlane.net/pandoc/README.html#synopsis
 
 # general options:
@@ -27,18 +24,11 @@ HTML_OPTS="--self-contained --mathml"
 # Find chapter files
 FILES=$(find $(pwd) -type f -name "chapter.md" | sort | tr "\n" " ")
 
-# work around an issue with pandoc not finding images specified with relative
-# paths - just dump them in a directory
-
-rm -rf imgdump
-mkdir -p imgdump
-IMAGES=$(find . -type f -name "*.png" -o -name "*.gif" -o -name "*.jpg" -o -name "*.svg")
-
-for image in $IMAGES; do
-    target="imgdump/${image#./*/}"
-    mkdir -p $(dirname $target)
-    cp "$image" "$target"
-done
+# put all the images into an images folder in the root folder, so that
+# pandoc finds them from relative links
+mkdir -p images
+rm -rf ./images/*
+cp ./*/images/*.* ./images/
 
 # option string construction
 if [ $1 = "html" ] ; then
@@ -56,14 +46,18 @@ else
     exit 1
 fi
 
-# echo $OPTS
-
-
-cd imgdump
+#create the book
 pandoc $FILES $OPTS -o ofBook.$1
-cd ..
+retval=$?
 
-exit 0
+if [ "$retval" == 0 ] ; then
+    #remove temporary image folder
+    rm -rf ./images
+else
+    echo "Some error occured!"
+fi
+
+exit $retval
 
 
 
