@@ -22,7 +22,7 @@ GENERAL_OPTS="-N --smart --toc --toc-depth=4 -s -p"
 LATEX_OPTS="--latex-engine=xelatex -V papersize=a4 -V documentclass=scrbook -V links-as-notes"
 
 # html-related options
-HTML_OPTS="--self-contained"
+HTML_OPTS="--self-contained --mathml"
 
 # Find chapter files
 FILES=$(find $(pwd) -type f -name "chapter.md" | sort | tr "\n" " ")

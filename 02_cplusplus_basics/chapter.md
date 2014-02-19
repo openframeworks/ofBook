@@ -887,7 +887,6 @@ The term *nesting* is the same concept as the Matryoshka doll, as shown in Figur
 You may have noticed that the recent C++ example code had a lot of cutting and pasting in it. This brute-force way of forging repetitive behavior is not as flexible, and nowhere near as concise as simply telling your code to loop.
 
 ```C++
-
 #include <math.h>
 #include <iostream>
 using namespace std;
@@ -902,7 +901,6 @@ int main(){
 	
     return 0;   
 }
-
 ```
 
 If you run this code, the output starts like this . . .
