@@ -35,7 +35,7 @@ and use backticks ( \` ) for inline code like `printf()`
 
 ## links ##
 
-Please use inline links and add titles to the links for more details explanation (helps for accesability).  Don't repeate the link text in the title. 
+Please use inline links and add titles to the links for more details explanation (helps for accessibility).  Don't repeate the link text in the title. 
 
 for example this: 
 
@@ -55,7 +55,7 @@ for now, let's use bold and square brackets for notes, so they are easy to spot 
 
 ## content ##
 
-for your chapter, feel free to make two folders, "code" and "images" to store your assets for now.  For images, don't worry about naming, we'll standardize a figure naming scheme once chapter order is locked down.   I imagine code will also be shuffled, so that it can be in one compileable package, but it's useful for now just to have each chapter self contained.  Feel free to put other text as well in your chapter folder, and any other assets you think you might need. 
+for your chapter, feel free to make two folders, "code" and "images" to store your assets for now. Also, please don't fetch any iamges from online, instead put them in the images folder of the repo. For images, don't worry about naming, we'll standardize a figure naming scheme once chapter order is locked down. I imagine code will also be shuffled, so that it can be in one compileable package, but it's useful for now just to have each chapter self contained.  Feel free to put other text as well in your chapter folder, and any other assets you think you might need. 
 
 ## newlines ##
 
