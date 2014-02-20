@@ -49,7 +49,7 @@ fi
 
 #create the book
 #pandoc $FILES $OPTS -o ofBook.$1
-for f in `dirname */chapter.md`; do sed "s/!\[\([^]]*\)\](\([^)]*\))/![\1]($f\/\2)/g"  $f/chapter.md | sed "s/<img src=\"\([^\"]*\)\"/<img src=\"$f\/\1\"/g"; printf "\n\n\n\n"; done  | pandoc $OPTS -o ofBook.$1
+for f in `dirname */chapter.md`; do sed "s/\!\[\([^]]*\)\](\([^)]*\))/\![\1]($f\/\2)/g"  $f/chapter.md | sed "s/<img src=\"\([^\"]*\)\"/<img src=\"$f\/\1\"/g"; printf "\n\n\n\n"; done  | pandoc $OPTS -o ofBook.$1
 retval=$?
 
 if [ "$retval" == 0 ] ; then
