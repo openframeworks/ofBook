@@ -38,6 +38,13 @@ img{
     display: block;
 }
 
+blockquote{
+    border-left: 4px solid #aaaacd;
+    margin-left:0px;
+    padding:1em;
+    padding-left: 30px;
+}
+
 .doxy-mainmenu ul li:before,  .doxy-mainmenu ul li:before{
     content: none !important;
     padding:0;
