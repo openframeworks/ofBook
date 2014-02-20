@@ -14,7 +14,7 @@
 SyntaxHighlighter.defaults['gutter'] = false;
 </script>
 
-<script type="text/javascript" src="https://stackedit.io/libs/MathJax/MathJax.js?config=TeX-AMS_HTML"></script>
+<script type="text/javascript" src="http://openframeworks.cc/libs_js/MathJax/MathJax.js?config=TeX-AMS_HTML"></script>
 
 <link rel="stylesheet" type="text/css" href="${bf.config.site.url}/css/style.css" media="all" />
 <link rel="stylesheet" type="text/css" href="${bf.config.site.url}/css/print.css" media="print" />
@@ -26,6 +26,5 @@ SyntaxHighlighter.defaults['gutter'] = false;
 <link rel="icon" href="${bf.config.site.url}/favicon.ico" type="image/x-icon" />
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js" type="text/javascript"></script>
-<script type="text/javascript" src="${bf.config.site.url}/js/jquery.timeago.js" type="text/javascript"></script>
 
-<meta name="google-site-verification" content="RiGtl9pFuFnUeEQ4MU1miiutTR5mmCPUi38YLCn-M-g" />
+<!--meta name="google-site-verification" content="RiGtl9pFuFnUeEQ4MU1miiutTR5mmCPUi38YLCn-M-g" /-->
