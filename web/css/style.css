@@ -23,7 +23,7 @@ body {
 }
 
 #body-wrap ul li:before {
-    content: '> ';
+    content: '- ';
     padding-right: 0.3em;
     color: #009bca;
 }
@@ -1355,7 +1355,7 @@ div.log {padding-left:2em;}
 
 
 #body-wrap ul li.noDoc:before{
-    content: '> ';
+    content: '- ';
     padding-right: 0.3em;
     color: #bbb;
 }
