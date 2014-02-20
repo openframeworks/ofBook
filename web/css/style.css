@@ -599,6 +599,7 @@ h1 {
 	margin: 0 0 1em 0;
 	padding: 10px 0px 5px 0px;
 	font-family: 'Questrial', sans-serif;
+	text-align: left;
 }
 h2 {
 	color: #333333;
@@ -608,6 +609,7 @@ h2 {
 	margin: 0 1.2em 0 0;
 	padding: 0px 0px 2px 0px;
 	font-family: 'Questrial', sans-serif;
+	text-align: left;
 }
 h3 {
 	color: #333333;
@@ -616,15 +618,18 @@ h3 {
 	margin: 0px;
 	padding: 0px 0px 2px 0px;
 	font-family: 'Questrial', sans-serif;
+	text-align: left;
 }
 .page-right-narrow h3 {
 	font-size: 1.8em;
 	line-height: 1.7em;
 	margin-right: 40px;
 	padding-right: 10px;
+	text-align: left;
 }
 .page-right-narrow h3 a:hover {
 	background-color: white;
+	text-align: left;
 }
 hr {
 	background: #DADADA;
