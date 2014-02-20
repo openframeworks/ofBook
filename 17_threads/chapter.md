@@ -52,7 +52,7 @@ This way the loading of the image happens in the background and our application 
 
 Now how do we know when our image is loaded? The thread will run separately from the main thread of our application:
 
-<img src="simple_thread.svg" height="300"/>
+<img src="images/simple_thread.svg" height="300"/>
 
 As we see in the image the duration of the loading of the image and thus the duration of the call to threadedFunction, of the new thread is not known to the main thread. There's a simple way to know from the main thread when the image has been loaded and that's by asking the thread if it has finished already:
 
