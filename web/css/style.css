@@ -41,7 +41,7 @@ body {
 	box-shadow: 5px 5px 5px #aaa, -5px 0 5px #aaa;
 	margin: auto;
 	moz-box-shadow: 5px 5px 5px #aaa, -5px 0 5px #aaa;
-	text-align: left;
+	text-align: justify;
 	webkit-box-shadow: 5px 5px 5px #aaa, -5px 0 5px #aaa;
 	width: 1000px;
 }
@@ -962,6 +962,14 @@ pre {
     font-style: normal !important;
     font-size: 1em !important;
 	line-height: normal;
+}
+code {
+    font-family: "Consolas", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace !important;
+    font-weight: normal !important;
+    font-style: normal !important;
+    font-size: 1em !important;
+    background-color: #EEEEEE;
+    padding: 0.2em;
 }
 .faqAnswer {
 	background-color: #FCFCFC;
