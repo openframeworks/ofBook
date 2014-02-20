@@ -17,6 +17,7 @@ SyntaxHighlighter.defaults['gutter'] = false;
 <link rel="stylesheet" type="text/css" href="${bf.config.site.url}/css/style.css" media="all" />
 <link rel="stylesheet" type="text/css" href="${bf.config.site.url}/css/print.css" media="print" />
 <link href='http://fonts.googleapis.com/css?family=Questrial' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Noto+Serif:400' rel='stylesheet' type='text/css'>
 <!--link rel="search" type="application/opensearchdescription+xml" href="${bf.config.site.url}/opensearch.xml" title="openFrameworks" /-->
 
 <link rel="shortcut icon" href="${bf.config.site.url}/favicon.ico" />
