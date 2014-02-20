@@ -3,3 +3,6 @@ ofBook.html
 ofBook.tex
 ofBook.pdf
 /images
+
+web/_site
+*.orig

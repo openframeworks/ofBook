@@ -1,5 +1,9 @@
 # Network
 
+
+*by [Arturo Castro](http://arturocastro.net)*
+
+
 ## TCP vs UDP
 
 TCP and UDP are 2 of the most used protocols to comunicate through a network. Indeed it's so common that the suite of protocols on which internet is based is usually called TCP/IP. We are not goint to enter into details of protocol layers... but instead explain what are the main differences between this 2 protocols so we can know when it makes sense to use one or the other and how.
@@ -100,3 +104,8 @@ OSC is an applcation level protocol is of a higher level than UDP or TCP, and it
 It's usage in openFrameworks is really simple so just check the examples in the addons folder to know how it works
 
 Another advantage of using OSC is that there's lots of commercial and open source projects that support OSC to communicate with them so using OSC you might be able to control easily some other software or receive results from it.
+
+
+*This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.en_US">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.*
+
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>

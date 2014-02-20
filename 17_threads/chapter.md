@@ -2,8 +2,6 @@
 
 *by [Arturo Castro](http://arturocastro.net)*
 
-*<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.en_US">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.*
-
 ## What's a thread when to use it
 
 Sometimes in an application we need to execute tasks that will take a while to finish, the perfect example is reading something from disk, in the computer the CPU is way faster than accessing the memory which is way faster than accessing the hard disk. So accesing for example an image from the HD can take a while compared to the normal flow of the application.
@@ -54,7 +52,7 @@ This way the loading of the image happens in the background and our application 
 
 Now how do we know when our image is loaded? The thread will run separately from the main thread of our application:
 
-<img src="http://rawgithub.com/openframeworks/ofBook/master/17_threads/images/simple_thread.svg" height="300"/>
+<img src="images/simple_thread.svg" height="300"/>
 
 As we see in the image the duration of the loading of the image and thus the duration of the call to threadedFunction, of the new thread is not known to the main thread. There's a simple way to know from the main thread when the image has been loaded and that's by asking the thread if it has finished already:
 
@@ -652,4 +650,9 @@ private:
 When we call `condition.wait(mutex)` the mutex needs to be locked before, then the condition unlocks the mutex and blocks the execution of that thread until `condition.signal()` is called. When the condition awakes the thread because it's been signaled, it locks the mutex again and continues the execution, there, we can read the queue without problem because we know that the other thread won't be able to access it since we are holding the mutex, copy the next url to ping and unlock the mutex to keep the lock time to a minimum. Then outside the lock we ping the server and start the process again.
 
 Whenever the queue gets emptied the condition will block the execution of the thread avoiding to have to run it constantly in the background. 
+
+
+*This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.en_US">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.*
+
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>
 
