@@ -10,7 +10,12 @@
 <link href="${bf.config.site.url}/css/shCore.css" rel="stylesheet" type="text/css" />
 <link href="${bf.config.site.url}/css/shThemeDefault.css" rel="stylesheet" type="text/css" />
 
-<script type="text/javascript" src="http://openframeworks.cc/libs_js/MathJax/MathJax.js?config=TeX-AMS_HTML"></script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
 <link rel="stylesheet" type="text/css" href="${bf.config.site.url}/css/style.css" media="all" />
 <link rel="stylesheet" type="text/css" href="${bf.config.site.url}/css/print.css" media="print" />
