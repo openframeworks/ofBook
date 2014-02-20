@@ -10,10 +10,6 @@
 <link href="${bf.config.site.url}/css/shCore.css" rel="stylesheet" type="text/css" />
 <link href="${bf.config.site.url}/css/shThemeDefault.css" rel="stylesheet" type="text/css" />
 
-<script>
-SyntaxHighlighter.defaults['gutter'] = false;
-</script>
-
 <script type="text/javascript" src="http://openframeworks.cc/libs_js/MathJax/MathJax.js?config=TeX-AMS_HTML"></script>
 
 <link rel="stylesheet" type="text/css" href="${bf.config.site.url}/css/style.css" media="all" />
