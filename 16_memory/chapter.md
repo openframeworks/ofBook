@@ -605,7 +605,7 @@ most probably our application will crash if the memory address at arr + 25 is ou
 
 We've just sayd arr + 25? what does that mean? As we've seen before a variable is some place in memory, we can get it's memory address which is the first byte that is asigned to that variable in memory. With arrays is pretty much the same, for example since we know that an int occupies 4 bytes in memory an array of 10 ints will occupy 40 bytes and those bytes are consecutive:
 
-<img src="array.svg" height="300"/>
+<img src="images/array.svg" height="300"/>
 
 Remember that memory addresses are expressed as hexadecimal so 40 == 0x0028. Now to take the address of an array, as with other variable we might want to use the `&` operator and indeed we can do it like:
 
