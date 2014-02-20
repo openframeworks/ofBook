@@ -16,12 +16,17 @@
  */
 .syntaxhighlighter {
   background-color: white !important;
+	padding-bottom: 10px;
+	padding-left: 30px;
+	padding-top: 10px;
+	border-left: 4px solid #EE3987;
+	white-space: pre-wrap;
 }
 .syntaxhighlighter td.code .line.alt1 {
   background-color: white !important;
 }
 .syntaxhighlighter td.code .line.alt2 {
-  background-color: #f8f8f8 !important;
+  background-color: white !important;
 }
 
 .syntaxhighlighter td.gutter .line.alt1 {

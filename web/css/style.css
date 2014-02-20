@@ -948,16 +948,19 @@ a.documentation_class_link, a:link.documentation_class_link, a:visited.documenta
 	font-weight: bold;
 }
 pre {
-	font-family: Courier,  monospace; 
+    font-family: "Consolas", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace !important;
 	line-height: 120%;
 	margin: 0px;
-	margin-left: 10px;
+	margin-left: 0px;
 	margin-top: 15px;
 	padding-bottom: 10px;
-	padding-left: 10px;
+	padding-left: 30px;
 	padding-top: 10px;
 	border-left: 4px solid #EE3987;
 	white-space: pre-wrap;
+    font-weight: normal !important;
+    font-style: normal !important;
+    font-size: 1em !important;
 	line-height: normal;
 }
 .faqAnswer {
