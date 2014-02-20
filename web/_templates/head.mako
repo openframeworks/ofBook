@@ -14,6 +14,8 @@
 SyntaxHighlighter.defaults['gutter'] = false;
 </script>
 
+<script type="text/javascript" src="https://stackedit.io/libs/MathJax/MathJax.js?config=TeX-AMS_HTML"></script>
+
 <link rel="stylesheet" type="text/css" href="${bf.config.site.url}/css/style.css" media="all" />
 <link rel="stylesheet" type="text/css" href="${bf.config.site.url}/css/print.css" media="print" />
 <link href='http://fonts.googleapis.com/css?family=Questrial' rel='stylesheet' type='text/css'>
