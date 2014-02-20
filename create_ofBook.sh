@@ -11,7 +11,8 @@
 # Pandoc options here: http://johnmacfarlane.net/pandoc/README.html#synopsis
 
 # general options:
-GENERAL_OPTS="-N --smart --toc --toc-depth=4 -s -p"
+#GENERAL_OPTS="-N --smart --toc --toc-depth=4 -s -p"
+GENERAL_OPTS="-N --smart --toc -s -p"
 
 # Latex-related options
 # Note: PDF output requires Latex, too
@@ -26,9 +27,9 @@ FILES=$(find $(pwd) -type f -name "chapter.md" | sort | tr "\n" " ")
 
 # put all the images into an images folder in the root folder, so that
 # pandoc finds them from relative links
-mkdir -p images
-rm -rf ./images/*
-cp ./*/images/*.* ./images/
+#mkdir -p images
+#rm -rf ./images/*
+#cp ./*/images/*.* ./images/
 
 # option string construction
 if [ $1 = "html" ] ; then
@@ -47,7 +48,8 @@ else
 fi
 
 #create the book
-pandoc $FILES $OPTS -o ofBook.$1
+#pandoc $FILES $OPTS -o ofBook.$1
+for f in `dirname */chapter.md`; do sed "s/!\[\([^]]*\)\](\([^)]*\))/![\1]($f\/\2)/g"  $f/chapter.md | sed "s/<img src=\"\([^\"]*\)\"/<img src=\"$f\/\1\"/g"; printf "\n\n\n\n"; done  | pandoc $OPTS -o ofBook.$1
 retval=$?
 
 if [ "$retval" == 0 ] ; then
