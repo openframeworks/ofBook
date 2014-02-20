@@ -29,8 +29,30 @@ Like in C++, in Obj-C your code is broken down into two files, the header file a
 
 #Under the Hood
 - How OF works on iOS, using OpenGL ES, UIViewController and App Delegate (basic iOS app structure)
-- OpenGL ES1 & ES2 renderers, what are the differences.
-- Shaders using ES2. Crossover between web ES2 shaders and nd iOS ES2 shaders.
+
+
+###OpenGL ES and iOS
+
+- Intro > lead to types
+- iOS Support for ES 1.1
+- iOS Support for ES 2.0
+- iOS Support for ES 2.0 > Lead to Hardware
+
+- Apple Devices Hardware Limitations (A7 VS PowerVR)
+	- PowerVR
+	- A7 > Lead to Device Specific Limitions
+- Device Specific Texture Limitations
+	- Ref Apple Docs
+	https://developer.apple.com/library/ios/documentation/DeviceInformation/Reference/iOSDeviceCompatibility/OpenGLESPlatforms/OpenGLESPlatforms.html
+- Conclusion > Lead to Shaders and Crossovers.
+
+
+------
+- Shaders using ES2. Crossover between web ES2 shaders and iOS ES2 shaders.
+- https://www.khronos.org/webgl/wiki/WebGL_and_OpenGL_Differences
+
+
+
 
 
 #Media Playback
