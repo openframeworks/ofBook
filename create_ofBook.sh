@@ -11,8 +11,7 @@
 # Pandoc options here: http://johnmacfarlane.net/pandoc/README.html#synopsis
 
 # general options:
-#GENERAL_OPTS="-N --smart --toc --toc-depth=4 -s -p"
-GENERAL_OPTS="-N --smart --toc -s -p"
+GENERAL_OPTS="-N --smart --toc --toc-depth=4 -s -p"
 
 # Latex-related options
 # Note: PDF output requires Latex, too
