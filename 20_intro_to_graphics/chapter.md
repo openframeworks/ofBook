@@ -112,7 +112,7 @@ Okay, so you've got the recipes for some basic shapes down.  Before we start put
 
 You surivived the boring bits!
 
-Well, the necessary bits.  Why draw a single rectangle, when you can draw a bagillion?
+Well, the necessary bits.  Why draw a single rectangle, when you can draw a millions?  (Okay, not a million - but at least enough that you wouldn't bother counting.)
 
 ![Many Rectangles](images/intrographics_lotsofrectangles.png "Drawing lots and lots of rectangles")
 
@@ -360,7 +360,7 @@ There's another way we can use `ofSetColor` that is useful.  Meet [`ofColor`](ht
 	yellow.g = 255;
 	yellow.a = 255;
 
-Now, let's say that instead of just using an orange or a red color for our circle brush, what if we wanted to pick a random color in-between orange and red?  `ofColor` has a solution for using what is called [linear interpolation](http://en.wikipedia.org/wiki/Linear_interpolation "Wiki for Linear Interpolation"].  Replace your `ofSetColor` line of code with these four lines of code: 
+Now, let's say that instead of just using an orange or a red color for our circle brush, what if we wanted to pick a random color in-between orange and red?  `ofColor` has a solution for using what is called [linear interpolation](http://en.wikipedia.org/wiki/Linear_interpolation "Wiki for Linear Interpolation").  Replace your `ofSetColor` line of code with these four lines of code: 
 
 **[Note: explain lerp for the math averse and explain the syntax]**
 
@@ -400,7 +400,7 @@ The code you've used before is almost all that you need to create this brush.  W
 		ofLine(mouseX, mouseY, mouseX+xoffset, mouseY+yoffset);
 	}
 
-What have we done with the alpha?  We've introduced a new function called ['ofMap'](http://www.openframeworks.cc/documentation/math/ofMath.html#show_ofMap "ofMap Documentation Page").  This provides a quick way to do a linear interpolation **[note: link to math]**.  To get a "twinkle," We want our shortest lines to be the most opaque and our longer lines to be the most transparent.  We want to tie the alpha parameter to the distance parameter.  `ofMap` takes a value from one range and maps it into another range like this: `ofMap(float value, float inputMin, float inputMax, float outputMin, float outputMax)`.  We tell it that distance is a value in-between minRadius and maxRadius and that we want it mapped such a distance value of 125 (maxRadius) yields an alpha value of 50 and a distance value of 25 (minRadius) yields an alpha value of 0.  The longer the line, the more transparent the color.
+What have we done with the alpha?  We've introduced a new function called [`ofMap`](http://www.openframeworks.cc/documentation/math/ofMath.html#show_ofMap "ofMap Documentation Page").  This provides a quick way to do a linear interpolation **[note: link to math]**.  To get a "twinkle," We want our shortest lines to be the most opaque and our longer lines to be the most transparent.  We want to tie the alpha parameter to the distance parameter.  `ofMap` takes a value from one range and maps it into another range like this: `ofMap(float value, float inputMin, float inputMax, float outputMin, float outputMax)`.  We tell it that distance is a value in-between minRadius and maxRadius and that we want it mapped such a distance value of 125 (maxRadius) yields an alpha value of 50 and a distance value of 25 (minRadius) yields an alpha value of 0.  The longer the line, the more transparent the color.
 
 If you wanted to, you could also play with the line thickness:
 	
@@ -438,7 +438,7 @@ But to be able to get to that, we will need to introduce [`ofVec2f`](http://open
 
 ofVec2f isn't that scary, right?  And it is quite useful.  So let's start using it to build towards the triangle brush.  First step is to draw a triangle at the mouse cursor.  Specifically, we are going to draw an isoceles triangle:
 
-![Iscoceles Triangle](images/IsoscelesTriangle_800.png) "Image of an iscoceles triangle from wolfram"
+![Iscoceles Triangle](http://mathworld.wolfram.com/images/eps-gif/IsoscelesTriangle_800.gif "Image of an iscoceles triangle from wolfram")
 
 **[Note: Stolen graphics from wolfram, generate something similar later]**
 
@@ -732,7 +732,7 @@ What happens when you run it?  Your white lines just look thicker?  That's becau
 
 We can also sample points along the polyline using [`getPointAtPercent`](http://openframeworks.cc/documentation/graphics/ofPolyline.html#show_getPointAtPercent "getPointAtPercent Documentation Page").  **[Note: explain the function]**.  Inside the `draw` function, comment out the code that draws a circle at each vertex.  Below that, add: 
 
-        for (int p=0; p<=100; p+=10) {
+        for (int p=0; p<100; p+=10) {
             ofVec3f point = polyline.getPointAtPercent(p/100.0);
             ofCircle(point, 5);
         }
@@ -741,10 +741,147 @@ And now you have evenly spaced points:
 
 ![Polyline Sampled Points](images/intrographics_polylinesampledpoints.png "Drawing circles at sampled points along a polyline")
 
-Additional extensions to write up:
-- Drawing normal lines
-- Drawing tangents lines
-- Drawing normal shape
-- Something fun to cap off all of the concepts
+So we have a line, and we can get a point along that line anywhere we want.  We can start transforming that line into whatever we want.  Maybe you want to create a brush stroke where the thickness of the line changes?  I hope so, because that's what we are going to do.  
+
+To do this, we need to talk about something called a [normal vector](http://en.wikipedia.org/wiki/Normal_(geometry) "Wiki on normal vectors in geometry").  You might remember those words from the echos of a memory of high school math, or you migth remember another word, [perpendicular](http://en.wikipedia.org/wiki/Perpendicular "Wiki on perpendicular lines").  If we have start with one line, the normal vector points in the opposite direction.  If you draw the normal vector onto our original line, they will be perpendicular, forming a cross.  (Mathematically, we are talking about two lines that intersect and form right angles with each other.)  
+
+**[Note: quick pick would be enough to help cut down on the words here]**
+
+Why do we care about normals?  Well, imagine you were have a straight, horizontal `ofPolyline` line that you just drew, and you want to make it thicker.  You could walk along every pixel of your line, and at each pixel, color in the pixels that are directly above or below you.  What you are doing is coloring in the pixels that are perpendicular to your line, the normal vectors.  Well, `ofPolyline` will let us do just that in our code.   
+
+**[Note: work on better explanation]**
+
+You can comment out (or delete) your lines of code that draw circles in your `draw` function, and below that, add these lines of code: 
+
+        vector<ofVec3f> vertices = polyline.getVertices();
+        float normalLength = 40;
+        for (int vertexIndex=0; vertexIndex<vertices.size(); ++vertexIndex) {
+            ofVec3f vertex = vertices[vertexIndex];
+            ofVec3f normal = polyline.getNormalAtIndex(vertexIndex) * normalLength;
+            ofLine(vertex-normal/2, vertex+normal/2);
+        }
+        
+Like with the first time we drew circles, we getting the all of the vertices in our `ofPolyline`.  But here, we are also using [`getNormalAtIndex`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html#show_getNormalAtIndex "getNormalAtIndex Documentation Page"] which you have already guess, takes an index and returns to you an `ofVec3f` that represents the normal vector for the vertex at that index.  **[Note: explain how normal vector is relative to (0,0,0) and how to center it on the vertex]** 
+
+**[Note: has ofVec3f been properly introduced for this part to make sense?]**
+
+![Polyline Normals](images/intrographics_polylinenormals.png "Drawing the normals at the vertices of a polyline")
+
+Well, you may have also guessed that `ofPolyline` lets us sample normals as well as points, using the function [`getNormalAtIndexInterpolated`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html#show_getNormalAtIndexInterpolated "getNormalAtIndexInterpolated Documentation Page").  So let's comment out the code we just wrote, and try sampling our normals evenly along the polyline:
+
+	float numPoints = polyline.size();
+	float normalLength = 20;
+	for (int p=0; p<100; p+=10) {
+		ofVec3f point = polyline.getPointAtPercent(p/100.0);
+		float floatIndex = p/100.0 * (numPoints-1);
+		ofVec3f normal = polyline.getNormalAtIndexInterpolated(floatIndex) * normalLength;
+		ofLine(point-normal/2, point+normal/2);
+	}
+	
+We can get our evenly spaced point by using percents again, but `getNormalAtIndexInterpolated` is asking for an index.  Specifically, it is asking for a `floatIndex` which means that we can pass in 1.5 and the polyline will return a normal that lives halfway between the point at index 1 and halfway between the point at index 2.  So we need to convert our percent, `p/100.0`, to a `floatindex`.  All we need to do is multiple the percent by the last index in our polyline (which we can get from subtracting one from the [`size`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html#show_size "size Documentation Page") which tells us how many vertices are in our polyline).
+	
+![Polyline Sampled Normals](images/intrographics_polylinesamplednormals.png "Drawing normals at sampled points along a polyline")
+
+What if you pumped up the number of normals you are drawing?  Change your loop increment from `p+=10` to `p+=1`, change your loop condition from `p<100` to `p<500` and change your `p/100.0` lines of code to `p/500.0`.  You might also want to use a transparent white for drawing these normals, so add `ofSetColor(255,100);` right before your loop.  And you will end up being able to draw ribbon lines:
+
+![Polyline Many Many Sampled Normals](images/intrographics_polylinemanysamplednormals.png "Drawing many many normals to fill out the polyline")
+
+**[Note: this should probably be done by sampling by length rather than percent, but I don't know if it is worth explaining that]**
+
+You've just added some thickness to your polylines - and we'll go into a way to do that in a more proper way - but let's have a quick aside and talk about tangents.  These wonderful things are perpendicular to the normals that we just drew.  So if you drew tangents along a perfectly straight line, you wouldn't really see anything.  The fun part comes when you draw tangents on a curved line, so let's see what that looks like.  Same drill as before, comment out the last code and add in the following:
+
+	vector<ofVec3f> vertices = polyline.getVertices();
+	float tangentLength = 80;
+	for (int vertexIndex=0; vertexIndex<vertices.size(); ++vertexIndex) {
+		ofVec3f vertex = vertices[vertexIndex];
+		ofVec3f tangent = polyline.getTangentAtIndex(vertexIndex) * tangentLength;
+		ofLine(vertex-tangent/2, vertex+tangent/2);
+	}
+	
+This should look very familiar except for [`getTangentAtIndex`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html#show_getTangentAtIndex "getTangentAtIndex Documenation Page") which is just the equivalent of `getNormalAtIndex` but for tangents.  For straight and slightly curved lines, not much happens, but sharply curved lines reveal the tangents:
+        
+**[Note: again diagram would explain the concept]**
+
+![Polyline Tangents](images/intrographics_tangents.png "Drawing tangents at vertices of polyline")
+
+I'm sure you can guess what's next... drawing a whole bunch of tangents at evenly spaced locations!  It's more fun that in sounds.  Same drill, comment out the last code, and add the following:
+
+	ofSetColor(255, 50);
+	float numPoints = polyline.size();
+	float tangentLength = 300;
+	for (int p=0; p<500; p+=1) {
+		ofVec3f point = polyline.getPointAtPercent(p/500.0);
+		float floatIndex = p/500.0 * (numPoints-1);
+		ofVec3f tangent = polyline.getTangentAtIndexInterpolated(floatIndex) * tangentLength;
+		ofLine(point-tangent/2, point+tangent/2);
+	}
+
+[`getTangentAtIndexInterpolated`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html#show_getTangentAtIndexInterpolated "getTangentAtIndexInterpolated Documentation Page") works like `getNormalAtIndexInterpolated`.  And you get something like this:
+
+![Polyline Exaggerated Tangents](images/intrographics_exaggeratedtangents.png "Drawing exaggerated tangents at at evenly spaced points along the polyline")
+
+That was worth the aside, right?  (I'm sorry.  Desperately trying to avoid a tangent pun.)  Back to the normals we were working with, eh?   
+
+It doesn't seem terribly efficient to add thickness to our lines by drawing lots and lots of normals using `ofLine`.  Instead, we can draw a filled polygon to cover the space that our normal lines are covering.  **[note: explain the winding order here]** So, we want to loop through all of our upper normal bounds from left to right, then loop around and follow the lower normal bounds from right to left.  In order to do this, we are going to store our points and normals into vectors [**note: make sure vectors are explained**].  Again, comment out the last code and add in the following:
+
+	float numPoints = polyline.size();
+	float normalLength = 40;
+	vector <ofVec3f> points;
+	vector <ofVec3f> normals;
+	for (int p=0; p<100; p+=1) { 
+		ofVec3f point = polyline.getPointAtPercent(p/100.0);
+		float floatIndex = p/100.0 * (numPoints-1);
+		ofVec3f normal = polyline.getNormalAtIndexInterpolated(floatIndex) * normalLength;
+		points.push_back(point);
+		normals.push_back(normal);
+	}
+
+Nothing new here other than using vectors.  But it is important to note that we are using `p+=1` because we want to make sure that we are sampling our polyline at a high resolution.  We are now going to use three new functions: `ofBeginShape`, `ofVertex` and `ofEndShape`.  To indicate to openFrameworks that we want to build a polygon, we call [`ofBeginShape`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofBeginShape ofBeginShape Documentation Page).  Then we can add vertices to the polygon by calling [`ofVertex`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofVertex ofVertex Documentation Page).  And then finally, we finish our shape by calling [`ofEndShape`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofEndShape ofEndShape Documentation Page).  Note that you *must* add your vertices in between `ofBeginShape` and `ofEndShape`.  So to loop through our normals and create the polygon, add:
+
+	ofSetColor(255, 200);
+	float numPoints = polyline.size();
+	float normalLength = 40;
+	ofSetLineWidth(0);
+	ofBeginShape();
+	for (int p=0; p<100; p+=1) {
+		ofVec3f point = polyline.getPointAtPercent(p/100.0);
+		float floatIndex = p/100.0 * (numPoints-1);
+		ofVec3f normal = polyline.getNormalAtIndexInterpolated(floatIndex) * normalLength;
+		ofVertex(point.x+normal.x/2.0, point.y+normal.y/2.0);
+	}
+	for (int p=90; p>=0; p-=1) {
+		ofVec3f point = polyline.getPointAtPercent(p/100.0);
+		float floatIndex = p/100.0 * (numPoints-1);
+		ofVec3f normal = polyline.getNormalAtIndexInterpolated(floatIndex) * normalLength;
+		ofVertex(point.x-normal.x/2.0, point.y-normal.y/2.0);
+	}
+	ofEndShape();
+	
+**[Note: explain above code, also maybe mention closing a shape with ofEndShape]**
+
+**[Note: how do you stop drawing the outline of the polygon without setting `ofSetLineWidth(0);`]**
+
+Before running, I would recommend commenting out your `polyline.draw();` line of code (if you haven't already).  Then you can have at it:
+
+![Polyline Polygon Normals](images/intrographics_normalspolygon.png "Drawing a polygon from the normals along the polyline")
+
+**[Note: ugh, better graphic please]**
+
+**[Note: insert last brush section on using math to control and animate the width of the brush]** 
+
+![Polyline Brush Width Test](images/intrographics_brushwidthtest.png "Test Graphic")
+
+**[Note: another test graphic, redo later using polygons and make animated]**
+
+## 2. See outline ##
+
+## 3. See outline ##
+
+**openFrameworks Bugs and Weirdness:**
+- Setting alpha to 1 causes the hue information on a color to shift when drawing overlapping shapes (need to verify this happens outside of the brush app)
+- `polyline.getPointAtPercent(0)` and `polyline.getPointAtPercent(1.0)` return the same thing
+
+**General notes:**
+- might be a small thing, but I'm considering going back and rewritting all for loops to use i++ over ++i. i++ is more readable for a beginner
 
 
