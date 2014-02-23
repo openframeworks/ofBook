@@ -15,7 +15,8 @@ I'm aiming to make sure we don't lose any beginners, so I realize that this chap
 		-  1.2a [Hello Polyline](#12a-hello-polyline)
 			- addVertex, curveTo, close  
 		-  1.2b [Polyline Brushes](#12b-polyline-brushes)
-- 2. Moving Coordinate System - described in outline.md
+- 2. [Moving The World](#2-moving-the-world)
+	- translate, rotate, scale, push, pop, noise, parameterization, creating a gif
 - 3. Recursion Generative Color Compositions - described in outline.md
 
 ## 1. Drawing Shapes.  Then Drawing Many, Many, Many Shapes ##
@@ -112,7 +113,7 @@ Okay, so you've got the recipes for some basic shapes down.  Before we start put
 
 You surivived the boring bits!
 
-Well, the necessary bits.  Why draw a single rectangle, when you can draw a bagillion?
+Well, the necessary bits.  Why draw a single rectangle, when you can draw a millions?  (Okay, not a million - but at least enough that you wouldn't bother counting.)
 
 ![Many Rectangles](images/intrographics_lotsofrectangles.png "Drawing lots and lots of rectangles")
 
@@ -360,7 +361,7 @@ There's another way we can use `ofSetColor` that is useful.  Meet [`ofColor`](ht
 	yellow.g = 255;
 	yellow.a = 255;
 
-Now, let's say that instead of just using an orange or a red color for our circle brush, what if we wanted to pick a random color in-between orange and red?  `ofColor` has a solution for using what is called [linear interpolation](http://en.wikipedia.org/wiki/Linear_interpolation "Wiki for Linear Interpolation"].  Replace your `ofSetColor` line of code with these four lines of code: 
+Now, let's say that instead of just using an orange or a red color for our circle brush, what if we wanted to pick a random color in-between orange and red?  `ofColor` has a solution for using what is called [linear interpolation](http://en.wikipedia.org/wiki/Linear_interpolation "Wiki for Linear Interpolation").  Replace your `ofSetColor` line of code with these four lines of code: 
 
 **[Note: explain lerp for the math averse and explain the syntax]**
 
@@ -400,7 +401,7 @@ The code you've used before is almost all that you need to create this brush.  W
 		ofLine(mouseX, mouseY, mouseX+xoffset, mouseY+yoffset);
 	}
 
-What have we done with the alpha?  We've introduced a new function called ['ofMap'](http://www.openframeworks.cc/documentation/math/ofMath.html#show_ofMap "ofMap Documentation Page").  This provides a quick way to do a linear interpolation **[note: link to math]**.  To get a "twinkle," We want our shortest lines to be the most opaque and our longer lines to be the most transparent.  We want to tie the alpha parameter to the distance parameter.  `ofMap` takes a value from one range and maps it into another range like this: `ofMap(float value, float inputMin, float inputMax, float outputMin, float outputMax)`.  We tell it that distance is a value in-between minRadius and maxRadius and that we want it mapped such a distance value of 125 (maxRadius) yields an alpha value of 50 and a distance value of 25 (minRadius) yields an alpha value of 0.  The longer the line, the more transparent the color.
+What have we done with the alpha?  We've introduced a new function called [`ofMap`](http://www.openframeworks.cc/documentation/math/ofMath.html#show_ofMap "ofMap Documentation Page").  This provides a quick way to do a linear interpolation **[note: link to math]**.  To get a "twinkle," We want our shortest lines to be the most opaque and our longer lines to be the most transparent.  We want to tie the alpha parameter to the distance parameter.  `ofMap` takes a value from one range and maps it into another range like this: `ofMap(float value, float inputMin, float inputMax, float outputMin, float outputMax)`.  We tell it that distance is a value in-between minRadius and maxRadius and that we want it mapped such a distance value of 125 (maxRadius) yields an alpha value of 50 and a distance value of 25 (minRadius) yields an alpha value of 0.  The longer the line, the more transparent the color.
 
 If you wanted to, you could also play with the line thickness:
 	
@@ -732,7 +733,7 @@ What happens when you run it?  Your white lines just look thicker?  That's becau
 
 We can also sample points along the polyline using [`getPointAtPercent`](http://openframeworks.cc/documentation/graphics/ofPolyline.html#show_getPointAtPercent "getPointAtPercent Documentation Page").  **[Note: explain the function]**.  Inside the `draw` function, comment out the code that draws a circle at each vertex.  Below that, add: 
 
-        for (int p=0; p<=100; p+=10) {
+        for (int p=0; p<100; p+=10) {
             ofVec3f point = polyline.getPointAtPercent(p/100.0);
             ofCircle(point, 5);
         }
@@ -741,10 +742,442 @@ And now you have evenly spaced points:
 
 ![Polyline Sampled Points](images/intrographics_polylinesampledpoints.png "Drawing circles at sampled points along a polyline")
 
-Additional extensions to write up:
-- Drawing normal lines
-- Drawing tangents lines
-- Drawing normal shape
-- Something fun to cap off all of the concepts
+So we have a line, and we can get a point along that line anywhere we want.  We can start transforming that line into whatever we want.  Maybe you want to create a brush stroke where the thickness of the line changes?  I hope so, because that's what we are going to do.  
+
+To do this, we need to talk about something called a [normal vector](http://en.wikipedia.org/wiki/Normal_(geometry) "Wiki on normal vectors in geometry").  You might remember those words from the echos of a memory of high school math, or you migth remember another word, [perpendicular](http://en.wikipedia.org/wiki/Perpendicular "Wiki on perpendicular lines").  If we have start with one line, the normal vector points in the opposite direction.  If you draw the normal vector onto our original line, they will be perpendicular, forming a cross.  (Mathematically, we are talking about two lines that intersect and form right angles with each other.)  
+
+**[Note: quick pick would be enough to help cut down on the words here]**
+
+Why do we care about normals?  Well, imagine you were have a straight, horizontal `ofPolyline` line that you just drew, and you want to make it thicker.  You could walk along every pixel of your line, and at each pixel, color in the pixels that are directly above or below you.  What you are doing is coloring in the pixels that are perpendicular to your line, the normal vectors.  Well, `ofPolyline` will let us do just that in our code.   
+
+**[Note: work on better explanation]**
+
+You can comment out (or delete) your lines of code that draw circles in your `draw` function, and below that, add these lines of code: 
+
+        vector<ofVec3f> vertices = polyline.getVertices();
+        float normalLength = 40;
+        for (int vertexIndex=0; vertexIndex<vertices.size(); ++vertexIndex) {
+            ofVec3f vertex = vertices[vertexIndex];
+            ofVec3f normal = polyline.getNormalAtIndex(vertexIndex) * normalLength;
+            ofLine(vertex-normal/2, vertex+normal/2);
+        }
+        
+Like with the first time we drew circles, we getting the all of the vertices in our `ofPolyline`.  But here, we are also using [`getNormalAtIndex`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html#show_getNormalAtIndex "getNormalAtIndex Documentation Page"] which you have already guess, takes an index and returns to you an `ofVec3f` that represents the normal vector for the vertex at that index.  **[Note: explain how normal vector is relative to (0,0,0) and how to center it on the vertex]** 
+
+**[Note: has ofVec3f been properly introduced for this part to make sense?]**
+
+![Polyline Normals](images/intrographics_polylinenormals.png "Drawing the normals at the vertices of a polyline")
+
+Well, you may have also guessed that `ofPolyline` lets us sample normals as well as points, using the function [`getNormalAtIndexInterpolated`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html#show_getNormalAtIndexInterpolated "getNormalAtIndexInterpolated Documentation Page").  So let's comment out the code we just wrote, and try sampling our normals evenly along the polyline:
+
+	float numPoints = polyline.size();
+	float normalLength = 20;
+	for (int p=0; p<100; p+=10) {
+		ofVec3f point = polyline.getPointAtPercent(p/100.0);
+		float floatIndex = p/100.0 * (numPoints-1);
+		ofVec3f normal = polyline.getNormalAtIndexInterpolated(floatIndex) * normalLength;
+		ofLine(point-normal/2, point+normal/2);
+	}
+	
+We can get our evenly spaced point by using percents again, but `getNormalAtIndexInterpolated` is asking for an index.  Specifically, it is asking for a `floatIndex` which means that we can pass in 1.5 and the polyline will return a normal that lives halfway between the point at index 1 and halfway between the point at index 2.  So we need to convert our percent, `p/100.0`, to a `floatindex`.  All we need to do is multiple the percent by the last index in our polyline (which we can get from subtracting one from the [`size`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html#show_size "size Documentation Page") which tells us how many vertices are in our polyline).
+	
+![Polyline Sampled Normals](images/intrographics_polylinesamplednormals.png "Drawing normals at sampled points along a polyline")
+
+What if you pumped up the number of normals you are drawing?  Change your loop increment from `p+=10` to `p+=1`, change your loop condition from `p<100` to `p<500` and change your `p/100.0` lines of code to `p/500.0`.  You might also want to use a transparent white for drawing these normals, so add `ofSetColor(255,100);` right before your loop.  And you will end up being able to draw ribbon lines:
+
+![Polyline Many Many Sampled Normals](images/intrographics_polylinemanysamplednormals.png "Drawing many many normals to fill out the polyline")
+
+**[Note: this should probably be done by sampling by length rather than percent, but I don't know if it is worth explaining that]**
+
+You've just added some thickness to your polylines - and we'll go into a way to do that in a more proper way - but let's have a quick aside and talk about tangents.  These wonderful things are perpendicular to the normals that we just drew.  So if you drew tangents along a perfectly straight line, you wouldn't really see anything.  The fun part comes when you draw tangents on a curved line, so let's see what that looks like.  Same drill as before, comment out the last code and add in the following:
+
+	vector<ofVec3f> vertices = polyline.getVertices();
+	float tangentLength = 80;
+	for (int vertexIndex=0; vertexIndex<vertices.size(); ++vertexIndex) {
+		ofVec3f vertex = vertices[vertexIndex];
+		ofVec3f tangent = polyline.getTangentAtIndex(vertexIndex) * tangentLength;
+		ofLine(vertex-tangent/2, vertex+tangent/2);
+	}
+	
+This should look very familiar except for [`getTangentAtIndex`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html#show_getTangentAtIndex "getTangentAtIndex Documenation Page") which is just the equivalent of `getNormalAtIndex` but for tangents.  For straight and slightly curved lines, not much happens, but sharply curved lines reveal the tangents:
+        
+**[Note: again diagram would explain the concept]**
+
+![Polyline Tangents](images/intrographics_tangents.png "Drawing tangents at vertices of polyline")
+
+I'm sure you can guess what's next... drawing a whole bunch of tangents at evenly spaced locations!  It's more fun that in sounds.  Same drill, comment out the last code, and add the following:
+
+	ofSetColor(255, 50);
+	float numPoints = polyline.size();
+	float tangentLength = 300;
+	for (int p=0; p<500; p+=1) {
+		ofVec3f point = polyline.getPointAtPercent(p/500.0);
+		float floatIndex = p/500.0 * (numPoints-1);
+		ofVec3f tangent = polyline.getTangentAtIndexInterpolated(floatIndex) * tangentLength;
+		ofLine(point-tangent/2, point+tangent/2);
+	}
+
+[`getTangentAtIndexInterpolated`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html#show_getTangentAtIndexInterpolated "getTangentAtIndexInterpolated Documentation Page") works like `getNormalAtIndexInterpolated`.  And you get something like this:
+
+![Polyline Exaggerated Tangents](images/intrographics_exaggeratedtangents.png "Drawing exaggerated tangents at at evenly spaced points along the polyline")
+
+That was worth the aside, right?  (I'm sorry.  Desperately trying to avoid a tangent pun.)  Back to the normals we were working with, eh?   
+
+It doesn't seem terribly efficient to add thickness to our lines by drawing lots and lots of normals using `ofLine`.  Instead, we can draw a filled polygon to cover the space that our normal lines are covering.  **[note: explain the winding order here]** So, we want to loop through all of our upper normal bounds from left to right, then loop around and follow the lower normal bounds from right to left.  In order to do this, we are going to store our points and normals into vectors [**note: make sure vectors are explained**].  Again, comment out the last code and add in the following:
+
+	float numPoints = polyline.size();
+	float normalLength = 40;
+	vector <ofVec3f> points;
+	vector <ofVec3f> normals;
+	for (int p=0; p<100; p+=1) { 
+		ofVec3f point = polyline.getPointAtPercent(p/100.0);
+		float floatIndex = p/100.0 * (numPoints-1);
+		ofVec3f normal = polyline.getNormalAtIndexInterpolated(floatIndex) * normalLength;
+		points.push_back(point);
+		normals.push_back(normal);
+	}
+
+Nothing new here other than using vectors.  But it is important to note that we are using `p+=1` because we want to make sure that we are sampling our polyline at a high resolution.  We are now going to use three new functions: `ofBeginShape`, `ofVertex` and `ofEndShape`.  To indicate to openFrameworks that we want to build a polygon, we call [`ofBeginShape`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofBeginShape ofBeginShape Documentation Page).  Then we can add vertices to the polygon by calling [`ofVertex`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofVertex ofVertex Documentation Page).  And then finally, we finish our shape by calling [`ofEndShape`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofEndShape ofEndShape Documentation Page).  Note that you *must* add your vertices in between `ofBeginShape` and `ofEndShape`.  So to loop through our normals and create the polygon, add:
+
+	ofSetColor(255, 200);
+	float numPoints = polyline.size();
+	float normalLength = 40;
+	ofSetLineWidth(0);
+	ofBeginShape();
+	for (int p=0; p<100; p+=1) {
+		ofVec3f point = polyline.getPointAtPercent(p/100.0);
+		float floatIndex = p/100.0 * (numPoints-1);
+		ofVec3f normal = polyline.getNormalAtIndexInterpolated(floatIndex) * normalLength;
+		ofVertex(point.x+normal.x/2.0, point.y+normal.y/2.0);
+	}
+	for (int p=90; p>=0; p-=1) {
+		ofVec3f point = polyline.getPointAtPercent(p/100.0);
+		float floatIndex = p/100.0 * (numPoints-1);
+		ofVec3f normal = polyline.getNormalAtIndexInterpolated(floatIndex) * normalLength;
+		ofVertex(point.x-normal.x/2.0, point.y-normal.y/2.0);
+	}
+	ofEndShape();
+	
+**[Note: explain above code, also maybe mention closing a shape with ofEndShape]**
+
+**[Note: how do you stop drawing the outline of the polygon without setting `ofSetLineWidth(0);`]**
+
+Before running, I would recommend commenting out your `polyline.draw();` line of code (if you haven't already).  Then you can have at it:
+
+![Polyline Polygon Normals](images/intrographics_normalspolygon.png "Drawing a polygon from the normals along the polyline")
+
+**[Note: ugh, better graphic please]**
+
+**[Note: insert last brush section on using math to control and animate the width of the brush]** 
+
+![Polyline Brush Width Test](images/intrographics_brushwidthtest.png "Test Graphic")
+
+**[Note: another test graphic, redo later using polygons and make animated]**
+
+## 2. Moving The World ##
+
+Jeeze.  We've been making brushes for a long time.  Let's take a break from that and create a smaller project that will help demonstrate how you can move the world.  And by move the world, I really just mean move the coordinate system (though it sounds more exciting the other way).
+
+Whenever we called a drawing function, like `ofRect` for example, we passed in an `x` and `y` location at which we wanted our shape to be drawn.  We knew (0,0) to be the upper left pixel of our window, that the positive x direction was rightward across our window and that positive y direction was downward along our window.  We are about to violate that established knowledge.  
+
+**[Note: this section needs pictures to go along with the analogy]**
+
+For a physical analogy, imagine that you have a piece of graphing paper in front of you (or go ahead and grab one).  Those squares are the pixels of your screen.  If I ask you to draw a black rectangle at (5, 10) that is 5 pixels wide and 2 pixels high, what would you do?  Probably grab a black pen and move your hand over to the location (5, 10) on your graphing paper and start filling in pixels?  Good, that seems normal.  But you could have also have kept your pen hand stationary, moved your paper 5 pixels left and 10 pixels down and then started filling in pixels.  That initially seems like an odd thing to do right?  It turns out that it is a powerful thing to do in code.  With openFrameworks, we can move our coordinate system like this using `ofTranslate`, but we can also rotate or scale the coordinate system with `ofRotate` and `ofScale`.  
+
+**[Note: explain why ofBackground can't be used with transparency]**
+
+So let's tackle [`ofTranslate`](http://www.openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofTranslate "ofTranslate Documentation Page") first.  `ofTranslate` takes an x, a y and an optional z parameter, and then shifts the coordinate system by those specified values.  Why would you ever want to shift the coordinate system like this?  Imagine that you wrote some code to draw a little stick figure family.  Or better yet, create a new project and add this to your `draw` function of your source file (.cpp):
+
+	ofBackground(255);
+	
+        ofColor purpleColor(231, 49, 247, 200);
+	
+	ofSetColor(purpleColor);
+	ofCircle(30, 30, 30);
+	ofRect(5, 70, 50, 100);
+	
+	ofSetColor(purpleColor);
+	ofCircle(95, 30, 30);
+	ofRect(70, 70, 50, 100);
+	
+	ofSetColor(purpleColor);
+	ofCircle(45, 90, 15);
+	ofRect(30, 110, 30, 60);
+	
+	ofSetColor(purpleColor);
+	ofCircle(80, 90, 15);
+	ofRect(65, 110, 30, 60);
+
+And you end up with something like this:
+
+![Monochromatic Family](images/intrographics_coordsystemfamily.png "A little monochromatic stick figure family")
+
+What if, after figuring out the coordinates for all your shapes, you decided that you wanted to draw that family at a different spot on the screen, or you decided that you wanted to clone the family and draw a row of them?  You *could* change all the positions of the shapes you are drawing, or you could just use `ofTranslate` to move your coordinate system and leave the positions as they are:
+
+	ofBackground(255);
+	ofColor purpleColor(231, 49, 247, 200);
+        
+	for (int cols=0; cols<10; cols++) {
+	
+		ofSetColor(purpleColor);
+		ofCircle(30, 30, 30);
+		ofRect(5, 70, 50, 100);
+		
+		ofSetColor(purpleColor);
+		ofCircle(95, 30, 30);
+		ofRect(70, 70, 50, 100);
+		
+		ofSetColor(purpleColor);
+		ofCircle(45, 90, 15);
+		ofRect(30, 110, 30, 60);
+		
+		ofSetColor(purpleColor);
+		ofCircle(80, 90, 15);
+		ofRect(65, 110, 30, 60);
+        
+		ofTranslate(150, 0);
+	}
+
+
+So we have just taken our original cricle and rectangle code and wrapped it in a loop which ends with `ofTranslate(150, 0)` which shifts our graph paper (coordinate system) to the left 150 pixels each time it executes.  And you'll end up with something like this:
+
+![Family Row](images/intrographics_coordsystemfamilyrow.png "A row of stick figure families")
+
+Or almost like that.  I added a tweak to randomize the colors of the people - every family is different, right?  If you wanted to create a whole grid of families, you will run into problems.  After the first row of families, your coordinate system will have been moved quite far to the left.  If you move your coordinate system up in order to start drawing your second row, you will end up drawing off the screen.  It would look something like this:
+
+![Family Improper Grid](images/intrographics_coordsystemfamilywithoutsaving.png "Drawing the families without reseting the coordinate system")
+
+So what we need is some way to reset the coordinate system.  You'll want to start using [`ofPushMatrix`](http://www.openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofPushMatrix "ofPushMatrix Documentation Page") and [`ofPopMatrix`](http://www.openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofPopMatrix "ofPopMatrix Documentation Page").
+
+`ofPushMatrix` saves the current coordinate system and `ofPopMatrix` returns you to the last saved coordinate system.  The reason why they have these functions have the word matrix in them is because of what is happening behind the scenes in openFrameworks.  You start with an un- rotated, un-translated, and un-scaled coordinate system that you used in section 1 of this chapter, which we will call the unmodified coordinate system.  When you start using `ofTranslate`, `ofRotate` and `ofScale`, the rotation, translation and scaling are all stored in a single transformation matrix, which represents the modified coordinate system.  Let's say you have a point (x, y, z) in the unmodifed coordinate system, if you multiple it by the transformation matrix, you end up with a new point (x', y', z') that is in modified coordinate system.  The math chapter *[note: point to math chapter]** will go into more depth on this.  I just want to make sure that the word matrix in `ofPushMatrix` and `ofPopMatrix` has some context.  If you want, you can just think of it as ofSaveCoordinateSystem and ofReturnToLastSavedCoordinateSystem.
+
+So we can use these new functions like this:
+	
+        for (int rows=0; rows<10; rows++) {
+            ofPushMatrix(); // Save the coordinate system before you shift it horizontally
+            for (int cols=0; cols<10; cols++) {
+
+                // Code omitted for clarity ...
+                
+                ofTranslate(150, 0);
+            }
+            ofPopMatrix(); // Return to the coordinate system before you shifted it horizontally
+            ofTranslate(0, 200);
+        }
+
+**[note: wrap whole thing in push/pop for good practice? also indent code between push/pop for readability]**
+
+And you should end up with a grid.  I've skipped ahead and used `ofScale`, but you should end up with a nice grid like this:
+
+![Family Proper Grid](images/intrographics_coordsystemfamilywithsaving.png "Drawing the families with proper reseting of the coordinate system")
+
+Or if you hate grids, you can make a mess of a crowd using random translations:
+
+![Family Crowd](images/intrographics_coordsystemfamilycrowd.png "Drawing a crowd of families")
+
+**[note: better purple-ish could be used here]**
+
+And onto `ofScale` and `ofRotate`!  Go ahead and create a new project where you'll be creating some rotating and scaling rectangles that will end up looking like the below image.  Guess what?  At the heart of the code, there will be single `ofRect` that is called inside a loop with a bunch of scaling and rotations.
+
+![Spiraling Rectangles](images/intrographics_spiralingrectangles.png "Drawing a series of spiraling rectangles")
+
+Before knowing that an `ofRotate` command existed.  How would you have gone about drawing a rotated rectangle?  `ofRect` would be no help.  You might try calculating the vertices and create a polygon using `ofBeginShape` and `ofEndShape`.  You could do that, but it feels tedious, right?  [`ofRotate`](http://www.openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofRotate "ofRotate Documentation Page") is here to make that easier.  `ofRotate` takes an angle in degrees and will rotate our coordinate system around the current origin (0, 0).  (There is another way to use `ofRotate` to control rotation around the x, y and z axes, but we won't be using it.) 
+
+Let's set up some code in our `draw` function:
+
+	ofBackground(255);
+	ofSetColor(0, 0, 255);
+	ofRect(500, 200, 200, 200);
+
+Rectangle, no sweat.  Rotated rectangle...uh, well, let's try `ofRotate`:
+
+	ofBackground(255);
+	ofPushMatrix();
+		// Original rectangle in blue
+		ofSetColor(0, 0, 255);
+		ofRect(500, 200, 200, 200);
+		
+		// Rotated rectangle in red
+		ofRotate(45);
+		ofSetColor(0, 0, 255);
+		ofRect(500, 200, 200, 200);
+	ofPopMatrix();
+
+Hmm, not quite right:
+
+![Improper Rotated Rectangle](images/intrographics_rotatewrong.png "Uh oh, rotated rectangle moved")
+
+Well, `ofRotate` rotates the coordinate system around the current origin (0,0) of the coordinate system.  That origin starts out in the top left corner of the screen by default, so our rectangle rotated 45 degrees clockwise around the upper left pixel in our image.  If we want to rotate our rectangle in place, we need to use `ofTranslate` to move the origin to our rectangle *before* rotating.  Then our rectangle will rotate in place.  So update the red rectangle's code:
+	// Rotated rectangle in red
+	ofTranslate(500, 200);
+	ofRotate(45);
+	ofSetColor(0, 0, 255);
+	ofRect(0, 0, 200, 200);
+
+And we get a rectangle that rotates around its upper left corner:
+
+![Rotated Rectangle](images/intrographics_rotateright.png "Drawing a rotated red rectangle")
+
+Remember that by default, when you pass an (x,y) position to `ofRect`, it will assume that (x,y) is the position of the upper left corner.  If you want to rotate the rectangle around its center, you can use `ofSetRectMode(OF_RECTMODE_CENTER);` to tell openFrameworks that the (x,y) position defines the center of the rectangle.  The alternative to leave the rectangle mode as set as the upper left corner and modify your code like this:
+
+	// Rotated rectangle in red
+	
+	// Add half rect width and half rect height to the translate, 
+	// so that (0,0) is now at the center of the blue rectangle
+	ofTranslate(500+100, 200+100); 
+	
+	// Rotate around the center of the blue rectangle
+	ofRotate(45);
+	ofSetColor(255, 0, 0);
+	
+	// Now we want to draw our red rectangle by specifying the upper left corner
+	// If we tried ofRect(0,0,200,200), we would draw the red's corner in the center of blue
+	// Since (0,0) is currently the cetner of the blue rect, we want to draw the center of our 
+	// red rectangle at (0,0).  To do that, we need to draw at (-width/2, -height/2):
+	ofRect(-100, -100, 200, 200);
+	
+**[Note: maybe omit this code?  the explanation of the (-100, -100) needs diagrams with graph paper for a better understanding]**
+
+![Rotated Centered Rectangle](images/intrographics_rotaterightcentered.png "Drawing a rotated and centered red rectangle")
+
+You can now push, pop, rotate and translate like a pro, so the only thing left to do is figure out how to use [`ofScale`](http://www.openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofScale "ofScale Documentation Page") and then we can create some infinitely spiraling rectangles.
+
+`ofScale` takes three arguments, the desired scaling in x, y and z directions.  The z parameter is option and defaults to 1.  Since we are working in two dimensions (x and y), we should just leave the z scale as 1.0.  Our scaling code applied to the blue and red rectangles looks like:
+
+	ofSetRectMode(OF_RECTMODE_CENTER);
+	ofBackground(255);
+	
+	ofPushMatrix();
+		// Original rectangle in blue
+		ofSetColor(0, 0, 255);
+		ofRect(500, 200, 200, 200);
+		
+		// Scaled down rectangle in red
+		ofTranslate(500, 200);
+		ofScale(0.5, 0.5);
+		ofSetColor(255, 0, 0);
+		ofRect(0, 0, 200, 200);
+	ofPopMatrix();
+
+![Scaled Centered Rectangle](images/intrographics_scalecentered.png "Drawing a scaled and centered rectangle")
+
+We'll run into the same issues that we ran into with centering.  The solution is the same - translate before scaling if you want centered rectangles.
+
+If you want to create some trippy rectangles, start a new project (or just delete the red and blue rectangle code you wrote).  The core of the idea is really simple, we are going to draw a rectangle at the center of the screen, scale, rotate, draw a rectangle, repeat and repeat.  So we'll code the core and then we'll add some motion and graphical florishes.  Add the following to your `draw` function:
+
+	ofBackground(255);
+	
+	ofSetRectMode(OF_RECTMODE_CENTER);
+	ofSetColor(0);
+	ofNoFill();
+	ofPushMatrix();
+		ofTranslate(ofGetWidth()/2, ofGetHeight()/2);
+		for (int i=0; i<100; ++i) {
+			ofScale(1.1, 1.1);
+			ofRotate(5);
+			ofRect(0, 0, 50, 50);
+		}
+	ofPopMatrix();
+
+**[Note: has ofGetWidth and ofGetHeight been explained at this point?]**
+
+And that's it:
+
+![Simple Spiral](images/intrographics_simplespiral.png "Simple spiral of rectangles")
+
+You can play with the scaling, rotation, size of the rectangle, etc.  Three lines of code will add some life to our rectangles and cause them to coil and uncoil over time.  Put these in the place of `ofRotate(5);`:
+
+	float time = ofGetElapsedTimef();
+	float timeScale = 0.5;
+	float noise = ofSignedNoise(time * timeScale) * 20.0;
+	ofRotate(noise);
+
+**[Note: noise is a loaded concept.  I'm not sure who is covering it, but I can add a section here explaining it.]**
+
+Next up is to make our spiral leave a visual smear as it rotates.  We turned off the background automatic clearing (`ofSetBackgroundAuto(false)`) in section 1 with our brushes.  What if we extended that concept and used it here?  We want to draw new frames of our animation on top of faded versions of the past frames of our animation to create a smear (which is usually called a "trail effect").  For our app, this is a lot easier than it sounds to implement.  We will turn off the background automatic clearing, and then every time we are about to draw a frame of the animation, we will draw a transparent screen over our window.  This will cause the frames of our animation to fade out over time.
+
+So first step is to add a few things to `setup`:
+
+	ofSetBackgroundAuto(false);
+	ofEnableAlphaBlending(); // Remember if we are using transparency, we need to let openFrameworks know
+	ofBackground(255);
+
+Delete `ofBackground(255);` from your `draw` function and what do you get?
+
+![Animated Spiral Without Clearing](images/intrographics_animatedspiralwithoutclearing.png "Simple spiral animated without clearing the background")
+
+Messy, huh?  Add this to the beginning of your `draw` function:
+	
+	float clearAlpha = 100;
+	ofSetColor(255, clearAlpha);
+	ofSetRectMode(OF_RECTMODE_CORNER);
+	ofFill();
+	ofRect(0, 0, ofGetWidth(), ofGetHeight());
+	
+By drawing a transparent rectangle over the whole window, we can clean up some of that mess while still leaving a smear or trail.  If you turn up the alpha, you will turn down the smear.  If you turn down the alpha, you will turn up the smear.  **[note: explain why you can't use ofBackground here]**
+
+![Animated Spiral With Clearing](images/intrographics_animatedspiralwithclearing.png "Simple spiral animated with a trail effect")
+
+Okay, you've got some code.  It does something neat.  But it has a bunch of variables that you are playing with by manually changing them and reruning your code.  It would be much nicer to take these parameters and change them at runtime, so that you can find the settings you like best.  It doesn't matter quite so much for this project, but in your own work, this process of parameterization and exploration will be very important (especially, if you are creating any generative visuals).
+
+We've got a couple parameters that drastically change the visual experience of our spirals.  Let's focus in on the `timeScale` of our noise and the `clearAlpha` used to set transparency.  We can use the mouse position to control both of these variables on the fly.  Horizontally moving the mouse can turn the `clearAlpha` up and down while moving the mouse vertically can turn the `timeScale` up and down.  (Using the mouse like this is handy if you've got one or two parameters to explore).
+
+Delete those lines of code that define `timeScale` and `clearAlpha`.  Instead add this to your header (.h) file:
+
+	float clearAlpha;
+	float timeScale;
+	
+Initialize them in the `setup` function of your source file (.cpp):
+
+	clearAlpha = 100;
+	timeScale = 0.5;
+
+We haven't talked about this function yet, but [`mouseMoved(int x, int y )`](http://openframeworks.cc/documentation/application/ofBaseApp.html#!show_mouseMoved "mouseMoved Documentation Page") will get run anytime the mouse position changes in our openFrameworks window.  We can use it to change our parameters through a mapping of the x and y mouse positions:
+
+	clearAlpha = ofMap(x, 0, ofGetWidth(), 0, 255);
+	timeScale = ofMap(y, 0, ofGetHeight(), 0, 1);
+
+**[note: ofMap, ofGetWidth and ofGetHeight have probably been explained earlier in the tutorial?]**
+
+One last extension, just for fun.  We are drawing black rectangles on a white background.  We could easily draw white rectangles on a black background.  We could also slowly flip between those two.  Add this code at the top of the `draw` function:
+
+	ofColor darkColor(0,0,0,255);
+	ofColor lightColor(255,255,255,255);
+	float time = ofGetElapsedTimef();
+	float percent = ofMap(cos(time/2.0), -1, 1, 0, 1, true);
+	ofColor bgColor = darkColor;
+	bgColor.lerp(lightColor, percent);
+	bgColor.a = clearAlpha;
+	ofColor fgColor = lightColor;
+	fgColor.lerp(darkColor, percent);
+
+Then use `bgColor` when you call `ofSetColor` before drawing the transparent rectangle, and use `fgColor` when you call `ofSetColor` for your rectangle outlines.
+
+![Animated Contrast Reversing Spiral](images/intrographics_animatedspiralcontrastreverse.png "Spiral animated with a trail effect where the contrast reverses over time")
+
+**[note: this code could use some explanation]**
+
+**[note: there should be a gif in here showing the animation]**
+
+**[note: any possibly a section about documenting your work via gif and video]**
+
+Congrats, you survived coordinate transformations :)
+
+	
+
+
+
+## 3. See outline ##
+
+This chapter is super long to begin with...but I have another project in the outline around generative color.  It might be time to cut that.
+
+
+
+**openFrameworks Bugs and Weirdness:**
+- Setting alpha to 1 causes the hue information on a color to shift when drawing overlapping shapes (need to verify this happens outside of the brush app)
+- `polyline.getPointAtPercent(0)` and `polyline.getPointAtPercent(1.0)` return the same thing
+
+**General notes:**
+- might be a small thing, but I'm considering going back and rewritting all for loops to use i++ over ++i. i++ is more readable for a beginner
 
 

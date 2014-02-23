@@ -2,8 +2,6 @@
 
 *by [Arturo Castro](http://arturocastro.net)*
 
-*<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.en_US">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.*
-
 ## 2D, immediate mode vs ofPolyline/ofPath
 
 Traditionally in frameworks like openFrameworks or processing the way of drawing things have been something like:
@@ -459,3 +457,6 @@ void ofApp::draw(){
 >Note: Don't use of3DPrimitive for simple primitives like the one above, calculating the transformations of an ofNode is kind of expensive in terms of cpu usage, for primitives with lots of vertices it's usually ok but for something like the previous example is usually just faster to recalculate all the points in their new position using an ofVboMesh
 
 
+<em style="font-size:0.8em; text-align:center; display:block;">This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.en_US">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.</em>
+
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>

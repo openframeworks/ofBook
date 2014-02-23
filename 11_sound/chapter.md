@@ -8,7 +8,7 @@ Sound
 Why -1 to 1?
 ------------
 - Sound = oscillation. As opposed to visual content (i.e. images), there's not really such a thing as static sound. What is heard is the changes in amplitude over time.
-- 0 is "at rest". -1 / 1 aren't "loud" on their own. 
+- 0 is "at rest". -1 / 1 aren't "loud" on their own.
 - What makes a sound loud is how much it changes over time. -0.5 to 0.5 is much louder than 0.9 to 1.0.
 
 Time Domain vs Frequency Domain
@@ -43,4 +43,3 @@ Synthesizing Audio
 ------------------
 - Attack Decay Sustain Release
 - MIDI / OSC
-- 
