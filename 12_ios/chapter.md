@@ -6,7 +6,7 @@
 ##Intro
 The beauty behind OpenFrameworks is its cross-platform nature and the ability to run the same code on your desktop and mobile devices while achieving the same results.
 
-Support for the iPhone in OpenFrameworks started when the very early iPhones (iPhone 2 or 3 - fact check!) were being released. Some clever people from the OF community relealised that the iPhone supported OpenGL which also happened to be what OF was using for rendering graphics, and even more importantly, that C++ code could be mixed with Obj-C code. With these two very important pieces of the puzzle in place it was a matter of tweaking the core OF code to begin it's support for iOS devices. It was then when ofxiPhone was born.
+Support for the iPhone in OpenFrameworks started when the very early iPhones (iPhone 2 or 3 - fact check!) were being released. Some clever people from the OF community realised that the iPhone supported OpenGL which also happened to be what OF was using for rendering graphics, and even more importantly, that C++ code could be mixed with Obj-C code. With these two very important pieces of the puzzle in place it was a matter of tweaking the core OF code to begin it's support for iOS devices. It was then when ofxiPhone was born.
 
 Since then Apple have released a number of other devices like the iPad and so the ofxiPhone title became less accurate and was eventually changed to ofxiOS, OpenFrameworks support for all iOS devices.
 
@@ -26,8 +26,15 @@ Like in C++, in Obj-C your code is broken down into two files, the header file a
 - brief overview of Obj-C memory management compared to C++ (retain/release and ARC)
 - How C++ and Obj-C can be mixed together. Mention .mm files.
 
+good reference => http://cocoadevcentral.com/d/learn_objectivec/
+
 
 #Under the Hood
+
+Every single iOS app starts with an Application Delegate which is the top level UIKit class that initialises the app. The App Delegate needs to create two things for the app to run, a UIWindow, that manages and displays all the views in the app, and a root view controller that manages views and transition.
+
+ofxiOS does all this when a iOS OpenFrameworks app is first launched. Firstly, the ofxiOSAppDelegate is created and adds a ofxiOSViewController as the root view controller to the application window. The ofxiOSViewController manages a set of views, but most importantly it creates a OpenGL view for OpenFrameworks to render graphics into.
+
 - How OF works on iOS, using OpenGL ES, UIViewController and App Delegate (basic iOS app structure)
 
 
