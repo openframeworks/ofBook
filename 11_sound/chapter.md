@@ -33,10 +33,16 @@ This is because what you actually hear is the *changes* in values over time. Any
 
 When representing sound as a continuous stream of values between -1 and 1, you're working with sound in what's known as the "Time Domain". This means that each value you're dealing with is referring to a specific moment in time. There is another way of representing sound which can be very helpful when you're using sound to drive something other aspect of your app. That representation is known as the "Frequency Domain".
 
-[ image of a waveform vs an FFT bar graph ]
+*[ image of a waveform vs an FFT bar graph ]*
 
-- A time domain signal can be transformed to the frequency domain via a FFT
-- You can also invert an FFT to transform a frequency domain signal back to a time domain signal. *Possible shout out to additive synthesis here*.
+In the frequency domain, you'll be able to see how much of your input signal lies in various frequencies, split into various "bins" (see above image).
+
+You can transform a signal in the time domain into the frequency domain by a ubiquitous algorithm called the Fast Fourier Transform. You can get an openFrameworks-ready implementation of the FFT (along with examples!) in either the ofxFFT or ofxFft addons (by Lukasz Karluk and Kyle McDonald respectively).
+
+*[footnote explaining FFT vs DFT to avoid cluttering the previous paragraph up]*
+
+You can also transform a signal from the frequency domain back to the time domain, using an Inverse Fast Fourier Transform (aka IFFT). This is less common, but there is an entire genre of audio synthesis called Additive Synthesis which is built around this principle (generating values in the frequency domain then running an IFFT on them to create synthesized sound).
+
 - ofSoundStream gives you access to sound in the time domain.
 - The time domain is useful for analysing general "loudness", as well as pitch detection ([counterintuitively](http://blog.bjornroche.com/2012/07/frequency-detection-using-fft-aka-pitch.html))
 - Frequency domain is useful for isolating particular elements of a sound, such as instruments in a song. It is also useful for analyzing the character/timbre of a sound.
@@ -52,12 +58,14 @@ When representing sound as a continuous stream of values between -1 and 1, you'r
 ###RMS
 One of the simplest ways to add audio-reactivity to your app is to calculate the RMS of the most recent buffer of audio data. RMS stands for "root mean square" and is a pretty straightforward calculation that serves as a good approximation of "loudness" (much better than something like just averaging the buffer or picking the maximum value). You can see RMS being used in the "audioInputExample".
 
-[ code snippet here ]
+*[ code snippet here ]*
 
 ###FFT
 Running an FFT on your input audio will give you back a buffer of values representing the input's frequency content. A straight up FFT *won't* tell you which notes are present in a piece of music, but you will be able to use the data to take the input's sonic "texture" into account. For instance, the FFT data will let you know how much "bass" / "mid" / "treble" is in the input, at a pretty fine granulairty (a typical FFT used for realtime audio-reactive work will give you something like 512 to 4096 individual frequency bins to play with).
 
 - Pitch detection
+  - FFT -> Power -> IFFT Autocorrelation sort-of-hack
+  - Zero crossings
 - Onset detection
 - Conversions to Mel scale, decibels
 
