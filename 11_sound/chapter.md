@@ -52,6 +52,7 @@ You can also transform a signal from the frequency domain back to the time domai
 - On the opposite end of the spectrum, ofSoundFile will allow you to extract an uncompressed ofSoundBuffer out of a file, allowing you access to the raw time domain signal.
 - ofSoundPlayer provides access to the frequency domain content of the sounds being played in the form of `ofSoundGetSpectrum()`, but does not give access to the time domain (i.e. the -1 to 1 uncompressed samples)
 - "Multiplay" allows you to have a file playing several times at different pitches simulatenously. Very handy for sound effects.
+- Codec support
 
 ##Reacting to Live Audio
 
@@ -59,6 +60,13 @@ You can also transform a signal from the frequency domain back to the time domai
 One of the simplest ways to add audio-reactivity to your app is to calculate the RMS of incoming buffer of audio data. RMS stands for "root mean square" and is a pretty straightforward calculation that serves as a good approximation of "loudness" (much better than something like averaging the buffer or picking the maximum value). You can see RMS being calculated in the "audioInputExample".
 
 *[ code snippet here ]*
+
+###Onset Detection
+Onset detection algorithms attempt to locate moments in an audio stream where an "onset" occurs, which is usually something like an instrument playing a note or the impulse of a drum hit. There are many onset detection algorithms available at various levels of complexity and accuracy, some fine-tuned for speech as opposed to music, some working in the frequency domain instead of the time domain, some made for offline processing as opposed to realtime, etc.
+
+A simple realtime onset detection algorithm can be built on top of the RMS calculation above.
+
+*[ naive RMS threshold-based code sample here ]*
 
 ###FFT
 Running an FFT on your input audio will give you back a buffer of values representing the input's frequency content. A straight up FFT *won't* tell you which notes are present in a piece of music, but you will be able to use the data to take the input's sonic "texture" into account. For instance, the FFT data will let you know how much "bass" / "mid" / "treble" there is in the input at a pretty fine granulairty (a typical FFT used for realtime audio-reactive work will give you something like 512 to 4096 individual frequency bins to play with).
@@ -70,7 +78,6 @@ When using the FFT to analyze music, you should keep in mind that the FFT's bins
 - Pitch detection
   - FFT -> Power -> IFFT Autocorrelation sort-of-hack
   - Zero crossings
-- Onset detection
 - Conversions to Mel scale, decibels
 
 ##Synthesizing Audio
@@ -94,7 +101,7 @@ If your samples begin to exceed the range of -1 to 1, you'll likely start to hea
 
 Assuming this isn't your intent, you can generally blame clipping on a misbehaving addition or subtraction in your code. A multiplication of any two numbers between -1 and 1 will always result in another number between -1 and 1.
 
-If you *want* distortion, it's much more common to use a waveshaping algorithm [todo: link].
+If you *want* distortion, it's much more common to use a waveshaping algorithm instead of trying to find a way to make clipping sound good [todo: link].
 
   - Sample rates, Nyquist, aliasing
   - Latency
