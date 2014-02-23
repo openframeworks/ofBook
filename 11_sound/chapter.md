@@ -56,12 +56,16 @@ You can also transform a signal from the frequency domain back to the time domai
 ##Reacting to Live Audio
 
 ###RMS
-One of the simplest ways to add audio-reactivity to your app is to calculate the RMS of the most recent buffer of audio data. RMS stands for "root mean square" and is a pretty straightforward calculation that serves as a good approximation of "loudness" (much better than something like just averaging the buffer or picking the maximum value). You can see RMS being used in the "audioInputExample".
+One of the simplest ways to add audio-reactivity to your app is to calculate the RMS of incoming buffer of audio data. RMS stands for "root mean square" and is a pretty straightforward calculation that serves as a good approximation of "loudness" (much better than something like averaging the buffer or picking the maximum value). You can see RMS being calculated in the "audioInputExample".
 
 *[ code snippet here ]*
 
 ###FFT
-Running an FFT on your input audio will give you back a buffer of values representing the input's frequency content. A straight up FFT *won't* tell you which notes are present in a piece of music, but you will be able to use the data to take the input's sonic "texture" into account. For instance, the FFT data will let you know how much "bass" / "mid" / "treble" is in the input, at a pretty fine granulairty (a typical FFT used for realtime audio-reactive work will give you something like 512 to 4096 individual frequency bins to play with).
+Running an FFT on your input audio will give you back a buffer of values representing the input's frequency content. A straight up FFT *won't* tell you which notes are present in a piece of music, but you will be able to use the data to take the input's sonic "texture" into account. For instance, the FFT data will let you know how much "bass" / "mid" / "treble" there is in the input at a pretty fine granulairty (a typical FFT used for realtime audio-reactive work will give you something like 512 to 4096 individual frequency bins to play with).
+
+NOTE TO SELF/EDITORS: I definitely need to clean up the following paragraph. It's pretty crucial but I haven't found a way to get a succinct explanation of it yet.
+
+When using the FFT to analyze music, you should keep in mind that the FFT's bins increment on a *linear* scale, whereas humans interpret frequency on a *logarithmic* scale. So, if you were to use an FFT to split an input signal into 512 bins, the lowest bins (probably bin 0 through bin 30 or so) will contain the bulk of the data, and the remaining bins will mostly just be high frequency content. If you were to isolate the sound on a bin-to-bin basis, you'd be able to easily tell the difference between the sound of bins 3 and 4, but bins 500 and 501 would probably sound exactly the same. Unless you had robot ears.
 
 - Pitch detection
   - FFT -> Power -> IFFT Autocorrelation sort-of-hack
@@ -70,5 +74,27 @@ Running an FFT on your input audio will give you back a buffer of values represe
 - Conversions to Mel scale, decibels
 
 ##Synthesizing Audio
-- Attack Decay Sustain Release
 - MIDI / OSC
+- Attack Decay Sustain Release
+- Working with external sound applications
+- Overview of simple synthesis techniques (very high-level)
+
+##Gotchas
+### "Popping"
+When starting or ending playback of synthesized audio, you should try to quickly fade in / out the buffer, instead of starting or stopping abruptly. If you start playing back a buffer that begins like `[1.0, 0.9, 0.8...]`, the first thing the speaker will do is jump from the "at rest" position of 0 immediately to 1.0. This is a *huge* jump, and will probably result in a "pop" that's quite a bit louder than you were expecting (based on your computer's current volume).
+
+Usually, fading in / out over the course of about 30ms is enough to eliminate these sorts of pops.
+
+If you're getting pops in the middle of your playback, you can diagnose it by trying to find reasons why the sound might be very briefly cutting out (i.e. jumping to 0, resulting in a pop if the waveform was previously at a non-zero value).
+
+### "Clipping" / Distortion
+If your samples begin to exceed the range of -1 to 1, you'll likely start to hear what's known as "clipping", which generally sounds like a grating, unpleasant distortion. Some audio hardware will handle this gracefully by allowing you a bit of leeway outside of the -1 to 1 range, but others will "clip" your buffers.
+
+*[ clipped waveform image ]*
+
+Assuming this isn't your intent, you can generally blame clipping on a misbehaving addition or subtraction in your code. A multiplication of any two numbers between -1 and 1 will always result in another number between -1 and 1.
+
+If you *want* distortion, it's much more common to use a waveshaping algorithm [todo: link].
+
+  - Sample rates, Nyquist, aliasing
+  - Latency
