@@ -30,8 +30,7 @@ This is how you declare a Class -> in the header file (*.h), otherwise known as 
 
 
 	#ifndef _OF_BALL // if this class hasn't been defined, the program can define it
-	#define _OF_BALL // by using this if statement you prevent the class to be called more 
-                 // than once which would confuse the compiler
+	#define _OF_BALL // by using this if statement you prevent the class to be called more than once which would confuse the compiler
 	#include "ofMain.h"
 	class ofBall {
     		public: // place public functions or variables declarations here
