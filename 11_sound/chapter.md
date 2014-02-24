@@ -1,12 +1,21 @@
 #Sound
 
-This chapter will demonstrate how to use the sound features and objects that you'll find in openFrameworks, as well as some techniques you can use to react to and generate sound.
+This chapter will demonstrate how to use the sound features that you'll find in openFrameworks, as well as some techniques you can use to react to and generate sound.
+
+Here's a quick overview of the classes you can use to work with sound in openFrameworks:
 
 `ofSoundPlayer` provides simple access to sound files, allowing you to easily load and play sounds, add sound effects to an app and extract some data about the file's sound as it's playing.
 
-`ofSoundStream` gives you access to the computer's sound hardware, allowing you to programmatically generate your own sound as well as react to sound coming into your computer from something like a microphone or line-in jack.
+`ofSoundStream` gives you access to the computer's sound hardware, allowing you to generate your own sound as well as react to sound coming into your computer from something like a microphone or line-in jack.
 
-- Mention ofSoundBuffer / ofSoundFile / ofSoundObject
+*[ possibly separate the below from above? (since they're not actually in OF yet) ]*
+
+`ofSoundBuffer` is used to store a sequence of `float` values, and perform audio-related things on said values (like resampling)
+
+`ofSoundFile` allows you to extract uncompressed ofSoundBuffers from files.
+
+`ofSoundObject` is an interface for chaining bits of sound code together, similar to how a guitarist might use guitar pedals. This is mostly relevant for addon authors or people looking to share their audio processing code.
+
 - Quick and dirty play files w/ofSoundPlayer & beep boop `sin()` ofSoundStream examples to set the stage.
 
 ##Why -1 to 1?
