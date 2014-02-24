@@ -2,14 +2,23 @@
 
 ##Contents
 • 1 - Overview
+
 • 2 - What is OOP
+
 • 3 - How to build your own Classes (simple Class)
+
 • 4 - make an Object from your Class 
+
 • 5 - make Objects from your Class
+
 • 5.1- make more Objects from your Class
+
 • 6 - make even more Objects from your Class: properties and  constructor
+
 • 6.1 - make even more Objects from your Class
+
 • 7 - make and delete as you wish  - vectors
+
 • 8 - quick intro to polymorphism
 
 ##• 1 - Overview
@@ -18,8 +27,11 @@ By the end of this chapter you should understand how to create your own objects 
 
 ##• 2 - What is OOP
 Object Oriented Programming is a programming paradigm based on the use of objects and their interactions. some definitions:
+
 -a Class defines the characteristics of a thing - the object - and its behaviors; it defines not only its properties and attributes but also what it can do.
+
 -an Object is an instance of a class.
+
 -the Methods are the objects abilities and how we can call them.
 
 A recurring analogy is to see a Class as a the cookie cutter and the cookies as the Objects. 
