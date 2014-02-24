@@ -21,7 +21,9 @@ Object Oriented Programming is a programming paradigm based on the use of object
 -a Class defines the characteristics of a thing - the object - and its behaviors; it defines not only its properties and attributes but also what it can do.
 -an Object is an instance of a class.
 -the Methods are the objects abilities and how we can call them.
+
 A recurring analogy is to see a Class as a the cookie cutter and the cookies as the Objects. 
+
 note: pls see chapter (Josh Nimoy's) for amore detailed explanation of Objected Oriented languages.
 
 ##• 3 - How to build your own Classes (simple Class)
