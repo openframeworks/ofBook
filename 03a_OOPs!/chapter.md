@@ -33,18 +33,21 @@ This is how you declare a Class -> in the header file (*.h), otherwise known as 
 	#define _OF_BALL // by using this if statement you prevent the class to be called more than once which would confuse the compiler
 	#include "ofMain.h"
 	class ofBall {
+		
 		public: // place public functions or variables declarations here
+		
 		// methods, equivalent to specific functions of your class objects
 		void update();  // update method, used to refresh your objects properties
 		void draw();    // draw method, this where you'll do the object's drawing 
+		
 		// variables
 		float x;      // position
 		float y;
 		float speedY; // speed and direction
 		float speedX;
 		int dim;      // size
-		ofBall(); // constructor - used to initialize an object, if no properties are passed
-		//               the program sets them to the default value
+		
+		ofBall(); // constructor - used to initialize an object, if no properties are passed the program sets them to the default value
 		private: // place private functions or variables declarations here
 	}; // don't forget the semicolon!!
 	#endif 
@@ -57,7 +60,7 @@ Here's how you can write the class *.cpp file, the implementation file:
 
 
 	#include "ofBall.h"
- 
+	
 	ofBall::ofBall(){
 		x = ofRandom(0, ofGetWidth());      // give some random positioning
 		y = ofRandom(0, ofGetHeight());
@@ -220,14 +223,14 @@ we're now at the last part of this how-to tutorial on classes and objects. this 
 As we're creating an array of objects, instead of creating one pointer only we'll also have to create an array of pointers. That's why we have two 'stars' and not one in the declarations(*.h) file. We have created a pointer to an array of pointers. Let's see how we'll create and call these objects in the implementation (*.cpp) file:
 
 	nBalls = 5; // the number of ball objects we want to create
- 
+	
 	myBall = new ofBall*[nBalls]; // an array of pointers for the objects
- 
+	
 	for (int i = 0; i < nBalls; i++){
 		float x = 20+(100*i); // using the value of the counter variable(i) to differentiate them
 		float y = 20+(100*i);
 		int dim = 10+(i*10);
- 		
+			
 		myBall[i] = new ofBall(x,y,dim);  // create each object from the array
 	}
 
@@ -238,7 +241,7 @@ similarly when we want to draw and update the objects we've created we'll need '
 	for (int i = 0; i < nBalls; i++){
 		myBall[i]->update();
 	}
- 
+
 
 
 	for (int i = 0; i < nBalls; i++){
