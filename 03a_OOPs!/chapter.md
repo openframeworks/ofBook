@@ -35,17 +35,17 @@ This is how you declare a Class -> in the header file (*.h), otherwise known as 
 	class ofBall {
 		public: // place public functions or variables declarations here
 		// methods, equivalent to specific functions of your class objects
-        	void update();  // update method, used to refresh your objects properties
-        	void draw();    // draw method, this where you'll do the object's drawing 
+		void update();  // update method, used to refresh your objects properties
+		void draw();    // draw method, this where you'll do the object's drawing 
 		// variables
-        	float x;      // position
-        	float y;
-        	float speedY; // speed and direction
-        	float speedX;
-        	int dim;      // size
-        	ofBall(); // constructor - used to initialize an object, if no properties are passed
+		float x;      // position
+		float y;
+		float speedY; // speed and direction
+		float speedX;
+		int dim;      // size
+		ofBall(); // constructor - used to initialize an object, if no properties are passed
 		//               the program sets them to the default value
-    		private: // place private functions or variables declarations here
+		private: // place private functions or variables declarations here
 	}; // don't forget the semicolon!!
 	#endif 
 
@@ -58,27 +58,26 @@ Here's how you can write the class *.cpp file, the implementation file:
 
 	#include "ofBall.h"
  
-	ofBall::ofBall()
-	{
+	ofBall::ofBall(){
 		x = ofRandom(0, ofGetWidth());      // give some random positioning
 		y = ofRandom(0, ofGetHeight());
- 	
+		
 		speedX = ofRandom(-1, 1);           // and random speed and direction
 		speedY = ofRandom(-1, 1);
- 	
+		
 		dim = 20;
 	}
- 
-
+	
+	
 	void ofBall::update(){
-    		if(x < 0 ){
-        		x = 0;
-        		speedX *= -1;
-    		} else if(x > ofGetWidth()){
-        		x = ofGetWidth();
-        		speedX *= -1;
-    		}
- 
+		if(x < 0 ){
+			x = 0;
+			speedX *= -1;
+		} else if(x > ofGetWidth()){
+			x = ofGetWidth();
+			speedX *= -1;
+		}
+		
 		if(y < 0 ){
 			y = 0;
 			speedY *= -1;
@@ -86,12 +85,10 @@ Here's how you can write the class *.cpp file, the implementation file:
 			y = ofGetHeight();
 			speedY *= -1;
 		} 
- 
+		
 		x+=speedX;
 		y+=speedY;
 	}
- 
-
 
 	void ofBall::draw(){
 		// set Color based on values for Red, Green and Blue
@@ -105,15 +102,16 @@ now that we've created a class let's make the real object! in your testapp.h (he
 
 	ofBall myBall;
 
-and finally let's get that ball bouncing on screen! go to your project testapp.cpp (implementation) file. now that we've created the object we just need to draw it and update its values by calling its methods. in the update() function add:
 
+and finally let's get that ball bouncing on screen! go to your project testapp.cpp (implementation) file. now that we've created the object we just need to draw it and update its values by calling its methods. in the update() function add:
 
 	myBall.update();  // calling the object's update method
 
+
 and in the draw() function lets add:
 
-
 	myBall.draw();  // call the draw method to draw the object
+
 
 compile and run! by now you must be seeing a bouncing ball on the screen! great!
 
@@ -121,14 +119,13 @@ compile and run! by now you must be seeing a bouncing ball on the screen! great!
 ##• 5 - make Objects from your Class
 you're probably asking yourself now why did you have so much trouble just to create a bouncing ball. You could have done this (and you've probably done it!) without using classes. In fact one of the advantages of using classes is to be able to create multiple individual objects with the same characteristics. So, lets do that now! going back to your ofApp.h file we'll just need to create a couple of new objects:
 
-
 	ofBall myBall1;
 	ofBall myBall2;
 	ofBall myBall3;
 
+
 And in the implementation file (*.cpp) just call the corresponding methods for each of the objects.
 in the ofApp's update() function:
-
 
 	myBall1.update();
 	myBall2.update();
@@ -136,7 +133,6 @@ in the ofApp's update() function:
 
 
 and also in the draw() function:
-
 
 	myBall1.draw();
 	myBall2.draw();
@@ -160,17 +156,15 @@ we'll now use the CONSTANT value to define the size of our array of objects:
 back to our implementation file we'll just need to create an array of objects and call their methods through 'for' loops.
 in the update() function:
 
-
 	for(int i=0; i<NBALLS; i++){
-  		myBall[i].update();
+		myBall[i].update();
 	}
 
 
 in the draw() function:
 
-
 	for(int i=0; i<NBALLS; i++){
-  		myBall[i].draw();
+		myBall[i].draw();
 	}
 
 
@@ -179,18 +173,16 @@ in the draw() function:
 
 As we've seen each of the objects has a set of properties defined by its variables (position, speed and direction and dimension). Another advantage of object oriented programming is that the objects created can have different values on each of its properties. For us to be able to have better control of each object we can have a constructor which defines these characteristics and lets us access them. In the ofBall definitions file (*.h) we can change the constructor to include some of the objects properties (lets say position and dimension):
 
-
 	ofBall(float x, float y, int dim);
 
 
 As we've changed the constructor we'll need to update the ofBall implementation (*.cpp) file to reflect these.
 
-
 	ofBall::ofBall(float _x, float _y, int _dim){
 		x = _x;
 		y = _y;
 		dim = _dim;
- 
+		
 		speedX = ofRandom(-1, 1);
 		speedY = ofRandom(-1, 1);
 	}
@@ -205,16 +197,14 @@ By implementing these changes we'll also need to create space in memory for thes
 The star(*) means it will be created in a reserved part of memory just for it.
 Now in the TestApp.cpp file we will need to create the object in the setup and we'll call the objects methods on the draw() and update() functions in a different way than we've been doing before. in the setup() :
 
-
-
-                        	// x-position,        y-position,           size
+				// x-position,        y-position,           size
 	myBall = new ofBall(ofRandom(300,400), ofRandom(200,300), ofRandom(10,40));
 
 
 As you see it is now possible to directly control the objects properties on its creation. and now we'll just need to update and draw it.
 
 	myBall->update();
- 
+
 	
 	myBall->draw();
 
@@ -223,22 +213,21 @@ As you see it is now possible to directly control the objects properties on its 
 ##• 6.1 - make even more Objects from your Class
 we're now at the last part of this how-to tutorial on classes and objects. this part will now demonstrate an automation process to create objects from our previously built class. We'll be creating objects through arrays as we did in part 2.1 with some minor changes:
 
-
 	ofBall** myBall;   // an array of pointers of type ofBall
 	int nBalls;        //variable for the number of balls 
 
-As we're creating an array of objects, instead of creating one pointer only we'll also have to create an array of pointers. That's why we have two 'stars' and not one in the declarations(*.h) file. We have created a pointer to an array of pointers. Let's see how we'll create and call these objects in the implementation (*.cpp) file:
 
+As we're creating an array of objects, instead of creating one pointer only we'll also have to create an array of pointers. That's why we have two 'stars' and not one in the declarations(*.h) file. We have created a pointer to an array of pointers. Let's see how we'll create and call these objects in the implementation (*.cpp) file:
 
 	nBalls = 5; // the number of ball objects we want to create
  
-  	myBall = new ofBall*[nBalls]; // an array of pointers for the objects
+	myBall = new ofBall*[nBalls]; // an array of pointers for the objects
  
 	for (int i = 0; i < nBalls; i++){
 		float x = 20+(100*i); // using the value of the counter variable(i) to differentiate them
 		float y = 20+(100*i);
 		int dim = 10+(i*10);
- 
+ 		
 		myBall[i] = new ofBall(x,y,dim);  // create each object from the array
 	}
 
@@ -250,6 +239,7 @@ similarly when we want to draw and update the objects we've created we'll need '
 		myBall[i]->update();
 	}
  
+
 
 	for (int i = 0; i < nBalls; i++){
 		myBall[i]->draw();
