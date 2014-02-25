@@ -30,7 +30,7 @@ From first brainstorms to final hand-over of the project it took X months? When 
 - ideation
 - interaction scenario
 - prototype
-- content animation workshops (July/Dec)
+- content animation workshops (July, Dec)
 - tech sourcing (July/Aug) 
 - tech purchase (Sept)
 - software (Aug-Jan)
@@ -85,6 +85,9 @@ Since the project will be permanently installed, we involved locals in the makin
 ### The dance stage
 
 While camera and projector stay intangible, it was important to give the project a physical presence. Who's main purpose was to define the active tracking zone for the participants, but who would also present a different version of the project during the daylight hours, when the projection was off. ...
+
++ need to spend $10k ? on renting a ground-unfreezing device to be able to install underground cabling for LED power
++ people thinking the 'sensors' are mounted in the steles
 
 
 
@@ -433,9 +436,10 @@ The `ofNotifyEvent()` then triggers the connected function in the baseApp:
 
 
 
-### Finetuning interaction
-- calibration of final behavior (importance of GUI)
-- screenshot of debug GUI
+### Debug screen and fineunting interaction
+For testing and tuning purposes i run the application on 2 screens with `window.setMultiDisplayFullscreen(true)`, the projection and the debug screen. The debug screen shows a visualization of the tracking data, the scene-relevant states of the blobs, two GUI panels for finetuning parameters, and preview of the projection view. 
+
+To be able to finetune all the parameters that define the interaction (what velocity threshold defines "standing still", how exact does the alignment need to be to activate the eclipse effect, etc.) while testing it on site, it's important to have all variables accessible via a GUI. 
 
 ![GUI](images/blackGUI.png "GUI screen")
 
@@ -446,13 +450,20 @@ The `ofNotifyEvent()` then triggers the connected function in the baseApp:
 
 
 ## Fail-safes and dirty fixes 
-worst case scenarios and the messiness of the real-world
+The nights before the opening were naturally used for heavy test sessions that led to some restructuring, some video updates and lots of parameters finetunings. Late night coding over remote desktop while dressing up every 5 minutes to run outside into the cold to test the changes with camera vision and projection - not the best of scenarios. Combined with the natural occurrence of bugs, suddenly the software didn't seem as stable and fast as a few days ago. A mysterious segmentation fault error kept appearing (not often enough to be obvious), but other pressing issues didn't allow for proper tracing of the error's roots. 
+
+The opening day had me glued next to the projection computer, ready to hit a button or change a parameter, in case of unexpected crashes or lagging framerates. The next day - before the project went live on its daily schedule of 5pm to midnight - turned into an exercise of setting priorities. Instead of going into debug mode and investigating errors, the main goal was to to keep the app going seamlessly during showtime.
+
 
 ### first: keep your app alive
-segmentation faults: how to keep your app alive nevertheless
-supervise, launchd, lingon, ...
+The one good thing about segmentation faults is that they kill your app very fast. The app crashes and in the next frame you are left with your desktop background (which should be black). The perfect fail-safe solution for this is something like [daemontools]( http://cr.yp.to/daemontools.html) (linux), which is a background process that monitors your app and restarts it within a second in case it crashes. 
+
+launchd, lingon, ...
+
+After setting up supervision with deamontools, the app could crash, but all people would see is a few seconds of black (depending on how long the preloading of videos takes on startup). 
 
 ### second: framerate cheats
+The second concern was the drops in framerate that would come too much videoplayer actions. 
 - variables FPS: update animation with fps-dependent value, ofGetLastFrameTime() 
 - memory leaks, dropping FPS: regularly terminate app, seamless transitions
 - put limits on your number of objects (blobs, video elements)
