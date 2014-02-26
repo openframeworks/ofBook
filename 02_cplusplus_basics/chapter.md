@@ -1,4 +1,6 @@
-# Chapter 2. C++ Language Basics
+# Chapter 2. C++ Language Basics #
+
+*by [jtnimoy](http://jtnimoy.net)*
 
 ###inspirational quote candidates:
 
@@ -2178,7 +2180,7 @@ Just the same, if I were to declare any variables inside the scope of that funct
 
 Variables have different *types*, meaning they hold different kinds of information in them. Some take up more memory than others. Returning to the Minecraft metaphor, we can think about putting more than just water in more than just iron buckets.
 
-![Figure 30. Minecraft Vessles](images/minecraft-vessles.png "Minecraft Vessles")
+![Figure 30. Minecraft Vessles](images/minecraft-vessles.png "Figure 30. Minecraft Vessles")
 
 In Minecraft, Buckets will hold milk and lava in addition to water. Furthermore, there are a few other kinds of containers meant for other liquids and other stuff. Requiring the correct container for the correctly according data makes C a *strictly typed* (or *strongly typed*) language because it is strict about which type of variable you use. Strictly typed variables are arguably a big virtue for a programming language, and are kept in as a matter of choice since they reduce errors, and greatly speed the app's performance. The issue of whether or not to use a strict or loosely typed language for a project is a very important decision to make, but whether or not one should devote ones career exclusively to strict or loose typing is an unhealthy sort of xenophobia. Both walks of life have their pros and cons.
 
@@ -2190,6 +2192,8 @@ char myLetter = 'E';
 ```
 
 Unlike an `int`, A `float` allows decimal points, and so you can work at a higher resolution. A `char` holds a single ASCII character. It only needs to take up 8-bits of memory whilst the `float` and `int` take up more (therefore allowing them to express a wider range of values). I will touch briefly on the bits and bytes of memory when we get into bitwise operators, and then Arturo will give you much more in Chapter 16. Let's see the `float` in action!
+
+####Float
 
 ```C++
 #include <iostream>
@@ -2320,23 +2324,593 @@ int main() {
 The output becomes a long, serene list of zeros since the `int` data type cannot handle a tiny fraction like 0.012. So during the moment it tries to add 0.012 to myNumber (which is an int), 0.012 gets automatically rounded down to an integer, which is zero every time. Now let's try the opposite example, storing ints into a float.
 
 ```C++
+#include <iostream>
+using namespace std;
+
+int main() {
+	float myNumber = 0.0;
+	for(int i=0;i<100;i++){
+		myNumber += 1;
+		cout << myNumber << endl;
+	}
+	return 0;
+}
+```
+The variable type was changed back to `float` and within the for-loop, i am now adding an integer `1`. It turns out there is no loss in precision since a float is more than enough to store the first 100 integers. So far so good. Now here's a gotcha!
+
+```C++
+#include <iostream>
+using namespace std;
+
+int main() {
+	float myNumber = 22 / 7;
+	cout << myNumber << endl;
+	return 0;
+}
+```
+
+The output is simply `3`, not 3.14286. For the beginner in variable types, this can be somewhat confusing. On the one hand, I have declared the variable as a `float` so it *must* be able to handle decimal points. The answer lies in the syntax used for integers 22 and 7. Like variables, literal numbers (values typed out with numeric digits right into the code) in C have a type, inferred by the compiler based on *how you formatted the number*. In this case, 22 and 7 are both literal integers since they are nothing but number. Let's try changing them to be literal *floats* by suffixing them with `.0`.
+
+```C++
+	float myNumber = 22.0 / 7.0;
+```
+
+The output should now be `3.14286` since the expression is now floating point division, rather than integer division, which chops off the fraction. To shed a bit more light about this important difference between integers and floats, let's remove the `.0` from just the 7 and see what happens.
+
+```C++
+	float myNumber = 22.0 / 7;
+```
+
+The output is still `3.14286`, since the division operator needs to have only one of its participating numbers be a float in order to act with more precision. Therefore, it should not matter which side of the division operator has the floating point type . . .
+
+
+```C++
+	float myNumber = 22 / 7.0;
+```
+
+The output remains `3.14286`.
+
+#####What's in a name?
+
+I grew up in Southern California. When someone says the word "float" I am reminded of the Pasadena Tournament of Roses, a new years parade with flower-covered **floats** - decorated platforms on wheels. That's why I can understand if it's difficult at first to remember that a float is the variable type that allows decimal points. Often times, when I am having trouble associating a name like this in my mind, it helps me to look deeper into the reasoning behind the nomenclature. The reason these are called *floats* has historical significance. *Floating point precision* means the decimal place can shift left and right (because powers of 10 are useful), in contrast to *fixed point precision* like `double`, a type we will learn later on. If that still doesn't make sense, just do like a scripting language and use floats for everything. *When in doubt, use the type with a higher precision.*
+
+
+####Char
+
+`Char` is another type that stores a single character, whose value is traditionally 0-255, a range that fits inside 8-bits (1 byte). Often times, a char is referred to as a byte for this 8-bit reason. You may know the term `8-bit` if you are a fan of chiptune music or had a Nintendo Entertainment System (NES). A single byte is a pretty classic unit of memory, and as such - incredibly useful for dealing with data. You'll learn more about bits and bytes in chapter 16, in which Arturo will be covering the subject in greater detail. For now, let's start playing with the `char` type and begin to understand its basic uses.
+
+```C++
+#include <iostream>
+using namespace std;
+
+int main() {
+	char myLetter = 'A';
+	myLetter += 1;
+	cout << myLetter << endl;
+	return 0;
+}
+```
+
+This program outputs `B`. You've already seen strings surrounded by double quotes. A literal char is surrounded by single-quotes. This strictness can be difficult getting used to if you bring habits from scripting languages that use double and single quotes interchangeably. In C, a char is always surrounded by single quotes. When I add 1 to `myLetter`, it increments from A to B. On the next line, `cout` knows just what to do with the char, and prints it as a letter.
+
+####Casting
+
+Okay, what if we want to see the numeric representation of our char, instead of the letter? *Explicit type conversion* (or casting) allows you to force the surrounding expression to treat a variable with one type as if it had another type. We do this by placing the desired type in parentheses and attach it to the left of the variable. In the following example, I loop from 'A' (65) to 'z' (122), and print out all the letters with their according numbers.
+
+```C++
+#include <iostream>
+using namespace std;
+
+int main() {
+	for(char i = 'A' ; i <= 'z' ; i++){
+		cout << i << ' ' << (int)i << endl;
+	}
+	return 0;
+}
+```
+
+Here is the output:
+
+```
+A 65
+B 66
+C 67
+D 68
+E 69
+F 70
+G 71
+H 72
+I 73
+J 74
+K 75
+L 76
+M 77
+N 78
+O 79
+P 80
+Q 81
+R 82
+S 83
+T 84
+U 85
+V 86
+W 87
+X 88
+Y 89
+Z 90
+[ 91
+\ 92
+] 93
+^ 94
+_ 95
+` 96
+a 97
+b 98
+c 99
+d 100
+e 101
+f 102
+g 103
+h 104
+i 105
+j 106
+k 107
+l 108
+m 109
+n 110
+o 111
+p 112
+q 113
+r 114
+s 115
+t 116
+u 117
+v 118
+w 119
+x 120
+y 121
+z 122
+```
+
+Naturally, you can cast between any of the fundamental types. The computer will increase and decrease precision as needed. Here's an example where I cast from char to float, then to int, then to char again. Try to guess what the output will be.
+
+```C++
+#include <iostream>
+using namespace std;
+
+int main() {
+	int a = (float)'D' + 0.7;
+	cout << (char)a << endl;
+	return 0;
+}
+```
+
+The output is 'D'.
+
+Perhaps you guessed that the answer would be 'E' since I had added 0.7 before storing into `int a`. You were correct to assume that the computer is converting from float to int, but incorrect to say that 68.7 is "rounded" to 69, therefore producing the letter E. Instead, conversion from float to int is more technically a `floor()` function, meaning it just chops off the fraction and replaces it with a zero. So even (int)2.99999999999 will still come out as 2. If you need to actually round the number, bringing 5.0 and higher to the ceiling, then use `round()`
+
+```C++
+#include <iostream>
+#include <math.h>
+using namespace std;
+
+int main() {
+	float theNum = 3.449;
+	int f = floor(theNum);
+	int c = ceil(theNum);
+	int r = round(theNum);
+	cout << f << ' ' << c << ' ' << r << endl;
+	return 0;
+}
+```
+
+The output is `3 4 3`, and notice that I have included `<math.h>` so I can use floor(), ceil(), and round().
+
+###Randomness
+
+I admit that last topic about variable types was a bit numeric, but it was important so if you feel fuzzy about any of it, please go back and re-read. For now, let's have fun with what we just learned. `math.h` comes with all kinds of useful tools for art. One of them generates a fake data stream of evenly distributed values. Programmers call it *random* and ironically, it's anything but random. To see what I mean, run the following program three times, each time noting the output.
+
+```C++
+#include <iostream>
+#include <math.h>
+using namespace std;
+
+int main() {
+	for(int i=0;i<3;i++){
+		cout << rand() << endl;
+	}
+	return 0;
+}
+```
+
+Every time you run the program, you get the same output.
+
+```
+1804289383
+846930886
+1681692777
+```
+
+This tells us that the sequence starts over again. There are things you can do about that and it will be covered in a later chapter. Since these are pretty big numbers, let's normalize them by dividing by `RAND_MAX`, a constant provided by math.h which is the highest possible value that the random function is willing to return.
+
+```C++
+#include <iostream>
+#include <math.h>
+using namespace std;
+
+int main() {
+	for(int i=0;i<10;i++){
+		float r = rand() / (float)RAND_MAX;
+		cout << r << endl;
+	}
+	return 0;
+}
 
 ```
 
+Notice in the output, all numbers are somewhere between 0 and 1.
+
+```
+0.840188
+0.394383
+0.783099
+0.79844
+0.911647
+0.197551
+0.335223
+0.76823
+0.277775
+0.55397
+```
+
+Let's use this normalized random in an ascii art generator. By multiplying a normalized random output by 52, we get random values between 0 and 52. 
+
+```C++
+#include <iostream>
+#include <math.h>
+using namespace std;
+
+int main() {
+	for(int i=0;i<30;i++){
+		float r = rand() / (float)RAND_MAX; //normalize random
+		cout << '8';                        //snake tail
+		for(int j = 0; j < r * 52;j++){     //from 0 to no more than 52...
+			cout << '=';                    //print snake body
+		}
+		cout << "O~" << endl;               // print snake head
+	}
+	return 0;
+}
+```
+
+In this output, each rattle snake has a different length.
+
+```
+8============================================O~
+8=====================O~
+8=========================================O~
+8==========================================O~
+8================================================O~
+8===========O~
+8==================O~
+8========================================O~
+8===============O~
+8=============================O~
+8=========================O~
+8=================================O~
+8===================O~
+8===========================O~
+8==================================================O~
+8================================================O~
+8==================================O~
+8======================================O~
+8========O~
+8================================O~
+8=O~
+8=============O~
+8========O~
+8==========================================O~
+8=========O~
+8=====================O~
+8=======O~
+8======O~
+8====================================================O~
+8============O~
+```
+
+Artists like the random function because it creates a lot of organic aesthetic with very little typing. The experienced eye can spot the random function even several perlin octaves deep, in the same way you can look at an advertisement in the mall and call it out like "that was so photoshopped". Using the random function is like leaving the "Lorem Ipsum" in. Perhaps I can express my sentiment with more concreteness. If you find it sexy to create visual pieces that have *fake nature*, just imagine the impact you could have if you used *not-fake* nature. By that I mean replacing the random function with real world data. For example, you could set up an arduino or raspberry pi with a photocell (light sensor) to measure the way the cars passing by your apartment window temporarily block a nearby streetlight, and use that as an input to drive your software art. Also try working with big data from the past. Creating generative art, data visualizations, and working with physical computing will be covered in later chapters. But don't say I didn't warn you about the politics.
+
+In the following example, I am using the same random scaled to 52, casting it to `char`, and outputting a pseudo-chaotic wall of letters. 
+
+```C++
+#include <iostream>
+#include <math.h>
+using namespace std;
+
+int main() {
+	for(int i=0;i<40;i++){                      // 40 rows
+		for(int j=0;j<100;j++){                 // 100 columns
+			float r = rand() / (float)RAND_MAX; // normalized random
+			r *= 52;                            // scale to 52
+			r = 'A' + r;                        // offset by 'A' ascii value
+			cout << (char)r;                    //output without a newline
+		}
+		cout << endl;                           //finally add the newline
+	}
+	return 0;
+}
+```
+
+The output should look like this:
+
+```
+AGhX\LCddqT\lBC\cATDVd_qm\EcVephNCgRahtSMtfhbDaoOWhYMOSIZopDp[[QtZNErD[TOp\YqChilGAdnagftoMPS[_lVlOV
+\YOJH^jB\Zrg]oalILfGEOAVBeqMJQobHdUUZH_l_r]HtVH^NZYrGKQaGbajMYUKBoWHrVGoEIDSNHiXSXkqbLdpNmY[`khYraWk
+detrmP\[FV^nWfnfjegAo\YDfZcdKpno]HXtLXQ[nWYjSKtHaaAAifQVddKlelEEhaLLEUrrUNdOiiVOKAJtMkHU`JlItNMFLbej
+ehcaC`LQeGh\]_ReHIZmk]gQH\Q_[WNTUXYUOETNcd[ffrXqQX[cU`tHcR]\lAOb]pNsMleXkBIeeW_hteOhIAZEIoigWA_[D]UL
+Uace]OkTdQAF\iLCDIfPCYX\XHOle_dRCt]AmBTZ^gd\BGsJS``G]rSlsNNWkoMheXNcGKF]AJ`WEdTlGsBEZiqNShZgcdhBLL^b
+aTLMbIgICcGrZapA_fZCW[iDXsYRXgKITqsNDG\I[FlTWRf^nhleUq`S]XUMEVYPFLj\cmMfNTEXMjZANcWJsGjrI`DSP[klfRja
+CCHhD\qLKEeeZNfTKMWYmsXB\Bh_kRM\WUtsmnQHtbYqdk]^IrkICRFF[B^m[dgeBJcRDHpLT_IBdhfE_qqW[lp`f\ZIs^O\ecF]
+`cZ^_WH[gBC\QBMFT]``qi[ZbeVZYe\O`Oe\qMV`ipdk\LHoNbAqOmOr[GVeWFhFWRPhRRC^ZKFsmZTjIIDHYTnWVbQDkopoiI^B
+j\mOn_Uk\qV_gnRJgfnDenSEIVFd^knibonZFTTdGDHYeMUsadpSmjWDZZXZgqPHFEsVMslKGKR^W_WTT`WHcteUmkjTAYbbbjTS
+UReHPcmQH`ApT[RNPlGbCXTIhcAj^PVQ[flMYTCDK^lVlPJSq_TYarVCX_gmGFcl_ctApKs\Of_llcfbS\cQnXpOrGVlsR\\kqcM
+q`GMoKIl`alcUncGAdaX^BSmTc^DgOXJEot_BdZ^oWdKZOrMrYGrmLAiCrb^HGk[c[\GocOUUlMGfbKmBFJSifc_SIPILcVo_RWe
+ljmONI\DthGIWiLWBqFNZjNLOTKqha^SpKFjeAgFocRTLRApiUflnGRqSSE^ilZkbWSSOpagIiN`mQ`GTGNGKhDXsMKdEmHGkrCD
+lHjLU`cCtkVBFsnclMf_LLAXVqB[Tmj`RacbNBtKb^TGXH_]ZoESFPlplskjlXbekYKUqYT[LotHXdOVgBPKkOfVif_ajAaSYZ\Q
+mHUUmCXhPsutgSjK`]NK^[g`tj]HF\M^RdDlnRHgcU_]Z`q`NCaRBI`W^fTTTE_VFQd^n\sDYFt]eGYDXpWmt]GmJccsXIHOs`mD
+qrYOXWnKUhkcfdQIdpIAJJKcd[QYQEnXHbqncKIAIFS^sMBBoop]IZkq_]YhRI[TlsAPXolNglVeV\\EUiNQJhabRIJX\IqVBI^t
+HRQSIQTb`BRE]ZONWcQAsFQrSItGCriLFNWMO]nmc]homhMtNTPgthWbYFJm[qoPas]lCJshnB[TsKL`o]EiieCnDtOZdgrdpIkO
+ZpeUIoK]TNjMcR\X`cBkT]sgjhXVMeLcVORPdrioBsCVIjA`pF]D]TZUV^qe_AOUg^]NGISkNJVb\DYTFZGLWStoSWjtP^]H[ZfE
+LIUTNImMojsNO]f[ZSmVBpr^tU_jVC]G^sdK^lPPst_R\Ekd_KKIOKjnjEIMh[UnR`itrkidlahU_VjYdk]P_YoWNYAcE^dcgbtO
+iAEDqLiNOgPYppoNhdYYK[olrspHNUiiiXVbbglOiJGitEWlarWrjTMlCLEmCrkn[htVLUFSFKUkoskVkfXV_`ctgAaGodRMXdNH
+e`dDnKLgirfgKLBlhLVOdlCaaXFfAV\FbWBMRaT]hEhCJYlRTmiOkeonVJ]\SfsMHMjkUn`ChZsSfInQdHOpB_rl^KB_bIDP^TKB
+hDOiTPSsaeSI[^edjXgIRAWjq^^^tfF[XY]_Hf\R_Bph[VYIeBeINrgkPRclWWWDTb[Kgd[T[GVkB]Gga][e[fserTaJZPdemZjJ
+XMB\nRXdJ`SkWClHqmkBsOgFliAj`A]aBQ_QbkggdGhQAF^nLaMnET_jUbjDt_sRmNYInfCDjJCMdKbROQBsLcLqDiPbTJgN\BOZ
+qs_oRnAJQL[kL]JJboZOHSJeECSMP^TSnPpQgcjq[jkP_QFDdKW[Q]t`At\baJOIXqHUnKhjnkR^`EjFVgQc[[oJXNVXrrZJd[p`
+UgsRTslFGFijiTSHMFBGefE_q__t^DOTNMktOGCb_c\SpnEImZrE`GWGUGcVdNY^iJMIa`ZFBRipVqNMVjH__kd[kc]ThKG^^e`N
+iGTCGCIjROlLG[NPOF[HskpdQLcIKeFEBGJMmmPTYKcdChLAnMfJDnbC^qqoSQ]JsIftIbcqDiJXZGZRTTafqiAn[VUc\aTYqihN
+iEc^pPDHYfAhaD`dZth_iBPYsVILTl_J_kCYiUWQPpP[aHNqt[oZAOtoBCDoI\qPPTErXcX_r[[Td]VCjFr_dbFkDa\ITgbcFg`q
+LD_SsJkNp^CYteGkZAKDVAFsW`pQBj`LVNYKTbt_MWdLOrBSYGdLOH^dffiNUtIKGIlDOa_SrSZHO\_mPrAmLpNrMoGT[AVRO_kq
+qnFp[mGHbHeannN`B\rTq]sPf_XJIi]]RBYhsZliHBTmSfbRRMHkSFpK\M[KJD[t[\SSQO`XtZnqkXCOeHrn`qkprBTIOOO]MAHB
+F`KHI`]T_XdfPHoFas`GaGqoB`dC`MjIPDIZkdZH\pWLYMkLPbKLQETAnmKdZN\rFO^KFom`AlLBmobbAnMEMmX[_ZhANIn]ks[d
+adBOJVtMHVJFRWdXQaUhYVb^DWY`aYsMH[WstWkc\KPiqKBHPgRZthXBccIFMi\X\Ib_Hlp`eKDZTelVNoMJhqk^]ZC\i_pIBf[V
+DADDFsTMASVkqQ]Rob\TLHpCL`L^JVJaieCM]lYbsfpR^ss_bBZ]gPUZWPqAQhtWEAnXYWRcB]QViZ]P]mTRHntFOA_naEjpshKm
+ItcSiM]]QE]KUqGZFS^hTdFXq]qfceBiNmGjGXh[A[`AOWJqqiWZDEarBeW[UENTMTnJZEDrNUK`tK^XITAhRFYdsLbJpkmMA^XN
+[XoCTp\aBsDS]mXrXmAnmAFSAacgbN`ZCHhZoPnsF^HfXingeVkkl\U_WggOrgdWVlBFodVOnMecVA`ZQG[VWZjRmCAU]`kWSWjF
+ZYY^AERTMbrKWD`_nojkCjEHVLEQi`Ms]o^hbLLVZFgWqiGilCrkJ^GD]NH_sbEpHhn[VrHijrH]NpiVEXWgbjcaP]tdMgA`TkJK
+co`PfQiYGHKkmOindjgMi^iptspkemVpBaZlN^[iA\OakDkV]c[Sr[QaqrYW\CGfOGhimXdKRX^jpI^tEUbRWKVkbWCOLSP[JRMl
+j\XUtEIFJNo^hoOoIMgkklGWqghLR__nKd_XtJe^jWOYXWjRIpcGiHRr]THpTfI]tnsKInULkpE]NOojOPCLUqiBL\R`dYY^Ki`X
+p^NPhDj\Ilj]jNnnPlX`onn[pOiihJsSNehtl`]G[UULRttHXk^mrpOQtAEJpBmcfeBtXPEmEEoYPsEZRcfUJraDsH\iK\qMkDE[
+^C[XXJE`_\TcT\De[nop[RFpC]OtKhtP`mMLhqErpIXbMXlf[NMYdltrV_Y_cFadPgemQgOOcSaBGZbQPTH^ikaVgNYc[DmYQm]S
+LVt_anFDeHVjjJR`nF^C\oge[ElhXr[TGVoWrCNXGFZiJik\MbK^RAg`[pfmaYGfAAJF\LREqCZJZS_RZIPsBYmL\QmhShd]^UQt
+WM\^fNOaJYrJpkpe`_PH^UMrmPbShtk`tiKdlhZMir`HD[\rE`qCLkLfUZsT[NVmGIlf[toeRtJOoNooJFJTUlAg^soeT`MqhOhF
+```
+
+To make it more interesting, I will inform the palette of characters with column index, and I will randomize a "masking" part of the code which inserts a space according to a custom conditional.
+
+```C++
+#include <iostream>
+#include <math.h>
+using namespace std;
+
+int main() {
+	for(int i=0;i<40;i++){                        // 40 rows
+		for(int j=0;j<80;j++){                    // 100 columns
+			float r1 = rand() / (float)RAND_MAX;  // normalized random
+			float r2 = rand() / (float)RAND_MAX;  // normalized random
+			r1 *= 3;                              // scale to 3
+			r1 = 30 + r1 + j;                     // offset by 'L' ascii value
+			if(r2 > (i/40.0) || -i < -j+10){    // artistically tweaked inequalities
+				r1 = ' ';                             //blank it out
+			}
+			cout << (char)r1;                     //output without a newline
+		}
+		cout << endl;                             //finally add the newline
+	}
+	return 0;
+}
+```
+
+In the line marked "artistically tweaked inequalities", my process was simply changing one thing about the expression, hitting compile, and seeing how I feel. I sat with the code until I reached a sweet spot. Here is the output.
+
+```
+              =               K              Z                   
+                 >   C                    XZ                     
+                                  P          Z          fg       
+                   B B                        ]             i   n
+                 >                                    c       l  
+               =  @                P  T   W  Z            h      
+              <==     C EH  J L            X  \]              m  
+                   @ B   G    MM PP      W  [   _   a cd   h    m
+             :     AB   EH IK M            Y     ^ b d         n 
+               =   @ B E  G     N QP RU          _` c    g iij nm
+                  A     GH J     N       V       `` a c gh   j nn
+             < >   A C  EH    L   QP         [  ^`a     f h  k   
+               >?>      G  JJ KNMP P     WYY    ]^  a d  fh  lm  
+                ? A@  DDE    K L N    S WWXY \ ^] ``  c      l  n
+               =>@     EFG        QR TS  W   \  ] `   d  g   j l 
+             ;;=  A BCD   I IKML  Q QRU VXX       _ab     gi    o
+              ;>   BBB DE G J  LO PQ  UUWV  Z \]_ _`b  e fh   k  
+             < = @?   D E HI   N  Q Q     Y ZZ[ ^^ bb ddg  h  k  
+                >@ @B  D  G      N  RR   V   [[\__ ` ddd g jj m n
+                ? ? BD EFFHIKLK OOQQ RS WW    []]    cceg  j  km 
+                           JK LN  PQ R VWW Z Z\] __`ab  fhgh   l 
+                  A@ D  F GJK  N    ST VW   Z[\ _   adcf   i jm m
+                   AA    H    KMNNPPQ TV WY ZZ  ]` b dd  g  jjmnm
+                   @C  EEG JJ     P RR  W  Y[[ \    ad de      no
+                       FG HIKJ  NO  QRU UX X  [  _a`bcdfff  jlk n
+                     D  EHG JK  MO PRRUVU  XYZ ^ ` acdcee   klkm 
+                      CEE G J L ONOQ RTV V   \ ]^ `aacc fhhjk lno
+                        EGHH K LN  QRRS UWWX  \\]_  ccedffhh l no
+                           JKKMNMOPRRT U XYYY  ^ `aaa  ef ih lln 
+                         GII KLLNPQP  STUVY [\]^^` aadde  hhjjmlo
+                          GH  MLNPQR SU WW XY[ ]^ _`bcddfhiij mno
+                           HI KLM PQS SVV W Z ]\_``bbb  gh ji ll 
+                             LLLNOQPQS TUWYZZZ\\_^_b bed   ikkkmo
+                              KNNPP QTUUVVX   \^___abb eeghijkmmn
+                              MMOOPQS  UV WZZ  ]^_abace efghilmmn
+                               MNNOPRTTVWVWZZZ]]]^`abbefe gjkl nm
+                                MO RQ T UWWX[[] ]```bcddefiijk ln
+                                 PPQSTSVVXYZYZ]\_^`  ddffhhjikklo
+                                  PRRTTUUXYXZ\[^_`_bbbddefijillmo
+```
+
+Having already warned you of its dangers, I am also of the opinion that computer random, just like Lorem Ipsum, fake plastic trees, and the Roland 808 cowbell sound all have their place as real elements in art, particularly when the artist is making a real statement about those very tools, and their people.
+
+###Algorithm
+
+The classic random number generator *algorithm* is just a feedback loop wherein a variable feeds back on itself, each time having some manipulation done to it. What gets returned to us is a snapshot of that. An algorithm is just a procedure for doing something. It's a fancy term to describe a useful chunk of code. Figure 31 shows an algorithm represented as a flowchart, which is easier for a lot of people to look at than indented code syntax. Notice it has conditionals, looping, and a main entry point.
+
+![Figure 31. Flowchart by Randall Munroe, xkcd](images/flow_charts.png "Figure 31. Flowchart by Randall Munroe, xkcd")
+
+If you can understand `random()` at an algorithmic level, you will be able to deeply remix it. The following is my own quick random function. It takes a char (0-255) and adds a prime number to it, causing it to wrap around from 255 to 0 as we iterate. 
+
+```C++
+#include <iostream>
+#include <math.h>
+using namespace std;
+
+int main() {
+	unsigned char iterator = 0;
+	for(int i=0;i<40;i++){
+		iterator += 67;
+		float normalized = iterator / 256.0;
+		cout << normalized << endl;
+	}
+	return 0;
+}
+```
+
+The output looks pretty organic and chaotic from here.
+
+```
+0.261719
+0.523438
+0.785156
+0.046875
+0.308594
+0.570312
+0.832031
+0.09375
+0.355469
+0.617188
+0.878906
+0.140625
+0.402344
+0.664062
+0.925781
+0.1875
+0.449219
+0.710938
+0.972656
+0.234375
+0.496094
+0.757812
+0.0195312
+0.28125
+0.542969
+0.804688
+0.0664062
+0.328125
+0.589844
+0.851562
+0.113281
+0.375
+0.636719
+0.898438
+0.160156
+0.421875
+0.683594
+0.945312
+0.207031
+0.46875
+```
+
+Now let's visualize the same number sequence by drawing bars.
+
+```C++
+#include <iostream>
+#include <math.h>
+using namespace std;
+
+int main() {
+	unsigned char iterator = 0;
+	for(int i=0;i<40;i++){
+		iterator += 67;
+		float normalized = iterator / 256.0;
+		for(int j = 0 ; j < 100 * normalized ; j++){
+			cout << 'Z';
+		}
+		cout <<  endl;
+	}
+	return 0;
+}
+```
+
+The visualization reveals a pattern that is quite different from classic random, and yet it is *algorithmically* related.
+
+```
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+ZZZZZ
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+ZZZZZZZZZZ
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+ZZZZZZZZZZZZZZZ
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+ZZZZZZZZZZZZZZZZZZZ
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+ZZZZZZZZZZZZZZZZZZZZZZZZ
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+ZZ
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+ZZZZZZZ
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+ZZZZZZZZZZZZ
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+ZZZZZZZZZZZZZZZZZ
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+ZZZZZZZZZZZZZZZZZZZZZ
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+```
+
+Sometimes, a surprising feedback loop might be all you need, instead of reaching for vanilla `random()` every time.
+
+### Signed, Unsigned ###
+
+
+
 ===
 
-
-+ some basic data types (int, char, float)
 + computer science operators
 	+ bitwise math
 		+ interlude about how `cout` overloads `<<`
+
 + some less basic data types (unsigned, double, long, short)
-+ converting between these data types
++ don't forget boolean type.
 
++ switch-case
 
-+ include switch-case as syntactic sugar for if-then-else
++ escape sequences in strings and chars
 
-+ try/catch?
 
 ===
 
@@ -2354,11 +2928,14 @@ The output becomes a long, serene list of zeros since the `int` data type cannot
 		+ inheritance?
 + std::string
 + other STL?
+
+
 + possibly show them local terminal-based C++ in cygwin/linux/bsd
 + possibly weave in basic GLUT/OpenGL to make this all more fun?
 
 + learning C++ "for real" (book recommendations)
 
++ todo: change "goodnight moon" example to not step on ITP's toes
 
 * this chapter is in-progress. [see outline](outline.md) for upcoming subject matter. *
 
