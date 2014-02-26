@@ -5,7 +5,7 @@
 I'm aiming to make sure we don't lose any beginners, so I realize that this chapter may be overly pedantic.  It can be tightened up in revisions.
 
 ## 0. Outline
-- 1. [Drawing Shapes, Then Drawing Many, Many, Many Shapes.](#1-drawing-shapes--then-drawing-many-many-many-shapes)
+- 1. [Drawing Shapes, Then Drawing Many, Many, Many Shapes.](#1-drawing-shapes-then-drawing-many-many-many-shapes)
 	- 1.1 [Predefined Shapes](#11-predefined-shapes)
 		-  1.1a [Drawing to the screen!](#11a-drawing-to-the-screen)
 			- background, rectangles, circles, ellipses, lines, triangles, fill, antialiasing
