@@ -5,7 +5,7 @@
 I'm aiming to make sure we don't lose any beginners, so I realize that this chapter may be overly pedantic.  It can be tightened up in revisions.
 
 ## 0. Outline
-- 1. [Drawing Shapes. Then Drawing Many, Many, Many Shapes](#1-drawing-shapes--then-drawing-many-many-many-shapes)
+- 1. [Drawing Shapes, Then Drawing Many, Many, Many Shapes.](#1-drawing-shapes--then-drawing-many-many-many-shapes)
 	- 1.1 [Predefined Shapes](#11-predefined-shapes)
 		-  1.1a [Drawing to the screen!](#11a-drawing-to-the-screen)
 			- background, rectangles, circles, ellipses, lines, triangles, fill, antialiasing
@@ -19,27 +19,26 @@ I'm aiming to make sure we don't lose any beginners, so I realize that this chap
 	- translate, rotate, scale, push, pop, noise, parameterization, creating a gif
 - 3. Recursion Generative Color Compositions - described in outline.md
 
-## 1. Drawing Shapes.  Then Drawing Many, Many, Many Shapes ##
+## 1. Drawing Shapes, Then Drawing Many, Many, Many Shapes. ##
 
-This section needs an introduction explaining the flow of this section - we are making generative brushes because it is allows for us to jump into graphics with minimal math+conceptual overhead but it still allows for hitting all the graphical concepts.  (But it still leaves room for adding in advanced math+concepts.)
+This section needs an introduction explaining the flow of this section - we are making generative brushes because it allows for us to jump into graphics with minimal math+conceptual overhead but it still allows for hitting all the graphical concepts.  (But it still leaves room for adding in advanced math+concepts.)
 
 **[Note: Insert Section on Setup/Update/Draw]**
 
 **[Note: Insert Section on XY coordinate system]**
 
-To get started creating brushes, we need to find the basic building blocks of graphics.  You can classify the 2D graphics functions that openFrameworks provides into two categories: predefined shapes and freeform shapes.  The predefines shapes are rectangles, circles, triangles and straight lines.  The freeform shapes are polygons and paths.
+To get started creating brushes, we need to define some basic building blocks of graphics.  You can classify the 2D graphics functions that openFrameworks provides into two categories: predefined shapes and freeform shapes.  Predefines shapes are rectangles, circles, triangles and straight lines.  Freeform shapes are polygons and paths.
 
 ### 1.1 Predefined Shapes ###
 
 #### 1.1a Drawing to the screen! ####
 
-Okay, okay.  Time for actual code.  Add the following line to your `draw()` function and like magic you will have an empty, empty, black void of a window on your screen.
-
+Time for actual code.  Add the following line inside your `draw()` function to create a solid black window on your screen.
 
 	ofBackground(0);
 
 
-Now that we have our background in place, we can start drawing on top of it.  Let's draw a rectangle, a circle, an ellipse, a triangle and some straight lines by adding the following lines to the end of the `draw()` function:
+Now that we have our background in place, we can start drawing on top of it.  Let's draw a rectangle, a circle, an ellipse, a triangle and some straight lines by adding the following code near the end of the `draw()` function:
 
 	ofSetColor(0);
 	
@@ -50,13 +49,15 @@ Now that we have our background in place, we can start drawing on top of it.  Le
 	ofTriangle(500, 150, 550, 50, 600, 150);
 	ofLine(700, 50, 700, 150);
 
-The first line of code tells openFrameworks what color it should be using when drawing.  You can think of it as telling openFrameworks to pull out a particular colored sharpie - it will draw in that color until you tell it to switch to another color.  We'll be exploring how you can specify color as we go, but for now, we are using grayscale colors.  If you pass in a single integer value (between 0 and 255) to [`ofSetColor`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofSetColor "ofColor Documentation Page"), openFrameworks will interpret that as a grayscale color where 0 is black (i.e. no light) and 255 is white (i.e. all light).
+The first line of code tells openFrameworks what color it should use when drawing.  You can think of it like telling openFrameworks to pull out a particular colored sharpie - it will draw in that color until you tell it to switch to another color.  We'll be exploring how you can specify color as we go, but for now, we are using grayscale colors.  If you pass in a single integer value (between 0 and 255) to [`ofSetColor`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofSetColor "ofColor Documentation Page"), openFrameworks will interpret that as a grayscale color where 0 is black (i.e. no light) and 255 is white (i.e. all light).
 
-Now that we have color squared away, we make use of some handy functions to draw shapes: `ofRect`, `ofCircle`, `ofEllipse`, `ofTriangle` and `ofLine`.  The documentation page for [`ofRect`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#!show_ofRect "ofRect Documentation Page") shows that we can create a rectangle in a number of different ways.  Here, we are passing in the x and y values of the top left corner as well as the width and height that we would like, all in that order.  For [`ofCircle`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofCircle "ofCircle Documentation Page"), we are passing in the x and y values of the center of the circle and the radius.  With [`ofEllipse`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofEllipse "ofEllipse Documentation Page"), we are passing in the x and y values of the center as well as the width and height.  For [`ofTriangle`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofTriangle "ofTriangle Documentation Page"), we pass in the x and y positions of the three corners of the triangle.  Finally, with [`ofLine`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofLine "ofLine Documentation Page"), we pass in the x and y coordinates of the two endpoints of our desired straight line.
+**[bd: What is the convention for writing ints in ofBook? 1 or `1`?]**
 
-And when you run all of that, you should see some filled shapes hanging out in your black void.
+We have a basic understanding of color, so we can make use of some handy functions to draw shapes: `ofRect()`, `ofCircle()`, `ofEllipse()`, `ofTriangle()` and `ofLine()`.  The documentation page for [`ofRect()`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#!show_ofRect "ofRect Documentation Page") shows that we can create a rectangle in a number of different ways.  We are passing in the x and y values of the top left corner as well as the rectangle width and height, all in that order.  For [`ofCircle()`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofCircle "ofCircle Documentation Page") we are passing in the x and y values of the center of the circle and the radius.  With [`ofEllipse()`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofEllipse "ofEllipse Documentation Page") we are passing in the x and y values of the center as well as the width and height.  For [`ofTriangle()`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofTriangle "ofTriangle Documentation Page") we pass in the x and y positions of the three corners of the triangle.  Finally with [`ofLine()`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofLine "ofLine Documentation Page"), we pass in the x and y coordinates of the two endpoints of our desired straight line.
 
-But what if you only wanted to draw the outline of the shapes?  There are two functions, [`ofFill`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#!show_ofFill "ofFill Documentation Page") and [`ofNoFill`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#!show_ofFill "ofNoFill Documentation Page") that will allow you to toggle between drawing filled shapes and drawing outlines.  Let's modify our `draw` function again, so that it looks like this:
+When you run that code, you should see some filled shapes drawn on top of your black background.
+
+But what if you only wanted to draw the outline of the shapes?  There are two functions, [`ofFill()`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#!show_ofFill "ofFill Documentation Page") and [`ofNoFill()`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#!show_ofFill "ofNoFill Documentation Page"), that will allow you to toggle between drawing filled shapes and drawing outlines.  Let's modify our `draw()` function again to make it look like this:
 
 	ofBackground(0);
 	
@@ -80,11 +81,11 @@ But what if you only wanted to draw the outline of the shapes?  There are two fu
 	ofTriangle(500, 250, 550, 50, 600, 150);
 	ofLine(700, 250, 700, 350);
 
-Here, we've redraw our same shapes but without the fill and shifted down 200 pixels on the screen.  Much like `ofSetColor`, `ofFill` tells openFrameworks that it should be ready to draw filled shapes until it sees `ofNoFill`. (And `ofNoFill` says to draw outlines until the next `ofFill`.)
+We've redrawn our same shapes but without the fill.  We have also moved all of the shapes 200 pixels down on the screen.  Much like `ofSetColor()`, `ofFill()` tells openFrameworks that it should be ready to draw filled shapes until it sees an instance of `ofNoFill()`. Inversely, `ofNoFill()` says to draw outlines until the next `ofFill()`.
 
 **[Note: mention why ofLine is lighter than full white]** 
 
-And if you want to control the thickness of the outlines (or the straight lines drawn with `ofLine`), you can use [`ofSetLineWidth`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofSetLineWidth "ofSetLineWidth Documentation Page").  Again, like `ofSetColor`, `ofSetLineWidth` will effect all lines drawn until the thickness is changed again.  Add the following lines to your `draw` function:
+If you want to control the thickness of the outlines, or the straight lines drawn with `ofLine`, you can use [`ofSetLineWidth()`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofSetLineWidth "ofSetLineWidth Documentation Page").  Again, like `ofSetColor()`, `ofSetLineWidth()` will effect all lines drawn until the thickness is changed again.  Add the following lines to your `draw()` function:
 
 	// Code omitted for clarity ...
 	
@@ -94,11 +95,11 @@ And if you want to control the thickness of the outlines (or the straight lines 
 	// Code omitted for clarity ...
 	
 	ofNoFill(); // If you omit this and leave ofFill(), all the shapes will be filled!
-	ofSetLineWidth(2); // Try playing with the value
+	ofSetLineWidth(2); // A higher number will render thicker lines
 	
 	// Code omitted for clarity ...
 
-Okay, so you've got the recipes for some basic shapes down.  Before we start putting those snippets of code to some creative uses, there's one more line of code that you should add, [`ofEnableAntiAliasing`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofEnableAntiAliasing "ofEnableAntiAliasing Documentation Page").  You might have noticed that your outlines (and ofLines) look a bit blocky.  The lines look like paths of jagged pixels.  We can smooth out these pixels using an anti-aliasing technique.  Luckily, you don't have to do anything other than add `ofEnableAntiAliasing();` to your `setup` function, and poof, smoother lines.  (If you want to understand what's happening under the hood, check out the wiki on [anti-aliasing](http://en.wikipedia.org/wiki/Spatial_anti-aliasing "Wiki on spatial anti-aliasing").
+Okay, so you've got the recipes for some basic shapes down.  Before we start putting those snippets of code to some creative uses, there's one more line of code that you should add, [`ofEnableAntiAliasing()`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofEnableAntiAliasing "ofEnableAntiAliasing Documentation Page").  You may have noticed that your outlines (and ofLines) look a bit blocky, like paths of jagged pixels.  We can smooth out these pixels using an anti-aliasing technique.  Simply add `ofEnableAntiAliasing()` to your `setup` function, and poof, smoother lines.  (If you want to understand what's happening under the hood, check out the wiki on [anti-aliasing](http://en.wikipedia.org/wiki/Spatial_anti-aliasing "Wiki on spatial anti-aliasing").
 
 ![Anti-aliasing](images/intrographics_antialiasing.png "Line with and without anti-aliasing")
 ![Basic Shapes](images/intrographics_basicshapes.png "Basic shapes with and without a fill")
@@ -111,34 +112,38 @@ Okay, so you've got the recipes for some basic shapes down.  Before we start put
 
 #### 1.1b Drawing to the screen! (But now the fun bits.) ####
 
-You surivived the boring bits!
+You survived the boring bits!
 
-Well, the necessary bits.  Why draw a single rectangle, when you can draw a millions?  (Okay, not a million - but at least enough that you wouldn't bother counting.)
+Well, the necessary bits.  Why draw a single rectangle, when you can draw a million?  (Okay, not a million - but at least enough that you wouldn't bother counting.)
 
 ![Many Rectangles](images/intrographics_lotsofrectangles.png "Drawing lots and lots of rectangles")
 
-Let's create a new openFrameworks project and call it something like ShapeBrush.  We are going to just use the basic recipes from the last section and mix in some randomness and repetition to create a digital 'brush.'  When we click somewhere on the screen, we will draw a ton of shapes.  But we need a canvas that doesn't constantly erase itself. openFrameworks clears the screen on with each invocation of `draw`, so enter [`ofSetBackgroundAuto`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofSetBackgroundAuto "ofSetBackgroundAuto Documentation Page"), which allows us to stop openFrameworks from clearing the screen on each update.  Add the following lines into your `setup` function:
+Let's create a new openFrameworks sketch and call it something like ShapeBrush.  We are going to use the basic recipes from the last section and mix in some randomness and repetition to create a digital "brush."  When we click somewhere on the screen, we will draw an explosion of random shapes.  To do this, we will need a canvas that doesn't constantly erase itself, and by default, openFrameworks clears the screen every frame with each invocation of `draw()`. Calling [`ofSetBackgroundAuto()`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofSetBackgroundAuto "ofSetBackgroundAuto Documentation Page") allows us to control whether or not openFrameworks clears the background at the beginning of each frame.  Add the following lines into your `setup` function:
 
 	ofSetBackgroundAuto(false);
 	ofBackground(0); // If you omit this, the screen will be a default gray color
 
-`ofSetBackgroundAuto` takes a boolean value, so pass in `false` and then we draw a black background.  **[Note: point to c++ chapter's description of bools?]**   Great!  We've created an exceptionally empty space that we can overload with shapes.
+`ofSetBackgroundAuto()` requires a boolean parameter so let's pass in `false` to prevent the black background from being re-drawn each frame.  **[Note: point to c++ chapter's description of bools?]**   
 
-Since we will be doing all our drawing inside of the `draw` function, what we need to create some variables that let us know 1) where the mouse is located on the screen and 2) whether or not the left mouse button is currently pressed.
+Great!  We've created an exceptionally empty space that we can overload with shapes.
 
-For 1), we can use two built-in openFrameworks variables `mouseX` and `mouseY`.  These variables are updated internally by openFrameworks. We can use them inside our `draw` function as we would any other integer variables.
+Since we will be doing all of our drawing inside of the `draw()` function we need to create some variables that let us know 1) where the mouse is located on the screen and 2) whether or not the left mouse button is being pressed.
 
-For 2), we should take a look at two functions inside your openFrameworks source file (.cpp) that you probably haven't had a need to use yet: [`mousePressed(int x, int y, int button)`](http://www.openframeworks.cc/documentation/application/ofBaseApp.html#show_mousePressed "mousePressed Documentation Page") and [`mouseReleased(int x, int y, int button)`](http://www.openframeworks.cc/documentation/application/ofBaseApp.html#show_mouseReleased) "mouseReleased Documentation Page").  These functions are called by openFrameworks anytime a mouse button is pressed or released.  It recieves the x and y position of the mouse when the mouse was pressed/released as well as an integer representing which mouse button was pressed/released.   We can thus set up a boolean variable, isLeftMousePressed, and change its value inside of these two functions.
+For 1), we can use two built-in openFrameworks variables `mouseX` and `mouseY`.  These variables are updated internally by openFrameworks and we can use them inside our `draw()` function as we would any other integer variables.
 
-So add this to your header file (.h):
+For 2), we should take a look at two functions inside our openFrameworks source file (.cpp) that you probably haven't had a need to use yet: [`mousePressed()`](http://www.openframeworks.cc/documentation/application/ofBaseApp.html#show_mousePressed "mousePressed Documentation Page") and [`mouseReleased()`](http://www.openframeworks.cc/documentation/application/ofBaseApp.html#show_mouseReleased "mouseReleased Documentation Page") **[bd: I removed the parameters from the previous function listings per your convention that is used throughout the rest of the chapter. I think it is more clear to refer to function names without their parameters in the text and then illustrate the parameters in code examples but that is just my opinion.]**.  These functions are called by openFrameworks anytime the mouse button is pressed or released.  Each receives the x and y position of the mouse when the mouse was pressed/released as well as an integer representing which mouse button was pressed/released as its three parameters.   We can use this information to set up a boolean variable, `isLeftMousePressed`, and update its value when a mouse press/release event is triggered using these two functions.
+
+Let's add this as a public property to our header file (.h):
+
+**[note: point to properties section of c++ section]**
 
 	bool isLeftMousePressed;
 
-And add this into the `setup` function of your source file (.cpp):
+And add this inside of our `setup()` function in our source file (.cpp):
 
 	isLeftMousePressed = false;  
 
-Now that the boolean variable is set up, add these lines to your `mousePressed` and `mouseReleased` functions:
+Finally, add these lines to your `mousePressed()` and `mouseReleased()` functions:
 
 	void testApp::mousePressed(int x, int y, int button){
 		if (button == OF_MOUSE_BUTTON_LEFT) isLeftMousePressed = true;
@@ -148,9 +153,9 @@ Now that the boolean variable is set up, add these lines to your `mousePressed` 
 		if (button == OF_MOUSE_BUTTON_LEFT) isLeftMousePressed = false;
 	}
 
-Whenever a button on the mouse is pressed or released, we want to check if that button is the left mouse button.  If it is, then we can adjust our `isLefMousePressed` boolean appropriately.  The `button` variable is an integer that identifies which button is pressed/released, and openFrameworks provides some handy constants that we can use to identify the button in a human-readable way (`OF_MOUSE_BUTTON_LEFT`, `OF_MOUSE_BUTTON_MIDDLE` and `OF_MOUSE_BUTTON_RIGHT`).  If you really wanted, you *could* just say `button == 0` to test for whether the pressed/released button is the left mouse button.
+Whenever a button on the mouse is pressed or released, we want to check if that button is the left mouse button.  If it is, then we can update our `isLefMousePressed` boolean appropriately.  The `button` variable is an integer that identifies which button is being pressed/released and openFrameworks provides some handy constants that we can use to identify the button in a human-readable way (`OF_MOUSE_BUTTON_LEFT`, `OF_MOUSE_BUTTON_MIDDLE` and `OF_MOUSE_BUTTON_RIGHT`).  If we really wanted, we *could* just say `button == 0` to test for whether the pressed/released button is the left mouse button.
 
-Let's hop into the `draw` function and start making use of our mouse information:
+Let's hop into the `draw()` function and start making use of our mouse information:
 
 	if (isLeftMousePressed) {
 		ofSetColor(255);
@@ -158,11 +163,11 @@ Let's hop into the `draw` function and start making use of our mouse information
 		ofRect(mouseX, mouseY, 50, 50);
 	}
 
-[`ofSetRectMode`](http://www.openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofSetRectMode "ofSetRectMode Documentation Page") allows us to control how the x and y positions we pass into `ofRect` are used to draw a rectangle.  Like with the mouse button constants, openFrameworks provides some rectangle mode constants for us to use: `OF_RECTMODE_CORNER` and `OF_RECTMODE_CENTER`.  By default rectangles are drawn by interpreting the x and y values you pass to it as the coordinates of the upper left corner (`OF_RECTMODE_CORNER`).  For our purposes, it is more convient for us to specify the center of the rectangle (`OF_RECTMODE_CENTER`) so that our rectangle is centered over the mouse position.  So we draw the center of our white, 50 x 50 rectangle at the mouse position using `mouseX` and `mouseY`.
+[`ofSetRectMode()`](http://www.openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofSetRectMode "ofSetRectMode Documentation Page") allows us to control how the x and y positions we pass into `ofRect()` are used to draw a rectangle.  Like with the mouse button constants, openFrameworks provides some rectangle mode constants for us to use: `OF_RECTMODE_CORNER` and `OF_RECTMODE_CENTER`.  By default rectangles are drawn by interpreting the x and y values we pass to it as the coordinates of the upper left corner (`OF_RECTMODE_CORNER`).  For our purposes, it is more convenient for us to specify the center of the rectangle (`OF_RECTMODE_CENTER`) so that our rectangle is centered over the mouse position.  So we draw the center of our white 50 x 50 rectangle at the mouse position using `mouseX` and `mouseY`.
 
-Boring! We are going to make this a bit more interesting by 1) adding randomness and 2) adding repeptition.
+Boring! We are going to make this a bit more interesting by adding 1) randomness and 2) repetition.
 
-Randomness makes your openFrameworks sketches dark, mysterious and unpredictable.  So meet one of your new friends, [`ofRandom`](http://openframeworks.cc/documentation/math/ofMath.html#!show_ofRandom "ofRandom Documentation Page").  `ofRandom` can be used in two different ways: by passing in two values `ofRandom(float min, float max)` or by passing in a single value `ofRandom(float max)`.  If you pass in two values, they are the minimum and maximum values you want your random value to take.  If you pass in a single value, it is considered to be the maximum value you want and the minimum is assumed to be 0.  So when we go to specify the color of the rectangle we are about to draw, we can substitute a random value:
+Randomness makes your openFrameworks sketches dark, mysterious and unpredictable.  So meet one of our new friends, [`ofRandom()`](http://openframeworks.cc/documentation/math/ofMath.html#!show_ofRandom "ofRandom Documentation Page").  `ofRandom()` can be used in two different ways: by passing in two values `ofRandom(float min, float max)` or by passing in a single value `ofRandom(float max)`.  If we pass in two values, they become the minimum and maximum values we want our random value to take.  If we pass in a single value, it is considered to be the maximum value we want and the minimum is assumed to be 0.  So when we specify the color of the rectangle we are about to draw, we can substitute a random value:
 
 	ofSetColor(ofRandom(50, 255));
 
@@ -170,7 +175,7 @@ Randomness makes your openFrameworks sketches dark, mysterious and unpredictable
 
 **[Note: Point to c++ section on float vs int and casting?]**
 
-Remember that we are using grayscale colors and that they take on values between 0 and 255.  We can exlude some of the deep black colors because they won't be visible to us when drawing on a black background.  
+Remember that we are using grayscale colors and that they are represented by values between 0 and 255.  We can exclude some of the deep black colors because they won't be visible to us when drawing on a black background.  
 
 **[Note: change image to cursive 'hi'?]**
 
@@ -178,7 +183,9 @@ Remember that we are using grayscale colors and that they take on values between
 
 **[Note: reference to c++ loops section?]**
 
-So whenever you are done drawing weird rectangle snakes, we can move on to adding repetition.  Instead of drawing a single rectangle every frame during which the left mouse button is pressed, we can draw a burst of randomized rectangles.  To create that burst, we are going use a for loop to generate a set some number of rectangles where each rectangle's parameters are randomly chosen from a set of values.  So what can we randomize?  Grayscale color, width and height are easy candidates.  We can also use a small positive or negative value to randomly offset each rectangle from mouse position.  Modify your `draw` function to look like this:  
+Next, let's add some repetition. Instead of drawing a single rectangle every frame that the left mouse button is pressed, we can draw a burst of randomized rectangles.  To create that burst we are going use a `for` loop to generate some rectangles whose parameters are randomly chosen from a set of values.  So what can we randomize?  Grayscale color, width and height are easy candidates.  We can also use a small positive or negative value to randomly offset each rectangle from mouse position.  Modify your `draw()` function to look like this:  
+
+**[What is the convention for 'for' loops]**
 
 	if (isLeftMousePressed) {
 		ofSetRectMode(OF_RECTMODE_CENTER);
@@ -187,27 +194,28 @@ So whenever you are done drawing weird rectangle snakes, we can move on to addin
 			ofSetColor(ofRandom(50, 255));
 			float width = ofRandom(5, 20);
 			float height = ofRandom(5, 20);
-			float xoffset = ofRandom(-40, 40);
-			float yoffset = ofRandom(-40, 40);
-			ofRect(mouseX+xoffset, mouseY+yoffset, width, height);
+			float xOffset = ofRandom(-40, 40);
+			float yOffset = ofRandom(-40, 40);
+			ofRect(mouseX+xOffset, mouseY+yOffset, width, height);
 		}
 	}
 
-But let's add one more thing before you hit run.  Into `setup`, add:
+But let's add one more thing inside `setup()` before hitting run.
 
 	ofSetFrameRate(60);
 
 **[Note: do I need to explain framerate?]**
 
-Why do we care about setting the framerate here?  We want to be able to accurately know (and control) how many rectangles our code will draw.  We are drawing 10 every time the `draw` function is called, but without setting the framerate, we don't know ahout many times the `draw` function will be called per second.  By setting the framerate to 60 frames per second, then we can say that our code will generate `10 rectangles per frame * 60 frames per second = 60 rectangles per second`.
+Why do we care about setting the frame rate here?  We want to be able to accurately know (and control) how many rectangles our code will draw.  We are drawing 10 each frame when the `draw()` function is called, but without setting the frame rate, we don't know how many times the `draw()` function will be called per second.  By explicitly defining the frame rate as 60 frames per second, we can say that our code will generate 60 rectangles per second (`10 rectangles per frame * 60 frames per second = 60 rectangles per second`).
 
-So what happens when you try using your new rectangle brush?  You get a box-shaped, messy spread of random rectangles.  Things are slowly becoming more interesting.  But you might have been expecting to see a circular spread?  Since we said that `xoffset` and `yoffset` could be random values between -40 and 40, we were actually picking values from a rectangular region of space.  You can imagine the boundries of that region by thinking about what happens when `xoffset` and `yoffset` take on their extreme values (e.g. [`xoffset`, `yoffset`] values of [-40, -40], [40, -40], [40, 40], [-40, 40]).
+So what happens when we try using our new rectangle brush?  You get a messy, box-shaped spread of random rectangles.  Things are slowly becoming more interesting as you might have been expecting to see a circular spread?  Since we said that `xOffset` and `yOffset` could be random values between -40 and 40, we were actually picking values from a rectangular region of space.  You can imagine the boundaries of that region by thinking about what happens when `xOffset` and `yOffset` take on their extreme values (e.g. [`xOffset`, `yOffset`] values of [-40, -40], [40, -40], [40, 40], [-40, 40]).
 
-To generate a circular spread, we need to introduce a tiny pinch of mathematics.  If we want to pick a random point that lives within a circle that has a particular size, it helps to think in terms of angles.  Image you are at the center of a circle.  If you rotate a random amount (let's call this the *polar angle*) and then move a random distance (let's call this the *polar radius*), you will end up in a random location within the circle (assuming you don't walk so far that you cross the boundry of your circle).  You've defined a point in space by a polar angle and a polar radius instead of using an x coordinate and a y coordinate.  What you've done is think in terms of what are called [polar coordinates](http://en.wikipedia.org/wiki/Polar_coordinate_system "Polar Coordinates Wiki").  (In contrast, using x and y values to define a point is the [Cartesian coordinate system](http://en.wikipedia.org/wiki/Cartesian_coordinate_system "Cartesian coordinate system"].)
+To generate a circular spread, we need to introduce a bit of mathematics.  If we want to pick a random point that lives within a circle of a particular size, it helps to think in terms of angles.  Imagine that we are at the center of a circle.  If we rotate a random amount (let's call this the *polar angle*) and then move a random distance (let's call this the *polar radius*), we will end up in a random location within the circle (assuming we don't walk so far that we cross the boundary of our circle).  We've defined a point in space by a polar angle and a polar radius instead of using an x coordinate and a y coordinate.  We have just begun to think think in terms of [polar coordinates](http://en.wikipedia.org/wiki/Polar_coordinate_system "Polar Coordinates Wiki").  (In contrast, using x and y values to represent a point in space is called the [Cartesian coordinate system](http://en.wikipedia.org/wiki/Cartesian_coordinate_system "Cartesian coordinate system"].)
 
 **[Note: This could use a simple visual to show cartesian vs polar coords]**
+**[bd: I can make a visual for you. remind me if I haven't done it by the time you read this.]**
 
-So where does this leave us in terms of our code?  If we start at the mouse position, we want to pick a random direction (polar angle) and random distance (polar distance).  Once we have those, we can convert them back to Cartesian coordinates (x and y values) to be used for our `xoffset` and `yoffset`.  So modify your for loop inside your `draw` function to look like this:
+So where does this leave us in terms of our code?  We want to pick a random direction (polar angle) and random distance (polar distance) from the mouse position and represent those values in polar coordinates.  Once we have those we can convert them back to Cartesian coordinates (x and y values) to be used for our `xOffset` and `yOffset`.  Let's modify our for loop inside of our `draw()` function to look like this:
 
 **[Note: Explain the trig conversion from polar to cartesian, or point to the math chapter section?]**
 
@@ -217,9 +225,9 @@ So where does this leave us in terms of our code?  If we start at the mouse posi
 		float height = ofRandom(5, 20);
 		float angle = ofRandom(2.0*PI);
 		float distance = ofRandom(35);
-		float xoffset = cos(angle) * distance;
-		float yoffset = sin(angle) * distance;
-		ofRect(mouseX+xoffset, mouseY+yoffset, width, height);
+		float xOffset = cos(angle) * distance;
+		float yOffset = sin(angle) * distance;
+		ofRect(mouseX+xOffset, mouseY+yOffset, width, height);
 	}
 
 **[Note: explain radians vs degrees]**
@@ -230,28 +238,30 @@ So where does this leave us in terms of our code?  If we start at the mouse posi
 
 **[Note: Insert an image using the rectangle brush]**
 
-:) You are a rectangle master now.  But the circles, ellipses, lines and triangles probably feel neglected.  Since we are going to create a few more brushes, let's add two things to our code 1) the ability to erase the screen and 2) the ability to switch between brushes.
+You are now a rectangle master :).  The circles, ellipses, lines and triangles probably feel neglected.  Since we are going to create a few more brushes let's add two things to our code: 1) the ability to completely erase the screen and 2) the ability to switch between brushes.
 
-For erasing the screen, add the following lines (check the comments to see where to put them):
+Add the following lines to erase the screen.
+
+In your header file (.h), create a property called `isRightMousePressed`:
 	
-	// Add to your header (.h):
 	bool isRightMousePressed;
-		
-	// Add to setup()
+
+Initialize the property to false in your `setup()` function:
+
 	isRightMousePressed = false;
-		
-	// Add to mousePressed()
+
+Inside of `mousePressed()`, add:
 	if (button == OF_MOUSE_BUTTON_RIGHT) isRightMousePressed = true; 
-	
-	// Add to mouseReleased()
+
+Inside of `mouseReleased()`, add:
 	if (button == OF_MOUSE_BUTTON_RIGHT) isRightMousePressed = false;
 	
-	// Add to the beginning of draw()
+Lastly, add this to the beginning of your `draw()` function:
 	if (isRightMousePressed) ofBackground(0);
 
-Now we can right click to get a fresh screen.  For adding the ability to switch between brushes, we are going to define an integer `drawingMode` and each number from 0 through 3 will represent a unique mode.  To make our code more human-readable, we will define an integer variable for each of those modes, e.g. `rectangleMode = 0`, etc.  Inside of `draw`, we can then check the drawingMode variable to determine what code to execute.  Then finally, we will use keyboard inputs to switch between the different brush modes.
+Now we can right click to get a fresh screen.  To add the ability to switch between brushes we are going to define an integer `drawingMode`.  Each number from 0 through 3 will represent a unique mode.  To make our code more human-readable, we will define an integer variable for each of those modes, e.g. `rectangleMode = 0`, etc.  Inside of `draw()` we can then check the `drawingMode` variable to determine what code to execute.  Finally, we will use keyboard inputs to switch between the different brush modes.
 
-Add these variables to your header file (.h):
+Add these properties to your header file (.h):
 
 	int drawingMode;
 	int rectangleMode = 0;
@@ -260,16 +270,16 @@ Add these variables to your header file (.h):
 	int lineMode = 3;
 	int triangleMode = 4;
 
-In your `.cpp` function, initialize your drawing mode to the rectangle brush:
+Assign your first drawing mode to the rectangle brush in your `setup()` function:
 
 	drawingMode = rectangleMode;
 
-We are going to reorganize the `draw` function, so that it looks like this:
+We are going to reorganize the `draw()` function so that it looks like this:
 
-	// If right mouse button pressed, erase the screen
+	// If right mouse button is pressed, then erase the screen
 	if (isRightMousePressed) ofBackground(0);
 	
-	// If left mouse button pressed, draw the appropriate brush
+	// If left mouse button is pressed, then draw the appropriate brush
 	if (isLeftMousePressed) {
 	
 		if (drawingMode == rectangleMode) {
@@ -286,30 +296,32 @@ We are going to reorganize the `draw` function, so that it looks like this:
 		}
 	}
 
-And for getting keyboard inputs, we are going to make use of the [`keyPressed(int key)`](http://openframeworks.cc/documentation/application/ofBaseApp.html#!show_keyPressed keyPressed "Documentation Page") function that is already built into your openFrameworks code.  Like `mousePressed`, this function is called any time a key is pressed.  We just need to use that integer that is passed in to keyPressed to switch our `drawingMode`.  "r" for rectangle mode, "c" for circle mode, etc.  
+We are going to make use of the [`keyPressed(int key)`](http://openframeworks.cc/documentation/application/ofBaseApp.html#!show_keyPressed keyPressed "Documentation Page") function that is already built into your openFrameworks `.cpp` file to handle key events.  Like `mousePressed()`, this function is called any time a key is pressed.  We can use the integer that is passed into `keyPressed()` to switch our `drawingMode` variable.  We will use "r" for rectangle mode, "c" for circle mode, etc.  
 
-But how exactly does an integer tell us which key has been pressed?  Well that integer is actually the ASCII code for the key that was pressed.  You can check out the [ASCII wiki](http://en.wikipedia.org/wiki/ASCII "ASCII Wiki Page") for details, but for this chapter, it is enough to just know that ASCII is an agreed upon system for assigning numbers to characters.  And it turns out to be quite easy to check if that ASCII integer `key` is a particular character.  Let's see what this looks like in code.  Add these lines to your `keyPressed` function:
+But how exactly does an integer tell us which key has been pressed?  That integer is actually the ASCII code for the key that was pressed.  You can check out the [ASCII wiki](http://en.wikipedia.org/wiki/ASCII "ASCII Wiki Page") for details, but for this chapter it is enough to just know that ASCII is an agreed upon system for assigning numbers to characters.  It turns out to be quite easy to check if the ASCII integer `key` is a particular character. Add these lines to your `keyPressed()` function to see what this looks like in code.
 
 	if (key == 'r') drawingMode = rectangleMode;
 	else if (key == 'c') drawingMode = circleMode;
 	else if (key == 'l') drawingMode = lineMode;
 	else if (key == 't') drawingMode = triangleMode;
 
-In c++, you can compare an integer like `key` with a character through an inequality.  
+**[bd: will the reader have been made aware at this point that single-line if statements can be written without curly brackets?]**
+
+In C++, you can compare an integer like `key` with a character using `==` or `!=`.
 
 **[Note: Explain char vs int, the double quote vs single quote.  Or is this in c++ chapter]**
 
 **[Note: the constants that oF provides for key presses]**
 
-Whew! Now when you run your code, you should be able to clear your screen and switch between brushes.  Now let's fill in those circle, line and triangle brushes!
+Whew! When you run your code, you should now be able to clear your screen and switch between brushes.  Let's fill in those circle, line and triangle brushes!
 
-With our circle brush, let's play with transparency and then add in some color.  Unlike what we did with rectangles, we are going to layer our circles on top of each other until they become hazy and indistinct.  We are going to draw a giant transparent circle, then draw a slightly smaller transparent circle, then repeat, repeat, repeat.
+For our circle brush, let's play with transparency and add some color.  Unlike what we did with rectangles, we are going to layer our circles on top of each other until they become hazy and indistinct.  We are going to draw a giant transparent circle, then draw a slightly smaller transparent circle, then repeat, repeat, repeat.
 
-Transparency? So far, we've only used opaque grayscale colors, but you can make your colors transparent by adding an extra parameter to `ofSetColor`, like `ofSetColor(255, 50)`.  That second parameter that we passed in is the alpha channel.  It takes a value from 0 to 255 where 0 is completely transparent and 255 is completely opaque.  But before we use colors that have alpha, we need to enable something called alpha blending.  This just means that when two transparent colors occupy the same space on the screen, their colors get mixed.  Alpha blending is disabled by default because it requires additional computational power over drawing opaque colors.  In the `setup` function, add the following line:
+So far, we've only used opaque grayscale colors but you can make your colors transparent by adding an extra parameter to `ofSetColor()` (e.g.`ofSetColor(255, 50)`).  That second parameter represents the alpha channel.  It takes a value from 0 to 255 where 0 is completely transparent and 255 is completely opaque.  Before we use colors that have alpha we need to enable something called alpha blending.  This means that when two transparent colors occupy the same space on the screen, their colors get mixed.  Alpha blending is disabled by default because it requires additional computing power.  Let's add the following line to our `setup()` function:
 
 	ofEnableAlphaBlending();
 
-Now we can start working on our `draw` function.  We will use the `angle`, `distance`, `xoffset` and `yoffset` code like we did with the rectangle brush.  The difference is that our loop will control the radius of our circle.  We will start with drawing a large radius circle and slowly reduce our radius to 0.  So add the following to `draw`:
+Now we can start working on our `draw()` function.  We will use the `angle`, `distance`, `xOffset` and `yOffset` code like we did with the rectangle brush.  The difference is that our loop will control the radius of our circle.  We will start by drawing a circle with a large radius value and slowly reduce it to 0.  Add the following to `draw()` inside of our if statement to check if the `drawingMode` is `circleMode`:
 
 	int maxRadius = 100;
 	int radiusStepSize = 5;
@@ -318,63 +330,66 @@ Now we can start working on our `draw` function.  We will use the `angle`, `dist
 	for (int radius=maxRadius; radius>0; radius-=radiusStepSize) {
 		float angle = ofRandom(2.0*PI);
 		float distance = ofRandom(maxOffsetDistance);
-		float xoffset = cos(angle) * distance;
-		float yoffset = sin(angle) * distance;
+		float xOffset = cos(angle) * distance;
+		float yOffset = sin(angle) * distance;
 		ofSetColor(255, alpha);
-		ofCircle(mouseX+xoffset, mouseY+yoffset, radius);
+		ofCircle(mouseX+xOffset, mouseY+yOffset, radius);
 	}
 
-The result is something like drawing with glowing light.  You can play with the maxRadius, radiusStepSize, alpha and maxOffsetDistance to get make that glowing effect stronger, weaker, narrower or wider.
+The result is something like drawing with a glowing light.  You can play with the `maxRadius`, `radiusStepSize`, `alpha` and `maxOffsetDistance` to make that glowing effect stronger, weaker, narrower or wider.
 
 ![Circle Glow Brush](images/intrographics_circleglow.png "Results of using the circle glow brush")
 
-Kind of cool right?  You are probably tired of having to live in moody shades of gray for so long.  Well, `ofSetColor` has some alternate forms that make use of the RGB color model.  If you haven't heard of RGB before, you can check out the [wiki](http://en.wikipedia.org/wiki/RGB_color_model "Wiki on RGB Color Model").  It allows you to specify a color through quantifying the amount of red, blue and green light in the color.  We refer to these color components as channels, and each channel can take on a value from 0 to 255.  (Alpha is another possible channel.) So here are the forms of `ofSetColor` we can now use:
+Kind of cool right?  You are probably tired of having to live in moody shades of gray for so long.  `ofSetColor()` can make use of the RGB color model in addition to the grayscale color model.  If you haven't heard of RGB before, you can check out the [wiki](http://en.wikipedia.org/wiki/RGB_color_model "Wiki on RGB Color Model").  It allows you to specify a color through quantifying the amount of red, blue and green light present in that color.  We refer to these color components as channels, and each channel can be represented by a value from 0 to 255.  (Alpha is a fourth possible channel.) Here are the forms of `ofSetColor()` we can now use:
 
 **[Note: would it be helpful to somewhere explain 24-bit/32-bit color and where 256 comes from?]**
 
-**[Note: would it be helpful to have a RGB diagram?]**
+**[Note: would it be helpful to have a RGB diagram?]** **[bd: yes]**
 
 	ofSetColor(255); // Opaque grayscale white
 	ofSetColor(255, 10); // Very transparent grayscale white
 	ofSetColor(255, 0, 0); // Opaque red! Hooray for color :)
 	ofSetColor(255, 0, 0, 10); // Very transparent red
 
-So go ahead and modify your `ofSetColor` line of code inside of your circle brush to use some color you like.  I'll just leave this orange here: `ofSetColor(255, 103, 0, 3);`
+Let's go ahead and modify the `ofSetColor()` in our above circle brush code to use some color.  Here is a nice orange: `ofSetColor(255, 103, 0, 3)`.
 
-There's another way we can use `ofSetColor` that is useful.  Meet [`ofColor`](http://openframeworks.cc/documentation/types/ofColor.html "ofColor Documentation Page"].  This is a handy class that openFrameworks provides for handling colors that allows you to do some color math (among other things). Here are some examples of defining and modifying colors:
+There's another way we can use `ofSetColor()` that is also useful.  Meet [`ofColor`](http://openframeworks.cc/documentation/types/ofColor.html "ofColor Documentation Page"].  This is a handy class that openFrameworks provides for handling colors which allows you to do some fancy color math (among other things). Here are some examples of defining and modifying colors:
 
-	ofColor orange(255, 132, 0); // Opaque orange color - specified using RGB
+	ofColor myOrange(255, 132, 0); // Opaque orange color - specified using RGB
 	
-	ofColor blue(0, 0, 255, 50); // Transparent blue color - specified using RGBA
+	ofColor myBlue(0, 0, 255, 50); // Transparent blue color - specified using RGBA
 	
 	// You can access the red, green, blue and alpha channels like this:
-	ofColor green(0, 0, 255, 255);
-	cout << "Red channel:" << green.r << endl;
-	cout << "Green channel:" << green.g << endl;
-	cout << "Blue channel:" << green.b << endl;
-	cout << "Alpha channel:" << green.a << endl;
+	ofColor myGreen(0, 0, 255, 255);
+	
+	cout << "Red channel:" << myGreen.r << endl;
+	cout << "Green channel:" << myGreen.g << endl;
+	cout << "Blue channel:" << myGreen.b << endl;
+	cout << "Alpha channel:" << myGreen.a << endl;
 	
 	// You can also set the red, green, blue and alpha channels like this:
-	ofColor yellow;
-	yellow.r = 255;
-	yellow.b = 0;
-	yellow.g = 255;
-	yellow.a = 255;
+	ofColor myYellow;
+	myYellow.r = 255;
+	myYellow.b = 0;
+	myYellow.g = 255;
+	myYellow.a = 255;
 
-Now, let's say that instead of just using an orange or a red color for our circle brush, what if we wanted to pick a random color in-between orange and red?  `ofColor` has a solution for using what is called [linear interpolation](http://en.wikipedia.org/wiki/Linear_interpolation "Wiki for Linear Interpolation").  Replace your `ofSetColor` line of code with these four lines of code: 
+Now, let's say that instead of just using an orange or a red color for our circle brush, what if we want to pick a random color in-between orange and red?  `ofColor` has a solution for using what is called [linear interpolation](http://en.wikipedia.org/wiki/Linear_interpolation "Wiki for Linear Interpolation").  Replace your `ofSetColor` line of code with these four lines: 
 
 **[Note: explain lerp for the math averse and explain the syntax]**
 
-	ofColor orange(255, 132, 0, alpha);
-	ofColor red(255, 6, 0, alpha);
-	ofColor inbetween = orange.getLerped(red, ofRandom(1.0));
-	ofSetColor(inbetween);
+	ofColor myOrange(255, 132, 0, alpha);
+	ofColor myRed(255, 6, 0, alpha);
+	ofColor inBetween = myOrange.getLerped(myRed, ofRandom(1.0));
+	ofSetColor(inBetween);
 	
-Maybe you aren't a fan of circles?  You can turn your circle into an ellipse using:
+Maybe we aren't a fan of circles?  We can turn our circle into an ellipse using:
+	
+	float scaledWidth = radius * ofRandom(0.8, 1.2);
+	float scaledHeight = radius * ofRandom(0.8, 1.2);
+	ofEllipse(mouseX+xOffset, mouseY+yOffset, scaledWidth, scaledHeight);
 
-	ofEllipse(mouseX+xoffset, mouseY+yoffset, radius*ofRandom(0.8, 1.2), radius*ofRandom(0.8, 1.2));
-
-What about using outlines instead of solid shapes inserting `ofNoFill();` into your circle brush code?  If you do that, try increasing your `alpha` to 10 and lowering your `radiusStepSize` to 1.  (Don't forget that if you start using `ofNoFill` in your circle brush, you should add `ofFill` to your rectangle brush!)
+What if we use outlines instead of solid shapes by inserting `ofNoFill()` into our circle brush code?  If we do that, let's try increasing our `alpha` to 10 and lowering our `radiusStepSize` to 1.  Don't forget that if we start using `ofNoFill()` in our circle brush, we should add `ofFill()` to our rectangle brush!
 
 ![Circle Squiggle Brush](images/intrographics_circlesquiggles.png "Results of using the circle brush without fill")
 
@@ -384,9 +399,9 @@ What about using outlines instead of solid shapes inserting `ofNoFill();` into y
 
 **[Note: Why does the hue break when using alpha == 1?]**
 
-Rectangles, check.  Circle and ellipses, check.  Lines.  We're all familiar with an asterisk, right?  We are going to create a brush that draws a bunch of lines that all intersect at their midpoints - something like an asterisk - and look like a twinkling star.  
+Rectangles, check.  Circle and ellipses, check.  What about lines?  We're all familiar with an asterisk, right?  We are going to create a brush that draws a bunch of lines that all intersect at their midpoints to create something similar to an asterisk. Done correctly, this should look like a twinkling star.  
 
-The code you've used before is almost all that you need to create this brush.  We will draw a set of randomly sized lines that extend out from the mouse position in random directions.  One new wrinkle, if we want our brush to look "twinkly", is that we want our brush to be brightest in the center and fade towards the periphery.  So let's add this in the line brush section of the `draw` function:
+The code we've learned so far is almost all that we need to create this brush.  We will draw a set of randomly sized lines that extend out from the mouse position in random directions.  If we want our brush to look a bit more "twinkly" we can make it brightest in the center and fade towards the periphery.  Let's add the following to the line brush section of the `draw()` function:
 
 	int numLines = 30;
 	int minRadius = 25;
@@ -394,30 +409,30 @@ The code you've used before is almost all that you need to create this brush.  W
 	for (int i=0; i<numLines; ++i) {
 		float distance = ofRandom(minRadius, maxRadius);
 		float angle = ofRandom(2.0*PI);
-		float xoffset = cos(angle) * distance;
-		float yoffset = sin(angle) * distance;
+		float xOffset = cos(angle) * distance;
+		float yOffset = sin(angle) * distance;
 		float alpha = ofMap(distance, minRadius, maxRadius, 50, 0);
 		ofSetColor(255, alpha);
-		ofLine(mouseX, mouseY, mouseX+xoffset, mouseY+yoffset);
+		ofLine(mouseX, mouseY, mouseX+xOffset, mouseY+yOffset);
 	}
 
-What have we done with the alpha?  We've introduced a new function called [`ofMap`](http://www.openframeworks.cc/documentation/math/ofMath.html#show_ofMap "ofMap Documentation Page").  This provides a quick way to do a linear interpolation **[note: link to math]**.  To get a "twinkle," We want our shortest lines to be the most opaque and our longer lines to be the most transparent.  We want to tie the alpha parameter to the distance parameter.  `ofMap` takes a value from one range and maps it into another range like this: `ofMap(float value, float inputMin, float inputMax, float outputMin, float outputMax)`.  We tell it that distance is a value in-between minRadius and maxRadius and that we want it mapped such a distance value of 125 (maxRadius) yields an alpha value of 50 and a distance value of 25 (minRadius) yields an alpha value of 0.  The longer the line, the more transparent the color.
+By golly what have we done with the alpha?  We've introduced a new function called [`ofMap`](http://www.openframeworks.cc/documentation/math/ofMath.html#show_ofMap "ofMap Documentation Page").  This function provides a quick way to do a linear interpolation.**[note: link to math]**. To get a "twinkle" we want our shortest lines to be the most opaque and our longer lines to be the most transparent.  We want to tie the alpha parameter to the distance parameter.  `ofMap` takes a value from one range and maps it into another range like this: `ofMap(float value, float inputMin, float inputMax, float outputMin, float outputMax)`.  We tell it that distance is a value in-between `minRadius` and `maxRadius` and that we want it mapped so that a distance value of 125 (`maxRadius`) returns an alpha value of 50 and a distance value of 25 (`minRadius`) returns an alpha value of 0.  The longer the line, the more transparent the color.
 
-If you wanted to, you could also play with the line thickness:
+We could also play with the line thickness if we wanted to:
 	
 	ofSetLineWidth(ofRandom(1.0, 5.0));
 
-Just remember that if you change the line width here, you will need to go to your other brushes and set the line width back to 1. 
+Just remember that if we change the line width here we will need go back and set our line width back to 1 for our other brushes. 
 
-**[Note: maybe expand upon linking variables together - now that you know how to do this, what could you have done with your prior brushes to make them cooler?]**
+**[Note: maybe expand upon linking variables together - now that we know how to do this, what could we have done with your prior brushes to make them cooler?]**
 
 ![Line Star Brush](images/intrographics_linestars.png "Results of using the line brush")
 
-Whew, time for the last brush from predefined shapes - the triangle!  The general idea for this brush is to draw a bunch of randomized triangles that appear to be directed out from the mouse position.  Like this:
+Time for the last brush from a predefined shape - the triangle!  The general idea for this brush is to draw a bunch of randomized triangles that appear to be directed outward from the mouse position like this:
 
 ![Triangle Brush Sample](images/intrographics_trianglebrushsample.png "Sample how the triangle brush will look")
 
-But to be able to get to that, we will need to introduce [`ofVec2f`](http://openframeworks.cc/documentation/math/ofVec2f.html "ofVec2f Documentation Page").  We've been defining a point in space by keeping two separate variables - one for the x position and one for the y position.  A triangle is defined by three points, so we would end up with six separate variables if we continued with our current tactic.  `ofVec2f` is a vector, and it allows us to hold both the x and y coordinates in one variable (and comes with some handy math operations).  You can use an ofVec2f variable like this:
+But first we will need to introduce the [`ofVec2f`](http://openframeworks.cc/documentation/math/ofVec2f.html "ofVec2f Documentation Page") class.  We've been defining a point in space by keeping two separate variables - one for the x position and one for the y position.  A triangle is defined by three points, so we would end up with six separate variables if we tried to represent one using what we know so far.  `ofVec2f` is a vector, and as 2 dimensional vector that allows us to hold both the x and y coordinates in one variable. It also comes with some handy math operations.  You can use an ofVec2f variable like this:
 
 	ofVec2f mousePos(mouseX, mouseY);
 	
@@ -426,10 +441,10 @@ But to be able to get to that, we will need to introduce [`ofVec2f`](http://open
 	cout << "Mouse Y: " << mousePos.y << endl;
 	
 	// Or you can modify the coordinates like this:
-	float xoffset = 10.0;
-	float yoffset = 30.0;
-	mousePos.x += xoffset;
-	mousePos.y += yoffset;
+	float xOffset = 10.0;
+	float yOffset = 30.0;
+	mousePos.x += xOffset;
+	mousePos.y += yOffset;
 	
 	// But you can do what we just did above by adding or subtracting two vectors directly
 	ofVec2f offset(10.0, 30.0);
@@ -437,13 +452,13 @@ But to be able to get to that, we will need to introduce [`ofVec2f`](http://open
 	
 **[Note: this may need more description; division/mult, scaler vs vector]**
 
-ofVec2f isn't that scary, right?  And it is quite useful.  So let's start using it to build towards the triangle brush.  First step is to draw a triangle at the mouse cursor.  Specifically, we are going to draw an isoceles triangle:
+ofVec2f isn't that scary, right?  Plus it's actually quite useful.  Let's start using it to build the triangle brush.  The first step is to draw an isosceles triangle at the mouse cursor. 
 
-![Iscoceles Triangle](http://mathworld.wolfram.com/images/eps-gif/IsoscelesTriangle_800.gif "Image of an iscoceles triangle from wolfram")
+![Isosceles Triangle](http://mathworld.wolfram.com/images/eps-gif/IsoscelesTriangle_800.gif "Image of an isosceles triangle from wolfram")
 
 **[Note: Stolen graphics from wolfram, generate something similar later]**
 
-An isoceles triangle is one that has two sides that are of equal length (labeled as b) and one side of a different length (labeled a).  You can also see that the height (labeled h) is drawn in the figure.  We are going to use draw a skinny triangle using one side (a) and the height (h).  It will become important later, but we are going to draw our triangle starting from the mouse cursor and pointing to the right.  Add these lines to the triangle section of your `draw` function:
+An isosceles triangle has two sides that are of equal length (labeled as b) and one side of a different length (labeled a).  You can also see that the height (labeled h) is drawn in the figure.  We are going to draw a skinny triangle using one side (a) and the height (h).  It will become important later, but we are going to draw our triangle starting from the mouse cursor and pointing to the right.  Add these lines to the triangle section of your `draw()` function:
 
 	ofVec2f mousePos(mouseX, mouseY);
 	
@@ -464,11 +479,11 @@ An isoceles triangle is one that has two sides that are of equal length (labeled
 	ofSetColor(255, 50);
 	ofTriangle(p1, p2, p3);
 
-So we are defining the three points of the triangle using three points set relative to the mouse position.  If all goes well, you will end up with something like this:
+We are defining the three points of the triangle using three points set relative to the mouse position.  If all goes well, we will end up with something like this:
 
 ![Single Triangle Brush](images/intrographics_singletrianglebrush.png "Results of using the single triangle brush")
 
-You've used vectors!  Now, we are going to want to be able to rotate our triangles to point in any direction.  Previously, we've fearlessly used trigonometry (sin and cos) for our rotations.  But! `ofVec2f` has a [`rotate`](http://www.openframeworks.cc/documentation/math/ofVec2f.html#show_rotate "ofVec2f's rotate function documentation page") function.  Let's try adding a rotation into our code:
+We've just used vectors!  Now we are going to want to be able to rotate our triangles to point in any direction.  Previously, we've fearlessly used trigonometry (sin and cos) for our rotations.  But `ofVec2f` has a [`rotate()`](http://www.openframeworks.cc/documentation/math/ofVec2f.html#show_rotate "ofVec2f's rotate function documentation page") function.  Let's try adding rotation into our code:
 
 	ofVec2f mousePos(mouseX, mouseY);
 	
@@ -482,8 +497,8 @@ You've used vectors!  Now, we are going to want to be able to rotate our triangl
 	ofVec2f p3(0, -triangleSide/2.0);
 	
 	// Rotate the triangle points around the origin
-	float rotation = ofRandom(360);
-	p1.rotate(rotation);	// Uses degrees!
+	float rotation = ofRandom(360); // Uses degrees!
+	p1.rotate(rotation);	
 	p2.rotate(rotation);
 	p3.rotate(rotation);
 	
@@ -498,7 +513,7 @@ You've used vectors!  Now, we are going to want to be able to rotate our triangl
 
 ![Rotating Triangle Brush](images/intrographics_rotatingtrianglebrush.png "Results of using the rotating triangle brush")
 
-See how ofVec2f simplifies your life?  (Or at least your code.)  If you were to move that rotation code to *after* we shifted the triangle to the mouse position, the code wouldn't work very nicely.  The way we are using `rotate` assumes that we want to rotate all of our points around the origin, which is (0,0).  But there is an alternate way to use `rotate` where you pass in two paramters: the rotation angle and a pivot point.  So you could shift your triangle to the mouse position and then use `p1.rotate(rotation, mousePos)` - everything would work just fine!
+See how `ofVec2f` simplifies your life (or at least your code)?  If we were to move that rotation code to *after* we shifted the triangle to the mouse position, the code wouldn't work very nicely.  The way we are using `rotate` assumes that we want to rotate all of our points around the origin, which is (0,0).  But there is an alternate way to use `rotate()` where we pass in two parameters: the rotation angle and a pivot point.  We could shift our triangle to the mouse position and then use `p1.rotate(rotation, mousePos)` - everything would work just fine!
 
 We're getting there!  Next step, let's integrate this code into our prior approach of drawing multiple shapes that are offset from the mouse position:
 
@@ -536,46 +551,46 @@ We're getting there!  Next step, let's integrate this code into our prior approa
 		ofTriangle(p1, p2, p3);
 	}
 
-So we are now using `of2Vec` to figure out our offset.  To do that, we need to create a vector that points rightward.  Why rightward?  Well, that's the 0 degree direction.  This is why we initially created our triangles pointing rightward from the mouse.  Both our offset and our triangle are pointing in the same direction.  So when we apply the same rotation to both of them, they stay in sync (i.e. both pointing away from the mouse cursor).  See what happens if you try doing `triangleOffset.rotate(rotation+90);`  You'll get a swirling blob of triangles.   Hey, you might even like that effect better than the original.  
+So we are now using `ofVec2f` to figure out our offset.  To do that we need to create a vector that points rightward.  Why rightward?  Well that's the 0 degree direction.  This is why we initially created our triangles pointing rightward from the mouse.  Both our offset and our triangle are pointing in the same direction.  So when we apply the same rotation to both of them they stay in sync (i.e. both pointing away from the mouse cursor).  See what happens if we try doing `triangleOffset.rotate(rotation+90);`  We get a swirling blob of triangles.   Hey, we might even like that effect better than the original.  
 
 **[Note: this explanation may need clarification; also, possibly introduce vector length here?]**
 
-How about we add some color?  I won't get offended if you'd rather use your own colors.
+How about we add some color?
 
 		ofColor aqua(0, 252, 255, alpha);
 		ofColor purple(198, 0, 205, alpha);
-		ofColor inbetween = aqua.getLerped(purple, ofRandom(1.0));
-		ofSetColor(inbetween);
+		ofColor inBetween = aqua.getLerped(purple, ofRandom(1.0));
+		ofSetColor(inBetween);
 
 ![Triangle Brush Final](images/intrographics_trianglebrushfinal.png "Results of using the final triangle brush")	
 
-And once again, you can play with turning off fill and changing line width if you like.
+Once again, we can play with turning off fill and changing line width if we would like.
 
-But now you are a master of rectangles, circles, ellipses, lines and triangles, you can make other brushes that strike your fancy.  (Or you can go off and make something other than a brush.)  In the next section, we'll hop into freeform shapes and how you can use those to create paths out of your digital brush strokes.
+By now we are a master of rectangles, circles, ellipses, lines and triangles. We also have a basic understanding for how we the can create custom digital brushes.  In the next section, we'll hop into freeform shapes and how we can use them to create paths using of our digital brush strokes.
 
 **Go back and add subheaders for each brush to better break up the sections and then title them with the concepts that will be introduced (and add that to the outline)**
 
-**Need a section on saving your final image**
+**Need a section on saving our final image**
 
 **Need to include links to works by artists using these approaches**
 
 ### 1.2 Freeform Shapes ###
 
-In the last section, we drew our graphics directly onto the screen.  We were storing the graphics (the brush strokes) as pixels.  This is known as [raster graphics](http://en.wikipedia.org/wiki/Raster_graphics "Raster Graphics Wiki").  That means that it is hard for us to erase just the last brush stroke.  It also makes it hard for us to rescale graphics once they are drawn.  In contrast, there is something called [vector graphics](http://en.wikipedia.org/wiki/Vector_graphics "Vector Graphics Wiki").  The graphics that you draw as stored as a list of geometric objects (also called geometric primitives) instead of pixel values.  Those objects can be modified after you "place" them on your screen.  You can erase or rescale a brush stroke with ease.  You might already be familiar with the concept of vector graphics if you have used software like Adobe Illustrator, Inkscape, etc.
+In the last section we drew our graphics directly onto the screen.  We were storing graphics (the brush strokes) as pixels, and therefore using [raster graphics](http://en.wikipedia.org/wiki/Raster_graphics "Raster Graphics Wiki").  For this reason, it is hard for us to erase just the last brush stroke.  It also makes it hard for us to rescale graphics once they are drawn.  In contrast, there is something called [vector graphics](http://en.wikipedia.org/wiki/Vector_graphics "Vector Graphics Wiki").  With vector graphics, the graphics that we draw are stored as a list of geometric objects (also called geometric primitives) instead of pixel values.  Those objects can be modified after we "place" them on our screen.  This allows us to erase or rescale a brush stroke with ease.  Vector graphics are used most prominently with software Adobe Illustrator, Inkscape, etc.
 
 Why does any of that matter?  We are moving into the territory of vector graphics by using freeform shapes in openFrameworks.  We are going to be using structures that allow us to store and draw paths.
 
 #### 1.2a Hello Polyline ####
 
-Create a new project and call it something like PathBrush.  Say hello to [`ofPolyline`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html "ofPolyline Documentation Page"), who is about to become our buddy.  What's an ofPolyline?  It is a data structure that allows you to store a series of sequential points and then draw them to create a line or shape.  Like with `ofColor` and `ofVec2f`, `ofPolyline` gives you a bunch of handy helper functions to make life easier.
+Create a new project and call it something like PathBrush.  Then say hello to [`ofPolyline`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html "ofPolyline Documentation Page"), who is about to become our buddy. `ofPolyline` is a data structure that allows us to store a series of sequential points and then draw them to create a line or shape.  Like with `ofColor` and `ofVec2f`, `ofPolyline` gives us a bunch of handy helper functions to make life easier.
 
-How about we get acquainted with ofPolyline in the context of some code?  Let's define three `ofPolylines` in the header file (.h):
+How about we get acquainted with `ofPolyline` in the context of some code?  Let's define three `ofPolylines` in the header file (.h):
 
 	ofPolyline straightSegmentPolyline;
 	ofPolyline curvedSegmentPolyline;
 	ofPolyline closedShapePolyline;
 
-Now, we can fill those polylines with points in the `setup` function of the source file (.cpp):
+Now, we can fill those polylines with points in the `setup()` function of the source file (.cpp):
 
 	straightSegmentPolyline.addVertex(100, 100);
 	straightSegmentPolyline.addVertex(150, 150);
@@ -597,7 +612,7 @@ Now, we can fill those polylines with points in the `setup` function of the sour
 	closedShapePolyline.addVertex(700, 150);
 	closedShapePolyline.close();
 	
-And finally, we can then draw our polylines in the `draw` function:
+We can now draw our polylines in the `draw()` function:
 
 	ofBackground(0);
 	ofSetLineWidth(2.0);
@@ -608,37 +623,39 @@ And finally, we can then draw our polylines in the `draw` function:
 
 So what did we do here?  We created three different types of polylines.  
 
-For the first one, `straightSegmentPolyline`, we used the [`addVertex`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html#show_addVertex "addVertex Documentation Page") function.  This allows us to add points that will be connected with a series of straight lines.  You can pass an `ofVec2f` (or `ofVec3f`) to `addVertex`, or you can pass in x and y (and an optional z) into the function in that order.  
+For our first polyline, `straightSegmentPolyline`, we used `ofPolyline`'s [`addVertex()`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html#show_addVertex "addVertex Documentation Page") method.  This allows us to add points that will be connected by a series of straight lines.  We can pass an `ofVec2f` (or `ofVec3f`) to `addVertex()`, or we can pass in x and y (and an optional z) into the function in that order.  
 
-For the second one, `curvedSegmentPolyline` we use the same points, but we connect up the points with curved lines using [`curveTo`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html#show_curveTo "curveTo Function Documentation Page").  `curveTo` accepts the same types of inputs as `addVertex`.  Notice that we had to add the first vertex and last vertex twice.  The `curveTo` function, like its name suggests, curves from the last vertex to the vertex that you pass in.  **[note: explain why you need a first duplicate AND a last duplicate]**  
+For the second one, `curvedSegmentPolyline`, we used the same points but they are connected with curved lines using `ofPolyline`'s [`curveTo`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html#show_curveTo "curveTo Function Documentation Page") method.  `curveTo()` accepts the same types of parameters as `addVertex()`.  Notice that we had to add the first vertex and last vertex twice.  The `curveTo()` method, like its name suggests, curves from the last vertex to the vertex that you pass in.  **[note: explain why you need a first duplicate AND a last duplicate]**  
 
-For the final one, `closedShapePolyline`, we used straight line segments again, but we use the [`close`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html#show_close "close Function Documentation Page") function to connect our last vertex to our first vertex.  **[note: explain why you would want to close a polyline]**  
+For the final polyline, `closedShapePolyline`, we used straight line segments again, but we called `ofPolyline`'s [`close()`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html#show_close "close Function Documentation Page") method to connect our last vertex to our first vertex.  **[note: explain why you would want to close a polyline]**  
 
-After you created those polylines in `setup`, then you were able to draw them using the polyline's [`draw`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html#show_draw "draw Function Documentation Page") function to display them to the screen.  (Note that `ofSetLineWidth` works to adjust the thickness of polylines.)  And you ended up with something that looked like this:
+After we created the polylines in `setup()`, we were able to draw them using the `ofPolyline`'s [`draw()`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html#show_draw "draw Function Documentation Page") method to render them to the screen. Our sketch should look something that looked like this:
 
 ![Polyline Examples](images/intrographics_polylineexamples.png "Using basic polylines")
 
-So the advantage of drawing paths and shapes in this way (versus what we did in the last section) is that those polyline objects are stored and are modifiable.  We could move our vertices around on the fly.  We could add or delete vertices on the fly.  **[note: maybe put a little more effort to explain the power]** 
+Additionally, we can use `ofPolyline`'s `ofSetLineWidth()` method to adjust the line width of each polyline.
+
+The advantage of drawing paths and shapes in this way (versus what we did in the last section) is that those polyline objects become modifiable.  We could easily move, delete, add to, or even scale our vertices on the the fly.  **[note: maybe put a little more effort to explain the power]** 
 
 #### 1.2b Polyline Brushes ####
 
-Let's start using polylines to track brush "strokes."  When the left mouse button is held down, we will keep track of the mouse positions and add them to a polyline.  
+Let's start using polylines to track brush "strokes."  When the left mouse button is held down we will add the mouse position to a polyline.  
 
-How should we go about that?  We are going to need a boolean to tell us whether the left mouse button is being held down.  If it is being held down, then we need to get the mouse position every frame.  It would be tempting to just add all of those mouse positions to a polyline, but that could cause some problems.  If we were to just hold the left mouse button down without moving the mouse, we would add a duplicate point to our polyline on every frame.  That could potentially add up to cause slowdowns or crashing, so it is best to plan ahead.  Instead of adding *every* mouse position, let's just add the mouse positions where the mouse has moved a sufficient distance away from the last point in our polyline.  
+We are going to need a boolean to tell us whether the left mouse button is being held down.  If it is being held down, then we will need to get the mouse position every frame.  It would be tempting to just add all of those mouse positions to a polyline, but that could cause some problems.  If we were to just hold the left mouse button down without moving the mouse, we would add a duplicate point to our polyline on every frame.  That could potentially add up to cause slowdowns or crashing, so it is best to plan ahead.  Instead of adding *every* mouse position, let's just add the mouse positions where the mouse has moved a sufficient distance away from the last point in our polyline. 
 
-We've got some idea of what we are going to do, so on to the code.  Put these lines into the header file (.h):
+We've got some idea of what we are going to do so let's move on to the code.  Put these lines into the header file (.h):
 
 	ofPolyline currentPolyline;
 	bool currentlyAddingPoints;
 	ofVec2f lastPoint;
 	float minDistance;
 	
-And put these lines into the `setup` function of the source file (.cpp):
+And put these lines into the `setup()` function of the source file (.cpp):
 
 	minDistance = 10;
 	currentlyAddingPoints = false;
 	
-We've got our variables set up, so now we can start dealing with the mouse button presses in the `mousePressed` function:
+Now that we have our variables we can start dealing with the mouse button press events inside the `mousePressed()` function:
 
 	if (button == OF_MOUSE_BUTTON_LEFT) {
 		leftMouseButtonPressed = true;
@@ -646,18 +663,18 @@ We've got our variables set up, so now we can start dealing with the mouse butto
 		lastPoint.set(x, y);
 	}
 	
-When the left mouse button is pressed, we update our variables.  Remember that the variables `x` and `y` in the `mousePressed` and `mouseReleased` functions give us the position of the mouse when a button is pressed/released.  
+When the left mouse button is pressed, we update our variables.  Remember that the variables `x` and `y` in the `mousePressed()` and `mouseReleased()` functions give us the position of the mouse when a button is pressed/released.  
 
-Our `mouseReleased` function will be quite simple for the moment:
+Our `mouseReleased()` function will be quite simple for the moment:
 
 	if (button == OF_MOUSE_BUTTON_LEFT) {
 		leftMouseButtonPressed = false;
 		currentPolyline.clear();	
 	}
     
-We haven't talked about the polyline [`clear`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html#show_clear "clear Documentation Page") function yet, but it does was you might expect - remove all the points that are stored in the polyline.  This way we can start a new brush stroke with each click of the mouse.  
+We haven't talked about `ofPolyline`'s [`clear()`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html#show_clear "clear Documentation Page") method yet, but it does what you might expect. `clear()` removes all the points that are stored in the polyline.  We use it so that we can start a new brush stroke with each click of the mouse.  
 
-Great, we've set up our variables and handled mouse button pressed, so here's the workhourse code that will go into the `update` function:
+Great, we've set up our variables and handled mouse button pressed. The code that will take care of adding the mouse position to our polyline is pretty short.  Add these lines into the `update()` function:
 
 	if (leftMouseButtonPressed) {
 		ofVec2f mousePos(mouseX, mouseY);
@@ -667,33 +684,33 @@ Great, we've set up our variables and handled mouse button pressed, so here's th
 		}
 	}
 
-This code handles adding the mouse position to the polyline (and only does so when the mouse has moved a certain threshold amount away from the last point we added to the polyline).  Last thing to do is draw our polyline in the `draw` function:
+This code handles adding the mouse position to the polyline, but only does so when the mouse has moved a certain threshold amount (`minDistance`) away from the last point we added to the polyline.  The last thing to do is draw our polyline using the following code in our `draw()` function:
 
 	ofBackground(0);    
 	ofSetLineWidth(2);
 	ofSetColor(255,100,0);
 	currentPolyline.draw();
 
-So you have a super basic pen.  Hooray?  Maybe it is a little too blocky for your tastes?  The polyline is made up of straight line segments at the moment...so let's change that by using `curveTo`.
+Now we have a super basic drawing tool.  Maybe it is a little too blocky for our tastes?  The polyline is made up of straight line segments at the moment...so let's change that by using `curveTo`.
 
-In `mousePressed`, instead of `currentPolyline.addVertex(x, y);`, try:
+In `mousePressed`, instead of `currentPolyline.addVertex(x, y)`, 	try:
 	
 	currentPolyline.curveTo(x, y); // Necessary duplicate for first point when using curveTo
 	currentPolyline.curveTo(x, y);
 	
-In `update`, instead of `currentPolyline.addVertex(mousePos);`, use `currentPolyline.curveTo(mousePos);`.
+In `update`, instead of `currentPolyline.addVertex(mousePos)`, 	use `currentPolyline.curveTo(mousePos)`.
 
-And lastly, in `mouseReleased`, add `currentPolyline.curveTo(x, y);` inside your if statement.  This provides our necessary duplicate of our last point.
+Lastly, in `mouseReleased()`, let's add `currentPolyline.curveTo(x, y)` inside our if statement.  This provides our necessary duplicate of our last point.
 
-Your lines should be slightly more attractive (or in the case of my awful mouse control, much more attractive).  Now you've got a basic polyline drawing program, but you don't have the ability to save your polylines.  For that, we will turn to something called a `vector`.  
+Our lines should be slightly more attractive (or in the case of my awful mouse control, much more attractive).  Now we've got a basic polyline drawing program, but we don't have the ability to save our polylines.  For that we will turn to something called a `vector`.  C++ `vector`s are very similar to `array`s in other languages. 
 
 This isn't the same kind of vector that we talked about earlier in the context of `of2Vecf`. **[Note: need to explain vector]**
 
-So we can use a `vector <ofPolylines>` to save our polyline brush strokes.  When we finish a stroke, we want to add the polyline to our vector.  So in the if statement inside of `mouseReleased`, let's add:
+We can use a `vector <ofPolylines>` to save our polyline brush strokes.  When we finish a stroke, we want to add the polyline to our vector.  So in the if statement inside of `mouseReleased()`, let's add:
 
 	polylines.push_back(currentPolyline);
 
-Then we can draw our saved polylines in a different color than our current polyline.  So your `draw` function should look like this:
+Then we can draw our saved polylines in a different color than our current polyline.  So our `draw` function should look like this:
 
 	ofBackground(0);
 	ofSetLineWidth(2);
@@ -706,7 +723,7 @@ Then we can draw our saved polylines in a different color than our current polyl
 	
 	ofSetColor(255,100,0);
 	currentPolyline.draw();
-	
+
 And you can draw a doopy smiley face:
 
 ![Polyline Smile](images/intrographics_polylinesmile.png "Using a polyline pen to draw a smile")
@@ -715,7 +732,7 @@ And you can draw a doopy smiley face:
 
 Now that we have the basic drawing in place, why don't we play with how we are rendering our polylines to the screen?  
 
-First, let's draw circles where the points in our polylines are.  Inside of the for loop in your `draw` function (after `polyline.draw();`, add this:
+First, let's draw circles where the points in our polylines are.  Inside of the for loop in your `draw()` function (after `polyline.draw()`), add this:
 
 	vector<ofVec3f> vertices = polyline.getVertices();
 	for (int vertexIndex=0; vertexIndex<vertices.size(); ++vertexIndex) {
@@ -723,36 +740,34 @@ First, let's draw circles where the points in our polylines are.  Inside of the 
 		ofCircle(vertex, 5);
 	}
 	
-**[Note: explain vector<ofVec3f>, getVertices, vertices.size()]**
+**[Note: explain vector<ofVec3f>, getVertices(), vertices.size()]**
 
-What happens when you run it?  Your white lines just look thicker?  That's because our polyline is jam-packed with vertices!  Every time we call the `curveTo` function, we create 20 extra vertices (by default).  These are needed to make a smooth-looking curve.  You can adjust how many vertices are added with an optional parameter (`curveResolution`) that you pass to `curveTo` (check out the [documentation page](http://openframeworks.cc/documentation/graphics/ofPolyline.html#show_curveTo "curveTo Documentation Page")).  We don't need quite that many vertices on our polylines, but instead of lowering the `curveResolution`, we can make use of another polyline function called [`simplify`](http://openframeworks.cc/documentation/graphics/ofPolyline.html#show_simplify "simplify Documentation Page").
+What happens when we run it?  Our white lines look thicker.  That's because our polyline is jam-packed with vertices!  Every time we call the `curveTo()` method, we create 20 extra vertices (by default).  These are needed to make a smooth-looking curve.  We can adjust how many vertices are added with an optional parameter (`curveResolution`) that we pass to `curveTo` (check out the [documentation page](http://openframeworks.cc/documentation/graphics/ofPolyline.html#show_curveTo "curveTo Documentation Page")).  We don't need quite that many vertices on our polylines, but instead of lowering the `curveResolution`, we can make use of another `ofPolyline` method called [`simplify()`](http://openframeworks.cc/documentation/graphics/ofPolyline.html#show_simplify "simplify Documentation Page").
 
-`simplify` is a function that will remove 'duplicate' points from your polyline.  You pass a single argument into it: `tolerance`, a value between 0.0 and 1.0.  The `tolerance` describes how dis-similar points must be in order to be considered 'unique' enough to not be deleted.  The higher the tolerance, the more points that will be removed.  So right before we save our polyline by putting it into our `polylines` vector, we will simplify it to reduce the number of vertices.  Inside of the if statment within `mouseReleased` (before `polylines.push_back(currentPolyline);`), add: `currentPolyline.simplify(0.75);`.  Now you should see something like this:
+`simplify()` is a method that will remove "duplicate" points from our polyline.  We pass a single argument into it: `tolerance`, a value between 0.0 and 1.0.  The `tolerance` describes how dis-similar points must be in order to be considered 'unique' enough to not be deleted.  The higher the `tolerance`, the more points will be removed.  So right before we save our polyline by putting it into our `polylines` vector, we will simplify it to reduce the number of vertices.  Inside of the if statement within `mouseReleased()` (before `polylines.push_back(currentPolyline)`), add: `currentPolyline.simplify(0.75)`.  Now we should see something like this:
 
 ![Polyline Vertices](images/intrographics_polylinevertices.png "Drawing circles at the vertices of a polyline")
 
-We can also sample points along the polyline using [`getPointAtPercent`](http://openframeworks.cc/documentation/graphics/ofPolyline.html#show_getPointAtPercent "getPointAtPercent Documentation Page").  **[Note: explain the function]**.  Inside the `draw` function, comment out the code that draws a circle at each vertex.  Below that, add: 
+We can also sample points along the polyline using [`getPointAtPercent()`](http://openframeworks.cc/documentation/graphics/ofPolyline.html#show_getPointAtPercent "getPointAtPercent Documentation Page").  **[Note: explain the function]**.  Inside the `draw()` function, comment out the code that draws a circle at each vertex.  Below that, add: 
 
         for (int p=0; p<100; p+=10) {
             ofVec3f point = polyline.getPointAtPercent(p/100.0);
             ofCircle(point, 5);
         }
 
-And now you have evenly spaced points:
+Now we have evenly spaced points:
 
 ![Polyline Sampled Points](images/intrographics_polylinesampledpoints.png "Drawing circles at sampled points along a polyline")
 
-So we have a line, and we can get a point along that line anywhere we want.  We can start transforming that line into whatever we want.  Maybe you want to create a brush stroke where the thickness of the line changes?  I hope so, because that's what we are going to do.  
-
-To do this, we need to talk about something called a [normal vector](http://en.wikipedia.org/wiki/Normal_(geometry) "Wiki on normal vectors in geometry").  You might remember those words from the echos of a memory of high school math, or you migth remember another word, [perpendicular](http://en.wikipedia.org/wiki/Perpendicular "Wiki on perpendicular lines").  If we have start with one line, the normal vector points in the opposite direction.  If you draw the normal vector onto our original line, they will be perpendicular, forming a cross.  (Mathematically, we are talking about two lines that intersect and form right angles with each other.)  
+Let's try creating a brush stroke where the thickness of the line changes. To do this we need to use a [normal vector](http://en.wikipedia.org/wiki/Normal_(geometry) "Wiki on normal vectors in geometry").  You might remember those words from high school math, or you might remember another word, [perpendicular](http://en.wikipedia.org/wiki/Perpendicular "Wiki on perpendicular lines").  If we start with one line, the normal vector points in the opposite direction.  If we draw the normal vector overtop our original line, they will appear perpendicular, forming a cross.
 
 **[Note: quick pick would be enough to help cut down on the words here]**
 
-Why do we care about normals?  Well, imagine you were have a straight, horizontal `ofPolyline` line that you just drew, and you want to make it thicker.  You could walk along every pixel of your line, and at each pixel, color in the pixels that are directly above or below you.  What you are doing is coloring in the pixels that are perpendicular to your line, the normal vectors.  Well, `ofPolyline` will let us do just that in our code.   
+Why do we care about normals?  Well, imagine we have a straight, horizontal `ofPolyline` line that we just drew, and we want to make it thicker.  We could walk along every pixel of our line, and at each pixel, color in the pixels that are directly above or below us. **[bd: awkward wording]**  What we are doing is coloring in the pixels that are perpendicular to our line or the normal vectors.  Well, `ofPolyline` will let us do just that in our code.   
 
 **[Note: work on better explanation]**
-
-You can comment out (or delete) your lines of code that draw circles in your `draw` function, and below that, add these lines of code: 
+	
+We can comment out our lines of code that draw circles in our `draw()` function and add these lines of code below them: 
 
         vector<ofVec3f> vertices = polyline.getVertices();
         float normalLength = 40;
@@ -779,17 +794,17 @@ Well, you may have also guessed that `ofPolyline` lets us sample normals as well
 		ofLine(point-normal/2, point+normal/2);
 	}
 	
-We can get our evenly spaced point by using percents again, but `getNormalAtIndexInterpolated` is asking for an index.  Specifically, it is asking for a `floatIndex` which means that we can pass in 1.5 and the polyline will return a normal that lives halfway between the point at index 1 and halfway between the point at index 2.  So we need to convert our percent, `p/100.0`, to a `floatindex`.  All we need to do is multiple the percent by the last index in our polyline (which we can get from subtracting one from the [`size`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html#show_size "size Documentation Page") which tells us how many vertices are in our polyline).
+We can get an evenly spaced point by using percents again, but `getNormalAtIndexInterpolated()` is asking for an index.  Specifically, it is asking for a `floatIndex` which means that we can pass in 1.5 and the polyline will return a normal that lives halfway between the point at index 1 and halfway between the point at index 2.  So we need to convert our percent, `p/100.0`, to a `floatIndex`.  All we need to do is to multiply the percent by the last index in our polyline (which we can get from subtracting one from the [`size()`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html#show_size "size Documentation Page") which tells us how many vertices are in our polyline).
 	
 ![Polyline Sampled Normals](images/intrographics_polylinesamplednormals.png "Drawing normals at sampled points along a polyline")
 
-What if you pumped up the number of normals you are drawing?  Change your loop increment from `p+=10` to `p+=1`, change your loop condition from `p<100` to `p<500` and change your `p/100.0` lines of code to `p/500.0`.  You might also want to use a transparent white for drawing these normals, so add `ofSetColor(255,100);` right before your loop.  And you will end up being able to draw ribbon lines:
+What if we pumped up the number of normals in our drawing?  Let's change our loop increment from `p+=10` to `p+=1`, change our loop condition from `p<100` to `p<500` and change our `p/100.0` lines of code to `p/500.0`.  We might also want to use a transparent white for drawing these normals, so let's add `ofSetColor(255,100)` right before our loop.  We will end up being able to draw ribbon lines:
 
 ![Polyline Many Many Sampled Normals](images/intrographics_polylinemanysamplednormals.png "Drawing many many normals to fill out the polyline")
 
 **[Note: this should probably be done by sampling by length rather than percent, but I don't know if it is worth explaining that]**
 
-You've just added some thickness to your polylines - and we'll go into a way to do that in a more proper way - but let's have a quick aside and talk about tangents.  These wonderful things are perpendicular to the normals that we just drew.  So if you drew tangents along a perfectly straight line, you wouldn't really see anything.  The fun part comes when you draw tangents on a curved line, so let's see what that looks like.  Same drill as before, comment out the last code and add in the following:
+We've just added some thickness to our polylines.  Now let's have a quick aside about tangents.  These wonderful things are perpendicular to the normals that we just drew.  So if we drew tangents along a perfectly straight line we wouldn't really see anything.  The fun part comes when we draw tangents on a curved line, so let's see what that looks like.  Same drill as before.  Comment out the last code and add in the following:
 
 	vector<ofVec3f> vertices = polyline.getVertices();
 	float tangentLength = 80;
@@ -799,7 +814,7 @@ You've just added some thickness to your polylines - and we'll go into a way to 
 		ofLine(vertex-tangent/2, vertex+tangent/2);
 	}
 	
-This should look very familiar except for [`getTangentAtIndex`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html#show_getTangentAtIndex "getTangentAtIndex Documenation Page") which is just the equivalent of `getNormalAtIndex` but for tangents.  For straight and slightly curved lines, not much happens, but sharply curved lines reveal the tangents:
+This should look very familiar except for [`getTangentAtIndex()`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html#show_getTangentAtIndex "getTangentAtIndex Documenation Page") which is the equivalent of `getNormalAtIndex()` but for tangents.  Not much happens for straight and slightly curved lines, however, sharply curved lines reveal the tangents:
         
 **[Note: again diagram would explain the concept]**
 
@@ -817,13 +832,13 @@ I'm sure you can guess what's next... drawing a whole bunch of tangents at evenl
 		ofLine(point-tangent/2, point+tangent/2);
 	}
 
-[`getTangentAtIndexInterpolated`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html#show_getTangentAtIndexInterpolated "getTangentAtIndexInterpolated Documentation Page") works like `getNormalAtIndexInterpolated`.  And you get something like this:
+[`getTangentAtIndexInterpolated()`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html#show_getTangentAtIndexInterpolated "getTangentAtIndexInterpolated Documentation Page") works like `getNormalAtIndexInterpolated()`.  We get something like this:
 
 ![Polyline Exaggerated Tangents](images/intrographics_exaggeratedtangents.png "Drawing exaggerated tangents at at evenly spaced points along the polyline")
 
-That was worth the aside, right?  (I'm sorry.  Desperately trying to avoid a tangent pun.)  Back to the normals we were working with, eh?   
+That was worth the aside, right?  (I'm desperately trying to avoid a tangent pun.)  Back to the normals we were working with, eh?   
 
-It doesn't seem terribly efficient to add thickness to our lines by drawing lots and lots of normals using `ofLine`.  Instead, we can draw a filled polygon to cover the space that our normal lines are covering.  **[note: explain the winding order here]** So, we want to loop through all of our upper normal bounds from left to right, then loop around and follow the lower normal bounds from right to left.  In order to do this, we are going to store our points and normals into vectors [**note: make sure vectors are explained**].  Again, comment out the last code and add in the following:
+It doesn't seem terribly efficient to add thickness to our lines by drawing lots and lots of normals using `ofLine()`.  Instead, we can draw a filled polygon to cover the space that our normal lines are covering.  **[note: explain the winding order here]** So, we want to loop through all of our upper normal bounds from left to right, then loop around and follow the lower normal bounds from right to left.  In order to do this we are going to store our points and normals in vectors [**note: make sure vectors are explained**].  Again, let's comment out the code we just wrote and add in the following:
 
 	float numPoints = polyline.size();
 	float normalLength = 40;
@@ -837,7 +852,7 @@ It doesn't seem terribly efficient to add thickness to our lines by drawing lots
 		normals.push_back(normal);
 	}
 
-Nothing new here other than using vectors.  But it is important to note that we are using `p+=1` because we want to make sure that we are sampling our polyline at a high resolution.  We are now going to use three new functions: `ofBeginShape`, `ofVertex` and `ofEndShape`.  To indicate to openFrameworks that we want to build a polygon, we call [`ofBeginShape`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofBeginShape ofBeginShape Documentation Page).  Then we can add vertices to the polygon by calling [`ofVertex`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofVertex ofVertex Documentation Page).  And then finally, we finish our shape by calling [`ofEndShape`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofEndShape ofEndShape Documentation Page).  Note that you *must* add your vertices in between `ofBeginShape` and `ofEndShape`.  So to loop through our normals and create the polygon, add:
+Nothing new here other than using vectors.  But it is important to note that we are using `p+=1` because we want to make sure that we are sampling our polyline at a high resolution.  We are now going to use three new functions: `ofBeginShape()`, `ofVertex()` and `ofEndShape()`.  We call [`ofBeginShape()`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofBeginShape ofBeginShape Documentation Page) to tell openFrameworks that we want to build a polygon, we can then add vertices to the polygon by calling [`ofVertex()`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofVertex ofVertex Documentation Page).  Finally, we finish our shape by calling [`ofEndShape()`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofEndShape ofEndShape Documentation Page).  Note that we *must* add our vertices in between `ofBeginShape()` and `ofEndShape()`.  To loop through our normals and create the polygon, add:
 
 	ofSetColor(255, 200);
 	float numPoints = polyline.size();
@@ -862,7 +877,7 @@ Nothing new here other than using vectors.  But it is important to note that we 
 
 **[Note: how do you stop drawing the outline of the polygon without setting `ofSetLineWidth(0);`]**
 
-Before running, I would recommend commenting out your `polyline.draw();` line of code (if you haven't already).  Then you can have at it:
+Before running, let's comment out our `polyline.draw()` line of code.  Then let's have at it:
 
 ![Polyline Polygon Normals](images/intrographics_normalspolygon.png "Drawing a polygon from the normals along the polyline")
 
@@ -876,14 +891,13 @@ Before running, I would recommend commenting out your `polyline.draw();` line of
 
 ## 2. Moving The World ##
 
-Jeeze.  We've been making brushes for a long time.  Let's take a break from that and create a smaller project that will help demonstrate how you can move the world.  And by move the world, I really just mean move the coordinate system (though it sounds more exciting the other way).
+Jeeze.  We've been making brushes for a long time.  Let's take a break from that and create a smaller project that will help demonstrate how we can move the world. By move the world, I really just mean move the coordinate system (though it sounds more exciting the other way).
 
-Whenever we called a drawing function, like `ofRect` for example, we passed in an `x` and `y` location at which we wanted our shape to be drawn.  We knew (0,0) to be the upper left pixel of our window, that the positive x direction was rightward across our window and that positive y direction was downward along our window.  We are about to violate that established knowledge.  
+Whenever we call a drawing function, like `ofRect()` for example, we pass in an `x` and `y` location at which we want our shape to be drawn.  We know (0,0) to be the upper left pixel of our window, that the positive x direction is rightward across our window and that positive y direction is downward along our window.  We are about to violate this established knowledge.
 
 **[Note: this section needs pictures to go along with the analogy]**
 
-For a physical analogy, imagine that you have a piece of graphing paper in front of you (or go ahead and grab one).  Those squares are the pixels of your screen.  If I ask you to draw a black rectangle at (5, 10) that is 5 pixels wide and 2 pixels high, what would you do?  Probably grab a black pen and move your hand over to the location (5, 10) on your graphing paper and start filling in pixels?  Good, that seems normal.  But you could have also have kept your pen hand stationary, moved your paper 5 pixels left and 10 pixels down and then started filling in pixels.  That initially seems like an odd thing to do right?  It turns out that it is a powerful thing to do in code.  With openFrameworks, we can move our coordinate system like this using `ofTranslate`, but we can also rotate or scale the coordinate system with `ofRotate` and `ofScale`.  
-
+For a physical analogy, imagine that we have a piece of graphing paper in front of us ~~(or go ahead and grab one)~~.  The graph squares represent the pixels of our screen.  How would we draw a black rectangle at (5, 10) that is 5 pixels wide and 2 pixels high?  We would probably grab a black pen, move our hands over to the location (5, 10) on our graphing paper, and start filling in pixels?  Good, that seems normal.  But we could have also have kept our pen hand stationary, moved our paper 5 pixels left and 10 pixels down and then started filling in pixels.  That initially seems like an odd thing to do right?  It turns out that this is a powerful thing to do in code.  With openFrameworks, we can move our coordinate system like this using `ofTranslate()`, but we can also rotate or scale the coordinate system with `ofRotate()` and `ofScale()`.  
 **[Note: explain why ofBackground can't be used with transparency]**
 
 So let's tackle [`ofTranslate`](http://www.openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofTranslate "ofTranslate Documentation Page") first.  `ofTranslate` takes an x, a y and an optional z parameter, and then shifts the coordinate system by those specified values.  Why would you ever want to shift the coordinate system like this?  Imagine that you wrote some code to draw a little stick figure family.  Or better yet, create a new project and add this to your `draw` function of your source file (.cpp):
@@ -1163,10 +1177,6 @@ Then use `bgColor` when you call `ofSetColor` before drawing the transparent rec
 
 Congrats, you survived coordinate transformations :)
 
-	
-
-
-
 ## 3. See outline ##
 
 This chapter is super long to begin with...but I have another project in the outline around generative color.  It might be time to cut that.
@@ -1178,6 +1188,6 @@ This chapter is super long to begin with...but I have another project in the out
 - `polyline.getPointAtPercent(0)` and `polyline.getPointAtPercent(1.0)` return the same thing
 
 **General notes:**
-- might be a small thing, but I'm considering going back and rewritting all for loops to use i++ over ++i. i++ is more readable for a beginner
+- might be a small thing, but I'm considering going back and rewritting all for loops to use i++ over ++i. i++ is more readable for a beginner **[bd: I think this is a good idea.]**
 
 
