@@ -83,14 +83,14 @@ The left curly brace goes on the same line as the start of the statement. **No e
 ##Referring to code in text
 
 ###Variables, functions, and functions with arguments
-Referring to code in text can be tricky. Here is a list of uniform practices to use when referring to the following keywords, variable types, functions, etc...
+Referring to code in text can be tricky. Here is a list of uniform practices to use when referring to the following keywords, variable types, functions, etc __in text__.
 
 - `variableName`
-- `ClassName` or `ofClassName`
+- `CustomClassName` or `ofClassName`
 - `functionName()` where the function requires __no__ parameter.
 - `functionName(...)` where the function requires __one or more__ parameter.
 
-###Misc
+##Misc
 Be careful not to interchange the use of "parameter" and "argument". See the accepted answer to [this](http://stackoverflow.com/questions/1788923/parameter-vs-argument) Stack Overflow question for more info.
 
 When referring to a __specific__ line of example code try to mention it in-line without the semicolon. e.g. `ofBackground(255)` instead of like this `ofBackground(255);`. 
@@ -101,13 +101,10 @@ Refer to openFrameworks app (and subsequent `.h` and `.cpp` files) as `baseApp` 
 
 Refer to all keywords and variable types in text as `int`, `for` loop, and `if` statements with in-line code highlighting like this sentence employs.
 
-##Questions?
+##Editor Workflow
 
-###Contradictions to of-code-style
-- Why not use `cout`? This makes since for oF developers but is it safe for use with openFrameworks/C++ instruction? It seems like it is an important C++ feature and one that is used prevalently with oF users.
+Some discussion has been revolving around editing workflow in [this issue](https://github.com/openframeworks/ofBook/issues/27). It seems that the best way to submit edits and suggestions is to create a Pull Request. While editors may have access to push directly to the ofBook repository, this workflow allows publicly documented communication and discourse around changes, and does a nice job of keeping editors from stepping on the toes of authors.
 
-###Buggy Functions
+Editors are encouraged to use ~~strikethroughs~~ and **[BD: boldly bracketed notes that begin with the editor's initials]** directly on the `chapter.md` file. Simple style changes and grammar/spelling fixes can also be edited to that file. 
 
-With functions that don't necessarily work how they are supposed to in the documentation, like `ofEnableAlphaBlending()`, you should value how it is __documented__ over how it actually __works__. That is, as long as the discrepancy doesn't break its functionality. The reasoning behind this is that it is easier for a user to track code through documentation and change logs than trial and error in code.
-
-(^Is this correct?)
+For general suggestions and comments regarding the chapter as a whole, or any miscellaneous editing info, a `editor_notes.md` file should be added to the chapter directory.
