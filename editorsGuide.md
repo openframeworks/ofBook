@@ -1,8 +1,16 @@
-#Editor's Style Guide
+#Editor's Guide
 
 The following guide aims to outline a standard of writing (and code) practices for ofBook. The multiple-author-model that ofBook uses allows for a well rounded and diverse insight to openFrameworks/C++ techniques and practices, however, it also proposes some possible clarity and consistency challenges from a reader's perspective. This guide attempts to tackle some of these issues by outlining a style guide for editors (and authors) to follow.
 
 A general ofBook [Style Guide](StyleGuide.md) already exists. Think of this one as an add-on directed towards editors.
+
+##Editor Workflow
+
+Some discussion has been revolving around editing workflow in [this issue](https://github.com/openframeworks/ofBook/issues/27). It seems that the best way to submit edits and suggestions is to create a Pull Request. While editors may have access to push directly to the ofBook repository, this workflow allows publicly documented communication and discourse around changes, and does a nice job of keeping editors from stepping on the toes of authors.
+
+Editors are encouraged to use ~~strikethroughs~~ and **[BD: boldly bracketed notes that begin with the editor's initials]** directly on the `chapter.md` file. Simple style changes and grammar/spelling fixes can also be edited to that file. 
+
+For general suggestions and comments regarding the chapter as a whole, or any miscellaneous editing info, a `editor_notes.md` file should be added to the chapter directory.
 
 ##Code Practices
 To remain consistent to oF's coding practices ofBook will use the official [oF Code Style](https://github.com/openframeworks/openFrameworks/wiki/oF-code-style). Here are some notable highlights:
@@ -89,22 +97,28 @@ Referring to code in text can be tricky. Here is a list of uniform practices to 
 - `CustomClassName` or `ofClassName`
 - `functionName()` where the function requires __no__ parameter.
 - `functionName(...)` where the function requires __one or more__ parameter.
+- `+`, `-`, `*`, `/`, `%`, `+=`, `-=`, `*=` and all other math operators.
 
 ##Misc
 Be careful not to interchange the use of "parameter" and "argument". See the accepted answer to [this](http://stackoverflow.com/questions/1788923/parameter-vs-argument) Stack Overflow question for more info.
 
 When referring to a __specific__ line of example code try to mention it in-line without the semicolon. e.g. `ofBackground(255)` instead of like this `ofBackground(255);`. 
 
-Make sure that "property" vs "variable" and "function" vs "method" are used correctly. Technically all variables and functions that are used in `ofBaseApp` are properties and methods, but for instructional purposes they should be illustrated to be functions and variables.
+Make sure that "property" vs "variable" and "function" vs "method" are used correctly. Technically all variables and functions that are used in `ofBaseApp` are properties and methods, but for instructional purposes they should be referred to as "functions" and "variables". In the case of custom class creation refer to 
 
 Refer to openFrameworks app (and subsequent `.h` and `.cpp` files) as `baseApp` not `testApp`.
 
 Refer to all keywords and variable types in text as `int`, `for` loop, and `if` statements with in-line code highlighting like this sentence employs.
 
-##Editor Workflow
+~~Always type expressions using in-line code or code blocks, even when referring to the __idea__ of an expression and not example code. For instance, 1 + 1 = 2 should be written as `1 + 1 = 2`.~~**[BD: Is this a good idea?]**
 
-Some discussion has been revolving around editing workflow in [this issue](https://github.com/openframeworks/ofBook/issues/27). It seems that the best way to submit edits and suggestions is to create a Pull Request. While editors may have access to push directly to the ofBook repository, this workflow allows publicly documented communication and discourse around changes, and does a nice job of keeping editors from stepping on the toes of authors.
+##Referring to console logging and errors
+ 
+Place any console output (or errors) in their own designated code block like so:
 
-Editors are encouraged to use ~~strikethroughs~~ and **[BD: boldly bracketed notes that begin with the editor's initials]** directly on the `chapter.md` file. Simple style changes and grammar/spelling fixes can also be edited to that file. 
-
-For general suggestions and comments regarding the chapter as a whole, or any miscellaneous editing info, a `editor_notes.md` file should be added to the chapter directory.
+	prog.cpp: In function ‘int main()’:
+	prog.cpp:5:2: error: ‘cout’ was not declared in this scope
+	  cout << "Hello World" << endl;
+	  ^
+	prog.cpp:5:27: error: ‘endl’ was not declared in this scope
+	  cout << "Hello World" << endl;
