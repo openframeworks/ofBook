@@ -1,0 +1,12 @@
+- 2D
+- immediate mode vs ofPolyline/ofPath
+
+- 3D
+- Transformation matrices
+    - ofTranslate/Rotate/Scale using ofMatrix4x4
+    - ofNode
+- ofCamera
+- ofMesh
+- ofVboMesh
+- of3dPrimitive
+- Applying simple textures to 3d primitives and ofFbo
