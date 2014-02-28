@@ -16,6 +16,12 @@ https://github.com/openframeworks/ofBook/blob/master/03_setup_and_project_struct
 
 
 
+OOPs!:
+
+https://github.com/openframeworks/ofBook/blob/master/03a_OOPs!/chapter.md
+
+
+
 Animation:
 
 https://github.com/openframeworks/ofBook/blob/master/04_animation/chapter.md
@@ -70,3 +76,15 @@ https://github.com/openframeworks/ofBook/blob/master/21_advanced_graphics/chapte
 Math:
 
 https://github.com/openframeworks/ofBook/blob/master/math_chapters_unnumbered/chapter.md
+
+
+
+Project Breakdown (Eva):
+
+https://github.com/openframeworks/ofBook/blob/master/project_eva/chapter.md
+
+
+
+Project Breakdown Memo):
+
+https://github.com/openframeworks/ofBook/blob/master/project_memo/chapter.md
