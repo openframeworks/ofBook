@@ -2838,7 +2838,7 @@ int main() {
 	for(int i=0;i<40;i++){
 		iterator += 67;
 		float normalized = iterator / 256.0;
-		for(int j = 0 ; j < 100 * normalized ; j++){
+		for(int j = 0 ; j < 100 * normalized ; j++){    // new
 			cout << 'Z';
 		}
 		cout <<  endl;
@@ -2896,16 +2896,185 @@ Sometimes, a surprising feedback loop might be all you need, instead of reaching
 
 ### Signed, Unsigned ###
 
+You may have noticed the use of a special keyword in the previous example, `unsigned`. In languages like Java or Javascript, all numbers are *signed* meaning they are capable of being negative. (the *sign* tells us whether the number is negative). When working in C, we benefit from the convenience of specifying explicitly whether or not an int or char is signed or unsigned by adding the keyword before the type. `unsigned char myByte = 128;` To see the difference between signed and unsigned, let's loop through all the values of a char, printing each one.
+
+```C++
+#include <iostream>
+#include <math.h>
+using namespace std;
+
+int main() {
+	for(int i=0;i<256;i++){
+		unsigned char c = i;          //convert integer to char
+		cout << (int)c << ' ';
+	}
+	return 0;
+}
+```
+
+The output is a list of integers 0 through 255 as you would expect.
+
+```
+0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26
+27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49
+50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72
+73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95
+96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113
+114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 129 130
+131 132 133 134 135 136 137 138 139 140 141 142 143 144 145 146 147
+148 149 150 151 152 153 154 155 156 157 158 159 160 161 162 163 164
+165 166 167 168 169 170 171 172 173 174 175 176 177 178 179 180 181
+182 183 184 185 186 187 188 189 190 191 192 193 194 195 196 197 198
+199 200 201 202 203 204 205 206 207 208 209 210 211 212 213 214 215
+216 217 218 219 220 221 222 223 224 225 226 227 228 229 230 231 232
+233 234 235 236 237 238 239 240 241 242 243 244 245 246 247 248 249
+250 251 252 253 254 255
+```
+
+Chars are signed by default. change `unsigned` to `signed`, and run it again. The output is different.
+
+```
+0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26
+27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49
+50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72
+73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95
+96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113
+114 115 116 117 118 119 120 121 122 123 124 125 126 127 -128 -127 -126
+-125 -124 -123 -122 -121 -120 -119 -118 -117 -116 -115 -114 -113 -112
+-111 -110 -109 -108 -107 -106 -105 -104 -103 -102 -101 -100 -99 -98
+-97 -96 -95 -94 -93 -92 -91 -90 -89 -88 -87 -86 -85 -84 -83 -82 -81
+-80 -79 -78 -77 -76 -75 -74 -73 -72 -71 -70 -69 -68 -67 -66 -65 -64
+-63 -62 -61 -60 -59 -58 -57 -56 -55 -54 -53 -52 -51 -50 -49 -48 -47
+-46 -45 -44 -43 -42 -41 -40 -39 -38 -37 -36 -35 -34 -33 -32 -31 -30
+-29 -28 -27 -26 -25 -24 -23 -22 -21 -20 -19 -18 -17 -16 -15 -14 -13
+-12 -11 -10 -9 -8 -7 -6 -5 -4 -3 -2 -1
+```
+
+Instead of counting all the way up to 255, it looks like the sequence stops after 127, switches over to -128, then counts up from there until it reaches -1. A `signed char` can only count to 127 because it's using one of its bits as the sign. Figure 32 shows the 8 bits that make up the char in computer memory. With only 7 bits, you can only count from 0 to 127.
+
+![Figure 32. Signed vs. Unsigned in memory](images/signed-unsigned.png "Figure 32. Signed vs. Unsigned in memory")
+
+###Bool
+
+I previously mentioned George Boole when talking about the business of true and false. Whilst a true/false can be stored as a number (zero being false, and non-zero being true), C provides a convenient type called a `bool` whose value can only be true or false. In the following example, I declare a boolean variable and store a counting integer into it.
+
+```C++
+#include <iostream>
+#include <math.h>
+using namespace std;
+
+int main() {
+	bool foo;
+	for(int i=0;i<10;i++){
+		foo = i;
+		cout << foo;
+	}
+	return 0;
+}
+```
+
+The output is `0111111111` since `bool` only cares if the number is zero or non-zero. of course, since a bool is true or false, it goes naturally with OR (||), AND (&&), and NOT(!) as I discussed back in the *Boolean Logic* section. The following example program declares 4 booleans and uses them as bits in a 4-bit counter.
+
+```C++
+#include <iostream>
+#include <math.h>
+using namespace std;
+
+void render(bool v){
+	if(v){
+		cout << "democratic ";
+	}else{
+		cout << "republican ";
+	}
+}
+
+int main() {
+	
+	bool bit0 = false;
+	bool bit1 = false;
+	bool bit2 = false;
+	bool bit3 = false;
+	
+	for(int i=0;i<32;i++){
+		
+		render(bit3);
+		render(bit2);
+		render(bit1);
+		render(bit0);
+		cout << endl;
+				
+		bit0 = !bit0;
+		if(!bit0){
+			bit1 = !bit1;
+			if(!bit1){
+				bit2 = !bit2;
+				if(!bit2){
+					bit3 = !bit3;
+				}
+			}
+		}
+
+	}
+	return 0;
+}
+```
+
+The output is the 4 bits properly counting upward in binary.
+
+```
+republican republican republican republican 
+republican republican republican democratic 
+republican republican democratic republican 
+republican republican democratic democratic 
+republican democratic republican republican 
+republican democratic republican democratic 
+republican democratic democratic republican 
+republican democratic democratic democratic 
+democratic republican republican republican 
+democratic republican republican democratic 
+democratic republican democratic republican 
+democratic republican democratic democratic 
+democratic democratic republican republican 
+democratic democratic republican democratic 
+democratic democratic democratic republican 
+democratic democratic democratic democratic 
+republican republican republican republican 
+republican republican republican democratic 
+republican republican democratic republican 
+republican republican democratic democratic 
+republican democratic republican republican 
+republican democratic republican democratic 
+republican democratic democratic republican 
+republican democratic democratic democratic 
+democratic republican republican republican 
+democratic republican republican democratic 
+democratic republican democratic republican 
+democratic republican democratic democratic 
+democratic democratic republican republican 
+democratic democratic republican democratic 
+democratic democratic democratic republican 
+democratic democratic democratic democratic
+```
+
+##Bitwise operators
+
+In addition to basic arithmetic and boolean logic, C provides a palette of operators for manipulating individual bits. Although *bitwise* operations are *infix* notation, (two numbers surrounding a punctuation), I think of them less as mathematics and more as basic building blocks of computers. Some are quite common and worth pointing out. Let us explore.
+
++ todo: looking to eliminating the binary rabbit hole. sent email on feb 27. waiting for any responses.
+
 
 
 ===
 
+( this chapter is in-progress. [see outline](outline.md) for upcoming subject matter. )
+
+
+===
+
+
 + computer science operators
 	+ bitwise math
 		+ interlude about how `cout` overloads `<<`
-
-+ some less basic data types (unsigned, double, long, short)
-+ don't forget boolean type.
 
 + switch-case
 
@@ -2930,15 +3099,16 @@ Sometimes, a surprising feedback loop might be all you need, instead of reaching
 + other STL?
 
 
-+ possibly show them local terminal-based C++ in cygwin/linux/bsd
-+ possibly weave in basic GLUT/OpenGL to make this all more fun?
-
 + learning C++ "for real" (book recommendations)
 
 + todo: change "goodnight moon" example to not step on ITP's toes
 
-* this chapter is in-progress. [see outline](outline.md) for upcoming subject matter. *
 
+
++ cancelled
+  + possibly show them local terminal-based C++ in cygwin/linux/bsd
+  + possibly weave in basic GLUT/OpenGL to make this all more fun?
+  + some less basic data types (double, long, short)
 	
 
 ###bibliography
