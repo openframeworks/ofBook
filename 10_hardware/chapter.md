@@ -189,9 +189,11 @@ DMX (which stands for Digital Multiplex), also known as DMX512 (512 being the nu
 ![DMX Lighting](images/stutterspot.jpg "DMX Lighting")
 
 **Overview of the DMX protocol**
+
 In order to send DMX first of all you need a DMX to USB control interface. This is a special box that you'll need to purchase in order to enable your computer to send DMX data via a USB port. These interfaces can be easily purchased on-line in case you can't track one down locally. You'll also need some DMX cables to connect between the interface and the DMX device you want to control. Microphone cables with XLR connectors can be used to send DMX data, although the official standard for DMX is a 5-pin cable, unlike the 3-pins that XLR has to offer. There does exist adaptors between 5 and 3-pin connectors in case you need to mix and match them. In any case, hook up your hardware via cables to your DMX to USB device, install your drivers if required (Operating System dependent) and you are ready to send. As previously mentioned, each DMX output from your controller can send up to 512 channels of DMX data. In DMX terminology, each group of 512 channels is known as a "Universe". Multiple DMX Universes are often used in complex setups requiring lots of channels. Typically you won't need more than a single universe as a single coloured light will only use up around 3 channels (one each for red, green and blue).
 
 ** DMX data format **
+
 A DMX packet, in other words the data sent to the hardware each frame, consists of 512 channels, with an 8-bit value sent per channels (i.e. 0-255). One of the idiosyncracies of DMX is that the channel numbering starts at 1, channel 0 being a start code and not a data channel. This means that when setting up an array to hold your per-frame DMX data, you'll need to make it a size of 513 bytes (a byte in this case being also known as an 'unsigned char').
 
     //setup the data structure
@@ -208,29 +210,33 @@ A number of OF addons have sprung up around DMX, a quick search of ofxAddons.com
 **Structure of an OF DMX application**
 No matter which code or which addon you use, the way in which you'll send DMX data will be very similar to the following pseudo-code (replace the comments with the relevant code):
 
-void Setup() {
-    //connect to your DMX controller
-}
+    void Setup() {
+        //connect to your DMX controller
+    }
 
-void Update() {
-
-    //assign the relevant values to your DMX data structure
+    void Update() {
     
-    //update the DMX controller with the new data
-}
+        //assign the relevant values to your DMX data structure
+        
+        //update the DMX controller with the new data
+    }
 
 **Using a colour picker to set up your lights**
+
 *TODO*
 
 ##Raspberry Pi - getting your OF app into small spaces##
 
 **Raspberry Pi and the Serial Port - Connecting to an Arduino**
+
 *TODO*
 
 **Running the Rasperry PI headless**
+
 *TODO*
 
 **Case Study: Raspberry PI as a master DMX controller**
+
 One of the nifty uses of a Raspberry Pi is to use it as a master DMX controller. It takes up little space and sending serial data doesn't require much processing power so it's a perfect candidate. Add to that the ability to control your OF app running on the PI remotely via OSC, for example using an Android or IOS tablet, and you have a fully fledged custom DMX set up which would otherwise require expensive commercial software to replicate.
 
 
