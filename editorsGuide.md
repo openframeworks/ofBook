@@ -106,7 +106,7 @@ When referring to a __specific__ line of example code try to mention it in-line 
 
 Make sure that "property" vs "variable" and "function" vs "method" are used correctly. Technically all variables and functions that are used in `ofBaseApp` are properties and methods, but for instructional purposes they should be referred to as "functions" and "variables". In the case of custom class creation refer to 
 
-Refer to openFrameworks app (and subsequent `.h` and `.cpp` files) as `baseApp` not `testApp`.
+Refer to openFrameworks app (and subsequent `.h` and `.cpp` files) as `ofApp` not `testApp`.
 
 Refer to all keywords and variable types in text as `int`, `for` loop, and `if` statements with in-line code highlighting like this sentence employs.
 
