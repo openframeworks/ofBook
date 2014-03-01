@@ -100,7 +100,7 @@ Referring to code in text can be tricky. Here is a list of uniform practices to 
 - `+`, `-`, `*`, `/`, `%`, `+=`, `-=`, `*=` and all other math operators.
 
 ##Misc
-Be careful not to interchange the use of "parameter" and "argument". See the accepted answer to [this](http://stackoverflow.com/questions/1788923/parameter-vs-argument) Stack Overflow question for more info.
+Be careful not to interchange the use of "parameter" and "argument". See the accepted answer to [this](http://stackoverflow.com/questions/1788923/parameter-vs-argument) Stack Overflow question for more info. This isn't of upmost importance but it would be helpful to teach the habit of using these words correctly.
 
 When referring to a __specific__ line of example code try to mention it in-line without the semicolon. e.g. `ofBackground(255)` instead of like this `ofBackground(255);`. 
 
