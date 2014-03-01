@@ -111,14 +111,3 @@ Refer to openFrameworks app (and subsequent `.h` and `.cpp` files) as `baseApp` 
 Refer to all keywords and variable types in text as `int`, `for` loop, and `if` statements with in-line code highlighting like this sentence employs.
 
 ~~Always type expressions using in-line code or code blocks, even when referring to the __idea__ of an expression and not example code. For instance, 1 + 1 = 2 should be written as `1 + 1 = 2`.~~**[BD: Is this a good idea?]**
-
-##Referring to console logging and errors
- 
-Place any console output (or errors) in their own designated code block like so:
-
-	prog.cpp: In function ‘int main()’:
-	prog.cpp:5:2: error: ‘cout’ was not declared in this scope
-	  cout << "Hello World" << endl;
-	  ^
-	prog.cpp:5:27: error: ‘endl’ was not declared in this scope
-	  cout << "Hello World" << endl;
