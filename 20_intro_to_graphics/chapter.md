@@ -1185,6 +1185,7 @@ Congrats, you survived coordinate transformations :)
 This chapter is super long to begin with...but I have another project in the outline around generative color.  It might be time to cut that.
 
 
+## Notes to Self ## 
 
 **openFrameworks Bugs and Weirdness:**
 - Setting alpha to 1 causes the hue information on a color to shift when drawing overlapping shapes (need to verify this happens outside of the brush app)
