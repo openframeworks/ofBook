@@ -31,7 +31,12 @@ good reference => http://cocoadevcentral.com/d/learn_objectivec/
 
 #Under the Hood
 
-Every single iOS app starts with an Application Delegate which is the top level UIKit class that initialises the app. The App Delegate needs to create two things for the app to run, a UIWindow, that manages and displays all the views in the app, and a root view controller that manages views and transition.
+UIKit is the backbone of all iOS apps. It is a collection of classes or framework that provide a standardised structure for creating and running applications. UIKit provides the skeleton structure into which you can insert your custom application code and makes it easy to receive system events like device orientation changes or memory warning as two examples amongst many. 
+
+UIKit organises its classes using the MVC (model-view-controller) design pattern. When you get into iOS programming you will see the MVC patterns everywhere, especially when working with UIViewControllers. MVC breaks up code into one of the three categories and makes the code more extensible and reusable.
+
+When you run a iOS app, it always begins with the UIApplication class which listens for system events and passes them into the app code for further handling. The first class you can start writing your own code into is the Application Delegate. The App Delegate is responsible for creating and managing the UIWindow as well as the root UIViewController, two very important objects in the iOS app structure. UIWindow's job is to coordinate and display content on the screen. As for a UIViewController, you can think of it as a single app screen and using the this analogy the root UIViewController can be thought of as the home screen for the app. The root UIViewController is the bottom most view controller on top of which you can stack other view controllers, aptly named the view controller stack. When stacking UIViewController objects on top of one another you get the beginnings of an app. You now have a few screens which with different UIView objects and you can navigate between them.
+
 
 ofxiOS does all this when a iOS OpenFrameworks app is first launched. Firstly, the ofxiOSAppDelegate is created and adds a ofxiOSViewController as the root view controller to the application window. The ofxiOSViewController manages a set of views, but most importantly it creates a OpenGL view for OpenFrameworks to render graphics into.
 
