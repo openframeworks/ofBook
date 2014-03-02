@@ -11,7 +11,7 @@
 
 > The magician of the future will use mathematical formulas.
 >
-> **--Aleister Crowley** [1 vote]**[BD: 2 votes]**
+> **--Aleister Crowley** [1 vote]**[BD: 2 votes]** **[MH: Make that 3 votes]**
 
 
 
@@ -35,6 +35,8 @@ This fractal, the famous *Sierpinski triangle ***[BD: Link? Or is that too distr
 The cycle ~~I just described (write code, run app, re-think program's behavior,  revise code, etc.) as shown~~**[BD: "illustrated above". The previous just feels a bit redundent]** in Figure 2, is an infinitely repeating loop that I have had a great pleasure of executing for a couple decades and I still love what I do. Each new cycle never fails to surprise me. As I pursue what it means to create a program, and what it means to create software art, the process of iteratively evolving a list of computer instructions always presents as much logical challenge as it does artistic reward. Very few of those challenges have been impossible to solve, especially with other people available to collaborate and assist, or by splitting my puzzle into smaller puzzles. If you have already written code in another environment like Processing, Javascript, or even HTML with CSS, then this first important lesson might seem too obvious.
 
 ![Figure 3: Don't get the wrong idea.](images/profit-not.png "Figure 3: Don't get the wrong idea.")
+
+**[MH: this figure would benefit from having arrows indicating flow, like in fig 2]**
 
 For those just now familiarizing themselves with what it means to write small programs, it is important to understand the iterative nature of the code writing process. The anecdote in Figure 3 shows what this process is *not*. Rarely would you ever enter some code into the editor just once, and expect to hit compile and see your finished outcome. It is natural, and commonly accepted for programs to start small, have plenty of mistakes (bugs), and evolve slowly toward a goal of desired outcome or behavior. In fact it is so commonplace that to make the former assumption is a downright programmer's mistake. Even in older days when programs were hand-written on paper, the author still needed to eyeball the code obsessively in order to work out the mistakes, and therefore the process was iterative. In learning the C++ language, I will provide tiny code examples that you will be compiling on your machine. The abnormal part is typing the code from the book into the editor, and (provided your fingers do not slip), the program magically runs. I am deliberately removing the troubleshooting experience in order to isolate out the subject matter of the C++ language itself. Later on, we will tackle the black art of *debugging* as a topic all its own.
 
@@ -181,7 +183,7 @@ The compiler found an error and did not run the program. Instead, it's showing y
 #include <iostream>
 ```
 
-When using OpenFrameworks, you have choice of tools and platforms. Each one shows you an error in a different way. Sometimes the editor will open up and highlight the code for you, placing an error talk bubble for more info. Other times, the editor will show nothing, but the compile output will show a raw error formatted similar to the one above. Whilst sometimes useful that we receive several errors from a compile, it can save a lot of grief if you focus on understanding and fixing the very first error that got reported. After fixing the top error, it is likely that all subsequent errors will elegantly disappear, having all been covered by your first fix.
+When using OpenFrameworks, you have choice of tools and platforms. Each one shows you an error in a different way. Sometimes the editor will open up and highlight the code for you, placing an error talk bubble for more info. Other times, the editor will show nothing, but the compile output will show a raw error formatted similar to the one above. Whilst sometimes useful that we receive several errors from a compile, it can save a lot of grief if you focus on understanding and fixing the very first error that got reported. After fixing the top error, it is likely that all subsequent errors will elegantly disappear, having all been covered by your first fix.  **[MH: There's an opportunity here to note that by commenting out of a single line, the reader caused two errors]**
 
 ###Namespaces at First Glance
 
@@ -278,7 +280,9 @@ Good night brush.
 Good night bowl full of mush.
 ```
 
-In this new code, notice the second function `greet()` which looks the same but different from `main()`. It has the same curley brackets to hold the code block, but the return type is different. It has the same pair of parentheses, but this time there is something inside. And what about that required return statement? The *void* keyword is used in place of a return type when a function does not return anything. So, since `greet()` has a *void* return type, the compiler will not complain should you leave out the `return`. However, you may still use the return statement to end the execution of the function early. More on this when we get to functions that have multiple lines of code. In the parentheses, you see `string person`. This is an *argument*, an input-value for the function to use. In this case, it's a bit like find-and-replace. Down in `main()`, you see I call `greet()` five times, and each time, I put a different string in quotes between the parentheses. These five lines of code are all ***function calls***. They are telling `greet()` to execute, and passing it the one string argument so it can do its job. That one string argument is made available to `greet()`'s inner code via the argument called `person`. To see the order of how things happen, take a look at Figure 11.
+In this new code, notice the second function `greet()` which looks the same but different from `main()`. It has the same curley brackets to hold the code block, but the return type is different. It has the same pair of parentheses, but this time there is something inside. And what about that required return statement? The *void* keyword is used in place of a return type when a function does not return anything. So, since `greet()` has a *void* return type, the compiler will not complain should you leave out the `return`. However, you may still use the return statement to end the execution of the function early. More on this when we get to functions that have multiple lines of code. **[MH: Since you are going to explain returning early later in your chapter anyway, I wouldn't bother mentioning it here as it might distract newbies]** In the parentheses, you see `string person`. This is an *argument*, an input-value for the function to use. In this case, it's a bit like find-and-replace. Down in `main()`, you see I call `greet()` five times, and each time, I put a different string in quotes between the parentheses. These five lines of code are all ***function calls***. They are telling `greet()` to execute, and passing it the one string argument so it can do its job. That one string argument is made available to `greet()`'s inner code via the argument called `person`. To see the order of how things happen, take a look at Figure 11.
+
+**[MH: The distinction between argument and paramter might be important enough to warrent its own graphic?]**
 
 ![Figure 11. Function Call Flow](images/function-call.png "Figure 11. Function Call Flow")
 
@@ -356,7 +360,7 @@ The answer to the life the universe and everything is 42.
 That number plus 1 is 43.
 ```
 
-We understand from a previous lesson that stuff you put between the `<<` operators will get formatted into the `cout` object, and magically end up in the output console. Notice in the last line, I put a bit of light arithmetic (42+1) in-between parentheses, and it evaluated to 43. That is called an *expression*, in the mathematics sense. These three lines of code all say something about the number 42, and so they all contain a literal integer. If I want to change that number, I can do what I know from word processing, and "find-and-replace" the 42 to a new value. Now what if I had 100,000 particles in a 3d world. Some have 42's that need changing, but other 42's that should not be changed? Things can get both heavy and complex when you write code. The most obvious application of *variables* is that they are a very powerful find-and-replace mechanism, but you'll see that variables are useful for more than that. So let's declare an integer at the top of the code and use it in place of the literal 42's.
+We understand from a previous lesson that stuff you put between the `<<` operators will get formatted into the `cout` object, and magically end up in the output console. Notice in the last line, I put a bit of light arithmetic (42+1) in-between parentheses, and it evaluated to 43. That is called an *expression*, in the mathematics sense. These three lines of code all say something about the number 42, and so they all contain a literal integer. **[MH: Worth noting what literal means]** If I want to change that number, I can do what I know from word processing, and "find-and-replace" the 42 to a new value. Now what if I had 100,000 particles in a 3d world. Some have 42's that need changing, but other 42's that should not be changed? Things can get both heavy and complex when you write code. The most obvious application of *variables* is that they are a very powerful find-and-replace mechanism, but you'll see that variables are useful for more than that. So let's declare an integer at the top of the code and use it in place of the literal 42's.
 
 ```C++
 #include <iostream>
@@ -384,7 +388,7 @@ int answer;
 answer = 42;
 ```
 
-In this case, there is a moment after you declare that variable when its answer may be unpredictable and glitchy because in C (unlike Java), fresh variables are not set to zero for free - you need to do it. Instead, the variable is occupied with what ever old computer memory happens to be sitting there at the time. So, unless you intend to make glitch art, please always initialize your variable to some number upon declaring it, even if that number is zero.
+In this case, there is a moment after you declare that variable when its answer may be unpredictable and glitchy because in C (unlike Java), fresh variables are not set to zero for free - you need to do it. Instead, the variable is occupied with what ever old computer memory happens to be sitting there at the time. **[MH: You haven't mentioned memory yet, so this might not make sense to all readers]** So, unless you intend to make glitch art, please always initialize your variable to some number upon declaring it, even if that number is zero.
 
 ### Naming your variable
 
@@ -483,6 +487,8 @@ mov ax, 4        ; store literal integer into working register
 mov bucket, ax  ; move contents of working register into RAM at address 'bucket'
 ```
 
+**[MH: I might have missed something - what does understanding assembly add to understanding the origin of `=`?]**
+
 In the above assembly code, the programmer needs to put the value into an intermediary called a *register* before it can go into the place in memory we know as a variable. The usefulness of having the variable name on the left side rather than the right becomes apparent in practice since the expressions get get quite lengthy! Beginning a line with `varname =` ends up being easier for the eyeball to scan because it's guaranteed to be 2 symbols long before starting in on whatever madness you plan on typing after the equals sign.
 
 Analyzing the previous code example, we see the number increments by 1 each time before it is output. I am repeatedly storing literal integers into the variable. Since a programming language knows basic arithmetic, let us now try the following modification:
@@ -515,6 +521,8 @@ The output should still be `012345`. By saying `counter = counter + 1`, I am inc
 Great Scott, that could make someone dizzy! But after doing it a few times, you'll see it doesn't get much more complicated than what you see there. This is a highly *practical* use of science fiction, and you probably aren't attempting to challenge the fabric of spacetime (unless you are Kyle McDonald, or maybe a Haskell coder). The point here is to modify the contents of computer memory, so we have `counter` from one instruction ago, in the same way that there might already be water in our bucket when we go to add water to it. Figure 22 shows `bucket = bucket + water`.
 
 ![Figure 22. bucket = bucket + water](images/minecraft-inc.png "Figure 22. bucket = bucket + water")
+
+**[MH: Shouldn't the empty bucket and water bucket be reversed?]**
 
 Incrementing by one, or adding some value to a variable is in fact so commonplace in all programming that there is even syntactic sugar for it. *Syntactic Sugar* is a redundant grammar added to a programming language for reasons of convenience. It helps reduce typing, can increase comprehension or expressiveness, and (like sugar) makes the programmer happier. The following statements all add 1 to `counter`.
 
@@ -614,7 +622,7 @@ Imagine riding your bicycle in the streets of your city. When you encounter inte
 
 Your ability to judge a situation and change your behavior based on your analysis is a kind of prediction behavior that defines intelligence. A computer program can also stop, analyze, and decide how to act in a more simplified way. *Conditionals* or *branching* in code are what provides this kind of simple yet useful intelligence. With just a little bit if *If-Then-Else* in your code, you can automate very complex decision making.
 
-Figure 23 shows a generative, interactive cluster of neurons coded in OpenFrameworks for the CLOUDS Interactive Documentary.
+Figure 23 shows a generative, interactive cluster of neurons coded in OpenFrameworks for the CLOUDS Interactive Documentary.  **[MH: Explicityly drop the word branching to link this up the to conditional concept?]**
 
 ![Figure 23. Neuron simulation from CLOUDS Interactive Documentary](images/vsneurons.png "Figure 23. Neuron simulation from CLOUDS Interactive Documentary")
 
@@ -760,7 +768,7 @@ if(true){
 }
 ```
 
-This is different from simply putting an un-braced line of code beneath the if-clause since that free-roaming line of code would execute *whether or not* the condition were true. So `else` turns out to be pretty convenient. Another similar piece is `else if` that allows you to cascade your if-then clauses in a way similar to CSS.
+This is different from simply putting an un-braced line of code beneath the if-clause since that free-roaming line of code would execute *whether or not* the condition were true. **[MH: adding an example free-roaming line to the above example might help]** So `else` turns out to be pretty convenient. Another similar piece is `else if` that allows you to cascade your if-then clauses in a way similar to CSS.
 
 ```C++
 
@@ -786,7 +794,7 @@ The following is debated as something worth avoiding by folks like JSLint (who a
 if (counter > 1) cout << "yes, it's greater";
 ```
 
-An if-statement with no curly braces will only "limit" the one immediately following line of code. Even with the other snap-in parts, the same "next line only" rules apply.
+An if-statement with no curly braces will only "limit" the one immediately following line of code. Even with the other snap-in parts, the same "next line only" rules apply.  **[MH: Maybe add a free roaming line after the if in order to show the next line only rule]**
 
 ```C++
 if (counter > 1) cout << "yes, it's greater";
@@ -952,7 +960,7 @@ I changed the contents of the `while`'s conditional expression so that it will o
 
 ```
 
-This is not the only way to stop a while loop. Let us nest some if-then clauses into the while loop, so I can demonstrate the `break` and `continue` statements.
+This is not the only way to stop a while loop. Let us nest some if-then clauses into the while loop, so I can demonstrate the `break` and `continue` statements.  **[MH: you mention introducing continue and then it doesn't come back for a few paragraphs]**
 
 ```C++
 	while(true){
@@ -967,6 +975,8 @@ This is not the only way to stop a while loop. Let us nest some if-then clauses 
 The output is `1 2 3 4 5 6 7 8 9 10 `. As I loop, I am repeatedly checking to see if counter is 10, and if that is the case, I `break` out of the loop. 
 
 ### Modulo %
+
+**[MH: mod is a stumbling block for the people I've tried to teach, and you use it heavily, so it might be worth walking through a little more?]**
 
 For the next example, I'd like to introduce you to the modulo operator, which is not so common in basic arithmetic but turns out to be useful and fun in programming. It is the percent sign operator, placed between 2 numbers, and it computes the *remainder* from dividing the left number by the right number. Here are a few examples:
 
@@ -2323,7 +2333,7 @@ int main() {
 }
 ```
 
-The output becomes a long, serene list of zeros since the `int` data type cannot handle a tiny fraction like 0.012. So during the moment it tries to add 0.012 to myNumber (which is an int), 0.012 gets automatically rounded down to an integer, which is zero every time. Now let's try the opposite example, storing ints into a float.
+The output becomes a long, serene list of zeros since the `int` data type cannot handle a tiny fraction like 0.012. So during the moment it tries to add 0.012 to myNumber (which is an int), 0.012 gets automatically rounded down **[MH: maybe better to say decimal gets disregarded/truncated since 0.012 gets rounded down whenever you round it]** to an integer, which is zero every time. Now let's try the opposite example, storing ints into a float.
 
 ```C++
 #include <iostream>
@@ -2765,7 +2775,7 @@ The classic random number generator *algorithm* is just a feedback loop wherein 
 
 ![Figure 31. Flowchart by Randall Munroe, xkcd](images/flow_charts.png "Figure 31. Flowchart by Randall Munroe, xkcd")
 
-If you can understand `random()` at an algorithmic level, you will be able to deeply remix it. The following is my own quick random function. It takes a char (0-255) and adds a prime number to it, causing it to wrap around from 255 to 0 as we iterate. 
+If you can understand `random()` at an algorithmic level, you will be able to deeply remix it. The following is my own quick random function. It takes a char (0-255) and adds a prime number to it, causing it to wrap around from 255 to 0 as we iterate. **[MH: Big fan of this idea, but wrapping is probably unexpected for newbies and could use a sentence to aknowledge that]**
 
 ```C++
 #include <iostream>
@@ -2953,6 +2963,8 @@ Chars are signed by default. change `unsigned` to `signed`, and run it again. Th
 ```
 
 Instead of counting all the way up to 255, it looks like the sequence stops after 127, switches over to -128, then counts up from there until it reaches -1. A `signed char` can only count to 127 because it's using one of its bits as the sign. Figure 32 shows the 8 bits that make up the char in computer memory. With only 7 bits, you can only count from 0 to 127.
+
+**[MH: planning to explain what a bit is?]**
 
 ![Figure 32. Signed vs. Unsigned in memory](images/signed-unsigned.png "Figure 32. Signed vs. Unsigned in memory")
 
