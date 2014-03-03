@@ -1,7 +1,7 @@
-C++11 chapter
+the following needs heavy rewrites for readability (flow of text)...
 
 # Blah blah
-C++ is a pretty old language, it's been around since XXX, and perhaps because of that (but certainly for many other reasons), it is often seen as archaic, obtuse, or perhaps just plain rubbish by today's standards. Contrary to that, many people believe that it is still offers the best balance of performance and clarity on the coding high street, and (in part thanks to the success of Unix and its mates) has an incredibly strong ecosystem of 3rd party libraries, device support and general acceptance, even up to the point where current  shader languages and CUDA use C++ as their language of choice.
+C++ is a pretty old language, it's been around since XXX, and perhaps because of that (but certainly for many other reasons), it is often seen as archaic, obtuse, or perhaps just plain rubbish by today's standards. Contrary to that, many people believe that it is still offers the best balance of performance and clarity on the coding high street, and (in part thanks to the success of Unix and its mates) has an incredibly strong ecosystem of 3rd party libraries, device support and general acceptance, even up to the point where current shader languages and CUDA use C++ as their language of choice.
 
 Some more modern languages (such as JavaScript and C#) make programs which run in a very different way to C/C++. They have a 'virtual machine', which is a very different type of computer than the one which crunches electronic signals on a circuit board. The virtual machine receives and processes program instructions like a real machine, but allows for all sorts of ideas which don't directly translate to silicon electronics, such as dynamic typing and reflection. The virtual machine abstracts the constraints of the processor away from the thinking of the programmer.
  
@@ -29,12 +29,12 @@ On each line of code we are:
 2. Declaring a new variable which is explicitly typed to match the value on the right
 3. Assigning the value to the variable
 
-What we may notice, is that the type of data on the right and left side of the `=`  is the same. Since C++ is strictly typed (e.g. a function which returns a `float` will always return a `float` no matter what), it is impossible for the value on the right hand side to ever be anything different. The compiler __knows__ what type of value the right hand will give, e.g. it knows that on line 1 that on the right hand side of the `=` is an `ofRectangle`. So perhaps if we were to write something like:
+What we may notice, is that the type of data on the right and left side of the `=` is the same. Since C++ is strictly typed (e.g. a function which returns a `float` will always return a `float` no matter what), it is impossible for the value on the right hand side to ever be anything different. The compiler __knows__ what type of value the right hand will give, e.g. it knows that on line 1 that on the right hand side of the `=` is an `ofRectangle`. So perhaps if we were to write something like:
 
 ```cpp
 auto myRectangle = ofGetCurrentViewport();
 auto rectangleCenter = myRectangle.getCenter();
-auto  rectangleCenterX = rectangleCenter.x;
+auto rectangleCenterX = rectangleCenter.x;
 ```
 
 Then the compiler can do some of the coding for us. In fact, thanks to `auto`, we can do this now. This code block compiles to exactly the same result as the first code block did. The compiler notices what's on the right hand side and substitutes in the correct type wherever it sees `auto`.
@@ -123,9 +123,9 @@ auto & x = rectangle.x;
 ```
 
 ## Summary
-* Save keystrokes (and your brain from remembering type names) by using `auto` in variable declarations
+* Save keystrokes by using `auto` in variable declarations
 * `auto` takes the type of the right hand side of the `=` assignment, and replaces the text `auto` with that type at compile time.
-* `auto` is not a magic container which can carry any type of data, it simply gets replaced at compile time by whatever is implied in the  code
+* `auto` is not a magic container which can carry any type of data, it simply gets replaced at compile time by whatever is implied in the code
 * You can't use `auto` in function arguments, return types and a few other places.
 * Use `const auto` for a const type, and `auto &` for a reference type
 
@@ -167,7 +167,7 @@ take some sexy snaps
 //oh dear, my photos are all in portrait
 for(auto & mySelfie : mySelfies) { 
 	//rotate them from landscape to portrait
-	mySelfie.rotate90(1);  // (1)
+	mySelfie.rotate90(1); // (1)
 }
 
 auto myFriends = snapChatClient.getFriends();
@@ -185,11 +185,11 @@ for(auto & myFriend : myFriend) {
 Notice that `for(thing : things)` gels so well with `auto`. Also notice that I'm using `auto &` since:
 
 * At `(1)` I want to be able to change the contents of the vector, so I need a reference to the vector item rather than a copy of it.
-* At `(2)`, it makes more sense to use a reference rather than a copy because it's computationally cheaper, and means I don't have to allocate new instances of `ofxSnapChat::Friend` (which I presume is quite a complex object, since it can do things like harbour societal dispositions of what it means to be attractive with the `bool isHot()` function).
+* At `(2)`, it makes more sense to use a reference rather than a copy because it's computationally cheaper, and means I don't have to allocate new instances of `ofxSnapChat::Friend` (which I presume is quite a complex object, since it can do things like send images over the internet, and understand societal dispositions of what it means to be attractive).
 
 ## Summary
 * Use `for(auto thing : vectorOfThings)`
-* This works with all the STL containers (`vector`, `map`, `list`, `deque`, `set`, etc) and in some more purpose built containers (e.g. `ofxGrayCode::dataSet`)
+* This works with all the STL containers (`vector`, `map`, `list`, `deque`, `set`, etc) and in some more purpose built containers (e.g. `ofxGrayCode::DataSet`)
 * Often you'll want to do `for(auto & thing : vectorOfThings)` to use a reference rather than a copy
 
 # override
@@ -205,7 +205,7 @@ public:
 //...
 };
 
-class AutoBuildingProjectionMapper {
+class AutoBuildingProjectionMapper : public BuildingProjectionMapper {
 public:
 	void mapTheGreekColums(); // woops, I spelt column incorrectly
 };
@@ -213,7 +213,7 @@ public:
 Now if I implement `AutoBuildingProjectionMapper::mapTheGreekColums`, it may never get called, and I may be wondering why my function calls are all being handled by the base class. The problem is that the compiler never told me that the function that I was trying to override didn't exist. Here comes `override` to the rescue.
 
 ```cpp
-class AutoBuildingProjectionMapper {
+class AutoBuildingProjectionMapper : public BuildingProjectionMapper {
 public:
 	void mapTheGreekColums() override;
 };
