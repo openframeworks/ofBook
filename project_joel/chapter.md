@@ -2,9 +2,9 @@
 
 ## Project Overview
 
-Anthropocene |ˈanTHrəpəˌsēn|
-adjective
-relating to or denoting the current geological age, viewed as the period during which human activity has been been the dominant influence on climate and the environment.
+Anthropocene ˈanTHrəpəˌsēn
+Adjective
+Relating to or denoting the current geological age, viewed as the period during which human activity has been been the dominant influence on climate and the environment.
 
 First of all, you should watch this video, to see the finished project, as part of a wider video all about the Greenpeace Field at Glastonbury 2013.
 
