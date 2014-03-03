@@ -28,7 +28,7 @@ We would like to explore the following ideas within the imagery, sound and feeli
 
 3: Making an oasis away from the rest of the festival that would last around 15 minutes, but raise some points about how the cycle of seasons of the Arctic are being affected.
 
-4. Generative audio - a four channel speaker system that adds depth and texture the visuals.
+4: Generative audio - a four channel speaker system that adds depth and texture the visuals.
 
 ### Actual Timeline
 ### Team and Credits
