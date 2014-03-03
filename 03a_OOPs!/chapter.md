@@ -22,25 +22,26 @@
 • 8 - quick intro to polymorphism
 
 ##• 1 - Overview
-This tutorial is an quick  and practical introduction to Object Oriented Programming in OpenFrameworks and a how-to guide to build and use your own classes.
+This tutorial is an quick and practical introduction to Object Oriented Programming in openFrameworks and a how-to guide to build and use your own classes.
 By the end of this chapter you should understand how to create your own objects and have a lot of balls bouncing on your screen!
 
 ##• 2 - What is OOP
-Object Oriented Programming is a programming paradigm based on the use of objects and their interactions. some definitions:
+Object Oriented Programming is a programming paradigm based on the use of objects and their interactions. **[KL: Some terms and definitions used within OOP are listed below:]**
 
--a Class defines the characteristics of a thing - the object - and its behaviors; it defines not only its properties and attributes but also what it can do.
+-A Class defines the characteristics of a thing - the object - and its behaviors; it defines not only its properties and attributes but also what it can do.
 
--an Object is an instance of a class.
+-An Object is an instance of a class.
 
--the Methods are the objects abilities and how we can call them.
+-The Methods are the objects abilities and how we can call them.
 
 A recurring analogy is to see a Class as a the cookie cutter and the cookies as the Objects. 
 
-note: pls see chapter (Josh Nimoy's) for amore detailed explanation of Objected Oriented languages.
+Note: please see chapter (Josh Nimoy's) for amore detailed explanation of Objected Oriented languages.
 
 ##• 3 - How to build your own Classes (simple Class)
-Classes and objects are similar to the concepts of movie clips and instances in Flash and are also a fundamental part of Java programming. If you have a background in Java and/or Processing this other tutorial will be useful.
-This is how you declare a Class -> in the header file (*.h), otherwise known as the declarations file. In this case, the file name should be ofBall.h 
+Classes and objects are similar to the concepts of movie clips and instances in Flash and are also a fundamental part of Java programming. If you have a background in Java and/or Processing this other tutorial will be useful. **[KL: how is this tutorial useful for people with Java/Processing experience versus someone without these backgrounds? Clarify how it's useful for both.]**
+**[KL: maybe some lead up to the example below would be nice. "Now we will build an example of a class in oF to see exactly how it works."]**
+Declare a class in the header file (*.h), otherwise known as the declarations file. In this case, the file name should be ofBall.h. **[KL: "Type the code below into your ofBall.h file and note the comments I've included to guide you along."]**
 
 
 	#ifndef _OF_BALL // if this class hasn't been defined, the program can define it
@@ -67,10 +68,14 @@ This is how you declare a Class -> in the header file (*.h), otherwise known as 
 	#endif 
 
 
-We have declared the Ball class header filer (the list of ingredients) and now lets get to the cooking part -> what do these ingredients do!
+We have declared the Ball class header file (the list of ingredients) and now lets get to the cooking part **[KL: I wouldn't use an arrow symbol within this text.]** to see what these ingredients can do!
 Please notice the '#include' tag, this is a way to tell the compiler which file to include for each implementation file. When the program is compiled these '#include' tags will be replaced by the original file they're referring to. The 'if statement' (#ifndef) is a way to prevent the repetition of header files which could easily occur. Here's an example of how easily this could happen due to the recursive structure of the program: Lets say we're building a Pool game, we'll have the ofApp class, dependent on this there will be the pool table class and also the pool stick class and as both of these will be needed for our balls collision detection function both will refer to the ball class individually. If we didn't use the '#ifndef' 'if' statement the compiler would try to compile the ball class repeatedly and would find some conflicts.
 
+**[KL: Inheritance issues could be addressed later on because that's a little more complex. For now we just have ofBall.h so delving into repetition issues could be approached in more detail later. It seems like an afterthought here. It deserves its own section.]**
+
 Here's how you can write the class *.cpp file, the implementation file:
+
+**[KL: did the previous chapter talk about how to create a new class in oF? If so, no worries, but if it didn't, it's a good idea to address how to do that, and that the example below is ofBall.cpp.]**
 
 
 	#include "ofBall.h"
@@ -112,15 +117,15 @@ Here's how you can write the class *.cpp file, the implementation file:
 		ofSetColor(120,120,120);
 		ofCircle(x, y, dim);
 	} 
-
+**[KL: Explain exactly why we are creating this class outside of ofApp. This and the explanation below seem kind of rushed and OOP can benefit by using some real life analogies to demonstrate class relationships.]**
 
 ##• 4 - make an Object from your Class 
-now that we've created a class let's make the real object! in your testapp.h (header file) we'll have to add declare a new object and get some free memory for it. this is how we do it:
+Now that we've created a class let's make the real object! In your testApp.h (header file) we'll have to declare a new object and get some free memory for it. First declare an instance of the class:
 
 	ofBall myBall;
 
 
-and finally let's get that ball bouncing on screen! go to your project testapp.cpp (implementation) file. now that we've created the object we just need to draw it and update its values by calling its methods. in the update() function add:
+Now let's get that ball bouncing on screen! Go to your project testApp.cpp (implementation) file. Now that we've created the object, we just need to draw it and update its values by calling its methods. In the update() function, add:
 
 	myBall.update();  // calling the object's update method
 
@@ -130,18 +135,19 @@ and in the draw() function lets add:
 	myBall.draw();  // call the draw method to draw the object
 
 
-compile and run! by now you must be seeing a bouncing ball on the screen! great!
+Compile and run! By now you must be seeing a bouncing ball on the screen! Great!
 
 
 ##• 5 - make Objects from your Class
-you're probably asking yourself now why did you have so much trouble just to create a bouncing ball. You could have done this (and you've probably done it!) without using classes. In fact one of the advantages of using classes is to be able to create multiple individual objects with the same characteristics. So, lets do that now! going back to your ofApp.h file we'll just need to create a couple of new objects:
+By now, you're probably asking yourself why you went to so much trouble to create a bouncing ball. You could have done this (and probably have) without using classes. In fact one of the advantages of using classes is to be able to create multiple individual objects with the same characteristics. So, let's do that now! Go back to your ofApp.h file and create a couple of new objects:
 
 	ofBall myBall1;
 	ofBall myBall2;
 	ofBall myBall3;
 
 
-And in the implementation file (*.cpp) just call the corresponding methods for each of the objects.
+In the implementation file (ofApp.cpp), call the corresponding methods for each of the objects
+
 in the ofApp's update() function:
 
 	myBall1.update();
@@ -158,8 +164,10 @@ and also in the draw() function:
 
 
 ##• 5.1- make more Objects from your Class
-We've just created 3 objects but what if we wanted to created 10, 100 or may be 1000's of them?! hardcoding one by one would be a painful and long process that can be easily solved by automating the object creation and function calls. Just by using a couple for loops we'll be making this process way simpler and cleaner. Instead of declaring a list of objects one by one we'll just create an array of objects of type 'ofBall'. We'll also introduce another new element: a constant. Constants are defined after the #includes as #define CONSTANT_NAME value. This is a way of defining a constant value that won't be ever changed in the program:
+We've just created 3 objects but what if we wanted to created 10, 100 or maybe 1000's of them?! Hardcoding one by one would be a painful and long process that can be easily solved by automating the object creation and function calls. Just by using a couple for loops we'll make this process simpler and cleaner. Instead of declaring a list of objects one by one we'll create an array of objects of type 'ofBall'. We'll also introduce another new element: a constant. Constants are defined after the #includes as #define CONSTANT_NAME value. This is a way of defining a constant value that won't ever change in the program:
 
+**[KL: The pseudo code-like explanation above is an effective approach. This is a good method to use before writing out the ofBall class above, too. Also, I've been taking out words like "just" before steps and simplifying verb tenses for clarity. I'd keep that in mind as you continue writing this chapter. The more concise, the better.]** 
+**[KL: Restate which file this is happening in.]**
 
 	#define NBALLS 5
 
@@ -186,14 +194,14 @@ in the draw() function:
 
 
 
-##• 6 - make even more Objects from your Class: properties and  constructor
+##• 6 - make even more Objects from your Class: properties and constructors
 
-As we've seen each of the objects has a set of properties defined by its variables (position, speed and direction and dimension). Another advantage of object oriented programming is that the objects created can have different values on each of its properties. For us to be able to have better control of each object we can have a constructor which defines these characteristics and lets us access them. In the ofBall definitions file (*.h) we can change the constructor to include some of the objects properties (lets say position and dimension):
+As we've seen, each of the objects has a set of properties defined by its variables (position, speed, direction, and dimension). Another advantage of object oriented programming is that the objects created can have different values for each of its properties. For us to have better control of each object, we can have a constructor that defines these characteristics and lets us access them. In the ofBall definitions file (*.h) we can change the constructor to include some of the object's properties (let's say position and dimension):
 
 	ofBall(float x, float y, int dim);
 
 
-As we've changed the constructor we'll need to update the ofBall implementation (*.cpp) file to reflect these.
+Since we've changed the constructor, we'll need to update the ofBall implementation (*.cpp) file to reflect these.
 
 	ofBall::ofBall(float _x, float _y, int _dim){
 		x = _x;
@@ -204,7 +212,7 @@ As we've changed the constructor we'll need to update the ofBall implementation 
 		speedY = ofRandom(-1, 1);
 	}
 
-
+**[KL: Give an image of the entire .cpp file and not just the part we changed because you can't tell how this fits in to the original .cpp file.]**
 By implementing these changes we'll also need to create space in memory for these objects. We'll do this by creating a pointer (a reference in memory) for each object. Back to the ofApp.h (definitions) file we'll declare a new object like this:
 
 
@@ -212,7 +220,10 @@ By implementing these changes we'll also need to create space in memory for thes
 
 
 The star(*) means it will be created in a reserved part of memory just for it.
-Now in the TestApp.cpp file we will need to create the object in the setup and we'll call the objects methods on the draw() and update() functions in a different way than we've been doing before. in the setup() :
+
+**[KL: specify why we'd make it into a pointer vs not a pointer]**
+
+Now in the TestApp.cpp file we will need to create the object in the setup and we'll call the object's methods on the draw() and update() functions in a different way than before. In setup()
 
 				// x-position,        y-position,           size
 	myBall = new ofBall(ofRandom(300,400), ofRandom(200,300), ofRandom(10,40));
@@ -225,16 +236,18 @@ As you see it is now possible to directly control the objects properties on its 
 	
 	myBall->draw();
 
+**[KL: We've changed myBall.update() to myBall->update(). That's kind of a big deal and warrants explanation concerning pointers.]**
+
 
 
 ##• 6.1 - make even more Objects from your Class
-we're now at the last part of this how-to tutorial on classes and objects. this part will now demonstrate an automation process to create objects from our previously built class. We'll be creating objects through arrays as we did in part 2.1 with some minor changes:
+The final part of our OOP tutorial **[KL: I simplified two statements into one for concision.]** will demonstrate an automation process to create objects from our previously built class. We'll be creating **[KL: "We'll create" works better than "we'll be creating." This is an example of verb tenses I've been changing. It's shorter and clearer.]**  objects through arrays as we did in part 2.1 with some minor changes:
 
 	ofBall** myBall;   // an array of pointers of type ofBall
 	int nBalls;        //variable for the number of balls 
 
 
-As we're creating an array of objects, instead of creating one pointer only we'll also have to create an array of pointers. That's why we have two 'stars' and not one in the declarations(*.h) file. We have created a pointer to an array of pointers. Let's see how we'll create and call these objects in the implementation (*.cpp) file:
+When creating an array of objects, instead of creating one pointer, we'll create an array of pointers. That's why we have two 'stars' and not one in the declarations(*.h) file. We have created a pointer to an array of pointers. Let's see how we'll create and call these objects in the implementation (*.cpp) file:
 
 	nBalls = 5; // the number of ball objects we want to create
 	
@@ -262,7 +275,7 @@ similarly when we want to draw and update the objects we've created we'll need '
 		myBall[i]->draw();
 	}
 
-
+**[KL: Great tutorial so far. The organization works well. I'm eager to see the rest. The main thing so far would be focusing on concision in your writing.]**
 
 ##• 7 - make and delete as you wish  - vectors
 Quick example showing how to create dynamically objects, push them to a vector and delete them.
