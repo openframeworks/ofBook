@@ -26,10 +26,9 @@ Connecting to the computer (how in-depth to go here?)
 
 Serial, in the most basic language sense, refers to things that come one after another; it’s a term often used to describe magazines, crimes, and television programs.  That meaning also applies when talking about serial data:  “serial communication” means that all information between two entities is being sent one piece at a time, following in a single stream.  One piece of data, or one bit, is just a binary piece of information: you’re either sending a 0 or a 1.  Using the terminology of digital electronics, these are frequently referred to as “high” and “low”; 0 is low (like turning a light off) and 1 is high (flipping it back on).  8 bits (for example the stream 01000001, which represents the letter A) are sometimes packaged together to create a single byte.
 
-Serial communication is actually a very broad topic and there are many serial protocols, including audio-visual protocols such as DMX (based on RS-485) and MIDI (serial at 31,250 bits per second) which we'll briefly cover in this chapter. The most common serial protocol however is called RS-232 and computers used to be equipped with RS-232 serial ports (remember them?) but today serial communication is rarely present on a personal computer, which is why serial communications involving a computer will typically require an RS-232 to USB adaptor (found on-line or at your local electronics store).
+Serial communication is actually a very broad topic and there are many serial protocols, including audio-visual protocols such as DMX (based on RS-485) and MIDI (serial at 31,250 bits per second) which we'll briefly cover in this chapter. The most common serial protocol is called RS-232 and computers used to be equipped with RS-232 serial ports (remember them?) but today they are rarely present, which is why serial communications involving a computer will typically require an RS-232 to USB adaptor (found on-line or at your local electronics store).
 
-**[ maybe include a picture of an RS-232 to USB adaptor?
-e.g. [RS-232 to USB adaptor](https://www.sparkfun.com/products/11304 "rs-232 to usb adaptor") ]**
+![RS-232 to USB adaptor](images/USB-rs232.jpg "RS-232 to USB adaptor")
 
 However, if you're connecting to an Arduino, it already appears to the computer as a virtual serial port and you just need a regular USB cable (the exact type is dependent on which model Arduino you have). The Arduino also has a built-in library which handles reading and writing to the serial port that appears on your computer. Additionally, the Arduino has bi-directional RS-232 serial ports which can be used to connect to other external serial devices. In short - the Arduino is well equipped for serial communications and does most of the hard work for you!
 
@@ -181,3 +180,65 @@ When all the parts are together, run the app and toggle your UP and DOWN arrow k
 *analog input, example with receiving input and mapping it into a program graphic (potentiometer game)*
 
 *servo control with mouse*
+
+ 
+## Lights On - controlling hardware via DMX
+
+DMX (which stands for Digital Multiplex), also known as DMX512 (512 being the number of channels each output can accommodate), is a protocol for controlling lighting and stage equipment. It's been around since the 80's, and is sometimes referred to as the MIDI of the lighting world as it achieves a fairly similar outcome - the sequencing and controlling of hardware through the use of a computer. DMX can be used to control anything from strobes to RGB par-can lights to LED fixtures. It's even possible to drive LED strips by Pulse Width Modulation if you have the right hardware. The advantage of sending DMX through a custom openFrameworks app is that you can then integrate it via all the other goodness OF has to offer, including custom GUI's, custom sequencing algorithms, camera tracking - you name it.
+
+![DMX Lighting](images/stutterspot.jpg "DMX Lighting")
+
+**Overview of the DMX protocol**
+
+In order to send DMX first of all you need a DMX to USB control interface. This is a special box that you'll need to purchase in order to enable your computer to send DMX data via a USB port. These interfaces can be easily purchased on-line in case you can't track one down locally. You'll also need some DMX cables to connect between the interface and the DMX device you want to control. Microphone cables with XLR connectors can be used to send DMX data, although the official standard for DMX is a 5-pin cable, unlike the 3-pins that XLR has to offer. There does exist adaptors between 5 and 3-pin connectors in case you need to mix and match them. In any case, hook up your hardware via cables to your DMX to USB device, install your drivers if required (Operating System dependent) and you are ready to send. As previously mentioned, each DMX output from your controller can send up to 512 channels of DMX data. In DMX terminology, each group of 512 channels is known as a "Universe". Multiple DMX Universes are often used in complex setups requiring lots of channels. Typically you won't need more than a single universe as a single coloured light will only use up around 3 channels (one each for red, green and blue).
+
+** DMX data format **
+
+A DMX packet, in other words the data sent to the hardware each frame, consists of 512 channels, with an 8-bit value sent per channels (i.e. 0-255). One of the idiosyncracies of DMX is that the channel numbering starts at 1, channel 0 being a start code and not a data channel. This means that when setting up an array to hold your per-frame DMX data, you'll need to make it a size of 513 bytes (a byte in this case being also known as an 'unsigned char').
+
+    //setup the data structure
+    unsigned char dmxData[513];
+
+    // zero the first value
+    dmxData[0] = 0;
+    
+    // channels are valid from here on up
+    dmxData[1] = 126;
+
+A number of OF addons have sprung up around DMX, a quick search of ofxAddons.com will reveal the most up to date. Typically these addons will have set up all the necessary data structures, including the one above, so you won't need to worry about anything other than sending the right data to the right channels. The hardest part will probably be installing the drivers for your controller!
+
+**Structure of an OF DMX application**
+No matter which code or which addon you use, the way in which you'll send DMX data will be very similar to the following pseudo-code (replace the comments with the relevant code):
+
+    void Setup() {
+        //connect to your DMX controller
+    }
+
+    void Update() {
+    
+        //assign the relevant values to your DMX data structure
+        
+        //update the DMX controller with the new data
+    }
+
+**Using a colour picker to set up your lights**
+
+*TODO*
+
+##Raspberry Pi - getting your OF app into small spaces##
+
+**Raspberry Pi and the Serial Port - Connecting to an Arduino**
+
+*TODO*
+
+**Running the Rasperry PI headless**
+
+*TODO*
+
+**Case Study: Raspberry PI as a master DMX controller**
+
+One of the nifty uses of a Raspberry Pi is to use it as a master DMX controller. It takes up little space and sending serial data doesn't require much processing power so it's a perfect candidate. Add to that the ability to control your OF app running on the PI remotely via OSC, for example using an Android or IOS tablet, and you have a fully fledged custom DMX set up which would otherwise require expensive commercial software to replicate.
+
+
+
+
