@@ -11,10 +11,22 @@ First of all, you should watch this video, to see the finished project, as part 
 http://youtu.be/LwokmKqT0og?t=1m12s
 
 ### Initial Brief from Client
-### Inital Timeline
+
+April 2013
+
+(images/2013_04_11_GreenpeaceStructure.jpg "External Shell Structure for Installation from Client")
+
+(images/2013_04_16_DomeWithProjector.jpg "Initial Projection Plan from Client")
+
+June 2014
+
+(images/2013_06_04_SiteFromPaul.jpg "Site Visit by Client")
+
 ### Our response
 
-Hellicar&Lewis Greenpeace 16th April 2013
+12/6/2013
+
+(images/2013_06_12_Greenpeace_HandL_01.jpg "First Page of Presentation")
 
 We would like this installation to be a relaxing and immersive space. An oasis where the viewer can relax on bean bags looking up at a screen.
 
@@ -32,8 +44,68 @@ We would like to explore the following ideas within the imagery, sound and feeli
 
 4: Generative audio - a four channel speaker system that adds depth and texture the visuals.
 
+(images/2013_06_12_Greenpeace_HandL_03.jpg "Third Page of Presentation, Proposed Diagram")
+(images/2013_06_12_Greenpeace_HandL_04.jpg "Fourth Page of Presentation, Visual Experimentation")
+(images/2013_06_12_Greenpeace_HandL_06.jpg "Sixth Page of Presentation, Arctic Experiments")
+(images/2013_06_12_Greenpeace_HandL_10.jpg "Tenth Page of Presentation, Kaleidoscope Imagery from previous installation")
+
 ### Actual Timeline
+
+Here are the folder names of all the folders in my greenpeaceArcticGlastonbury2013 folder.
+
+2013_04_11_PlansAndContentFromGreenpeace
+2013_04_16_ProjectorQuotes
+2013_04_30_PeteQuoteAndIdeas
+2013_05_08_GlastoOverviewPlan
+2013_05_14_PetePlanAndTechList
+2013_05_20_GuestList
+2013_05_28_CrewDetailsFromPete
+2013_05_29_addons
+2013_05_29_addonsAfterPragmatism
+2013_05_29_ofxGUIFromDevelopGitHubBranch
+2013_05_31_AddMaps
+2013_06_02_BaficInvoice
+2013_06_03_PeteEffectsFromSomantics
+2013_06_04_HomeHigherResForPete
+2013_06_06_CallToActionScript
+2013_06_12_CrewForFieldReadup
+2013_06_12_Font
+2013_06_12_GreenpeaceLogos
+2013_06_12_MoreCrewBriefing
+2013_06_13_HuntResult
+2013_06_13_MoreDurationBits
+2013_06_13_obviousJimAudioReactiveRing
+2013_06_16_ofxTimelineVideo
+2013_06_19_Singleton
+2013_06_19_VoiceOverOutro
+2013_06_20_CateringMenu
+2013_06_20_NewAddonsToTry
+2013_06_24_CodeForArtFromJeffTimesten
+2013_06_24_DeadFlock
+2013_06_24_newFilmAndAudio
+2013_06_24_ofxAddonsOFXContourUtil
+2013_07_31_Final50Invoice
+2013_08_18_ThankYouFromGreenpeace
+
 ### Team and Credits
+
+Pete Hellicar
+Joel Gethin Lewis
+Paul Earnshaw
+Sarah Toplis
+Bafic
+Kieran Startup
+
+Uses addons and other code Contributions from:
+
+Marek Bereza aka Mazbox
+ofxKinect
+ofxSlitScan
+ofxBox2d
+ofxTimeline
+ofxGui
+ofxOpticalFlowFarneback
+
 ### Hardware selection
 
 1 x 3D Camera
@@ -61,7 +133,7 @@ XCode for Development
 
 Chrome for Web
 
-Submlime Text for logging
+Sublime Text for logging
 
 ### Connectivity issues
 ### Edited development notes
@@ -78,9 +150,9 @@ Submlime Text for logging
 #### Video Performance, using the HighPerformanceExample
 #### Counting the items in an Enum
 ## Show time
-### sequencing
-### code structure, main loop
-### modes, with ScreenGrabs and code explanation
+### Sequencing
+### Code structure, main loop
+### Modes, with screen grabs and code explanation
 #### BLANK
 #### GUI
 #### VIDEO
@@ -101,12 +173,12 @@ Submlime Text for logging
 #### PARTICLES
 #### WHITEFUR
 #### PAINT
-### running procedure
-### live issues
+### Running procedure
+### Live issues
 ## Post Event
 ### Open Source discussions with Client
 ### Re-running remotely in Australia and New Zealand
 ### Conclusion, future development
-#### broadcast
-#### social interaction
-#### raspberry pi
+#### Broadcast
+#### Social interaction
+#### Raspberry pi
