@@ -144,11 +144,11 @@ Sublime Text for logging
 #### ofxTimeline, understanding how cuing works
 #### ofxGui, running the Latest branch from Github, multiple input methods and GUI addons
 #### ofxOpticalFlowFarneback, making a polar bear
-#### Audio negotiations
-#### Naming
-#### Changing scenes
-#### Video Performance, using the HighPerformanceExample
-#### Counting the items in an Enum
+### Audio negotiations
+### Naming
+### Changing scenes
+### Video Performance, using the HighPerformanceExample
+### Counting the items in an Enum
 ## Show time
 ### Sequencing
 ### Code structure, main loop
