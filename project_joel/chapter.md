@@ -13,9 +13,25 @@ http://youtu.be/LwokmKqT0og?t=1m12s
 ### Initial Brief from Client
 ### Inital Timeline
 ### Our response
+
+We would like this installation to be a relaxing and immersive space. An oasis where the viewer can relax on bean bags looking up at a screen.
+
+We will use a mix of existing Greenpeace footage and a generative soundscape to build a beautiful abstraction of the arctic.
+
+We would like to project onto the ceiling of the space, using either a rectangular, square or circular projection surface. We will experiment with different projection shapes and see what fits best aesthetically as well as meeting the budget.
+
+We would like to explore the following ideas within the imagery, sound and feeling of the space.
+
+1: The space as a timepiece - trying to have a cycle of sunset, night and dawn - each lasting around five minutes and having a single interaction between the floor and ceiling that is explored graphically and interactively.
+
+2: Kaleidoscopes, shattering or delaying or time stretching footage. Breaking it up into blocks of time. Arranging in grids, or having different delays in different parts. The possibility of peoples movement being mirrored into the video playback in interesting ways, playing with time.
+
+3: Making an oasis away from the rest of the festival that would last around 15 minutes, but raise some points about how the cycle of seasons of the Arctic are being affected.
+
+4. Generative audio - a four channel speaker system that adds depth and texture the visuals.
+
 ### Actual Timeline
 ### Team and Credits
-### Budget and Strategy
 ### Hardware selection
 ## Development
 ### Development Hardware and Software setup
