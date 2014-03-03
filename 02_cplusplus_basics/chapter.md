@@ -3103,6 +3103,7 @@ In addition to basic arithmetic and boolean logic, C provides a palette of opera
 
 + todo: change "goodnight moon" example to not step on ITP's toes
 
++ fine tune "argument" vs. "parameter"
 
 
 + cancelled
