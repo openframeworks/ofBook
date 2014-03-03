@@ -24,6 +24,7 @@ In this code block, we are declaring 3 variables:
 * `rectangleCenterX`
 
 On each line of code we are:
+
 1. Getting a variable on the right hand side. which is of a certain type (`ofRectangle`, `ofVec2f`, `float` respectively)
 2. Declaring a new variable which is explicitly typed to match the value on the right
 3. Assigning the value to the variable
