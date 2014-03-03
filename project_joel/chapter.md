@@ -86,9 +86,7 @@ Here are the folder names of all the folders in my greenpeaceArcticGlastonbury20
 2013_06_24_DeadFlock
 2013_06_24_newFilmAndAudio
 2013_06_24_ofxAddonsOFXContourUtil
-
 2013_07_31_Final50Invoice
-
 2013_08_18_ThankYouFromGreenpeace
 
 ### Team and Credits
@@ -182,7 +180,7 @@ recopy over examples after! did it, just copying in the empty example xcode proj
 
 oF/of_v0.7.4_osx_release/examples/gui
 
-On 29 May 2013, at 20:44, Joel Gethin Lewis <me@joelgethinlewis.com> wrote:
+On 29 May 2013, at 20:44, Joel Gethin Lewis wrote:
 
 All ofFloatColor or ofFloatImages
 
@@ -257,7 +255,7 @@ oF/openFrameworks-develop
 
 seems to be working, leaving it for a bit...
 
-[error] ofFile::copyFromTo source file/folder doesn't exist: oF/openFrameworks-develop/scripts/osx/template/emptyExample.xcodeproj/xcshareddata/WorkspaceSettings.xcsettings
+error ofFile::copyFromTo source file/folder doesn't exist: oF/openFrameworks-develop/scripts/osx/template/emptyExample.xcodeproj/xcshareddata/WorkspaceSettings.xcsettings
 
 is the error....
 
@@ -267,11 +265,11 @@ oF/openFrameworks-develop/scripts/osx/template/emptyExample.xcodeproj/xcsharedda
 
 doesn't have it
 
-/Users/joel/Documents/Projects/HellicarAndLewis/liseNorwayMovement/2013_05_26_ofDevelopForOFXGUI/openFrameworks-develop/apps/devApps/projectGenerator/bin/data/xcode/template/emptyExample.xcodeproj/xcshareddata
+openFrameworks-develop/apps/devApps/projectGenerator/bin/data/xcode/template/emptyExample.xcodeproj/xcshareddata
 
 copied that in, and another file inside 
 
-/Users/joel/Documents/Projects/HellicarAndLewis/liseNorwayMovement/2013_05_26_ofDevelopForOFXGUI/openFrameworks-develop/apps/devApps/projectGenerator/bin/data/xcode/template/emptyExample.xcodeproj/xcshareddata/xcschemes
+openFrameworks-develop/apps/devApps/projectGenerator/bin/data/xcode/template/emptyExample.xcodeproj/xcshareddata/xcschemes
 
 xcschememanagement.plist
 
@@ -318,7 +316,6 @@ void testApp::setup(){
 	ofSetVerticalSync(true);
 }
 
-//--------------------------------------------------------------
 void testApp::update(){
 	sync.update();
 }
@@ -697,7 +694,7 @@ hmmm
 
 sent this to james and got a response:
 
-{On 16 Jun 2013, at 19:00, James George <james@jamesgeorge.org> wrote:
+On 16 Jun 2013, at 19:00, James George wrote:
 
 yea it's impossible to call setPosition on a video every frame and have it playback smoothly. Quicktime needs to control its own time
 
@@ -714,7 +711,7 @@ Sending the /seektosecond message will then trigger an update to come back from 
 
 
 
-On Sun, Jun 16, 2013 at 1:49 PM, Joel Gethin Lewis <me@joelgethinlewis.com> wrote:
+On Sun, Jun 16, 2013 at 1:49 PM, Joel Gethin Lewis wrote:
 Hey James,
 
 I've been trying to get a Duration app to be able to sync the video playback on an OF app - I used your example and have started trying to sync to the time from a track:
@@ -752,8 +749,7 @@ trying to get that working with a simple sender, having problems gaining control
 
 sent this:
 
-{
-On 16 Jun 2013, at 20:48, Joel Gethin Lewis <me@joelgethinlewis.com> wrote:
+On 16 Jun 2013, at 20:48, Joel Gethin Lewis wrote:
 
 Hey James,
 
@@ -792,21 +788,20 @@ Ideally, I'd like either side to be Master if it sends messages to the other. Ma
 
 Cheers,
 
-Joel}
+Joel
 
 made new osc send:
 
-{    //update duration based on the position of the quicktime player
+	//update duration based on the position of the quicktime player
     float videoTimeToSend = greenpeaceVideo.getPosition()*greenpeaceVideo.getDuration();
     ofxOscMessage m;
     m.setAddress("/duration/seektosecond");
     m.addFloatArg(videoTimeToSend);
-    senderToDuration.sendMessage(m);}
+    senderToDuration.sendMessage(m);
 
 sent that:
 
-{
-On 16 Jun 2013, at 20:51, Joel Gethin Lewis <me@joelgethinlewis.com> wrote:
+On 16 Jun 2013, at 20:51, Joel Gethin Lewis wrote:
 
 This is my send, in my update:
 
@@ -820,7 +815,7 @@ This is my send, in my update:
 Cheers,
 
 Joel
-On 16 Jun 2013, at 20:48, Joel Gethin Lewis <me@joelgethinlewis.com> wrote:
+On 16 Jun 2013, at 20:48, Joel Gethin Lewis wrote:
 
 Hey James,
 
@@ -859,10 +854,9 @@ Ideally, I'd like either side to be Master if it sends messages to the other. Ma
 
 Cheers,
 
-Joel}
+Joel
 
-{
-On 16 Jun 2013, at 21:07, Joel Gethin Lewis <me@joelgethinlewis.com> wrote:
+On 16 Jun 2013, at 21:07, Joel Gethin Lewis wrote:
 
 Hey James,
 
@@ -878,21 +872,17 @@ Cheers,
 
 Joel
 
-On 16 Jun 2013, at 20:53, James George <james@jamesgeorge.org> wrote:
+On 16 Jun 2013, at 20:53, James George wrote:
 
 Huh! Duration should definitely update when you move the playhead even if it's not playing... Definitely a bug.
 
 Must be a bug in the way seektosecond works. This may be a rabbit hole, but try downloading the source from the Duration website (its the entire OF bundle) and see if you can give it a look. it's probalby a simple change to make sure that handleOscOut() works even when it's not playing
 
-}
-
 watched that video above
 
 did this:
 
-{
 jglmacbookprocore2:addons joel$ git clone https://github.com/YCAMInterlab/ofxTimeline.git
-}
 
 trying:
 
@@ -914,13 +904,11 @@ apple z for undo even works!
 
 17th June 2013
 
-{
-On 17 Jun 2013, at 00:12, James George <james@jamesgeorge.org> wrote:
+On 17 Jun 2013, at 00:12, James George wrote:
 
 the video player posted on the oF list is really nice, but it doesn't support the getCurrentFrame() command which may cause some issues. give it a shot!
 
-
-On Sun, Jun 16, 2013 at 5:02 PM, Joel Gethin Lewis <me@joelgethinlewis.com> wrote:
+On Sun, Jun 16, 2013 at 5:02 PM, Joel Gethin Lewis wrote:
 IT TOTALLY ROCKS!
 
 It totally works with the thumbnailer. Great work.
@@ -935,16 +923,17 @@ Cheers,
 
 Joel
 
-On 16 Jun 2013, at 21:26, James George <james@jamesgeorge.org> wrote:
+On 16 Jun 2013, at 21:26, James George wrote:
 
 that's me in the video btw ;)
 
 
-On Sun, Jun 16, 2013 at 4:26 PM, James George <james@jamesgeorge.org> wrote:
+On Sun, Jun 16, 2013 at 4:26 PM, James George wrote:
+
 no it'll be fine, the thumbnails generator is really light, it pulls only as it needs. you can also disable it.
 
 
-On Sun, Jun 16, 2013 at 4:07 PM, Joel Gethin Lewis <me@joelgethinlewis.com> wrote:
+On Sun, Jun 16, 2013 at 4:07 PM, Joel Gethin Lewis wrote:
 Hey James,
 
 I'll take a look. BUT! Looking at this video:
@@ -959,12 +948,11 @@ Cheers,
 
 Joel
 
-On 16 Jun 2013, at 20:53, James George <james@jamesgeorge.org> wrote:
+On 16 Jun 2013, at 20:53, James George wrote:
 
 Huh! Duration should definitely update when you move the playhead even if it's not playing... Definitely a bug.
 
 Must be a bug in the way seektosecond works. This may be a rabbit hole, but try downloading the source from the Duration website (its the entire OF bundle) and see if you can give it a look. it's probalby a simple change to make sure that handleOscOut() works even when it's not playing
-}
 
 need to decide on the different modes - and do a mirror mode and a proper sparkles mode with direction..
 
@@ -1068,45 +1056,39 @@ is where things were trying to draw! co-ordinates must be in pixels inside the c
 
 sorted it with:
 
-{
-	
-	void Sparkles::update(ofxCvContourFinder* aContourFinder){
-    
-    float cloudWidth = theFBO.getWidth();
-    float cloudHeight = theFBO.getHeight();
-    
-    float contourWidth = aContourFinder->getWidth();
-    float contourHeight = aContourFinder->getHeight();
-    
-    float widthRatio = cloudWidth/contourWidth;
-    float heightRatio = cloudHeight/contourHeight;
-    
-    // now just stick some particles on the contour and emit them randomly
-    for(int i = 0; i < aContourFinder->nBlobs; i++) {
-        int step = 10;//contourFinder.blobs[i].pts.size()/10;
-        for(int j = 0; j < aContourFinder->blobs[i].pts.size(); j+=step) {
-            cloud.spawn(
-                    (aContourFinder->blobs[i].pts[j].x)*widthRatio,
-                    (aContourFinder->blobs[i].pts[j].y)*heightRatio,
-                    ofRandom(-5, 5), ofRandom(-5, 5));
-        }
-    }
+void Sparkles::update(ofxCvContourFinder* aContourFinder){
+	float cloudWidth = theFBO.getWidth();
+	float cloudHeight = theFBO.getHeight();
+
+	float contourWidth = aContourFinder->getWidth();
+	float contourHeight = aContourFinder->getHeight();
+
+	float widthRatio = cloudWidth/contourWidth;
+	float heightRatio = cloudHeight/contourHeight;
+
+	// now just stick some particles on the contour and emit them randomly
+	for(int i = 0; i < aContourFinder->nBlobs; i++) {
+	    int step = 10;//contourFinder.blobs[i].pts.size()/10;
+	    for(int j = 0; j < aContourFinder->blobs[i].pts.size(); j+=step) {
+	        cloud.spawn(
+	                (aContourFinder->blobs[i].pts[j].x)*widthRatio,
+	                (aContourFinder->blobs[i].pts[j].y)*heightRatio,
+	                ofRandom(-5, 5), ofRandom(-5, 5));
+	    }
+	}
 }
 
 ok that works
 
 SECOND:
 
-{
 Re: MulticolouredMagic/Somantics/src/somantics/Mirror/Mirror.cpp at master · HellicarAndLewis/MulticolouredMagic · GitHub
-On 17 Jun 2013, at 19:01, Joel Gethin Lewis <me@joelgethinlewis.com> wrote:
+On 17 Jun 2013, at 19:01, Joel Gethin Lewis wrote:
 
 This is the mirror 
 https://github.com/HellicarAndLewis/MulticolouredMagic/blob/master/Somantics/src/somantics/Mirror/Mirror.cpp
 
 just do a vertical scene and a horizontal scene for now - kaledscope later...
-
-}
 
 DONE... just the vertical one for now...
 
@@ -1233,53 +1215,53 @@ working on horizontal mirror, made notes, did it not quite right...
 
 wrong with this
 
-//        case SLIGHTLY BUGGERED RERVERSED VERTICAL MIRROR:
-//        {
-//            ofxCvColorImage mirrorImage;
-//            
-//            mirrorImage.allocate(timeline.getVideoPlayer("video")->getWidth(), timeline.getVideoPlayer("video")->getHeight());
-//            
-//            mirrorImage.setFromPixels(timeline.getVideoPlayer("video")->getPixels(), mirrorImage.getWidth(), mirrorImage.getHeight());
-//            
-//            mirrorImage.updateTexture();
-//            
-//            bool usingNormTexCoords = ofGetUsingNormalizedTexCoords();
-//            
-//            if(!usingNormTexCoords) {
-//                ofEnableNormalizedTexCoords();
-//            }
-//            
-//            mirrorImage.getTextureReference().bind();
-//            
-//            ofMesh mesh;
-//            mesh.clear();
-//            mesh.addVertex(ofVec3f(0, 0));
-//            mesh.addVertex(ofVec3f(0, ofGetHeight()));
-//            mesh.addVertex(ofVec3f(ofGetWidth()/2, 0));
-//            mesh.addVertex(ofVec3f(ofGetWidth()/2, ofGetHeight()));
-//            mesh.addVertex(ofVec3f(ofGetWidth(), 0));
-//            mesh.addVertex(ofVec3f(ofGetWidth(), ofGetHeight()));
-//            
-//            
-//            mesh.addTexCoord(ofVec2f(0, 0.25));
-//            mesh.addTexCoord(ofVec2f(0, 0.75));
-//            mesh.addTexCoord(ofVec2f(1.0, 0.25));
-//            mesh.addTexCoord(ofVec2f(1.0, 0.75));
-//            mesh.addTexCoord(ofVec2f(0, 0.25));
-//            mesh.addTexCoord(ofVec2f(0, 0.75));
-//            
-//            mesh.setMode(OF_PRIMITIVE_TRIANGLE_STRIP);
-//            ofSetColor(ofColor::white);
-//            mesh.draw();
-//            
-//            mirrorImage.getTextureReference().unbind();
-//            
-//            // pop normalized tex coords
-//            if(!usingNormTexCoords) {
-//                ofDisableNormalizedTexCoords();
-//            }
-//            break;
-//        }
+        case SLIGHTLY BUGGERED RERVERSED VERTICAL MIRROR:
+        {
+            ofxCvColorImage mirrorImage;
+            
+            mirrorImage.allocate(timeline.getVideoPlayer("video")->getWidth(), timeline.getVideoPlayer("video")->getHeight());
+            
+            mirrorImage.setFromPixels(timeline.getVideoPlayer("video")->getPixels(), mirrorImage.getWidth(), mirrorImage.getHeight());
+            
+            mirrorImage.updateTexture();
+            
+            bool usingNormTexCoords = ofGetUsingNormalizedTexCoords();
+            
+            if(!usingNormTexCoords) {
+                ofEnableNormalizedTexCoords();
+            }
+            
+            mirrorImage.getTextureReference().bind();
+            
+            ofMesh mesh;
+            mesh.clear();
+            mesh.addVertex(ofVec3f(0, 0));
+            mesh.addVertex(ofVec3f(0, ofGetHeight()));
+            mesh.addVertex(ofVec3f(ofGetWidth()/2, 0));
+            mesh.addVertex(ofVec3f(ofGetWidth()/2, ofGetHeight()));
+            mesh.addVertex(ofVec3f(ofGetWidth(), 0));
+            mesh.addVertex(ofVec3f(ofGetWidth(), ofGetHeight()));
+            
+            
+            mesh.addTexCoord(ofVec2f(0, 0.25));
+            mesh.addTexCoord(ofVec2f(0, 0.75));
+            mesh.addTexCoord(ofVec2f(1.0, 0.25));
+            mesh.addTexCoord(ofVec2f(1.0, 0.75));
+            mesh.addTexCoord(ofVec2f(0, 0.25));
+            mesh.addTexCoord(ofVec2f(0, 0.75));
+            
+            mesh.setMode(OF_PRIMITIVE_TRIANGLE_STRIP);
+            ofSetColor(ofColor::white);
+            mesh.draw();
+            
+            mirrorImage.getTextureReference().unbind();
+            
+            // pop normalized tex coords
+            if(!usingNormTexCoords) {
+                ofDisableNormalizedTexCoords();
+            }
+            break;
+        }
 
 right with this
 
@@ -1394,15 +1376,15 @@ hmmm
 
 all i had to do was change shatter.h to :
 
-#include "ofMain.h"
-#include "ofxOpenCv.h"
-#include "ofxBox2D.h"
+include "ofMain.h"
+include "ofxOpenCv.h"
+include "ofxBox2D.h"
 
 from
 
-#include "ofMain.h"
-#include "ofxBox2D.h"
-#include "ofxOpenCv.h"
+include "ofMain.h"
+include "ofxBox2D.h"
+include "ofxOpenCv.h"
 
 {paulf
 london
@@ -1420,66 +1402,66 @@ crazy...
 
 ok. got that working, but way too slow...
 
-//    float timeSinceLastShatter = ofGetElapsedTimef() - timeOfLastShatter;
-//    
-//    if(timeSinceLastShatter > 10.f){ //every 2 seconds make some more....
-//        float shatterWidth = theFBO.getWidth();
-//        float shatterHeight = theFBO.getHeight();
-//        
-//        float contourWidth = aContourFinder->getWidth();
-//        float contourHeight = aContourFinder->getHeight();
-//        
-//        float widthRatio = shatterWidth/contourWidth;
-//        float heightRatio = shatterHeight/contourHeight;
-//        
-//        // now just stick some particles on the contour and emit them randomly
-//        for(int i = 0; i < aContourFinder->nBlobs; i++) {
-//            int step = 20;
-//            
-//            shape.clear();
-//            
-//            for(int j = 0; j < aContourFinder->blobs[i].pts.size(); j+=step) {
-//                shape.addVertex((aContourFinder->blobs[i].pts[j].x)*widthRatio,
-//                                (aContourFinder->blobs[i].pts[j].y)*heightRatio);
-//            }
-//            
-//            // This is the manual way to triangulate the shape
-//            // you can then add many little triangles
-//            
-//            // first simplify the shape
-//            shape.simplify();
-//            
-//            // save the outline of the shape
-//            ofPolyline outline = shape;
-//            
-//            // resample shape
-//            ofPolyline resampled = shape.getResampledBySpacing(256); //dude
-//            //ofPolyline resampled = shape.getResampledBySpacing(100);
-//            
-//            // triangulate the shape, return am array of triangles
-//            vector <TriangleShape> tris = triangulatePolygonWithOutline(resampled, outline);
-//            
-//            // add some random points inside
-//            addRandomPointsInside(shape, 255);
-//            
-//            // now loop through all the trainles and make a box2d triangle
-//            for (int i=0; i<tris.size(); i++) {
-//                ofxBox2dPolygon p;
-//                p.addTriangle(tris[i].a, tris[i].b, tris[i].c);
-//                p.setPhysics(1.0, 0.3, 0.3);
-//                p.setAsEdge(false);
-//                if(p.isGoodShape()) {
-//                    p.create(box2d.getWorld());
-//                    triangles.push_back(p);
-//                }
-//            }
-//            
-//            // done with shape clear it now
-//            shape.clear();
-//        }
-//        
-//        timeSinceLastShatter = ofGetElapsedTimef();
-//    }
+    float timeSinceLastShatter = ofGetElapsedTimef() - timeOfLastShatter;
+    
+    if(timeSinceLastShatter > 10.f){ //every 2 seconds make some more....
+        float shatterWidth = theFBO.getWidth();
+        float shatterHeight = theFBO.getHeight();
+        
+        float contourWidth = aContourFinder->getWidth();
+        float contourHeight = aContourFinder->getHeight();
+        
+        float widthRatio = shatterWidth/contourWidth;
+        float heightRatio = shatterHeight/contourHeight;
+        
+        // now just stick some particles on the contour and emit them randomly
+        for(int i = 0; i < aContourFinder->nBlobs; i++) {
+            int step = 20;
+            
+            shape.clear();
+            
+            for(int j = 0; j < aContourFinder->blobs[i].pts.size(); j+=step) {
+                shape.addVertex((aContourFinder->blobs[i].pts[j].x)*widthRatio,
+                                (aContourFinder->blobs[i].pts[j].y)*heightRatio);
+            }
+            
+            // This is the manual way to triangulate the shape
+            // you can then add many little triangles
+            
+            // first simplify the shape
+            shape.simplify();
+            
+            // save the outline of the shape
+            ofPolyline outline = shape;
+            
+            // resample shape
+            ofPolyline resampled = shape.getResampledBySpacing(256); //dude
+            //ofPolyline resampled = shape.getResampledBySpacing(100);
+            
+            // triangulate the shape, return am array of triangles
+            vector <TriangleShape> tris = triangulatePolygonWithOutline(resampled, outline);
+            
+            // add some random points inside
+            addRandomPointsInside(shape, 255);
+            
+            // now loop through all the trainles and make a box2d triangle
+            for (int i=0; i<tris.size(); i++) {
+                ofxBox2dPolygon p;
+                p.addTriangle(tris[i].a, tris[i].b, tris[i].c);
+                p.setPhysics(1.0, 0.3, 0.3);
+                p.setAsEdge(false);
+                if(p.isGoodShape()) {
+                    p.create(box2d.getWorld());
+                    triangles.push_back(p);
+                }
+            }
+            
+            // done with shape clear it now
+            shape.clear();
+        }
+        
+        timeSinceLastShatter = ofGetElapsedTimef();
+    }
 
 lets just spray triangles out from the top of the blobs...
 
@@ -1504,16 +1486,9 @@ made that
 
 starting with 1. SELFSLITSCAN - super easy:
 
-{            if(timeline.getVideoPlayer("video")->isFrameNew()){
-                //self slitscan
-//                ofImage selfSlitScanDelayMap;
-//                selfSlitScanDelayMap.allocate(timeline.getVideoPlayer("video")->getWidth(), timeline.getVideoPlayer("video")->getHeight(), OF_IMAGE_COLOR);
-//                selfSlitScanDelayMap.setFromPixels(timeline.getVideoPlayer("video")->getPixelsRef());
-               
-                slitScan.setDelayMap(timeline.getVideoPlayer("video")->getPixelsRef());
-                slitScan.addImage(timeline.getVideoPlayer("video")->getPixelsRef());
-}
-
+if(timeline.getVideoPlayer("video")->isFrameNew()){
+    slitScan.setDelayMap(timeline.getVideoPlayer("video")->getPixelsRef());
+    slitScan.addImage(timeline.getVideoPlayer("video")->getPixelsRef());
 
 next on to spikey mode!
 
