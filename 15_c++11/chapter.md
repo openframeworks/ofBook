@@ -1,4 +1,5 @@
-the following needs heavy rewrites for readability (flow of text)...
+the following needs readability improvements (flow of text)...
+i'll take another pass at it soon
 
 # Blah blah
 C++ is a pretty old language, it's been around since XXX, and perhaps because of that (but certainly for many other reasons), it is often seen as archaic, obtuse, or perhaps just plain rubbish by today's standards. Contrary to that, many people believe that it is still offers the best balance of performance and clarity on the coding high street, and (in part thanks to the success of Unix and its mates) has an incredibly strong ecosystem of 3rd party libraries, device support and general acceptance, even up to the point where current shader languages and CUDA use C++ as their language of choice.
