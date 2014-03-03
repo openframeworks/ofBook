@@ -14,9 +14,9 @@ http://youtu.be/LwokmKqT0og?t=1m12s
 
 April 2013
 
-(images/2013_04_11_GreenpeaceStructure.jpg "External Shell Structure for Installation from Client")
+![External Shell Structure for Installation from Client](images/2013_04_11_GreenpeaceStructure.jpg "External Shell Structure for Installation from Client")
 
-(images/2013_04_16_DomeWithProjector.jpg "Initial Projection Plan from Client")
+![Initial Projection Plan from Client](images/2013_04_16_DomeWithProjector.jpg "Initial Projection Plan from Client")
 
 June 2014
 
