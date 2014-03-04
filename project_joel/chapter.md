@@ -1742,7 +1742,7 @@ Kieran and Pete completed the main sequencing onsite.
 
 ## Show time
 
-![The Installation in Action, 27th June 2013](images/2013_06_27_HandsInTheAir.jpg.jpg "The Installation in Action, 27th June 2013")
+![The Installation in Action, 27th June 2013](images/2013_06_27_HandsInTheAir.jpg "The Installation in Action, 27th June 2013")
 
 ### Code structure, main loop
 
