@@ -10,86 +10,7 @@ First of all, you should watch this video, to see the finished project, as part 
 
 http://youtu.be/LwokmKqT0og?t=1m12s
 
-### Initial Brief from Client
-
-April 2013
-
-![External Shell Structure for Installation from Client](images/2013_04_11_GreenpeaceStructure.jpg "External Shell Structure for Installation from Client")
-
-![Initial Projection Plan from Client](images/2013_04_16_DomeWithProjector.jpg "Initial Projection Plan from Client")
-
-June 2014
-
-![Site Visit by Client](images/2013_06_04_SiteFromPaul.jpg "Site Visit by Client")
-
-### Our response
-
-After Greenpeace put us in contact with projection, bean bag and audio equipment suppliers that had agreed to support the project, we sent the following presentation to Greenpeace on 12th June 2013.
-
-12/6/2013
-
-![First Page of Presentation](images/2013_06_12_Greenpeace_HandL_01.jpg "First Page of Presentation")
-
-We would like this installation to be a relaxing and immersive space. An oasis where the viewer can relax on bean bags looking up at a screen.
-
-We will use a mix of existing Greenpeace footage and a generative soundscape to build a beautiful abstraction of the arctic.
-
-We would like to project onto the ceiling of the space, using either a rectangular, square or circular projection surface. We will experiment with different projection shapes and see what fits best aesthetically as well as meeting the budget.
-
-We would like to explore the following ideas within the imagery, sound and feeling of the space.
-
-1: The space as a timepiece - trying to have a cycle of sunset, night and dawn - each lasting around five minutes and having a single interaction between the floor and ceiling that is explored graphically and interactively.
-
-2: Kaleidoscopes, shattering or delaying or time stretching footage. Breaking it up into blocks of time. Arranging in grids, or having different delays in different parts. The possibility of peoples movement being mirrored into the video playback in interesting ways, playing with time.
-
-3: Making an oasis away from the rest of the festival that would last around 15 minutes, but raise some points about how the cycle of seasons of the Arctic are being affected.
-
-4: Generative audio - a four channel speaker system that adds depth and texture the visuals.
-
-![Third Page of Presentation, Proposed Diagram](images/2013_06_12_Greenpeace_HandL_03.jpg "Third Page of Presentation, Proposed Diagram")
-![Fourth Page of Presentation, Visual Experimentation](images/2013_06_12_Greenpeace_HandL_04.jpg "Fourth Page of Presentation, Visual Experimentation")
-![Sixth Page of Presentation, Arctic Experiments](images/2013_06_12_Greenpeace_HandL_06.jpg "Sixth Page of Presentation, Arctic Experiments")
-![Tenth Page of Presentation, Kaleidoscope Imagery from previous installation](images/2013_06_12_Greenpeace_HandL_10.jpg "Tenth Page of Presentation, Kaleidoscope Imagery from previous installation")
-
-### Actual Timeline
-
-Here are the folder names of all the folders in my greenpeaceArcticGlastonbury2013 folder.
-
-2013_04_11_PlansAndContentFromGreenpeace
-2013_04_16_ProjectorQuotes
-2013_04_30_PeteQuoteAndIdeas
-2013_05_08_GlastoOverviewPlan
-2013_05_14_PetePlanAndTechList
-2013_05_20_GuestList
-2013_05_28_CrewDetailsFromPete
-2013_05_29_addons
-2013_05_29_addonsAfterPragmatism
-2013_05_29_ofxGUIFromDevelopGitHubBranch
-2013_05_31_AddMaps
-2013_06_02_BaficInvoice
-2013_06_03_PeteEffectsFromSomantics
-2013_06_04_HomeHigherResForPete
-2013_06_06_CallToActionScript
-2013_06_12_CrewForFieldReadup
-2013_06_12_Font
-2013_06_12_GreenpeaceLogos
-2013_06_12_MoreCrewBriefing
-2013_06_13_HuntResult
-2013_06_13_MoreDurationBits
-2013_06_13_obviousJimAudioReactiveRing
-2013_06_16_ofxTimelineVideo
-2013_06_19_Singleton
-2013_06_19_VoiceOverOutro
-2013_06_20_CateringMenu
-2013_06_20_NewAddonsToTry
-2013_06_24_CodeForArtFromJeffTimesten
-2013_06_24_DeadFlock
-2013_06_24_newFilmAndAudio
-2013_06_24_ofxAddonsOFXContourUtil
-2013_07_31_Final50Invoice
-2013_08_18_ThankYouFromGreenpeace
-
-### Team and Credits
+## Team and Credits
 
 Pete Hellicar
 Joel Gethin Lewis
@@ -100,7 +21,7 @@ Kieran Startup
 
 Project uses addons and other code Contributions from:
 
-Marek Bereza aka Mazbox
+Marek Bereza aka Mazbox as part of Cariad Interactive
 ofxKinect
 ofxSlitScan
 ofxBox2d
@@ -119,19 +40,124 @@ Tim Scaffidi
 James George
 YCAM
 
-### Hardware selection
+## Hardware selection
 
 1 x 3D Camera
 Microsoft XBox360 Kinect
 1 x Playback and Interaction Computer
 MacBook Pro Retina
-1 x 10k projector.
-Preferred model. http://panasonic.net/avc/projector/products/dz8700/ Stand and housing.
+1 x 10k projector
 Projection Screen
-1 x screen and mounting. We want to hang the screen at an angle. Like in our rough sketch below.
-Either.
+1 x screen and mounting.
 Sound.
 4 x D&B T-10 Top + Amp 2 x Subs
+
+## The Project
+
+### Initial Brief from Client
+
+On 9th April 2013 we were approached by Paul Earnshaw of Greenpeace about a potential installation as part of Greenpeace's Field at Glastonbury 2013, a large music festival in the south west of England. Another studio had previously been in place to create a five day experience due to go live for the public duration of the festival on the 25th of June, but a scheduling conflict had emerged that had meant that they had to reluctantly withdraw.
+
+Paul already had a budget and a unique space picked out for the installation, a large geodesic dome:
+
+![External Shell Structure for Installation from Client](images/2013_04_11_GreenpeaceStructure.jpg "External Shell Structure for Installation from Client")
+
+### Our response
+
+We initially sought out a projector hire firm, who responded with a quote and a plan for a projection setup that met our requirements for maximum visual impact on a budget:
+
+![Initial Projection Plan from Projector Firm](images/2013_04_16_DomeWithProjector.jpg "Initial Projection Plan from Projector Firm")
+
+After some studio thinking, by 16th April we responded with the following document:
+
+![First Page of Presentation](images/2013_04_16_Greenpeace_HandL_01.jpg "First Page of Presentation")
+
+We would like this installation to be a relaxing and immersive space. An oasis where the viewer can relax on bean bags looking up at a screen.
+
+We will use a mix of existing Greenpeace footage and a generative soundscape to build a beautiful abstraction of the Arctic.
+
+We would like to project onto the ceiling of the space, using either a rectangular, square or circular projection surface. We will experiment with different projection shapes and see what fits best aesthetically as well as meeting the budget.
+
+We would like to explore the following ideas within the imagery, sound and feeling of the space.
+
+1: The space as a timepiece - trying to have a cycle of sunset, night and dawn - each lasting around five minutes and having a single interaction between the floor and ceiling that is explored graphically and interactively.
+
+2: Kaleidoscopes, shattering or delaying or time stretching footage. Breaking it up into blocks of time. Arranging in grids, or having different delays in different parts. The possibility of peoples movement being mirrored into the video playback in interesting ways, playing with time.
+
+3: Making an oasis away from the rest of the festival that would last around 15 minutes, but raise some points about how the cycle of seasons of the Arctic are being affected.
+
+4: Generative audio - a four channel speaker system that adds depth and texture the visuals.
+
+![Third Page of Presentation, Proposed Diagram](images/2013_04_16_Greenpeace_HandL_03.jpg "Third Page of Presentation, Proposed Diagram")
+![Fourth Page of Presentation, Visual Experimentation](images/2013_04_16_Greenpeace_HandL_04.jpg "Fourth Page of Presentation, Visual Experimentation")
+![Sixth Page of Presentation, Arctic Experiments](images/2013_04_16_Greenpeace_HandL_06.jpg "Sixth Page of Presentation, Arctic Experiments")
+![Tenth Page of Presentation, Kaleidoscope Imagery from previous installation](images/2013_04_16_Greenpeace_HandL_10.jpg "Tenth Page of Presentation, Kaleidoscope Imagery from previous installation")
+
+On April 30th, we recieved an email from Paul:
+
+"..we would love you to implement your proposal in our main feature of the dome at Glastonbury Festival this year..."
+
+We had the project! Now it was time to get real about the budget, and see if we could get some interesting musical collaborators...
+
+During May, we concentrated on discovering what film footage was available, and finalising the production design and kit list. Pete spent many hours working on the edit of the film, aiming to complete it while other negotiations continued.
+
+### Audio negotiations
+
+On May 10th, Pete Hellicar reached out to our friends at Warp, to see if any of their artists would be interested in donating their music to the project, and by the nick of project time we had permission from several artists to use their sounds.
+
+### Supplier change and final budget negotiations and
+
+By the end of May, we had changed suppliers to ones already working with Greenpeace on their field, and had found replacement kit for our production. We'd also reached a final budget, and I was ready to start coding. Please see below for more details of the actual coding.
+
+At the beginning of June 2014 we received the following image from Paul:
+
+![Site Visit by Client](images/2013_06_04_SiteFromPaul.jpg "Site Visit by Client")
+
+The site awaited us.
+
+### Interactive Background to Delay Maps, and the question of generating the delay map from the Kinect
+
+**[Add visual experimentation from pete inspiring the idea of blobs as delay maps, and thinking about delay maps: First at Fabrica, Then at UVA, Then feedback, With James George writing the addon much easier, Golan list of time works]**
+
+The breakthrough after this initial thinking was to try to think of what other greyscale maps I had seen - from the depth maps of the Kinect.
+
+### Actual Timeline
+
+Here are the folder names of all the folders in my greenpeaceArcticGlastonbury2013 folder.
+
+* 2013_04_11_PlansAndContentFromGreenpeace
+* 2013_04_16_ProjectorQuotes
+* 2013_04_30_PeteQuoteAndIdeas
+* 2013_05_08_GlastoOverviewPlan
+* 2013_05_14_PetePlanAndTechList
+* 2013_05_20_GuestList
+* 2013_05_28_CrewDetailsFromPete
+* 2013_05_29_addons
+* 2013_05_29_addonsAfterPragmatism
+* 2013_05_29_ofxGUIFromDevelopGitHubBranch
+* 2013_05_31_AddMaps
+* 2013_06_02_BaficInvoice
+* 2013_06_03_PeteEffectsFromSomantics
+* 2013_06_04_HomeHigherResForPete
+* 2013_06_06_CallToActionScript
+* 2013_06_12_CrewForFieldReadup
+* 2013_06_12_Font
+* 2013_06_12_GreenpeaceLogos
+* 2013_06_12_MoreCrewBriefing
+* 2013_06_13_HuntResult
+* 2013_06_13_MoreDurationBits
+* 2013_06_13_obviousJimAudioReactiveRing
+* 2013_06_16_ofxTimelineVideo
+* 2013_06_19_Singleton
+* 2013_06_19_VoiceOverOutro
+* 2013_06_20_CateringMenu
+* 2013_06_20_NewAddonsToTry
+* 2013_06_24_CodeForArtFromJeffTimesten
+* 2013_06_24_DeadFlock
+* 2013_06_24_newFilmAndAudio
+* 2013_06_24_ofxAddonsOFXContourUtil
+* 2013_07_31_Final50Invoice
+* 2013_08_18_ThankYouFromGreenpeace
 
 ## Development
 ### Development Hardware and Software setup
@@ -453,6 +479,8 @@ lucky birthday boy!
 works great...
 
 did grab..
+
+![Slit scan generated from Kinect Depth Map Slice](images/2013_05_31_BirthdayPresentSlitScanFromDepthImage.jpg "Slit scan generated from Kinect Depth Map Slice")
 
 31st May 2013
 
@@ -1139,7 +1167,7 @@ https://github.com/Flightphase/ofxCvOpticalFlowLK
 
 doing a quick look at them before supper.... lazy! look at in the morning....
 
-the next evening! double shit
+the next evening!
 
 ok addons first....
 
@@ -1664,23 +1692,58 @@ just changed the fur to not have any alpha (white fur that is)
 
 also added non timeline gui to everything...
 
-### Addons used/rejected
-#### ofxKinect, as a possible input to ofxSlitScan
-#### ofxSlitScan, using PNG's and moving to generating realtime maps, making a Aurora
-#### ofxBox2d, making ice, previous projects with Todd Vanderlin
-#### ofxTimeline, understanding how cuing works
-#### ofxGui, running the Latest branch from Github, multiple input methods and GUI addons
-#### ofxOpticalFlowFarneback, making a polar bear
-### Audio negotiations
+### Explanation and Discussion of Development in Detail
 
-On May 10th, Pete Hellicar reached out to our friends at Warp, to see if any of their artists would be interested in donating their music to the project, and by the nick of project time we had permission from several artists to use their sounds.
+#### ofxKinect, as a possible input to ofxSlitScan
+
+**[Programatically easy! the joy of openframeworks]**
+
+#### ofxSlitScan, using PNG's and moving to generating realtime maps, making a Aurora
+
+**[Start with pngs as inputs as with james george app, then feeding in blobs, then affecting the blobs, then using paint as depth map as the input to the final aurora look, and the timewarp look over mountains]**
+
+#### ofxBox2d, making ice, previous projects with Todd Vanderlin
+
+**[Inspired by previous work with todd on feedback - fracturing time using 2d opencv strategies to get blobs, now had the luxury of the kinect]**
+
+#### ofxTimeline, understanding how cuing works
+
+**[Starting with duration, problems with cuing, quicktime access discussed below and using ofxtimeline in the end]**
+
+#### ofxGui, running the Latest branch from Github, multiple input methods and GUI addons
+
+**[Wanting to get access to the latest features mid development, github, ending up with multiple guis]**
+
+#### ofxOpticalFlowFarneback, making a polar bear
+
+**[Serendipity of seeing the addon come up, looking at different versions, fitting perfectly with the film, transforming to different forms of polar bear and coloured aurora]**
 
 ### Naming
+
+**[No bad characters?]**
+
 ### Changing scenes
+
+**[Having to pass the playhead over the cue]**
+
 ### Video Performance, using the HighPerformanceExample
+
+**[Wanting to get access to the latest features mid development, github, ending up with multiple guis]**
+
 ### Counting the items in an Enum
-## Show time
+
+**[c++ searching strategy, link to article]**
+
 ### Sequencing
+
+![Kieran in front of the projection screen, final sequencing](images/2013_06_25_KieranProjection.jpg "Kieran in front of the projection screen, final sequencing")
+
+Kieran and Pete completed the main sequencing onsite.
+
+## Show time
+
+![The Installation in Action, 27th June 2013](images/2013_06_27_HandsInTheAir.jpg.jpg "The Installation in Action, 27th June 2013")
+
 ### Code structure, main loop
 
 **[Add code]**
@@ -1709,12 +1772,39 @@ On May 10th, Pete Hellicar reached out to our friends at Warp, to see if any of 
 #### PARTICLES
 #### WHITEFUR
 #### PAINT
+
 ### Running procedure
+
+**[Testimony from kieran and bafic]**
+
 ### Live issues
+
+**[Testimony from kieran and bafic]**
+
 ## Post Event
+
+**[PR]**
+
 ### Open Source discussions with Client
+
+**[Contacting open source people within Greenpeace, decision to delay release because of film issues]**
+
 ### Re-running remotely in Australia and New Zealand
+
+**[Challenges of getting old code running again]**
+
 ### Conclusion, future development
+
+**[Wanting to get access to the latest features mid development, github, ending up with multiple guis]**
+
 #### Broadcast
+
+**[Broadcast this interaction]**
+
 #### Social interaction
+
+**[Hello Cube style interaction]**
+
 #### Raspberry pi
+
+**[Cheap, available portable robust platform]**
