@@ -1,4 +1,4 @@
-# Anthropocene, an interactive film installation for Greenpeace as part of their field at Glastonbury 2013 
+# Anthropocene, an interactive film installation for Greenpeace as part of their field at Glastonbury 2013
 
 ## Project Overview
 
@@ -12,45 +12,42 @@ http://youtu.be/LwokmKqT0og?t=1m12s
 
 ## Team and Credits
 
-Pete Hellicar
-Joel Gethin Lewis
-Paul Earnshaw
-Sarah Toplis
-Bafic
-Kieran Startup
+* Pete Hellicar
+* Joel Gethin Lewis
+* Paul Earnshaw
+* Sarah Toplis
+* Bafic
+* Kieran Startup
 
 Project uses addons and other code Contributions from:
 
-Marek Bereza aka Mazbox as part of Cariad Interactive
-ofxKinect
-ofxSlitScan
-ofxBox2d
-ofxTimeline
-ofxGui
-ofxOpticalFlowFarneback
+* Marek Bereza aka Mazbox as part of Cariad Interactive
+* **[insert github creators of various addons below]**
+* ofxKinect
+* ofxSlitScan
+* ofxBox2d
+* ofxTimeline
+* ofxGui
+* ofxOpticalFlowFarneback
 
 Thanks to:
-All our families and friends.
-The Greenpeace Family
-Microsoft for being Open
-Theo Watson
-The entire openFrameworks community
-Marshmallow Laser Feast
-Tim Scaffidi
-James George
-YCAM
+* All our families and friends.
+* The Greenpeace Family
+* Microsoft for being Open
+* Theo Watson
+* The entire openFrameworks community
+* Marshmallow Laser Feast
+* Tim Scaffidi
+* James George
+* YCAM
 
 ## Hardware selection
 
-1 x 3D Camera
-Microsoft XBox360 Kinect
-1 x Playback and Interaction Computer
-MacBook Pro Retina
-1 x 10k projector
-Projection Screen
-1 x screen and mounting.
-Sound.
-4 x D&B T-10 Top + Amp 2 x Subs
+* 1 x 3D Camera - Microsoft XBox360 Kinect
+* 1 x Playback and Interaction Computer - MacBook Pro Retina
+* 1 x 10K projector
+* 1 x Projection Screen
+* Sound - 4 x D&B T-10 Top + Amp 2 x Subs
 
 ## The Project
 
@@ -105,7 +102,7 @@ During May, we concentrated on discovering what film footage was available, and 
 
 On May 10th, Pete Hellicar reached out to our friends at Warp, to see if any of their artists would be interested in donating their music to the project, and by the nick of project time we had permission from several artists to use their sounds.
 
-### Supplier change and final budget negotiations and
+### Supplier change and final budget negotiations and beginning to write the software
 
 By the end of May, we had changed suppliers to ones already working with Greenpeace on their field, and had found replacement kit for our production. We'd also reached a final budget, and I was ready to start coding. Please see below for more details of the actual coding.
 
@@ -169,20 +166,16 @@ Memory  4 GB 1067 MHz DDR3
 Graphics  NVIDIA GeForce 9600M GT 512 MB
 
 XCode for Development
-
-Chrome for Web
-
+Chrome for Web Browsing
 Sublime Text for logging
 
 ### Edited development notes
 
-29th May 2013
+#### 29th May 2013
 
 oF/of_v0.7.4_osx_release/apps/ofxKinect-demos
 
-also downloaded ofxKinect
-
-get gui working first, with ofxKinect, then start on:
+Also downloaded ofxKinect. Get gui working first, with ofxKinect, then start on:
 
 https://github.com/toruurakawa/ofxFakeMotionBlur
 DON'T USE, USE JAMEZILLA https://github.com/kylemcdonald/ofxBlur
@@ -198,84 +191,57 @@ https://github.com/bakercp/ofxVideoBuffer
 https://github.com/bakercp/ofxVideoUtils
 https://github.com/obviousjim/ofxSlitScan
 
-doing gui
-
-having to make the projectGenerator to make the projects, generating the examples now....
-
-recopy over examples after! did it, just copying in the empty example xcode project, all in here now:
+Doing gui - having to make the projectGenerator to make the projects, generating the examples now.... Recopy over examples after! Did it, just copying in the empty example xcode project, all in here now:
 
 oF/of_v0.7.4_osx_release/examples/gui
 
+Email of notes on development:
+
 On 29 May 2013, at 20:44, Joel Gethin Lewis wrote:
 
-All ofFloatColor or ofFloatImages
+* All ofFloatColor or ofFloatImages
+* HSB blob shifts as a mode - crazy colours, also try whole image on slow change using ofmath demos
+* Blobs cracking off
+* Just blackness on blob
+* Slit scan obvs
+* ofxbox2d? Kinect demos? Look at memos
+* Look at ofxaddons for time ones
+* Use ofGui official one
+* Have different GUI panes per constructor for ofxScenes (make that)
 
-HSB blob shifts as a mode - crazy colours, also try whole image on slow change using ofmath demos
-Blobs cracking off
-Just blackness on blob
-Slit scan obvs
-ofxbox2d? Kinect demos? Look at memos
-Look at ofxaddons for time ones
-Use ofGui official one
-Have different GUI panes per constructor for ofxScenes (make that)
+Think in addon way - indeed that every scene might have addons inside it. That's the way the should be. Addons inside scenes. Scenes are subclasses of ofxScene. Draw it out. Start with slitscan as first scene. Just get that working then use that as basis for ofxScene. Pragmatic! Will need central image creator as input for each scene. Kinect in this case. Don't worry about that for now.
 
-Think in addon way - indeed that every scene might have addons inside it. That's the way the should be. Addons inside scenes. Scenes are subclasses of ofxScene 
+ofparameter is missing! Looking at old OF folder from other project: openFrameworks-develop/apps/devApps/projectGenerator, looking in there in the oF project to try to find what is going on...
 
-Draw it out.
+openFrameworks-develop/libs/openFrameworks/types contains:
 
-Start with slitscan as first scene. Just get that working then use that as basis for ofxScene.
-
-Pragmatic! 
-
-Will need central image creator as input for each scene. Kinect in this case. Don't worry about that for now.
-
-ofparameter is missing 
-
-looking old OF folder from other project: openFrameworks-develop/apps/devApps/projectGenerator
-
-looking in there in the oF project to try to find what is going on...
-
-openFrameworks-develop/libs/openFrameworks/types
-
-contains
-
-ofBaseTypes.cpp
-ofBaseTypes.h
-ofColor.cpp
-ofColor.h
-ofParameter.cpp
-ofParameter.h
-ofParameterGroup.cpp
-ofParameterGroup.h
-ofPoint.cpp
-ofPoint.h
-ofRectangle.cpp
-ofRectangle.h
-ofTypes.h
+* ofBaseTypes.cpp
+* ofBaseTypes.h
+* ofColor.cpp
+* ofColor.h
+* ofParameter.cpp
+* ofParameter.h
+* ofParameterGroup.cpp
+* ofParameterGroup.h
+* ofPoint.cpp
+* ofPoint.h
+* ofRectangle.cpp
+* ofRectangle.h
+* ofTypes.h
 
 looking for ofpanel
 
 openFrameworks-develop/addons/ofxGui/src
 
-is where it is...
-
-opening 
+is where it is...opening:
 
 oF/of_v0.7.4_osx_release/examples/gui/guiExample
 
-again, just trying to add it in, in the addon...
-
-NOooo thats bad.. should use the develop version...
-
-space is low...
-
-now working here:
+again, just trying to add it in, in the addon... Nooo thats bad.. should use the develop version... space is low...now working here:
 
 oF/openFrameworks-develop/apps/devApps/projectGenerator
 
-trying to build that and run it
-
-had to select the root oF folder, it was defaulting to a wierd one, so selected:
+trying to build that and run it, had to select the root oF folder, it was defaulting to a weird one, so selected:
 
 oF/openFrameworks-develop
 
@@ -283,9 +249,7 @@ seems to be working, leaving it for a bit...
 
 error ofFile::copyFromTo source file/folder doesn't exist: oF/openFrameworks-develop/scripts/osx/template/emptyExample.xcodeproj/xcshareddata/WorkspaceSettings.xcsettings
 
-is the error....
-
-its correct:
+is the error....it's correct:
 
 oF/openFrameworks-develop/scripts/osx/template/emptyExample.xcodeproj/xcshareddata
 
@@ -299,15 +263,7 @@ openFrameworks-develop/apps/devApps/projectGenerator/bin/data/xcode/template/emp
 
 xcschememanagement.plist
 
-as well...
-
-so trying to generate again...
-
-seems to be working now......
-
-won't paste in the log! (-;
-
-trying this now...
+as well...so trying to generate again...seems to be working now......won't paste in the log! (-; trying this now...
 
 oF/openFrameworks-develop/examples/gui/guiExample
 
@@ -315,18 +271,12 @@ nice!
 
 oF/openFrameworks-develop/examples/gui/guiFromParametersExample
 
-next
-
-not that interesting...
+next - not that interesting...
 
 oscParametersReceiver
 oscParametersSender
 
-together...
-
-neat demo! synchronised gui controls....
-
-both crash on exit
+together... Neat demo! synchronised gui controls....both crash on exit
 
 sender:
 
@@ -380,13 +330,7 @@ doesn't work...
 
 oF/openFrameworks-develop/examples/gui/parameterGroupExample
 
-is very intersting - two renderers running at once!
-
-only thing missing is multiple parameters, and images being drawn?
-
-could always do that with bools, and the images being displayed on top, sliders and the like could work with that too...
-
-moving big greenpeace video into:
+Is very intersting - two renderers running at once! Only thing missing is multiple parameters, and images being drawn? could always do that with bools, and the images being displayed on top, sliders and the like could work with that too... Moving big greenpeace video into:
 
 oF/openFrameworks-develop/examples/video/osxHighPerformanceVideoPlayerExample/bin/data/movies
 
@@ -394,19 +338,7 @@ to save space, rather than copying!
 
 oF/openFrameworks-develop/examples/video/osxHighPerformanceVideoPlayerExample
 
-trying this now...
-
-builds with standard movie file in demo, fingers.mov
-
-now trying, Greenpeace.m4v
-
-works great!
-
-audio back too...
-
-and pixel access!
-
-MOVED video file out of the folder for safety..
+Trying this now...builds with standard movie file in demo, fingers.mov. Now trying, Greenpeace.m4v - works great! audio back too...and pixel access! MOVED video file out of the folder for safety..
 
 copied in this:
 
@@ -415,14 +347,9 @@ oF/openFrameworks-develop/apps/ofxKinect-demos
 trying normal ofxKinect first...
 
 oF/openFrameworks-develop/addons/ofxKinect
-
 oF/openFrameworks-develop/addons/ofxKinect/example
 
-trying that...
-
-works fine, with motor and everything...
-
-so making a mega mix up of:
+trying that... works fine, with motor and everything...so making a mega mix up of:
 
 ofxKinect, ofxGUI and ofHighPerformanceVideo demo
 
@@ -433,179 +360,97 @@ copied that in, changed name to:
 oF/openFrameworks-develop/apps/HAndLGreenpeace/001fromofxKinectExampleAndofxGUIAndHighPerformanceVideo
 
 oF/openFrameworks-develop/examples/video/osxHighPerformanceVideoPlayerExample
-and
 oF/openFrameworks-develop/examples/gui/guiExample
 
-copying over gui data...
-
-that works with gui.. now lets try with high performance video...
-
-all works!
-
-nice debug screen!
-
-saved it out to making of....
+copying over gui data...that works with gui.. now lets try with high performance video...all works! nice debug screen! saved it out to making of....
 
 ![Kinect, GUI and High Performance Video Debug Screen](images/2013_05_29_MashingHighPerfAndKinectAndGUI.jpg "Kinect, GUI and High Performance Video Debug Screen")
 
-30th May 2013
+#### 30th May 2013
 
-doing modes
-
-tidying up gui, need to do more on gui tidy up and keys
-
-made:
+Doing modes, tidying up gui, need to do more on gui tidy up and keys. Made:
 
 oF/openFrameworks-develop/apps/HAndLGreenpeace/002FirstModesAndSlitScan
 
-builds (-;
-
-pixel drawing is messed up, checking the original high perf demo
-
-recoded nicely with bits that made sense and were easier to understand...
-
-now slitsan!
-
-fixed a few gui bugs...
+Builds (-; Pixel drawing is messed up, checking the original high perf demo. Recoded nicely with bits that made sense and were easier to understand...now slitsan! fixed a few gui bugs...
 
 oF/openFrameworks-develop/addons/ofxSlitScan
 
-made that...
-
-image is PNG RGB for slitscan delay map, so kinect depth map is good for that... right? (-;
-
-lucky birthday boy!
-
-works great...
-
-did grab..
+Made that... Image is PNG RGB for slitscan delay map, so kinect depth map is good for that... right? (-; lucky birthday boy! works great...did grab..
 
 ![Slit scan generated from Kinect Depth Map Slice](images/2013_05_31_BirthdayPresentSlitScanFromDepthImage.jpg "Slit scan generated from Kinect Depth Map Slice")
 
-31st May 2013
+#### 31st May 2013
 
-showed pete
+Showed Pete, performance better on his laptop, no optimisation yet, tried out some maps with bafic...
 
-performance better on his laptop, no optimisation yet
+#### 6th June 2013
 
-tried out some maps with bafic...
-
-6th June 2013
-
-first lets do GUI that corresponds to big maps, so we can switch between them...
-
-duplicating multicoloured magic into the folder, so got all that lovely code to work with..
-
-after lunch lets look at mirror somanitcs code...
-
-too complicated for now, need some time to sit down and make it work...
-
-for now on the Virgin SA flight, lets try some of the addons!
+First lets do GUI that corresponds to big maps, so we can switch between them... Duplicating multicoloured magic into the folder, so got all that lovely code to work with.. After lunch lets look at mirror Somantics code... Too complicated for now, need some time to sit down and make it work... For now on the Virgin SA flight, lets try some of the addons!
 
 ofxBlur By Kyle McDonald
-
 had to add accelerate, qtkit and corevideo frameworks to make it work..
 
 ofxBlurShader
-
-This is a very lightly refactored version of Kyle McDonald's ofBlur
-example (https://github.com/kylemcdonald/SubdivisionOfRoam/tree/master/GaussianBlur). It's
-been updated to OF 007.
-
+This is a very lightly refactored version of Kyle McDonald's ofBlur example (https://github.com/kylemcdonald/SubdivisionOfRoam/tree/master/GaussianBlur). It hasbeen updated to OF 007.
 Didn't build!
 
 ofxBox2d
+trying every example: 
 
-trying every example
-oF/openFrameworks-develop/addons/ofxBox2d/ComplexPolgonExample
-useful for making shatter like effects - how do I texture them?
-
-oF/openFrameworks-develop/addons/ofxBox2d/ContactListenerExample
-useful for tiggering audio samples on ofxBox2D interactions
-
-oF/openFrameworks-develop/addons/ofxBox2d/CustomDataExample
-useful for storing data withing objects, nothing particularly useful there for us at the moment..
-
-oF/openFrameworks-develop/addons/ofxBox2d/ForcesExample
-bunch of forces on mouse action
-
-oF/openFrameworks-develop/addons/ofxBox2d/JointExample
-long chain of pieces
-
-oF/openFrameworks-develop/addons/ofxBox2d/ofxBox2dExample
-line that you can draw and lots of various shapes
-
-oF/openFrameworks-develop/addons/ofxBox2d/PolygonExample
-more line drawing...
-
-oF/openFrameworks-develop/addons/ofxBox2d/SimpleExample
-simple!
+* oF/openFrameworks-develop/addons/ofxBox2d/ComplexPolgonExample - useful for making shatter like effects - how do I texture them?
+* oF/openFrameworks-develop/addons/ofxBox2d/ContactListenerExample - useful for tiggering audio samples on ofxBox2D interactions
+* oF/openFrameworks-develop/addons/ofxBox2d/CustomDataExample - useful for storing data withing objects, nothing particularly useful there for us at the moment..
+* oF/openFrameworks-develop/addons/ofxBox2d/ForcesExample - bunch of forces on mouse action
+* oF/openFrameworks-develop/addons/ofxBox2d/JointExample -long chain of pieces
+* oF/openFrameworks-develop/addons/ofxBox2d/ofxBox2dExample - line that you can draw and lots of various shapes
+* oF/openFrameworks-develop/addons/ofxBox2d/PolygonExample - more line drawing...
+* oF/openFrameworks-develop/addons/ofxBox2d/SimpleExample - simple!
 
 ofxBullet
 
-oF/openFrameworks-develop/addons/ofxBullet/SimpleExample
-is simple, several different basic shapes...
-
-oF/openFrameworks-develop/addons/ofxBullet/CustomShapesExample
-needs ofxAssimpMeshHelper - that is in the assimp model loader addon...
-cool - very fast simulation and loading of custom shapes - perhaps pete could make custom 3D shapes?
-
-oF/openFrameworks-develop/addons/ofxBullet/EventsExample
-smashing of objects into each other, mouse animation of objects within cube
-
-oF/openFrameworks-develop/addons/ofxBullet/JointsExample
-has long chain of shapes, similar to ofxbox2d example...
+* oF/openFrameworks-develop/addons/ofxBullet/SimpleExample - is simple, several different basic shapes...
+* oF/openFrameworks-develop/addons/ofxBullet/CustomShapesExample - needs ofxAssimpMeshHelper - that is in the assimp model loader addon... cool - very fast simulation and * loading of custom shapes - perhaps pete could make custom 3D shapes?
+* oF/openFrameworks-develop/addons/ofxBullet/EventsExample - smashing of objects into each other, mouse animation of objects within cube
+* oF/openFrameworks-develop/addons/ofxBullet/JointsExample - has long chain of shapes, similar to ofxbox2d example...
 
 ofxCameraFilter
 
-oF/openFrameworks-develop/addons/ofxCameraFilter/example-graphics
-simple camera effects on some rotating shapes, aberation and the like...
-
-oF/openFrameworks-develop/addons/ofxCameraFilter/example-live
-does the same but live, and with an interesting use of an ofMesh
+* oF/openFrameworks-develop/addons/ofxCameraFilter/example-graphics - simple camera effects on some rotating shapes, aberation and the like...
+* oF/openFrameworks-develop/addons/ofxCameraFilter/example-live - does the same but live, and with an interesting use of an ofMesh
 
 ofxFakeMotionBlur
 
-no work
-
-oF/openFrameworks-develop/addons/ofxFakeMotionBlur/example
+* oF/openFrameworks-develop/addons/ofxFakeMotionBlur/example - no work
 
 ofxPBOVideoPlayer
 
-oF/openFrameworks-develop/addons/ofxPBOVideoPlayer/example
-
-seems speedy
+* oF/openFrameworks-develop/addons/ofxPBOVideoPlayer/example - seems speedy
 
 ofxPlaymodes
 
-oF/openFrameworks-develop/addons/ofxPlaymodes/example-pmAV
-
-needs more addons, come back to this..
+* oF/openFrameworks-develop/addons/ofxPlaymodes/example-pmAV - needs more addons, come back to this..
 
 ofxTLGlitch
 
-trying oF/openFrameworks-develop/addons/ofxVideoBuffer/example-multi-tap
-
-had to add empty example
-
-couldn't get building....
+* trying oF/openFrameworks-develop/addons/ofxVideoBuffer/example-multi-tap - had to add empty example, couldn't get building....
 
 DONE addon off....
 
-12th June 2013
+#### 12th June 2013
 
-greenpeace logos look nice as slit scans! saved all graphics and fonts into:
+Greenpeace logos look nice as slit scans! saved all graphics and fonts into:
 
 2013_06_12_Font
 2013_06_12_GreenpeaceLogos
 
-pete gave me new audio and the film for working with duration
+Pete gave me new audio and the film for working with duration
 
-13th June 2013
+#### 13th June 2013
 
-demo is up from james george too:
+Duration demo is up from James George too:
 
-Posted demo code from Duration.cc demo github.com/obviousjim/Dur… cc @JGL
+* Posted demo code from Duration.cc demo github.com/obviousjim/Dur… cc @JGL
 
 got that, put it here:
 
@@ -617,15 +462,11 @@ OF/openFrameworks-develop/apps/jamesGeorgeDurationDemo/DurationAudioReactiveRing
 
 made:
 
-Duration
-
 Duration_004_OSX
 Duration_004_OSX.zip
 durationData
 
-too..
-
-the readme sez:
+too.. The readme sez:
 
 Duration: Timeline for Creative Code Demonstration
 
@@ -641,9 +482,7 @@ http://www.duration.cc/ // https://github.com/YCAMInterlab/Duration
 
 Supported by YCAM InterLab Guest Research Project 2012
 
-getting those..
-
-in here:
+Getting those.. put in here:
 
 2013_06_13_MoreDurationBits
 
@@ -654,32 +493,20 @@ trying this first
 
 OF/openFrameworks-develop/addons/ofxDuration/example-simpleReceiver
 
-totally did it, totally worked - have to show Pete Hellicar it tomorrow, and disuss which controls he wants...
-
-made a new track:
+totally did it, totally worked - have to show Pete Hellicar it tomorrow, and disuss which controls he wants...made a new track:
 
 Duration/durationData/FirstTry
 
-audio all loaded in fine (-;
-
-need to test with film sync, see if that works OK.. try to set the movie time on each frame? will it fuck everything?
-
-basically should make a new version of the app:
+audio all loaded in fine (-; need to test with film sync, see if that works OK.. try to set the movie time on each frame? will it fuck everything? Basically should make a new version of the app:
 
 OF/openFrameworks-develop/apps/HAndLGreenpeace/003WithOFXDuration
 
-added
+Added:
 
 GUI
 SimpleReceiverPort.txt
 
-to data folder too...
-
-need to compare with:
-
-OF/openFrameworks-develop/addons/ofxDuration/example-simpleReceiver
-
-and dupicate the functionality - start with scene control and colour....
+to data folder too...need to compare with: OF/openFrameworks-develop/addons/ofxDuration/example-simpleReceiver and duplicate the functionality - start with scene control and colour....
 
 MORNING TIME
 
@@ -687,81 +514,53 @@ OF/openFrameworks-develop/addons/ofxDuration/example-simpleReceiver
 
 opening that and taking the functionality over...
 
-{    ofxDurationTrack sceneTrack = duration.getTrack("/scene");
-    
-    string currentScene = sceneTrack.flag;
-    
-    if(currentScene == "VIDEO"){
-        currentMode = VIDEO;
-    }
-    
-    if(currentScene == "SLITSCANBASIC"){
-        currentMode = SLITSCANBASIC;
-    }}
+ofxDurationTrack sceneTrack = duration.getTrack("/scene");
+string currentScene = sceneTrack.flag;
 
+if(currentScene == "VIDEO"){
+    currentMode = VIDEO;
+}
+
+if(currentScene == "SLITSCANBASIC"){
+    currentMode = SLITSCANBASIC;
+}
 
 totally works!
 
-16th June 2013
+#### 16th June 2013
 
-lets try the video sync'ing...
-
-over osc...
-
-didn't seem to work with:
+Lets try the video syncing over osc.. Didn't seem to work with:
 
     float remoteTime = sceneTrack.lastUpdatedTime;
     cout << "Remote time is:" << remoteTime << endl
     float totalLengthOfVideo = greenpeaceVideo.getDuration();
-    
     float percentToSeekTo = remoteTime/totalLengthOfVideo;
-    
     greenpeaceVideo.setPosition(percentToSeekTo);
 
-hmmm
+Hmmm. Sent this to james and got a response:
 
-sent this to james and got a response:
-
-On 16 Jun 2013, at 19:00, James George wrote:
-
-yea it's impossible to call setPosition on a video every frame and have it playback smoothly. Quicktime needs to control its own time
-
-Try this: play the video back normally in openframeworks and then update Duration every frame based on it's position
+On 16 Jun 2013, at 19:00, James George wrote: yea it's impossible to call setPosition on a video every frame and have it playback smoothly. Quicktime needs to control its own time. Try this: play the video back normally in openframeworks and then update Duration every frame based on it's position:
 
 https://github.com/YCAMInterlab/Duration#controlling-duration-through-osc
 
-Specifically make sure Duration has its incoming OSC port set and from OF send it a /duration/seektosecond 
-
-get the seconds from the video player.getPosition()*player.getDuration() then create an outgoing OSC message directed at Duration:
+Specifically make sure Duration has its incoming OSC port set and from OF send it a /duration/seektosecond. Get the seconds from the video player.getPosition()*player.getDuration() then create an outgoing OSC message directed at Duration:
 
 Seek	/duration/seektosecond	Second (Float)	 Sets playhead position to the specified second
 Sending the /seektosecond message will then trigger an update to come back from Duration to your app and update all the other params.
 
+On Sun, Jun 16, 2013 at 1:49 PM, Joel Gethin Lewis wrote: Hey James, I've been trying to get a Duration app to be able to sync the video playback on an OF app - I used your example and have started trying to sync to the time from a track:
 
+ofxDurationTrack sceneTrack = duration.getTrack("/scene");
+string currentScene = sceneTrack.flag;
+float remoteTime = sceneTrack.lastUpdatedTime;
+cout << "Remote time is:" << remoteTime << endl;
+float totalLengthOfVideo = greenpeaceVideo.getDuration();
+cout << "totalLengthOfVideo time is:" << totalLengthOfVideo << endl;
+float percentToSeekTo = remoteTime/totalLengthOfVideo;
+cout << "percentToSeekTo time is:" << percentToSeekTo << endl;
+greenpeaceVideo.setPosition(percentToSeekTo);
 
-On Sun, Jun 16, 2013 at 1:49 PM, Joel Gethin Lewis wrote:
-Hey James,
-
-I've been trying to get a Duration app to be able to sync the video playback on an OF app - I used your example and have started trying to sync to the time from a track:
-
-    ofxDurationTrack sceneTrack = duration.getTrack("/scene");
-
-    string currentScene = sceneTrack.flag;
-
-    float remoteTime = sceneTrack.lastUpdatedTime;
-    cout << "Remote time is:" << remoteTime << endl;
-    float totalLengthOfVideo = greenpeaceVideo.getDuration();
-    cout << "totalLengthOfVideo time is:" << totalLengthOfVideo << endl;
-    float percentToSeekTo = remoteTime/totalLengthOfVideo;
-    cout << "percentToSeekTo time is:" << percentToSeekTo << endl;
-
-    greenpeaceVideo.setPosition(percentToSeekTo);
-
-But it results in stuttering, playback - do you have any tips? How often are the control packets sent? Should I be getting the remote time in a better way?
-
-Cheers,
-
-Joel}
+But it results in stuttering, playback - do you have any tips? How often are the control packets sent? Should I be getting the remote time in a better way? Cheers, Joel
 
 looking at:
 
@@ -769,269 +568,101 @@ https://github.com/YCAMInterlab/Duration#controlling-duration-through-osc
 
 /duration/seektosecond
 
-is what we want...
+Is what we want...so need to setup osc, trying to get that working with a simple sender, having problems gaining control from the OF app. Sent this:
 
-so need to setup osc, 
+On 16 Jun 2013, at 20:48, Joel Gethin Lewis wrote: Hey James, Thanks! It kind of works, but not really. I have my app jumping around it's video when I press t:
 
-trying to get that working with a simple sender, having problems gaining control frmo the OF app
+case 't':
+{
+   float newseekposition = (float)mouseX/(float)ofGetWidth();
+   ofClamp(newseekposition, 0.f, 1.f); //safety
+   greenpeaceVideo.setPosition(newseekposition);
+   cout << "New seek position is: " << newseekposition << endl;
+}
 
-sent this:
-
-On 16 Jun 2013, at 20:48, Joel Gethin Lewis wrote:
-
-Hey James,
-
-Thanks! 
-
-It kind of works, but not really.
-
-I have my app jumping around it's video when I press t:
-
-       case 't':
-       {
-           float newseekposition = (float)mouseX/(float)ofGetWidth();
-           ofClamp(newseekposition, 0.f, 1.f); //safety
-           greenpeaceVideo.setPosition(newseekposition);
-           cout << "New seek position is: " << newseekposition << endl;
-       }
-
-If the Duration app is set to paused, it updates fine, the playhead moving around when I press T in my app- but I don't get the messages back from Duration! If it isn't paused (the duration app), I get the messages, but I can't move the Duration playhead around with the above messages! Catch 22?
-
-What should I do? I want to get the messages back, have it be playing on both ends and be able to seek.
-
-At the moment, I can have seeking in my app and Duration, but without messages back. Or messages back, without seeking.
+If the Duration app is set to paused, it updates fine, the playhead moving around when I press T in my app- but I don't get the messages back from Duration! If it isn't paused (the duration app), I get the messages, but I can't move the Duration playhead around with the above messages! Catch 22? What should I do? I want to get the messages back, have it be playing on both ends and be able to seek. At the moment, I can have seeking in my app and Duration, but without messages back. Or messages back, without seeking.
 
 Sending the /seektosecond message will then trigger an update to come back from Duration to your app and update all the other params.
 
-Doesn't seem to be happening?
-
-Two little Duration suggestions:
+Doesn't seem to be happening? Two little Duration suggestions:
 
 1) Shouldn't ofxDuration have a send to DurationApp method? That would be useful, no? Auto osc.
 2) Can I mute the audio of the Duration app in its GUI?
 
-Any thoughts gratefully recieved.
+Any thoughts gratefully recieved. Ideally, I'd like either side to be Master if it sends messages to the other. Make sense? My app the true master, but seeking to Quicktime if it gets an occasional timeline change from the Duration app - but how to do that only some of the time? Cheers, Joel
 
-Ideally, I'd like either side to be Master if it sends messages to the other. Make sense? My app the true master, but seeking to Quicktime if it gets an occasional timeline change from the Duration app - but how to do that only some of the time?
+Made new osc send:
 
-Cheers,
+On 16 Jun 2013, at 20:51, Joel Gethin Lewis wrote: This is my send, in my update:
 
-Joel
+//update duration based on the position of the quicktime player
+float videoTimeToSend = greenpeaceVideo.getPosition()*greenpeaceVideo.getDuration();
+ofxOscMessage m;
+m.setAddress("/duration/seektosecond");
+m.addFloatArg(videoTimeToSend);
+senderToDuration.sendMessage(m);
 
-made new osc send:
+Got this reply back, and replied:
 
-	//update duration based on the position of the quicktime player
-    float videoTimeToSend = greenpeaceVideo.getPosition()*greenpeaceVideo.getDuration();
-    ofxOscMessage m;
-    m.setAddress("/duration/seektosecond");
-    m.addFloatArg(videoTimeToSend);
-    senderToDuration.sendMessage(m);
-
-sent that:
-
-On 16 Jun 2013, at 20:51, Joel Gethin Lewis wrote:
-
-This is my send, in my update:
-
-   //update duration based on the position of the quicktime player
-   float videoTimeToSend = greenpeaceVideo.getPosition()*greenpeaceVideo.getDuration();
-   ofxOscMessage m;
-   m.setAddress("/duration/seektosecond");
-   m.addFloatArg(videoTimeToSend);
-   senderToDuration.sendMessage(m);
-
-Cheers,
-
-Joel
-On 16 Jun 2013, at 20:48, Joel Gethin Lewis wrote:
-
-Hey James,
-
-Thanks! 
-
-It kind of works, but not really.
-
-I have my app jumping around it's video when I press t:
-
-      case 't':
-      {
-          float newseekposition = (float)mouseX/(float)ofGetWidth();
-          ofClamp(newseekposition, 0.f, 1.f); //safety
-          greenpeaceVideo.setPosition(newseekposition);
-          cout << "New seek position is: " << newseekposition << endl;
-      }
-
-If the Duration app is set to paused, it updates fine, the playhead moving around when I press T in my app- but I don't get the messages back from Duration! If it isn't paused (the duration app), I get the messages, but I can't move the Duration playhead around with the above messages! Catch 22?
-
-What should I do? I want to get the messages back, have it be playing on both ends and be able to seek.
-
-At the moment, I can have seeking in my app and Duration, but without messages back. Or messages back, without seeking.
-
-Sending the /seektosecond message will then trigger an update to come back from Duration to your app and update all the other params.
-
-Doesn't seem to be happening?
-
-Two little Duration suggestions:
-
-1) Shouldn't ofxDuration have a send to DurationApp method? That would be useful, no? Auto osc.
-2) Can I mute the audio of the Duration app in its GUI?
-
-Any thoughts gratefully recieved.
-
-Ideally, I'd like either side to be Master if it sends messages to the other. Make sense? My app the true master, but seeking to Quicktime if it gets an occasional timeline change from the Duration app - but how to do that only some of the time?
-
-Cheers,
-
-Joel
-
-On 16 Jun 2013, at 21:07, Joel Gethin Lewis wrote:
-
-Hey James,
-
-I'll take a look. BUT! Looking at this video:
+On 16 Jun 2013, at 21:07, Joel Gethin Lewis wrote: Hey James, I'll take a look. BUT! Looking at this video:
 
 https://vimeo.com/59653952
 
-It looks like I might be better off doing everything in a single OF app. What do you think?
-
-Do you think my massive video file (785,526,769 bytes (785.5 MB on disk)) will kill your thumbnail maker? Lets see...
-
-Cheers,
-
-Joel
+It looks like I might be better off doing everything in a single OF app. What do you think? Do you think my massive video file (785,526,769 bytes (785.5 MB on disk)) will kill your thumbnail maker? Lets see...Cheers, Joel
 
 On 16 Jun 2013, at 20:53, James George wrote:
 
-Huh! Duration should definitely update when you move the playhead even if it's not playing... Definitely a bug.
+Huh! Duration should definitely update when you move the playhead even if it's not playing... Definitely a bug. Must be a bug in the way seektosecond works. This may be a rabbit hole, but try downloading the source from the Duration website (its the entire OF bundle) and see if you can give it a look. it's probalby a simple change to make sure that handleOscOut() works even when it's not playing.
 
-Must be a bug in the way seektosecond works. This may be a rabbit hole, but try downloading the source from the Duration website (its the entire OF bundle) and see if you can give it a look. it's probalby a simple change to make sure that handleOscOut() works even when it's not playing
-
-watched that video above
-
-did this:
+Watched that video above, did this:
 
 jglmacbookprocore2:addons joel$ git clone https://github.com/YCAMInterlab/ofxTimeline.git
 
-trying:
+Trying:
 
 OF/openFrameworks-develop/addons/ofxTimeline/example-videoRenderer
 
-worked...
-
-tried:
+Worked...tried:
 
 OF/openFrameworks-develop/apps/tryingBigVideoIntoOfxTimeline/example-allTracks
 
-totally worked!
+Totally worked! OK - so need to get audio file and video files separately... autosaves...... apple z for undo even works!
 
-OK - so need to get audio file and video files separately...
+#### 17th June 2013
 
-autosaves......
+On 17 Jun 2013, at 00:12, James George wrote: the video player posted on the oF list is really nice, but it doesn't support the getCurrentFrame() command which may cause some issues. give it a shot!
+On Sun, Jun 16, 2013 at 5:02 PM, Joel Gethin Lewis wrote: IT TOTALLY ROCKS! It totally works with the thumbnailer. Great work. I am going to code it up as a pure OF app, with maybe a little OSC Remote. Did you see the discussion about the new OSX high performance video player? How gnarly is the hookup to the ofVideoPlayer? I just glanced at the code and it didn't seem too bad.. AMAZING. Cheers, Joel
+On Sun, 16 Jun 2013, at 21:26, James George wrote: that's me in the video btw ;)
+On Sun, Jun 16, 2013 at 4:26 PM, James George wrote: no it'll be fine, the thumbnails generator is really light, it pulls only as it needs. you can also disable it.
 
-apple z for undo even works!
-
-17th June 2013
-
-On 17 Jun 2013, at 00:12, James George wrote:
-
-the video player posted on the oF list is really nice, but it doesn't support the getCurrentFrame() command which may cause some issues. give it a shot!
-
-On Sun, Jun 16, 2013 at 5:02 PM, Joel Gethin Lewis wrote:
-IT TOTALLY ROCKS!
-
-It totally works with the thumbnailer. Great work.
-
-I am going to code it up as a pure OF app, with maybe a little OSC Remote.
-
-Did you see the discussion about the new OSX high performance video player? How gnarly is the hookup to the ofVideoPlayer? I just glanced at the code and it didn't seem too bad..
-
-AMAZING.
-
-Cheers,
-
-Joel
-
-On 16 Jun 2013, at 21:26, James George wrote:
-
-that's me in the video btw ;)
-
-
-On Sun, Jun 16, 2013 at 4:26 PM, James George wrote:
-
-no it'll be fine, the thumbnails generator is really light, it pulls only as it needs. you can also disable it.
-
-
-On Sun, Jun 16, 2013 at 4:07 PM, Joel Gethin Lewis wrote:
-Hey James,
-
-I'll take a look. BUT! Looking at this video:
-
-https://vimeo.com/59653952
-
-It looks like I might be better off doing everything in a single OF app. What do you think?
-
-Do you think my massive video file (785,526,769 bytes (785.5 MB on disk)) will kill your thumbnail maker? Lets see...
-
-Cheers,
-
-Joel
-
-On 16 Jun 2013, at 20:53, James George wrote:
-
-Huh! Duration should definitely update when you move the playhead even if it's not playing... Definitely a bug.
-
-Must be a bug in the way seektosecond works. This may be a rabbit hole, but try downloading the source from the Duration website (its the entire OF bundle) and see if you can give it a look. it's probalby a simple change to make sure that handleOscOut() works even when it's not playing
-
-need to decide on the different modes - and do a mirror mode and a proper sparkles mode with direction..
-
-first off, make a new version, with everything in it and timeline and duration stripped out...
-
-RIGHT!
-
-made this:
+Need to decide on the different modes - and do a mirror mode and a proper sparkles mode with direction.. First off, make a new version, with everything in it and timeline and duration stripped out...RIGHT! made this:
 
 OF/openFrameworks-develop/apps/HAndLGreenpeace/004BuiltInOfxTimeLine
 
-ALL WORKing nice for demo, need to re-add GUI elements for showing and hiding etc... did it on mouse hide...
+All working nice for demo, need to re-add GUI elements for showing and hiding etc... did it on mouse hide... works great with the slitscan control on too...So next, it's really time to do effects...mirror first.. add an x variable for the point....
 
-works great with the slitscan control on too...
+#### 18th June 2013
 
-SO next, it's really time to do effects...
-
-mirror first.. add an x variable for the point....
-
-18th June 2013
-
-doing sparkles first:
-
-copied over:
+doing sparkles first: copied over:
 
 /Users/joel/Documents/Projects/HellicarAndLewis/greenpeaceArcticGlastonbury2013/OF/openFrameworks-develop/apps/HAndLGreenpeace/004BuiltInOfxTimeLine/bin/data/particles
 
-blob.png
-glitter.png
-sparkle.png
-star.png
+* blob.png
+* glitter.png
+* sparkle.png
+* star.png
 
 as the images for the particles
 
 https://github.com/HellicarAndLewis/MulticolouredMagic/blob/master/Somantics/src/somantics/Sparkles/Sparkles.cpp
 
-do this with the depth image as input to the blob tracker - or the IR image? 
+Do this with the depth image as input to the blob tracker - or the IR image? 
 
-get all three modes working first, then have a think about how to get them working as MODES - make a mode opbejst? Look at somantics for how to have scenes. Maybe call it a mode? Construct with a pointer to the test app for easier data steal. Have a vector of things
-
-just making sparkles for now
-
-made a sparkle cloud, duplicated the spartkcles logic from marekes sparkles from somantics - the one that spawns along the edges of the blobs... great way of doing it!
-
-going to need an FBO to draw the Sparkles into, so looking at:
+Get all three modes working first, then have a think about how to get them working as MODES - make a mode object? Look at somantics for how to have scenes. Maybe call it a mode? Construct with a pointer to the test app for easier data steal. Have a vector of things. Just making sparkles for now, made a sparkle cloud, duplicated the spartkcles logic from marekes sparkles from somantics - the one that spawns along the edges of the blobs... great way of doing it! Going to need an FBO to draw the Sparkles into, so looking at:
 
 /Users/joel/Documents/Projects/HellicarAndLewis/greenpeaceArcticGlastonbury2013/OF/openFrameworks-develop/examples/gl/fboTrailsExample
 
-Lets make it first, then do a InstallationMode object, based on what Sparkles actually needed. tightly coupling into testApp at the moment with a passed pointer, but whatever works for now...
-
-compilation problems, forward declration because of pointers to testApp...
+Lets make it first, then do a InstallationMode object, based on what Sparkles actually needed. tightly coupling into testApp at the moment with a passed pointer, but whatever works for now...Compilation problems, forward declaration because of pointers to testApp...
 
 http://stephanschulz.ca/downloads/singleton.zip
 
@@ -1039,50 +670,33 @@ had a look, from :
 
 http://forum.openframeworks.cc/index.php/topic,12466.msg54372.html#msg54372
 
-the first one i found was about singletons which allows you to have global variables that can be accessed by all classes; i.e. all .cpp files.
-
-bollocks to singletons... bad for test app, decoupled...
-
-trying to get the FBO to play nicely with the slitscan and the sparkles
+the first one i found was about singletons which allows you to have global variables that can be accessed by all classes; i.e. all .cpp files. Bollocks to singletons... bad for test app, decoupled...trying to get the FBO to play nicely with the slitscan and the sparkles
 
 FBO->SLITSCAN is working:
 
 RGB fbo!
 
-        ofImage distortionMap;
-        distortionMap.allocate(someSparkles.theFBO.getWidth(), someSparkles.theFBO.getHeight(), OF_IMAGE_COLOR);
-        
-        someSparkles.theFBO.readToPixels(distortionMap.getPixelsRef());
-        
-        distortionMap.resize(timeline.getVideoPlayer("video")->getWidth(), timeline.getVideoPlayer("video")->getHeight());
-        slitScan.setDelayMap(distortionMap);
+ofImage distortionMap;
+distortionMap.allocate(someSparkles.theFBO.getWidth(), someSparkles.theFBO.getHeight(), OF_IMAGE_COLOR);
+someSparkles.theFBO.readToPixels(distortionMap.getPixelsRef());
+distortionMap.resize(timeline.getVideoPlayer("video")->getWidth(), timeline.getVideoPlayer("video")->getHeight());
+slitScan.setDelayMap(distortionMap);
 
-rgb:
 setup:
-    theFBO.allocate(aWidth, aHeight, GL_RGB);
+theFBO.allocate(aWidth, aHeight, GL_RGB);
+
 draw:
-    theFBO.begin();
-	ofSetColor(ofColor::black);
-    ofRect(0,0,theFBO.getWidth(), theFBO.getHeight());
-    
-    //cloud.draw(theColour);
-    
-    ofSetColor(ofColor::white);
-    float circleX = theFBO.getWidth()/2.f;
-    float circleY = theFBO.getHeight()/2.f;
-    float circleRadius = min(circleX, circleY);
-    ofCircle(circleX,circleY, circleRadius);
-    
-    theFBO.end();
+theFBO.begin();
+ofSetColor(ofColor::black);
+ofRect(0,0,theFBO.getWidth(), theFBO.getHeight());
+ofSetColor(ofColor::white);
+float circleX = theFBO.getWidth()/2.f;
+float circleY = theFBO.getHeight()/2.f;
+float circleRadius = min(circleX, circleY);
+ofCircle(circleX,circleY, circleRadius);
+theFBO.end();
 
-
-so the bug is currently with how the cloud of sparkles is being drawn - is the contour finder being read properly?
-
-I'm trying to draw at:581814,23197.4, at size:13.0935
-
-is where things were trying to draw! co-ordinates must be in pixels inside the contour tracker! dumb......
-
-sorted it with:
+So the bug is currently with how the cloud of sparkles is being drawn - is the contour finder being read properly? I'm trying to draw at:581814,23197.4, at size:13.0935 is where things were trying to draw! co-ordinates must be in pixels inside the contour tracker! dumb......sorted it with:
 
 void Sparkles::update(ofxCvContourFinder* aContourFinder){
 	float cloudWidth = theFBO.getWidth();
@@ -1106,86 +720,53 @@ void Sparkles::update(ofxCvContourFinder* aContourFinder){
 	}
 }
 
-ok that works
+OK that works
 
 SECOND:
 
-Re: MulticolouredMagic/Somantics/src/somantics/Mirror/Mirror.cpp at master · HellicarAndLewis/MulticolouredMagic · GitHub
-On 17 Jun 2013, at 19:01, Joel Gethin Lewis wrote:
+On 17 Jun 2013, at 19:01, Joel Gethin Lewis wrote: This is the mirror: https://github.com/HellicarAndLewis/MulticolouredMagic/blob/master/Somantics/src/somantics/Mirror/Mirror.cpp
+Just do a vertical scene and a horizontal scene for now - kaledscope later...DONE... just the vertical one for now...
 
-This is the mirror 
-https://github.com/HellicarAndLewis/MulticolouredMagic/blob/master/Somantics/src/somantics/Mirror/Mirror.cpp
+THIRD:
 
-just do a vertical scene and a horizontal scene for now - kaledscope later...
+Paint as a slitscan input. Lets do paint! it's fun... - it is fun! It looks nice....DONE
+Quick optimisation - why are both slitscans done separately? Changed it, all seems fine.
+BUG: when switching to slitscan basic from sparkles, you don't get any update of the slitscan image, but it works initially...dirty hack to make work - change prevslitscan to -1 if it's not slitscan basic mode...
 
-DONE... just the vertical one for now...
+OK next! sleep...
 
-next:
-
-THIRD
-
-Paint as a slitscan input
-
-lets do paint! it's fun...
-
-it is fun it looks nice....
-
-DONE
-
-quick optimisation - why are both slitscans done separately?
-
-changed it, all seems fine
-
-BUG: when switching to slitscan basic from sparkles, you don't get any update of the slitscan image, but it works initially...
-
-dirty hack to make work - change prevslitscan to -1 if it's not slitscan basic mode...
-
-ok next! sleep...
-
-20th June 2013
+#### 20th June 2013
 
 FOURTH:
 
-Use the blobs from the depth image - make a bunch of triangles in box2d as greyscale image that floats up and ADD that to slitscan...
-
-dropped in box2d, all working ok:
-
+Use the blobs from the depth image - make a bunch of triangles in box2d as greyscale image that floats up and ADD that to slitscan...dropped in box2d, all working ok:
 OF/openFrameworks-develop/apps/HAndLGreenpeace/006AddingOFXBox2D
-
 bit slow, need to look at optimising...
 
-21st June 2013
+#### 21st June 2013
 
 grabbing some addons:
 
-https://github.com/maxillacult/ofxPostGlitch
-https://github.com/outsidecontext/ofxPSLevels
-https://github.com/neilmendoza/ofxPostProcessing - http://www.neilmendoza.com/ofxpostprocessing/
-https://github.com/julapy/ofxOpticalFlowLK
-https://github.com/timscaffidi/ofxOpticalFlowFarneback
-https://github.com/Flightphase/ofxCvOpticalFlowLK
+* https://github.com/maxillacult/ofxPostGlitch
+* https://github.com/outsidecontext/ofxPSLevels
+* https://github.com/neilmendoza/ofxPostProcessing - http://www.neilmendoza.com/ofxpostprocessing/
+* https://github.com/julapy/ofxOpticalFlowLK
+* https://github.com/timscaffidi/ofxOpticalFlowFarneback
+* https://github.com/Flightphase/ofxCvOpticalFlowLK
 
-doing a quick look at them before supper.... lazy! look at in the morning....
-
-the next evening!
-
-ok addons first....
+doing a quick look at them before supper.... lazy! look at in the morning....the next evening! ok addons first....
 
 doing this:
 
 ofxCvOpticalFlowLK - no readme, no draw, moving on - could use the draw image into an FBO easily
 
-ofxOpticalFlowFarneback - 
-/Users/joel/Documents/Projects/HellicarAndLewis/greenpeaceArcticGlastonbury2013/OF/openFrameworks-develop/apps/bunchOfAddonsTrying/ofxOpticalFlowFarneback
-
+ofxOpticalFlowFarneback - OF/openFrameworks-develop/apps/bunchOfAddonsTrying/ofxOpticalFlowFarneback
 looks beautiful! definitely develop this one post stripped down version.... easy conversion to greyscale for the coloured one
 
-ofxOpticalFlowLK
-/Users/joel/Documents/Projects/HellicarAndLewis/greenpeaceArcticGlastonbury2013/OF/openFrameworks-develop/apps/bunchOfAddonsTrying/ofxOpticalFlowLK
+ofxOpticalFlowLK - OF/openFrameworks-develop/apps/bunchOfAddonsTrying/ofxOpticalFlowLK
 similar look to ofxOpticalFlowFarneback but not as pretty, use the other...
 
-ofxPostGlitch
-/Users/joel/Documents/Projects/HellicarAndLewis/greenpeaceArcticGlastonbury2013/OF/openFrameworks-develop/apps/bunchOfAddonsTrying/ofxPostGlitch
+ofxPostGlitch - OF/openFrameworks-develop/apps/bunchOfAddonsTrying/ofxPostGlitch
 lots of fun effects and already in an FBO! just do these effects on either the live video OR the depth image, but put into the slitscan
 
 ofxPostProcessing
@@ -1197,153 +778,118 @@ ofxPostProcessing
     post.createPass<NoiseWarpPass>()->setEnabled(false);
     post.createPass<PixelatePass>()->setEnabled(false);
     post.createPass<EdgePass>()->setEnabled(false);
-nice, but all in 3D
-
-doing a quick hack to draw the video grabber in the scene
-
-no, couldn't get it working, need to draw it to a texture and draw in space, no thank you...
+nice, but all in 3D - doing a quick hack to draw the video grabber in the scene. No, couldn't get it working, need to draw it to a texture and draw in space, no thank you...
 
 ofxPSLevels
 
-        s += "\nbrightness (b/B) : " + ofToString(levels.brightness);
-        s += "\ncontrast (c/C) : " + ofToString(levels.contrast);
-        s += "\nsaturation (s/S) : " + ofToString(levels.saturation);
-        s += "\ngamma (g/G) : " + ofToString(levels.gamma);
+s += "\nbrightness (b/B) : " + ofToString(levels.brightness);
+s += "\ncontrast (c/C) : " + ofToString(levels.contrast);
+s += "\nsaturation (s/S) : " + ofToString(levels.saturation);
+s += "\ngamma (g/G) : " + ofToString(levels.gamma);
 
-nice to have this as a post effect for everything
+nice to have this as a post effect for everything.
 
-ok
+OK, lets get on with the other direction mirror AND the kaleidoscope..... should be relatively straight forward, just drop in for now. get rid of box2d?
 
-lets get on with the other direction mirror AND the kalediscope..... should be relatively straight forward, just drop in for now. get rid of box2d?
+taking out ofxbox2d - that;s better, but why is just video playback so slow? Having a look now... optimised the video only draw section...Still not fast, do it through the fucking still scan with the image that does nothing....taking out colour.....made a few more slitscans...
 
-taking out ofxbox2d
+* ALLBLACK.png
+* ALLWHITE.png
+* NOHelvetica.png
+* Rewind.png
+* YesGillSans.png
 
-thats better, but why is just video playback so slow?
+left in bangs..turned on snapping...they look ok, can work on these...working on horizontal mirror, made notes, did it not quite right...
 
-having a look now... optimised the video only draw section...
+This is wrong:
 
-still not fast, do it through the fucking still scan with the image that does nothing....
+case SLIGHTLY BUGGERED RERVERSED VERTICAL MIRROR:
+{
+    ofxCvColorImage mirrorImage;
+    mirrorImage.allocate(timeline.getVideoPlayer("video")->getWidth(), timeline.getVideoPlayer("video")->getHeight());
+    mirrorImage.setFromPixels(timeline.getVideoPlayer("video")->getPixels(), mirrorImage.getWidth(), mirrorImage.getHeight());
+    mirrorImage.updateTexture();
+    bool usingNormTexCoords = ofGetUsingNormalizedTexCoords();
+    
+    if(!usingNormTexCoords) {
+        ofEnableNormalizedTexCoords();
+    }
+    
+    mirrorImage.getTextureReference().bind();
+    
+    ofMesh mesh;
+    mesh.clear();
+    mesh.addVertex(ofVec3f(0, 0));
+    mesh.addVertex(ofVec3f(0, ofGetHeight()));
+    mesh.addVertex(ofVec3f(ofGetWidth()/2, 0));
+    mesh.addVertex(ofVec3f(ofGetWidth()/2, ofGetHeight()));
+    mesh.addVertex(ofVec3f(ofGetWidth(), 0));
+    mesh.addVertex(ofVec3f(ofGetWidth(), ofGetHeight()));
+    mesh.addTexCoord(ofVec2f(0, 0.25));
+    mesh.addTexCoord(ofVec2f(0, 0.75));
+    mesh.addTexCoord(ofVec2f(1.0, 0.25));
+    mesh.addTexCoord(ofVec2f(1.0, 0.75));
+    mesh.addTexCoord(ofVec2f(0, 0.25));
+    mesh.addTexCoord(ofVec2f(0, 0.75));
+    mesh.setMode(OF_PRIMITIVE_TRIANGLE_STRIP);
+    ofSetColor(ofColor::white);
+    mesh.draw();
+    
+    mirrorImage.getTextureReference().unbind();
 
-taking out colour.....
+    // pop normalized tex coords
+    if(!usingNormTexCoords) {
+        ofDisableNormalizedTexCoords();
+    }
+    break;
+}
 
-made a few more slitscans...
+This is right
 
-ALLBLACK.png
-ALLWHITE.png
-NOHelvetica.png
-Rewind.png
-YesGillSans.png
+case HORIZONTALMIRROR:
+{
+    ofxCvColorImage mirrorImage;
+    
+    mirrorImage.allocate(timeline.getVideoPlayer("video")->getWidth(), timeline.getVideoPlayer("video")->getHeight());
+    mirrorImage.setFromPixels(timeline.getVideoPlayer("video")->getPixels(), mirrorImage.getWidth(), mirrorImage.getHeight());
+    mirrorImage.updateTexture();
+    
+    bool usingNormTexCoords = ofGetUsingNormalizedTexCoords();
+    if(!usingNormTexCoords) {
+        ofEnableNormalizedTexCoords();
+    }
+    
+    mirrorImage.getTextureReference().bind();
+    
+    ofMesh mesh;
+    mesh.clear();
+    mesh.addVertex(ofVec3f(ofGetWidth(), 0));
+    mesh.addVertex(ofVec3f(0, 0));
+    mesh.addVertex(ofVec3f(ofGetWidth(), ofGetHeight()/2));
+    mesh.addVertex(ofVec3f(0, ofGetHeight()/2));
+    mesh.addVertex(ofVec3f(ofGetWidth(), ofGetHeight()));
+    mesh.addVertex(ofVec3f(0,ofGetHeight()));
+    mesh.addTexCoord(ofVec2f(1.0, 0.25));
+    mesh.addTexCoord(ofVec2f(0.0, 0.25));
+    mesh.addTexCoord(ofVec2f(1.0, 0.75));
+    mesh.addTexCoord(ofVec2f(0.0, 0.75));
+    mesh.addTexCoord(ofVec2f(1.0, 0.25));
+    mesh.addTexCoord(ofVec2f(0.0, 0.25));
+    mesh.setMode(OF_PRIMITIVE_TRIANGLE_STRIP);
+    ofSetColor(ofColor::white);
+    mesh.draw();
+    
+    mirrorImage.getTextureReference().unbind();
+    
+    // pop normalized tex coords
+    if(!usingNormTexCoords) {
+        ofDisableNormalizedTexCoords();
+    }
+}
 
-left in bangs..
-turned on snapping...
+Getting a bit better...fixing the controls - some of the keys were clashing. Red lines on the screen indicate track in a and out below the main timeline. 
 
-they look ok, can work on these...
-
-working on horizontal mirror, made notes, did it not quite right...
-
-wrong with this
-
-        case SLIGHTLY BUGGERED RERVERSED VERTICAL MIRROR:
-        {
-            ofxCvColorImage mirrorImage;
-            
-            mirrorImage.allocate(timeline.getVideoPlayer("video")->getWidth(), timeline.getVideoPlayer("video")->getHeight());
-            
-            mirrorImage.setFromPixels(timeline.getVideoPlayer("video")->getPixels(), mirrorImage.getWidth(), mirrorImage.getHeight());
-            
-            mirrorImage.updateTexture();
-            
-            bool usingNormTexCoords = ofGetUsingNormalizedTexCoords();
-            
-            if(!usingNormTexCoords) {
-                ofEnableNormalizedTexCoords();
-            }
-            
-            mirrorImage.getTextureReference().bind();
-            
-            ofMesh mesh;
-            mesh.clear();
-            mesh.addVertex(ofVec3f(0, 0));
-            mesh.addVertex(ofVec3f(0, ofGetHeight()));
-            mesh.addVertex(ofVec3f(ofGetWidth()/2, 0));
-            mesh.addVertex(ofVec3f(ofGetWidth()/2, ofGetHeight()));
-            mesh.addVertex(ofVec3f(ofGetWidth(), 0));
-            mesh.addVertex(ofVec3f(ofGetWidth(), ofGetHeight()));
-            
-            
-            mesh.addTexCoord(ofVec2f(0, 0.25));
-            mesh.addTexCoord(ofVec2f(0, 0.75));
-            mesh.addTexCoord(ofVec2f(1.0, 0.25));
-            mesh.addTexCoord(ofVec2f(1.0, 0.75));
-            mesh.addTexCoord(ofVec2f(0, 0.25));
-            mesh.addTexCoord(ofVec2f(0, 0.75));
-            
-            mesh.setMode(OF_PRIMITIVE_TRIANGLE_STRIP);
-            ofSetColor(ofColor::white);
-            mesh.draw();
-            
-            mirrorImage.getTextureReference().unbind();
-            
-            // pop normalized tex coords
-            if(!usingNormTexCoords) {
-                ofDisableNormalizedTexCoords();
-            }
-            break;
-        }
-
-right with this
-
-        case HORIZONTALMIRROR:
-        {
-            ofxCvColorImage mirrorImage;
-            
-            mirrorImage.allocate(timeline.getVideoPlayer("video")->getWidth(), timeline.getVideoPlayer("video")->getHeight());
-            
-            mirrorImage.setFromPixels(timeline.getVideoPlayer("video")->getPixels(), mirrorImage.getWidth(), mirrorImage.getHeight());
-            
-            mirrorImage.updateTexture();
-            
-            bool usingNormTexCoords = ofGetUsingNormalizedTexCoords();
-            
-            if(!usingNormTexCoords) {
-                ofEnableNormalizedTexCoords();
-            }
-            
-            mirrorImage.getTextureReference().bind();
-            
-            ofMesh mesh;
-            mesh.clear();
-            mesh.addVertex(ofVec3f(ofGetWidth(), 0));
-            mesh.addVertex(ofVec3f(0, 0));
-            mesh.addVertex(ofVec3f(ofGetWidth(), ofGetHeight()/2));
-            mesh.addVertex(ofVec3f(0, ofGetHeight()/2));
-            mesh.addVertex(ofVec3f(ofGetWidth(), ofGetHeight()));
-            mesh.addVertex(ofVec3f(0,ofGetHeight()));
-            
-            mesh.addTexCoord(ofVec2f(1.0, 0.25));
-            mesh.addTexCoord(ofVec2f(0.0, 0.25));
-            mesh.addTexCoord(ofVec2f(1.0, 0.75));
-            mesh.addTexCoord(ofVec2f(0.0, 0.75));
-            mesh.addTexCoord(ofVec2f(1.0, 0.25));
-            mesh.addTexCoord(ofVec2f(0.0, 0.25));
-            
-            mesh.setMode(OF_PRIMITIVE_TRIANGLE_STRIP);
-            ofSetColor(ofColor::white);
-            mesh.draw();
-            
-            mirrorImage.getTextureReference().unbind();
-            
-            // pop normalized tex coords
-            if(!usingNormTexCoords) {
-                ofDisableNormalizedTexCoords();
-            }
-        }
-
-getting a bit better...
-
-fixing the controls - some of the keys were clashing
-
-red lines on the screen indicate track in a nd out below the main timeline 
+Keys for Duration/ofxTimeline:
 
 Note on OS X the COMMAND key is used, on Linux and Windows the CTRL key is used
 
@@ -1362,45 +908,23 @@ Expand Focused track	alt+e
 Collapse all tracks	alt+c
 Evenly distribute track sizes	alt+shift+c
 
-sped things up by taking off vertical sync and smoothing too, 30fps
+Sped things up by taking off vertical sync and smoothing too, 30fps. Did kaleidoscope, little bugs I think...turned the update into a proper switch statement, really improved performance! All good, enough for tonight....
 
-did kaledscope, little bugs I think...
+#### 23rd June 2013
 
-turned the update into a proper switch statement, really improved performance!
+OK first thing to do is to take over all the Kinect stuff from:
 
-all good, enough for tonight....
+cariad/reactickles/oF/openFrameworks-develop/apps/zHarp/006withMemoLogic
 
-23rd May 2013
+So taking that over now....Making it all in:
 
-OK first thing to do is to take over all the Kinect stuff from 
+OF/openFrameworks-develop/apps/HAndLGreenpeace/008NewKinectAndPsychBear
 
-/Users/joel/Documents/Projects/cariad/reactickles/oF/openFrameworks-develop/apps/zHarp/006withMemoLogic
+Taking over the code, adding the display to the blank scene.... Trying to get the saving working....got it working - it was the bad characters! : and &. That's working, now neatening up the gui screen, adding a blank screen and taking out pointless Kinect modes. OK thats nice, now lets get the psych fur working...All in and the gui in too!
 
-so taking that over now....
+OF/openFrameworks-develop/apps/HAndLGreenpeace/009ShatterExperiment
 
-making it all in:
-
-/Users/joel/Documents/Projects/HellicarAndLewis/greenpeaceArcticGlastonbury2013/OF/openFrameworks-develop/apps/HAndLGreenpeace/008NewKinectAndPsychBear
-
-taking over the code, adding the display to the blank scene....
-
-trying to get the saving working....
-
-got it working - it was the bad characters! : and &
-
-thats working, now neatening up the gui screen, adding a blank screen and taking out pointless Kinect modes
-
-ok thats nice, now lets get the psych fur working...
-
-all in and the gui in too!
-
-/Users/joel/Documents/Projects/HellicarAndLewis/greenpeaceArcticGlastonbury2013/OF/openFrameworks-develop/apps/HAndLGreenpeace/009ShatterExperiment
-
-trying shatter...
-
-trying to make it work but there seems to be a conflict when I try to include box2d:
-
-hmmm
+trying shatter...trying to make it work but there seems to be a conflict when I try to include box2d. Hmmm
 
 all i had to do was change shatter.h to :
 
@@ -1408,99 +932,80 @@ include "ofMain.h"
 include "ofxOpenCv.h"
 include "ofxBox2D.h"
 
-from
+from:
 
 include "ofMain.h"
 include "ofxBox2D.h"
 include "ofxOpenCv.h"
 
-{paulf
-london
+Via OF Forum post: http://forum.openframeworks.cc/index.php?topic=7165.0 :
 
-Posts: 22
+paulf london Posts: 22
+Re: Weird codeblocks 007 build errors
+Reply #5 on: April 05, 2012, 02:12:39 PM
+in testApp.h having #include "ofxOpenCv.h" at the top of my include list solved the issue for me
 
-	Re: Weird codeblocks 007 build errors
-« Reply #5 on: April 05, 2012, 02:12:39 PM »
-in testApp.h having #include "ofxOpenCv.h"
-at the top of my include list solved the issue for me}
+Crazy... OK. got that working, but way too slow...
 
-http://forum.openframeworks.cc/index.php?topic=7165.0
+float timeSinceLastShatter = ofGetElapsedTimef() - timeOfLastShatter;
 
-crazy...
-
-ok. got that working, but way too slow...
-
-    float timeSinceLastShatter = ofGetElapsedTimef() - timeOfLastShatter;
+if(timeSinceLastShatter > 10.f){ //every 2 seconds make some more....
+    float shatterWidth = theFBO.getWidth();
+    float shatterHeight = theFBO.getHeight();
+    float contourWidth = aContourFinder->getWidth();
+    float contourHeight = aContourFinder->getHeight();
+    float widthRatio = shatterWidth/contourWidth;
+    float heightRatio = shatterHeight/contourHeight;
     
-    if(timeSinceLastShatter > 10.f){ //every 2 seconds make some more....
-        float shatterWidth = theFBO.getWidth();
-        float shatterHeight = theFBO.getHeight();
+    // now just stick some particles on the contour and emit them randomly
+    for(int i = 0; i < aContourFinder->nBlobs; i++) {
+        int step = 20;
         
-        float contourWidth = aContourFinder->getWidth();
-        float contourHeight = aContourFinder->getHeight();
+        shape.clear();
         
-        float widthRatio = shatterWidth/contourWidth;
-        float heightRatio = shatterHeight/contourHeight;
-        
-        // now just stick some particles on the contour and emit them randomly
-        for(int i = 0; i < aContourFinder->nBlobs; i++) {
-            int step = 20;
-            
-            shape.clear();
-            
-            for(int j = 0; j < aContourFinder->blobs[i].pts.size(); j+=step) {
-                shape.addVertex((aContourFinder->blobs[i].pts[j].x)*widthRatio,
-                                (aContourFinder->blobs[i].pts[j].y)*heightRatio);
-            }
-            
-            // This is the manual way to triangulate the shape
-            // you can then add many little triangles
-            
-            // first simplify the shape
-            shape.simplify();
-            
-            // save the outline of the shape
-            ofPolyline outline = shape;
-            
-            // resample shape
-            ofPolyline resampled = shape.getResampledBySpacing(256); //dude
-            //ofPolyline resampled = shape.getResampledBySpacing(100);
-            
-            // triangulate the shape, return am array of triangles
-            vector <TriangleShape> tris = triangulatePolygonWithOutline(resampled, outline);
-            
-            // add some random points inside
-            addRandomPointsInside(shape, 255);
-            
-            // now loop through all the trainles and make a box2d triangle
-            for (int i=0; i<tris.size(); i++) {
-                ofxBox2dPolygon p;
-                p.addTriangle(tris[i].a, tris[i].b, tris[i].c);
-                p.setPhysics(1.0, 0.3, 0.3);
-                p.setAsEdge(false);
-                if(p.isGoodShape()) {
-                    p.create(box2d.getWorld());
-                    triangles.push_back(p);
-                }
-            }
-            
-            // done with shape clear it now
-            shape.clear();
+        for(int j = 0; j < aContourFinder->blobs[i].pts.size(); j+=step) {
+            shape.addVertex((aContourFinder->blobs[i].pts[j].x)*widthRatio,
+                            (aContourFinder->blobs[i].pts[j].y)*heightRatio);
         }
         
-        timeSinceLastShatter = ofGetElapsedTimef();
+        // This is the manual way to triangulate the shape
+        // you can then add many little triangles
+        // first simplify the shape
+        shape.simplify();
+        // save the outline of the shape
+        ofPolyline outline = shape;
+        // resample shape
+        ofPolyline resampled = shape.getResampledBySpacing(256); //dude
+        //ofPolyline resampled = shape.getResampledBySpacing(100);
+        // triangulate the shape, return am array of triangles
+        vector <TriangleShape> tris = triangulatePolygonWithOutline(resampled, outline);
+        // add some random points inside
+        addRandomPointsInside(shape, 255);
+
+        // now loop through all the tri's and make a box2d triangle
+        for (int i=0; i<tris.size(); i++) {
+            ofxBox2dPolygon p;
+            p.addTriangle(tris[i].a, tris[i].b, tris[i].c);
+            p.setPhysics(1.0, 0.3, 0.3);
+            p.setAsEdge(false);
+            if(p.isGoodShape()) {
+                p.create(box2d.getWorld());
+                triangles.push_back(p);
+            }
+        }
+        
+        // done with shape clear it now
+        shape.clear();
     }
+    
+    timeSinceLastShatter = ofGetElapsedTimef();
+}
 
-lets just spray triangles out from the top of the blobs...
+Let's just spray triangles out from the top of the blobs...like sparkles but with triangles....triangles lame, circles work! Had it running on pete's laptop all lovely...
 
-like sparkles but with triangles....
+#### 24th June 2013
 
-triangles lame, circles work!
-had it running on pete's laptop all lovely...
-
-24th May 2013
-
-ok, things to try this morning before lunch
+OK, things to try this morning before lunch:
 
 DONE 1. feed in current frame as greyscale for the slitscan
 DONE 2. try a slitscan mode where I make a spikey slitscan mode - like in divide by zero, going to need OF/openFrameworks-develop/addons/ofxContourUtil from julapy
@@ -1510,187 +1015,124 @@ DONE - flock it .4. try a flock attracted to blobs....
 
 OF/openFrameworks-develop/apps/HAndLGreenpeace/010WithSpikyBlobsFlockAndSelfSlitScan
 
-made that
-
-starting with 1. SELFSLITSCAN - super easy:
+Made that. starting with 1. SELFSLITSCAN - super easy:
 
 if(timeline.getVideoPlayer("video")->isFrameNew()){
     slitScan.setDelayMap(timeline.getVideoPlayer("video")->getPixelsRef());
     slitScan.addImage(timeline.getVideoPlayer("video")->getPixelsRef());
 
-next on to spikey mode!
-
-was going to use:
+Next on to spikey mode! Was going to use:
 
 ofxContourUtil-master
 
-from julapy, but it's all in 
+From julapy, but it's all in:
 
 void ofPolyline::simplify(float tol){
 
-in core, so lets have a go with that...
-
-also have:
+In core, so lets have a go with that...also have:
 
 ofPolyline ofPolyline::getSmoothed(int smoothingSize, float smoothingShape)
 
-this is the logic from divide by zero:
+This is the logic from Divide by Zero:
 
-{
+// contour simplification/manipulation
+
+int numberOfBlobs = videoContourFinder.blobs.size();
+
+if(numberOfBlobs > 0){
+		//if we have at least one blob
+	curve.resize(numberOfBlobs);
+	curveSmooth.resize(numberOfBlobs);
+	curveSimplify.resize(numberOfBlobs);
+	curveCvSimplify.resize(numberOfBlobs);
+	float mx = gui.getValueF("AURA_SIMPLIFICATION");
+	float scale1	= mx;
+	float scale2	= mx * 140;
+	float scale3	= mx * 0.1;
+	bool noneSmooth = gui.getValueB("AURA_IS_SMOOTH");
+	bool simplifyCV = gui.getValueB("AURA_IS_CV");
+	float auraScale = gui.getValueF("AURA_SCALE");
+	bool scaleFromStage = gui.getValueB("AURA_SCALE_FROM_STAGE");
 	
-			//countour simplification/manipulation
+	for(int i = 0; i< numberOfBlobs; i++){
+		curve[i] = videoContourFinder.blobs[i];
+		ofPoint centreOfStage = ofPoint(camWidth/2.f, camHeight);
 		
-		int numberOfBlobs = videoContourFinder.blobs.size();
+		if(scaleFromStage){
+			curve[i].scaleBlob(centreOfStage, auraScale); //scale from the base of stage
+		}else {
+			curve[i].scaleBlob(curve[i].centroid, auraScale); //else do it from the centroid
+		}
 		
-		if(numberOfBlobs > 0){
-				//if we have at least one blob
-			
-			curve.resize(numberOfBlobs);
-			curveSmooth.resize(numberOfBlobs);
-			curveSimplify.resize(numberOfBlobs);
-			curveCvSimplify.resize(numberOfBlobs);
-			
-			float mx = gui.getValueF("AURA_SIMPLIFICATION");
-			
-			float scale1	= mx;
-			float scale2	= mx * 140;
-			float scale3	= mx * 0.1;
-			
-			bool noneSmooth = gui.getValueB("AURA_IS_SMOOTH");
-			bool simplifyCV = gui.getValueB("AURA_IS_CV");
-			
-			float auraScale = gui.getValueF("AURA_SCALE");
-			
-			bool scaleFromStage = gui.getValueB("AURA_SCALE_FROM_STAGE");
-			
-			for(int i = 0; i< numberOfBlobs; i++){
-				
-				curve[i] = videoContourFinder.blobs[i];
-				
-				ofPoint centreOfStage = ofPoint(camWidth/2.f, camHeight);
-				
-				if(scaleFromStage){
-					curve[i].scaleBlob(centreOfStage, auraScale); //scale from the base of stage
-				}else {
-					curve[i].scaleBlob(curve[i].centroid, auraScale); //else do it from the centroid
-				}
-				
-				if(noneSmooth){ //smooth it
-					cu.smooth( curve[i].pts, curveSmooth[i].pts, scale1 );
-				}else{
-						//do nothing.
-				}
-				
-				if(simplifyCV){
-						//cv simplify it
-					simplifyDP_openCV( curve[i].pts, curveCvSimplify[i].pts, scale3 );
-				}else{
-						//just simplify it
-					cu.simplify( curve[i].pts, curveSimplify[i].pts, scale2 );
-				}					
-			}
-
+		if(noneSmooth){ //smooth it
+			cu.smooth( curve[i].pts, curveSmooth[i].pts, scale1 );
+		}else{
+				//do nothing.
+		}
+		
+		if(simplifyCV){
+				//cv simplify it
+			simplifyDP_openCV( curve[i].pts, curveCvSimplify[i].pts, scale3 );
+		}else{
+				//just simplify it
+			cu.simplify( curve[i].pts, curveSimplify[i].pts, scale2 );
+		}
+	}
 }
 
-so lets have a look at the demo here:
+So lets have a look at the demo here:
 
 /Users/joel/Documents/Projects/HellicarAndLewis/greenpeaceArcticGlastonbury2013/OF/openFrameworks-develop/examples/graphics/polylineBlobsExample
 
-very useful demo....
-
-used all the code from demo and ofPolyline in general
-
-looks nice, ended up doing a simplify down to 10 points....
-
-lets move onto changing the background for the kaleidescope...
-
-did it with the vertical mirror as the background, pretty..
-
-downloaded:
+Very useful demo....used all the code from demo and ofPolyline in general. Looks nice, ended up doing a simplify down to 10 points.... Let's move onto changing the background for the kaleidoscope...did it with the vertical mirror as the background, pretty.. Downloaded:
 
 https://github.com/jefftimesten/CodeForArt
-
 https://github.com/jefftimesten/CodeForArt/tree/master/Chapter004-physics/012-flock/src
 
-is what i used for whiteheat anyhow...
+Is what i used for Whiteheat anyhow... jefftimesten = jeff crouse. Lets use it again...flock it, too slow too lame no fun... lets do it with particles instead...Looks ok. Going to crack on with the movie....changed name to:
 
-jefftimesten = jeff crouse
+OF/openFrameworks-develop/apps/HAndLGreenpeace/010WithSpikyBlobsParticlesAndSelfSlitScan
 
-lets use it again...
+Doing the audio now and new film in:
 
-flock it, too slow too lame no fun... lets do it with particles instead...
+2013_06_24_newFilmAndAudio
 
-looks ok 
+Copied in and took over to Pete's computer so he could have a play....he is sequencing...
 
-going to crack on with the movie....
+#### 25th June 2013
 
-changed name to 
+Shower! was lovely. Long drop too.
 
-/Users/joel/Documents/Projects/HellicarAndLewis/greenpeaceArcticGlastonbury2013/OF/openFrameworks-develop/apps/HAndLGreenpeace/010WithSpikyBlobsParticlesAndSelfSlitScan
-
-doing the audio now and new film
-
-in:
-
-/Users/joel/Documents/Projects/HellicarAndLewis/greenpeaceArcticGlastonbury2013/2013_06_24_newFilmAndAudio
-
-copied in and took over to petes computer so he could have a play....
-
-he is sequencing...
-
-25th May 2013
-
-shower! was lovely. Long drop too.
-
-todo today:
-
-lets do white fur first...
-
-looks great... 
-
-copying over to pete...
+TODO today:
+lets do white fur first...looks great...copying over to pete...
 
 DONE 1) kaledscope is always, (2n)+1 : 3,5,7,9,11,13,15,17,19 19 as the limit... which is up to 9
-DONE 2) add WHITE FUR to:
-
-VERTICALMIRROR, HORIZONTALMIRROR, KALEIDOSCOPE, MIRRORKALEIDOSCOPE, SLITSCANBASIC
+DONE 2) add WHITE FUR to: VERTICALMIRROR, HORIZONTALMIRROR, KALEIDOSCOPE, MIRRORKALEIDOSCOPE, SLITSCANBASIC
 
 copied in the new slitscans:
 
-00_ALLBLACK.png
-01_ALLWHITE.png
-01_random_grid.png
-down_to_up.png
-left_to_right.png
-right_to_left.png
-soft_noise.png
-Triangle_001.png
-Triangle_002.png
-Triangle_003.png
-Triangle_004.png
-Triangle_005.png
-up_to_down.png
+* 00_ALLBLACK.png
+* 01_ALLWHITE.png
+* 01_random_grid.png
+* down_to_up.png
+* left_to_right.png
+* right_to_left.png
+* soft_noise.png
+* Triangle_001.png
+* Triangle_002.png
+* Triangle_003.png
+* Triangle_004.png
+* Triangle_005.png
+* up_to_down.png
 
 look amazing!
 
-1) first, kaleidoscope - want always even!
+First, kaleidoscope - want always even! timeline.addCurves("star", ofRange(2, 12)); - so just double it...
+Second, adding white fur.....to VERTICALMIRROR, HORIZONTALMIRROR, KALEIDOSCOPE, MIRRORKALEIDOSCOPE, SLITSCANBASIC
 
-timeline.addCurves("star", ofRange(2, 12));
+#### 26th June 2013
 
-so just double it...
-2) adding white fur.....
-
-to
-
-VERTICALMIRROR, HORIZONTALMIRROR, KALEIDOSCOPE, MIRRORKALEIDOSCOPE, SLITSCANBASIC
-
-done
-
-26th June 2013
-
-just changed the fur to not have any alpha (white fur that is)
-
-also added non timeline gui to everything...
+Just changed the fur to not have any alpha (white fur that is) also added non-ofxTimeline GUI to everything...
 
 ### Explanation and Discussion of Development in Detail
 
