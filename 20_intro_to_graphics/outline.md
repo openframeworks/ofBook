@@ -26,7 +26,7 @@ Personal goals for chapter:
     * Why not RGB?
     * Concept of recursion
     * Subdivide screen into smaller rectangles that change slowly along one of the HSB color dimensions
-      * Example images: [hue](https://github.com/openframeworks/ofBook/blob/master/20_intro_to_graphics/EvolvingColor_ChangingHue.png), [saturation](https://github.com/openframeworks/ofBook/blob/master/20_intro_to_graphics/EvolvingColor_ChangingSaturation.png), [brightness](https://github.com/openframeworks/ofBook/blob/master/20_intro_to_graphics/EvolvingColor_ChangingBrightness.png)
+      * Example images: [hue](https://github.com/openframeworks/ofBook/blob/master/20_intro_to_graphics/images/EvolvingColor_ChangingHue.png), [saturation](https://github.com/openframeworks/ofBook/blob/master/20_intro_to_graphics/images/EvolvingColor_ChangingSaturation.png), [brightness](https://github.com/openframeworks/ofBook/blob/master/20_intro_to_graphics/images/EvolvingColor_ChangingBrightness.png)
       * Uses ofRect, ofRectangle, ofRandom and std::vector
     * Defining controllable parameters 
       * Parameter searching interactively using mouseX, mouseY and key presses
@@ -49,7 +49,7 @@ Personal goals for chapter:
     * Same rectangle code, ofRect(0, 0, w, h) 
     * Visual changes comes from ofRotate, ofScale, ofTranslate
     * Makes use of ofNoise for creating sprialling rotations
-  * [Example image](https://github.com/openframeworks/ofBook/blob/master/20_intro_to_graphics/CoordSystem_RepeatingSquareSpiral.png)
+  * [Example image](https://github.com/openframeworks/ofBook/blob/master/20_intro_to_graphics/images/CoordSystem_RepeatingSquareSpiral.png)
 
 ####Section 4: The Other Shapes
 * __Intent:__ Finish off 2D graphics using curves, beziers, and custom shape
