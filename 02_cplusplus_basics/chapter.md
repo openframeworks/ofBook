@@ -37,8 +37,10 @@ The cycle ~~I just described (write code, run app, re-think program's behavior, 
 ![Figure 3: Don't get the wrong idea.](images/profit-not.png "Figure 3: Don't get the wrong idea.")
 
 **[MH: this figure would benefit from having arrows indicating flow, like in fig 2]**
-
+**[KL: I would start the chapter here]**
 For those just now familiarizing themselves with what it means to write small programs, it is important to understand the iterative nature of the code writing process. The anecdote in Figure 3 shows what this process is *not*. Rarely would you ever enter some code into the editor just once, and expect to hit compile and see your finished outcome. It is natural, and commonly accepted for programs to start small, have plenty of mistakes (bugs), and evolve slowly toward a goal of desired outcome or behavior. In fact it is so commonplace that to make the former assumption is a downright programmer's mistake. Even in older days when programs were hand-written on paper, the author still needed to eyeball the code obsessively in order to work out the mistakes, and therefore the process was iterative. In learning the C++ language, I will provide tiny code examples that you will be compiling on your machine. The abnormal part is typing the code from the book into the editor, and (provided your fingers do not slip), the program magically runs. I am deliberately removing the troubleshooting experience in order to isolate out the subject matter of the C++ language itself. Later on, we will tackle the black art of *debugging* as a topic all its own.
+
+**[KL: “black art” is pretty daunting…I’d call it something friendlier while still emphasizing that it’s difficult. We want to keep people engaged and not make them afraid to carry on]**
 
 
 
@@ -64,6 +66,7 @@ This is just an empty code template that does nothing, and creates no errors. Th
 ###Interlude on Typography
 
 Computer programming code is generally presented in fixed-width typesetting, because it is a form of ascii-art. The indentation, white space characters, and repetitive patterns are all important to preserve and easily eyeball for comparison. Every coder I know except artist Jeremy Rotsztain uses some manner of monospaced font for their code. **[BD: Maybe briefly explain what monospace type is and why it is useful/important]** Some typeface suggestions are Courier, Andale Mono, Monaco, Profont, Monofur, Proggy, Droid Sans Mono, Deja Vu Sans Mono, Consolas, and Inconsolata. From now on, you will see the font style switch to `this style` . . .
+**[KL: Who is Jeremy Rotsztain? If you keep him in there, briefly explain why he chooses not to use monospaced font, and before that, explain what monospaced font means and its relevance.]**
 
 ```C++
 or this style ...
@@ -103,9 +106,13 @@ cout << "Hello World" << endl;
 
 This line of code tells the computer to say "Hello World" into an implied text-space known as *standard output* (aka. *stdout*). When writing a program, it is safe to expect *stdout* to exist and that the program can say things in it. Other times, it's just a window pane in your coding tool, only used to troubleshoot.
 
-You may put almost anything between those quotes. The quoted phrase is a called a *string* of text. More specifically, it is a *c-string literal*. We will cover more on strings later in this chapter. In the code, the chunk `cout <<` part means "send the following stuff to stdout in a formatted way." The last chunk `<< endl` means "add a carriage return (end-of-line) character to the end of the hello world message." Finally, at the very end of this line of code, you see a semicolon (;). In C++, semicolons are like a full-stop or period at the end of the sentence. We must type a semicolon after each statement, and usually this is at the end of the line of code. If you forget to type that semicolon, the compile fails. Semicolons are useful because they allow multiple statements to share one line, or a single statement to occupy several lines, freeing the programmer to be flexible and expressive with ones whitespace. By adding a semicolon you ensure that the compiler does not get confused because you help it out and show it where the statement ends.
+You may put almost anything between those quotes. The quoted phrase is a called a *string* of text. More specifically, it is a *c-string literal*. We will cover more on strings later in this chapter. In the code, the chunk `cout <<` part means "send the following stuff to stdout in a formatted way." The last chunk `<< endl` means "add a carriage return (end-of-line) character to the end of the hello world message." Finally, at the very end of this line of code, you see a semicolon (;).
 
-While you typed, perhaps you noticed the text became multi-colored all by itself. This convenient feature is called *syntax-coloring* and can subconsciously enhance ones ability to read the code, troubleshoot malformed syntax, and assist in searching. Each tool will have its own syntax coloring system so if you wish to change the colors, please expect that it's not the same thing as a word processor. It will not let me assign the font "TRON.TTF" with a glowing aqua color to *just* `endl` (which means end-of-line). Instead, I can choose a special style for a whole category of syntax, and see all parts of my code styled that way as long as it's that type of code. In this case, both `cout` and `endl` are considered keywords and so the tool colors them black. If these things show up as different colors elsewhere, please trust that it's the same code as before. The entire code should now look like this:
+**[KL: I'd isolate this semicolon section to make it stand out more because semicolons are so important and are the reason something isn't running properly 95% of the time. A new coder needs to know the high level of importance of using semicolons.]**
+
+In C++, semicolons are like a full-stop or period at the end of the sentence. We must type a semicolon after each statement, and usually this is at the end of the line of code. If you forget to type that semicolon, the compile fails. Semicolons are useful because they allow multiple statements to share one line, or a single statement to occupy several lines, freeing the programmer to be flexible and expressive with ones whitespace. By adding a semicolon you ensure that the compiler does not get confused because you help it out and show it where the statement ends.
+
+While you typed, perhaps you noticed the text became multi-colored all by itself. This convenient feature is called *syntax-coloring* and can subconsciously enhance ones ability to read the code, troubleshoot malformed syntax, and assist in searching. Each tool will have its own syntax coloring system so if you wish to change the colors, please expect that it's not the same thing as a word processor. It will not let me assign the font "TRON.TTF" with a glowing aqua color to *just* `endl` (which means end-of-line). Instead, I can choose a special style for a whole category of syntax, and see all parts of my code styled that way as long as it's that type of code. In this case, both `cout` and `endl` are considered keywords and so the tool colors them black. If these things show up as different colors elsewhere, please trust that it's the same code as before. **[KL: why should I trust this? Give a real reason–e.g. different programs simply choose different colors to clarify syntax. Also, better emphasize the color's role in these programs as something for syntactical clarity and not looks, which differentiates color in code vs in word processors.]**The entire code should now look like this:
 
 ```C++
 include <iostream.h>
@@ -117,13 +124,15 @@ int main(){
 }
 ```
 
-Now press the green "ideone it!" **[BD: Note that you previously referred to a button using _italics_]** button at the bottom right corner and watch the output console, which is the bottom half of the code editor, just above that green button. You will see orange status messages saying things like “Waiting for compilation”, “Compilation”, and “Running”. Shortly after, the program will itself, execute, its output printed. You should see the new message in Figure 8.
+Now press the green "ideone it!" **[BD: Note that you previously referred to a button using _italics_]** button at the bottom right corner and watch the output console, which is the bottom half of the code editor, just above that green button. You will see orange status messages saying things like “Waiting for compilation”, “Compilation”, and “Running”. **[KL: commas and periods go inside of quotes: "Waiting for compilation," "Compilation," and "Running."]** Shortly after, the program will itself, execute, its output printed. You should see the new message in Figure 8.
 
 ![Figure 8](images/hello-world.png "Figure 8: Hello World appears in output window")
 
-If you made it this far, then give yourself a great big hug. You just wrote your first line of C++ code, you analyzed it, compiled it, ran it, and saw the output. Please send word of your recent success so that we may heed your triumph. Tweet the following:
+If you made it this far, then give yourself a great big hug. **[KL: If? Of course they did. Reaffirm this: "You made it this far, now give yourself a pat on the back."]** You just wrote your first line of C++ code, you analyzed it, compiled it, ran it, and saw the output. Please send word of your recent success so that we may heed your triumph. Tweet the following:
 
 **cout << "Hello World" << endl; #ofBook**
+
+**[KL: Introducing newcomers to C++ by first having them see a result is a good idea. Now talking about the content below makes it more worthwhile. Good approach.]**
 
 COME BACK
 ##Beyond Hello World
@@ -144,7 +153,7 @@ In OpenFrameworks, double quotes are used to include header files that are not p
 
 ###What's with the # ?
 
-It's a whole story, but worth understanding conceptually. The include statement is not really C++ code, it's part of a completely separate compiler pass called *preprocessor*. It happens before your actual programmatic instructions are dealt with. They are like instructions for the code compiler, as opposed to instructions for the computer to run after the compile. Using a pound/hash symbol before these *preprocessor directives*, one can clearly spot them in the file, and for good reason too. They should be seen as a different language in which your real C++ code is interleaved. There aren't many C++ preprocessor directives - they are mostly concerned with herding other code. Here are some you might see.
+It's a whole story, but worth understanding conceptually. The include statement is not really C++ code, it's part of a completely separate compiler pass called *preprocessor*. It happens before your actual programmatic instructions are dealt with. They are like instructions for the code compiler, as opposed to instructions for the computer to run after the compile. Using a pound/hash symbol before these *preprocessor directives*, one can clearly spot them in the file, and for good reason too. They should be seen as a different language in which your real C++ code is interleaved.  **[KL: "interleaved" makes sense here but maybe choose another word because it's a little odd.]** There aren't many C++ preprocessor directives - they are mostly concerned with herding other code. Here are some you might see.
 
 
 `#define`
@@ -197,6 +206,8 @@ Let's say I'm in the 3rd grade of elementary school and I hop on a school bus to
 
 Let's say you join a social website and it asks you to choose a username. My name is Joshua Nimoy, username might be JNIMOY. I submit the page and it returns an error, telling me that username is already taken, and I have to choose another, since my father, Joseph Nimoy, registered before I did and he's got JNIMOY. And so I must use my middle initial T, and create a more unique username, JTNIMOY. I just created and resolved a *namespace conflict*. A namespace is a group of unique names - none are identical. It's possible to have identical names, as long as they are a part of two separate namespaces. Namespaces help programmers avoid stepping on each other's toes by overwriting one another's symbols or hogging the good names. Namespaces also provide a neat and tidy organization system to help us find what we're looking for. In OpenFrameworks, everything starts with `of` . . . like `ofSetBackground` and `ofGraphics`. This is one technique to do namespace separation because it's less likely that any other names created by other programmers would begin with `of`. The same technique is used by OpenGL. Every name in the OpenGL API (Application Programming Interface) begins with `gl` like `glBlendFunc` and `glPopMatrix`. In C++ however, it is not necessary to have a strictly disciplined character prefix for your names, as the language provides its own namespacing syntax. In line 2, `using namespace std;` is telling the compiler that this .cpp file is going to use all the names in the `std` namespace. Spoiler-alert! those two names are `cout` and `endl`. Let us now do an experiment and comment out line 2, then run the code. What sort of error do you think the compiler will return?
 
+**[KL: While it's tempting to connect Forrest Gump to things, just stick with the JNIMOY one because too many examples makes what you are exemplifying get lost in translation. JNIMOY is more relevant concerning namespaces.]**
+
 ```C++
 /* using namespace std; */
 ```
@@ -221,6 +232,8 @@ When you run the code, you will see it compiles just fine, and succeeds in print
 
 Say I'm at a Scrabble party in Manhattan, and I am the only Josh. People can just call me Josh when it's my turn to have a go at Scrabble. However, if Josh Noble joins us after dinner, it gets a bit confusing and we start to call the Josh's by first and last name for clarity. In C++, the same is also true. It's alright to have two different `cout` names, one from the  `std` namespace, and another from the `improved` namespace, as long as both are expressed with explicit namespaces; `std::cout` and `improved::cout`. In fact, the compiler will complain if you don't.
 
+**[KL: I'm confused by why we'd have two different namespaces in this example. Plus, having it at the end of the namespaces section doesn't make sense. It seems like it's addressing another aspect of namespaces, but it's in placed as a conclusion. Elaborate on this more and then write a conclusion for this section.]**
+
 
 ##Functions
 
@@ -238,6 +251,8 @@ This is the first piece of code that has a beginning and an end, such that it "w
 
 In C++, we enclose groups of code statements inside functions, and each function can be seen as a little program inside the greater program, as in my laughably gross oversimplification in figure 9.
 
+**[KL: "laughably gross oversimplification" could be "as in my simplified diagram." Your phrase makes it seem so complex and over our heads that it can't be grasped. Functions are complex, but let's ease into that fact.]**
+
 ![Figure 9: Many Functions](images/program-anatomy.png "Figure 9. A program contains many functions, and each function contains zero or more statements.")
 
 Each of these functions has a name by which we can call it. To call a function is to execute the code statements contained inside that function. The basic convenience in doing this is less typing, and we will talk about the other advantages later. Like a board game, a program has a starting position. More precisely, the program has an *entrypoint* expected by the compiler to be there. That entrypoint is a function called *main*. The code you write inside the *main* function is the first code that executes in your program, and therefore it is responsible for calling any other functions in your program. Who calls your *main* function? The operating system does! Let's break down the syntax of the main function in this demo. Again, for all you Processing coders, this is old news.
@@ -246,7 +261,9 @@ Each of these functions has a name by which we can call it. To call a function i
 
 When defining a function, the first token is the advertised return type. Functions can optionally return a value, like an answer to a question, a solution to a problem, the result of a task, or the product of a process. In this case, *main* promises to return an `int`, or *integer* type, which is a whole number with no fraction or decimal component. Next token is the name of our function. The system expects the word "main" in all lower-case, but you will later define your own functions and we will get into naming. Next is an opening and closing parenthesis. Yes, it seems kind of strange to have it there, since there is nothing inside it. Later, we will see what goes in there - but never leave out the pair of parentheses with functions because in a certain way, that is the major hint to the human that it's a function. In fact, from now on, when I refer to a function by name, I'll suffix it with a ( ), for example `main()`.
 
-Next, we see an opening curley bracket. Sometimes this opening curley bracket is on the same line as the preceding closing parenthesis, and other times, you will see it on its own new line. It depends on the personal style of the coder and both are fine. Inbetween this opening curley bracket and the closing one, we place our code statements that actually tell the computer to go do something. In this example, I only have one statement, and that is the required `return`. If you leave this out for a function whose return type is `int` then the compiler will complain that you broke your promise to return an int. In this case, the operating system interprets a 0 as "nothing went wrong". Just for fun, see what happens when you change the 0 to a 1, and run the code.
+Next, we see an opening curley bracket. Sometimes this opening curley bracket is on the same line as the preceding closing parenthesis, and other times, you will see it on its own new line. It depends on the personal style of the coder and both are fine. Inbetween this opening curly bracket and the closing one, we place our code statements that actually tell the computer to go do something. In this example, I only have one statement, and that is the required `return`. If you leave this out for a function whose return type is `int` then the compiler will complain that you broke your promise to return an int. In this case, the operating system interprets a 0 as "nothing went wrong". Just for fun, see what happens when you change the 0 to a 1, and run the code.
+
+**[KL: This reminds me that up above when you discuss things like the basics of semicolons, I'd mention using spaces and line breaks and how usually it's the coders personal preference, but sometimes it matters, and that there is a general format that people follow.]**
 
 ##Custom Functions
 
@@ -288,13 +305,17 @@ In this new code, notice the second function `greet()` which looks the same but 
 
 The colorful line in Figure 11 is the path drawn by an imaginary playback head that steps over the code as it executes. We start at the blue part and go in through the main entrypoint, then encounter `greet()`, which is where a *jump* happens. As the line turns green, it escapes out of `main()` temporarily so it can go follow along `greet()` for a while. About where the line turns yellow, you see it finished executing the containing code inside `greet()` and does a second jump (the return) this time going back to the previous saved place, where it continues to the next statement. The most obvious advantage we can see in this example is the reduction of complexity from that long `cout` statement to a simple call to `greet()`. If we must call `greet()` five times, having the routine *encapsulated* into a function gives it convenience power. Let's say you wanted to change the greeting from "Good night" to "Show's over ". Rather than updating all the lines of code you cut-and-pasted, you could just edit the one function, and all the uses of the function would change their behavior along with it, in a synchronized way. Furthermore, code can grow to be pretty complex. It helps to break it down into small routines, and use those routines as your own custom building blocks when thinking about how to build the greater software. By using functions, you are liberated from the need to meticulously represent every detail of your system, and therefore a function is one kind of *abstraction* just like abstraction in art. This sort of abstraction is called *encapsulation of complexity* because it's like taking the big complex thing and putting it inside a nice little capsule, making that big complex thing seem smaller and simpler. It's a very powerful idea - not just in code, but in the growth of civilization, and even in the evolution of life on Earth.
 
+**[KL: How does this tie to evolution? I don't know if this helps visualize functions. Also, when I first started learning C++, I didn't come across writing functions for a long time. It's important to understand what a function is...like in the instance of main(), but knowing what it is vs. how to implement a function you've created yourself are two different levels of complexity that should be clarified above.]**
+
 ##Encapsulation of Complexity
 
-Imagine actor Laurence Fishburne wearing tinted Pince Nez glasses, offering you two options that are pretty complicated to explain. On the one hand, he is willing to help you escape from the evil Matrix so that you may fulfill your destiny as the hacker hero but it involves living life on life's terms and that is potentially painful but whatever, the story must go on and btw, there is a pretty girl. On the other hand, he is also willing to let you forget this all happened, and mysteriously plant you back in your tiny apartment where you can go on living a lie, none the wiser. These two options are explained in the movie *The Matrix* and then the main character is offered the choice in the form of colored pills, as a way to simplify an otherwise wordy film scenario. The two complex choices are encapsulated into a simple analogy that is much easier for movie audiences to swallow. See Figure 12.
+Imagine actor Laurence Fishburne wearing tinted Pince Nez glasses, offering you two options that are pretty complicated to explain. On the one hand, he is willing to help you escape from the evil Matrix so that you may fulfill your destiny as the hacker hero but it involves living life on life's terms and that is potentially painful but whatever, the story must go on and btw, there is a pretty girl. **[KL: This sentence is really drawn out.]** On the other hand, he is also willing to let you forget this all happened, and mysteriously plant you back in your tiny apartment where you can go on living a lie, none the wiser. These two options are explained in the movie *The Matrix* and then the main character is offered the choice in the form of colored pills, as a way to simplify an otherwise wordy film scenario. The two complex choices are encapsulated into a simple analogy that is much easier for movie audiences to swallow. See Figure 12.
 
 ![Figure 12. Red Pill and Blue Pill from The Matrix](images/red-blue-pills.png "Figure 12. Red Pill and Blue Pill from The Matrix")
 
 Rather than repeating back the entire complicated situation, Neo (the main character) needed only to swallow one of the pills. Even if it were real medicine, the idea of encapsulating complexity still applies. Most of us do not have the expertise to practice medicine in the most effective way, and so we trust physicians and pharmacologists to create just the right blend of just the right herbs and chemicals. When you swallow a pill, it is like calling that function because you have the advantage of not needing to understand the depths of the pill. You simply trust that the pill will cause an outcome. The same is true with code. Most of the time, a function was written by someone else and if that person is a good developer, you are free to remain blissfully ignorant of their function's inner workings as long as you grasp how to properly call their function. In this way, you are the *higher level* coder, meaning that you simply call the function but you did not write it. Someone who creates a project in OpenFrameworks is sitting on the shoulders of the OpenFrameworks layer. OpenFrameworks sits on the shoulders of the OpenGL Utility Toolkit, which sits on OpenGL itself, and so on. In other words, an OpenFrameworks project is a *higher level* application of C++, a language with a reputation for *lower level* programming. As illustrated in Figure 13, I sometimes run into a problem when I tell people I wrote an interactive piece in C++.
+
+**[KL: This Matrix comparison fits well for what a function does. The first paragraph is sloppy though. Try to condense what the pills meant. How much time you spend explaining the backdrop of an example is an important thing to consider. The chapter isn't about The Matrix, it's about functions in C++, so just try to meet somewhere in the middle.]**
 
 ![Figure 13. Standing on Shoulders of Giants](images/shoulders-of-giants.png "Figure 13. Standing on Shoulders of Giants")
 
@@ -330,6 +351,8 @@ Although OS X promotes Objective-C and Windows promotes C#, both XCode and Visua
 Sometimes I say C, and sometimes I say C++. Since they are closely related, perhaps you can understand how they are almost synonymous. I also leave out the ++ because I am talking about both languages! C++ is almost a superset of C (see figure 17), so when I talk about the properties of C, I am usually also talking about the properties of C++. To make things worse, the greater slang of C applies to all the C-something languages. Let's say you are a famous code artist presenting at the EyeO festival and a member of the audience asks you to talk about the programming of your piece. You may have used a combination of C++, C, and Objective-C on Mac OS X to make your OpenFrameworks project happen (not to mention Java and C# on your Linode server), but because simplicity is elegant, and because you only have 2 minutes left before they kick you off stage, your answer is shortened - and you say "I wrote it in C". Perhaps later when that audience member buys you a drink, you can be more specific about all the strains of C-language you actually used. Like most slang, relaxed conversational use of "C" is also context-sensitive. Sometimes preemptively simplifying speech like that is inappropriate when you are speaking to known engineers, developers, and hackers. In that case, saying C when you mean C++ might be construed as fronting!
 
 ![Figure 17. C++ is a non-strict superset of C](images/non-strict-superset.png "Figure 17. C++ is a non-strict superset of C")
+
+**[KL: This history and C background in between functions and variables needs to be placed somewhere else. Also, naming variables needs to be before functions because naming variables is a really basic, first lesson part of C++ and oF. Naming variables helps users imagine what's moving around. Any chance to offer some tangibility is a big plus.]** 
 
 ## Variables (part 1)
 
@@ -389,6 +412,8 @@ answer = 42;
 ```
 
 In this case, there is a moment after you declare that variable when its answer may be unpredictable and glitchy because in C (unlike Java), fresh variables are not set to zero for free - you need to do it. Instead, the variable is occupied with what ever old computer memory happens to be sitting there at the time. **[MH: You haven't mentioned memory yet, so this might not make sense to all readers]** So, unless you intend to make glitch art, please always initialize your variable to some number upon declaring it, even if that number is zero.
+
+**[KL: In addition to Mike's comment, memory should be way at the beginning. How are these variables and functions being moved around in a computer? If this chapter is striving for the most thorough explanation, it should start with the 1s and 0s.]**
 
 ### Naming your variable
 
@@ -614,13 +639,18 @@ There are a few more essentials to learn about variables, but we're going to tak
 
 **@stroustrup I know why you called it C++; #ofBook**
 
+**[KL: Again, variables are so fundamental to C++ that they should be way up at the beginning of this chapter. Also, what about int vs. float, char, long, etc.? Did I miss that? That, to me, is really important to distinguish.]**
+
 ## If-Then
 
 > Life is a multiple-choice, choose-your-own-adventure. *--my girlfriend Becca*
+**[KL: There are some really good sayings about logic out there...this doesn't really make sense to me. If/then is taking complex ideas and then condensing them into more black and white, statement-action type things.]**
 
 Imagine riding your bicycle in the streets of your city. When you encounter intersections or forks in the road, you must decide whether to turn, go straight, or turn around based on where you are going, your urgency in getting home, and other places you may want to stop at. The next day, you may take the same route but end up taking very different streets based on the domino effect of your decisions.
 
 Your ability to judge a situation and change your behavior based on your analysis is a kind of prediction behavior that defines intelligence. A computer program can also stop, analyze, and decide how to act in a more simplified way. *Conditionals* or *branching* in code are what provides this kind of simple yet useful intelligence. With just a little bit if *If-Then-Else* in your code, you can automate very complex decision making.
+
+**[KL: this statement reaffirms what I mean. You're taking "complex decision-making" and automating it to something less ambiguous.]**
 
 Figure 23 shows a generative, interactive cluster of neurons coded in OpenFrameworks for the CLOUDS Interactive Documentary.  **[MH: Explicityly drop the word branching to link this up the to conditional concept?]**
 
@@ -1332,7 +1362,7 @@ The output should be more circular, depending on the line-height of the font ren
  ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( (
 
 ```
-
+**[KL: using these loops to generate cool images is successful. It's nice to see fun things as a result of code instead of it just generating numbers. Nice.]**
 ## Returning Early from a Function
 
 When I first introduced functions, we had not learned enough code statements to fill those functions with more than one line of code. Now that you've seen a bit more, I'd like to cover something I had omitted. You have seen how it is possible to `break` out of a loop. it is also possible to break out of an entire function with the special `return` statement, and this will skip the rest of the function and go directly back to the calling code.
@@ -2093,11 +2123,15 @@ You may have noticed something different in the bouncing ball example. There wer
 
 Something that is local (a local concert by a local band) will happen in a smaller, lesser known location - and will happen by a lesser known (but just as important!) local band. A world traveller may come to see the show but since she goes to so many shows in so many locations, she forgets about our local band. Because she forgets about the local band, it gives the band an opportunity to change their name from "From First to Last" to "Skrillex", and adopt a fresher musical genre. When our world traveller returns to the same city to see the same local band, it has benefited from a fresh new start. This fresh new start is why we use local variables. Their ability to reset (their values forgotten quickly) is incredibly useful to us. Global variables, on the other hand, are classical musicians like Ludwig van Beethoven or Wolfgang Amadeus Mozart, whose names ring far and wide about the Earth (and possibly beyond), never to be forgotten. Their music was appreciated long ago and will continue to be appreciated, in many countries. Their musician names are known globally, and persist (stay the same) globally. This absolute stability of a global variable is what makes them so useful, in contrast to a more local variable. We need both global and local variables to make the whole system work, just like we need both global and local musicians for the health of music!
 
+**[KL: This is a good comparison and way of looking at global and local variables. This needs to be up with the explanation of variables though.]**
+
 ![Figure 26. Global versus Local, with apologies to Sonny Moore ](images/global-local.png "Figure 26. Global versus Local with apologies to Sonny Moore")
 
 ### Apologies
 
 I know it is hip to hate on Skrillex, so remember that his career has just begun. He has gone from local to global in a small amount of time, which is impressive. I am sure he will transform into an even more globally recognized musician than he already is, and then we will all stop hating on him. On the other hand, people have been hating on Mozart's appearance and character for 256 years (a more globally persisting rejection). Like making music, someone will always tell you you're not a real coder. Do not let that stop you. Having read the book "Coders at Work" in which Peter Seibel interviews the top programmers and computer scientists, I was pleasantly surprised to learn that people came from a diversity of backgrounds, and some saw themselves as architects or writers. Being a good programmer is different from being a good computer scientist or mathematician!
+
+**[KL: This is a nice piece of advise but it's not really cohesive with variables...keep it but relocate it.]**
 
 Variables at a more local scope are incredibly impactful and important because they deal with that which is closest to us, a bit like being closer to ones nerves. If we did everything using global variables all the time, we would have collisions - and perhaps remember too much garbage. Code and computer memory would grow tangled like the ratty hair of electronic musician. The idea of a local variable is newer, and was introduced for organization reasons. Programmers have made good efforts to avoid tangled, confusing code - and one way to do it is through keeping variables local.
 
@@ -2202,6 +2236,7 @@ In the beginning of this chapter, we declared strings and since then, we've decl
 float myNumber = 340.1928; 
 char myLetter = 'E';
 ```
+**[KL: Alright, so here is where variable types come in. I would really stress moving it way up in the chapter, because your containers comparison gives us a visual, and starting out the chapter with visuals is important because C++ is so bizarre to newcomers.]**
 
 Unlike an `int`, A `float` allows decimal points, and so you can work at a higher resolution. A `char` holds a single ASCII character. It only needs to take up 8-bits of memory whilst the `float` and `int` take up more (therefore allowing them to express a wider range of values). I will touch briefly on the bits and bytes of memory when we get into bitwise operators, and then Arturo will give you much more in Chapter 16. Let's see the `float` in action!
 
@@ -2389,7 +2424,7 @@ I grew up in Southern California. When someone says the word "float" I am remind
 
 ####Char
 
-`Char` is another type that stores a single character, whose value is traditionally 0-255, a range that fits inside 8-bits (1 byte). Often times, a char is referred to as a byte for this 8-bit reason. You may know the term `8-bit` if you are a fan of chiptune music or had a Nintendo Entertainment System (NES). A single byte is a pretty classic unit of memory, and as such - incredibly useful for dealing with data. You'll learn more about bits and bytes in chapter 16, in which Arturo will be covering the subject in greater detail. For now, let's start playing with the `char` type and begin to understand its basic uses.
+`Char` is another type that stores a single character, whose value is traditionally 0-255, a range that fits inside 8-bits (1 byte). **[KL: The extent as to which you clarify things in this chapter is an ongoing question. Should you cover bits and bytes and computer memory? I think in Issues it needs to be clarified what this chapter's main concerns are.]** Often times, a char is referred to as a byte for this 8-bit reason. You may know the term `8-bit` if you are a fan of chiptune music or had a Nintendo Entertainment System (NES). A single byte is a pretty classic unit of memory, and as such - incredibly useful for dealing with data. You'll learn more about bits and bytes in chapter 16, in which Arturo will be covering the subject in greater detail. For now, let's start playing with the `char` type and begin to understand its basic uses.
 
 ```C++
 #include <iostream>
@@ -2518,6 +2553,8 @@ int main() {
 
 The output is `3 4 3`, and notice that I have included `<math.h>` so I can use floor(), ceil(), and round().
 
+**[KL: If this is a fundamentals of C++ chapter, maybe casting isn't necessary for now. It's pretty complicated. Unless you explain why it's necessary given an example. It's hard to visualize scenarios when this is appropriate, or when to use chars in general. You said to use floats when in doubt, so what's stopping me from just always using a float? Why use casting?]** 
+
 ###Randomness
 
 I admit that last topic about variable types was a bit numeric, but it was important so if you feel fuzzy about any of it, please go back and re-read. For now, let's have fun with what we just learned. `math.h` comes with all kinds of useful tools for art. One of them generates a fake data stream of evenly distributed values. Programmers call it *random* and ironically, it's anything but random. To see what I mean, run the following program three times, each time noting the output.
@@ -2630,7 +2667,7 @@ In this output, each rattle snake has a different length.
 8============O~
 ```
 
-Artists like the random function because it creates a lot of organic aesthetic with very little typing. The experienced eye can spot the random function even several perlin octaves deep, in the same way you can look at an advertisement in the mall and call it out like "that was so photoshopped". Using the random function is like leaving the "Lorem Ipsum" in. Perhaps I can express my sentiment with more concreteness. If you find it sexy to create visual pieces that have *fake nature*, just imagine the impact you could have if you used *not-fake* nature. By that I mean replacing the random function with real world data. For example, you could set up an arduino or raspberry pi with a photocell (light sensor) to measure the way the cars passing by your apartment window temporarily block a nearby streetlight, and use that as an input to drive your software art. Also try working with big data from the past. Creating generative art, data visualizations, and working with physical computing will be covered in later chapters. But don't say I didn't warn you about the politics.
+Artists like the random function because it creates a lot of organic aesthetic with very little typing. The experienced eye can spot the random function even several perlin octaves deep, in the same way you can look at an advertisement in the mall and call it out like "that was so photoshopped". Using the random function is like leaving the "Lorem Ipsum" in. Perhaps I can express my sentiment with more concreteness. If you find it sexy to create visual pieces that have *fake nature*, just imagine the impact you could have if you used *not-fake* nature. By that I mean replacing the random function with real world data. For example, you could set up an arduino or raspberry pi **[KL: Have Arduino and Raspberry Pi been introduced yet in this book?]** with a photocell (light sensor) to measure the way the cars passing by your apartment window temporarily block a nearby streetlight, and use that as an input to drive your software art. Also try working with big data from the past. Creating generative art, data visualizations, and working with physical computing will be covered in later chapters. But don't say I didn't warn you about the politics.
 
 In the following example, I am using the same random scaled to 52, casting it to `char`, and outputting a pseudo-chaotic wall of letters. 
 
@@ -2775,7 +2812,7 @@ The classic random number generator *algorithm* is just a feedback loop wherein 
 
 ![Figure 31. Flowchart by Randall Munroe, xkcd](images/flow_charts.png "Figure 31. Flowchart by Randall Munroe, xkcd")
 
-If you can understand `random()` at an algorithmic level, you will be able to deeply remix it. The following is my own quick random function. It takes a char (0-255) and adds a prime number to it, causing it to wrap around from 255 to 0 as we iterate. **[MH: Big fan of this idea, but wrapping is probably unexpected for newbies and could use a sentence to aknowledge that]**
+If you can understand `random()` at an algorithmic level, you will be able to deeply remix it. The following is my own quick random function. It takes a char (0-255) and adds a prime number to it, causing it to wrap around from 255 to 0 as we iterate. **[MH: Big fan of this idea, but wrapping is probably unexpected for newbies and could use a sentence to aknowledge that]** **[KL: I second Mike.]**
 
 ```C++
 #include <iostream>
