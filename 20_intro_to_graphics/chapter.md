@@ -1,5 +1,17 @@
 # Graphics #
 
+**TO DO**
+- Break apart the chapter into more clearly defined sections
+	- Each section should have an overview paragraph to give readers a better roadmap of what is coming
+	- Optimally, I'd like each section to have suggestions of advanced extensions that could be made to the project
+- Write introduction section
+- Fill in missing graphics and update ugly graphics
+- Insert three small sections: saving a rasterized graphic, saving a vector graphic and saving an animation
+- Cut the Revursive Generative Color Composition section (possibly weave the HSB color model into one of the existing sections)
+- Write addons/more info section
+
+
+
 **Introduction TDB**
 
 I'm aiming to make sure we don't lose any beginners, so I realize that this chapter may be overly pedantic.  It can be tightened up in revisions.
@@ -1185,6 +1197,7 @@ Congrats, you survived coordinate transformations :)
 This chapter is super long to begin with...but I have another project in the outline around generative color.  It might be time to cut that.
 
 
+## Notes to Self ## 
 
 **openFrameworks Bugs and Weirdness:**
 - Setting alpha to 1 causes the hue information on a color to shift when drawing overlapping shapes (need to verify this happens outside of the brush app)
