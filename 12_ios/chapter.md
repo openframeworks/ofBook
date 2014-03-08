@@ -35,13 +35,48 @@ UIKit is the backbone of all iOS apps. It is a collection of classes or framewor
 
 UIKit organises its classes using the MVC (model-view-controller) design pattern. When you get into iOS programming you will see the MVC patterns everywhere, especially when working with UIViewControllers. MVC breaks up code into one of the three categories and makes the code more extensible and reusable.
 
-When you run a iOS app, it always begins with the UIApplication class which listens for system events and passes them into the app code for further handling. The first class you can start writing your own code into is the Application Delegate. The App Delegate is responsible for creating and managing the UIWindow as well as the root UIViewController, two very important objects in the iOS app structure. UIWindow's job is to coordinate and display content on the screen. As for a UIViewController, you can think of it as a single app screen and using the this analogy the root UIViewController can be thought of as the home screen for the app. The root UIViewController is the bottom most view controller on top of which you can stack other view controllers, aptly named the view controller stack. When stacking UIViewController objects on top of one another you get the beginnings of an app. You now have a few screens which with different UIView objects and you can navigate between them.
+When you run a iOS app, it always begins with the UIApplication class which listens for system events and passes them into the app code for further handling. The first class you can start writing your own code into is the Application Delegate. The App Delegate is responsible for creating and managing the UIWindow as well as the root UIViewController, two very important objects in the iOS app structure. UIWindow's job is to coordinate and display content on the screen. As for a UIViewController, you can think of it as a single app screen and using the this analogy the root UIViewController can be thought of as the home screen for the app. The root UIViewController is the bottom most view controller on top of which you can stack other view controllers, aptly named the view controller stack. When stacking UIViewController objects on top of one another you get the beginnings of an app. You now have a few screens with different UIView objects that you can navigate between.
 
-So that's the super compressed summary which is only skiming the surface of iOS development. It can be a very steap and slippery learning curve and this is where ofxiOS comes to the rescue as an elevator that takes you straight to the top of that curve. ofxiOS allows you to make native iOS apps using OpenFrameworks without knowing anything about UIKit or Obj-C at all. 
+(explain UIViews)
 
-Inside ofxiOS are classes which extend UIKit and take care of the creating the iOS application structure. ofxiOSAppDelegate is the application delegate and it initialises a ofxiOSViewController, the OpenFrameworks root view controller. ofxiOSViewController creates and manages a ofxiOSEAGLView which is the UIView to which OpenFrameworks renders graphics into to be displayed on the device. ofxiOSEAGLView is mainly where all the magic happens... it is responsible for the OpenGL draw loop, creating the ESRenderer and capturing touch events.
+So that's the super compressed summary which is only skiming the surface of iOS development. It can be a very steap learning curve and this is where ofxiOS comes to the rescue as an elevator that takes you straight to the top of that curve. ofxiOS allows you to make native iOS apps using OpenFrameworks without knowing anything about UIKit or Obj-C at all. 
 
-- How OF works on iOS, using OpenGL ES, UIViewController and App Delegate (basic iOS app structure)
+Inside ofxiOS are classes which extend UIKit and take care of creating the iOS application structure. The three core classes are ofxiOSAppDelegate which extends the application delegate, ofxiOSViewController which extends a UIViewController and is the root view controller for an OF application, and ofxiOSEAGLView which extends a UIView and is the view to which OpenGL content is drawn to.
+
+ofxiOSAppDelegate is mainly in responsible for listening to and handling global events like orientation changes, memory warnings, and events for when the application is exited or moves to the background state. ofxiOSAppDelegate alerts the ofApp that that these events have happened and it is then up to the programmer to handle these events as they chose inside the ofApp.
+
+ofxiOSViewController is the OF UIViewController and like the name suggest, its main responsibility is to create and control the OF UIView. It also takes care of orientation changes and can rotate an OF application to match the orientation changes on the device.
+
+ofxiOSEAGLView is the OF UIView which displays all OF rendered content. ofxiOSEAGLView is respinsible for creating a ESRenderer which encapsulates low-level OpenGL setup and makes it possible to render OpenGL graphics into a UIView. ofxiOSEAGLView also listens out for touch events which it passes into the ofApp to be handled by the programmer.
+
+TODO // need to make a diagram to visualise all this.
+
+###ofxiOSApp
+
+![Figure 1: OF on iPhone.](images/ofxiOS_XCode_sml.png "Figure 2: ofxiOS XCode.")
+
+When you open up a empty ofxiOS project you will immediatly notice some differences in the ofApp header file. You will see that ofApp extends ofxiOSApp and not ofBaseApp as you would see when running a desktop app. This is because iOS apps and desktop apps are different in many regards, desktop apps receive mouse and keyboard events and iOS apps receive touch events as well a orientation events and memory warnings. To handle these new events, new methods had to be defined inside ofxiOSApp which the ofApp inherits from and listens to.
+
+```
+void touchDown(ofTouchEventArgs & touch);
+void touchMoved(ofTouchEventArgs & touch);
+void touchUp(ofTouchEventArgs & touch);
+void touchDoubleTap(ofTouchEventArgs & touch);
+void touchCancelled(ofTouchEventArgs & touch);
+```
+explain...
+
+`void lostFocus();`
+explain...
+
+`void gotFocus();`
+explain...
+
+`void gotMemoryWarning();`
+explain...
+
+`void deviceOrientationChanged(int newOrientation);`
+explain...
 
 
 ###OpenGL ES and iOS
