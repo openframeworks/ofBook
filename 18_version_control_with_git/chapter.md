@@ -8,21 +8,21 @@ The major concepts and keywords are explained, enabling you to easily dig deeper
 A number of tools for working with Git are presented.
 You will learn about Github, a web service for hosting Git repositories and one of the major platforms for "social coding".
 It will be shown how you can start hosting your own projects on Github and leverage its features.
-Finally, I will show you how you can build upon the things you just learned and where you can get help if you get stuck.
+Finally, you will learn how you can build upon the things you just learned and where you can get help if you get stuck.
 
 ## What is version control, and why should you use it?
 
 How do you track the state of your projects over time?
-Have you ever simply made several copies of your project folder (or text document, Photoshop file,...)?
+Have you ever made several copies of your project folder (or text document, Photoshop file,...)?
 Did you name them something like `Awesome_project_1`, `Awesome_project_may10`, `Awesome_project_final`, `Awesome_project_final2`, `Awesome_project_really_final_for_installation`,...?
-Did you mail around zipped projects to collaborators, and had some trouble syncing up the changes they (or you) made in the meantime?
+Did you mail around zipped projects to collaborators, and had some trouble syncrhonizing the changes they (or you) made in the meantime?
 Have you run into problems when you had to go back to a previous version, change things, copy those changes to other version, or generally keep tabs on changes?
 
 If you nodded at some of these questions, you've come to the right place - version control is there to help you!
 [Version control](http://en.wikipedia.org/wiki/Revision_control) (also called revision control) is the management of changes to documents, computer programs, large web sites, and other collections of information.
-It is used to easily, efficiently and reproducibly track changes to all kinds of information.
+It is used to easily, efficiently and reproducibly track changes to all kinds of information (like a really advanced "undo" function).
 Specifically, in programming it is (primarily) used to track changes to your source code, but it's generally applicable to most kinds of files on your computer.
-Version control also enables programmers to effectively collaborate in teams, because it offers methods to distribute changes, merge different version together, resolve conflicts if two (or more) programmers modified the same file, sync state between computers, etc.
+Version control also enables programmers to effectively collaborate in teams, because it offers methods to distribute changes, merge different development versions together, resolve conflicts if two (or more) programmers modified the same file, sync state between computers, etc.
 
 I hope you'll agree by now that it is a very good idea to use some manner of version control when developing your programs.
 In the next section, I'll talk a bit about the different choices you have when choosing a particular system.
@@ -41,7 +41,7 @@ Some [popular centralized version control](http://en.wikipedia.org/wiki/List_of_
 * [Subversion (SVN)](http://subversion.apache.org/), a popular successor to CVS.
 
 [*Distributed version control systems*](http://en.wikipedia.org/wiki/Distributed_revision_control), on the other hand, take a peer-to-peer approach.
-There is no central server, and every programmer has a full copy of the project locally available (thus acting as a backup, too!).
+There is no central server, and every programmer has all files and history locally available (thus acting as a backup, too!).
 Network access is only needed for syncing changes with other programmers.
 Distributed version control systems have recently gained much popularity.
 Some [notable systems](http://en.wikipedia.org/wiki/List_of_revision_control_software) are:
@@ -58,15 +58,17 @@ In this section, I'll give you an introduction on how to use version control wit
 Note that this chapter is only an introduction, and as such only touches the surface of Git's capabilities, both in the presented commands, and their options.
 Much more detailed information, including in-depth tutorials and a command reference, can be found online. Some links are collected at the end of the chapter, and most commands presented have a link to their online reference.
 
+In what follows, I'll explain the basic concepts of Git, show the typical operations involved in using Git with an openFrameworks project, give an overview over the basic operations of Git, and show you how to work with remote Git servers.
+
 ### Basic concepts
 
 When you put your project under version control, Git creates a **repository** in your project folder.
 This means that the contents of that folder are tracked with Git.
-Most of the files associated with Git are in a `.git` folder in your project root (the leading dot means this folder is by default probably hidden from view in your file browser).
+Most of the files associated with Git are in the `.git` folder in your project root (the leading dot means this folder is by default probably hidden from view in your file browser).
 
 The basic element for tracking the history of the repository is the **commit**.
 This is basically a snapshot of the repository's state at the time of the commit, including a **commit message** and any parent commit(s).
-It has a unique identifier called the **hash** or **SHA**.
+It has a unique identifier called the **hash** (or **SHA**).
 This is a checksum calculated from the commit's contents, i.e. its files and folders, parent commit(s) and commit message.
 It's impossible to change any part of the commit without the hash changing.
 Thus, a commit hash uniquely defines a commit and the whole history preceding it.
@@ -74,7 +76,7 @@ Thus, a commit hash uniquely defines a commit and the whole history preceding it
 As your work proceeds, you will be adding commits, describing the things you change.
 These commits will form a chain of commits, making up the project history.
 A chain of such commits is called a **branch**, and the default branch is called `master`.
-Branches are also created when you decide to diverge from a line of development, and try something different.
+Branches are also created when you decide to diverge from a line of development, and try something different (for example a new feature, or a bug fix) while preserving the state of the project.
 This new chain of commits, which *branches off* at a certain commit of the original branch, now forms its own branch.
 
 Branches can be **merged** into another branch.
@@ -83,11 +85,11 @@ When this happens, Git analyzes the two different branches and merges their diff
 Finally, there are three different "areas" in Git, which you will encounter often when reading about Git:
 
 The **repository** contains all the commits.
-The **HEAD** is a pointer pointing to the last commit of the branch you are currently on.
+The **HEAD** points to the current commit of the branch you are currently on.
 This represents the *latest committed state* of your repository.
 If you create a new commit, it will become this commit's parent (and HEAD will be moved to the new commit).
 
-The **working directory** contains the files and folders of your repository, the stuff you modify and work with when writing code for your project.
+The **working directory** contains the files and folders under version control, the stuff you modify and work with when writing code for your project.
 
 When you prepare a commit, you first have to **stage** any changes you want that commit to contain.
 This means that these changes will be put into the **index** (or **staging area**).
@@ -107,7 +109,7 @@ You can also use a Git program with a GUI if you want (some will be presented la
 Much of what follows will be less tedious to achieve, and presented in a prettier way, if you're using a GUI to interact with Git.
 Nevertheless, I am presenting this intro with a terminal-based approach for several reasons:
 
-* I think it's actually more instructive to follow some typed commands than pages after pages of (rapidly outdated) screenshots of a GUI app you probably don't even use (as there's quite a lot of them out there).
+* I think it's actually more instructive to follow some typed commands than pages after pages of (rapidly outdated) screenshots of a GUI app you probably don't even use (as there are quite a lot of them out there).
 * Many GUI programs don't offer the full range of functions that Git provides, so you will probably have to drop down into a terminal sooner or later. At that point it's quite handy to know what your GUI does in the background.
 * Most of the online documentation and advice on Git focus on the command-line interface.
 
@@ -123,8 +125,8 @@ This will look similar to this:
     .
     ├── addons.make
     ├── bin
-    │   └── data
-    │       └── .gitkeep
+    │   └── data
+    │       └── .gitkeep
     ├── config.make
     ├── demoProject.cbp
     ├── demoProject.workspace
@@ -225,7 +227,7 @@ The list of files looks correct, so far so good!
 You might have noticed the `.gitkeep` file in `bin/data/`.
 Git only tracks files, not directories, which means that empty directories are not visible to Git.
 A common technique to work around this, if you want to have empty directories (e.g. for future output files) in your repository, is to place an empty file there, which makes sure that that directory can be added to Git.
-Naming that file `gitkeep` is just a convention, and has no special meaning to Git.
+Naming that file `.gitkeep` is just a convention, and has no special meaning to Git.
 
 If we compile the OF project now, some additional files will be created in the /bin folder.
 Because we added a `.gitignore` file in the previous step, these files will not be picked up by Git.
@@ -287,7 +289,7 @@ We can supply a commit message at the same time by using the `-m` flag, otherwis
      create mode 100644 src/ofApp.h
 
 The first line of the output shows us the branch we are on (`master`), and that this was our first commit, creating the root of our commit tree.
-Also, we see the hash of the commit we just created (`3ef08e9`) and the commit message.
+Also, we see the hash (i.e. the unique ID) of the commit we just created (`3ef08e9`) and the commit message.
 The hash is given in a short form, as it's often sufficient to only supply the first seven or so characters of the hash to uniquely identify a commit (Git will complain if that's not the case).
 The next line roughly describes the changes that were committed, how many files were changed and how many insertions and deletions were committed.
 The rest lists the files new to Git, the mysterious `mode 100644` is a unix-style description of the file permissions, `100644` is a regular, non-executable file (`100755` would be an executable file).
@@ -349,7 +351,7 @@ Let's check it out:
 
      //--------------------------------------------------------------
 
-This output shows the difference between two files in the [unified diff format](http://en.wikipedia.org/wiki/Diff#Unified_format).
+This output shows the difference between two files in the [unified diff format](http://en.wikipedia.org/wiki/Diff#Unified_format) (`diff` is a popular Unix tool for comparing text files).
 It looks pretty confusing, but let's pick it apart a bit to highlight the most useful parts.
 
 The first line denotes the two different files being compared, denoted as `a/...` and `b/...`.
@@ -406,8 +408,9 @@ Now that that is out of the way, we can commit the change we just added, and che
 [Branches and merging](http://git-scm.com/book/en/Git-Branching) are the bread and butter of Git, so you will be branching and merging a lot.
 Branching and merging often is a workflow encouraged by Git, as those are computationally cheap operations.
 
-For example, if you want to create some new feature, or afix a bug in your program, it is prudent to start work on this on a branch, separated from the main branch.
+For example, if you want to create some new feature, or fix a bug in your program, it is prudent to start this work on a branch separated from the main branch.
 This has several advantages:
+
 * Your work on is contained in this branch.
 * You can quickly and easily switch to another topic of work if needed.
 * The main branch is unaffected by your work as long as it's not merged, so normal operations can continue in the meantime (e.g. when you create an experimental addition to an OF addon other people are using).
@@ -655,8 +658,8 @@ After doing this, Git still knows that there has been a conflict, and `git statu
     no changes added to commit (use "git add" and/or "git commit -a")
 
 Obediently, we run `git add src/ofApp.cpp` to stage our conflict-free file and mark the conflict as resolved.
-Now, we create a merge commit.
-If we omit the `-m <message>` part, `git commit` will open an editor (which one depends on your setup) with a proposed commit message which includes the files for which conflicts had occured.
+Now, we can finish the merge.
+If we omit the `-m <message>` part, `git commit` will open an editor (which one depends on your setup) with a proposed commit message which mentions the files for which conflicts had occured.
 You can either try that way, or just create a self-made commit message directly, as usual:
 
     $ git commit -m "Merge after resolving conflict"
@@ -702,7 +705,7 @@ OpenFrameworks primarily uses Github to host its [source code repositories](http
 
 Delving deeper into Github's features would lead too far here, so I'll just outline the typical operations you will deal with when interacting with Github repositories.
 
-#### Setting up, remotes
+#### Setting up and remotes
 
 To start a project on Github, you have several options:
 
@@ -713,7 +716,7 @@ Github will display instructions for creating an empty local repository, or for 
 If there's already a Git repository online somewhere, you can also [clone that repository](https://help.github.com/articles/fork-a-repo#step-2-clone-your-fork) to get a copy of it on your local machine.
 This command is not limited to Github repositories, but can be used with all Git repositories, see the [`git clone` docs](http://git-scm.com/docs/git-clone) for what you can do with `git clone`.
 
-The remote repositories will be added as so-called `remotes` to your local repository's configuration.
+The remote repositories are added as so-called `remotes` to your local repository's configuration (either automatically, or using `git remote add`).
 Think about it as a target identifier you supply to Git commands if you want to work with remote repositories.
 It is customary that a "parent" repository (i.e. the repository under your Github account) is called `origin`, and a repository you forked from is called `upstream`.
 You can get the list of current remotes using [`git remote`](http://git-scm.com/docs/git-remote) (add `-v` to see more info).
