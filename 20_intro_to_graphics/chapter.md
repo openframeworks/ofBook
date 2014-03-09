@@ -10,19 +10,31 @@
 - Insert three small sections: saving a rasterized graphic, saving a vector graphic and saving an animation
 - Write addons/more info section
 - Rename figures to be more informative
+- Multiple figures can be combined onto a single line to save space in terms of total page number
 - Change ++i to i++
 - Change in-line references to functions that require parameters: use `functionName(...)` 
 - Add arc to basic shapes?
 - Use "we" + "our" over "you" + "your"
 - How are links being handled?  I don't explicitly point them out most of the time since that would be redundant in an online version.
 - `polyline.getPointAtPercent(0)` and `polyline.getPointAtPercent(1.0)` return the same thing
-
+- Add a line about what happens when alpha is very low (i.e. == 1)
+- Does each individual brush section need a list of extensions?  Or should they just come at the end?
 
 - Section 1.1 Wish List:
+  - Link to artists that take this generative brush approach 
   - Setup/update/draw description
   - Talk about how graphics are layered
   - Setting circle resolution
   - `ofDrawBitmapString()`
+- Section 1.2.3 Wish List:
+  - Key press constants 
+  - Explain 8-bits color channels, why they are 0-255
+  - Explanation of lerp
+  - push/pop style
+  - Point to lerp (in the getLerped section)
+- Section 1.2.5 Wish List:
+  - ofVec2f description that includes div, mult, scaler, etc. 
+  - Mention getRotated
 
 ***
 
@@ -51,10 +63,10 @@ Along the way from brushes to animated rectangles **[note which sections]**, we 
   1. [Brushes from Basic Shapes](#12-brushes-from-basic-shapes)
     1. [Single Rectangle Brush](#121-single-rectangle-brush)
     1. [Bursting Rectangle Brush](#112-bursting-rectangle-brush)
-    1. Glowing Circle Brush
-    1. Star Line Brush
-    2. Fleeing Triangle Brush
-  1. Saving Raster Graphics]
+    1. [Glowing Circle Brush](#123-glowing-circle-brush)
+    1. [Star Line Brush](#124-star-line-brush)
+    1. [Fleeing Triangle Brush](#125-fleeing-triangle-brush)
+  1. (Saving Raster Graphics](#13-saving-raster-graphics)
 1. Brushes with Freeform Shapes]
   1. Freeform Shapes
   1. Brushes from Freeform Shapes
@@ -193,7 +205,7 @@ We are going to lay down the foundational code for our brushes by making a simpl
 
 **[make sure that public variables have been covered at this point; C++ basics]**
 
-For 1), we can use two openFrameworks variables [`mouseX`](http://openframeworks.cc/documentation/application/ofBaseApp.html#!show_mouseX "mouseX Documenation Page") and [`mouseY`](http://openframeworks.cc/documentation/application/ofBaseApp.html#show_mouseY "mouseY Documentation Page").  These variables are updated internally by openFrameworks.  They are public variables, so we have access to them anywhere within our ofApp.cpp source file.  We  will use them inside our `draw()` function just like we would any other `int` variables.
+For 1), we can use two openFrameworks variables [`mouseX`](http://openframeworks.cc/documentation/application/ofBaseApp.html#!show_mouseX "mouseX Documenation Page") and [`mouseY`](http://openframeworks.cc/documentation/application/ofBaseApp.html#show_mouseY "mouseY Documentation Page").  These variables are updated internally by openFrameworks.  They are public variables, so we have access to them anywhere within our ofApp.cpp source file.  We will use them inside our `draw()` function just like we would any other `int` variables.
 
 For 2), we should take a look at the [`mousePressed(...)`](http://www.openframeworks.cc/documentation/application/ofBaseApp.html#show_mousePressed "mousePressed Documentation Page") and [`mouseReleased(...)`](http://www.openframeworks.cc/documentation/application/ofBaseApp.html#show_mouseReleased "mouseReleased Documentation Page") functions in our source file (ofApp.cpp).  These functions are called by openFrameworks anytime the mouse button is pressed or released.  Each receives three parameters: the x and y position of the mouse when the mouse was pressed/released and an `int` representing which mouse button was pressed/released.  
 
@@ -311,7 +323,7 @@ But why do we care about setting the frame rate here?  We want to be able to acc
 
 Compile, run and we get a messy, box-shaped spread of random rectangles.  Things are slowly becoming more interesting.  But why didn't our code generate a circular spread?  Since `xOffset` and `yOffset` could be any random values between `-40` and `40`, we were actually picking random locations from a rectangular region of space.  We can imagine the boundaries of that region by thinking about what happens when `xOffset` and `yOffset` take on their most extreme values, i.e. (`xOffset`, `yOffset`) values of ('-40', '-40'), ('40', '-40'), ('40', '40'), ('-40', '40').
 
-To generate a circular spread, we need to introduce a tiny bit of mathematics.  If we want to pick a random point that lives within a circle of a particular size, it helps to think in terms of angles.  Imagine that we are at the center of a circle.  If we rotate a random amount (let's call this the *polar angle*) and then move a random distance (let's call this the *polar radius*), we will end up in a random location within the circle (assuming we don't walk so far that we cross the boundary of our circle).  What we have just done is define a point in space by a polar angle and a polar radius instead of using an x coordinate and a y coordinate.  We have just begun to think think in terms of [polar coordinates](http://en.wikipedia.org/wiki/Polar_coordinate_system "Polar Coordinates Wiki").  (In contrast, remember that using x and y values to represent a point in space is called the [Cartesian coordinate system](http://en.wikipedia.org/wiki/Cartesian_coordinate_system "Cartesian coordinate system"]).)
+To generate a circular spread, we need to introduce a tiny bit of mathematics.  If we want to pick a random point that lives within a circle of a particular size, it helps to think in terms of angles.  Imagine that we are at the center of a circle.  If we rotate a random amount (let's call this the *polar angle*) and then move a random distance (let's call this the *polar radius*), we will end up in a random location within the circle (assuming we don't walk so far that we cross the boundary of our circle).  What we have just done is define a point in space by a polar angle and a polar radius instead of using an x coordinate and a y coordinate.  We have just thought about space in terms of [polar coordinates](http://en.wikipedia.org/wiki/Polar_coordinate_system "Polar Coordinates Wiki").  (In contrast, remember that using x and y values to represent a point in space is called the [Cartesian coordinate system](http://en.wikipedia.org/wiki/Cartesian_coordinate_system "Cartesian coordinate system"]).)
 
 **[This could use a simple visual to show cartesian vs polar coords]**
 
@@ -340,20 +352,19 @@ We have mastered rectangles.  Circles, ellipses, lines and triangles are up next
 
 #### 1.2.3 Glowing Circle Brush ####
 
-Since we are going to create a few more brushes, it would be nice to be able to switch between brushes on-the-fly.
+Unlike what we did with the rectangle brush, we are going to layer colorful, transparent circles on top of each to create a glowing haze.  But before we get into that, we should modify our code so that we can switch between brushes while our code is running.
 
-To add the ability to switch between brushes we are going to define an integer `drawingMode`.  Each number from 0 through 3 will represent a unique mode.  To make our code more human-readable, we will define an integer variable for each of those modes, e.g. `rectangleMode = 0`, etc.  Inside of `draw()` we can then check the `drawingMode` variable to determine what code to execute.  Finally, we will use keyboard inputs to switch between the different brush modes.
+Let's define an integer, `drawingMode`, that will allow us to identify which brush we are using.  Each number from 0 through 3 will represent a unique mode - one for each basic shape we will be using.  To make our code more human-readable, we will define an integer variable for each of those modes, e.g. `rectangleMode = 0`, etc.  Inside of `draw()` we can then check the `drawingMode` variable to determine which brush code to use.  Finally, we will use keyboard inputs to switch between the different brush modes.
 
-Add these properties to your header file (.h):
+Add these public variables to the header file (ofApp.h):
 
 	int drawingMode;
 	int rectangleMode = 0;
-	int ellipseMode = 1;
-	int circleMode = 2;
-	int lineMode = 3;
-	int triangleMode = 4;
+	int circleMode = 1;
+	int lineMode = 2;
+	int triangleMode = 3;
 
-Assign your first drawing mode to the rectangle brush in your `setup()` function:
+Assign the initial drawing mode to the rectangle brush in `setup()`:
 
 	drawingMode = rectangleMode;
 
@@ -366,7 +377,7 @@ We are going to reorganize the `draw()` function so that it looks like this:
 	if (isLeftMousePressed) {
 	
 		if (drawingMode == rectangleMode) {
-			// Insert the rectangle drawing code you wrote here
+			// Insert the rectangle drawing code here
 		}
 		
 		else if (drawingMode == circleMode) {
@@ -375,36 +386,33 @@ We are going to reorganize the `draw()` function so that it looks like this:
 		else if (drawingMode == lineMode) {
 		}
 		
+        
 		else if (drawingMode == triangleMode) {
 		}
 	}
 
-We are going to make use of the [`keyPressed(int key)`](http://openframeworks.cc/documentation/application/ofBaseApp.html#!show_keyPressed keyPressed "Documentation Page") function that is already built into your openFrameworks `.cpp` file to handle key events.  Like `mousePressed(...)`, this function is called any time a key is pressed.  We can use the integer that is passed into `keyPressed(...)` to switch our `drawingMode` variable.  We will use "r" for rectangle mode, "c" for circle mode, etc.  
+Scroll down in ofApp.cpp to find the [`keyPressed(int key)`](http://openframeworks.cc/documentation/application/ofBaseApp.html#!show_keyPressed keyPressed "Documentation Page") function.  Similar to `mousePressed(...)`, this function is called any time a key is pressed, and it receives  an `int` called `key` to identify which key is currently being pressed.  We will use `key` to change our `drawingMode` variable: press "r" for rectangle mode, "c" for circle mode, etc.  
 
-But how exactly does an integer tell us which key has been pressed?  That integer is actually the ASCII code for the key that was pressed.  You can check out the [ASCII wiki](http://en.wikipedia.org/wiki/ASCII "ASCII Wiki Page") for details, but for this chapter it is enough to just know that ASCII is an agreed upon system for assigning numbers to characters.  It turns out to be quite easy to check if the ASCII integer `key` is a particular character. Add these lines to your `keyPressed()` function to see what this looks like in code.
+But how exactly does an `int` tell us which key has been pressed?  That `int` is the ASCII code for the key that was pressed.  Check out the [ASCII wiki](http://en.wikipedia.org/wiki/ASCII "ASCII Wiki Page") for details, but for this chapter, it is enough to know that ASCII is an agreed upon system for assigning numbers to characters.  It turns out to be quite easy to check if the ASCII integer `key` represents a particular character.  In C++, you can compare an integer like `key` with a character directly using `==` or `!=`.  Add these lines to the `keyPressed(...)` function:
 
 	if (key == 'r') drawingMode = rectangleMode;
 	else if (key == 'c') drawingMode = circleMode;
 	else if (key == 'l') drawingMode = lineMode;
 	else if (key == 't') drawingMode = triangleMode;
 
-**[bd: will the reader have been made aware at this point that single-line if statements can be written without curly brackets?]**
+**[Explain char vs int, the double quote vs single quote.  Or is this in c++ chapter]**
 
-In C++, you can compare an integer like `key` with a character using `==` or `!=`.
+Whew! Not much changes when we run the code, but the new architecture allows more flexibility as we create brushes.  We are ready for hazy, transparent circles.  Instead of drawing an explosion of shapes, we are going to draw a giant transparent circle, then draw a slightly smaller transparent circle on top of it, then repeat, repeat, repeat.
 
-**[Note: Explain char vs int, the double quote vs single quote.  Or is this in c++ chapter]**
+We've only used opaque grayscale colors so far.  We can add transparency by adding an extra parameter to `ofSetColor(...)` (e.g.`ofSetColor(255, 50)`).  That second parameter represents the alpha channel.  It takes a value from '0' to '255' where '0' is completely transparent and '255' is completely opaque.  
 
-**[Note: the constants that oF provides for key presses]**
+Before we use colors that have an alpha channel, we need to enable something called "alpha blending."  If we held up two pieces of transparent paper - one red and one blue - and looked through them, the world would appear purple.  The colors would blend.  (Well, that's not exactly what is happening with the physics of light, but stick with me.)  This blending happens "by default" in the world, you can't turn off physics.  In our code, this blending costs computing power, so alpha blending may be disabled by default in our openFrameworks project.  [`ofEnableAlphaBlending()`](http://www.openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofEnableAlphaBlending "ofEnableAlphaBlending Documentation Page") allow us to turn alpha blending on when we want it, and [`ofDisableAlphaBlending()`](http://www.openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofDisableAlphaBlending "ofDisableAlphaBlending Documentation Page") lets us turn it off when we don't need it.  
 
-Whew! When you run your code, you should now be able to clear your screen and switch between brushes.  Let's fill in those circle, line and triangle brushes!
-
-For our circle brush, let's play with transparency and add some color.  Unlike what we did with rectangles, we are going to layer our circles on top of each other until they become hazy and indistinct.  We are going to draw a giant transparent circle, then draw a slightly smaller transparent circle, then repeat, repeat, repeat.
-
-So far, we've only used opaque grayscale colors but you can make your colors transparent by adding an extra parameter to `ofSetColor()` (e.g.`ofSetColor(255, 50)`).  That second parameter represents the alpha channel.  It takes a value from 0 to 255 where 0 is completely transparent and 255 is completely opaque.  Before we use colors that have alpha we need to enable something called alpha blending.  This means that when two transparent colors occupy the same space on the screen, their colors get mixed.  Alpha blending is disabled by default because it requires additional computing power.  Let's add the following line to our `setup()` function:
+Add the following line to `setup()`:
 
 	ofEnableAlphaBlending();
 
-Now we can start working on our `draw()` function.  We will use the `angle`, `distance`, `xOffset` and `yOffset` code like we did with the rectangle brush.  The difference is that our loop will control the radius of our circle.  We will start by drawing a circle with a large radius value and slowly reduce it to 0.  Add the following to `draw()` inside of our if statement to check if the `drawingMode` is `circleMode`:
+Now we can start working on our `draw()` function.  We will use the `angle`, `distance`, `xOffset` and `yOffset` code like we did with the rectangle brush.  The difference is that our `for` loop will control the radius of our circle.  We will start with a large radius value and step its value down to 0.  Add the following to `draw()`, but remember to put it inside of our `if (drawingMode == circleMode)` if statement:
 
 	int maxRadius = 100;
 	int radiusStepSize = 5;
@@ -419,30 +427,28 @@ Now we can start working on our `draw()` function.  We will use the `angle`, `di
 		ofCircle(mouseX+xOffset, mouseY+yOffset, radius);
 	}
 
-The result is something like drawing with a glowing light.  You can play with the `maxRadius`, `radiusStepSize`, `alpha` and `maxOffsetDistance` to make that glowing effect stronger, weaker, narrower or wider.
+It is a bit like drawing with a glowing light.  You can play with the `maxRadius`, `radiusStepSize`, `alpha` and `maxOffsetDistance` to make that glowing effect stronger, weaker, narrower or wider.
 
 ![Circle Glow Brush](images/intrographics_circleglow.png "Results of using the circle glow brush")
 
-Kind of cool right?  You are probably tired of having to live in moody shades of gray for so long.  `ofSetColor()` can make use of the RGB color model in addition to the grayscale color model.  If you haven't heard of RGB before, you can check out the [wiki](http://en.wikipedia.org/wiki/RGB_color_model "Wiki on RGB Color Model").  It allows you to specify a color through quantifying the amount of red, blue and green light present in that color.  We refer to these color components as channels, and each channel can be represented by a value from 0 to 255.  (Alpha is a fourth possible channel.) Here are the forms of `ofSetColor()` we can now use:
+Kind of cool, right?  But we are tired living in moody shades of gray for so long.  `ofSetColor(...)` can make use of the RGB color model in addition to the grayscale color model.  If you haven't heard of RGB before, you can check out the [wiki](http://en.wikipedia.org/wiki/RGB_color_model "Wiki on RGB Color Model").  RGB allows you to specify a color through specifying the amount of red, blue and green light present.  We refer to these color components as channels, and each channel can be represented by a value from 0 to 255.  (Alpha is an optional fourth channel which gives us RGBA.)  Here are the forms of `ofSetColor(...)` we now know:
 
-**[Note: would it be helpful to somewhere explain 24-bit/32-bit color and where 256 comes from?]**
-
-**[Note: would it be helpful to have a RGB diagram?]** **[bd: yes]**
+**[RGB diagram?]**
 
 	ofSetColor(255); // Opaque grayscale white
 	ofSetColor(255, 10); // Very transparent grayscale white
 	ofSetColor(255, 0, 0); // Opaque red! Hooray for color :)
 	ofSetColor(255, 0, 0, 10); // Very transparent red
 
-Let's go ahead and modify the `ofSetColor()` in our above circle brush code to use some color.  Here is a nice orange: `ofSetColor(255, 103, 0, 3)`.
+Let's go ahead and modify the `ofSetColor(...)` in our above circle brush code to use some color.  Here is a nice orange: `ofSetColor(255, 103, 0, 3)`.
 
-There's another way we can use `ofSetColor()` that is also useful.  Meet [`ofColor`](http://openframeworks.cc/documentation/types/ofColor.html "ofColor Documentation Page"].  This is a handy class that openFrameworks provides for handling colors which allows you to do some fancy color math (among other things). Here are some examples of defining and modifying colors:
+There's another way we can use `ofSetColor(...)` that is useful.  Meet [`ofColor`](http://openframeworks.cc/documentation/types/ofColor.html "ofColor Documentation Page"].  This is a handy openFrameworks class for handling colors which allows you to do some fancy color math (among other things). Here are some examples of defining and modifying colors:
 
 	ofColor myOrange(255, 132, 0); // Opaque orange color - specified using RGB
 	
 	ofColor myBlue(0, 0, 255, 50); // Transparent blue color - specified using RGBA
 	
-	// You can access the red, green, blue and alpha channels like this:
+	// We can access the red, green, blue and alpha channels like this:
 	ofColor myGreen(0, 0, 255, 255);
 	
 	cout << "Red channel:" << myGreen.r << endl;
@@ -450,39 +456,39 @@ There's another way we can use `ofSetColor()` that is also useful.  Meet [`ofCol
 	cout << "Blue channel:" << myGreen.b << endl;
 	cout << "Alpha channel:" << myGreen.a << endl;
 	
-	// You can also set the red, green, blue and alpha channels like this:
+	// We can also set the red, green, blue and alpha channels like this:
 	ofColor myYellow;
 	myYellow.r = 255;
 	myYellow.b = 0;
 	myYellow.g = 255;
 	myYellow.a = 255;
 
-Now, let's say that instead of just using an orange or a red color for our circle brush, what if we want to pick a random color in-between orange and red?  `ofColor` has a solution for using what is called [linear interpolation](http://en.wikipedia.org/wiki/Linear_interpolation "Wiki for Linear Interpolation").  Replace your `ofSetColor` line of code with these four lines: 
+Now, if we wanted to make our brush fierier, we would want to draw using random colors that are in-between orange and red.  Intuitively, we know what an in-between color is, but we need to specify it mathematically in our code.  `ofColor` gives us that mathematical in-betweenness using something called "[linear interpolation](http://en.wikipedia.org/wiki/Linear_interpolation "Wiki for Linear Interpolation")." with a function called [`getLerped(...)`](http://www.openframeworks.cc/documentation/types/ofColor.html#show_getLerped "getLerped Documentation Page").
 
-**[Note: explain lerp for the math averse and explain the syntax]**
+**[point to math section for lerp]**
+
+`getLerped(...)` is a class method of `ofColor`, so we call it using an instance of `ofColor` like this: `myFirstColor.getLerped(mySecondColor, 0.3)`.  We pass in two arguments, an 'ofColor' and a `float` value between `0.0` and `1.0`.  The function returns a new `ofColor` that is between the two specified colors, and the `float` determines how close the new color is to our original color.  A `float` of `0.0` will return a color that is 0% of the way from our first color to our second color, while a `float` of `1.0` will return a color that is 100% of the way from our first color to our second color. 
+
+We can put that to use in our `draw()` function by replace our current `ofSetColor` code with these four lines: 
 
 	ofColor myOrange(255, 132, 0, alpha);
 	ofColor myRed(255, 6, 0, alpha);
 	ofColor inBetween = myOrange.getLerped(myRed, ofRandom(1.0));
 	ofSetColor(inBetween);
 	
-Maybe we aren't a fan of circles?  We can turn our circle into an ellipse using:
+Maybe circles are just too symmetric?   We can turn our circle into an ellipse using:
 	
 	float scaledWidth = radius * ofRandom(0.8, 1.2);
 	float scaledHeight = radius * ofRandom(0.8, 1.2);
 	ofEllipse(mouseX+xOffset, mouseY+yOffset, scaledWidth, scaledHeight);
 
-What if we use outlines instead of solid shapes by inserting `ofNoFill()` into our circle brush code?  If we do that, let's try increasing our `alpha` to 10 and lowering our `radiusStepSize` to 1.  Don't forget that if we start using `ofNoFill()` in our circle brush, we should add `ofFill()` to our rectangle brush!
+What about outlines?  We can inserting `ofNoFill()` into our circle brush code.  Try increasing our `alpha` to 10 and lowering our `radiusStepSize` to 1.  Don't forget that if we start using `ofNoFill()` in our circle brush, we should add `ofFill()` to our rectangle brush!
 
 ![Circle Squiggle Brush](images/intrographics_circlesquiggles.png "Results of using the circle brush without fill")
 
-**[Note: opportunity to explain push/pop style]**
+#### 1.2.4 Star Line Brush ####
 
-**[Note: if there is time, extension with using an exponential decay for circle radius]**
-
-**[Note: Why does the hue break when using alpha == 1?]**
-
-Rectangles, check.  Circle and ellipses, check.  What about lines?  We're all familiar with an asterisk, right?  We are going to create a brush that draws a bunch of lines that all intersect at their midpoints to create something similar to an asterisk. Done correctly, this should look like a twinkling star.  
+Rectangles, check.  Circle and ellipses, check.  What about lines?  We're all familiar with an asterisk, right?  We are going to create a brush that draws a bunch of lines that all intersect at their midpoints to create something similar to an asterisk.  It will look like a frozen twinkling star.  
 
 The code we've learned so far is almost all that we need to create this brush.  We will draw a set of randomly sized lines that extend out from the mouse position in random directions.  If we want our brush to look a bit more "twinkly" we can make it brightest in the center and fade towards the periphery.  Let's add the following to the line brush section of the `draw()` function:
 
@@ -499,23 +505,23 @@ The code we've learned so far is almost all that we need to create this brush.  
 		ofLine(mouseX, mouseY, mouseX+xOffset, mouseY+yOffset);
 	}
 
-By golly what have we done with the alpha?  We've introduced a new function called [`ofMap`](http://www.openframeworks.cc/documentation/math/ofMath.html#show_ofMap "ofMap Documentation Page").  This function provides a quick way to do a linear interpolation.**[note: link to math]**. To get a "twinkle" we want our shortest lines to be the most opaque and our longer lines to be the most transparent.  We want to tie the alpha parameter to the distance parameter.  `ofMap` takes a value from one range and maps it into another range like this: `ofMap(float value, float inputMin, float inputMax, float outputMin, float outputMax)`.  We tell it that distance is a value in-between `minRadius` and `maxRadius` and that we want it mapped so that a distance value of 125 (`maxRadius`) returns an alpha value of 50 and a distance value of 25 (`minRadius`) returns an alpha value of 0.  The longer the line, the more transparent the color.
+What have we done with the alpha?  We've introduced a new function called [`ofMap(...)`](http://www.openframeworks.cc/documentation/math/ofMath.html#show_ofMap "ofMap Documentation Page").  This function provides a quick way to do a linear interpolation, like we did earlier with `ofColor`.  To get a "twinkle" we want our shortest lines to be the most opaque and our longer lines to be the most transparent.  We use `ofMap(...)` to tie the alpha parameter to the distance parameter.  `ofMap(...)` takes a value from one range and maps it into another range like this: `ofMap( value, inputMin, inputMax, outputMin, outputMax)`.  We tell it that distance is a value in-between `minRadius` and `maxRadius` and that we want it mapped so that a distance value of 125 (`maxRadius`) returns an alpha value of 50 and a distance value of 25 (`minRadius`) returns an alpha value of 0.  The longer the line, the more transparent the color.
 
 We could also play with the line thickness if we wanted to:
 	
 	ofSetLineWidth(ofRandom(1.0, 5.0));
 
-Just remember that if we change the line width here we will need go back and set our line width back to 1 for our other brushes. 
-
-**[Note: maybe expand upon linking variables together - now that we know how to do this, what could we have done with your prior brushes to make them cooler?]**
+Just remember that if we change the line width here we will need go back and set our line width back to `1.0` for our other brushes. 
 
 ![Line Star Brush](images/intrographics_linestars.png "Results of using the line brush")
 
-Time for the last brush from a predefined shape - the triangle!  The general idea for this brush is to draw a bunch of randomized triangles that appear to be directed outward from the mouse position like this:
+#### 1.2.5 Fleeing Triangle Brush ####
+
+Time for the last brush in section 1.  The triangle.  The general idea for this brush is to draw a bunch of randomized triangles that appear to be directed outward (fleeing?) from the mouse position.  Remember that `ofTriangle(...)` requires us to specify the three points (vertices) of the triangle, which means that we will need to calculate the rotation of the triangles such that they point away from the mouse.  A new class will make that math easier: [`ofVec2f`](http://openframeworks.cc/documentation/math/ofVec2f.html "ofVec2f Documentation Page").
 
 ![Triangle Brush Sample](images/intrographics_trianglebrushsample.png "Sample how the triangle brush will look")
 
-But first we will need to introduce the [`ofVec2f`](http://openframeworks.cc/documentation/math/ofVec2f.html "ofVec2f Documentation Page") class.  We've been defining a point in space by keeping two separate variables - one for the x position and one for the y position.  A triangle is defined by three points, so we would end up with six separate variables if we tried to represent one using what we know so far.  `ofVec2f` is a vector, and as 2 dimensional vector that allows us to hold both the x and y coordinates in one variable. It also comes with some handy math operations.  You can use an ofVec2f variable like this:
+We've been defining a point in space by keeping two separate variables - one for the x position and one for the y position.  A triangle is defined by three points, so we would end up with six separate variables if we tried to represent one using what we know so far.  `ofVec2f` is a two-dimensional vector which allows us to hold both the x and y coordinates in one variable.  It also comes with some handy math operations (like being able to rotate points in space).  We can use an ofVec2f variable like this:
 
 	ofVec2f mousePos(mouseX, mouseY);
 	
@@ -523,25 +529,23 @@ But first we will need to introduce the [`ofVec2f`](http://openframeworks.cc/doc
 	cout << "Mouse X: " << mousePos.x << endl;
 	cout << "Mouse Y: " << mousePos.y << endl;
 	
-	// Or you can modify the coordinates like this:
+	// Or we can modify the coordinates like this:
 	float xOffset = 10.0;
 	float yOffset = 30.0;
 	mousePos.x += xOffset;
 	mousePos.y += yOffset;
 	
-	// But you can do what we just did above by adding or subtracting two vectors directly
+	// But we can do what we just did above by adding or subtracting two vectors directly
 	ofVec2f offset(10.0, 30.0);
 	mousePos += offset;
 	
-**[Note: this may need more description; division/mult, scaler vs vector]**
-
-ofVec2f isn't that scary, right?  Plus it's actually quite useful.  Let's start using it to build the triangle brush.  The first step is to draw an isosceles triangle at the mouse cursor. 
+ofVec2f isn't that scary, right?  Let's start using it to build the triangle brush.  The first step is to draw an isosceles triangle at the mouse cursor. 
 
 ![Isosceles Triangle](http://mathworld.wolfram.com/images/eps-gif/IsoscelesTriangle_800.gif "Image of an isosceles triangle from wolfram")
 
-**[Note: Stolen graphics from wolfram, generate something similar later]**
+**[stolen graphics from wolfram, generate something similar later]**
 
-An isosceles triangle has two sides that are of equal length (labeled as b) and one side of a different length (labeled a).  You can also see that the height (labeled h) is drawn in the figure.  We are going to draw a skinny triangle using one side (a) and the height (h).  It will become important later, but we are going to draw our triangle starting from the mouse cursor and pointing to the right.  Add these lines to the triangle section of your `draw()` function:
+An isosceles triangle has two sides that are of equal length (labeled as b) and one side of a different length (labeled a).  The height (labeled h) is also drawn in the figure.  We are going to draw a skinny triangle using one side (a) and the height (h).  It will become important later, but we are going to draw our triangle starting from the mouse cursor and pointing to the right.  Add these lines to the triangle section of your `draw()` function:
 
 	ofVec2f mousePos(mouseX, mouseY);
 	
@@ -549,7 +553,7 @@ An isosceles triangle has two sides that are of equal length (labeled as b) and 
 	float triangleHeight = 100;
 	float triangleSide = triangleHeight/2.0;
 	
-	// Define a triangle around the origin (0,0)
+	// Define a triangle at the origin (0,0)
 	ofVec2f p1(0, triangleSide/2.0);
 	ofVec2f p2(triangleHeight, 0);
 	ofVec2f p3(0, -triangleSide/2.0);
@@ -562,11 +566,11 @@ An isosceles triangle has two sides that are of equal length (labeled as b) and 
 	ofSetColor(255, 50);
 	ofTriangle(p1, p2, p3);
 
-We are defining the three points of the triangle using three points set relative to the mouse position.  If all goes well, we will end up with something like this:
+We are defining the three points of the triangle using three points set relative to the mouse position.  We end up with:
 
 ![Single Triangle Brush](images/intrographics_singletrianglebrush.png "Results of using the single triangle brush")
 
-We've just used vectors!  Now we are going to want to be able to rotate our triangles to point in any direction.  Previously, we've fearlessly used trigonometry (sin and cos) for our rotations.  But `ofVec2f` has a [`rotate()`](http://www.openframeworks.cc/documentation/math/ofVec2f.html#show_rotate "ofVec2f's rotate function documentation page") function.  Let's try adding rotation into our code:
+Since we defined the points of our triangle as vectors, we can use the `ofVec2f` class method `rotate(...)` to rotate our triangles.  Previously, we've fearlessly used trigonometry (sin and cos) for our rotations.  We use [`rotate(...)`](http://www.openframeworks.cc/documentation/math/ofVec2f.html#show_rotate "ofVec2f's rotate function documentation page") like this: `myPoint.rotate(45.0)`.  We pass in a rotation amount as a `float` and our `myPoint` variable is rotated around the origin counter-clockwise by that amount.   Let's try adding rotation into our code:
 
 	ofVec2f mousePos(mouseX, mouseY);
 	
@@ -596,7 +600,7 @@ We've just used vectors!  Now we are going to want to be able to rotate our tria
 
 ![Rotating Triangle Brush](images/intrographics_rotatingtrianglebrush.png "Results of using the rotating triangle brush")
 
-See how `ofVec2f` simplifies your life (or at least your code)?  If we were to move that rotation code to *after* we shifted the triangle to the mouse position, the code wouldn't work very nicely.  The way we are using `rotate` assumes that we want to rotate all of our points around the origin, which is (0,0).  But there is an alternate way to use `rotate()` where we pass in two parameters: the rotation angle and a pivot point.  We could shift our triangle to the mouse position and then use `p1.rotate(rotation, mousePos)` - everything would work just fine!
+See how `ofVec2f` simplifies our lives (or at least our code)?  If we were to move that rotation code to *after* we shifted the triangle to the mouse position, the code wouldn't work very nicely.  The way we are using `rotate(...)` assumes that we want to rotate our points around the origin, which is (0,0).  But there is an alternate way to use `rotate(...)` where we pass in two parameters: the rotation angle and a pivot point.  We could shift our triangle to the mouse position, use `p1.rotate(rotation, mousePos)`, and everything would work just fine.
 
 We're getting there!  Next step, let's integrate this code into our prior approach of drawing multiple shapes that are offset from the mouse position:
 
@@ -634,9 +638,7 @@ We're getting there!  Next step, let's integrate this code into our prior approa
 		ofTriangle(p1, p2, p3);
 	}
 
-So we are now using `ofVec2f` to figure out our offset.  To do that we need to create a vector that points rightward.  Why rightward?  Well that's the 0 degree direction.  This is why we initially created our triangles pointing rightward from the mouse.  Both our offset and our triangle are pointing in the same direction.  So when we apply the same rotation to both of them they stay in sync (i.e. both pointing away from the mouse cursor).  See what happens if we try doing `triangleOffset.rotate(rotation+90);`  We get a swirling blob of triangles.   Hey, we might even like that effect better than the original.  
-
-**[Note: this explanation may need clarification; also, possibly introduce vector length here?]**
+We are now using `ofVec2f` to figure out our offset.  We started with a vector that points rightward.  Why rightward?  Well, that's the 0 degree direction.  This is why we initially created our triangles pointing rightward from the mouse.  Both our offset and our triangle are pointing in the same direction.  So when we apply the same rotation to both of them they stay in sync (i.e. both pointing away from the mouse cursor).  See what happens if we try doing `triangleOffset.rotate(rotation+90)`?  We get a swirling blob of triangles.   Hey, we might even like that effect better than the original.  
 
 How about we add some color?
 
@@ -647,15 +649,20 @@ How about we add some color?
 
 ![Triangle Brush Final](images/intrographics_trianglebrushfinal.png "Results of using the final triangle brush")	
 
-Once again, we can play with turning off fill and changing line width if we would like.
+Once again, we can play with turning off fill and changing line width.
 
-By now we are a master of rectangles, circles, ellipses, lines and triangles. We also have a basic understanding for how we the can create custom digital brushes.  In the next section, we'll hop into freeform shapes and how we can use them to create paths using of our digital brush strokes.
+By now, we are masters of rectangles, circles, ellipses, lines and triangles.  We also have a basic understanding for how to create digital brushes.
 
-**Go back and add subheaders for each brush to better break up the sections and then title them with the concepts that will be introduced (and add that to the outline)**
+**Extensions**
 
-**Need a section on saving our final image**
+- Use keypresses and some public variables to control parameters at runtime (transparency, brush width, etc.)
+- Track the mouse position over time and use the distance it moves between frames to control parameters (brush width, color, offset, etc.)
+- Create an erasure brush by drawing transparent black shapes
+- Think about the ways we can change the brush color on-the-fly
 
-**Need to include links to works by artists using these approaches**
+#### 1.3 Saving Raster Graphics ####
+
+...
 
 ### 1.2 Freeform Shapes ###
 
@@ -958,7 +965,7 @@ Nothing new here other than using vectors.  But it is important to note that we 
 	
 **[Note: explain above code, also maybe mention closing a shape with ofEndShape]**
 
-**[Note: how do you stop drawing the outline of the polygon without setting `ofSetLineWidth(0);`]**
+**[Note: how do you stop drawing the outline of the polygon without setting `ofSetLineWidth(0)`]**
 
 Before running, let's comment out our `polyline.draw()` line of code.  Then let's have at it:
 
@@ -1115,7 +1122,7 @@ And we get a rectangle that rotates around its upper left corner:
 
 ![Rotated Rectangle](images/intrographics_rotateright.png "Drawing a rotated red rectangle")
 
-Remember that by default, when you pass an (x,y) position to `ofRect`, it will assume that (x,y) is the position of the upper left corner.  If you want to rotate the rectangle around its center, you can use `ofSetRectMode(OF_RECTMODE_CENTER);` to tell openFrameworks that the (x,y) position defines the center of the rectangle.  The alternative to leave the rectangle mode as set as the upper left corner and modify your code like this:
+Remember that by default, when you pass an (x,y) position to `ofRect`, it will assume that (x,y) is the position of the upper left corner.  If you want to rotate the rectangle around its center, you can use `ofSetRectMode(OF_RECTMODE_CENTER)` to tell openFrameworks that the (x,y) position defines the center of the rectangle.  The alternative to leave the rectangle mode as set as the upper left corner and modify your code like this:
 
 	// Rotated rectangle in red
 	
@@ -1182,7 +1189,7 @@ And that's it:
 
 ![Simple Spiral](images/intrographics_simplespiral.png "Simple spiral of rectangles")
 
-You can play with the scaling, rotation, size of the rectangle, etc.  Three lines of code will add some life to our rectangles and cause them to coil and uncoil over time.  Put these in the place of `ofRotate(5);`:
+You can play with the scaling, rotation, size of the rectangle, etc.  Three lines of code will add some life to our rectangles and cause them to coil and uncoil over time.  Put these in the place of `ofRotate(5)`:
 
 	float time = ofGetElapsedTimef();
 	float timeScale = 0.5;
@@ -1199,7 +1206,7 @@ So first step is to add a few things to `setup`:
 	ofEnableAlphaBlending(); // Remember if we are using transparency, we need to let openFrameworks know
 	ofBackground(255);
 
-Delete `ofBackground(255);` from your `draw` function and what do you get?
+Delete `ofBackground(255)` from your `draw` function and what do you get?
 
 ![Animated Spiral Without Clearing](images/intrographics_animatedspiralwithoutclearing.png "Simple spiral animated without clearing the background")
 
