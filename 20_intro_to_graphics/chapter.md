@@ -68,7 +68,7 @@ To create brushes, we need to define some basic building blocks of graphics.  We
 
 We have some basic building blocks, but how do we specify where we want to draw them on the screen?  Computer graphics use something called the [Cartesian coordinate system](http://en.wikipedia.org/wiki/Cartesian_coordinate_system "Wiki on Cartesian coordinate system").  Remember these grids from math class?
 
-![Cartesian coordinate system](intrographics_cartesiancoordinatessystem.png "Simple graphic of the cartesian coordinate system")
+![Cartesian coordinate system](images/intrographics_cartesiancoordinatessystem.png "Simple graphic of the cartesian coordinate system")
 
 **[Graphic pulled from wiki.  Remake]**
 
