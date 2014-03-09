@@ -15,6 +15,8 @@
 - Add arc to basic shapes?
 - Use "we" + "our" over "you" + "your"
 - How are links being handled?  I don't explicitly point them out most of the time since that would be redundant in an online version.
+- `polyline.getPointAtPercent(0)` and `polyline.getPointAtPercent(1.0)` return the same thing
+
 
 - Section 1.1 Wish List:
   - Setup/update/draw description
@@ -44,18 +46,23 @@ Along the way from brushes to animated rectangles **[note which sections]**, we 
 
 **Our chapter roadmap:**
 
-1. [Brushes with Basic Shapes](#empty)
-  1. [Basic Shapes](#empty)
-  1. [Brushes from Basic Shapes](#empty)
-  1. [Saving Raster Graphics](#empty)
-1. [Brushes with Freeform Shapes](#empty)
-  1. [Freeform Shapes](#empty)
-  1. [Brushes from Freeform Shapes](#empty)
-  1. [Saving Vector Graphics](#empty)
-1. [Coordinate Transformations](#empty)
-  1. [Translating](#empty) 
-  1. [Rotating and Scaling](#empty)
-  1. [Saving Animated Graphics](#empty)
+1. [Brushes with Basic Shapes](#1-brushes-with-basic-shapes)
+  1. [Basic Shapes](#11-basic-shapes)
+  1. [Brushes from Basic Shapes](#12-brushes-from-basic-shapes)
+    1. [Single Rectangle Brush](#121-single-rectangle-brush)
+    1. [Bursting Rectangle Brush](#112-bursting-rectangle-brush)
+    1. Glowing Circle Brush
+    1. Star Line Brush
+    2. Fleeing Triangle Brush
+  1. Saving Raster Graphics]
+1. Brushes with Freeform Shapes]
+  1. Freeform Shapes
+  1. Brushes from Freeform Shapes
+  1. Saving Vector Graphics
+1. Coordinate Transformations
+  1. Translating
+  1. Rotating and Scaling
+  1. Saving Animated Graphics
 
 
 ## 1. Brushes with Basic Shapes ##
@@ -155,7 +162,7 @@ Add the following lines to the `draw()` function:
 	
 	// Code omitted for clarity ...
 
-We've got the recipes for basic shapes down, but let's add one more detail before moving on to brushes: [anti-aliasing](http://en.wikipedia.org/wiki/Spatial_anti-aliasing "Wiki on spatial anti-aliasing").  Our lines and outlines look a bit blocky, like paths of jagged pixels.  Anti-aliasing refers to a set of techniques that smooth out those jagged edges. Simply add [`ofEnableAntiAliasing()`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofEnableAntiAliasing "ofEnableAntiAliasing Documentation Page") to your `setup` function, and poof, smoother lines.
+We've got the recipes for basic shapes down, but let's add one more detail before moving on to brushes: [anti-aliasing](http://en.wikipedia.org/wiki/Spatial_anti-aliasing "Wiki on spatial anti-aliasing").  Our lines and outlines look a bit blocky, like paths of jagged pixels.  Anti-aliasing refers to a set of techniques that smooth out those jagged edges. Simply add [`ofEnableAntiAliasing()`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofEnableAntiAliasing "ofEnableAntiAliasing Documentation Page") to your `setup` function, and poof, smoother lines.  Now, anti-aliasing will apply to anything we draw until we call [`ofDisableAntiAliasing()`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofDisableAntiAliasing "ofDisableAntiAliasing Documentation Page")
 
 ![Anti-aliasing](images/intrographics_antialiasing.png "Line with and without anti-aliasing")
 
@@ -164,46 +171,47 @@ We've got the recipes for basic shapes down, but let's add one more detail befor
 **Extensions**
 
 Let's say we wanted some challenges, we could:
-- Draw some rounded rectangles using [`ofRoundedRect(...)`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#!show_ofRectRounded "ofRoundedRect Documentation Page).
+- Draw some rounded rectangles using [`ofRoundedRect(...)`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#!show_ofRectRounded "ofRoundedRect Documentation Page").
 - Explore the world of curved lines with [`ofCurve(...)`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#!show_ofCurve "ofCurve Documentation Page") and [`ofBezier(...)`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#!show_ofBezier "ofBezier Documentation Page").
 - Revisit the code from the C++ basics chapter **[chapter number]**.
   - Create a bouncing ball using `ofCircle(...)`.
   - Draw some randomly sized lines using `ofLine(...)`.
 
-#### 1.1b Drawing to the screen! (But now the fun bits.) ####
+### 1.2 Brushes from Basic Shapes ###
 
-You survived the boring bits!
-
-Well, the necessary bits.  Why draw a single rectangle, when you can draw a million?  (Okay, not a million - but at least enough that you wouldn't bother counting.)
+We survived the boring bits!  They were the necessary bits, but why draw just one rectangle, when we can draw a million?  (Okay, not a million, but at least enough that we won't bother counting.)  
 
 ![Many Rectangles](images/intrographics_lotsofrectangles.png "Drawing lots and lots of rectangles")
 
-Let's create a new openFrameworks sketch and call it something like ShapeBrush.  We are going to use the basic recipes from the last section and mix in some randomness and repetition to create a digital "brush."  When we click somewhere on the screen, we will draw an explosion of random shapes.  To do this, we will need a canvas that doesn't constantly erase itself, and by default, openFrameworks clears the screen every frame with each invocation of `draw()`. Calling [`ofSetBackgroundAuto()`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofSetBackgroundAuto "ofSetBackgroundAuto Documentation Page") allows us to control whether or not openFrameworks clears the background at the beginning of each frame.  Add the following lines into your `setup` function:
+That is essentially what we will be doing in this section.  Using the recipes for shapes from the last section, we will build brushes that drop a burst of many small shapes whenever we press the left mouse button.  To make things more exciting, we will mix in some randomness.  So our interactive brushes will be a combination of repetition and randomness.
 
-	ofSetBackgroundAuto(false);
-	ofBackground(0); // If you omit this, the screen will be a default gray color
+Start a new openFrameworks project.  Call it something like ShapeBrush. 
 
-`ofSetBackgroundAuto()` requires a boolean parameter so let's pass in `false` to prevent the black background from being re-drawn each frame.  **[Note: point to c++ chapter's description of bools?]**   
+#### 1.2.1 Single Rectangle Brush ####
 
-Great!  We've created an exceptionally empty space that we can overload with shapes.
+We are going to lay down the foundational code for our brushes by making a simple one that draws a single rectangle when we hold down the mouse.  To get started, we are going to need to know 1) where the mouse is located on the screen and 2) whether or not the left mouse button is being pressed.
 
-Since we will be doing all of our drawing inside of the `draw()` function we need to create some variables that let us know 1) where the mouse is located on the screen and 2) whether or not the left mouse button is being pressed.
+**[make sure that public variables have been covered at this point; C++ basics]**
 
-For 1), we can use two built-in openFrameworks variables `mouseX` and `mouseY`.  These variables are updated internally by openFrameworks and we can use them inside our `draw()` function as we would any other integer variables.
+For 1), we can use two openFrameworks variables [`mouseX`](http://openframeworks.cc/documentation/application/ofBaseApp.html#!show_mouseX "mouseX Documenation Page") and [`mouseY`](http://openframeworks.cc/documentation/application/ofBaseApp.html#show_mouseY "mouseY Documentation Page").  These variables are updated internally by openFrameworks.  They are public variables, so we have access to them anywhere within our ofApp.cpp source file.  We  will use them inside our `draw()` function just like we would any other `int` variables.
 
-For 2), we should take a look at two functions inside our openFrameworks source file (.cpp) that you probably haven't had a need to use yet: [`mousePressed()`](http://www.openframeworks.cc/documentation/application/ofBaseApp.html#show_mousePressed "mousePressed Documentation Page") and [`mouseReleased()`](http://www.openframeworks.cc/documentation/application/ofBaseApp.html#show_mouseReleased "mouseReleased Documentation Page") **[bd: I removed the parameters from the previous function listings per your convention that is used throughout the rest of the chapter. I think it is more clear to refer to function names without their parameters in the text and then illustrate the parameters in code examples but that is just my opinion.]**.  These functions are called by openFrameworks anytime the mouse button is pressed or released.  Each receives the x and y position of the mouse when the mouse was pressed/released as well as an integer representing which mouse button was pressed/released as its three parameters.   We can use this information to set up a boolean variable, `isLeftMousePressed`, and update its value when a mouse press/release event is triggered using these two functions.
+For 2), we should take a look at the [`mousePressed(...)`](http://www.openframeworks.cc/documentation/application/ofBaseApp.html#show_mousePressed "mousePressed Documentation Page") and [`mouseReleased(...)`](http://www.openframeworks.cc/documentation/application/ofBaseApp.html#show_mouseReleased "mouseReleased Documentation Page") functions in our source file (ofApp.cpp).  These functions are called by openFrameworks anytime the mouse button is pressed or released.  Each receives three parameters: the x and y position of the mouse when the mouse was pressed/released and an `int` representing which mouse button was pressed/released.  
 
-Let's add this as a public property to our header file (.h):
+**[first place bool is discussed...link to C++?]**
 
-**[note: point to properties section of c++ section]**
+So within the `mousePressed(...)` and `mouseReleased(...)` functions, we can check if the left mouse button was released.  In order to have access to that information inside of our `draw()` function, we need to create a public variable.  We will set up a `bool` variable, `isLeftMousePressed`, and update its value when a mouse press/release event is triggered using the two functions.
 
-	bool isLeftMousePressed;
+Remember that we should keep our public variables inside our header file (ofApp.h)?  Go ahead and add this:
 
-And add this inside of our `setup()` function in our source file (.cpp):
+    bool isLeftMousePressed;
+
+Over in our source file (ofApp.cpp), we should initialize that `bool` in `setup()`:
 
 	isLeftMousePressed = false;  
 
-Finally, add these lines to your `mousePressed()` and `mouseReleased()` functions:
+**[First place control statements are introduced...link to C++? Esp because they use some syntactic sugar...]**
+
+Finally, we should modify our `mousePressed(...)` and `mouseReleased(...)` functions to look like:
 
 	void testApp::mousePressed(int x, int y, int button){
 		if (button == OF_MOUSE_BUTTON_LEFT) isLeftMousePressed = true;
@@ -213,39 +221,72 @@ Finally, add these lines to your `mousePressed()` and `mouseReleased()` function
 		if (button == OF_MOUSE_BUTTON_LEFT) isLeftMousePressed = false;
 	}
 
-Whenever a button on the mouse is pressed or released, we want to check if that button is the left mouse button.  If it is, then we can update our `isLefMousePressed` boolean appropriately.  The `button` variable is an integer that identifies which button is being pressed/released and openFrameworks provides some handy constants that we can use to identify the button in a human-readable way (`OF_MOUSE_BUTTON_LEFT`, `OF_MOUSE_BUTTON_MIDDLE` and `OF_MOUSE_BUTTON_RIGHT`).  If we really wanted, we *could* just say `button == 0` to test for whether the pressed/released button is the left mouse button.
+**[First place constants are introduced...link to C++?]**
 
-Let's hop into the `draw()` function and start making use of our mouse information:
+Whenever a button on the mouse is pressed or released, we want to check if that button is the left mouse button.  If it is, then we can update `isLefMousePressed` appropriately.  The `button` variable is an `int` that identifies which button is being pressed/released, and openFrameworks provides some handy constants that we can use to identify what `button` means in a human-readable way: `OF_MOUSE_BUTTON_LEFT`, `OF_MOUSE_BUTTON_MIDDLE` and `OF_MOUSE_BUTTON_RIGHT`.  If we really wanted, we *could* just write `button == 0` to test for whether the pressed/released button is the left mouse button.
 
-	if (isLeftMousePressed) {
+Let's add some graphics.  Hop over to the `draw()` function where we can start making use of our newly acquired mouse information:
+
+    if (isLeftMousePressed) {
 		ofSetColor(255);
 		ofSetRectMode(OF_RECTMODE_CENTER);
 		ofRect(mouseX, mouseY, 50, 50);
 	}
 
-[`ofSetRectMode()`](http://www.openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofSetRectMode "ofSetRectMode Documentation Page") allows us to control how the x and y positions we pass into `ofRect()` are used to draw a rectangle.  Like with the mouse button constants, openFrameworks provides some rectangle mode constants for us to use: `OF_RECTMODE_CORNER` and `OF_RECTMODE_CENTER`.  By default rectangles are drawn by interpreting the x and y values we pass to it as the coordinates of the upper left corner (`OF_RECTMODE_CORNER`).  For our purposes, it is more convenient for us to specify the center of the rectangle (`OF_RECTMODE_CENTER`) so that our rectangle is centered over the mouse position.  So we draw the center of our white 50 x 50 rectangle at the mouse position using `mouseX` and `mouseY`.
+[`ofSetRectMode(...)`](http://www.openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofSetRectMode "ofSetRectMode Documentation Page") allows us to control how the x and y positions we pass into `ofRect(...)` are used to draw a rectangle.  Like with the mouse button constants, openFrameworks provides some rectangle mode constants for us to use: `OF_RECTMODE_CORNER` and `OF_RECTMODE_CENTER`.  By default rectangles are drawn by interpreting the x and y values as the coordinates of the upper left corner (`OF_RECTMODE_CORNER`).  For our purposes, it is more convenient for us to specify the center of the rectangle (`OF_RECTMODE_CENTER`) so that our rectangle is centered over the mouse position (`mouseX` and `mouseY`).  
 
-Boring! We are going to make this a bit more interesting by adding 1) randomness and 2) repetition.
+Compile and run.  What happens?  There is a white 50 x 50 rectangle at the mouse position when we press the left mouse button...but it gets erased from the screen immediately.  That's not a terribly effective brush.  By default, openFrameworks will clear the screen every time `draw()` is run.  We can change that behavior by calling [`ofSetBackgroundAuto(...)`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofSetBackgroundAuto "ofSetBackgroundAuto Documentation Page").  Passing in a value of `false` turns off the automatic background clearing.  So, let's add the following lines into our `setup` function:
 
-Randomness makes your openFrameworks sketches dark, mysterious and unpredictable.  So meet one of our new friends, [`ofRandom()`](http://openframeworks.cc/documentation/math/ofMath.html#!show_ofRandom "ofRandom Documentation Page").  `ofRandom()` can be used in two different ways: by passing in two values `ofRandom(float min, float max)` or by passing in a single value `ofRandom(float max)`.  If we pass in two values, they become the minimum and maximum values we want our random value to take.  If we pass in a single value, it is considered to be the maximum value we want and the minimum is assumed to be 0.  So when we specify the color of the rectangle we are about to draw, we can substitute a random value:
+	ofSetBackgroundAuto(false);
+    
+    // We still want to draw on a black background, so we need to draw the background before we do anything with the brush
+	ofBackground(0);   
+
+Our first brush, done.  We are going to make this a bit more interesting by adding 1) randomness and 2) repetition.
+
+**[this is the first time a function returns a value that we then use.  is it worth linking to C++?]**
+
+**[also first time for randomness and floats, is it worth linking to C++?]**
+
+Randomness can make your code dark, mysterious and unpredictable.  Meet [`ofRandom(...)`](http://openframeworks.cc/documentation/math/ofMath.html#!show_ofRandom "ofRandom Documentation Page").  `ofRandom(...)` can be used in two different ways: by passing in two values `ofRandom(float min, float max)` or by passing in a single value `ofRandom(float max)`.  If we pass in two values, the function will return a random `float` value between the minimum and maximum we specify.  If we pass in a single value, the function will return a random `float` between 0 and the maximum we specify.  
+
+We can inject some randomness into our rectangle color by using:
 
 	ofSetColor(ofRandom(50, 255));
 
-**[Note: Aside on what computer randomness is?]**
+Remember that we are using grayscale colors (values between `0` and `255`).  We can exclude some of the deep black colors because they won't be visible to us when drawing on a black background.  
 
-**[Note: Point to c++ section on float vs int and casting?]**
-
-Remember that we are using grayscale colors and that they are represented by values between 0 and 255.  We can exclude some of the deep black colors because they won't be visible to us when drawing on a black background.  
-
-**[Note: change image to cursive 'hi'?]**
+**[change image to cursive 'hi'?]**
 
 ![Rectangle Snake](images/intrographics_rectanglesnake.png "Drawing a snake of rectangles")
 
-**[Note: reference to c++ loops section?]**
+To finish off this single rectangle brush, we might want the ability to erase what we have drawn, right?  Let's use the right mouse button to clear the screen.  We will be creating a `isRightMousePressed` that will act very similarly to our `isLeftMousePressed`.  In the header file (ofApp.h), create a public variable:
+    
+	bool isRightMousePressed;
 
-Next, let's add some repetition. Instead of drawing a single rectangle every frame that the left mouse button is pressed, we can draw a burst of randomized rectangles.  To create that burst we are going use a `for` loop to generate some rectangles whose parameters are randomly chosen from a set of values.  So what can we randomize?  Grayscale color, width and height are easy candidates.  We can also use a small positive or negative value to randomly offset each rectangle from mouse position.  Modify your `draw()` function to look like this:  
+Initialize the value to false in `setup()`:
+	
+	isRightMousePressed = false;
 
-**[What is the convention for 'for' loops]**
+Inside of `mousePressed()`, add:
+
+	if (button == OF_MOUSE_BUTTON_RIGHT) isRightMousePressed = true; 
+
+Inside of `mouseReleased()`, add:
+
+	if (button == OF_MOUSE_BUTTON_RIGHT) isRightMousePressed = false;
+	
+Lastly, add this to the beginning of the `draw()` function:
+
+	if (isRightMousePressed) ofBackground(0);
+
+#### 1.1.2 Bursting Rectangle Brush #####
+
+We have the basic architecture in place for a brush.  But why limit ourselves to a single rectangle?  Let's add some repetition and randomness. Instead of drawing a single rectangle every frame that the left mouse button is pressed, we can draw a burst of randomized rectangles.  
+
+To create that burst, we are going use a `for` loop to generate some rectangles whose parameters are randomly chosen from a set of values.  So what can we randomize?  Grayscale color, width and height are easy candidates.  We can also use a small positive or negative value to randomly offset each rectangle from mouse position.  Modify your `draw()` function to look like this:  
+
+**[first loops, link to C++?]**
 
 	if (isLeftMousePressed) {
 		ofSetRectMode(OF_RECTMODE_CENTER);
@@ -260,24 +301,25 @@ Next, let's add some repetition. Instead of drawing a single rectangle every fra
 		}
 	}
 
-But let's add one more thing inside `setup()` before hitting run.
+But! Let's add one more thing before hitting run.  Inside of `setup()`, add:
 
 	ofSetFrameRate(60);
 
-**[Note: do I need to explain framerate?]**
+The frame rate is the speed limit of our program.  It is specified in frames per second (fps).  Our program will not run the `update()` and `draw()` function more than `60` times per second.  (Note that this is a speed *limit*.  If our code inside of `update()` and `draw()` is really time consuming, our program will be slower than `60` fps.)
 
-Why do we care about setting the frame rate here?  We want to be able to accurately know (and control) how many rectangles our code will draw.  We are drawing 10 each frame when the `draw()` function is called, but without setting the frame rate, we don't know how many times the `draw()` function will be called per second.  By explicitly defining the frame rate as 60 frames per second, we can say that our code will generate 60 rectangles per second (`10 rectangles per frame * 60 frames per second = 60 rectangles per second`).
+But why do we care about setting the frame rate here?  We want to be able to accurately know (and control) how many rectangles our code will draw.  We are drawing 10 rectangles each frame when the `draw()` function is called with the mouse pressed, but without setting the frame rate, we don't know how many times the `draw()` function will be called per second.  By explicitly defining the frame rate as 60 frames per second, we can say that our code will generate 60 rectangles per second when the mouse is pressed: `10 rectangles per frame * 60 frames per second = 60 rectangles per second`.
 
-So what happens when we try using our new rectangle brush?  You get a messy, box-shaped spread of random rectangles.  Things are slowly becoming more interesting as you might have been expecting to see a circular spread?  Since we said that `xOffset` and `yOffset` could be random values between -40 and 40, we were actually picking values from a rectangular region of space.  You can imagine the boundaries of that region by thinking about what happens when `xOffset` and `yOffset` take on their extreme values (e.g. [`xOffset`, `yOffset`] values of [-40, -40], [40, -40], [40, 40], [-40, 40]).
+Compile, run and we get a messy, box-shaped spread of random rectangles.  Things are slowly becoming more interesting.  But why didn't our code generate a circular spread?  Since `xOffset` and `yOffset` could be any random values between `-40` and `40`, we were actually picking random locations from a rectangular region of space.  We can imagine the boundaries of that region by thinking about what happens when `xOffset` and `yOffset` take on their most extreme values, i.e. (`xOffset`, `yOffset`) values of ('-40', '-40'), ('40', '-40'), ('40', '40'), ('-40', '40').
 
-To generate a circular spread, we need to introduce a bit of mathematics.  If we want to pick a random point that lives within a circle of a particular size, it helps to think in terms of angles.  Imagine that we are at the center of a circle.  If we rotate a random amount (let's call this the *polar angle*) and then move a random distance (let's call this the *polar radius*), we will end up in a random location within the circle (assuming we don't walk so far that we cross the boundary of our circle).  We've defined a point in space by a polar angle and a polar radius instead of using an x coordinate and a y coordinate.  We have just begun to think think in terms of [polar coordinates](http://en.wikipedia.org/wiki/Polar_coordinate_system "Polar Coordinates Wiki").  (In contrast, using x and y values to represent a point in space is called the [Cartesian coordinate system](http://en.wikipedia.org/wiki/Cartesian_coordinate_system "Cartesian coordinate system"]).)
+To generate a circular spread, we need to introduce a tiny bit of mathematics.  If we want to pick a random point that lives within a circle of a particular size, it helps to think in terms of angles.  Imagine that we are at the center of a circle.  If we rotate a random amount (let's call this the *polar angle*) and then move a random distance (let's call this the *polar radius*), we will end up in a random location within the circle (assuming we don't walk so far that we cross the boundary of our circle).  What we have just done is define a point in space by a polar angle and a polar radius instead of using an x coordinate and a y coordinate.  We have just begun to think think in terms of [polar coordinates](http://en.wikipedia.org/wiki/Polar_coordinate_system "Polar Coordinates Wiki").  (In contrast, remember that using x and y values to represent a point in space is called the [Cartesian coordinate system](http://en.wikipedia.org/wiki/Cartesian_coordinate_system "Cartesian coordinate system"]).)
 
-**[Note: This could use a simple visual to show cartesian vs polar coords]**
-**[bd: I can make a visual for you. remind me if I haven't done it by the time you read this.]**
+**[This could use a simple visual to show cartesian vs polar coords]**
 
-So where does this leave us in terms of our code?  We want to pick a random direction (polar angle) and random distance (polar distance) from the mouse position and represent those values in polar coordinates.  Once we have those we can convert them back to Cartesian coordinates (x and y values) to be used for our `xOffset` and `yOffset`.  Let's modify our for loop inside of our `draw()` function to look like this:
+So where does this leave us in terms of our code?  When we figure out our offsets, we want to pick a random direction (polar angle) and random distance (polar distance) from the mouse position.  We can then convert those polar coordinates back to Cartesian coordinates (x and y values) and use them as `xOffset` and `yOffset`.  Let's modify our for loop inside of our `draw()` function to look like this:
 
-**[Note: Explain the trig conversion from polar to cartesian, or point to the math chapter section?]**
+**[Explain the trig conversion from polar to cartesian, or point to the math chapter section?]**
+
+**[Explain radians vs degrees]**
 
 	for (int r=0; r<numRects; r++) {
 		ofSetColor(ofRandom(50, 255));
@@ -290,39 +332,17 @@ So where does this leave us in terms of our code?  We want to pick a random dire
 		ofRect(mouseX+xOffset, mouseY+yOffset, width, height);
 	}
 
-**[Note: explain radians vs degrees]**
-
-**[Note: if there is room, add in a gaussian distribution via box-muller transform]**
-
 ![Cartesian Versus Polar Spreads](images/intrographics_cartesianvspolarspread.png "Cartesian brush spread versus polar brush spread")
 
-**[Note: Insert an image using the rectangle brush]**
+**[Insert an image that uses this brush]**
 
-You are now a rectangle master :).  The circles, ellipses, lines and triangles probably feel neglected.  Since we are going to create a few more brushes let's add two things to our code: 1) the ability to completely erase the screen and 2) the ability to switch between brushes.
+We have mastered rectangles.  Circles, ellipses, lines and triangles are up next.  
 
-Add the following lines to erase the screen.
+#### 1.2.3 Glowing Circle Brush ####
 
-In your header file (.h), create a property called `isRightMousePressed`:
-	
-	bool isRightMousePressed;
+Since we are going to create a few more brushes, it would be nice to be able to switch between brushes on-the-fly.
 
-Initialize the property to false in your `setup()` function:
-	
-	isRightMousePressed = false;
-
-Inside of `mousePressed()`, add:
-
-	if (button == OF_MOUSE_BUTTON_RIGHT) isRightMousePressed = true; 
-
-Inside of `mouseReleased()`, add:
-
-	if (button == OF_MOUSE_BUTTON_RIGHT) isRightMousePressed = false;
-	
-Lastly, add this to the beginning of your `draw()` function:
-
-	if (isRightMousePressed) ofBackground(0);
-
-Now we can right click to get a fresh screen.  To add the ability to switch between brushes we are going to define an integer `drawingMode`.  Each number from 0 through 3 will represent a unique mode.  To make our code more human-readable, we will define an integer variable for each of those modes, e.g. `rectangleMode = 0`, etc.  Inside of `draw()` we can then check the `drawingMode` variable to determine what code to execute.  Finally, we will use keyboard inputs to switch between the different brush modes.
+To add the ability to switch between brushes we are going to define an integer `drawingMode`.  Each number from 0 through 3 will represent a unique mode.  To make our code more human-readable, we will define an integer variable for each of those modes, e.g. `rectangleMode = 0`, etc.  Inside of `draw()` we can then check the `drawingMode` variable to determine what code to execute.  Finally, we will use keyboard inputs to switch between the different brush modes.
 
 Add these properties to your header file (.h):
 
@@ -359,7 +379,7 @@ We are going to reorganize the `draw()` function so that it looks like this:
 		}
 	}
 
-We are going to make use of the [`keyPressed(int key)`](http://openframeworks.cc/documentation/application/ofBaseApp.html#!show_keyPressed keyPressed "Documentation Page") function that is already built into your openFrameworks `.cpp` file to handle key events.  Like `mousePressed()`, this function is called any time a key is pressed.  We can use the integer that is passed into `keyPressed()` to switch our `drawingMode` variable.  We will use "r" for rectangle mode, "c" for circle mode, etc.  
+We are going to make use of the [`keyPressed(int key)`](http://openframeworks.cc/documentation/application/ofBaseApp.html#!show_keyPressed keyPressed "Documentation Page") function that is already built into your openFrameworks `.cpp` file to handle key events.  Like `mousePressed(...)`, this function is called any time a key is pressed.  We can use the integer that is passed into `keyPressed(...)` to switch our `drawingMode` variable.  We will use "r" for rectangle mode, "c" for circle mode, etc.  
 
 But how exactly does an integer tell us which key has been pressed?  That integer is actually the ASCII code for the key that was pressed.  You can check out the [ASCII wiki](http://en.wikipedia.org/wiki/ASCII "ASCII Wiki Page") for details, but for this chapter it is enough to just know that ASCII is an agreed upon system for assigning numbers to characters.  It turns out to be quite easy to check if the ASCII integer `key` is a particular character. Add these lines to your `keyPressed()` function to see what this looks like in code.
 
@@ -1239,19 +1259,4 @@ Then use `bgColor` when you call `ofSetColor` before drawing the transparent rec
 **[note: any possibly a section about documenting your work via gif and video]**
 
 Congrats, you survived coordinate transformations :)
-
-## 3. See outline ##
-
-This chapter is super long to begin with...but I have another project in the outline around generative color.  It might be time to cut that.
-
-
-## Notes to Self ## 
-
-**openFrameworks Bugs and Weirdness:**
-- Setting alpha to 1 causes the hue information on a color to shift when drawing overlapping shapes (need to verify this happens outside of the brush app)
-- `polyline.getPointAtPercent(0)` and `polyline.getPointAtPercent(1.0)` return the same thing
-
-**General notes:**
-- might be a small thing, but I'm considering going back and rewritting all for loops to use i++ over ++i. i++ is more readable for a beginner **[bd: I think this is a good idea.]**
-
 
