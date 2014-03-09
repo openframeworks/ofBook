@@ -1,126 +1,172 @@
-# Graphics #
+***
 
-**TO DO**
+**Notes to Self**
+- Condense!
 - Break apart the chapter into more clearly defined sections
-	- Each section should have an overview paragraph to give readers a better roadmap of what is coming
+    - Each section should have an overview paragraph to give readers a better roadmap of what is coming
 	- Optimally, I'd like each section to have suggestions of advanced extensions that could be made to the project
 - Write introduction section
-- Fill in missing graphics and update ugly graphics
+- Fill in missing graphics, flesh out descriptions, update ugly graphics
 - Insert three small sections: saving a rasterized graphic, saving a vector graphic and saving an animation
-- Cut the Revursive Generative Color Composition section (possibly weave the HSB color model into one of the existing sections)
 - Write addons/more info section
+- Rename figures to be more informative
+- Change ++i to i++
+- Change in-line references to functions that require parameters: use `functionName(...)` 
+- Add arc to basic shapes?
+- Use "we" + "our" over "you" + "your"
+- How are links being handled?  I don't explicitly point them out most of the time since that would be redundant in an online version.
+
+- Section 1.1 Wish List:
+  - Setup/update/draw description
+  - Talk about how graphics are layered
+  - Setting circle resolution
+  - `ofDrawBitmapString()`
+
+***
+
+# Graphics #
+
+**Personal Introduction TDB**
+
+This chapter is going to build off of the C++ Basics chapter **[chapter number]** and Project Setup and Structure chapter **[chapter number]**, so if you aren't already familiar with C++ and creating openFrameworks projects, definitely check out those chapters before diving into graphics.  
+
+**[paragraph needs work]** ~~There are plenty of reasons why you might want to create visuals using code rather than with pencil and paper.  Code allows for easy repetition.  We can design a simple rule for making a mark on screen, and then we can repeat that rule and cover the screen in milliseconds.   Code allows for animation - from simple shapes wiggling on your screen to movies like Pixar's Monsters, Inc.  Code allows for interactivity, which ranges from games to web browsing.  Most importantly to me, code allows us to engage with digital information.  We can visualize and explore data.  We can take digital imagery and reimagine it.~~    
+
+**[insert images of the works of artists making inspiring generative visuals]**
+
+We are going to focus in on a mixture of repetition and interactivity in this chapter.  
+
+In the first half of the chapter **[note which sections]**, we will be designing digital "paintbrushes."  If we pick up a paintbrush, dip it in some paint and then drag it across some canvas, physics is going to determine the characteristics of the resulting mark - the pressure we exert on the brush, the force of gravity pulling the paint downward, the ability of the paper to absorb water, etc.  When we digitize this process, the mouse will be our brush, and we get to create our own physics.  We create the rules that dictate how our brush makes marks on the screen.  ~~So we will use these brushes to create some images (that's the interactive part) and the brush physics will involve generating a lot of simple shapes (that's the repetition part).~~ **[last sentence doesn't flow well]** 
+
+In the second half of the chapter **[note which sections]**, we will take a break from interactivity and create a hypnotizing animation of spiraling, repeating rectangles.  
+
+Along the way from brushes to animated rectangles **[note which sections]**, we will learn how to save our work as images and animated gifs.  If you can't save and share your work, why make it?
+
+**Our chapter roadmap:**
+
+1. [Brushes with Basic Shapes](#empty)
+  1. [Basic Shapes](#empty)
+  1. [Brushes from Basic Shapes](#empty)
+  1. [Saving Raster Graphics](#empty)
+1. [Brushes with Freeform Shapes](#empty)
+  1. [Freeform Shapes](#empty)
+  1. [Brushes from Freeform Shapes](#empty)
+  1. [Saving Vector Graphics](#empty)
+1. [Coordinate Transformations](#empty)
+  1. [Translating](#empty) 
+  1. [Rotating and Scaling](#empty)
+  1. [Saving Animated Graphics](#empty)
 
 
+## 1. Brushes with Basic Shapes ##
 
-**Introduction TDB**
+**[Insert section on Setup/Update/Draw if Roy hasn't covered it]**
 
-I'm aiming to make sure we don't lose any beginners, so I realize that this chapter may be overly pedantic.  It can be tightened up in revisions.
+To create brushes, we need to define some basic building blocks of graphics.  We can classify the 2D graphics functions into two categories: basic shapes and freeform shapes.  Basic shapes are rectangles, circles, triangles and straight lines.  Freeform shapes are polygons and paths.  This classification of shapes is loose, and what it really amounts to is that basic shapes are easier to use but less flexible than the freeform shapes.
 
-## 0. Outline
-- 1. [Drawing Shapes, Then Drawing Many, Many, Many Shapes.](#1-drawing-shapes-then-drawing-many-many-many-shapes)
-	- 1.1 [Predefined Shapes](#11-predefined-shapes)
-		-  1.1a [Drawing to the screen!](#11a-drawing-to-the-screen)
-			- background, rectangles, circles, ellipses, lines, triangles, fill, antialiasing
-		-  1.1b [Drawing to the screen! (But now the fun bits.)](#11b-drawing-to-the-screen-but-now-the-fun-bits)
-			- rectangles, circles, ellipses, lines, triangles, mouse position, mouse clicks, keyboard input, randomness, RGB colors, transparency, linear interpolation, polar coordinates, ofVec2f  
-	- 1.2 [Freeform Shapes](#12-freeform-shapes)
-		-  1.2a [Hello Polyline](#12a-hello-polyline)
-			- addVertex, curveTo, close  
-		-  1.2b [Polyline Brushes](#12b-polyline-brushes)
-- 2. [Moving The World](#2-moving-the-world)
-	- translate, rotate, scale, push, pop, noise, parameterization, creating a gif
-- 3. Recursion Generative Color Compositions - described in outline.md
+### 1.1 Basic Shapes ###
 
-## 1. Drawing Shapes, Then Drawing Many, Many, Many Shapes. ##
+We have some basic building blocks, but how do we specify where we want to draw them on the screen?  Computer graphics use something called the [Cartesian coordinate system](http://en.wikipedia.org/wiki/Cartesian_coordinate_system "Wiki on Cartesian coordinate system").  Remember these grids from math class?
 
-This section needs an introduction explaining the flow of this section - we are making generative brushes because it allows for us to jump into graphics with minimal math+conceptual overhead but it still allows for hitting all the graphical concepts.  (But it still leaves room for adding in advanced math+concepts.)
+![Cartesian coordinate system](http://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Cartesian-coordinate-system.svg/354px-Cartesian-coordinate-system.svg.png "Simple graphic of the cartesian coordinate system")
 
-**[Note: Insert Section on Setup/Update/Draw]**
+To locate a point in the Cartesian coordinate system we need to know two things.  First, we need a reference point, (0, 0), which we called the origin.  Second, we need to know a pair of values, (x, y), that tell us how far away our point is from the origin.  Positive x values are located to the right of the origin; negative x values are to the left of the origin; positive y values are above the origin; and negative y values are below the origin.
 
-**[Note: Insert Section on XY coordinate system]**
+Computer graphics are based on this same system.  If we want to draw something on the screen, we can specify the pixels where we want to draw with (x, y).  There are two twists.  First, the (0, 0) point is the upper leftmost pixel.  Second, the y axis is flipped such that the positive y direction is located below the origin.  Let's zoom in on the top left of my screen, which happens to be my browser, to illustrate the graphical coordinate system:
 
-To get started creating brushes, we need to define some basic building blocks of graphics.  You can classify the 2D graphics functions that openFrameworks provides into two categories: predefined shapes and freeform shapes.  Predefines shapes are rectangles, circles, triangles and straight lines.  Freeform shapes are polygons and paths.
+![Cartesian coordinates in computer graphics](images/intrographics_cartesiangraphicssystem.png "Illustration of the cartesian coordinate system used in computer graphics")
 
-### 1.1 Predefined Shapes ###
+**[Finish this graphic by getting a better resolution on the grid lines and by overlaying an x- and y-axis]** 
 
-#### 1.1a Drawing to the screen! ####
+Now we have all the concepts needed to draw graphics to a screen, but we don't yet know the syntax.  Time to start coding some basic shapes.  Create a new openFrameworks project and call it something more imaginative than "BasicShapes."  Open up the project in your preferred IDE **[point to roy's chapter]**.  
 
-Time for actual code.  Add the following line inside your `draw()` function to create a solid black window on your screen.
-
+If we compile and run the project, we would see a gray screen.  We are going to change that by drawing one of each of the basic shapes (on each frame).  Open the source file, ofApp.cpp, and navigate to the `draw()` function.  Add the following:
+    
+	// Clear the screen with a black color
 	ofBackground(0);
-
-
-Now that we have our background in place, we can start drawing on top of it.  Let's draw a rectangle, a circle, an ellipse, a triangle and some straight lines by adding the following code near the end of the `draw()` function:
-
-	ofSetColor(0);
-	
-	// Let's draw some filled shapes
-	ofRect(50, 50, 100, 100);
-	ofCircle(250, 100, 50);
-	ofEllipse(400, 100, 80, 100);
-	ofTriangle(500, 150, 550, 50, 600, 150);
-	ofLine(700, 50, 700, 150);
-
-The first line of code tells openFrameworks what color it should use when drawing.  You can think of it like telling openFrameworks to pull out a particular colored sharpie - it will draw in that color until you tell it to switch to another color.  We'll be exploring how you can specify color as we go, but for now, we are using grayscale colors.  If you pass in a single integer value (between 0 and 255) to [`ofSetColor`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofSetColor "ofColor Documentation Page"), openFrameworks will interpret that as a grayscale color where 0 is black (i.e. no light) and 255 is white (i.e. all light).
-
-**[bd: What is the convention for writing ints in ofBook? 1 or `1`?]**
-
-We have a basic understanding of color, so we can make use of some handy functions to draw shapes: `ofRect()`, `ofCircle()`, `ofEllipse()`, `ofTriangle()` and `ofLine()`.  The documentation page for [`ofRect()`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#!show_ofRect "ofRect Documentation Page") shows that we can create a rectangle in a number of different ways.  We are passing in the x and y values of the top left corner as well as the rectangle width and height, all in that order.  For [`ofCircle()`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofCircle "ofCircle Documentation Page") we are passing in the x and y values of the center of the circle and the radius.  With [`ofEllipse()`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofEllipse "ofEllipse Documentation Page") we are passing in the x and y values of the center as well as the width and height.  For [`ofTriangle()`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofTriangle "ofTriangle Documentation Page") we pass in the x and y positions of the three corners of the triangle.  Finally with [`ofLine()`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofLine "ofLine Documentation Page"), we pass in the x and y coordinates of the two endpoints of our desired straight line.
-
-When you run that code, you should see some filled shapes drawn on top of your black background.
-
-But what if you only wanted to draw the outline of the shapes?  There are two functions, [`ofFill()`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#!show_ofFill "ofFill Documentation Page") and [`ofNoFill()`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#!show_ofFill "ofNoFill Documentation Page"), that will allow you to toggle between drawing filled shapes and drawing outlines.  Let's modify our `draw()` function again to make it look like this:
-
-	ofBackground(0);
-	
+    
+	// Set the drawing color to white
 	ofSetColor(255);
 	
-	ofFill(); // If you omit this and leave ofNoFill(), all the shapes will be outlines!
-	
-	// Let's draw some filled shapes
+	// Draw some filled shapes
 	ofRect(50, 50, 100, 100);
 	ofCircle(250, 100, 50);
 	ofEllipse(400, 100, 80, 100);
 	ofTriangle(500, 150, 550, 50, 600, 150);
 	ofLine(700, 50, 700, 150);
+
+**[need to make sure readers understand draw loop at this point]**  When we run the code, we see white shapes on a black background.  Success!  Each time our draw function executes, three things happen.  
+
+First, we clear the screen by drawing a solid black background using [`ofBackground(...)`](http://www.openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofBackground "ofBackground Documentation Page").  The `0` represents a grayscale color where `0` is completely black and `255` is completely white.  We'll be getting into other ways of specifying color in the next section.
+
+Second, we tell openFrameworks what color it should use when drawing using [`ofSetColor(...)`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofSetColor "ofColor Documentation Page").  We can think of this code as telling openFrameworks to pull out a particular colored sharpie.  When we draw, we will draw in that color until we specify that we want another color.
+
+Third, we draw our basic shapes: `ofRect(...)`, `ofCircle(...)`, `ofEllipse(...)`, `ofTriangle(...)` and `ofLine(...)`.  With [`ofRect(...)`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#!show_ofRect "ofRect Documentation Page"), we pass in the x and y values of the top left corner as well as the rectangle width and height, all in that order.  For [`ofCircle(...)`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofCircle "ofCircle Documentation Page"), we pass in the x and y values of the center of the circle and the radius.  With [`ofEllipse(...)`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofEllipse "ofEllipse Documentation Page"), we pass in the x and y values of the center as well as the width and height.  For [`ofTriangle()`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofTriangle "ofTriangle Documentation Page"), we pass in the x and y positions of the three corners of the triangle.  Finally, with [`ofLine(...)`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofLine "ofLine Documentation Page"), we pass in the x and y coordinates of the two endpoints of our desired straight line.
+
+It is worth noting that these functions all have multiple ways that we can use them, so check out their documentation pages for more information.
+
+But what if we only wanted to draw the outlines of our shapes?  There are two functions, [`ofFill()`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#!show_ofFill "ofFill Documentation Page") and [`ofNoFill()`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#!show_ofFill "ofNoFill Documentation Page"), that between drawing filled shapes and drawing outlines.  Our sharpie analogy from eariler doesn't fit with these functions - what would a sharipe that only draws outlines look like?  The concept still applies.  `ofFill()` tells openFrameworks to draw filled shapes until told otherwise.  `ofNoFill()` does the same but with outlines.  
+
+Head back into our `draw()` function, and modify it so that it look like this:
+
+	// Clear the screen with a black color
+	ofBackground(0);
 	
-	ofNoFill(); // If you omit this and leave ofFill(), all the shapes will be filled!
+	// Set the drawing color to white
+	ofSetColor(255);
+    
+	// If we omit this and leave ofNoFill(), all the shapes will be outlines!
+	ofFill(); 
 	
-	// Let's draw some shape outlines
+	// Draw some filled shapes
+	ofRect(50, 50, 100, 100);
+	ofCircle(250, 100, 50);
+	ofEllipse(400, 100, 80, 100);
+	ofTriangle(500, 150, 550, 50, 600, 150);
+	ofLine(700, 50, 700, 150);
+    
+	// If we omit this and leave ofFill(), all the shapes will be filled!
+	ofNoFill(); 
+	
+	// Draw some shape outlines
 	ofRect(50, 250, 100, 100);
 	ofCircle(250, 300, 50);
 	ofEllipse(400, 300, 80, 100);
 	ofTriangle(500, 250, 550, 50, 600, 150);
 	ofLine(700, 250, 700, 350);
 
-We've redrawn our same shapes but without the fill.  We have also moved all of the shapes 200 pixels down on the screen.  Much like `ofSetColor()`, `ofFill()` tells openFrameworks that it should be ready to draw filled shapes until it sees an instance of `ofNoFill()`. Inversely, `ofNoFill()` says to draw outlines until the next `ofFill()`.
+Now we have two rows of shapes on our screen - one filled and one outlines.  We can control the thickness of the outlines, and our `ofLine(...)` lines, using [`ofSetLineWidth(...)`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofSetLineWidth "ofSetLineWidth Documentation Page").  Like `ofSetColor(...)` and `ofFill()`, `ofSetLineWidth(...)` will apply to all lines drawn until the thickness is set to a new value.  
 
-**[Note: mention why ofLine is lighter than full white]** 
-
-If you want to control the thickness of the outlines, or the straight lines drawn with `ofLine`, you can use [`ofSetLineWidth()`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofSetLineWidth "ofSetLineWidth Documentation Page").  Again, like `ofSetColor()`, `ofSetLineWidth()` will effect all lines drawn until the thickness is changed again.  Add the following lines to your `draw()` function:
+Add the following lines to the `draw()` function:
 
 	// Code omitted for clarity ...
 	
-	ofFill(); // If you omit this and leave ofNoFill(), all the shapes will be outlines!
+	// If we omit this and leave ofNoFill(), all the shapes will be outlines!
+	ofFill();
 	ofSetLineWidth(1); // Default value is 1
 	
 	// Code omitted for clarity ...
 	
-	ofNoFill(); // If you omit this and leave ofFill(), all the shapes will be filled!
-	ofSetLineWidth(2); // A higher number will render thicker lines
+    	// If we omit this and leave ofFill(), all the shapes will be filled!
+	ofNoFill();     
+	ofSetLineWidth(2); // A higher value will render thicker lines
 	
 	// Code omitted for clarity ...
 
-Okay, so you've got the recipes for some basic shapes down.  Before we start putting those snippets of code to some creative uses, there's one more line of code that you should add, [`ofEnableAntiAliasing()`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofEnableAntiAliasing "ofEnableAntiAliasing Documentation Page").  You may have noticed that your outlines (and ofLines) look a bit blocky, like paths of jagged pixels.  We can smooth out these pixels using an anti-aliasing technique.  Simply add `ofEnableAntiAliasing()` to your `setup` function, and poof, smoother lines.  (If you want to understand what's happening under the hood, check out the wiki on [anti-aliasing](http://en.wikipedia.org/wiki/Spatial_anti-aliasing "Wiki on spatial anti-aliasing").
+We've got the recipes for basic shapes down, but let's add one more detail before moving on to brushes: [anti-aliasing](http://en.wikipedia.org/wiki/Spatial_anti-aliasing "Wiki on spatial anti-aliasing").  Our lines and outlines look a bit blocky, like paths of jagged pixels.  Anti-aliasing refers to a set of techniques that smooth out those jagged edges. Simply add [`ofEnableAntiAliasing()`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofEnableAntiAliasing "ofEnableAntiAliasing Documentation Page") to your `setup` function, and poof, smoother lines.
 
 ![Anti-aliasing](images/intrographics_antialiasing.png "Line with and without anti-aliasing")
+
 ![Basic Shapes](images/intrographics_basicshapes.png "Basic shapes with and without a fill")
 
-**[Note: Include something about rounded rect]**
-**[Note: Include something about layering, explaining screen buffer]**
-**[Note: Include something about setting rect mode, circle resolution]**
-**[Note: Include something about RGB colors]**
+**Extensions**
 
+Let's say we wanted some challenges, we could:
+- Draw some rounded rectangles using [`ofRoundedRect(...)`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#!show_ofRectRounded "ofRoundedRect Documentation Page).
+- Explore the world of curved lines with [`ofCurve(...)`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#!show_ofCurve "ofCurve Documentation Page") and [`ofBezier(...)`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#!show_ofBezier "ofBezier Documentation Page").
+- Revisit the code from the C++ basics chapter **[chapter number]**.
+  - Create a bouncing ball using `ofCircle(...)`.
+  - Draw some randomly sized lines using `ofLine(...)`.
 
 #### 1.1b Drawing to the screen! (But now the fun bits.) ####
 
