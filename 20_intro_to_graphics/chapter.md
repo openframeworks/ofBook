@@ -68,7 +68,9 @@ To create brushes, we need to define some basic building blocks of graphics.  We
 
 We have some basic building blocks, but how do we specify where we want to draw them on the screen?  Computer graphics use something called the [Cartesian coordinate system](http://en.wikipedia.org/wiki/Cartesian_coordinate_system "Wiki on Cartesian coordinate system").  Remember these grids from math class?
 
-![Cartesian coordinate system](http://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Cartesian-coordinate-system.svg/354px-Cartesian-coordinate-system.svg.png "Simple graphic of the cartesian coordinate system")
+![Cartesian coordinate system](intrographics_cartesiancoordinatessystem "Simple graphic of the cartesian coordinate system")
+
+**[Graphic pulled from wiki.  Remake]**
 
 To locate a point in the Cartesian coordinate system we need to know two things.  First, we need a reference point, (0, 0), which we called the origin.  Second, we need to know a pair of values, (x, y), that tell us how far away our point is from the origin.  Positive x values are located to the right of the origin; negative x values are to the left of the origin; positive y values are above the origin; and negative y values are below the origin.
 
