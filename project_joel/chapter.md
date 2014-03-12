@@ -1163,21 +1163,23 @@ Starting is often the hardest thing to do with programming. To combat this, I tr
 
 The next place to experiment was making the input realtime and interactive - using the blobs from a sliced section of the live Kinect depth image from ofxKinect. Drawing these simple blobs as an image allowed them to be inputted into ofxSlitscan on a frame by frame basis - producing a time warping effect over the playback of the film that Pete Hellicar edited for the project. As so often happens, when the input to the interaction becomes realtime it was far more engaging, which is exactly what we wanted users to do - see SLITSCANKINECTDEPTHGREY mode below for more details on the precise implementation, and in the other cases that follow.
 
-What else could be done with the depth information applied to the delay map of the slit scan? Experiments with effecting the blobs outline yielded the SPIKYBLOBSLITSCAN mode while using the input from the Kinect as an input to a paint simulator was something that I had worked on with Marek Bereza in the Somantics project - it made sense to try it as an input to a slitscan, as can be seen in the PAINT mode. This Paint mode made something that very much resembled the appearance of a human aurora when mixed with the beautiful Borealis footage that Pete Hellicar had sourced with the help of Greenpeace.
+What else could be done with the depth information applied to the delay map of the slit scan? Experiments with effecting the blobs outline yielded the SPIKYBLOBSLITSCAN mode. Using the input from the Kinect as an input to a paint simulator was something that I had worked on with Marek Bereza in the Somantics project - it made sense to try it as an input to a slitscan, as can be seen in the PAINT mode. This Paint mode made something that very much resembled the appearance of a human aurora when mixed with the beautiful Borealis footage that Pete Hellicar had sourced with the help of Greenpeace. SPARKLE mode was another example of a sucessfull port from Somantics to Anthropocene.
 
-Another good strategy for finding new interesting things is to feed the output of a system back into its input - this is demonstrated well by the visual feedback effects produced by using video frames as the delaymaps back into their own history - implemented in SELFSLITSCAN mode.
+Another good strategy for finding new interesting things is to feed the output of a system back into its input - this is demonstrated well by the visual feedback effects produced by using video frames as the delay maps back into their own history - implemented in SELFSLITSCAN mode.
 
 #### ofxBox2d, making ice, previous projects with Todd Vanderlin
 
-I had previously worked with Todd Vanderlin on the Feedback
-
-**[Inspired by previous work with todd on feedback - fracturing time using 2d opencv strategies to get blobs, now had the luxury of the kinect]**
+I had previously worked with Todd Vanderlin on the Feedback project, where we had experimented with using Box2D (via Todds ofxBox2D) as a way of "shattering" live video. Feedback used a screen orientated in portrait mode that encouraged the repeating of familiar existing behaviour - moving the experience from a tech demo to a playful joyous one. Having earlier experimented with ice like static PNG's I knew that using realtime triangles from ofxBox2D would work well - this time I had the advantage via the Kinect of a slice of 3D space as input, something that Todd had to work much harder to simulate using only 2D live camera input in Feedback. This aspect of constantly improving novel hardware inputs means that previous work can often be revisted and explored.
 
 #### ofxTimeline, understanding how cuing works
 
-**[Starting with duration, problems with cuing, quicktime access discussed below and using ofxtimeline in the end]**
+To combine the film and the various realtime effects, it was essential to develop a cuing system to allow different effects to combine with different scenes in a reliably repeatable way. I began by experimenting with Duration, but after emailing the author of the addon (see development notes above), it become apparent that ofxTimeline would be a much better fit for the project - a subset of Durations code base.
+
+After dealing with Quicktime perfomance issues (see below), the main challenge was cuing the effects. The structure of how ofxTimeline passes messages meant that the signal to switch scenes would only be sent when the playhead passed over the cue - clicking to a point after a cue meant that the signal to switch scenes would not be despatched. Deadlines of other functionality meant that this couldn't be fixed in time for show time - meaning that show operators would have to be careful when shuffling playback during the show proper.
 
 #### ofxGui, running the Latest branch from Github, multiple input methods and GUI addons
+
+I knew that I wanted to augment ofxTimelines interface with controls for the setup of the Kinect and other custom requirements for the project. Watching the GitHub development branch revealed the release of an official core GUI addon - something I wanted to experiment with, which meant that I had to switch from an official static release of OF to the live development branch via Github.
 
 **[Wanting to get access to the latest features mid development, github, ending up with multiple guis]**
 
@@ -1188,10 +1190,6 @@ I had previously worked with Todd Vanderlin on the Feedback
 ### Naming
 
 **[No bad characters?]**
-
-### Changing scenes
-
-**[Having to pass the playhead over the cue]**
 
 ### Video Performance, using the HighPerformanceExample
 
