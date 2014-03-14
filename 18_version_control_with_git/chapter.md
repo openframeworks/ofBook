@@ -14,7 +14,7 @@ Finally, you will learn how you can build upon the things you just learned and w
 
 How do you track the state of your projects over time?
 Have you ever made several copies of your project folder (or text document, Photoshop file,...)?
-Did you name them something like `Awesome_project_1`, `Awesome_project_may10`, `Awesome_project_final`, `Awesome_project_final2`, `Awesome_project_really_final_for_installation`,...?
+Did you name them something like `Awesome_project_1`, `Awesome_project_may10`, `Awesome_project_final`, `Awesome_project_final2`, `Awesome_project_really_final`,...?
 Did you mail around zipped projects to collaborators, and had some trouble syncrhonizing the changes they (or you) made in the meantime?
 Have you run into problems when you had to go back to a previous version, change things, copy those changes to other version, or generally keep tabs on changes?
 
@@ -69,7 +69,7 @@ Most of the files associated with Git are in the `.git` folder in your project r
 The basic element for tracking the history of the repository is the **commit**.
 This is basically a snapshot of the repository's state at the time of the commit, including a **commit message** and any parent commit(s).
 It has a unique identifier called the **hash** (or **SHA**).
-This is a checksum calculated from the commit's contents, i.e. its files and folders, parent commit(s) and commit message.
+This is a checksum calculated from the commit's contents.
 It's impossible to change any part of the commit without the hash changing.
 Thus, a commit hash uniquely defines a commit and the whole history preceding it.
 
@@ -222,8 +222,9 @@ Alright, let's use `git status -u` to see what's going on in our repository. The
     nothing added to commit but untracked files present (use "git add" to track)
 
 The output tells us which branch we are currently on (`master`), that we haven't committed anything yet, and that there are a couple of untracked files (i.e. not yet known to Git) in the repository and, importantly, what we should do next.
-The list of files looks correct, so far so good!
+Using `git status -s` is an option to get more condensed output.
 
+The list of files looks correct, so far so good!
 You might have noticed the `.gitkeep` file in `bin/data/`.
 Git only tracks files, not directories, which means that empty directories are not visible to Git.
 A common technique to work around this, if you want to have empty directories (e.g. for future output files) in your repository, is to place an empty file there, which makes sure that that directory can be added to Git.
@@ -305,7 +306,6 @@ It means that the working directory as it is right now is already committed to G
 It's often a good idea, whenever you start or stop working in a repository, to start from this state, as you will always be able to fall back to this point if things go wrong.
 
 Now that we have made your initial commit, we can make our first customizations to the OF project. Onwards!
-
 
 
 ### First edits
@@ -390,6 +390,8 @@ This will make it easier for everybody else, and future you in a couple of month
 A good, concise convention for how a good commit message looks can be found [here](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html).
 In short, you should have a short (about 50 characters or less), capitalized, imperative summary (e.g. "Fix bug in the file saving function").
 If this is not enough, follow this with a blank line(!) and a more detailed summary, wrapping lines to about 72 characters.
+*(If your terminal supports this, omitting the second quotation mark allows you to enter multiple lines. Otherwise, omit the `-m` flag to compose the commit message in the editor.)*
+
 
 Now that that is out of the way, we can commit the change we just added, and check the status afterwards:
 
@@ -563,13 +565,9 @@ Also note that the `celebration` branch is unaffected by the merge, it's still p
 
 Next, we shall find out what happens if merging does *not* go so smoothly.
 
-#### Merge conflicts
+#### `git reset`
 
-Git is pretty smart when merging branches together, but sometimes (typically when the same line of code was edited differently in both branches) it does not know how to merge properly, which will result in a **merge conflict**.
-It's up to us to resolve a merge conflict manually.
-Let's demonstrate this.
-
-First, we use [`git reset`](http://git-scm.com/docs/git-reset) to undo the merge commit we just made.
+First, purely for demonstration purposes, we use [`git reset`](http://git-scm.com/docs/git-reset) to undo the merge commit we just made.
 This can be a dangerous command, because you can erase commits with it, so we have to be careful.
 `git reset --hard HEAD~<N>` sets the current branch back by `<N>` commits, discarding the rest of the commits in the process if they are not part of another branch. *They can still be [recovered using `git reflog`](http://gitready.com/advanced/2009/01/17/restoring-lost-commits.html), but that's a bit too complicated to show here. Generally, it's hard to really lose things you have previously committed, so if you accidentally deleted some important history, don't despair immediately. :-)*
 
@@ -579,6 +577,13 @@ Anyway, let's reset our `master` branch back one commit now:
     HEAD is now at 68d2674 Add background switching
 
 You can consult the tree view again to see that the merge commit has disappeared, and `master` is back at "Add background switching".
+Now, let's try to make a merge fail.
+
+#### Merge conflicts
+
+Git is pretty smart when merging branches together, but sometimes (typically when the same line of code was edited differently in both branches) it does not know how to merge properly, which will result in a **merge conflict**.
+It's up to us to resolve a merge conflict manually.
+
 Now, let's create a commit which will create a conflict.
 We just add a second output line after the "Hello world" statement.
 Since in the `celebration` branch, another statement was *also* added right after "Hello world", Git will not know how to correctly resolve this.
@@ -776,6 +781,18 @@ I use the GUI mainly for branch navigation, selecting and staging modifications,
 
 ## Conclusion
 
+### Tips & tricks
+
+This section contains a loose collection of tips and tricks around common pitfalls of working with Git:
+
+* Collaborating with users using different operating systems can be tricky because MacOS/Linux and Windows use different characters to indicate a new line in files (`\n` and `\r\n`, respectively). You can configure Git according to [existing guidelines](https://help.github.com/articles/dealing-with-line-endings) to avoid most problems.
+* Some editors automatically remove trailing whitespace in files when saving. This can lead to commits containing unintentional modifications, which can make browsing a file's change history more confusing. Most relevant Git commands (e.g. `git diff`) accept the `-w` flag to ignore whitespace changes.
+* When you realize that you want to add some more changes to your last commit, you can use the `--amend` flag when committing to add your staged changes to the last commit and adjust the commit message. This rewrites that commit, so only do that if you haven't pushed your commit yet!
+* To unstage changes you have accidentally staged, you use `git rm --cached <file>` (for newly added files) or `git reset HEAD <file>` (for modified files). As usual, `git status` reminds you of these commands where appropriate.
+* When you want to stage only part of the modifications in a file, you can use `git add -p <file>`. This switches to an interactive view where you can decide for every change hunk whether to stage it or not.
+ 
+### Further reading
+
 Now we are at the end of this quick introduction to Git, and while we have touched the most important things you need to know to get you up and running, we have only touched the surface of what Git can do.
 
 Probably the most important thing left now is to point out where you can learn more about Git, and where you can turn to when things don't work out as expected:
@@ -790,4 +807,4 @@ Probably the most important thing left now is to point out where you can learn m
     - [Stack Overflow](http://stackoverflow.com/) is an awesome resources to find answers to problems you encounter (probably someone had the same problem before), and to ask questions yourself! There's even [a separate tag](http://stackoverflow.com/questions/tagged/git) for Git.
     - If you're not successful with Stackoverflow, the openFrameworks forum has a separate [category called "revision control"](http://forum.openframeworks.cc/category/revision-control) for questions around that topic.
 
-Finally, I hope that this chapter made you realize how useful it can be to integrate version control into your creative coding workflow, and that you will one day soon look fondly back on the days of zip files called `Awesome_project_really_final_for_installation.zip`.
+Finally, I hope that this chapter made you realize how useful it can be to integrate version control into your creative coding workflow, and that you will one day soon look fondly back on the days of zip files called `Awesome_project_really_final.zip`.
