@@ -55,7 +55,7 @@ TODO // need to make a diagram to visualise all this.
 
 ![Figure 1: OF on iPhone.](images/ofxiOS_XCode_sml.png "Figure 2: ofxiOS XCode.")
 
-When you open up a empty ofxiOS project you will immediatly notice some differences in the ofApp header file. You will see that ofApp extends ofxiOSApp and not ofBaseApp as you would see when running a desktop app. This is because iOS apps and desktop apps are different in many regards, desktop apps receive mouse and keyboard events and iOS apps receive touch events as well a orientation events and memory warnings. To handle these new events, new methods had to be defined inside ofxiOSApp which the ofApp inherits from and listens to.
+When you open up a empty ofxiOS project you will immediatly notice some differences in the ofApp header file. You will see that ofApp extends ofxiOSApp instead of ofBaseApp as you would see when running a desktop app. This is because iOS apps and desktop apps are slightly different, desktop apps receive mouse and keyboard events and iOS apps receive touch events as well a orientation events and memory warnings. To handle these new events, new methods had to be defined inside ofxiOSApp which the ofApp inherits from.
 
 ```
 void touchDown(ofTouchEventArgs & touch);
@@ -64,19 +64,23 @@ void touchUp(ofTouchEventArgs & touch);
 void touchDoubleTap(ofTouchEventArgs & touch);
 void touchCancelled(ofTouchEventArgs & touch);
 ```
-explain...
+Touch events are passed into the ofApp through these methods. Each method receives a ofTouchEventArgs object which contains all the information about the touch event, such as the touch ID and the x and y position of the touch on the screen.
 
-`void lostFocus();`
-explain...
+```
+void lostFocus();
+void gotFocus();
+```
+Focus events are passed into the ofApp when the application goes from active to inactive state and vise versa. `gotFocus()` method tells the ofApp that the application has becomes active, which happens when the application first launches. `lostFocus()` method tells the ofApp that the application has become inactive which happens when a phone call or SMS interrupts the app or when the user exits the app.
 
-`void gotFocus();`
-explain...
+```
+void gotMemoryWarning();
+```
+Each iOS application is allocated a limited amount of memory for it to run. When an application exceeds the allocated amount, the operating systems lets the application know by giving it a memory warning. Memory warnings are passed into the ofApp via the `gotMemoryWarning()` method at which point the application needs to free up some memory otherwise the operating system can terminate the application.
 
-`void gotMemoryWarning();`
-explain...
-
-`void deviceOrientationChanged(int newOrientation);`
-explain...
+```
+void deviceOrientationChanged(int newOrientation);
+```
+iOS dispatches orientation events when ever the device orientation changes. Orientation events are passed into the ofApp through `deviceOrientationChanged()` method. It is then up to the user to handle these orientation changes as they see fit. iosOrientationExample inside examples/ios/ folder demonstrates how the orientation events can be used.
 
 
 ###OpenGL ES and iOS
