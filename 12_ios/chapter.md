@@ -170,11 +170,14 @@ avVideoPlayer = (AVFoundationVideoPlayer *)video.getAVFoundationVideoPlayer();
 
 ###ofxiOSVideoGrabber
 
-###ofxiOSSoundPlayer
+###ofxiOSSoundPlayer and ofxOpenALSoundPlayer
 
-###ofxOpenALSoundPlayer
+![Figure 1: OF on iPhone.](images/ofxiOS_soundPlayerExample_sml.png "Figure 2: ofxiOS XCode.")
 
 ###ofxiOSSoundStream
+
+![Figure 1: OF on iPhone.](images/ofxiOS_audioInputExample_sml.png "Figure 2: ofxiOS XCode.")
+![Figure 1: OF on iPhone.](images/ofxiOS_audioOutputExample_sml.png "Figure 2: ofxiOS XCode.")
 
 
 #Life Hacks
