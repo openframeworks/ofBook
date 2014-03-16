@@ -104,22 +104,82 @@ iOS dispatches orientation events when ever the device orientation changes. Orie
 - https://www.khronos.org/webgl/wiki/WebGL_and_OpenGL_Differences
 
 
-
-
-
-#Media Playback
-- ofxiOS media playback classes, ofxiOSVideoPlayer, ofxiOSVideoGrabber, ofxiOSSoundPlayer, ofxiOSSoundStream
-
-
-#Life Hacks
-- ofxiOS utils, ofxiOSExtras, ofxiOSImagePicker, ofxiOSMapKit etc.
-
-
 #OF & UIKit
 - Adding UIViews to an OF app, above and below the OF glView.
 - openFrameworks as part of a larger app, several openFrameworks apps in one iOS app
 - addons for ofxiOS
 - dispatching on main queue from OF to UIKIT using blocks.
+
+
+#Media Playback and Capture
+
+A large chunk of ofxiOS support is media playback and capture. ofxiOS has good support for video playback, sound playback, camera capature and sound input. All Obj-C code that makes these features possible is wrapped and abstracted so a regular OF user can continue using the OF API the same way across all supported platforms.
+
+For example, lets say you have a very simple ofApp that plays a video. To achieve this you would use the `ofVideoPlayer` class, create a object instance of the class, call the `loadMovie()` method to load the video file and then call the `play()` method to begin playback of the video. Now to do this across desktop OF apps or iOS OF apps, the code is exactly the same. This is because we are using the `ofVideoPlayer` API which is common across all supported OF platforms. Although the thing to know here is that even though the code works the same way across the different platforms, the actual code used to play a video on OSX and iOS (for example) is very different. 
+
+###ofxiOSVideoPlayer
+
+![Figure 1: OF on iPhone.](images/ofxiOS_moviePlayerExample_sml.png "Figure 2: ofxiOS XCode.")
+
+`ofxiOSVideoPlayer` is the video player class used for video playback inside ofxiOS. When you're using `ofVideoPlayer` inside a iOS OF project, you are actually using `ofxiOSVideoPlayer`. OF automatically selects the correct video player class to use depending on the platform you are using.
+
+A iOS example that demonstrates the use of the video player on iOS can be found in the folder,
+examples/ios/moviePlayerExample
+
+When looking inside the ofApp header file you will notice that we are using the `ofxiOSVideoPlayer` class instead the generic `ofVideoPlayer` class. You can use both but it's probably better to use the `ofxiOSVideoPlayer` class instead. The reason being is that `ofxiOSVideoPlayer` has a few extra methods which are specific to iOS, which you may or may not want to use, but it's always good to have that option.
+
+Let go through some of the basic functionality.
+
+To load and play a video it's exactly the same as using the `ofVideoPlayer`.
+
+```
+void ofApp::setup() {
+	video.loadMovie("hands.m4v");
+	video.play();
+}
+```
+On every single frame we need to update the video player.
+
+```
+void ofApp::update(){
+    video.update();
+}
+```
+And to draw the video to screen, we need to first get a reference to the video texture and call draw on the texture object.
+
+```
+void ofApp::draw(){
+    video.getTexture()->draw(0, 0);
+}
+```
+
+Now for those extra iOS specific methods.
+
+If you poke around inside `ofxiOSVideoPlayer` you will see a method called `getAVFoundationVideoPlayer()` which is responsible for returning a reference of the underlaying `AVFoundationVideoPlayer`. `AVFoundationVideoPlayer` is the Obj-C implementation for the iOS video player and is the class that sits below `ofxiOSVideoPlayer` and pretty much does all the work. Now, some reasons you may want have accesss to the `AVFoundationVideoPlayer` is that you want to work directly with the Obj-C code to get the most out of iOS video player features or you want to display the video inside a UIView instead of rendering it to OpenGL.
+
+Here we are getting a pointer reference to the `AVFoundationVideoPlayer` which also happens to extends a `UIView`. This means we can add the video player to a UIView hiarchy and display the video natively.
+
+```
+AVFoundationVideoPlayer * avVideoPlayer;
+avVideoPlayer = (AVFoundationVideoPlayer *)video.getAVFoundationVideoPlayer();
+[avVideoPlayer setVideoPosition:CGPointMake(0, 240)];
+[ofxiOSGetGLParentView() insertSubview:avVideoPlayer.playerView belowSubview:controls.view];
+```
+
+
+
+###ofxiOSVideoGrabber
+
+###ofxiOSSoundPlayer
+
+###ofxOpenALSoundPlayer
+
+###ofxiOSSoundStream
+
+
+#Life Hacks
+- ofxiOS utils, ofxiOSExtras, ofxiOSImagePicker, ofxiOSMapKit etc.
+
 
 
 #App Store
