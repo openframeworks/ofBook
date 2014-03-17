@@ -1,51 +1,50 @@
-# Case Study in the Making: Choreographies for Humans and Stars ** FAR FROM READY 
+# Case Study: Choreographies for Humans and Stars 
 
-Permanent? outdoor interactive installation developed by **daily tous les jours** for the Planetarium in Montreal, 2013. 
+Permanent interactive outdoor installation developed by [Daily tous les jours](http://dailytouslesjours.com/ "Daily tous les jours") for Montreal's planetarium (2014). 
+
 Chapter by Eva Schindling, Pierre Thirion
-
-
 
 
 
 
 ## Project Overview 
 
-**Choreographies for Humans and Stars** is a permanent outdoor installation hosted at Montreal's Planetarium. The interactive projection on the building's facade invites passers-by to a series of impromptu performances inspired by the different mechanics of planets and stars. Exploring both dance and astronomy, participants use their bodies to understand celestial dynamics like eclipses, forces of attraction and combustion. Tracked by a camera system, the movements across the dance stage directly control the projected animations. 
+**Choreographies for Humans and Stars** is a 3 year / permanent outdoor installation hosted at Montreal's Rio Tinto Alcan Planetarium. The interactive projection on the building's facade invites passers-by to a series of impromptu performances inspired by the different mechanics of planets and stars. Exploring both dance and astronomy, participants use their bodies to understand celestial dynamics like eclipses, forces of attraction and combustion. Tracked by a camera system, the movements across the dance stage directly control the projected animations. 
 
 ![On site](images/shootingatplane.jpg "Project in action")
 
 ### Call, Competition and Commission
-The project started out as an official call by the City of Montreal. For the opening of the new Planetarium the city wanted to commission their first digital artwork. 
+The project started out as an official call by the City of Montreal. For the opening of the new planetarium the city wanted to commission their first digital artwork. The official brief asked for an interactive digital artwork utilizing the building facade for projection and simultaneously offering an intervention on the plaza in front of the venue's entrance. Sound excluded. The artist needed to ensure that the work outlasts a minimum of 3 years in the public space, come summer come winter. No light pollution. The budget for realizing the project was set at $000.000 CAD (before taxes).
 
-Official brief? Possibly budget info?
+The selection process spanned months and included three phases:
 
-We passed two/three selection rounds and finally were commissioned by Espace Pour La Vie end of 2012? **[get more details]** 
+ 1. Phase: jury select 6 artists based on portfolio
+ 2. Phase: jury select 3 finalists based on preliminary artistic concept
+ 3. Phase: jury selects winner based on complete project proposal (photo montage, video simulation, detailed budget, technical details, production calendar, supplier and collaborator list)
+
+After passing all phases we were officially commissioned by Espace Pour La Vie in **[when?]** 
 
 ### Timeline, wished-for and realistic
-From first brainstorms to final hand-over of the project it took X months? When you work with that many players (the city!, the planetarium, industrial designers..), your first and second attempt at a project timeline is bound to fail. Our first ambitious goal was to get it all done by November 2013, with the main intention to avoid all the snow and coldness that comes along with Montreal's winter season. Naturally we slipped right past that goal, and had our big opening midst lots of snow mid January, with temperatures ranging between -15 to -25. 
+From first brainstorms to final hand-over the project took impressive 28 months to complete. That's 10 months longer than the official brief planned for. When you work with that many players (the city, the planetarium, collaborators..) your first and second attempt at a project timeline is bound to fail. Our more pragmatic goal was to get it all done by November 2013, with the main intention to avoid all the snow and coldness that comes along with Montreal's winter season. Naturally we slipped right past that goal, and had our big opening midst lots of snow mid January, with temperatures ranging between -15 to -25. 
 
-- 1st selection round, x competitors (?)
-- 2nd selection round, 3 competitors (?)
-- official commission (April?)
-- ideation
-- interaction scenario
-- prototype
-- content animation workshops (July, Dec)
-- tech sourcing (July/Aug) 
-- tech purchase (Sept)
-- software (Aug-Jan)
-- camera installation, calibration (Sept?)
-- installation steles (Jan)
-- on site tests and finetuning
-- opening (Jan 23?)
-- maintenance 
-- tech hand-over (Jan 30?)
-
-**[find those dates and durations]**
+- 2011 Sept: official call
+- 2012 ?: official commission
+- 2012 Fall: ideation
+- 2013 ? : interaction scenario
+- 2013 ? : prototype
+- 2013 July: content animation workshop 1
+- 2013 July: tech sourcing
+- 2013 Aug: tech purchase
+- 2013 Aug: start software
+- 2013 Sept: camera installation, calibration
+- 2013 Dec: content animation workshop 2
+- 2014 Dec/Jan: on site tests and finetuning, install furniture
+- 2014 Jan 23rd: opening
+- 2014 Feb: maintenance
 
 ### Everyone involved
 
-Credit lists quickly grow long. The internal DTLJ team includes Mouna and Melissa being the main artists with the vision, Eva handling software, Pierre being heavily involved with visual identity and video production, Michael handling the LEDs in the outdoor furniture. The list of external collaborators include a producer (Nicolas), a technical director (Frederic), a software engineer (Emmanuel), a film animator (Patrick), a choreographer (Dana), an industrial design studio (Dikini), a graphic designer (Jacinthe), a beton workshop (M3Beton), ... 
+Credit lists quickly grow long. The internal DTLJ team includes Mouna and Melissa being the main artists with the vision, Eva handling software, Pierre being heavily involved with visual identity and video production, Michael handling the LEDs in the outdoor furniture. The list of external collaborators include a producer (Nicolas), a choreographer (Dana), a technical director (Frederic), a software engineer (Emmanuel), a film animator (Patrick), an industrial design studio (Dikini), a graphic designer (Studio Atelier), a beton workshop (M3Beton), engineers, a camera man, ... 
 
 
 
@@ -84,10 +83,7 @@ Since the project will be permanently installed, we involved locals in the makin
 
 ### The dance stage
 
-While camera and projector stay intangible, it was important to give the project a physical presence. Who's main purpose was to define the active tracking zone for the participants, but who would also present a different version of the project during the daylight hours, when the projection was off. ...
-
-+ need to spend $10k ? on renting a ground-unfreezing device to be able to install underground cabling for LED power
-+ people thinking the 'sensors' are mounted in the steles
+While camera and projector stay intangible, it was important to give the project a physical presence. The main purpose was to define the active tracking zone for the participants, but also to present a  version of the project during the daylight hours, while the projection was off. After going through many design proposals (a stage, a ring, a ballet pole!) we landed on 7 planet-like concrete steles positioned in a circle formation. A single white LED on each stele enhanced their presence. Installing the underground cabling for those 7 LEDs proved a big challenge and required the $10k rental of a ground-unfreezing device. (most expensive LEDs ever!) The delicate LEDs also caused the most confusion, as participants mistook them to be the secret sensors triggering the interaction.
 
 
 
