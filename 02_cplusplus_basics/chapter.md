@@ -3281,7 +3281,7 @@ In the above example, I must update each of the four `egg` variables by copying 
 
 ![Figure 32. Egg Cartons photographed by Melissa Baldwin](http://farm6.staticflickr.com/5101/5602248074_7f51aa5d69_b.jpg "Figure 32. Egg Cartons photographed by Melissa Baldwin")
 
-If a variable is a bucket or coffee cup, then an array is an egg carton - a single box holding several of the same thing. An array is a single variable name refers to a list of values. These values all share one type. Let's re-write the above example using an array rather than named variables. To do so, we need to know how to declare the array.
+If a variable is a bucket or coffee cup, then an array is an egg carton - a single box holding several of the same thing. An array is a single variable name but it refers to a list of values. These values all share one type. Let's re-write the above example using an array rather than named variables. To do so, we need to know how to declare the array.
 
 ![Figure 32. Declaring an array.](images/array-anatomy.png "Figure 32. Declaring an array.")
 
@@ -3521,7 +3521,7 @@ In the above example, I render the pixels right side up, then I render it a seco
 
 ### Errors
 
-There are a couple thing about arrays that make them dangerous. One of them is related to what we learned from variables, and that has to do with left-over memory if you don't initialize it with a value. Let's actually do that in the next example.
+There are a couple things about arrays that make them dangerous. One of them is related to what we learned from variables, and that has to do with left-over memory if you don't initialize it with a value. Let's actually do that in the next example.
 
 ```C++
 #include <iostream>
