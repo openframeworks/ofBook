@@ -878,6 +878,7 @@ The term *nesting* is the same concept as the Matryoshka doll, as shown in Figur
 
 ![Figure 25. Matryoshka nesting doll](images/Russian-Matroshka2.jpg "Figure 25. Matryoshka nesting doll")
 
+
 ## Looping
 
 You may have noticed that the recent C++ example code had a lot of cutting and pasting in it. This brute-force way of forging repetitive behavior is not as flexible, and nowhere near as concise as simply telling your code to loop.
@@ -2944,13 +2945,7 @@ Chars are signed by default. change `unsigned` to `signed`, and run it again. Th
 -12 -11 -10 -9 -8 -7 -6 -5 -4 -3 -2 -1
 ```
 
-Instead of counting all the way up to 255, it looks like the sequence stops after 127, switches over to -128, then counts up from there until it reaches -1. A `signed char` can only count to 127 because it's using one of its bits as the sign. Figure 32 shows the 8 bits that make up the char in computer memory. With only 7 bits, you can only count from 0 to 127.
-
-~~**[MH: planning to explain what a bit is?]**~~
-**[JTN: Not planning on explaining that. We had a concensus to omit the subject of binary and bitwise operators. It will require careful overhaul. `<<` will be taught as "push to stream"]**
-
-
-![Figure 32. Signed vs. Unsigned in memory](images/signed-unsigned.png "Figure 32. Signed vs. Unsigned in memory")
+Instead of counting all the way up to 255, it looks like the sequence stops after 127, switches over to -128, then counts up from there until it reaches -1. A `signed char` can only count to 127 in exchange for the ability to do negative values.
 
 ###Bool
 
@@ -2971,7 +2966,7 @@ int main() {
 }
 ```
 
-The output is `0111111111` since `bool` only cares if the number is zero or non-zero. of course, since a bool is true or false, it goes naturally with OR (||), AND (&&), and NOT(!) as I discussed back in the *Boolean Logic* section. The following example program declares 4 booleans and uses them as bits in a 4-bit counter.
+The output is `0111111111` since `bool` only cares if the number is zero or non-zero. of course, since a bool is true or false, it goes naturally with OR (||), AND (&&), and NOT(!) as I discussed back in the *Boolean Logic* section. The following example program declares 4 booleans and uses them as bits of logic in a 4-bit counter.
 
 ```C++
 #include <iostream>
@@ -3054,30 +3049,523 @@ democratic democratic democratic republican
 democratic democratic democratic democratic
 ```
 
-##Bitwise operators
+## Switch Case
 
-In addition to basic arithmetic and boolean logic, C provides a palette of operators for manipulating individual bits. Although *bitwise* operations are *infix* notation, (two numbers surrounding a punctuation), I think of them less as mathematics and more as basic building blocks of computers. Some are quite common and worth pointing out. Let us explore.
+There's a flow control structure similar to if-then that can sometimes be more convenient especially if you have a long chain of if-elseif-elseif-else. It looks at a single integer and jumps to a marker (a `case`) depending on what value the integer has.
 
-+ todo: looking to eliminating the binary rabbit hole. sent email on feb 27. waiting for any responses.
+```C++
+#include <iostream>
+#include <math.h>
+using namespace std;
 
+int main(){
+	for(int i=0;i<200;i++){
+		float rnd = rand() / (float)RAND_MAX;
+		int num = round(rnd * 5);
+		
+		switch(num){	
+		case 0:
+			cout << "////";
+			break;
+		case 1:
+			cout << "''''";
+			break;
+		case 2:
+			cout << "||||";
+			break;
+		default:
+			cout << "    ";
+		}
+		
+		if(i%16==15)cout << endl;
+		
+	}
+	return 0;
+}
+```
+
+In this example, you see the keyword `switch` is followed (like an if) by `(num)` which is its criteria. Then inside its curly braces, you see instances of `case 0:` and those are the bookmarks. If num was 0 during that loop iteration, then it would jump over to that part of the case and execute the code. The output would look like:
+
+```
+////''''    ||||    ''''////            ||||        ////////    
+    ////||||////||||                    ////    ||||            
+''''////    ||||            ||||''''                ////        
+''''||||    ||||''''''''||||''''||||        ////            ||||
+    ||||''''////    ////    ||||''''        ||||    ////        
+    ''''////                            ''''||||||||            
+||||    ''''||||    ||||''''''''''''        ////    ||||        
+                ''''''''    ''''////''''////||||////        ''''
+''''||||        ''''    ||||||||||||''''                    ''''
+    ||||''''    ''''||||||||    ''''''''||||    ''''            
+''''||||||||''''////    ||||''''    ||||''''    ////''''////||||
+''''''''    ||||||||||||            ''''        ''''    ||||    
+            ||||        ||||
+```
+
+Notice there is more whitespace in the output than other ascii phrases. That is because num is being set to a random number between and 5, but I only provided cases for 0, 1, and 2. At the bottom of the case, you see the final `default` catching all the rest of the unsaid cases. One tricky thing with cases is that their blocks of code require a `break` statement at the end if you want to skip all the way to the closing curly brace when finished. Otherwise, the code will actually continue running right into the next case!
+
+```C++
+#include <iostream>
+#include <math.h>
+using namespace std;
+
+float rnd(){
+	return rand() / (float)RAND_MAX;
+}
+
+int main(){
+	for(int i=0;i<20;i++){
+
+		switch(0){
+		case 0:
+			cout << "You make me come";
+			if(rnd()>0.5)break;         //break only half the time
+		case 1:
+			cout << "-plete";
+			if(rnd()>0.5)break;         //break only half the time
+		case 2:
+			cout << "ly miserable";
+			if(rnd()>0.5)break;         //break only half the time
+		default:
+			cout << " (guitar)";
+		}
+		
+		cout << '.' << endl;
+		
+	}
+	return 0;
+}
+```
+
+Given the option to break or not break can have *cascading* results. The output shows each line definitely starting with case 0, then sometimes continuing to case 1. Among those who got to case 1, some of them also throw in case 2, and so on.
+
+```
+You make me come-pletely miserable.
+You make me come-plete.
+You make me come-pletely miserable.
+You make me come.
+You make me come.
+You make me come-plete.
+You make me come.
+You make me come-pletely miserable.
+You make me come.
+You make me come-pletely miserable (guitar).
+You make me come-plete.
+You make me come.
+You make me come.
+You make me come.
+You make me come.
+You make me come-plete.
+You make me come-plete.
+You make me come.
+You make me come.
+You make me come-pletely miserable.
+```
+
+## Escape Sequence
+
+When dealing with paint, some paints have special handling instructions. One pigment is toxic and needs to be kept away from children. Another pigment requires refrigeration, and yet another is water insoluble and is more picky about the medium. In C, special characters like that are handled with an escape sequence.
+
+Let's jump back to the previous code example that was rendering the `////''''    ||||` and attempt to make some changes. Warning, this is going to cause an error, and it's not your fault. In `case 1`, Change the four single quotes to **three** double quotes.
+
+```C++
+#include <iostream>
+#include <math.h>
+using namespace std;
+
+int main(){
+	for(int i=0;i<200;i++){
+		float rnd = rand() / (float)RAND_MAX;
+		int num = round(rnd * 5);
+		
+		switch(num){	
+		case 0:
+			cout << "////";
+			break;
+		case 1:
+			cout << """""; // <--------------- changing this from '''' to """
+			break;
+		case 2:
+			cout << "||||";
+			break;
+		default:
+			cout << "    ";
+		}
+		
+		if(i%16==15)cout << endl;
+		
+	}
+	return 0;
+}
+```
+
+The error is not as useful as we've seen because the preprocessor is just that confused.
+
+```
+/Users/jtnimoy/Downloads/tmp.cpp:15:90: error: expected ';' after expression
+                        cout << """""; // <--------------- changing this from single quote ' to double quote "
+                                                                                                              ^
+                                                                                                              ;
+1 error generated.
+```
+
+You cannot put a double quote character into a string literal without using an escape sequence. In C, an escape sequence starts with a backslash and that just means the following character is to be interpreted in a special way.
+
+```C++
+#include <iostream>
+using namespace std;
+
+int main(){
+	cout << "This is a quote     ---> \" <---- Thank you." << endl;
+	cout << "This is a backslash ---> \\ <---- Hooray." << endl;
+	cout << "This is a tab       ---> \t <---- Good Grief." << endl;
+	cout << "This is a return    ---> \n <---- What next?" << endl;
+	cout << "This \
+is a \
+multiline \
+string \
+literal. Done." << endl;
+	return 0;
+}
+```
+
+The output shows that the backslash is a magical thing.
+
+```
+This is a quote     ---> " <---- Thank you.
+This is a backslash ---> \ <---- Hooray.
+This is a tab       ---> 	 <---- Good Grief.
+This is a return    ---> 
+ <---- What next?
+This is a multiline string literal. Done.
+```
+
+In strings surrounded by double quotes, we need a backslash to insert a double quote. The same is true for chars surrounded by single quotes. You're fine putting a double quote between single quotes, but if you want the actual single quote character, `escape it` with the backslash. Escape sequences are confusing because they are self-reflexive and look odd, but worth getting used to because you'll see them all the time.
+
+## Arrays
+
+In some of the previous examples, you saw I numbered similar variables by naming them with numbers at the end. They relate in name and the data is similar.
+
+```C++
+#include <iostream>
+using namespace std;
+
+int main(){
+	int egg0 = 4;
+	int egg1 = 5;
+	int egg2 = 6;
+	int egg3 = 7;
+	
+	cout << egg0 << egg1 << egg2 << egg3 << endl;
+		
+	egg0 += 1;
+	egg1 += 1;
+	egg2 += 1;
+	egg3 += 1;
+
+	cout << egg0 << egg1 << egg2 << egg3 << endl;
+
+	egg0 += 1;
+	egg1 += 1;
+	egg2 += 1;
+	egg3 += 1;
+
+	cout << egg0 << egg1 << egg2 << egg3 << endl;	
+		
+	return 0;
+}
+
+```
+
+In the above example, I must update each of the four `egg` variables by copying the text around. Whilst easy to understand, and syntactically more simple, this brute force, cut-and-paste method is laborious, and the computer has no idea that the four eggs are related and have an order. The numbers at the end of their variable names are merely part of the word `egg`. We miss the opportunity to *address* each egg by number, in effect, controlling which egg we're working with. Well, what if I told you it doesn't have to be that way?
+
+![Figure 32. Egg Cartons photographed by Melissa Baldwin](http://farm6.staticflickr.com/5101/5602248074_7f51aa5d69_b.jpg "Figure 32. Egg Cartons photographed by Melissa Baldwin")
+
+If a variable is a bucket or coffee cup, then an array is an egg carton - a single box holding several of the same thing. An array is a single variable name refers to a list of values. These values all share one type. Let's re-write the above example using an array rather than named variables. To do so, we need to know how to declare the array.
+
+![Figure 32. Declaring an array.](images/array-anatomy.png "Figure 32. Declaring an array.")
+
+Working with the individual eggs of this carton uses a similar square bracket syntax.
+
+```C++
+cout << eggs[2]; // output the value at index 2
+eggs[0] = 45; // store 45 into the first index
+```
+
+When referring to the array, the square brackets mean "look specifically at that one", and when declaring an array, the square brackets mean "make these many slots." The new egg program, translated in the most basic way (but not all the way) looks like this.
+
+```C++
+#include <iostream>
+using namespace std;
+
+int main(){
+	int eggs[4]; // declare an integer array with 4 slots		
+
+	eggs[0] = 4;
+	eggs[1] = 5;
+	eggs[2] = 6;
+	eggs[3] = 7;
+
+	cout << eggs[0] << eggs[1] << eggs[2] << eggs[3] << endl;
+
+	eggs[0] += 1;
+	eggs[1] += 1;
+	eggs[2] += 1;
+	eggs[3] += 1;
+
+	cout << eggs[0] << eggs[1] << eggs[2] << eggs[3] << endl;
+	
+	eggs[0] += 1;
+	eggs[1] += 1;
+	eggs[2] += 1;
+	eggs[3] += 1;
+
+	cout << eggs[0] << eggs[1] << eggs[2] << eggs[3] << endl;
+		
+	return 0;
+}
+
+```
+
+You can see the array syntax is being used, and that individual eggs may be handled one by one. Because the number is no longer part of the identifier, and now a real integer, we can apply a for-loop rather than cutting and pasting in order to loop through all of them. This makes the code more concise, easier to maintain, and opens us up to doing more intelligent things in the program. Here is a new version of the same program that replaces the one-by-one method with for-loops.
+
+```C++
+#include <iostream>
+using namespace std;
+
+int main(){
+	int eggs[4] = {4,5,6,7};   // declare an integer array with 4 slots,
+							   // and initialize it to a literal array of 4 values
+	// print them out
+	for(int i=0;i<4;i++){
+		cout << eggs[i];
+	}
+	cout << endl;
+
+	// increment them all
+	for(int i=0;i<4;i++){
+		eggs[i]++;
+	}
+
+	// print them out
+	for(int i=0;i<4;i++){
+		cout << eggs[i];
+	}
+	cout << endl;
+	
+	// increment them all
+	for(int i=0;i<4;i++){
+		eggs[i]++;
+	}
+
+	// print them out
+	for(int i=0;i<4;i++){
+		cout << eggs[i];
+	}
+	cout << endl;
+	
+	//report success
+	return 0;
+}
+```
+
+In the above evolution of the same example, you see I could make the size of the eggs array as big as I want without seeing my code get longer in response. 
+
+Let's take this incrementing idea further by printing out an array while altering it.
+
+```C++
+#include <iostream>
+using namespace std;
+
+int main(){
+	char eggs[8] = { '|',' ','o',' ','x', ' ', '_' , ' ' };
+	
+	for(int j=0;j<20;j++){
+		
+		// print
+		for(int i=0;i<8;i++){
+			cout << eggs[i];
+		}
+		cout << endl;
+		
+		
+		for(int i=8 ; i >= 1 ; i--){ //loop from max to min+1
+			eggs[i] = eggs[i-1]; // set current egg to previous egg's value
+		}
+		eggs[0] = eggs[7]; // wrap rightmost egg to leftmost egg
+		
+	}
+		
+	//report success
+	return 0;
+}
+```
+
+In this example, I am shifting the contents of the array to the right, and making them wrap around. The output is like a candy cane.
+
+```
+| o x _ 
+_| o x _
+ _| o x 
+x _| o x
+ x _| o 
+o x _| o
+ o x _| 
+| o x _|
+_| o x _
+ _| o x 
+x _| o x
+ x _| o 
+o x _| o
+ o x _| 
+| o x _|
+_| o x _
+ _| o x 
+x _| o x
+ x _| o 
+o x _| o
+```
+
+By sweeping downward and leaving a trail, we've made a 1-dimensional array look 2D.
+
+### Multidimensional Arrays
+
+You don't have to keep your arrays 1 dimensional however. To declare an extra dimension, add additional square brackets at the end.
+
+```C++
+#include <iostream>
+using namespace std;
+
+int main(){
+	//initialize a 2D array
+	int tictactoe[3][3] = {
+		{0,1,2},
+		{3,4,5},
+		{6,7,8}
+	};
+	
+	for(int y=0;y<3;y++){ // loop rows
+		for(int x=0;x<3;x++){ // loop columns
+			cout << tictactoe[y][x]; // print
+		}
+		cout << endl;
+	}
+		
+	return 0;
+}
+
+```
+
+Notice the syntax for initializing it with literal data has inner nested curly braces for each row. A 2D array may be used as a pixel buffer for remembering your color values.
+
+```C++
+#include <iostream>
+using namespace std;
+
+int main(){
+	//initialize a 2D array
+	int smiley[5][5] = {
+		{0,0,0,0,0},
+		{0,1,0,1,0},
+		{0,0,0,0,0},
+		{1,0,0,0,1},
+		{0,1,1,1,0}
+	};
+	
+	//render it right side up
+	for(int y=0;y<5;y++){ // loop rows
+		for(int x=0;x<5;x++){ // loop columns
+			if(smiley[y][x]){
+				cout << '#';
+			}else{
+				cout << ' ';
+			}
+		}
+		cout << endl;
+	}
+	
+	cout << endl;
+	
+	//render it sideways
+	for(int y=0;y<5;y++){ // loop rows
+		for(int x=0;x<5;x++){ // loop columns
+			if(smiley[x][y]){ // <----- X and Y flipped this time
+				cout << '#';
+			}else{
+				cout << ' ';
+			}
+		}
+		cout << endl;
+	}
+	
+	return 0;
+}
+
+```
+
+In the above example, I render the pixels right side up, then I render it a second time with X and Y flipped inside the `smiley[x][y]`. The output should look like this:
+
+```
+
+	 # # 
+
+	#   #
+	 ### 
+
+	   # 
+	 #  #
+	    #
+	 #  #
+	   #
+```
+
+### Errors
+
+There are a couple thing about arrays that make them dangerous. One of them is related to what we learned from variables, and that has to do with left-over memory if you don't initialize it with a value. Let's actually do that in the next example.
+
+```C++
+#include <iostream>
+using namespace std;
+
+int main(){
+	//initialize a 2D array
+	int smiley[5][5]; // <-------look, no initialization
+	
+	//render it right side up
+	for(int y=0;y<5;y++){ // loop rows
+		for(int x=0;x<5;x++){ // loop columns
+			cout << smiley[y][x] << ' ';
+		}
+		cout << endl;
+	}
+	
+	return 0;
+}
+
+```
+
+My output (which is no doubt different from yours) looked like this.
+
+```
+1479976160 32767 1608491643 32767 1479976184 
+32767 1479976184 32767 0 1 
+1479976208 32767 126439424 1 0 
+14 1479976224 32767 0 0 
+0 0 0 0 0
+```
+
+Some day your piece will glitch and you'll love it but eventually wonder how to fix it. When that day comes, I hope you'll recall that C arrays and variables need to be initialized with a starting value or else you'll find them filled with a visualization of your computer's internal memory.
+
+
++ index out of bounds
+
+
++ Handling the entire carton of eggs
 
 
 ===
 
 ( this chapter is in-progress. [see outline](outline.md) for upcoming subject matter. )
-
-
-===
-
-
-+ computer science operators
-	+ bitwise math
-		+ interlude about how `cout` overloads `<<`
-
-+ switch-case
-
-+ escape sequences in strings and chars
-
 
 ===
 
@@ -3107,6 +3595,9 @@ http://arduino.cc/en/Reference/SoftwareSerial#.Ux3MTOddWlO
 + fine tune "argument" vs. "parameter"
 
 
++ todo: split this thing into several smaller chapters.
+
+
 + cancelled
   + possibly show them local terminal-based C++ in cygwin/linux/bsd
   + possibly weave in basic GLUT/OpenGL to make this all more fun?
@@ -3124,4 +3615,3 @@ http://arduino.cc/en/Reference/SoftwareSerial#.Ux3MTOddWlO
 + back to the future
 + minecraft
 + http://hivelogic.com/articles/top-10-programming-fonts
-
