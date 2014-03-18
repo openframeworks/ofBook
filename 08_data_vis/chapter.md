@@ -98,7 +98,7 @@ getFirstLine();
 
 
 getNextLine();
-<p>You need to be able to run through each line of data in the buffer. This function allows us to do this so long as the data contains the \n or \r (new line characters). 
+<p>You need to be able to run through each line of data in the buffer. This function allows us to do this so long as the data contains the `\n` or `\r` (new line characters). 
 We can call it with a conditional function that checks we are not at the last line so that our program knows when to leave the buffer:</p>
 	while (!file.isLastLine()){
         	string line = file.getNextLine();

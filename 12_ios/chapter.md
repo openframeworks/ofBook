@@ -1,4 +1,4 @@
-#Chapter 12. ofxiOS
+#ofxiOS
 ##OpenFrameworks on iOS devices.
 
 ![Figure 1: OF on iPhone.](images/ofxiOS_iPhone_sml.png "Figure 1: OF on iPhone.")
@@ -29,7 +29,7 @@ Like in C++, in Obj-C your code is broken down into two files, the header file a
 good reference => http://cocoadevcentral.com/d/learn_objectivec/
 
 
-#Under the Hood
+##Under the Hood
 
 UIKit is the backbone of all iOS apps. It is a collection of classes or framework that provide a standardised structure for creating and running applications. UIKit provides the skeleton structure into which you can insert your custom application code and makes it easy to receive system events like device orientation changes or memory warning as two examples amongst many. 
 
@@ -104,14 +104,14 @@ iOS dispatches orientation events when ever the device orientation changes. Orie
 - https://www.khronos.org/webgl/wiki/WebGL_and_OpenGL_Differences
 
 
-#OF & UIKit
+##OF & UIKit
 - Adding UIViews to an OF app, above and below the OF glView.
 - openFrameworks as part of a larger app, several openFrameworks apps in one iOS app
 - addons for ofxiOS
 - dispatching on main queue from OF to UIKIT using blocks.
 
 
-#Media Playback and Capture
+##Media Playback and Capture
 
 A large chunk of ofxiOS support is media playback and capture. ofxiOS has good support for video playback, sound playback, camera capature and sound input. All Obj-C code that makes these features possible is wrapped and abstracted so a regular OF user can continue using the OF API the same way across all supported platforms.
 
@@ -180,12 +180,12 @@ avVideoPlayer = (AVFoundationVideoPlayer *)video.getAVFoundationVideoPlayer();
 ![Figure 1: OF on iPhone.](images/ofxiOS_audioOutputExample_sml.png "Figure 2: ofxiOS XCode.")
 
 
-#Life Hacks
+##Life Hacks
 - ofxiOS utils, ofxiOSExtras, ofxiOSImagePicker, ofxiOSMapKit etc.
 
 
 
-#App Store
+##App Store
 - App distribution, preparing your OF app for the app store.
 - examples of OF iOS apps already in the app store.
 
