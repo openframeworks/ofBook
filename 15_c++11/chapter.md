@@ -1,7 +1,9 @@
+# C++ 11
+
 the following needs readability improvements (flow of text)...
 i'll take another pass at it soon
 
-# Blah blah
+## Blah blah
 C++ is a pretty old language, it's been around since XXX, and perhaps because of that (but certainly for many other reasons), it is often seen as archaic, obtuse, or perhaps just plain rubbish by today's standards. Contrary to that, many people believe that it is still offers the best balance of performance and clarity on the coding high street, and (in part thanks to the success of Unix and its mates) has an incredibly strong ecosystem of 3rd party libraries, device support and general acceptance, even up to the point where current shader languages and CUDA use C++ as their language of choice.
 
 Some more modern languages (such as JavaScript and C#) make programs which run in a very different way to C/C++. They have a 'virtual machine', which is a very different type of computer than the one which crunches electronic signals on a circuit board. The virtual machine receives and processes program instructions like a real machine, but allows for all sorts of ideas which don't directly translate to silicon electronics, such as dynamic typing and reflection. The virtual machine abstracts the constraints of the processor away from the thinking of the programmer.
@@ -10,7 +12,7 @@ C/C++ does not have a virtual machine, which (for the time being) often gives it
 
 In this chapter we'll look at some of the new patterns in the C++ language introduced in C++11, which retain this promise whilst offering new ways of writing code.
 
-# `auto`
+## `auto`
 Perhaps the most used, and simplest new pattern in C++11 is `auto`. You'll love it. And probably won't remember life without it after a day or 2. Consider the following...
 
 ```cpp
@@ -40,7 +42,7 @@ auto rectangleCenterX = rectangleCenter.x;
 
 Then the compiler can do some of the coding for us. In fact, thanks to `auto`, we can do this now. This code block compiles to exactly the same result as the first code block did. The compiler notices what's on the right hand side and substitutes in the correct type wherever it sees `auto`.
 
-### How this helps
+#### How this helps
 Well obviously auto's going to save you keystrokes.  Imagine the following:
 
 ```cpp
@@ -61,8 +63,8 @@ auto firstThreadIterator = this->myVectorOfThreads.begin();
 
 Now this makes the code more readable (by decent humans), but also you could take advantage of `auto` in other ways, for example you could change makes changes in the h file, and the cpp file code would automatically correct itself. For example in the h you might change the `vector` to a `list`, or change to `shared_ptr<ofThread>` to `ofThread *`. These changes would perpetuate automatically to wherever an `auto` is listening. Nifty huh?
 
-## Watch out for this
-### `auto` is not a new type
+### Watch out for this
+#### `auto` is not a new type
 Note that the following doesn't work:
 
 ```cpp
@@ -72,7 +74,7 @@ myRectangle = "look mum! i'm a string!!"; // error!
 
 Remember that `auto` isn't a type itself, it's not a magic container that can take any kind of thing (such as `var` in C# or another dynamic typed language), it is simply a keyword which gets substituted at compile time, you can imagine that the compiler just types in for you whatever makes sense to type on that line where it is. In this case, it's an `ofRectangle`, and you can't assign a `string` to an `ofRectangle`.
 
-### You can't use `auto` in function arguments
+#### You can't use `auto` in function arguments
 Since the `auto` must be implicitly defined by the line of code where it is used, and that this decision is made at compile time, it can not be a function argument, let's see what that means..
 
 Imagine that the following was valid: (__NOTE__ : it isn't!)
@@ -91,10 +93,10 @@ cout << multiplyBy2(secondNumber) << endl;
 
 Now if this code were valid, then the first time the function is called, the `auto` would mean `int`, and the second time it would mean `float`. Therefore saying that the text `auto` is simply substituted with an explicit type where it is written doesn't make sense. So basically __you can't use `auto` in function arguments__ (you might want to look into `template` instead, which would automatically generate 2 pieces of code for the 2 different types).
 
-### You can't use `auto` as a function return type
+#### You can't use `auto` as a function return type
 I'm not sure why, you just can't. It kinda makes sense that you should be able to, but you just can't, move along :).
 
-## `const` and references
+### `const` and references
 Let's do a `const auto`:
 
 ```cpp
@@ -123,14 +125,14 @@ float & x = rectangle.x;
 auto & x = rectangle.x;
 ```
 
-## Summary
+### Summary
 * Save keystrokes by using `auto` in variable declarations
 * `auto` takes the type of the right hand side of the `=` assignment, and replaces the text `auto` with that type at compile time.
 * `auto` is not a magic container which can carry any type of data, it simply gets replaced at compile time by whatever is implied in the code
 * You can't use `auto` in function arguments, return types and a few other places.
 * Use `const auto` for a const type, and `auto &` for a reference type
 
-# for (thing : things)
+## for (thing : things)
 Consider the following common pattern:
 
 ```cpp
@@ -188,12 +190,12 @@ Notice that `for(thing : things)` gels so well with `auto`. Also notice that I'm
 * At `(1)` I want to be able to change the contents of the vector, so I need a reference to the vector item rather than a copy of it.
 * At `(2)`, it makes more sense to use a reference rather than a copy because it's computationally cheaper, and means I don't have to allocate new instances of `ofxSnapChat::Friend` (which I presume is quite a complex object, since it can do things like send images over the internet, and understand societal dispositions of what it means to be attractive).
 
-## Summary
+### Summary
 * Use `for(auto thing : vectorOfThings)`
 * This works with all the STL containers (`vector`, `map`, `list`, `deque`, `set`, etc) and in some more purpose built containers (e.g. `ofxGrayCode::DataSet`)
 * Often you'll want to do `for(auto & thing : vectorOfThings)` to use a reference rather than a copy
 
-# override
+## override
 `override` saves you time not by reducing the amount of typing you do, but by reducing the amount of head-scratching you might do when dealing with `virtual` functions. Imagine the following:
 
 ```cpp
@@ -222,14 +224,14 @@ public:
 
 This tells the compiler that I'm intending to override a `virtual` function. In this case, the compiler will tell me that no `virtual` function called `mapTheGreekColums` exists, and that therefore my `override` is faulty. So following the compiler's complaint I can go in and fix the spelling mistake. Then I can get on with making my Projection Mappening on the town library facade.
 
-## Summary
+### Summary
 * Use the keyword `override` at the end of function definitions in a derived class' h file when you are intending to override a `virtual` function in the base `class`
 * The compiler will warn you if your `override` is invalid, which might just save you a lot of time hunting for errors
 
-# Lambda functions
+## Lambda functions
 
 
-## Worker threads
-## Callbacks
+### Worker threads
+### Callbacks
 
-## Summary
+### Summary
