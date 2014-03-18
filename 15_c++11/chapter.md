@@ -65,7 +65,7 @@ Now this makes the code more readable (by decent humans), but also you could tak
 ### `auto` is not a new type
 Note that the following doesn't work:
 
-```c++
+```cpp
 auto myRectangle = ofGetCurrentViewport();
 myRectangle = "look mum! i'm a string!!"; // error!
 ```
