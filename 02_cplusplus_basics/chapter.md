@@ -3556,11 +3556,475 @@ My output (which is no doubt different from yours) looked like this.
 
 Some day your piece will glitch and you'll love it but eventually wonder how to fix it. When that day comes, I hope you'll recall that C arrays and variables need to be initialized with a starting value or else you'll find them filled with a visualization of your computer's internal memory.
 
+Another error is when you try and access an index in your array that is outside its boundaries. In the case of `int eggs[4]`, that is any number below 0 or above 3. Arrays are zero-indexed, meaning the first one is at slot zero, and the last one is at (size - 1). This provides a lot of mathematical advantage for the programmer and is worth getting used to. Let's make the mistake on purpose.
 
-+ index out of bounds
+```C++
+#include <iostream>
+using namespace std;
+
+int main(){
+	int eggs[4];
+	
+	for( int i = 0 ; i < 10 ; i++ ){
+		cout << eggs[i] << endl;
+	}
+	
+	return 0;
+}
+
+```
+
+The scary thing is that even as I loop beyond 4 and up to 10, it's still accessing mysterious memory and outputting it. Here is my glitchy output.
+
+```
+0
+0
+0
+0
+0
+0
+227347776
+1
+1906995960
+32767
+```
+
+If you loop for long enough, you may eventually cause a `Segmentation fault` error. The program is stopped by the operating system because it attempted to reach into a forbidden place.
+
+### Passing Arrays to Functions
+
+When you pass an array to a function, it is defaultly *passed by reference*, and that means the function does not get a local copy of the variable and instead, gets to work with the same variable. Let's see this in action.
 
 
-+ Handling the entire carton of eggs
+```C++
+#include <iostream>
+using namespace std;
+
+/**
+	i will add 1 to each item in an array
+	len is the length of the array
+	a is the array
+*/
+void addOne(int a[], int len){
+	for( int i = 0 ; i < len ; i++ ){
+		a[i] ++;
+	}
+}
+
+int main(){
+	// declare
+	int eggs[10];
+	
+	// initialize values
+	for( int i = 0 ; i < 10 ; i++ ){
+		eggs[i] = 42;
+	}
+	
+	// pass to function which adds one
+	addOne( eggs, 10 );
+
+	// output the new values
+	for( int i = 0 ; i < 10 ; i++ ){
+		cout << eggs[i] << ' ';
+	}
+	cout << endl;
+
+	return 0;
+}
+```
+
+In this example, I initialize all eggs with the value 42, then I pass it as an argument to `addOne()`. The array does not carry its own "size" meta-data, so one needs to pass the size as a second argument. Then `addOne()` loops through all the items and adds one to each. Notice I am not returning the array and yet, back in `main()` afterwards when I output the values, they are 43. An array is passed by reference. If you want to pass a copy, then you need to declare a second one and copy the values over to it. Swapping between arrays can be very powerful. In the following example, I do not quite copy the values to the second array verbatim. Instead, I use the previous state as simple rules.
+
+```C++
+#include <iostream>
+using namespace std;
+
+int main(){
+	
+	int width = 10;
+	int height = 10;
+	// setup
+	int worlds[2][10][10] = {
+		
+		{
+			{0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,1,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0}
+		}		
+	};
+	bool currentWorld = true;
+	
+	//------------------------------------------------
+	
+	
+	for(int i=0;i<9;i++){
+
+
+		// draw
+		for(int y=0;y<10;y++){
+			for(int x=0;x<10;x++){
+				if(worlds[!currentWorld][y][x]==1){
+					cout << '#';
+				}else{
+					cout << '.';
+				}
+			}
+			cout << endl;
+		}
+	
+		cout << endl;
+
+		//------------------------------------------------
+		
+		// update
+		for(int y=0 ; y < height ; y++){
+			for(int x=0 ; x < width ; x++){
+				bool center = worlds[!currentWorld][y][x];
+				
+				// collect which neighboring pixels are on
+				// modulo by width or height for wrap-around access.
+				int left = worlds[ !currentWorld ][ y ][ (x + width -1) % width ];
+				int right = worlds[ !currentWorld ][ y ][ (x+1) % width ];
+				int up = worlds[ !currentWorld ][ (y + height -1) % height ][ x ];
+				int down = worlds[ !currentWorld ][ (y+1) % height ][ x ];
+				
+				if( left + right + up + down > 0){
+					worlds[currentWorld][y][x] = !center; // flip value
+				}else{
+					worlds[currentWorld][y][x] = 0; // write a blank
+				}
+			}
+		}
+	
+		//------------------------------------------------
+	
+		// swap buffers
+		currentWorld = !currentWorld;
+	}
+	
+	return 0;
+}
+
+```
+
+As I copy the values from one buffer to the next, I count how many neighboring pixels are on. If there are any, I reverse the value and otherwise write a blank. The result is a rippling effect that can take a dot, and iterate it out as a checkered diamond.
+
+```
+..........
+..........
+..........
+..........
+.....#....
+..........
+..........
+..........
+..........
+..........
+
+..........
+..........
+..........
+.....#....
+....#.#...
+.....#....
+..........
+..........
+..........
+..........
+
+..........
+..........
+.....#....
+....#.#...
+...#.#.#..
+....#.#...
+.....#....
+..........
+..........
+..........
+
+..........
+.....#....
+....#.#...
+...#.#.#..
+..#.#.#.#.
+...#.#.#..
+....#.#...
+.....#....
+..........
+..........
+
+.....#....
+....#.#...
+...#.#.#..
+..#.#.#.#.
+.#.#.#.#.#
+..#.#.#.#.
+...#.#.#..
+....#.#...
+.....#....
+..........
+
+....#.#...
+...#.#.#..
+..#.#.#.#.
+.#.#.#.#.#
+#.#.#.#.#.
+.#.#.#.#.#
+..#.#.#.#.
+...#.#.#..
+....#.#...
+.....#....
+
+...#.#.#..
+..#.#.#.#.
+.#.#.#.#.#
+#.#.#.#.#.
+.#.#.#.#.#
+#.#.#.#.#.
+.#.#.#.#.#
+..#.#.#.#.
+...#.#.#..
+....#.#...
+
+..#.#.#.#.
+.#.#.#.#.#
+#.#.#.#.#.
+.#.#.#.#.#
+#.#.#.#.#.
+.#.#.#.#.#
+#.#.#.#.#.
+.#.#.#.#.#
+..#.#.#.#.
+...#.#.#..
+
+.#.#.#.#.#
+#.#.#.#.#.
+.#.#.#.#.#
+#.#.#.#.#.
+.#.#.#.#.#
+#.#.#.#.#.
+.#.#.#.#.#
+#.#.#.#.#.
+.#.#.#.#.#
+..#.#.#.#.
+```
+
+Evolving a pixel buffer using itself as the simple rules is often called *cellular automata*, and is an inspiring model of nature. If this sounds like a direction you're going in, try *Conway's Game of Life* and Wolfram.
+
+In the above code example, you see I have a *setup* routine, followed by a loop which does an *update*, then draws something. If the web dev community has *Model, View, Controller* (MVC) design pattern, creative coders have a *Setup, Update, Draw* design pattern. We could at least separate out the chunks of code into their own functions. Here is the same example, refactored to compartmentalize each of the three standard routines. Notice that in order to share variables between the functions, I had to make them global.
+
+```C++
+#include <iostream>
+using namespace std;
+
+int width;
+int height;
+
+int worlds[2][10][10] = {
+	
+	{
+		{0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,1,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0}
+	}		
+};
+bool currentWorld;
+
+// --------------------------------------
+
+void setup(){
+	width = 10;
+	height = 10;
+	currentWorld = true;
+}
+
+// --------------------------------------
+
+void update(){
+	for(int y=0 ; y < height ; y++){
+		for(int x=0 ; x < width ; x++){
+			bool center = worlds[!currentWorld][y][x];
+			
+			// collect which neighboring pixels are on
+			// modulo by width or height for wrap-around guard.
+			int left = worlds[ !currentWorld ][ y ][ (x + width -1) % width ];
+			int right = worlds[ !currentWorld ][ y ][ (x+1) % width ];
+			int up = worlds[ !currentWorld ][ (y + height -1) % height ][ x ];
+			int down = worlds[ !currentWorld ][ (y+1) % height ][ x ];
+			
+			if( left + right + up + down > 0){
+				worlds[currentWorld][y][x] = !center; // flip value
+			}else{
+				worlds[currentWorld][y][x] = 0; // write a blank
+			}
+		}
+	}
+
+	// swap buffers
+	currentWorld = !currentWorld;
+}
+
+// --------------------------------------
+
+void draw(){
+	for(int y=0;y<10;y++){
+		for(int x=0;x<10;x++){
+			if(worlds[!currentWorld][y][x]==1){
+				cout << '#';
+			}else{
+				cout << '.';
+			}
+		}
+		cout << endl;
+	}
+	cout << endl;
+}
+
+// --------------------------------------
+
+int main(){
+	setup();
+	for(int i=0;i<9;i++){
+		draw();
+		update();
+	}
+	return 0;
+}
+
+```
+
+I was able to lose the comments that label the code section since the containing function is called that. Self-documenting code which needs less comments is good code. Some say that if you write a program correctly, it needs no comments. Notice also that I've added dividing lines between the functions just to make it easier to see. Those are optional but do show up all over OpenFrameworks.
+
+In the following example, I use the same pixel buffer technique to draw a spiral (cosine and sine functions) but this time, I only show the last frame.
+
+```C++
+#include <iostream>
+#include <math.h>
+using namespace std;
+
+int width, height;
+int world[10][40];
+int spiralCounter;
+// --------------------------------------
+
+void setup(){
+	width = 40;
+	height = 10;
+	spiralCounter = 0;
+	
+	//zero the memory
+	for(int y=0;y<height;y++){
+		for(int x=0;x<width;x++){
+			world[y][x] = 0;
+		}
+	}
+}
+
+// --------------------------------------
+
+float rnd(){
+	return (float)rand() / RAND_MAX;
+}
+
+// --------------------------------------
+
+void update(){
+	int offsetX = 20;
+	int offsetY = 5;
+	float rScale = 0.0415;
+	float thScale = 0.075;
+	float theta = spiralCounter * thScale;
+	float r = spiralCounter * rScale;
+	
+	//basic use of cos() and sin()
+	int y = offsetY + round(sin( theta ) * r);
+	int x = offsetX + round(cos( theta ) * r) * 2; // x 2 for ascii art aspect
+	if(y < height && y >= 0 && x < width && x >= 0){
+		world[y][x] = 1;
+	}
+	
+	spiralCounter++;
+}
+
+// --------------------------------------
+
+void draw(){
+	for(int y=0;y<height;y++){
+		for(int x=0;x<width;x++){
+			if(world[y][x]==1){
+				cout << '@';
+			}else{
+				cout << '.';
+			}
+		}
+		cout << endl;
+	}
+	cout << endl;
+}
+
+// --------------------------------------
+
+int main(){
+	setup();
+	for(int i=0;i<500;i++){
+		update();
+	}
+	draw();
+	
+	return 0;
+}
+
+```
+
+The output is a spiral trail.
+
+```
+....@.@.......@.@.........@.@.@.......@.
+....@.......@.................@.@.....@.
+....@.....@.........@.@.........@.......
+..@.......@.......@...@.@.@.....@.@.....
+..@.......@.....@.........@.......@.....
+..@.......@.....@...@.....@.@.....@.....
+..@.......@.......@.@.....@.@.....@.....
+....@.....@.@.............@.......@.....
+....@.......@.@.........@.@.....@.@.....
+......@.......@.@.@.@.@.@.......@.......
+```
+
+## Dynamic Allocation and Pointers
+
+Besides declaring new variables and arrays the way I have shown you so far, there is another way which uses a different syntax and is a bit trickier but worth knowing. *Dynamic allocation* allows us to reserve global memory with more flexibility than traditional *stack based* declarations. The whole business of dynamic allocation pivots around the `new` and `delete` keywords, and contraversially, you are responsible for cleaning up after yourself. Here is a dynamically allocated integer.
+
+```C++
+#include <iostream>
+using namespace std;
+
+int main(){
+	int *myNumber = new int;
+	(*myNumber) = 5;
+	cout << myNumber << endl;
+	delete myNumber;
+	return 0;
+}
+```
+
+That asterisk prefix is part of *pointer* syntax. Using it in a declaration means that the variable will not be an int, but a pointer to an int. Using it on the next line to assign the value 5 to myNumber, the asterisk *de-references* causing the pointer `myNumber` to act as a normal variable for the moment I assign the value. You may have noticed a peculiar output from this program - something like 0x7feb6ac03980. That big number happened because we sent `myNumber` to `cout` in raw without de-referencing it. If you add an asterisk right before `myNumber` in the code and re-run, you'll see the satisfying 5. Sound confusing? You are not alone. This is infamous for being one of the most difficult parts of C.
+
 
 
 ===
@@ -3569,11 +4033,6 @@ Some day your piece will glitch and you'll love it but eventually wonder how to 
 
 ===
 
-+ memory addressing
-	+ arrays
-	+ stack vs. heap
-	+ dynamic allocation
-	+ pointers
 + header files
 + abstraction
 	+ structs
