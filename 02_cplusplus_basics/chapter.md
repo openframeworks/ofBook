@@ -3284,7 +3284,7 @@ In the above example, I must update each of the four `egg` variables by copying 
 
 If a variable is a bucket or coffee cup, then an array is an egg carton - a single box holding several of the same thing. An array is a single variable name but it refers to a list of values. These values all share one type. Let's re-write the above example using an array rather than named variables. To do so, we need to know how to declare the array.
 
-![Figure 32. Declaring an array.](images/array-anatomy.png "Figure 32. Declaring an array.")
+![Figure 33. Declaring an array.](images/array-anatomy.png "Figure 32. Declaring an array.")
 
 Working with the individual eggs of this carton uses a similar square bracket syntax.
 
@@ -4026,26 +4026,102 @@ int main(){
 
 That asterisk prefix is part of *pointer* syntax. Using it in a declaration means that the variable will not be an int, but a pointer to an int. Using it on the next line to assign the value 5 to myNumber, the asterisk *de-references* causing the pointer `myNumber` to act as a normal variable for the moment I assign the value. You may have noticed a peculiar output from this program - something like 0x7feb6ac03980. That big number happened because we sent `myNumber` to `cout` in raw without de-referencing it. If you add an asterisk right before `myNumber` in the code and re-run, you'll see the satisfying 5. Sound confusing? You are not alone. This is infamous for being one of the most difficult parts of C.
 
+### What is a pointer?
+
+![Figure 34. C++ Pointers](images/pointers/01.png "Figure 34. C++ Pointers")
+
+Imagine the variable `a`, an integer holding the value 42.
+
+![Figure 35. int a = 42;](images/pointers/02.png "Figure 35. int a = 42;")
+
+Well, 42 is sitting in the computer memory somewhere. You can think of the computer memory like a neighborhood and each place is like a house with an address. Those addresses can be written down and exchanged.
+
+![Figure 36. Computer memory is like houses with addresses.](images/pointers/03.png "Figure 36. Computer memory is like houses with addresses.")
+
+In C++, we use the ampersand *reference* operator before the variable name in order to mean `3`, the address in memory where the value `42` is living.
+
+![Figure 37. Ampersand reference operator.](images/pointers/04.png "Figure 37. Ampersand reference operator.")
+
+When declaring a pointer, we precede the name with an asterisk * meaning that it contains an address reference, and then we can store a reference into it. 
+
+![Figure 38. Asterisk address operator.](images/pointers/05.png "Figure 38. Asterisk address operator.")
 
 
-===
+One reason this can be confusing is that the variable can sit alone, without any asterisk or ampersand, and look like a regular variable - but it's still a pointer. 
 
-( this chapter is in-progress. [see outline](outline.md) for upcoming subject matter. )
+![Figure 39. B is still a pointer.](images/pointers/06.png "Figure 39. B is still a pointer.")
 
-===
+So what if I'm writing code that uses B and I want to access the value, instead of the pointer address? I precede the variable with another kind of asterisk, a *dereferencing operator*, in order to turn the 3 back into a 42.
+
+![Figure 40. B dereferenced.](images/pointers/07.png "Figure 40. B dereferenced.")
+ 
+In the following example, I will create a pointer to an already existing variable, then increment both.
+
+```cpp
+#include <iostream>
+using namespace std;
+
+int main(){
+	int a = 42;
+	int *b = &a; // create a pointer to a
+	cout << b << ' ' << a << endl;
+	a++;
+	(*b)++;
+	cout << b << ' ' << a << endl;
+	return 0;
+}
+
+```
+
+Notice the last output is 44, since incrementing b and a will add 1 to the same variable.
+
+Pointers may also be passed as arguments to functions with the same results. In the below example (whose output is 45), I show a couple techniques.
+
+```cpp
+#include <iostream>
+using namespace std;
+
+void addOne(int *that){
+	(*that) ++;
+}
+
+
+void addTwo(int &that){
+	that += 2;
+}
+
+int main(){
+	int a = 42;
+	addOne( &a );
+	addTwo( a );
+	cout << a << endl;
+	return 0;
+}
+
+```
+
+In `addOne()`, I pass a pointer. This can be useful because it does not let me forget that I'm working with something special. In `addTwo()`, I am *passing by reference* with that ampersand, and it provides for cleaner code at the risk of forgetting the local variable is connected to something bigger.
+
+## Forward Declaration
+
 
 + header files
-+ abstraction
-	+ structs
-	+ classes
-		+ private
-		+ public
-		+ inheritance?
-+ std::string
-+ other STL?
 
+
+## Bundling things
+
++ structs
++ classes
+	+ private
+	+ public
+	+ inheritance?
+
++ std::string
+
+## Conclusion
 
 + learning C++ "for real" (book recommendations)
+
 
 ~~+ todo: change "goodnight moon" example to not step on ITP's toes~~
 Tom Igoe's Arduino example, based on Mikal Hart's example.
@@ -4055,7 +4131,7 @@ http://arduino.cc/en/Reference/SoftwareSerial#.Ux3MTOddWlO
 + fine tune "argument" vs. "parameter"
 
 
-+ todo: split this thing into several smaller chapters.
++ todo: split this thing into several smaller chapters!
 
 
 + cancelled
