@@ -541,7 +541,7 @@ We've been defining a point in space by keeping two separate variables - one for
 	
 ofVec2f isn't that scary, right?  Let's start using it to build the triangle brush.  The first step is to draw an isosceles triangle at the mouse cursor. 
 
-![Isosceles Triangle](http://mathworld.wolfram.com/images/eps-gif/IsoscelesTriangle_800.gif "Image of an isosceles triangle from wolfram")
+![Isosceles Triangle](images/IsoscelesTriangle_800.png "Image of an isosceles triangle from wolfram")
 
 **[stolen graphics from wolfram, generate something similar later]**
 
