@@ -782,10 +782,12 @@ nice, but all in 3D - doing a quick hack to draw the video grabber in the scene.
 
 ofxPSLevels
 
+```cpp
 s += "\nbrightness (b/B) : " + ofToString(levels.brightness);
 s += "\ncontrast (c/C) : " + ofToString(levels.contrast);
 s += "\nsaturation (s/S) : " + ofToString(levels.saturation);
 s += "\ngamma (g/G) : " + ofToString(levels.gamma);
+```
 
 nice to have this as a post effect for everything.
 
