@@ -55,26 +55,23 @@ Your dataset is likely to contain extra information not relevant to your visuali
 ###Mine
 As Fry (2008) outlines, the mining stage of visualising data involves applying statistical methods and math to your dataset to analyse patterns and trends within it. This might be as simple as identifying the minimum and maximum values so that you know the range of variation in your data. Depending on your data, you may wish to calculate an average or a median value.
 
-Once you have completed this step, it is now time to load and visualise your data in OF. We will return to the last three stages of Fry’s data visualisation steps following this example.</p>
+Once you have completed this step, it is now time to load and visualise your data in OF. We will return to the last three stages of Fry’s data visualisation steps following this example.
 
-##2.1 Quick overview of some common file structures. tsv, csv, xml, json </h2>
-Data is available and stored in specific file types that have particular structures and syntax. The following file types are some of the most common forms of structuring data.</p>
+##2.1 Quick overview of some common file structures. tsv, csv, xml, json 
+Data is available and stored in specific file types that have particular structures and syntax. The following file types are some of the most common forms of structuring data.
 
 
-*CSV: comma separated values (csv) files. These can be directly imported into OF.</li>
-*TSV: text files are tab separated (tsv) files. These can be directly imported into OF. </li>
-*XML:  An xml document is composed of tags with values and other tags inside of them. A tag has a name, attributes, values. If a tag contains other tags they are called its children. If a tag is inside of another, the enclosing tag is called its parent. The tags next to one another are siblings.</li>
-1
-2
-3
-4	<parentTagName>
+*CSV: comma separated values (csv) files. These can be directly imported into OF.
+*TSV: text files are tab separated (tsv) files. These can be directly imported into OF. 
+*XML:  An xml document is composed of tags with values and other tags inside of them. A tag has a name, attributes, values. If a tag contains other tags they are called its children. If a tag is inside of another, the enclosing tag is called its parent. The tags next to one another are siblings.
+<parentTagName>
     <tagName attributeName="attributeValue">TagValue</tagName>
     <siblingTag />
 </parentName> 
 
 Reading an XML file in OF requires the use of an OF addon called ofXmlSettings.
 
-*JSON: JSON stands for ‘javascript object notation’. This is a human readable file that is built on two structures, a collection of name/value pairs which can be realised in OF as a struct and an ordered list of values, realised as a vector. Json files also are parsed using an OF addon called ofxJSON, see example 2.XX for how to implement this. </li>
+*JSON: JSON stands for ‘javascript object notation’. This is a human readable file that is built on two structures, a collection of name/value pairs which can be realised in OF as a struct and an ordered list of values, realised as a vector. Json files also are parsed using an OF addon called ofxJSON, see example 2.XX for how to implement this. 
 
 
 ##2.2 Loading and saving data 
