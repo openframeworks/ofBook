@@ -163,33 +163,33 @@ Because it can be daunting to come up with a generally useful gitignore template
 This file will look similar to this (formatted into three columns for convenience):
 
     $ pr -tW84 -s"|" -i" "1 -3 .gitignore
-    ###########################|                           |.externalToolBuilders
-    # ignore generated binaries|# XCode                    |
-    # but not the data folder  |*.pbxuser                  |##################
-    ###########################|*.perspective              |# operating system
-                               |*.perspectivev3            |##################
-    /bin/*                     |*.mode1v3                  |
-    !/bin/data/                |*.mode2v3                  |# Linux
-                               |# XCode 4                  |*~
-    #########                  |xcuserdata                 |# KDE
-    # general                  |*.xcworkspace              |.directory
-    #########                  |                           |.AppleDouble
-                               |# Code::Blocks             |
-    [Bb]uild/                  |*.depend                   |# OSX
-    [Oo]bj/                    |*.layout                   |.DS_Store
-    *.o                        |                           |*.swp
-    [Dd]ebug*/                 |# Visual Studio            |*~.nib
-    [Rr]elease*/               |*.sdf                      |# Thumbnails
-    *.mode*                    |*.opensdf                  |._*
-    *.app/                     |*.suo                      |
-    *.pyc                      |*.pdb                      |# Windows
-    .svn/                      |*.ilk                      |# Image file caches
-    *.log                      |*.aps                      |Thumbs.db
-                               |ipch/                      |# Folder config file
-    ########################   |                           |Desktop.ini
-    # IDE files which should   |# Eclipse                  |
-    # be ignored               |.metadata                  |# Android
-    ########################   |local.properties           |.csettings
+    ###########################|                     |.externalToolBuilders
+    # ignore generated binaries|# XCode              |
+    # but not the data folder  |*.pbxuser            |##################
+    ###########################|*.perspective        |# operating system
+                               |*.perspectivev3      |##################
+    /bin/*                     |*.mode1v3            |
+    !/bin/data/                |*.mode2v3            |# Linux
+                               |# XCode 4            |*~
+    #########                  |xcuserdata           |# KDE
+    # general                  |*.xcworkspace        |.directory
+    #########                  |                     |.AppleDouble
+                               |# Code::Blocks       |
+    [Bb]uild/                  |*.depend             |# OSX
+    [Oo]bj/                    |*.layout             |.DS_Store
+    *.o                        |                     |*.swp
+    [Dd]ebug*/                 |# Visual Studio      |*~.nib
+    [Rr]elease*/               |*.sdf                |# Thumbnails
+    *.mode*                    |*.opensdf            |._*
+    *.app/                     |*.suo                |
+    *.pyc                      |*.pdb                |# Windows
+    .svn/                      |*.ilk                |# Image file caches
+    *.log                      |*.aps                |Thumbs.db
+                               |ipch/                |# Folder config file
+    ########################   |                     |Desktop.ini
+    # IDE files which should   |# Eclipse            |
+    # be ignored               |.metadata            |# Android
+    ########################   |local.properties     |.csettings
 
 This might look like magic to you, but let us just continue for now, you can always look up more information on the gitignore syntax later, for example [here](http://git-scm.com/docs/gitignore).
 
