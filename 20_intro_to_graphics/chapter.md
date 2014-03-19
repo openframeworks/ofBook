@@ -1,3 +1,5 @@
+# Graphics #
+
 ***
 
 **Notes to Self**
@@ -37,8 +39,6 @@
   - Mention getRotated
 
 ***
-
-# Graphics #
 
 **Personal Introduction TDB**
 
