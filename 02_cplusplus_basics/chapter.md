@@ -241,7 +241,7 @@ We will now define our own function and make use of it as a word template. Type 
 using namespace std;
 
 void greet(string person){
-	cout << "Good night " << person << "." << endl;
+	cout << "Hi there " << person << "." << endl;
 }
 
 int main() {
@@ -257,11 +257,11 @@ int main() {
 The output shows a familiar bedtime story.
 
 ```
-Good night moon.
-Good night red balloon.
-Good night comb.
-Good night brush.
-Good night bowl full of mush.
+Hi there moon.
+Hi there red balloon.
+Hi there comb.
+Hi there brush.
+Hi there bowl full of mush.
 ```
 
 In this new code, notice the second function `greet()` which looks the same but different from `main()`. It has the same curley brackets to hold the code block, but the return type is different. It has the same pair of parentheses, but this time there is something inside. And what about that required return statement? The *void* keyword is used in place of a return type when a function does not return anything. So, since `greet()` has a *void* return type, the compiler will not complain should you leave out the `return`. However, you may still use the return statement to end the execution of the function early. More on this when we get to functions that have multiple lines of code. **[MH: Since you are going to explain returning early later in your chapter anyway, I wouldn't bother mentioning it here as it might distract newbies]** In the parentheses, you see `string person`. This is an *argument*, an input-value for the function to use. In this case, it's a bit like find-and-replace. Down in `main()`, you see I call `greet()` five times, and each time, I put a different string in quotes between the parentheses. These five lines of code are all ***function calls***. They are telling `greet()` to execute, and passing it the one string argument so it can do its job. That one string argument is made available to `greet()`'s inner code via the argument called `person`. To see the order of how things happen, take a look at Figure 11.
@@ -4104,41 +4104,263 @@ In `addOne()`, I pass a pointer. This can be useful because it does not let me f
 
 ## Forward Declaration
 
+Perhaps you noticed that all my functions in the previous examples were defined in a certain order. `main()` has always been very last. What if I put `main()` before?
 
-+ header files
+```cpp
+#include <iostream>
+using namespace std;
+
+int main(){	
+	doSomething();
+	return 0;
+}
+
+void doSomething(){
+	cout << "hi there" << endl;
+}
+```
+
+The error shows that the compiler was not able to find `doSomething()`.
+
+```
+/Users/jtnimoy/Downloads/tmp.cpp:5:2: error: use of undeclared identifier 'doSomething'
+        doSomething();
+        ^
+1 error generated.
+```
+
+If I had to manage everything in an order of dependency all the time, things would get out of control pretty quickly. Luckily, C++ has *forward declarations*. Declaring a function in the beginning without defining the full piece of code provides a legend to the compiler so it will allow you to place your functions in any order (after that).
+
+```cpp
+#include <iostream>
+using namespace std;
+
+//forward declaration
+void doSomething();
+
+int main(){	
+	doSomething();
+	return 0;
+}
+
+void doSomething(){
+	cout << "hi there" << endl;
+}
+```
+
+In fact, forward declarations are such an essential part of writing C and C++ that we put them in a header file. The following is an example header file separated out. `#pragma once` means make sure this file is only included once. The header file can take over the job of including libraries, using namespaces, and this is where you should be forward declaring functions.
+
+```cpp
+
+// -------- filename: code.h ----------
+
+#pragma once
+#include <iostream>
+using namespace std;
+
+void doSomething();
+int main();
+
+```
+
+Meanwhile in the C++ file, there is a lot less to deal with, and you can put your functions in any order.
 
 
-## Bundling things
+```cpp
+// -------- filename: code.cpp ----------
 
-+ structs
-+ classes
-	+ private
-	+ public
-	+ inheritance?
+#include "code.h"
 
-+ std::string
+int main(){	
+	doSomething();
+	return 0;
+}
+
+void doSomething(){
+	cout << "hi there" << endl;
+}
+
+```
+
+Let us modify this example to use a personal namespace.
+
+
+```cpp
+
+// -------- filename: code.h ----------
+
+#pragma once
+#include <iostream>
+using namespace std;
+namespace tutorial{
+	void doSomething();
+};
+int main();
+
+// -------- filename: code.cpp ----------
+
+#include "code.h"
+
+int main(){	
+	tutorial::doSomething();
+	return 0;
+}
+
+void tutorial::doSomething(){
+	cout << "hi there" << endl;
+}
+
+```
+Notice in the header file, the namespace `tutorial` contains the forward declaration of a function in that namespace, then in the code implementation file (.cpp), the function name is decorated with `tutorial::` before it. In C++, the double colon means the thing on the right is organized inside the thing on the left, a bit like a biological classification. `life::domain::kingdom::phylum::class::order::family::genus::species`. A namespace is not the only thing you can employ to organize your functions into nice bundles. In the last section, I will provide a tour of structs and classes, and it should be enough to get you through the initial OpenFrameworks topics. Classes and *Object Oriented Programming* will be covered in greater depth in a later chapter.
+
+## Classes
+
+It's nice to organize things into clusters, to form associations between them, stay tidy, and operate on them as a group - another kind of abstraction. A *class* is one construct that lets you do this. Let's bunch integers `x` and `y` into a class `Point`.
+
+```cpp
+// -------- filename: code.h ----------
+
+#pragma once
+#include <iostream>
+using namespace std;
+
+namespace tutorial{
+    class Point{
+	public:
+		float x;
+        float y;
+    };
+}
+
+// -------- filename: code.cpp ----------
+
+#include "code.h"
+
+int main(){
+    tutorial::Point p;
+    p.x = 5.8;
+    p.y = 2.5;
+
+    cout << p.x << ' ' << p.y << endl;
+    return 0;
+}
+
+```
+
+In the above example, I define the class `Point` and inside it, you see there is a `public:` label that allows me to use dot syntax and say `p.x` later on. If I had left out the `public:`, it would be the same as typing `private:` and the compiler would not allow me to refer to the inner members of the class. A class can also hold functions! Let's add a function to the `Point` class which will operate on its values in an encapsulated way.
+
+```cpp
+// -------- filename: code.h ----------
+#pragma once
+#include <iostream>
+using namespace std;
+
+namespace tutorial{
+    class Point{
+    public:
+        float x;
+		float y;
+        void move(int offsetX,int offsetY);
+    };
+}
+
+// -------- filename: code.cpp ----------
+
+#include "code.h"
+
+int main(){
+    tutorial::Point p;
+    p.x = 5.8;
+    p.y = 2.5;
+
+    p.move(4,4);
+
+    cout << p.x << ' ' << p.y << endl;
+    return 0;
+}
+
+void tutorial::Point::move(int offsetX,int offsetY){
+    x += offsetX;
+    y += offsetY;
+}
+
+```
+
+
+Notice the namespace syntax applies when defining the function later ... `tutorial::Point::move`. Within that function, I am referring to `x` and `y` as local variables, and it turns out that works because the function is in the `Point` class, next to those member variables, so this makes sense. When I call `p.move()`, the one instance of that class adds 4 to both its x and y members.
+
+When dynamically allocating an instance of a class, one uses pointer syntax just the same, but the dot syntax changes to arrows.
+
+```cpp
+int main(){
+    tutorial::Point *p = new tutorial::Point();
+    p->x = 5.8;
+    p->y = 2.5;
+
+    p->move(4,4);
+
+    cout << p->x << ' ' << p->y << endl;
+
+	delete p;
+    return 0;
+}
+```
+
+Now that you've seen the arrow syntax for class instance pointers, here is a more verbose way of referring to x and y in `move()`:
+
+```cpp
+void tutorial::Point::move(int offsetX,int offsetY){
+    this->x += offsetX;
+    this->y += offsetY;
+}
+```
+
+The reason x and y work is because they are implicitly members of `this`, which is a pointer to the current class instance.
+
+When seeing classes in OpenFrameworks code templates, the top of the class declaration might contain more than I've taught you. Something like:
+
+```cpp
+class testApp : public ofBaseApp{
+```
+
+The mysterious part at the end that goes `: public ofBaseApp` means that the class `testApp` is *inheriting* some pre-written variables and functions from OpenFrameworks so it is more capable than meets the eye.
+
+## STL Strings
+
+Now that you understand a little bit about classes, let's look back at some classes that have always been with us. `std::cout` is an instance of iostream, and the << operator is like calling a "writeLine" function, sort of like `cout.write()`. Although C traditionally uses c-strings (char arrays with zero bytes at the end) as its string format of choice, OpenFrameworks conventionally chooses the more robust STL String as it is closer to Java and has a lot of useful features. 
+
+```cpp
+#include <iostream>
+int main(){	
+	std::string s = "hi";
+	s += " there";
+	std::cout << s << ' ' << s.size() << std::endl;
+	return 0;
+}
+```
+
+In the above example, I am adding additional text to my string with the addition + operator, and calling `s.size()` to get the number of bytes in the text.
+
+As the STL String object enhances the c-string, there are many classes and packages in C++ that are here to enhance different domains. OpenFrameworks is one such collection of reusable code.
 
 ## Conclusion
 
-+ learning C++ "for real" (book recommendations)
+Congratulations, you should now know enough C++ to get started with OpenFrameworks, a collection of functions and classes to make your life easier as a computational poet. Of course, I did not just teach you the entire language, but if you wish to go further with learning C and C++, here are a couple books I recommend.
 
+Brian W. Kernighan; Dennis M. Ritchie (March 1988). The C Programming Language (2nd ed.). Englewood Cliffs, NJ: Prentice Hall. ISBN 0-13-110362-8. (Amazon: http://www.amazon.com/Programming-Language-2nd-Brian-Kernighan/dp/0131103628 )
 
-~~+ todo: change "goodnight moon" example to not step on ITP's toes~~
-Tom Igoe's Arduino example, based on Mikal Hart's example.
-http://arduino.cc/en/Reference/SoftwareSerial#.Ux3MTOddWlO
+Bjarne Stroustrup (2013). The C++ Programming Language (4th ed.).  Addison-Wesley. ISBN 978-0-321-56384-2 (Amazon: http://www.amazon.com/The-Programming-Language-4th-Edition/dp/0321563840 )
 
+For online reference, I recommend http://en.cppreference.com and http://cplusplus.com
 
+===
+===
+===
+
+TODO
 + fine tune "argument" vs. "parameter"
-
-
-+ todo: split this thing into several smaller chapters!
-
-
-+ cancelled
-  + possibly show them local terminal-based C++ in cygwin/linux/bsd
-  + possibly weave in basic GLUT/OpenGL to make this all more fun?
-  + some less basic data types (double, long, short)
-	
++ MH's inline comments
++ split this chapter into smaller 25-35 page chapters
 
 ###bibliography
 + "From the Beginning" - http://snap.nlc.dcccd.edu/learn/selena/history.html
