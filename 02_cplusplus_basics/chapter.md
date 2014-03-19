@@ -2,18 +2,9 @@
 
 *by [jtnimoy](http://jtnimoy.net)*
 
-###inspirational quote candidates:
-
-> A hero is someone who understands the responsibility that comes with his freedom.
->
-> **--Bob Dylan**
-
-
 > The magician of the future will use mathematical formulas.
 >
-> **--Aleister Crowley** [1 vote]**[BD: 2 votes]** **[MH: Make that 3 votes]**
-
-
+> **--Aleister Crowley**
 
 ##Look Alive!
 
@@ -21,22 +12,20 @@ This chapter introduces you to writing small computer programs using the C++ lan
 
 
 
-##Progress Not Perfection
+##Iteration
 
 
 I did most of my drawing and painting in the mid-nineties, a high school AP art student sporting a long black ponytail of hair shaved with a step, round eyeglasses, and never an article of clothing without spill, fling, smattering, or splotch of Liquitex Basics acrylic paint. Bored out of my mind in economics class, playing with my TI-82 graphing calculator, I discovered something that flipped a light bulb on in my heart. Unlike smaller calculators around my house growing up, the TI-82 had a thick instruction manual. Amidst sections in this manual about trig functions and other dry out-of-reach science, something caught my thirsty, young eye: a sexy black-on-white pyramid with smaller upside-down pyramids infinitely nested inside, shown in Figure 1.
 
 ![Figure 1: TI-82 rendering of the Sierpinski triangle, Courtesy of Texas Instruments](images/sierpinski-fractal-ti82.png "Figure 1: TI-82 rendering of the Sierpinski triangle, Courtesy of Texas Instruments")
 
-This fractal, the famous *Sierpinski triangle ***[BD: Link? Or is that too distracting too fast?]**, accompanied about twenty-five computer instructions making up the full SIERPINS program. I looked closer at the code, seeing a few numeric operations – nothing too advanced, and most of it was commanding words, like "do this", or "if something then do another thing". I was able to key in the code from the book into the graphing calculator and run the program. At first, just a blank LCD panel. Slowly a few random pixels switched to black here and there, not really showing any pattern. After a few more seconds, the scene filled in and I could already see faint outlines of triangles. After a good long time, my calculator finally matched the picture in the book. My mind was officially blown. Certain things did not make sense. What sort of miracle of nature caused such a complex form to come from so little instruction? The screen had over six-thousand pixels in it, so why is it that a mere twenty-five instructions was all it took to create this amazing, organism-like artwork? Whose artwork was it? Might I derive a new work from it? Rarely had I ever seen such a magical reward coming from so little work. I had found my new basics. I felt the need to understand the program because (I decided) it was important. I went back into the code and changed some of the numbers, then ran the program again. The screen went blank, then drew a different picture, only this time, skewed to the left, falling out of the viewport. Feeling more courageous, I attempted to change one of the English instructions, and the machine showed an error, failing to run.
+This fractal, the famous [Sierpinski triangle](https://www.wolframalpha.com/input/?i=sierpinski+triangle), accompanied about twenty-five computer instructions making up the full SIERPINS program. I looked closer at the code, seeing a few numeric operations – nothing too advanced, and most of it was commanding words, like "do this", or "if something then do another thing". I was able to key in the code from the book into the graphing calculator and run the program. At first, just a blank LCD panel. Slowly a few random pixels switched to black here and there, not really showing any pattern. After a few more seconds, the scene filled in and I could already see faint outlines of triangles. After a good long time, my calculator finally matched the picture in the book. My mind was officially blown. Certain things did not make sense. What sort of miracle of nature caused such a complex form to come from so little instruction? The screen had over six-thousand pixels in it, so why is it that a mere twenty-five instructions was all it took to create this amazing, organism-like artwork? Whose artwork was it? Might I derive a new work from it? Rarely had I ever seen such a magical reward coming from so little work. I had found my new basics. I felt the need to understand the program because (I decided) it was important. I went back into the code and changed some of the numbers, then ran the program again. The screen went blank, then drew a different picture, only this time, skewed to the left, falling out of the viewport. Feeling more courageous, I attempted to change one of the English instructions, and the machine showed an error, failing to run.
 
 ![Figure 2: The human loop of a programmer.](images/programmer-cycle.png "Figure 2: The human loop of a programmer.")
 
-The cycle ~~I just described (write code, run app, re-think program's behavior,  revise code, etc.) as shown~~**[BD: "illustrated above". The previous just feels a bit redundent]** in Figure 2, is an infinitely repeating loop that I have had a great pleasure of executing for a couple decades and I still love what I do. Each new cycle never fails to surprise me. As I pursue what it means to create a program, and what it means to create software art, the process of iteratively evolving a list of computer instructions always presents as much logical challenge as it does artistic reward. Very few of those challenges have been impossible to solve, especially with other people available to collaborate and assist, or by splitting my puzzle into smaller puzzles. If you have already written code in another environment like Processing, Javascript, or even HTML with CSS, then this first important lesson might seem too obvious.
+The cycle illustrated in Figure 2 is an infinitely repeating loop that I have had a great pleasure of executing for a couple decades and I still love what I do. Each new cycle never fails to surprise me. As I pursue what it means to create a program, and what it means to create software art, the process of iteratively evolving a list of computer instructions always presents as much logical challenge as it does artistic reward. Very few of those challenges have been impossible to solve, especially with other people available to collaborate and assist, or by splitting my puzzle into smaller puzzles. If you have already written code in another environment like Processing, Javascript, or even HTML with CSS, then this first important lesson might seem too obvious.
 
 ![Figure 3: Don't get the wrong idea.](images/profit-not.png "Figure 3: Don't get the wrong idea.")
-
-**[MH: this figure would benefit from having arrows indicating flow, like in fig 2]**
 
 For those just now familiarizing themselves with what it means to write small programs, it is important to understand the iterative nature of the code writing process. The anecdote in Figure 3 shows what this process is *not*. Rarely would you ever enter some code into the editor just once, and expect to hit compile and see your finished outcome. It is natural, and commonly accepted for programs to start small, have plenty of mistakes (bugs), and evolve slowly toward a goal of desired outcome or behavior. In fact it is so commonplace that to make the former assumption is a downright programmer's mistake. Even in older days when programs were hand-written on paper, the author still needed to eyeball the code obsessively in order to work out the mistakes, and therefore the process was iterative. In learning the C++ language, I will provide tiny code examples that you will be compiling on your machine. The abnormal part is typing the code from the book into the editor, and (provided your fingers do not slip), the program magically runs. I am deliberately removing the troubleshooting experience in order to isolate out the subject matter of the C++ language itself. Later on, we will tackle the black art of *debugging* as a topic all its own.
 
@@ -44,9 +33,9 @@ For those just now familiarizing themselves with what it means to write small pr
 
 ##Compiling My First App
 
-Let us start by making the smallest, most immediate C++ program possible, then use the convenient environment to test small snippits of C++ code throughout this chapter. In order to do that, we must have a *compiler*, which is a program that translates some code into an actual runnable app, sometimes referred to as the executable file. C++ compilers are mostly free of charge to download, and in a lot of cases, open source. The apps we generate will not automatically show up in places like Apple's App store, Google Play, Steam, Ubuntu Apps Directory, or Pi Store. Instead, they are your personal, private program files and you will be responsible for manually sharing them later on. In the following chapter *OF Setup and Project Structure*, the compiler will sit on your local computer, able to run offline. For now, we will be impatient and compile some casual C++ on the web using a convenient tool by Sphere Research Labs. Please open your web browser and go to [ideone](http://ideone.com) **[BD: Perhaps an actual link would be nice as well on the off-chance someone will read this from a book (if we ever get that lucky).]**.
+Let us start by making the smallest, most immediate C++ program possible, then use the convenient environment to test small snippits of C++ code throughout this chapter. In order to do that, we must have a *compiler*, which is a program that translates some code into an actual runnable app, sometimes referred to as the executable file. C++ compilers are mostly free of charge to download, and in a lot of cases, open source. The apps we generate will not automatically show up in places like Apple's App store, Google Play, Steam, Ubuntu Apps Directory, or Pi Store. Instead, they are your personal, private program files and you will be responsible for manually sharing them later on. In the following chapter *OF Setup and Project Structure*, the compiler will sit on your local computer, able to run offline. For now, we will be impatient and compile some casual C++ on the web using a convenient tool by Sphere Research Labs. Please open your web browser and go to [ideone](http://ideone.com) (http://ideone.com).
 
-You will notice right away that there is an editor already containing some code, but it is set to another language. We will now switch from Java to C++ **[BD: This sentence sort of sounds like we were at one point talking about programing in Java]**. Down at the bottom left of the editor, press the button that says "Java", as shown in Figure 4.
+You will notice right away that there is an editor already containing some code, but it may be set to another language. Let's switch the language to C++11 if it is not already in that mode. Down at the bottom left of the editor, press the button just to the left of "stdin", as shown in Figure 4. The label for this button could be any number of things.
 
 ![Figure 4](images/where-is-says-java.png "Figure 4")
 
@@ -63,13 +52,11 @@ This is just an empty code template that does nothing, and creates no errors. Th
 
 ###Interlude on Typography
 
-Computer programming code is generally presented in fixed-width typesetting, because it is a form of ascii-art. The indentation, white space characters, and repetitive patterns are all important to preserve and easily eyeball for comparison. Every coder I know except artist Jeremy Rotsztain uses some manner of monospaced font for their code. **[BD: Maybe briefly explain what monospace type is and why it is useful/important]** Some typeface suggestions are Courier, Andale Mono, Monaco, Profont, Monofur, Proggy, Droid Sans Mono, Deja Vu Sans Mono, Consolas, and Inconsolata. From now on, you will see the font style switch to `this style` . . .
+Most fonts on the web are variable width, meaning the letters are different widths and the current eye finds that comfortable to read. Fonts can also be fixed-width, meaning all the letters (even the W and the lowercase i) are all the same width. Whilst this may look funny and quant like a typewriter, it serves a pretty important purpose. A fixed width font makes a block of text into a kind of game board, like chess squares or graphing paper. Computer programming code is generally presented in fixed-width typesetting, because it is a form of ascii-art. The indentation, white space characters, and repetitive patterns are all important to preserve and easily eyeball for comparison. Every coder I know except artist Jeremy Rotsztain uses some manner of monospaced font for their code. Some typeface suggestions are Courier, Andale Mono, Monaco, Profont, Monofur, Proggy, Droid Sans Mono, Deja Vu Sans Mono, Consolas, and Inconsolata. From now on, you will see the font style switch to `this inline style` . . .
 
-```C++
-or this style ...
+```cpp
+and this style encased in a block . . .
 ```
-
-**[BD: Note that the above two examples, at least in my markdown preview app, render confusingly similar looking.]**
 
 . . . and that just means you are looking at some code.
 
@@ -81,14 +68,14 @@ Now please press *Edit* (Figure 7) at the top left of the code editor.
 
 You will see a slightly different editing configuration but the same template code will still be editable at the top. We will now edit the code. Find line 5, where it says:
 
-```C++
+```cpp
 // your code goes here .
 ```
 
-A line beginning with a double forward slash is called a comment. You may type anything you need to in order to annotate your code in a way you understand. Sometimes a it's useful to “comment out code” by placing two forward-slashes before it, because that deactivates the C++ code without deleting it. Comments in C++ can also take up multiple lines, or happen inside of **[BD: "after"?]** some code on 1 **[BD: Perhaps "one", as "1" could lead to confusion if the reader were to think that you meant the first line]** line, but the syntax for beginning and ending comment-mode is different. Everything between the `/* and the */` becomes a comment:
+A line beginning with a double forward slash is called a comment. You may type anything you need to in order to annotate your code in a way you understand. Sometimes a it's useful to “comment out code” by placing two forward-slashes before it, because that deactivates the C++ code without deleting it. Comments in C++ can also take up multiple lines, or insert like a tag. The syntax for beginning and ending comment-mode is different. Everything between the `/* and the */` becomes a comment:
 
 
-```C++
+```cpp
 /* 
 this is a multi-line comment. 
 still in comment mode.
@@ -97,7 +84,7 @@ still in comment mode.
 
 Please delete the code on line 5 and replace it with the following statement:
 
-```C++
+```cpp
 cout << "Hello World" << endl;
 ```
 
@@ -107,7 +94,7 @@ You may put almost anything between those quotes. The quoted phrase is a called 
 
 While you typed, perhaps you noticed the text became multi-colored all by itself. This convenient feature is called *syntax-coloring* and can subconsciously enhance ones ability to read the code, troubleshoot malformed syntax, and assist in searching. Each tool will have its own syntax coloring system so if you wish to change the colors, please expect that it's not the same thing as a word processor. It will not let me assign the font "TRON.TTF" with a glowing aqua color to *just* `endl` (which means end-of-line). Instead, I can choose a special style for a whole category of syntax, and see all parts of my code styled that way as long as it's that type of code. In this case, both `cout` and `endl` are considered keywords and so the tool colors them black. If these things show up as different colors elsewhere, please trust that it's the same code as before. The entire code should now look like this:
 
-```C++
+```cpp
 include <iostream.h>
 using namespace std;
 
@@ -117,26 +104,23 @@ int main(){
 }
 ```
 
-Now press the green "ideone it!" **[BD: Note that you previously referred to a button using _italics_]** button at the bottom right corner and watch the output console, which is the bottom half of the code editor, just above that green button. You will see orange status messages saying things like “Waiting for compilation”, “Compilation”, and “Running”. Shortly after, the program will itself, execute, its output printed. You should see the new message in Figure 8.
+Now press the green *ideone it!* button at the bottom right corner and watch the output console, which is the bottom half of the code editor, just above that green button. You will see orange status messages saying things like “Waiting for compilation”, “Compilation”, and “Running”. Shortly after, the program will itself, execute, its output printed. You should see the new message in Figure 8.
 
 ![Figure 8](images/hello-world.png "Figure 8: Hello World appears in output window")
 
-If you made it this far, then give yourself a great big hug. You just wrote your first line of C++ code, you analyzed it, compiled it, ran it, and saw the output. Please send word of your recent success so that we may heed your triumph. Tweet the following:
+If you made it this far, then give yourself a great big hug. You just wrote your first line of C++ code, you analyzed it, compiled it, ran it, and saw the output.
 
-**cout << "Hello World" << endl; #ofBook**
-
-COME BACK
 ##Beyond Hello World
 
 Now that we've gotten our feet wet, let's go back and analyze the other parts of the code. The first line is an include statement:
 
-```C++
+```cpp
 #include <iostream>
 ```
 
 Similar to *import* in Java and CSS, `#include` is like telling the compiler to cut and paste some other useful code from a file called *iostream.h* at that position in the file, so you can depend on its code in your new code. In this case, iostream.h *provides* `cout` and `endl` as tools I can use in my code, just by typing their names. In C++, a filename ending in **.h** is called a header file, and it contains code you would include in an actual C++ implementation file, whose filename would end in **.cpp**. There are many standard headers built into C++ that provide various basic services – in fact too many to mention here. If that wasn't enough, it's also commonplace to add an external library to your project, including its headers. You may also define your own header files as part of the code you write, but the syntax is slightly different:
 
-```C++
+```cpp
 #include "MyCustomInclude.h"
 ```
 
@@ -161,7 +145,7 @@ It's a whole story, but worth understanding conceptually. The include statement 
 
 Let's do an experiment. In the code editor, please comment out the include directive on line 1, then run the code. To comment out the line of code, insert two adjacent forward-slashes at the beginning of the line.
 
-```C++
+```cpp
 //#include <iostream>
 ```
 
@@ -179,7 +163,7 @@ prog.cpp:5:27: error: ‘endl’ was not declared in this scope
 
 The compiler found an error and did not run the program. Instead, it's showing you  where it got confused in attempt to help you fix it. The first part, *prog.cpp*: tells you the file that contains the error. In this case, ideone.com saved your code into that default file name. Next, it says `In function ‘int main()’`: file showing you the specific section of the code that contains the error, in this case, between the {curly brace} of a function called *main*. (We will talk about functions and curly braces later). On the next line, we see `prog.cpp:5:2:`. The 5 is how many lines from the top of the file, and 2 is how many characters rightward from the beginning of the line. Next, we see `error: ‘cout’ was not declared in this scope`. That is a message describing what it believes it wrong in the code. In this case, it's fairly correct. iostream.h is gone, and therefore no `cout` is provided to us, and so when we try to send "Hello World", the compile fails. On the next couple of lines, you see the line of code containing the fallacious `cout`, plus an extra little up-caret character on the line beneath it, and that is supposed to be an arrow pointing at a character in the code. In this case, the arrow should be sitting beneath the 'c' in `cout`. The system is showing you visually which token is at fault. A second error is shown, and this time, the compiler complains that there is no endl. Of course, we know that in order to fix the error, we need to include <iostream.h> so let us do that now. Please un-comment line 1 and re-run the code.
 
-```C++
+```cpp
 #include <iostream>
 ```
 
@@ -189,7 +173,7 @@ When using OpenFrameworks, you have choice of tools and platforms. Each one show
 
 Moving on to line 2, we see:
 
-```C++
+```cpp
 using namespace std;
 ```
 
@@ -197,7 +181,7 @@ Let's say I'm in the 3rd grade of elementary school and I hop on a school bus to
 
 Let's say you join a social website and it asks you to choose a username. My name is Joshua Nimoy, username might be JNIMOY. I submit the page and it returns an error, telling me that username is already taken, and I have to choose another, since my father, Joseph Nimoy, registered before I did and he's got JNIMOY. And so I must use my middle initial T, and create a more unique username, JTNIMOY. I just created and resolved a *namespace conflict*. A namespace is a group of unique names - none are identical. It's possible to have identical names, as long as they are a part of two separate namespaces. Namespaces help programmers avoid stepping on each other's toes by overwriting one another's symbols or hogging the good names. Namespaces also provide a neat and tidy organization system to help us find what we're looking for. In OpenFrameworks, everything starts with `of` . . . like `ofSetBackground` and `ofGraphics`. This is one technique to do namespace separation because it's less likely that any other names created by other programmers would begin with `of`. The same technique is used by OpenGL. Every name in the OpenGL API (Application Programming Interface) begins with `gl` like `glBlendFunc` and `glPopMatrix`. In C++ however, it is not necessary to have a strictly disciplined character prefix for your names, as the language provides its own namespacing syntax. In line 2, `using namespace std;` is telling the compiler that this .cpp file is going to use all the names in the `std` namespace. Spoiler-alert! those two names are `cout` and `endl`. Let us now do an experiment and comment out line 2, then run the code. What sort of error do you think the compiler will return?
 
-```C++
+```cpp
 /* using namespace std; */
 ```
 
@@ -213,7 +197,7 @@ In file included from prog.cpp:1:0:
 
 The compiler says "Hey, I searched for `cout` and I did find it in one of the namespaces included in the file. Here it is. `std::cout`" and in this case, the compiler is correct. It wants us to be *more explicit* with the way we type `cout`, so we express its namespace `std` (standard) on the left side, connected by a double colon (::). it's sort of like calling myself `Nimoy::Joshua`. Continuing our experiment, edit line 5 so that `cout` and `endl` have explicit namespaces added.
 
-```C++
+```cpp
 std::cout << "Hello World" << std::endl;
 ```
 
@@ -226,13 +210,13 @@ Say I'm at a Scrabble party in Manhattan, and I am the only Josh. People can jus
 
 Moving on, let us take a look at line 4:
 
-```C++
+```cpp
 int main() {
 ```
 
 This is the first piece of code that has a beginning and an end, such that it "wraps around" another piece of code. But more importantly, a function *represents* the statements enclosed within it. The closing end of this *function* is the closing curly brace on line 7:
 
-```C++
+```cpp
 }
 ```
 
@@ -252,12 +236,12 @@ Next, we see an opening curley bracket. Sometimes this opening curley bracket is
 
 We will now define our own function and make use of it as a word template. Type the sample code into your editor and run it.
 
-```C++
+```cpp
 #include <iostream>
 using namespace std;
 
 void greet(string person){
-	cout << "Good night " << person << "." << endl;
+	cout << "Hi there " << person << "." << endl;
 }
 
 int main() {
@@ -273,11 +257,11 @@ int main() {
 The output shows a familiar bedtime story.
 
 ```
-Good night moon.
-Good night red balloon.
-Good night comb.
-Good night brush.
-Good night bowl full of mush.
+Hi there moon.
+Hi there red balloon.
+Hi there comb.
+Hi there brush.
+Hi there bowl full of mush.
 ```
 
 In this new code, notice the second function `greet()` which looks the same but different from `main()`. It has the same curley brackets to hold the code block, but the return type is different. It has the same pair of parentheses, but this time there is something inside. And what about that required return statement? The *void* keyword is used in place of a return type when a function does not return anything. So, since `greet()` has a *void* return type, the compiler will not complain should you leave out the `return`. However, you may still use the return statement to end the execution of the function early. More on this when we get to functions that have multiple lines of code. **[MH: Since you are going to explain returning early later in your chapter anyway, I wouldn't bother mentioning it here as it might distract newbies]** In the parentheses, you see `string person`. This is an *argument*, an input-value for the function to use. In this case, it's a bit like find-and-replace. Down in `main()`, you see I call `greet()` five times, and each time, I put a different string in quotes between the parentheses. These five lines of code are all ***function calls***. They are telling `greet()` to execute, and passing it the one string argument so it can do its job. That one string argument is made available to `greet()`'s inner code via the argument called `person`. To see the order of how things happen, take a look at Figure 11.
@@ -327,7 +311,7 @@ Although OS X promotes Objective-C and Windows promotes C#, both XCode and Visua
 
 ### Conversational Slang
 
-Sometimes I say C, and sometimes I say C++. Since they are closely related, perhaps you can understand how they are almost synonymous. I also leave out the ++ because I am talking about both languages! C++ is almost a superset of C (see figure 17), so when I talk about the properties of C, I am usually also talking about the properties of C++. To make things worse, the greater slang of C applies to all the C-something languages. Let's say you are a famous code artist presenting at the EyeO festival and a member of the audience asks you to talk about the programming of your piece. You may have used a combination of C++, C, and Objective-C on Mac OS X to make your OpenFrameworks project happen (not to mention Java and C# on your Linode server), but because simplicity is elegant, and because you only have 2 minutes left before they kick you off stage, your answer is shortened - and you say "I wrote it in C". Perhaps later when that audience member buys you a drink, you can be more specific about all the strains of C-language you actually used. Like most slang, relaxed conversational use of "C" is also context-sensitive. Sometimes preemptively simplifying speech like that is inappropriate when you are speaking to known engineers, developers, and hackers. In that case, saying C when you mean C++ might be construed as fronting!
+Sometimes I say C, and sometimes I say C++. Since they are closely related, perhaps you can understand how they are almost synonymous. I also leave out the ++ because I am talking about both languages! C++ is almost a superset of C (see figure 17), so when I talk about the properties of C, I am usually also talking about the properties of C++. To make things worse, the greater slang of C applies to all the C-something languages. Let's say you are a famous code artist presenting at the EyeO festival and a member of the audience asks you to talk about the programming of your piece. You may have used a combination of C++, C, and Objective-C on Mac OS X to make your OpenFrameworks project happen (not to mention Java and C# on your Linode server), but because simplicity is elegant, and because you only have 2 minutes left before they kick you off stage, your answer is shortened - and you say "I wrote it in C". Perhaps later when that audience member talks to you individually, you can be more specific about all the strains of C-language you actually used. Like most slang, relaxed conversational use of "C" is also context-sensitive. Sometimes preemptively simplifying speech like that is inappropriate when you are speaking to known engineers, developers, and hackers. In that case, saying C when you mean C++ might be construed as fronting!
 
 ![Figure 17. C++ is a non-strict superset of C](images/non-strict-superset.png "Figure 17. C++ is a non-strict superset of C")
 
@@ -340,7 +324,7 @@ Sometimes I say C, and sometimes I say C++. Since they are closely related, perh
 
 Please enter the following program into ideone and run it.
 
-```C++
+```cpp
 #include <iostream>
 using namespace std;
 
@@ -362,7 +346,7 @@ That number plus 1 is 43.
 
 We understand from a previous lesson that stuff you put between the `<<` operators will get formatted into the `cout` object, and magically end up in the output console. Notice in the last line, I put a bit of light arithmetic (42+1) in-between parentheses, and it evaluated to 43. That is called an *expression*, in the mathematics sense. These three lines of code all say something about the number 42, and so they all contain a literal integer. **[MH: Worth noting what literal means]** If I want to change that number, I can do what I know from word processing, and "find-and-replace" the 42 to a new value. Now what if I had 100,000 particles in a 3d world. Some have 42's that need changing, but other 42's that should not be changed? Things can get both heavy and complex when you write code. The most obvious application of *variables* is that they are a very powerful find-and-replace mechanism, but you'll see that variables are useful for more than that. So let's declare an integer at the top of the code and use it in place of the literal 42's.
 
-```C++
+```cpp
 #include <iostream>
 using namespace std;
 
@@ -383,7 +367,7 @@ Now that I am using the variable `answer`, I only need to change that one number
 
 It is also possible to declare a variable and initialize it on two separate lines. That would look like:
 
-```C++
+```cpp
 int answer;
 answer = 42;
 ```
@@ -413,7 +397,7 @@ ___       // several underscores are fine
 Notice lowercase a is a different identifier than uppercase A. Identifiers in C++ are case-sensitive.
 The following identifiers are not okay.
 
-```C++
+```cpp
 1infiniteloop         // should not start with a number
 transient-mark-mode   // dashes should be underscores
 @jtnimoy              // should not contain an @
@@ -455,7 +439,7 @@ We call them variables because their values *vary* during runtime. They are most
 
 If a computer program is like a little brain, then a variable is like a basic unit of remembrance. Jotting down a small note in my sketchbook is like storing a value into a variable for later use. Let's see an example of a variable changing its value.
 
-```C++
+```cpp
 #include <iostream>
 using namespace std;
 
@@ -493,7 +477,7 @@ In the above assembly code, the programmer needs to put the value into an interm
 
 Analyzing the previous code example, we see the number increments by 1 each time before it is output. I am repeatedly storing literal integers into the variable. Since a programming language knows basic arithmetic, let us now try the following modification:
 
-```C++
+```cpp
 #include <iostream>
 using namespace std;
 
@@ -518,15 +502,17 @@ The output should still be `012345`. By saying `counter = counter + 1`, I am inc
 
 ![Figure 21. The future Marty uses the past Marty](images/futuremarty.png "Figure 21. The future Marty uses the past Marty")
 
-Great Scott, that could make someone dizzy! But after doing it a few times, you'll see it doesn't get much more complicated than what you see there. This is a highly *practical* use of science fiction, and you probably aren't attempting to challenge the fabric of spacetime (unless you are Kyle McDonald, or maybe a Haskell coder). The point here is to modify the contents of computer memory, so we have `counter` from one instruction ago, in the same way that there might already be water in our bucket when we go to add water to it. Figure 22 shows `bucket = bucket + water`.
+Great Scott, that could make someone dizzy! But after doing it a few times, you'll see it doesn't get much more complicated than what you see there. This is a highly *practical* use of science fiction, and you probably aren't attempting to challenge the fabric of spacetime (unless you are Kyle McDonald, or maybe a Haskell coder <!-- i mean these things as a high compliment, not as mockery -->). The point here is to modify the contents of computer memory, so we have `counter` from one instruction ago, in the same way that there might already be water in our bucket when we go to add water to it. Figure 22 shows `bucket = bucket + water`.
 
 ![Figure 22. bucket = bucket + water](images/minecraft-inc.png "Figure 22. bucket = bucket + water")
 
-**[MH: Shouldn't the empty bucket and water bucket be reversed?]**
+~~**[MH: Shouldn't the empty bucket and water bucket be reversed?]**~~
+**[JTN: i don't think so since the extra water tile "increments" onto the existing water already in the bucket, and the empty bucket on the right is more a symbol of the bucket alone]**
+
 
 Incrementing by one, or adding some value to a variable is in fact so commonplace in all programming that there is even syntactic sugar for it. *Syntactic Sugar* is a redundant grammar added to a programming language for reasons of convenience. It helps reduce typing, can increase comprehension or expressiveness, and (like sugar) makes the programmer happier. The following statements all add 1 to `counter`.
 
-```C++
+```cpp
 counter = counter + 1; // original form
 counter += 1;          // "increment self by" useful because it's less typing.
 counter++;             // "add 1 to self" useful because you don't need to type a 1.
@@ -535,7 +521,7 @@ counter++;             // "add 1 to self" useful because you don't need to type 
 
 Let's test this in the program.
 
-```C++
+```cpp
 #include <iostream>
 using namespace std;
 
@@ -558,7 +544,7 @@ int main(){
 
 Yes, it's a lot less typing, and there are many ways to make it more concise. Here is one way.
 
-```C++
+```cpp
 #include <iostream>
 using namespace std;
 
@@ -576,7 +562,7 @@ int main(){
 
 The answer is still `012345`. The postfix incrementing operator will increment the variable even while it sits inside an expression. Now let's try the prefix version.
 
-```C++
+```cpp
 #include <iostream>
 using namespace std;
 
@@ -594,7 +580,7 @@ int main(){
 
 If you got the answer `123456`, that is no mistake! The prefix incrementing operator is different from its postfix sister in this very way. With `counter` initialized as 0, `++counter` would evaluate to 1, whilst `counter++` would still evaluate to 0 (but an incremented version of `counter` would be left over for later use). The output for the following example is `1112`.
 
-```C++
+```cpp
 #include <iostream>
 using namespace std;
 
@@ -610,9 +596,7 @@ int main(){
 
 For arithmetic completeness, I should mention that the subtractive *decrementing* operator (counter--) also exists. Also, as you might have guessed by now, if one can say `counter + 1`, then a C compiler would also recognize the other classic arithmetic like `counter - 3` (subtraction), `counter * 2` (asterisk is multiplication), `counter / 2` (division), and overriding the order of operations by using parentheses, such as `(counter + 1) / 2` evaluating to a different result than `counter + 1 / 2`. Putting a negative sign before a variable will also do the right thing and negate it, as if it were being subtracted from zero. C extends this basic palette of maths operators with boolean logic and bitwise manipulation; I will introduce them in Variables part 2.
 
-There are a few more essentials to learn about variables, but we're going to take what we've learned so far and run with it in the name of fun. In the meantime, give yourself another pat on the back for making it this far! You learned what variables are, and how to perform basic arithmetic on them. Please give us a shout about your progress so that we may celebrate along with you. Tweet the following:
-
-**@stroustrup I know why you called it C++; #ofBook**
+There are a few more essentials to learn about variables, but we're going to take what we've learned so far and run with it in the name of fun. In the meantime, give yourself another pat on the back for making it this far! You learned what variables are, and how to perform basic arithmetic on them.
 
 ## If-Then
 
@@ -622,7 +606,7 @@ Imagine riding your bicycle in the streets of your city. When you encounter inte
 
 Your ability to judge a situation and change your behavior based on your analysis is a kind of prediction behavior that defines intelligence. A computer program can also stop, analyze, and decide how to act in a more simplified way. *Conditionals* or *branching* in code are what provides this kind of simple yet useful intelligence. With just a little bit if *If-Then-Else* in your code, you can automate very complex decision making.
 
-Figure 23 shows a generative, interactive cluster of neurons coded in OpenFrameworks for the CLOUDS Interactive Documentary.  **[MH: Explicityly drop the word branching to link this up the to conditional concept?]**
+Figure 23 shows a generative, interactive cluster of branching neurons coded in OpenFrameworks for the CLOUDS Interactive Documentary. 
 
 ![Figure 23. Neuron simulation from CLOUDS Interactive Documentary](images/vsneurons.png "Figure 23. Neuron simulation from CLOUDS Interactive Documentary")
 
@@ -716,7 +700,7 @@ Perhaps you noticed a pattern in the above *pseudo-code*, where I define a braci
 
 The part labelled `test` is a *boolean logic* expression, and that means it ultimately results in a TRUE or FALSE answer. Let us look at some real code to see how a true or false test looks in context.
 
-```C++
+```cpp
 #include <math.h>
 #include <iostream>
 using namespace std;
@@ -759,7 +743,7 @@ Each time, I am checking to see if `counter` is greater than 1, and if that is t
 
 The first time it evaluates `counter > 1`, the result is false, and so the indented code does not execute. There are a couple other pieces of the if-structure worth introducing. One important one is `else`, which opens up a second block of code to execute if the condition is false.
 
-```C++
+```cpp
 
 if(true){
 	// this code happens if the condition is true
@@ -770,7 +754,7 @@ if(true){
 
 This is different from simply putting an un-braced line of code beneath the if-clause since that free-roaming line of code would execute *whether or not* the condition were true. **[MH: adding an example free-roaming line to the above example might help]** So `else` turns out to be pretty convenient. Another similar piece is `else if` that allows you to cascade your if-then clauses in a way similar to CSS.
 
-```C++
+```cpp
 
 if(condition1){
 	// this code happens if condition1 is TRUE, then the rest is skipped.
@@ -790,13 +774,13 @@ Using `else if`, it's easy to build a flexible filter system for decision making
 
 The following is debated as something worth avoiding by folks like JSLint (who are also strict about whitespace). The reason I introduce it here is because you'll see it in OpenFrameworks related code, and I want you to recognize what you are seeing. If-statements can be expressed more concisely by using the single-line syntax, which is less flexible.
 
-```C++
+```cpp
 if (counter > 1) cout << "yes, it's greater";
 ```
 
 An if-statement with no curly braces will only "limit" the one immediately following line of code. Even with the other snap-in parts, the same "next line only" rules apply.  **[MH: Maybe add a free roaming line after the if in order to show the next line only rule]**
 
-```C++
+```cpp
 if (counter > 1) cout << "yes, it's greater";
 else if (counter < 10) cout << "well, it's still smaller than 10";
 else cout << "The counter was outside the 2-10 range.";
@@ -804,7 +788,7 @@ else cout << "The counter was outside the 2-10 range.";
 
 The above code will do the exact same thing as:
 
-```C++
+```cpp
 if (counter > 1) {
 	cout << "yes, it's greater";
 } else if (counter < 10) {
@@ -821,7 +805,7 @@ If at all possible, I recommend using the fully braced syntax for all new code i
 
 So far, I've glossed over that part that goes `counter > 1`. Perhaps you recall a moment in third grade when the teacher taught you the "pacman" rule of inequality, where greedy pacman wants to go chomp the bigger number, so he faces in that direction. Comparison operators in C are based on that.
 
-```C++
+```cpp
 a > b // a is greater than b
 a < b // a is less than b
 a >= b // a is greater-than-or-equal-to b
@@ -835,7 +819,7 @@ You will notice the use of double-equal sign to mean the original thing you thou
 
 Inequalities can be joined together with logical operators called AND, OR, and NOT, which do much the same thing they are already doing in natural English. AND is typed out as the `&&` operator, while OR is the `||` operator. NOT is a prefixed exclamation mark, and it inverts the truth state of an expression. Here are some boolean logic expressions.
 
-```C++
+```cpp
 true || false             // true
 false || false            // false
 true || false || false    // true
@@ -853,7 +837,7 @@ false || true && !false   // true
 
 "Boolean" is named after George Boole, one of the fathers of computer science who worked out this sort of true/false maths. You'll find boolean logic in everything  partly because it powers the if-then clauses. The keywords `true` and `false` are considered *global constants*. Conveniently, any non-zero number qualify as true when placed in a boolean context, whilst all zero values qualify as false. In that way, you might set up your arithmetic to land on a zero or non-zero in formulating a testing expression for your if-then clause. In the following example of a conditional, you'll see boolean logic operators used to join numeric comparison.
 
-```C++
+```cpp
 if (counter > 10 && counter < 20) {
 	cout << "it's within the 10-20 range";
 } else if (counter <= 0) {
@@ -867,7 +851,7 @@ if (counter > 10 && counter < 20) {
 
 If-then clauses may also be *nested* meaning you can place an entire if-then clause inside one of the code blocks of another. Of course, the indentation needs to observe proper recursion.
 
-```C++
+```cpp
 
 if( counter > 30 ){
 	
@@ -893,12 +877,14 @@ if( counter > 30 ){
 The term *nesting* is the same concept as the Matryoshka doll, as shown in Figure 25. You can place the hollow Russian dolls inside one another until it appears like there is only one doll. It's trippy because of the concentric modules (recursion) but it is incredibly useful in crafting an algorithm.
 
 ![Figure 25. Matryoshka nesting doll](images/Russian-Matroshka2.jpg "Figure 25. Matryoshka nesting doll")
+**[JTN: this needs copyleft attribution and highest res version needs to be archived]**
+
 
 ## Looping
 
 You may have noticed that the recent C++ example code had a lot of cutting and pasting in it. This brute-force way of forging repetitive behavior is not as flexible, and nowhere near as concise as simply telling your code to loop.
 
-```C++
+```cpp
 #include <math.h>
 #include <iostream>
 using namespace std;
@@ -941,7 +927,7 @@ If you run this code, the output starts like this . . .
 Normally, you would not want your program to simply loop forever. Let's modify the code so that the loop knows to stop after hitting 100.
 
 
-```C++
+```cpp
 while(counter < 100){
 	counter	++;
     cout << counter << ", ";
@@ -962,7 +948,7 @@ I changed the contents of the `while`'s conditional expression so that it will o
 
 This is not the only way to stop a while loop. Let us nest some if-then clauses into the while loop, so I can demonstrate the `break` and `continue` statements.  **[MH: you mention introducing continue and then it doesn't come back for a few paragraphs]**
 
-```C++
+```cpp
 	while(true){
     	counter	++;
 	    cout << counter << " ";
@@ -989,7 +975,7 @@ For the next example, I'd like to introduce you to the modulo operator, which is
 
 Modulo is great for easily making patterns. The following example prints an alternating pattern of # and space, forever.
 
-```C++
+```cpp
 while(true){
 	counter	++;
     if(counter % 2 == 0){
@@ -1002,7 +988,7 @@ while(true){
 
 This outputs `# # # # # #`. The next modification prints out `# ## ## ## ## ##`.
 
-```C++
+```cpp
 while(true){
 	counter	++;
     if(counter % 3 < 2){
@@ -1015,7 +1001,7 @@ while(true){
 
 Getting back to demonstrating the `continue` statement, I will use the % operator to "skip" only even numbers.
 
-```C++
+```cpp
 while(true){
 	counter	++;
     if(counter % 2 == 0){
@@ -1030,7 +1016,7 @@ The output begins with `1 3 5 7 9 11 13 15 17 19 21 23 25 27 29 31 33 35 37 39 4
 
 The following program uses a nested while-loop and an additional counter variable to generate a sawtooth wave pattern in ASCII art.
 
-```C++
+```cpp
 #include <math.h>
 #include <iostream>
 using namespace std;
@@ -1161,7 +1147,7 @@ Because a *finite* loop is so common, there is syntactical sugar for it. This su
 
 That whole chunk of `for( int i = 0 ; i < 100 ; i++ )` seems confusing at first but you will get to know it pretty fast. it just means "do this 100 times", and it is worth practicing typing that very thing out a few times so you can commit it into muscle memory. Here are a few for-loops.
 
-```C++
+```cpp
 
 for(int i = 100 ; i >= 0 ; i--){
 	//iterates with i from 100 to 0
@@ -1183,7 +1169,7 @@ for( int i = 0 ; i < 10 ; i++ ){
 
 The iterating variable in a for-loop is commonly named `i`, the inner one is named `j`, and the one inside that is `k`. After that, the emerging standard starts to vary but I have seen `ii`,`jj`,`kk`, and then `iii`,`jjj`,`kkk`. programmers also just break down and start using more expressive variable names. In nested for-loops that iterate through pixels, you will commonly see `x`, `y`, and sometimes `z` as the iterator names. If you see the variable `i` in someone's code, chances are it's a local variable declared at the top of the for-loop. Just like the while-loop, a for-loop will respond to `break` and `continue` statements. Here is an example of a double for-loop that generates a 2-dimensional pattern into the console.
 
-```C++
+```cpp
 #include <iostream>
 using namespace std;
 
@@ -1239,7 +1225,7 @@ And the output should look like this.
 Just for fun, I'm going to introduce a distance function. You don't need to understand the pythagorean theorem (unless you want to) but just paste the useful function into your code so you can measure distance.
 
 
-```C++
+```cpp
 #include <iostream>
 #include <math.h>
 using namespace std;
@@ -1303,7 +1289,7 @@ The output looks like this:
 
 The new if-statement measuring the distance from the circle's center allows us to render the inside of the circle with a different letter. The reason it looks tall and skinny is because in ACSII art, the characters are 2x taller, and we have not accounted for that in the code. We can fix that by multiplying the correct things by 2 in the arguments of `distance()` call.
 
-```C++
+```cpp
             if( distance(x,y*2,40,20) < 17 ){ // Y and circle-center-Y both multiplied by 2
 ```
 
@@ -1337,7 +1323,7 @@ The output should be more circular, depending on the line-height of the font ren
 
 When I first introduced functions, we had not learned enough code statements to fill those functions with more than one line of code. Now that you've seen a bit more, I'd like to cover something I had omitted. You have seen how it is possible to `break` out of a loop. it is also possible to break out of an entire function with the special `return` statement, and this will skip the rest of the function and go directly back to the calling code.
 
-```C++
+```cpp
 void doSomething(int a){
 	if ( a <= 0 ) {
 		return;
@@ -1357,7 +1343,7 @@ The above function has a return type of `void` and so it is not required to retu
 
 We will now combine our new knowledge of variables, conditionals, looping, and functions to render an animation of a ball bouncing. Let's start with an empty ASCII art picture and add a ball to it.
 
-```C++
+```cpp
 #include <iostream>
 using namespace std;
 
@@ -1392,7 +1378,7 @@ The output should look like this.
 
 We have a function `drawFrame()` whose job it is to render 1 frame of animation into the console as ASCII art. Above that, we have a couple variables `width` and `height` to store the size of the canvas. Now let's add the ball. To do this, we add a couple more global variables below `width` and `height` to hold the ball's position, and then we add an if-statement to the renderer to make sure it makes a visual exception for the ball position, which is 1 character.
 
-```C++
+```cpp
 #include <iostream>
 using namespace std;
 
@@ -1435,7 +1421,7 @@ The output changes to look like this.
 
 Let's make the ball move left and right by adding a `force` global variable just for the x value of the ball, then start adding the force to the ball's position, rendering frame after frame.
 
-```C++
+```cpp
 #include <iostream>
 using namespace std;
 
@@ -1555,7 +1541,7 @@ The output should start with this.
 
 As you can see, the ball's position keeps getting 1 added to it, and eventually it falls off the canvas. To make it bounce off the walls, we must add conditions into `updatePhysics()` that detect the ball collision with the wall, and change the direction of its force.
 
-```C++
+```cpp
 void updatePhysics(){
 	if( (ballX+1) ==width || ballX==0){   // new
 		forceX = -forceX;           // new
@@ -1815,7 +1801,7 @@ O...................
 
 To make the ball move up and down in addition to left and right, we simply add a `forceY` and repeat the working algorithm over from the X behavior.
 
-```C++
+```cpp
 int forceX = 1;
 int forceY = 1;                           // new
 
@@ -2062,9 +2048,7 @@ O...................
 ....O...............
 ```
 
-If you were able to follow along this far, then give yourself another hug because you just wrote a basic physics simulator and rendered it to the console frame by frame. Let us know you are awesome by tweeting this:
-
-**I made a ball bounce in code #ofBook**
+If you were able to follow along this far, then give yourself another hug because you just wrote a basic physics simulator and rendered it to the console frame by frame.
 
 ## Next Steps
 
@@ -2107,7 +2091,7 @@ When dealing with nested clauses in code, global and local are less black and wh
 
 Let us see how this looks in code.
 
-```C++
+```cpp
 #include <iostream>
 using namespace std;
 
@@ -2130,7 +2114,7 @@ int main() {
 
 The output is `0 1 2 3`. Notice `addOne()` and `main()` are *sharing* the global variable. Its value remains the same between them. Unfortunately, `myGlobal` is forgotten when the program is finished running, which makes it *local* within the scope of this program. To make its value even more persistent, we need to write it to a file, database, or share it over the network. That level of global-ness is one you will see explained in later chapters by other authors. Now let's deliberately cause an error.
 
-```C++
+```cpp
 #include <iostream>
 using namespace std;
 
@@ -2158,7 +2142,7 @@ prog.cpp:5:10: error: ‘i’ was not declared in this scope
 
 The compiler has a problem understanding what you mean by `i` within the scope of `addOne()` because `i` is not a global variable (it only exists inside the for-loop of `main()`) and because no local variable `i` has been declared for the personal use of `addOne()`. If we wanted to access the value of `i` from within `addOne()`, the best thing to do would probably be to pass `i`'s value as an argument in the `addOne()` function.
 
-```C++
+```cpp
 #include <iostream>
 using namespace std;
 
@@ -2207,7 +2191,7 @@ Unlike an `int`, A `float` allows decimal points, and so you can work at a highe
 
 ####Float
 
-```C++
+```cpp
 #include <iostream>
 using namespace std;
 
@@ -2319,7 +2303,7 @@ Floating point values are useful because they allow us get in-between the piano 
 
 Look what happens when we go back to that code example and change the type from `float` to `int`.
 
-```C++
+```cpp
 #include <iostream>
 using namespace std;
 
@@ -2335,7 +2319,7 @@ int main() {
 
 The output becomes a long, serene list of zeros since the `int` data type cannot handle a tiny fraction like 0.012. So during the moment it tries to add 0.012 to myNumber (which is an int), 0.012 gets automatically rounded down **[MH: maybe better to say decimal gets disregarded/truncated since 0.012 gets rounded down whenever you round it]** to an integer, which is zero every time. Now let's try the opposite example, storing ints into a float.
 
-```C++
+```cpp
 #include <iostream>
 using namespace std;
 
@@ -2350,7 +2334,7 @@ int main() {
 ```
 The variable type was changed back to `float` and within the for-loop, i am now adding an integer `1`. It turns out there is no loss in precision since a float is more than enough to store the first 100 integers. So far so good. Now here's a gotcha!
 
-```C++
+```cpp
 #include <iostream>
 using namespace std;
 
@@ -2363,20 +2347,20 @@ int main() {
 
 The output is simply `3`, not 3.14286. For the beginner in variable types, this can be somewhat confusing. On the one hand, I have declared the variable as a `float` so it *must* be able to handle decimal points. The answer lies in the syntax used for integers 22 and 7. Like variables, literal numbers (values typed out with numeric digits right into the code) in C have a type, inferred by the compiler based on *how you formatted the number*. In this case, 22 and 7 are both literal integers since they are nothing but number. Let's try changing them to be literal *floats* by suffixing them with `.0`.
 
-```C++
+```cpp
 	float myNumber = 22.0 / 7.0;
 ```
 
 The output should now be `3.14286` since the expression is now floating point division, rather than integer division, which chops off the fraction. To shed a bit more light about this important difference between integers and floats, let's remove the `.0` from just the 7 and see what happens.
 
-```C++
+```cpp
 	float myNumber = 22.0 / 7;
 ```
 
 The output is still `3.14286`, since the division operator needs to have only one of its participating numbers be a float in order to act with more precision. Therefore, it should not matter which side of the division operator has the floating point type . . .
 
 
-```C++
+```cpp
 	float myNumber = 22 / 7.0;
 ```
 
@@ -2391,7 +2375,7 @@ I grew up in Southern California. When someone says the word "float" I am remind
 
 `Char` is another type that stores a single character, whose value is traditionally 0-255, a range that fits inside 8-bits (1 byte). Often times, a char is referred to as a byte for this 8-bit reason. You may know the term `8-bit` if you are a fan of chiptune music or had a Nintendo Entertainment System (NES). A single byte is a pretty classic unit of memory, and as such - incredibly useful for dealing with data. You'll learn more about bits and bytes in chapter 16, in which Arturo will be covering the subject in greater detail. For now, let's start playing with the `char` type and begin to understand its basic uses.
 
-```C++
+```cpp
 #include <iostream>
 using namespace std;
 
@@ -2409,7 +2393,7 @@ This program outputs `B`. You've already seen strings surrounded by double quote
 
 Okay, what if we want to see the numeric representation of our char, instead of the letter? *Explicit type conversion* (or casting) allows you to force the surrounding expression to treat a variable with one type as if it had another type. We do this by placing the desired type in parentheses and attach it to the left of the variable. In the following example, I loop from 'A' (65) to 'z' (122), and print out all the letters with their according numbers.
 
-```C++
+```cpp
 #include <iostream>
 using namespace std;
 
@@ -2486,7 +2470,7 @@ z 122
 
 Naturally, you can cast between any of the fundamental types. The computer will increase and decrease precision as needed. Here's an example where I cast from char to float, then to int, then to char again. Try to guess what the output will be.
 
-```C++
+```cpp
 #include <iostream>
 using namespace std;
 
@@ -2501,7 +2485,7 @@ The output is 'D'.
 
 Perhaps you guessed that the answer would be 'E' since I had added 0.7 before storing into `int a`. You were correct to assume that the computer is converting from float to int, but incorrect to say that 68.7 is "rounded" to 69, therefore producing the letter E. Instead, conversion from float to int is more technically a `floor()` function, meaning it just chops off the fraction and replaces it with a zero. So even (int)2.99999999999 will still come out as 2. If you need to actually round the number, bringing 5.0 and higher to the ceiling, then use `round()`
 
-```C++
+```cpp
 #include <iostream>
 #include <math.h>
 using namespace std;
@@ -2522,7 +2506,7 @@ The output is `3 4 3`, and notice that I have included `<math.h>` so I can use f
 
 I admit that last topic about variable types was a bit numeric, but it was important so if you feel fuzzy about any of it, please go back and re-read. For now, let's have fun with what we just learned. `math.h` comes with all kinds of useful tools for art. One of them generates a fake data stream of evenly distributed values. Programmers call it *random* and ironically, it's anything but random. To see what I mean, run the following program three times, each time noting the output.
 
-```C++
+```cpp
 #include <iostream>
 #include <math.h>
 using namespace std;
@@ -2545,7 +2529,7 @@ Every time you run the program, you get the same output.
 
 This tells us that the sequence starts over again. There are things you can do about that and it will be covered in a later chapter. Since these are pretty big numbers, let's normalize them by dividing by `RAND_MAX`, a constant provided by math.h which is the highest possible value that the random function is willing to return.
 
-```C++
+```cpp
 #include <iostream>
 #include <math.h>
 using namespace std;
@@ -2577,7 +2561,7 @@ Notice in the output, all numbers are somewhere between 0 and 1.
 
 Let's use this normalized random in an ascii art generator. By multiplying a normalized random output by 52, we get random values between 0 and 52. 
 
-```C++
+```cpp
 #include <iostream>
 #include <math.h>
 using namespace std;
@@ -2634,7 +2618,7 @@ Artists like the random function because it creates a lot of organic aesthetic w
 
 In the following example, I am using the same random scaled to 52, casting it to `char`, and outputting a pseudo-chaotic wall of letters. 
 
-```C++
+```cpp
 #include <iostream>
 #include <math.h>
 using namespace std;
@@ -2700,7 +2684,7 @@ WM\^fNOaJYrJpkpe`_PH^UMrmPbShtk`tiKdlhZMir`HD[\rE`qCLkLfUZsT[NVmGIlf[toeRtJOoNoo
 
 To make it more interesting, I will inform the palette of characters with column index, and I will randomize a "masking" part of the code which inserts a space according to a custom conditional.
 
-```C++
+```cpp
 #include <iostream>
 #include <math.h>
 using namespace std;
@@ -2777,7 +2761,7 @@ The classic random number generator *algorithm* is just a feedback loop wherein 
 
 If you can understand `random()` at an algorithmic level, you will be able to deeply remix it. The following is my own quick random function. It takes a char (0-255) and adds a prime number to it, causing it to wrap around from 255 to 0 as we iterate. **[MH: Big fan of this idea, but wrapping is probably unexpected for newbies and could use a sentence to aknowledge that]**
 
-```C++
+```cpp
 #include <iostream>
 #include <math.h>
 using namespace std;
@@ -2840,7 +2824,7 @@ The output looks pretty organic and chaotic from here.
 
 Now let's visualize the same number sequence by drawing bars.
 
-```C++
+```cpp
 #include <iostream>
 #include <math.h>
 using namespace std;
@@ -2910,7 +2894,7 @@ Sometimes, a surprising feedback loop might be all you need, instead of reaching
 
 You may have noticed the use of a special keyword in the previous example, `unsigned`. In languages like Java or Javascript, all numbers are *signed* meaning they are capable of being negative. (the *sign* tells us whether the number is negative). When working in C, we benefit from the convenience of specifying explicitly whether or not an int or char is signed or unsigned by adding the keyword before the type. `unsigned char myByte = 128;` To see the difference between signed and unsigned, let's loop through all the values of a char, printing each one.
 
-```C++
+```cpp
 #include <iostream>
 #include <math.h>
 using namespace std;
@@ -2962,17 +2946,13 @@ Chars are signed by default. change `unsigned` to `signed`, and run it again. Th
 -12 -11 -10 -9 -8 -7 -6 -5 -4 -3 -2 -1
 ```
 
-Instead of counting all the way up to 255, it looks like the sequence stops after 127, switches over to -128, then counts up from there until it reaches -1. A `signed char` can only count to 127 because it's using one of its bits as the sign. Figure 32 shows the 8 bits that make up the char in computer memory. With only 7 bits, you can only count from 0 to 127.
-
-**[MH: planning to explain what a bit is?]**
-
-![Figure 32. Signed vs. Unsigned in memory](images/signed-unsigned.png "Figure 32. Signed vs. Unsigned in memory")
+Instead of counting all the way up to 255, it looks like the sequence stops after 127, switches over to -128, then counts up from there until it reaches -1. A `signed char` can only count to 127 in exchange for the ability to do negative values.
 
 ###Bool
 
 I previously mentioned George Boole when talking about the business of true and false. Whilst a true/false can be stored as a number (zero being false, and non-zero being true), C provides a convenient type called a `bool` whose value can only be true or false. In the following example, I declare a boolean variable and store a counting integer into it.
 
-```C++
+```cpp
 #include <iostream>
 #include <math.h>
 using namespace std;
@@ -2987,9 +2967,9 @@ int main() {
 }
 ```
 
-The output is `0111111111` since `bool` only cares if the number is zero or non-zero. of course, since a bool is true or false, it goes naturally with OR (||), AND (&&), and NOT(!) as I discussed back in the *Boolean Logic* section. The following example program declares 4 booleans and uses them as bits in a 4-bit counter.
+The output is `0111111111` since `bool` only cares if the number is zero or non-zero. of course, since a bool is true or false, it goes naturally with OR (||), AND (&&), and NOT(!) as I discussed back in the *Boolean Logic* section. The following example program declares 4 booleans and uses them as bits of logic in a 4-bit counter.
 
-```C++
+```cpp
 #include <iostream>
 #include <math.h>
 using namespace std;
@@ -3070,65 +3050,1326 @@ democratic democratic democratic republican
 democratic democratic democratic democratic
 ```
 
-##Bitwise operators
+## Switch Case
 
-In addition to basic arithmetic and boolean logic, C provides a palette of operators for manipulating individual bits. Although *bitwise* operations are *infix* notation, (two numbers surrounding a punctuation), I think of them less as mathematics and more as basic building blocks of computers. Some are quite common and worth pointing out. Let us explore.
+There's a flow control structure similar to if-then that can sometimes be more convenient especially if you have a long chain of if-elseif-elseif-else. It looks at a single integer and jumps to a marker (a `case`) depending on what value the integer has.
 
-+ todo: looking to eliminating the binary rabbit hole. sent email on feb 27. waiting for any responses.
+```cpp
+#include <iostream>
+#include <math.h>
+using namespace std;
 
+int main(){
+	for(int i=0;i<200;i++){
+		float rnd = rand() / (float)RAND_MAX;
+		int num = round(rnd * 5);
+		
+		switch(num){	
+		case 0:
+			cout << "////";
+			break;
+		case 1:
+			cout << "''''";
+			break;
+		case 2:
+			cout << "||||";
+			break;
+		default:
+			cout << "    ";
+		}
+		
+		if(i%16==15)cout << endl;
+		
+	}
+	return 0;
+}
+```
 
+In this example, you see the keyword `switch` is followed (like an if) by `(num)` which is its criteria. Then inside its curly braces, you see instances of `case 0:` and those are the bookmarks. If num was 0 during that loop iteration, then it would jump over to that part of the case and execute the code. The output would look like:
 
-===
+```
+////''''    ||||    ''''////            ||||        ////////    
+    ////||||////||||                    ////    ||||            
+''''////    ||||            ||||''''                ////        
+''''||||    ||||''''''''||||''''||||        ////            ||||
+    ||||''''////    ////    ||||''''        ||||    ////        
+    ''''////                            ''''||||||||            
+||||    ''''||||    ||||''''''''''''        ////    ||||        
+                ''''''''    ''''////''''////||||////        ''''
+''''||||        ''''    ||||||||||||''''                    ''''
+    ||||''''    ''''||||||||    ''''''''||||    ''''            
+''''||||||||''''////    ||||''''    ||||''''    ////''''////||||
+''''''''    ||||||||||||            ''''        ''''    ||||    
+            ||||        ||||
+```
 
-( this chapter is in-progress. [see outline](outline.md) for upcoming subject matter. )
+Notice there is more whitespace in the output than other ascii phrases. That is because num is being set to a random number between and 5, but I only provided cases for 0, 1, and 2. At the bottom of the case, you see the final `default` catching all the rest of the unsaid cases. One tricky thing with cases is that their blocks of code require a `break` statement at the end if you want to skip all the way to the closing curly brace when finished. Otherwise, the code will actually continue running right into the next case!
 
+```cpp
+#include <iostream>
+#include <math.h>
+using namespace std;
 
-===
+float rnd(){
+	return rand() / (float)RAND_MAX;
+}
 
+int main(){
+	for(int i=0;i<20;i++){
 
-+ computer science operators
-	+ bitwise math
-		+ interlude about how `cout` overloads `<<`
+		switch(0){
+		case 0:
+			cout << "You make me come";
+			if(rnd()>0.5)break;         //break only half the time
+		case 1:
+			cout << "-plete";
+			if(rnd()>0.5)break;         //break only half the time
+		case 2:
+			cout << "ly miserable";
+			if(rnd()>0.5)break;         //break only half the time
+		default:
+			cout << " (guitar)";
+		}
+		
+		cout << '.' << endl;
+		
+	}
+	return 0;
+}
+```
 
-+ switch-case
+Given the option to break or not break can have *cascading* results. The output shows each line definitely starting with case 0, then sometimes continuing to case 1. Among those who got to case 1, some of them also throw in case 2, and so on.
 
-+ escape sequences in strings and chars
+```
+You make me come-pletely miserable.
+You make me come-plete.
+You make me come-pletely miserable.
+You make me come.
+You make me come.
+You make me come-plete.
+You make me come.
+You make me come-pletely miserable.
+You make me come.
+You make me come-pletely miserable (guitar).
+You make me come-plete.
+You make me come.
+You make me come.
+You make me come.
+You make me come.
+You make me come-plete.
+You make me come-plete.
+You make me come.
+You make me come.
+You make me come-pletely miserable.
+```
 
+## Escape Sequence
 
-===
+When dealing with paint, some paints have special handling instructions. One pigment is toxic and needs to be kept away from children. Another pigment requires refrigeration, and yet another is water insoluble and is more picky about the medium. In C, special characters like that are handled with an escape sequence.
 
-+ memory addressing
-	+ arrays
-	+ stack vs. heap
-	+ dynamic allocation
-	+ pointers
-+ header files
-+ abstraction
-	+ structs
-	+ classes
-		+ private
-		+ public
-		+ inheritance?
-+ std::string
-+ other STL?
+Let's jump back to the previous code example that was rendering the `////''''    ||||` and attempt to make some changes. Warning, this is going to cause an error, and it's not your fault. In `case 1`, Change the four single quotes to **three** double quotes.
 
+```cpp
+#include <iostream>
+#include <math.h>
+using namespace std;
 
-+ learning C++ "for real" (book recommendations)
+int main(){
+	for(int i=0;i<200;i++){
+		float rnd = rand() / (float)RAND_MAX;
+		int num = round(rnd * 5);
+		
+		switch(num){	
+		case 0:
+			cout << "////";
+			break;
+		case 1:
+			cout << """""; // <--------------- changing this from '''' to """
+			break;
+		case 2:
+			cout << "||||";
+			break;
+		default:
+			cout << "    ";
+		}
+		
+		if(i%16==15)cout << endl;
+		
+	}
+	return 0;
+}
+```
 
-+ todo: change "goodnight moon" example to not step on ITP's toes
+The error is not as useful as we've seen because the preprocessor is just that confused.
 
+```
+/Users/jtnimoy/Downloads/tmp.cpp:15:90: error: expected ';' after expression
+                        cout << """""; // <--------------- changing this from single quote ' to double quote "
+                                                                                                              ^
+                                                                                                              ;
+1 error generated.
+```
 
+You cannot put a double quote character into a string literal without using an escape sequence. In C, an escape sequence starts with a backslash and that just means the following character is to be interpreted in a special way.
 
-+ cancelled
-  + possibly show them local terminal-based C++ in cygwin/linux/bsd
-  + possibly weave in basic GLUT/OpenGL to make this all more fun?
-  + some less basic data types (double, long, short)
+```cpp
+#include <iostream>
+using namespace std;
+
+int main(){
+	cout << "This is a quote     ---> \" <---- Thank you." << endl;
+	cout << "This is a backslash ---> \\ <---- Hooray." << endl;
+	cout << "This is a tab       ---> \t <---- Good Grief." << endl;
+	cout << "This is a return    ---> \n <---- What next?" << endl;
+	cout << "This \
+is a \
+multiline \
+string \
+literal. Done." << endl;
+	return 0;
+}
+```
+
+The output shows that the backslash is a magical thing.
+
+```
+This is a quote     ---> " <---- Thank you.
+This is a backslash ---> \ <---- Hooray.
+This is a tab       ---> 	 <---- Good Grief.
+This is a return    ---> 
+ <---- What next?
+This is a multiline string literal. Done.
+```
+
+In strings surrounded by double quotes, we need a backslash to insert a double quote. The same is true for chars surrounded by single quotes. You're fine putting a double quote between single quotes, but if you want the actual single quote character, `escape it` with the backslash. Escape sequences are confusing because they are self-reflexive and look odd, but worth getting used to because you'll see them all the time.
+
+## Arrays
+
+In some of the previous examples, you saw I numbered similar variables by naming them with numbers at the end. They relate in name and the data is similar.
+
+```cpp
+#include <iostream>
+using namespace std;
+
+int main(){
+	int egg0 = 4;
+	int egg1 = 5;
+	int egg2 = 6;
+	int egg3 = 7;
 	
+	cout << egg0 << egg1 << egg2 << egg3 << endl;
+		
+	egg0 += 1;
+	egg1 += 1;
+	egg2 += 1;
+	egg3 += 1;
+
+	cout << egg0 << egg1 << egg2 << egg3 << endl;
+
+	egg0 += 1;
+	egg1 += 1;
+	egg2 += 1;
+	egg3 += 1;
+
+	cout << egg0 << egg1 << egg2 << egg3 << endl;	
+		
+	return 0;
+}
+
+```
+
+In the above example, I must update each of the four `egg` variables by copying the text around. Whilst easy to understand, and syntactically more simple, this brute force, cut-and-paste method is laborious, and the computer has no idea that the four eggs are related and have an order. The numbers at the end of their variable names are merely part of the word `egg`. We miss the opportunity to *address* each egg by number, in effect, controlling which egg we're working with. Well, what if I told you it doesn't have to be that way?
+
+![Figure 32. Egg Cartons photographed by Melissa Baldwin](images/5602248074_7f51aa5d69_b.jpg "Figure 32. Egg Cartons photographed by Melissa Baldwin")
+
+If a variable is a bucket or coffee cup, then an array is an egg carton - a single box holding several of the same thing. An array is a single variable name but it refers to a list of values. These values all share one type. Let's re-write the above example using an array rather than named variables. To do so, we need to know how to declare the array.
+
+![Figure 33. Declaring an array.](images/array-anatomy.png "Figure 32. Declaring an array.")
+
+Working with the individual eggs of this carton uses a similar square bracket syntax.
+
+```cpp
+cout << eggs[2]; // output the value at index 2
+eggs[0] = 45; // store 45 into the first index
+```
+
+When referring to the array, the square brackets mean "look specifically at that one", and when declaring an array, the square brackets mean "make these many slots." The new egg program, translated in the most basic way (but not all the way) looks like this.
+
+```cpp
+#include <iostream>
+using namespace std;
+
+int main(){
+	int eggs[4]; // declare an integer array with 4 slots		
+
+	eggs[0] = 4;
+	eggs[1] = 5;
+	eggs[2] = 6;
+	eggs[3] = 7;
+
+	cout << eggs[0] << eggs[1] << eggs[2] << eggs[3] << endl;
+
+	eggs[0] += 1;
+	eggs[1] += 1;
+	eggs[2] += 1;
+	eggs[3] += 1;
+
+	cout << eggs[0] << eggs[1] << eggs[2] << eggs[3] << endl;
+	
+	eggs[0] += 1;
+	eggs[1] += 1;
+	eggs[2] += 1;
+	eggs[3] += 1;
+
+	cout << eggs[0] << eggs[1] << eggs[2] << eggs[3] << endl;
+		
+	return 0;
+}
+
+```
+
+You can see the array syntax is being used, and that individual eggs may be handled one by one. Because the number is no longer part of the identifier, and now a real integer, we can apply a for-loop rather than cutting and pasting in order to loop through all of them. This makes the code more concise, easier to maintain, and opens us up to doing more intelligent things in the program. Here is a new version of the same program that replaces the one-by-one method with for-loops.
+
+```cpp
+#include <iostream>
+using namespace std;
+
+int main(){
+	int eggs[4] = {4,5,6,7};   // declare an integer array with 4 slots,
+							   // and initialize it to a literal array of 4 values
+	// print them out
+	for(int i=0;i<4;i++){
+		cout << eggs[i];
+	}
+	cout << endl;
+
+	// increment them all
+	for(int i=0;i<4;i++){
+		eggs[i]++;
+	}
+
+	// print them out
+	for(int i=0;i<4;i++){
+		cout << eggs[i];
+	}
+	cout << endl;
+	
+	// increment them all
+	for(int i=0;i<4;i++){
+		eggs[i]++;
+	}
+
+	// print them out
+	for(int i=0;i<4;i++){
+		cout << eggs[i];
+	}
+	cout << endl;
+	
+	//report success
+	return 0;
+}
+```
+
+In the above evolution of the same example, you see I could make the size of the eggs array as big as I want without seeing my code get longer in response. 
+
+Let's take this incrementing idea further by printing out an array while altering it.
+
+```cpp
+#include <iostream>
+using namespace std;
+
+int main(){
+	char eggs[8] = { '|',' ','o',' ','x', ' ', '_' , ' ' };
+	
+	for(int j=0;j<20;j++){
+		
+		// print
+		for(int i=0;i<8;i++){
+			cout << eggs[i];
+		}
+		cout << endl;
+		
+		
+		for(int i=8 ; i >= 1 ; i--){ //loop from max to min+1
+			eggs[i] = eggs[i-1]; // set current egg to previous egg's value
+		}
+		eggs[0] = eggs[7]; // wrap rightmost egg to leftmost egg
+		
+	}
+		
+	//report success
+	return 0;
+}
+```
+
+In this example, I am shifting the contents of the array to the right, and making them wrap around. The output is like a candy cane.
+
+```
+| o x _ 
+_| o x _
+ _| o x 
+x _| o x
+ x _| o 
+o x _| o
+ o x _| 
+| o x _|
+_| o x _
+ _| o x 
+x _| o x
+ x _| o 
+o x _| o
+ o x _| 
+| o x _|
+_| o x _
+ _| o x 
+x _| o x
+ x _| o 
+o x _| o
+```
+
+By sweeping downward and leaving a trail, we've made a 1-dimensional array look 2D.
+
+### Multidimensional Arrays
+
+You don't have to keep your arrays 1 dimensional however. To declare an extra dimension, add additional square brackets at the end.
+
+```cpp
+#include <iostream>
+using namespace std;
+
+int main(){
+	//initialize a 2D array
+	int tictactoe[3][3] = {
+		{0,1,2},
+		{3,4,5},
+		{6,7,8}
+	};
+	
+	for(int y=0;y<3;y++){ // loop rows
+		for(int x=0;x<3;x++){ // loop columns
+			cout << tictactoe[y][x]; // print
+		}
+		cout << endl;
+	}
+		
+	return 0;
+}
+
+```
+
+Notice the syntax for initializing it with literal data has inner nested curly braces for each row. A 2D array may be used as a pixel buffer for remembering your color values.
+
+```cpp
+#include <iostream>
+using namespace std;
+
+int main(){
+	//initialize a 2D array
+	int smiley[5][5] = {
+		{0,0,0,0,0},
+		{0,1,0,1,0},
+		{0,0,0,0,0},
+		{1,0,0,0,1},
+		{0,1,1,1,0}
+	};
+	
+	//render it right side up
+	for(int y=0;y<5;y++){ // loop rows
+		for(int x=0;x<5;x++){ // loop columns
+			if(smiley[y][x]){
+				cout << '#';
+			}else{
+				cout << ' ';
+			}
+		}
+		cout << endl;
+	}
+	
+	cout << endl;
+	
+	//render it sideways
+	for(int y=0;y<5;y++){ // loop rows
+		for(int x=0;x<5;x++){ // loop columns
+			if(smiley[x][y]){ // <----- X and Y flipped this time
+				cout << '#';
+			}else{
+				cout << ' ';
+			}
+		}
+		cout << endl;
+	}
+	
+	return 0;
+}
+
+```
+
+In the above example, I render the pixels right side up, then I render it a second time with X and Y flipped inside the `smiley[x][y]`. The output should look like this:
+
+```
+
+	 # # 
+
+	#   #
+	 ### 
+
+	   # 
+	 #  #
+	    #
+	 #  #
+	   #
+```
+
+### Errors
+
+There are a couple things about arrays that make them dangerous. One of them is related to what we learned from variables, and that has to do with left-over memory if you don't initialize it with a value. Let's actually do that in the next example.
+
+```cpp
+#include <iostream>
+using namespace std;
+
+int main(){
+	//initialize a 2D array
+	int smiley[5][5]; // <-------look, no initialization
+	
+	//render it right side up
+	for(int y=0;y<5;y++){ // loop rows
+		for(int x=0;x<5;x++){ // loop columns
+			cout << smiley[y][x] << ' ';
+		}
+		cout << endl;
+	}
+	
+	return 0;
+}
+
+```
+
+My output (which is no doubt different from yours) looked like this.
+
+```
+1479976160 32767 1608491643 32767 1479976184 
+32767 1479976184 32767 0 1 
+1479976208 32767 126439424 1 0 
+14 1479976224 32767 0 0 
+0 0 0 0 0
+```
+
+Some day your piece will glitch and you'll love it but eventually wonder how to fix it. When that day comes, I hope you'll recall that C arrays and variables need to be initialized with a starting value or else you'll find them filled with a visualization of your computer's internal memory.
+
+Another error is when you try and access an index in your array that is outside its boundaries. In the case of `int eggs[4]`, that is any number below 0 or above 3. Arrays are zero-indexed, meaning the first one is at slot zero, and the last one is at (size - 1). This provides a lot of mathematical advantage for the programmer and is worth getting used to. Let's make the mistake on purpose.
+
+```cpp
+#include <iostream>
+using namespace std;
+
+int main(){
+	int eggs[4];
+	
+	for( int i = 0 ; i < 10 ; i++ ){
+		cout << eggs[i] << endl;
+	}
+	
+	return 0;
+}
+
+```
+
+The scary thing is that even as I loop beyond 4 and up to 10, it's still accessing mysterious memory and outputting it. Here is my glitchy output.
+
+```
+0
+0
+0
+0
+0
+0
+227347776
+1
+1906995960
+32767
+```
+
+If you loop for long enough, you may eventually cause a `Segmentation fault` error. The program is stopped by the operating system because it attempted to reach into a forbidden place.
+
+### Passing Arrays to Functions
+
+When you pass an array to a function, it is defaultly *passed by reference*, and that means the function does not get a local copy of the variable and instead, gets to work with the same variable. Let's see this in action.
+
+
+```cpp
+#include <iostream>
+using namespace std;
+
+/**
+	i will add 1 to each item in an array
+	len is the length of the array
+	a is the array
+*/
+void addOne(int a[], int len){
+	for( int i = 0 ; i < len ; i++ ){
+		a[i] ++;
+	}
+}
+
+int main(){
+	// declare
+	int eggs[10];
+	
+	// initialize values
+	for( int i = 0 ; i < 10 ; i++ ){
+		eggs[i] = 42;
+	}
+	
+	// pass to function which adds one
+	addOne( eggs, 10 );
+
+	// output the new values
+	for( int i = 0 ; i < 10 ; i++ ){
+		cout << eggs[i] << ' ';
+	}
+	cout << endl;
+
+	return 0;
+}
+```
+
+In this example, I initialize all eggs with the value 42, then I pass it as an argument to `addOne()`. The array does not carry its own "size" meta-data, so one needs to pass the size as a second argument. Then `addOne()` loops through all the items and adds one to each. Notice I am not returning the array and yet, back in `main()` afterwards when I output the values, they are 43. An array is passed by reference. If you want to pass a copy, then you need to declare a second one and copy the values over to it. Swapping between arrays can be very powerful. In the following example, I do not quite copy the values to the second array verbatim. Instead, I use the previous state as simple rules.
+
+```cpp
+#include <iostream>
+using namespace std;
+
+int main(){
+	
+	int width = 10;
+	int height = 10;
+	// setup
+	int worlds[2][10][10] = {
+		
+		{
+			{0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,1,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0}
+		}		
+	};
+	bool currentWorld = true;
+	
+	//------------------------------------------------
+	
+	
+	for(int i=0;i<9;i++){
+
+
+		// draw
+		for(int y=0;y<10;y++){
+			for(int x=0;x<10;x++){
+				if(worlds[!currentWorld][y][x]==1){
+					cout << '#';
+				}else{
+					cout << '.';
+				}
+			}
+			cout << endl;
+		}
+	
+		cout << endl;
+
+		//------------------------------------------------
+		
+		// update
+		for(int y=0 ; y < height ; y++){
+			for(int x=0 ; x < width ; x++){
+				bool center = worlds[!currentWorld][y][x];
+				
+				// collect which neighboring pixels are on
+				// modulo by width or height for wrap-around access.
+				int left = worlds[ !currentWorld ][ y ][ (x + width -1) % width ];
+				int right = worlds[ !currentWorld ][ y ][ (x+1) % width ];
+				int up = worlds[ !currentWorld ][ (y + height -1) % height ][ x ];
+				int down = worlds[ !currentWorld ][ (y+1) % height ][ x ];
+				
+				if( left + right + up + down > 0){
+					worlds[currentWorld][y][x] = !center; // flip value
+				}else{
+					worlds[currentWorld][y][x] = 0; // write a blank
+				}
+			}
+		}
+	
+		//------------------------------------------------
+	
+		// swap buffers
+		currentWorld = !currentWorld;
+	}
+	
+	return 0;
+}
+
+```
+
+As I copy the values from one buffer to the next, I count how many neighboring pixels are on. If there are any, I reverse the value and otherwise write a blank. The result is a rippling effect that can take a dot, and iterate it out as a checkered diamond.
+
+```
+..........
+..........
+..........
+..........
+.....#....
+..........
+..........
+..........
+..........
+..........
+
+..........
+..........
+..........
+.....#....
+....#.#...
+.....#....
+..........
+..........
+..........
+..........
+
+..........
+..........
+.....#....
+....#.#...
+...#.#.#..
+....#.#...
+.....#....
+..........
+..........
+..........
+
+..........
+.....#....
+....#.#...
+...#.#.#..
+..#.#.#.#.
+...#.#.#..
+....#.#...
+.....#....
+..........
+..........
+
+.....#....
+....#.#...
+...#.#.#..
+..#.#.#.#.
+.#.#.#.#.#
+..#.#.#.#.
+...#.#.#..
+....#.#...
+.....#....
+..........
+
+....#.#...
+...#.#.#..
+..#.#.#.#.
+.#.#.#.#.#
+#.#.#.#.#.
+.#.#.#.#.#
+..#.#.#.#.
+...#.#.#..
+....#.#...
+.....#....
+
+...#.#.#..
+..#.#.#.#.
+.#.#.#.#.#
+#.#.#.#.#.
+.#.#.#.#.#
+#.#.#.#.#.
+.#.#.#.#.#
+..#.#.#.#.
+...#.#.#..
+....#.#...
+
+..#.#.#.#.
+.#.#.#.#.#
+#.#.#.#.#.
+.#.#.#.#.#
+#.#.#.#.#.
+.#.#.#.#.#
+#.#.#.#.#.
+.#.#.#.#.#
+..#.#.#.#.
+...#.#.#..
+
+.#.#.#.#.#
+#.#.#.#.#.
+.#.#.#.#.#
+#.#.#.#.#.
+.#.#.#.#.#
+#.#.#.#.#.
+.#.#.#.#.#
+#.#.#.#.#.
+.#.#.#.#.#
+..#.#.#.#.
+```
+
+Evolving a pixel buffer using itself as the simple rules is often called *cellular automata*, and is an inspiring model of nature. If this sounds like a direction you're going in, try *Conway's Game of Life* and Wolfram.
+
+In the above code example, you see I have a *setup* routine, followed by a loop which does an *update*, then draws something. If the web dev community has *Model, View, Controller* (MVC) design pattern, creative coders have a *Setup, Update, Draw* design pattern. We could at least separate out the chunks of code into their own functions. Here is the same example, refactored to compartmentalize each of the three standard routines. Notice that in order to share variables between the functions, I had to make them global.
+
+```cpp
+#include <iostream>
+using namespace std;
+
+int width;
+int height;
+
+int worlds[2][10][10] = {
+	
+	{
+		{0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,1,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0}
+	}		
+};
+bool currentWorld;
+
+// --------------------------------------
+
+void setup(){
+	width = 10;
+	height = 10;
+	currentWorld = true;
+}
+
+// --------------------------------------
+
+void update(){
+	for(int y=0 ; y < height ; y++){
+		for(int x=0 ; x < width ; x++){
+			bool center = worlds[!currentWorld][y][x];
+			
+			// collect which neighboring pixels are on
+			// modulo by width or height for wrap-around guard.
+			int left = worlds[ !currentWorld ][ y ][ (x + width -1) % width ];
+			int right = worlds[ !currentWorld ][ y ][ (x+1) % width ];
+			int up = worlds[ !currentWorld ][ (y + height -1) % height ][ x ];
+			int down = worlds[ !currentWorld ][ (y+1) % height ][ x ];
+			
+			if( left + right + up + down > 0){
+				worlds[currentWorld][y][x] = !center; // flip value
+			}else{
+				worlds[currentWorld][y][x] = 0; // write a blank
+			}
+		}
+	}
+
+	// swap buffers
+	currentWorld = !currentWorld;
+}
+
+// --------------------------------------
+
+void draw(){
+	for(int y=0;y<10;y++){
+		for(int x=0;x<10;x++){
+			if(worlds[!currentWorld][y][x]==1){
+				cout << '#';
+			}else{
+				cout << '.';
+			}
+		}
+		cout << endl;
+	}
+	cout << endl;
+}
+
+// --------------------------------------
+
+int main(){
+	setup();
+	for(int i=0;i<9;i++){
+		draw();
+		update();
+	}
+	return 0;
+}
+
+```
+
+I was able to lose the comments that label the code section since the containing function is called that. Self-documenting code which needs less comments is good code. Some say that if you write a program correctly, it needs no comments. Notice also that I've added dividing lines between the functions just to make it easier to see. Those are optional but do show up all over OpenFrameworks.
+
+In the following example, I use the same pixel buffer technique to draw a spiral (cosine and sine functions) but this time, I only show the last frame.
+
+```cpp
+#include <iostream>
+#include <math.h>
+using namespace std;
+
+int width, height;
+int world[10][40];
+int spiralCounter;
+// --------------------------------------
+
+void setup(){
+	width = 40;
+	height = 10;
+	spiralCounter = 0;
+	
+	//zero the memory
+	for(int y=0;y<height;y++){
+		for(int x=0;x<width;x++){
+			world[y][x] = 0;
+		}
+	}
+}
+
+// --------------------------------------
+
+float rnd(){
+	return (float)rand() / RAND_MAX;
+}
+
+// --------------------------------------
+
+void update(){
+	int offsetX = 20;
+	int offsetY = 5;
+	float rScale = 0.0415;
+	float thScale = 0.075;
+	float theta = spiralCounter * thScale;
+	float r = spiralCounter * rScale;
+	
+	//basic use of cos() and sin()
+	int y = offsetY + round(sin( theta ) * r);
+	int x = offsetX + round(cos( theta ) * r) * 2; // x 2 for ascii art aspect
+	if(y < height && y >= 0 && x < width && x >= 0){
+		world[y][x] = 1;
+	}
+	
+	spiralCounter++;
+}
+
+// --------------------------------------
+
+void draw(){
+	for(int y=0;y<height;y++){
+		for(int x=0;x<width;x++){
+			if(world[y][x]==1){
+				cout << '@';
+			}else{
+				cout << '.';
+			}
+		}
+		cout << endl;
+	}
+	cout << endl;
+}
+
+// --------------------------------------
+
+int main(){
+	setup();
+	for(int i=0;i<500;i++){
+		update();
+	}
+	draw();
+	
+	return 0;
+}
+
+```
+
+The output is a spiral trail.
+
+```
+....@.@.......@.@.........@.@.@.......@.
+....@.......@.................@.@.....@.
+....@.....@.........@.@.........@.......
+..@.......@.......@...@.@.@.....@.@.....
+..@.......@.....@.........@.......@.....
+..@.......@.....@...@.....@.@.....@.....
+..@.......@.......@.@.....@.@.....@.....
+....@.....@.@.............@.......@.....
+....@.......@.@.........@.@.....@.@.....
+......@.......@.@.@.@.@.@.......@.......
+```
+
+## Dynamic Allocation and Pointers
+
+Besides declaring new variables and arrays the way I have shown you so far, there is another way which uses a different syntax and is a bit trickier but worth knowing. *Dynamic allocation* allows us to reserve global memory with more flexibility than traditional *stack based* declarations. The whole business of dynamic allocation pivots around the `new` and `delete` keywords, and contraversially, you are responsible for cleaning up after yourself. Here is a dynamically allocated integer.
+
+```cpp
+#include <iostream>
+using namespace std;
+
+int main(){
+	int *myNumber = new int;
+	(*myNumber) = 5;
+	cout << myNumber << endl;
+	delete myNumber;
+	return 0;
+}
+```
+
+That asterisk prefix is part of *pointer* syntax. Using it in a declaration means that the variable will not be an int, but a pointer to an int. Using it on the next line to assign the value 5 to myNumber, the asterisk *de-references* causing the pointer `myNumber` to act as a normal variable for the moment I assign the value. You may have noticed a peculiar output from this program - something like 0x7feb6ac03980. That big number happened because we sent `myNumber` to `cout` in raw without de-referencing it. If you add an asterisk right before `myNumber` in the code and re-run, you'll see the satisfying 5. Sound confusing? You are not alone. This is infamous for being one of the most difficult parts of C.
+
+### What is a pointer?
+
+![Figure 34. C++ Pointers](images/pointers/01.png "Figure 34. C++ Pointers")
+
+Imagine the variable `a`, an integer holding the value 42.
+
+![Figure 35. int a = 42;](images/pointers/02.png "Figure 35. int a = 42;")
+
+Well, 42 is sitting in the computer memory somewhere. You can think of the computer memory like a neighborhood and each place is like a house with an address. Those addresses can be written down and exchanged.
+
+![Figure 36. Computer memory is like houses with addresses.](images/pointers/03.png "Figure 36. Computer memory is like houses with addresses.")
+
+In C++, we use the ampersand *reference* operator before the variable name in order to mean `3`, the address in memory where the value `42` is living.
+
+![Figure 37. Ampersand reference operator.](images/pointers/04.png "Figure 37. Ampersand reference operator.")
+
+When declaring a pointer, we precede the name with an asterisk * meaning that it contains an address reference, and then we can store a reference into it. 
+
+![Figure 38. Asterisk address operator.](images/pointers/05.png "Figure 38. Asterisk address operator.")
+
+
+One reason this can be confusing is that the variable can sit alone, without any asterisk or ampersand, and look like a regular variable - but it's still a pointer. 
+
+![Figure 39. B is still a pointer.](images/pointers/06.png "Figure 39. B is still a pointer.")
+
+So what if I'm writing code that uses B and I want to access the value, instead of the pointer address? I precede the variable with another kind of asterisk, a *dereferencing operator*, in order to turn the 3 back into a 42.
+
+![Figure 40. B dereferenced.](images/pointers/07.png "Figure 40. B dereferenced.")
+ 
+In the following example, I will create a pointer to an already existing variable, then increment both.
+
+```cpp
+#include <iostream>
+using namespace std;
+
+int main(){
+	int a = 42;
+	int *b = &a; // create a pointer to a
+	cout << b << ' ' << a << endl;
+	a++;
+	(*b)++;
+	cout << b << ' ' << a << endl;
+	return 0;
+}
+
+```
+
+Notice the last output is 44, since incrementing b and a will add 1 to the same variable.
+
+Pointers may also be passed as arguments to functions with the same results. In the below example (whose output is 45), I show a couple techniques.
+
+```cpp
+#include <iostream>
+using namespace std;
+
+void addOne(int *that){
+	(*that) ++;
+}
+
+
+void addTwo(int &that){
+	that += 2;
+}
+
+int main(){
+	int a = 42;
+	addOne( &a );
+	addTwo( a );
+	cout << a << endl;
+	return 0;
+}
+
+```
+
+In `addOne()`, I pass a pointer. This can be useful because it does not let me forget that I'm working with something special. In `addTwo()`, I am *passing by reference* with that ampersand, and it provides for cleaner code at the risk of forgetting the local variable is connected to something bigger.
+
+## Forward Declaration
+
+Perhaps you noticed that all my functions in the previous examples were defined in a certain order. `main()` has always been very last. What if I put `main()` before?
+
+```cpp
+#include <iostream>
+using namespace std;
+
+int main(){	
+	doSomething();
+	return 0;
+}
+
+void doSomething(){
+	cout << "hi there" << endl;
+}
+```
+
+The error shows that the compiler was not able to find `doSomething()`.
+
+```
+/Users/jtnimoy/Downloads/tmp.cpp:5:2: error: use of undeclared identifier 'doSomething'
+        doSomething();
+        ^
+1 error generated.
+```
+
+If I had to manage everything in an order of dependency all the time, things would get out of control pretty quickly. Luckily, C++ has *forward declarations*. Declaring a function in the beginning without defining the full piece of code provides a legend to the compiler so it will allow you to place your functions in any order (after that).
+
+```cpp
+#include <iostream>
+using namespace std;
+
+//forward declaration
+void doSomething();
+
+int main(){	
+	doSomething();
+	return 0;
+}
+
+void doSomething(){
+	cout << "hi there" << endl;
+}
+```
+
+In fact, forward declarations are such an essential part of writing C and C++ that we put them in a header file. The following is an example header file separated out. `#pragma once` means make sure this file is only included once. The header file can take over the job of including libraries, using namespaces, and this is where you should be forward declaring functions.
+
+```cpp
+
+// -------- filename: code.h ----------
+
+#pragma once
+#include <iostream>
+using namespace std;
+
+void doSomething();
+int main();
+
+```
+
+Meanwhile in the C++ file, there is a lot less to deal with, and you can put your functions in any order.
+
+
+```cpp
+// -------- filename: code.cpp ----------
+
+#include "code.h"
+
+int main(){	
+	doSomething();
+	return 0;
+}
+
+void doSomething(){
+	cout << "hi there" << endl;
+}
+
+```
+
+Let us modify this example to use a personal namespace.
+
+
+```cpp
+
+// -------- filename: code.h ----------
+
+#pragma once
+#include <iostream>
+using namespace std;
+namespace tutorial{
+	void doSomething();
+};
+int main();
+
+// -------- filename: code.cpp ----------
+
+#include "code.h"
+
+int main(){	
+	tutorial::doSomething();
+	return 0;
+}
+
+void tutorial::doSomething(){
+	cout << "hi there" << endl;
+}
+
+```
+Notice in the header file, the namespace `tutorial` contains the forward declaration of a function in that namespace, then in the code implementation file (.cpp), the function name is decorated with `tutorial::` before it. In C++, the double colon means the thing on the right is organized inside the thing on the left, a bit like a biological classification. `life::domain::kingdom::phylum::class::order::family::genus::species`. A namespace is not the only thing you can employ to organize your functions into nice bundles. In the last section, I will provide a tour of structs and classes, and it should be enough to get you through the initial OpenFrameworks topics. Classes and *Object Oriented Programming* will be covered in greater depth in a later chapter.
+
+## Classes
+
+It's nice to organize things into clusters, to form associations between them, stay tidy, and operate on them as a group - another kind of abstraction. A *class* is one construct that lets you do this. Let's bunch integers `x` and `y` into a class `Point`.
+
+```cpp
+// -------- filename: code.h ----------
+
+#pragma once
+#include <iostream>
+using namespace std;
+
+namespace tutorial{
+    class Point{
+	public:
+		float x;
+        float y;
+    };
+}
+
+// -------- filename: code.cpp ----------
+
+#include "code.h"
+
+int main(){
+    tutorial::Point p;
+    p.x = 5.8;
+    p.y = 2.5;
+
+    cout << p.x << ' ' << p.y << endl;
+    return 0;
+}
+
+```
+
+In the above example, I define the class `Point` and inside it, you see there is a `public:` label that allows me to use dot syntax and say `p.x` later on. If I had left out the `public:`, it would be the same as typing `private:` and the compiler would not allow me to refer to the inner members of the class. A class can also hold functions! Let's add a function to the `Point` class which will operate on its values in an encapsulated way.
+
+```cpp
+// -------- filename: code.h ----------
+#pragma once
+#include <iostream>
+using namespace std;
+
+namespace tutorial{
+    class Point{
+    public:
+        float x;
+		float y;
+        void move(int offsetX,int offsetY);
+    };
+}
+
+// -------- filename: code.cpp ----------
+
+#include "code.h"
+
+int main(){
+    tutorial::Point p;
+    p.x = 5.8;
+    p.y = 2.5;
+
+    p.move(4,4);
+
+    cout << p.x << ' ' << p.y << endl;
+    return 0;
+}
+
+void tutorial::Point::move(int offsetX,int offsetY){
+    x += offsetX;
+    y += offsetY;
+}
+
+```
+
+
+Notice the namespace syntax applies when defining the function later ... `tutorial::Point::move`. Within that function, I am referring to `x` and `y` as local variables, and it turns out that works because the function is in the `Point` class, next to those member variables, so this makes sense. When I call `p.move()`, the one instance of that class adds 4 to both its x and y members.
+
+When dynamically allocating an instance of a class, one uses pointer syntax just the same, but the dot syntax changes to arrows.
+
+```cpp
+int main(){
+    tutorial::Point *p = new tutorial::Point();
+    p->x = 5.8;
+    p->y = 2.5;
+
+    p->move(4,4);
+
+    cout << p->x << ' ' << p->y << endl;
+
+	delete p;
+    return 0;
+}
+```
+
+Now that you've seen the arrow syntax for class instance pointers, here is a more verbose way of referring to x and y in `move()`:
+
+```cpp
+void tutorial::Point::move(int offsetX,int offsetY){
+    this->x += offsetX;
+    this->y += offsetY;
+}
+```
+
+The reason x and y work is because they are implicitly members of `this`, which is a pointer to the current class instance.
+
+When seeing classes in OpenFrameworks code templates, the top of the class declaration might contain more than I've taught you. Something like:
+
+```cpp
+class testApp : public ofBaseApp{
+```
+
+The mysterious part at the end that goes `: public ofBaseApp` means that the class `testApp` is *inheriting* some pre-written variables and functions from OpenFrameworks so it is more capable than meets the eye.
+
+## STL Strings
+
+Now that you understand a little bit about classes, let's look back at some classes that have always been with us. `std::cout` is an instance of iostream, and the << operator is like calling a "writeLine" function, sort of like `cout.write()`. Although C traditionally uses c-strings (char arrays with zero bytes at the end) as its string format of choice, OpenFrameworks conventionally chooses the more robust STL String as it is closer to Java and has a lot of useful features. 
+
+```cpp
+#include <iostream>
+int main(){	
+	std::string s = "hi";
+	s += " there";
+	std::cout << s << ' ' << s.size() << std::endl;
+	return 0;
+}
+```
+
+In the above example, I am adding additional text to my string with the addition + operator, and calling `s.size()` to get the number of bytes in the text.
+
+As the STL String object enhances the c-string, there are many classes and packages in C++ that are here to enhance different domains. OpenFrameworks is one such collection of reusable code.
+
+## Conclusion
+
+Congratulations, you should now know enough C++ to get started with OpenFrameworks, a collection of functions and classes to make your life easier as a computational poet. Of course, I did not just teach you the entire language, but if you wish to go further with learning C and C++, here are a couple books I recommend.
+
+Brian W. Kernighan; Dennis M. Ritchie (March 1988). The C Programming Language (2nd ed.). Englewood Cliffs, NJ: Prentice Hall. ISBN 0-13-110362-8. (Amazon: http://www.amazon.com/Programming-Language-2nd-Brian-Kernighan/dp/0131103628 )
+
+Bjarne Stroustrup (2013). The C++ Programming Language (4th ed.).  Addison-Wesley. ISBN 978-0-321-56384-2 (Amazon: http://www.amazon.com/The-Programming-Language-4th-Edition/dp/0321563840 )
+
+For online reference, I recommend http://en.cppreference.com and http://cplusplus.com
+
+===
+===
+===
+
+TODO
++ fine tune "argument" vs. "parameter"
++ MH's inline comments
++ split this chapter into smaller 25-35 page chapters
 
 ###bibliography
 + "From the Beginning" - http://snap.nlc.dcccd.edu/learn/selena/history.html
 + "Dennis M. Ritchie" - http://cm.bell-labs.com/who/dmr
 + Carver, Cecily "Things I Wish Someone Had Told Me When I was Learning How to Code." *HACKER MONTHLY Issue 45* February 2014: Page 28 - 30. Print.
 + Cubbi, "C++ keywords." *cppreference.com* 29 November 2013. Web. 15 February 2014. http://en.cppreference.com/w/cpp/keyword
+
+**need formatting**
+
 + back to the future
 + minecraft
++ http://hivelogic.com/articles/top-10-programming-fonts

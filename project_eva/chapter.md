@@ -1,51 +1,53 @@
-# Case Study in the Making: Choreographies for Humans and Stars ** FAR FROM READY 
+# Case Study: Choreographies for Humans and Stars 
 
-Permanent? outdoor interactive installation developed by **daily tous les jours** for the Planetarium in Montreal, 2013. 
+Permanent interactive outdoor installation developed by [Daily tous les jours](http://dailytouslesjours.com/ "Daily tous les jours") for Montreal's planetarium (2014). 
+
 Chapter by Eva Schindling, Pierre Thirion
-
-
 
 
 
 
 ## Project Overview 
 
-**Choreographies for Humans and Stars** is a permanent outdoor installation hosted at Montreal's Planetarium. The interactive projection on the building's facade invites passers-by to a series of impromptu performances inspired by the different mechanics of planets and stars. Exploring both dance and astronomy, participants use their bodies to understand celestial dynamics like eclipses, forces of attraction and combustion. Tracked by a camera system, the movements across the dance stage directly control the projected animations. 
+*Choreographies for Humans and Stars* is a 3 year / permanent outdoor installation hosted at Montreal's Rio Tinto Alcan Planetarium. The interactive projection on the building's facade invites passers-by to a series of impromptu performances inspired by the different mechanics of planets and stars. Exploring both dance and astronomy, participants use their bodies to understand celestial dynamics like eclipses, forces of attraction and combustion. Tracked by a camera system, the movements across the dance stage directly control the projected animations. 
 
 ![On site](images/shootingatplane.jpg "Project in action")
 
 ### Call, Competition and Commission
-The project started out as an official call by the City of Montreal. For the opening of the new Planetarium the city wanted to commission their first digital artwork. 
+The project started out as an official call by the [Public Art Bureau of the City of Montreal](http://ville.montreal.qc.ca/artpublic), who is in charge of commissioning and maintening permanent artworks around the city. For the opening of the new planetarium they wanted to commission Montreal's very first interactive and permanent artwork.
 
-Official brief? Possibly budget info?
+The official brief asked for an interactive digital installation utilizing the building facade for projection and simultaneously offering an intervention on the plaza in front of the venue's entrance. Sound excluded. The artist needed to ensure that the work outlasts a minimum of 3 years in the public space, come summer come winter. No light pollution. The budget for realizing the project was set at $262.000 CAD (before taxes).
 
-We passed two/three selection rounds and finally were commissioned by Espace Pour La Vie end of 2012? **[get more details]** 
+The selection process took ~9 months and included three phases:
+
+ 1. Request for qualifications (RFQ): jury select 6 artists based on portfolio
+ 2. Request for Proposals (RFP): jury select 3 finalists based on preliminary artistic concept
+ 3. Final concept: jury selects winner based on complete project proposal (photo montage, video simulation, detailed budget, technical details, production calendar, supplier and collaborator list)
+
+After passing all phases we were officially commissioned by the Public Art Bureau in June 2012.
 
 ### Timeline, wished-for and realistic
-From first brainstorms to final hand-over of the project it took X months? When you work with that many players (the city!, the planetarium, industrial designers..), your first and second attempt at a project timeline is bound to fail. Our first ambitious goal was to get it all done by November 2013, with the main intention to avoid all the snow and coldness that comes along with Montreal's winter season. Naturally we slipped right past that goal, and had our big opening midst lots of snow mid January, with temperatures ranging between -15 to -25. 
+From first brainstorms to final hand-over the mammoth project took impressive 28 months to complete. That's 10 months longer than the official brief planned for. When you work with that many players (the city, the planetarium, collaborators..) your first and second attempt at a project timeline is bound to fail. Our more pragmatic goal was to get it all done by November 2013, with the main intention to avoid all the snow and coldness that comes along with Montreal's winter season. Naturally we slipped right past that goal, and had our big opening midst lots of snow mid January, with temperatures ranging between -15 to -25. 
 
-- 1st selection round, x competitors (?)
-- 2nd selection round, 3 competitors (?)
-- official commission (April?)
-- ideation
-- interaction scenario
-- prototype
-- content animation workshops (July, Dec)
-- tech sourcing (July/Aug) 
-- tech purchase (Sept)
-- software (Aug-Jan)
-- camera installation, calibration (Sept?)
-- installation steles (Jan)
-- on site tests and finetuning
-- opening (Jan 23?)
-- maintenance 
-- tech hand-over (Jan 30?)
-
-**[find those dates and durations]**
+- 2011 Sept: official call
+- 2011: preliminary concept
+- 2012: final concept
+- 2012 June: official commission
+- 2012 Fall: ideation (revision)
+- 2013 May : interaction scenario
+- 2013 June : prototype
+- 2013 July: content animation workshop 1
+- 2013 July-Aug: tech sourcing and purchase
+- 2013 Aug: start software
+- 2013 Sept: camera installation, calibration
+- 2013 Dec: content animation workshop 2
+- 2014 Dec/Jan: on site tests and finetuning, install furniture
+- 2014 Jan 23rd: opening
+- 2014 Feb: maintenance
 
 ### Everyone involved
 
-Credit lists quickly grow long. The internal DTLJ team includes Mouna and Melissa being the main artists with the vision, Eva handling software, Pierre being heavily involved with visual identity and video production, Michael handling the LEDs in the outdoor furniture. The list of external collaborators include a producer (Nicolas), a technical director (Frederic), a software engineer (Emmanuel), a film animator (Patrick), a choreographer (Dana), an industrial design studio (Dikini), a graphic designer (Jacinthe), a beton workshop (M3Beton), ... 
+Credit lists quickly grow long. The internal DTLJ team includes Mouna and Melissa being the main artists with the vision, Eva handling software, Pierre being heavily involved with visual identity and video production, Michael handling the LEDs in the outdoor furniture. The list of external collaborators include a producer (Nicolas), a choreographer (Dana), a technical director (Frédérick), a software engineer (Emmanuel), a film animator (Patrick), an industrial design studio (Dikini), a graphic designer (Studio Atelier), a concrete workshop (M3Beton), engineers, a camera man, ... 
 
 
 
@@ -62,32 +64,75 @@ Credit lists quickly grow long. The internal DTLJ team includes Mouna and Meliss
 
 ## Ideation, Narrative and Content
 
-**[This section still needs a lot]**
 Where did the ideas come from? And how many ideation stages did we go through? ...
 
-### Choreographers
-Working with a choreographers. Using their bodies, participants come to understand celestial dynamics together. 
+### Ideation process
+[Space, and what is happening in it, feels really abstract for the tiny humans we are. When thinking about it, one can easily feel overwhelmed by its complexity. 
 
-Interaction scenarios, testing sessions. ...
+Even helped by an ever increasing amount of impressive technology, the most advanced scientists still can only guess what is happening above our heads. Dark matter, black holes, infinity...those are notions it is hard to wrap our heads around. Partly because it is not something we can feel, touch or smell.]
+
+Space is a great unknown, and that is what inspired us. Being invited by a planetarium – a place where you will find all the latest and accurate data you need to know about space – we felt that our role could be to bring a physical experience that would help visitors to not only understand but also feel what space is about.
+
+The ideation process started with the idea of connecting people to the infinitely big.
+
+One of our early inspiration was the opening scene of the Belà Tarr's movie "*Werckmeister Harmonies*", in which a couple guys end a party by dancing a solar system waltz where the Earth and the Moon are turning around an eclipsing Sun.
+
+### Content
+Solar system, proximity because we wanted people to keep a certain connection with the content.
+Started wrapping our heads around the content, around all the specificities of the planets...
+Felt that it would be more inspiring to open it up a little bit, and think about the relationships between them. Opportunities to create connections between people.
+Celestial mechanics. 
+As described by Wikipedia: Celestial mechanics is the branch of astronomy that deals with the motions of celestial objects.
+
+
+
+### Choreographer
+Working with a choreographer. Using their bodies, participants come to understand celestial dynamics together. 
 
 ### The narrative
-The sequential structure. 
+The sequential structure.
+Defining the scenes: stars, attraction, revolution, combustion...
+Diagram?
+Choreography-driven narrative
+
+### Interaction design
+Interaction scenarios, testing sessions. ...
+
+Iterative process
+Intervention on the ground. Need to define a physical space as the interface for people to interact.
+From paper to full scale prototyping.
+Challenges: 
+- Communicate the instructions
+- Allow for freedom of movement: have people move inside the space without having their eyes always stucked on the screen
+- No sound feedback
+
+Test sessions with users of all ages. 
+Basic openFrameworks prototype to load videos and display the matching instructions
+These test sessions allowed us to:
+- adjust the writing
+- refine timings of the scenes
 
 ### Producing video content
-The video content was created using simple analog animation techniques.
+Following the spirit of the ABCs of astronomy and dance, the video content was created using simple analog animation techniques.
 
-- Shooting stars animation...
-- Starry skies...
-- light painting animation of revolving planets...
+Since the project will be permanently installed, we involved locals in the making of these images, aiming to create a sense of ownership within the community that will be living next to the project for many years to come.
 
-Since the project will be permanently installed, we involved locals in the making of these images, aiming to create a sense of ownership within the community that will be living next to the project for many years to come. ...
+We did so through animation workshops with kids aged 7 to 12 from the neighborhood. We invited Patrick Péris, a film director with a strong background in animation, to create a framework for these workshops. After a few days spent exploring techniques for each ones of the scenes, he came up with a list of interesting set ups to trigger the kids' creativity.
+
+ - **Shooting stars**: stop-motion animation 
+ - **Starry skies**: backliit black foam core in which the kids pierce their constellations
+ - **Eclipse**: draw your own planet with watercolor
+ - **Revolution**: light painting stop-motion animation
+ - **Sun**: liquids filmed in micro video
+
+Every session lasted for 3 hours, with a total number of 80 kids.
+Then post-production
+Lots of time spent selecting content
+
 
 ### The dance stage
 
-While camera and projector stay intangible, it was important to give the project a physical presence. Who's main purpose was to define the active tracking zone for the participants, but who would also present a different version of the project during the daylight hours, when the projection was off. ...
-
-+ need to spend $10k ? on renting a ground-unfreezing device to be able to install underground cabling for LED power
-+ people thinking the 'sensors' are mounted in the steles
+While camera and projector stay intangible, it was important to give the project a physical presence. The main purpose was to define the active tracking zone for the participants, but also to present a  version of the project during the daylight hours, while the projection was off. After going through many design proposals (a stage, a ring, a ballet pole!) we landed on 7 planet-like concrete steles positioned in a circle formation. A single white LED on each stele enhanced their presence. Installing the underground cabling for those 7 LEDs proved a big challenge and required the $10k rental of a ground-unfreezing device. (most expensive LEDs ever!) The delicate LEDs also caused the most confusion, as participants mistook them to be the secret sensors triggering the interaction.
 
 
 
@@ -109,7 +154,7 @@ While camera and projector stay intangible, it was important to give the project
 Outdoor installation, all weather conditions, run after sunset, every night for at least the next 3 years. 
 
 #### Put the Projector with the animals
-The projection surface being a 20 meter high building covered with shiny tiles, we needed a high-lumen projector, which naturally ate almost half the budget. To save further costs, and for protection and easy-access reasons the projector was placed in the neighbouring building - the Montreal biodome - which has a large glass facade facing the planetarium. A glass replacement window needed to be cut out of the slightly tinted facade of the biodome. A simple $15 heater makes sure our window is be kept clear of ice and condensation. Additionally we negotiated with the landscape architects of the site to be able to trim any trees that were likely to grow into our projection cone during the next 3 years.
+The projection surface being a 20 meter high building covered with shiny tiles, we needed a high-lumen projector, which naturally ate almost half the budget. To save further costs, and for protection and easy-access reasons the projector was placed in the neighbouring building - the Montreal biodome - which has a large glass facade facing the planetarium. A glass replacement window needed to be cut out of the slightly tinted facade of the biodome. A simple $15 heater makes sure our window is kept clear of ice and condensation. Additionally we negotiated with the landscape architects of the site to be able to trim any trees that were likely to grow into our projection cone during the next 3 years.
 
 Distance between projector and projection surface: 87m. 
 
@@ -120,9 +165,7 @@ Projection size: 13.5m times 19m.
 #### Camera style and placement
 In an ideal camera tracking scenario you have a controlled indoor environment that gives you a clean top-down camera view and lets you create the lighting and background design of your choice. Our site at the planetarium is outdoors and therefore subject to all possible weather conditions. The scene can change from dark (cement floor) to white (snow), and often gets temporarily lit up by the flashlights of a driving-by car. 
 
-There's the obvious fact that it's rather dark at night, and that our camera system needed to live through -40 degrees in the winter. The distance between any possible camera location and the dance stage being around 20 meters, made it impossible to consider Kinects 3d sensing abilities. 
-
-So when first brainstorming technical solutions for tracking, our list included thermal imaging cameras (\$\$ and low-res), laser range finders (\$\$ and limited to one dimension), stereoscopic 3d cameras (), and cameras placed at 2 different angles to allow for dynamic mapping of two perspectives into one (double the fun). 
+There's the obvious fact that it's rather dark at night, and that our camera system needed to live through -40 degrees in the winter. The distance between any possible camera location and the dance stage being around 20 meters, made it impossible to consider a Kinect solution. When first brainstorming technical solutions for tracking, our list included thermal imaging cameras (\$\$ and low-res), laser range finders (\$\$ and limited to one dimension), stereoscopic 3d cameras (), and cameras placed at 2 different angles to allow for dynamic mapping of two perspectives into one (double the fun). 
 
 Finally we settled on going with one single camera, with high sensitivity that would make use of the few surrounding lights, and a tracking solution that could convert the 2d information into 3 dimensions.
 
@@ -132,7 +175,7 @@ Strict architecture codes prohibited us from being able to place the camera on t
 #### Network negotiations
 After calculating our camera's bandwidth requirements (resolution 800x600px * framerate 28fps * color depth 8bit * compression raw = xxx bit/sec) we discovered that the local network wouldn't allow us to send the camera data directly to the projector site. We had to place one computer in close proximity to the camera, and another computer next to the projector. 
 
-The network being part of the city network, was heavily controlled, subject to 15min timeout internet access. A couple of forms later we had a LAN connection between our two computers. VPN access for remote maintenance and remote updates took about 2-3 months, and we are still in negotiation to get SSH access. Cities protect their networks.
+The network being part of the city network, was heavily controlled, subject to 15min timeout internet access. A couple of request forms later we had a LAN connection between our two computers. VPN access for remote maintenance and remote updates took about 2-3 months, and we are still in negotiation to get SSH access. (Cities protect their networks).
 
 ### Hardware Choices
 
@@ -158,7 +201,7 @@ For the tracking software we found a collaborator in Emmanuel Durand, part of th
 #### Method of Tracking
 To track participants on our performance stage we used blobserver's HOG detector - [histogram of oriented gradients](http://en.wikipedia.org/wiki/Histogram_of_oriented_gradients "Histogram of Oriented Gradients on wikipedia") - which learns from a database of human shapes to detect human outlines. The HOG detection is processing optimized by limiting its areas of interest to areas with recent movements, detected by background subtraction. 
 
-First tracking tests were done based on publicly available databases of human shapes, but to get better results for our environment (camera view at slight top-down angle, specific background, ..) we had to create our own database, and compute our own model:
+First tracking tests were done based on publicly available databases of human shapes [link?], but to get better results for our environment (camera view at slight top-down angle, specific background, ..) we had to create our own database, and compute our own model:
 
 1. collect images from site
 2. crop images to human shapes with blobcrop
@@ -188,6 +231,7 @@ OpenFrameworks was chosen as the programming environments because of C++'s fast 
  - [switcher](https://code.sat.qc.ca/redmine/projects/switcher "switcher at code.sat.qc.ca") ... to access the GigE camera via shared memory
  - [libshmdata](https://github.com/sat-metalab/libshmdata "libshmdata on github") ... to share video via shared memory
  - oscdump, ..
+ - Photoshop, Final Cut Pro? ... image/video content production
 
 
 

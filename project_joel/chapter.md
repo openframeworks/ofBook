@@ -177,19 +177,19 @@ oF/of_v0.7.4_osx_release/apps/ofxKinect-demos
 
 Also downloaded ofxKinect. Get gui working first, with ofxKinect, then start on:
 
-https://github.com/toruurakawa/ofxFakeMotionBlur
-DON'T USE, USE JAMEZILLA https://github.com/kylemcdonald/ofxBlur
-https://github.com/jamezilla/ofxBlurShader
-https://github.com/kylemcdonald/ofxCameraFilter
-https://github.com/vanderlin/ofxBox2d
-https://github.com/NickHardeman/ofxBullet
-https://github.com/fishkingsin/ofxPBOVideoPlayer
-https://github.com/arturoc/ofxPlaymodes
-DONT'USE, IN CORE NOW https://github.com/Flightphase/ofxQTKitVideoPlayer
-https://github.com/after12am/ofxTLGlitch
-https://github.com/bakercp/ofxVideoBuffer
-https://github.com/bakercp/ofxVideoUtils
-https://github.com/obviousjim/ofxSlitScan
+* https://github.com/toruurakawa/ofxFakeMotionBlur
+* Don't use, use jamezilla https://github.com/kylemcdonald/ofxBlur
+* https://github.com/jamezilla/ofxBlurShader
+* https://github.com/kylemcdonald/ofxCameraFilter
+* https://github.com/vanderlin/ofxBox2d
+* https://github.com/NickHardeman/ofxBullet
+* https://github.com/fishkingsin/ofxPBOVideoPlayer
+* https://github.com/arturoc/ofxPlaymodes
+* Don't use, in core now https://github.com/Flightphase/ofxQTKitVideoPlayer
+* https://github.com/after12am/ofxTLGlitch
+* https://github.com/bakercp/ofxVideoBuffer
+* https://github.com/bakercp/ofxVideoUtils
+* https://github.com/obviousjim/ofxSlitScan
 
 Doing gui - having to make the projectGenerator to make the projects, generating the examples now.... Recopy over examples after! Did it, just copying in the empty example xcode project, all in here now:
 
@@ -782,10 +782,12 @@ nice, but all in 3D - doing a quick hack to draw the video grabber in the scene.
 
 ofxPSLevels
 
+```cpp
 s += "\nbrightness (b/B) : " + ofToString(levels.brightness);
 s += "\ncontrast (c/C) : " + ofToString(levels.contrast);
 s += "\nsaturation (s/S) : " + ofToString(levels.saturation);
 s += "\ngamma (g/G) : " + ofToString(levels.gamma);
+```
 
 nice to have this as a post effect for everything.
 
@@ -1138,21 +1140,48 @@ Just changed the fur to not have any alpha (white fur that is) also added non-of
 
 #### ofxKinect, as a possible input to ofxSlitScan
 
-**[Programatically easy! the joy of openframeworks]**
+One of the benefits of using a platform like openFrameworks is that when people do release extras or "addons" they inevitably interface with the core - interesting results can be found by thinking about how addons can interface with each other using the core as a bridge.
+
+In ofxKinect and ofxSlitScan's case, both addons used the same type of data:
+
+unsigned char* getDepthPixels();       ///< grayscale values //from ofxKinect.h
+
+and
+
+void setDelayMap(unsigned char* map, ofImageType type); //from ofxSlitScan.h
+
+So connecting them was simple:
+
+slitScan.setDelayMap(depthPixels); //from testApp::update() in testApp.cpp
+
+This kind of separation demonstrates encapsulation or the information hiding qualities of software - the utility of not having to know the specifics of the implementation of the functionality described, merely the inputs required and outputs produced.
+
+http://en.wikipedia.org/wiki/Encapsulation_(object-oriented_programming)
+http://en.wikipedia.org/wiki/Information_hiding
 
 #### ofxSlitScan, using PNG's and moving to generating realtime maps, making a Aurora
 
-**[Start with pngs as inputs as with james george app, then feeding in blobs, then affecting the blobs, then using paint as depth map as the input to the final aurora look, and the timewarp look over mountains]**
+Starting is often the hardest thing to do with programming. To combat this, I try to do the stupidest, most obvious thing first and then build from there. In this project, I started by protoyping various looks using static PNGs - feeding new data into the examples provided with ofxSlitScan. The provided an easy sketching ability - combined with a paint program to quickly produce many input variations.
+
+The next place to experiment was making the input realtime and interactive - using the blobs from a sliced section of the live Kinect depth image from ofxKinect. Drawing these simple blobs as an image allowed them to be inputted into ofxSlitscan on a frame by frame basis - producing a time warping effect over the playback of the film that Pete Hellicar edited for the project. As so often happens, when the input to the interaction becomes realtime it was far more engaging, which is exactly what we wanted users to do - see SLITSCANKINECTDEPTHGREY mode below for more details on the precise implementation, and in the other cases that follow.
+
+What else could be done with the depth information applied to the delay map of the slit scan? Experiments with effecting the blobs outline yielded the SPIKYBLOBSLITSCAN mode. Using the input from the Kinect as an input to a paint simulator was something that I had worked on with Marek Bereza in the Somantics project - it made sense to try it as an input to a slitscan, as can be seen in the PAINT mode. This Paint mode made something that very much resembled the appearance of a human aurora when mixed with the beautiful Borealis footage that Pete Hellicar had sourced with the help of Greenpeace. SPARKLE mode was another example of a sucessfull port from Somantics to Anthropocene.
+
+Another good strategy for finding new interesting things is to feed the output of a system back into its input - this is demonstrated well by the visual feedback effects produced by using video frames as the delay maps back into their own history - implemented in SELFSLITSCAN mode.
 
 #### ofxBox2d, making ice, previous projects with Todd Vanderlin
 
-**[Inspired by previous work with todd on feedback - fracturing time using 2d opencv strategies to get blobs, now had the luxury of the kinect]**
+I had previously worked with Todd Vanderlin on the Feedback project, where we had experimented with using Box2D (via Todds ofxBox2D) as a way of "shattering" live video. Feedback used a screen orientated in portrait mode that encouraged the repeating of familiar existing behaviour - moving the experience from a tech demo to a playful joyous one. Having earlier experimented with ice like static PNG's I knew that using realtime triangles from ofxBox2D would work well - this time I had the advantage via the Kinect of a slice of 3D space as input, something that Todd had to work much harder to simulate using only 2D live camera input in Feedback. This aspect of constantly improving novel hardware inputs means that previous work can often be revisted and explored.
 
 #### ofxTimeline, understanding how cuing works
 
-**[Starting with duration, problems with cuing, quicktime access discussed below and using ofxtimeline in the end]**
+To combine the film and the various realtime effects, it was essential to develop a cuing system to allow different effects to combine with different scenes in a reliably repeatable way. I began by experimenting with Duration, but after emailing the author of the addon (see development notes above), it become apparent that ofxTimeline would be a much better fit for the project - a subset of Durations code base.
+
+After dealing with Quicktime perfomance issues (see below), the main challenge was cuing the effects. The structure of how ofxTimeline passes messages meant that the signal to switch scenes would only be sent when the playhead passed over the cue - clicking to a point after a cue meant that the signal to switch scenes would not be despatched. Deadlines of other functionality meant that this couldn't be fixed in time for show time - meaning that show operators would have to be careful when shuffling playback during the show proper.
 
 #### ofxGui, running the Latest branch from Github, multiple input methods and GUI addons
+
+I knew that I wanted to augment ofxTimelines interface with controls for the setup of the Kinect and other custom requirements for the project. Watching the GitHub development branch revealed the release of an official core GUI addon - something I wanted to experiment with, which meant that I had to switch from an official static release of OF to the live development branch via Github.
 
 **[Wanting to get access to the latest features mid development, github, ending up with multiple guis]**
 
@@ -1163,10 +1192,6 @@ Just changed the fur to not have any alpha (white fur that is) also added non-of
 ### Naming
 
 **[No bad characters?]**
-
-### Changing scenes
-
-**[Having to pass the playhead over the cue]**
 
 ### Video Performance, using the HighPerformanceExample
 
