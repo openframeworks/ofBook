@@ -194,7 +194,7 @@ ofBuffer buffer = ofBufferFromFile(“weather.csv");
 		   data.temp = ofToFloat(split[3]);
         dataPoints.push_back(data);
     }
-```cpp
+```
 To finish this example here
 
 ##4. Working with APIs 
