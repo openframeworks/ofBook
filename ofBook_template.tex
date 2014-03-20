@@ -69,12 +69,13 @@ $if(graphics)$
 % given, the image width will not exceed the width of the page.
 % Images get their normal width if they fit onto the page, but
 % are scaled down if they would overflow the margins.
+% OF-specific hack to scale all images down to 70%.
 \makeatletter
 \def\ScaleIfNeeded{%
   \ifdim\Gin@nat@width>\linewidth
-    \linewidth
+    0.7\linewidth
   \else
-    \Gin@nat@width
+    0.7\Gin@nat@width
   \fi
 }
 \makeatother
