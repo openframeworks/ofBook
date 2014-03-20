@@ -24,7 +24,7 @@ GENERAL_OPTS="-N --smart --toc --toc-depth=4 -s -p"
 # Latex-related options
 # Note: PDF output requires Latex, too
 # Note: requires xetex currently due to UTF8 problems with regular latex
-LATEX_OPTS="--latex-engine=xelatex -V papersize=a4 -V documentclass=scrbook -V links-as-notes"
+LATEX_OPTS="--template=ofBook_template.tex --latex-engine=xelatex -V papersize=a4 -V documentclass=scrbook -V links-as-notes"
 
 # html-related options
 HTML_OPTS="--self-contained --mathml"
