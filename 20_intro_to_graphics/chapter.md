@@ -59,22 +59,22 @@ Along the way from brushes to animated rectangles **[note which sections]**, we 
 **Our chapter roadmap:**
 
 1. [Brushes with Basic Shapes](#1-brushes-with-basic-shapes)
-  1. [Basic Shapes](#11-basic-shapes)
-  1. [Brushes from Basic Shapes](#12-brushes-from-basic-shapes)
-    1. [Single Rectangle Brush](#121-single-rectangle-brush)
-    1. [Bursting Rectangle Brush](#112-bursting-rectangle-brush)
-    1. [Glowing Circle Brush](#123-glowing-circle-brush)
-    1. [Star Line Brush](#124-star-line-brush)
-    1. [Fleeing Triangle Brush](#125-fleeing-triangle-brush)
-  1. (Saving Raster Graphics](#13-saving-raster-graphics)
-1. Brushes with Freeform Shapes]
-  1. Freeform Shapes
-  1. Brushes from Freeform Shapes
-  1. Saving Vector Graphics
+	1. [Basic Shapes](#11-basic-shapes)
+	1. [Brushes from Basic Shapes](#12-brushes-from-basic-shapes)
+    	1. [Single Rectangle Brush](#121-single-rectangle-brush)
+    	1. [Bursting Rectangle Brush](#112-bursting-rectangle-brush)
+    	1. [Glowing Circle Brush](#123-glowing-circle-brush)
+    	1. [Star Line Brush](#124-star-line-brush)
+    	1. [Fleeing Triangle Brush](#125-fleeing-triangle-brush)
+	1. [Saving Raster Graphics](#13-saving-raster-graphics)
+1. Brushes with Freeform Shapes
+	1. Freeform Shapes
+	1. Brushes from Freeform Shapes
+	1. Saving Vector Graphics
 1. Coordinate Transformations
-  1. Translating
-  1. Rotating and Scaling
-  1. Saving Animated Graphics
+	1. Translating
+	1. Rotating and Scaling
+	1. Saving Animated Graphics
 
 
 ## 1. Brushes with Basic Shapes ##
@@ -85,19 +85,15 @@ To create brushes, we need to define some basic building blocks of graphics.  We
 
 ### 1.1 Basic Shapes ###
 
-We have some basic building blocks, but how do we specify where we want to draw them on the screen?  Computer graphics use something called the [Cartesian coordinate system](http://en.wikipedia.org/wiki/Cartesian_coordinate_system "Wiki on Cartesian coordinate system").  Remember these grids from math class?
+We have some basic building blocks, but how do we specify where we want to draw them on the screen?  Computer graphics use something called the [Cartesian coordinate system](http://en.wikipedia.org/wiki/Cartesian_coordinate_system "Wiki on Cartesian coordinate system").  Remember the grid in **figure x** from math class?
 
-![Cartesian coordinate system](images/intrographics_cartesiancoordinatessystem.png "Simple graphic of the cartesian coordinate system")
+![Coordinate Systems](images/CoordSystemFiguresCombined.png "Combined three figures to save space in pandoc")
 
-**[Graphic pulled from wiki.  Remake]**
+To locate a point in the Cartesian coordinate system, we need to know three things.  First, we need a reference point, `(0, 0)`, the origin.  Second, we need to know a pair of values, `(x, y)`, that tell us how far away our point is from the origin.  Third, we need to know which directions are positive: positive x values are located to the right of the origin, and positive y values are above the origin.
 
-To locate a point in the Cartesian coordinate system we need to know two things.  First, we need a reference point, (0, 0), which we called the origin.  Second, we need to know a pair of values, (x, y), that tell us how far away our point is from the origin.  Positive x values are located to the right of the origin; negative x values are to the left of the origin; positive y values are above the origin; and negative y values are below the origin.
+Computer graphics are based on this same system.  If we want to draw something on the screen, we can specify the pixels where we want to draw with `(x, y)`.  There are two twists.  First, the `(0, 0)` point is the upper leftmost pixel.  Second, the y axis is flipped such that the positive y direction is located below the origin.  Our graphing paper would now look like in **figure x**.  
 
-Computer graphics are based on this same system.  If we want to draw something on the screen, we can specify the pixels where we want to draw with (x, y).  There are two twists.  First, the (0, 0) point is the upper leftmost pixel.  Second, the y axis is flipped such that the positive y direction is located below the origin.  Let's zoom in on the top left of my screen, which happens to be my browser, to illustrate the graphical coordinate system:
-
-![Cartesian coordinates in computer graphics](images/intrographics_cartesiangraphicssystem.png "Illustration of the cartesian coordinate system used in computer graphics")
-
-**[Finish this graphic by getting a better resolution on the grid lines and by overlaying an x- and y-axis]** 
+Let's zoom in on the top left of my screen (**figure x**), which happens to be my browser, we could see the pixels and identify there location in our new coordinate system.  The top left pixel is `(0, 0)`.  The top left pixel of the blue calender icon (with the white "19") is `(58, 5)`.  
 
 Now we have all the concepts needed to draw graphics to a screen, but we don't yet know the syntax.  Time to start coding some basic shapes.  Create a new openFrameworks project and call it something more imaginative than "BasicShapes."  Open up the project in your preferred IDE **[point to roy's chapter]**.  
 
@@ -120,13 +116,13 @@ If we compile and run the project, we would see a gray screen.  We are going to 
 
 First, we clear the screen by drawing a solid black background using [`ofBackground(...)`](http://www.openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofBackground "ofBackground Documentation Page").  The `0` represents a grayscale color where `0` is completely black and `255` is completely white.  We'll be getting into other ways of specifying color in the next section.
 
-Second, we tell openFrameworks what color it should use when drawing using [`ofSetColor(...)`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofSetColor "ofColor Documentation Page").  We can think of this code as telling openFrameworks to pull out a particular colored sharpie.  When we draw, we will draw in that color until we specify that we want another color.
+Second, we tell openFrameworks what color it should use when drawing using [`ofSetColor(...)`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofSetColor "ofColor Documentation Page").  We can think of this code as telling openFrameworks to pull out a specific colored sharpie.  When we draw, we will draw in that color until we specify that we want another color.
 
 Third, we draw our basic shapes: `ofRect(...)`, `ofCircle(...)`, `ofEllipse(...)`, `ofTriangle(...)` and `ofLine(...)`.  With [`ofRect(...)`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#!show_ofRect "ofRect Documentation Page"), we pass in the x and y values of the top left corner as well as the rectangle width and height, all in that order.  For [`ofCircle(...)`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofCircle "ofCircle Documentation Page"), we pass in the x and y values of the center of the circle and the radius.  With [`ofEllipse(...)`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofEllipse "ofEllipse Documentation Page"), we pass in the x and y values of the center as well as the width and height.  For [`ofTriangle()`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofTriangle "ofTriangle Documentation Page"), we pass in the x and y positions of the three corners of the triangle.  Finally, with [`ofLine(...)`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofLine "ofLine Documentation Page"), we pass in the x and y coordinates of the two endpoints of our desired straight line.
 
 It is worth noting that these functions all have multiple ways that we can use them, so check out their documentation pages for more information.
 
-But what if we only wanted to draw the outlines of our shapes?  There are two functions, [`ofFill()`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#!show_ofFill "ofFill Documentation Page") and [`ofNoFill()`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#!show_ofFill "ofNoFill Documentation Page"), that between drawing filled shapes and drawing outlines.  Our sharpie analogy from eariler doesn't fit with these functions - what would a sharipe that only draws outlines look like?  The concept still applies.  `ofFill()` tells openFrameworks to draw filled shapes until told otherwise.  `ofNoFill()` does the same but with outlines.  
+But what if we only wanted to draw the outlines of our shapes?  There are two functions, [`ofFill()`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#!show_ofFill "ofFill Documentation Page") and [`ofNoFill()`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#!show_ofFill "ofNoFill Documentation Page"), that toggle between drawing filled shapes and drawing outlines.  Our sharpie analogy from earlier doesn't fit with these functions - what would a sharpie that only draws outlines look like?  The concept still applies.  `ofFill()` tells openFrameworks to draw filled shapes until told otherwise.  `ofNoFill()` does the same but with outlines.  
 
 Head back into our `draw()` function, and modify it so that it look like this:
 
@@ -156,7 +152,7 @@ Head back into our `draw()` function, and modify it so that it look like this:
 	ofTriangle(500, 250, 550, 50, 600, 150);
 	ofLine(700, 250, 700, 350);
 
-Now we have two rows of shapes on our screen - one filled and one outlines.  We can control the thickness of the outlines, and our `ofLine(...)` lines, using [`ofSetLineWidth(...)`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofSetLineWidth "ofSetLineWidth Documentation Page").  Like `ofSetColor(...)` and `ofFill()`, `ofSetLineWidth(...)` will apply to all lines drawn until the thickness is set to a new value.  
+Now we have two rows of shapes on our screen (**figure x**) - one filled and one outlines.  We can control the thickness of the outlines, and our `ofLine(...)` lines, using [`ofSetLineWidth(...)`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofSetLineWidth "ofSetLineWidth Documentation Page").  Like `ofSetColor(...)` and `ofFill()`, `ofSetLineWidth(...)` will apply to all lines drawn until the thickness is set to a new value.  
 
 Add the following lines to the `draw()` function:
 
@@ -174,7 +170,7 @@ Add the following lines to the `draw()` function:
 	
 	// Code omitted for clarity ...
 
-We've got the recipes for basic shapes down, but let's add one more detail before moving on to brushes: [anti-aliasing](http://en.wikipedia.org/wiki/Spatial_anti-aliasing "Wiki on spatial anti-aliasing").  Our lines and outlines look a bit blocky, like paths of jagged pixels.  Anti-aliasing refers to a set of techniques that smooth out those jagged edges. Simply add [`ofEnableAntiAliasing()`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofEnableAntiAliasing "ofEnableAntiAliasing Documentation Page") to your `setup` function, and poof, smoother lines.  Now, anti-aliasing will apply to anything we draw until we call [`ofDisableAntiAliasing()`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofDisableAntiAliasing "ofDisableAntiAliasing Documentation Page")
+We've got the recipes for basic shapes down, but let's add one more detail before moving on to brushes: [anti-aliasing](http://en.wikipedia.org/wiki/Spatial_anti-aliasing "Wiki on spatial anti-aliasing").  Our lines and outlines look a bit blocky, like paths of jagged pixels.  Anti-aliasing refers to a set of techniques that smooth out those jagged edges. Simply add [`ofEnableAntiAliasing()`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofEnableAntiAliasing "ofEnableAntiAliasing Documentation Page") to your `setup` function, and poof, smoother lines (**figure x**).  Now, anti-aliasing will apply to anything we draw until we call [`ofDisableAntiAliasing()`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofDisableAntiAliasing "ofDisableAntiAliasing Documentation Page").
 
 ![Anti-aliasing](images/intrographics_antialiasing.png "Line with and without anti-aliasing")
 
@@ -183,11 +179,13 @@ We've got the recipes for basic shapes down, but let's add one more detail befor
 **Extensions**
 
 Let's say we wanted some challenges, we could:
-- Draw some rounded rectangles using [`ofRoundedRect(...)`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#!show_ofRectRounded "ofRoundedRect Documentation Page").
-- Explore the world of curved lines with [`ofCurve(...)`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#!show_ofCurve "ofCurve Documentation Page") and [`ofBezier(...)`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#!show_ofBezier "ofBezier Documentation Page").
-- Revisit the code from the C++ basics chapter **[chapter number]**.
-  - Create a bouncing ball using `ofCircle(...)`.
-  - Draw some randomly sized lines using `ofLine(...)`.
+
+1. Draw some rounded rectangles using [`ofRoundedRect(...)`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#!show_ofRectRounded "ofRoundedRect Documentation Page").
+1. Explore the world of curved lines with [`ofCurve(...)`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#!show_ofCurve "ofCurve Documentation Page") and [`ofBezier(...)`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#!show_ofBezier "ofBezier Documentation Page").
+1. Revisit the code from the C++ basics chapter **[chapter number]**.
+	1. Create a bouncing ball using `ofCircle(...)`.
+	1. Draw some randomly sized lines using `ofLine(...)`.
+	1. **[Note: What else?]**
 
 ### 1.2 Brushes from Basic Shapes ###
 
@@ -197,11 +195,11 @@ We survived the boring bits!  They were the necessary bits, but why draw just on
 
 That is essentially what we will be doing in this section.  Using the recipes for shapes from the last section, we will build brushes that drop a burst of many small shapes whenever we press the left mouse button.  To make things more exciting, we will mix in some randomness.  So our interactive brushes will be a combination of repetition and randomness.
 
-Start a new openFrameworks project.  Call it something like ShapeBrush. 
+Start a new openFrameworks project.  Call it something like "ShapeBrush." 
 
 #### 1.2.1 Single Rectangle Brush ####
 
-We are going to lay down the foundational code for our brushes by making a simple one that draws a single rectangle when we hold down the mouse.  To get started, we are going to need to know 1) where the mouse is located on the screen and 2) whether or not the left mouse button is being pressed.
+We are going to lay down the foundation code for our brushes by making a simple one that draws a single rectangle when we hold down the mouse.  To get started, we are going to need to know 1) where the mouse is located on the screen and 2) whether or not the left mouse button is being pressed.
 
 **[make sure that public variables have been covered at this point; C++ basics]**
 
@@ -321,7 +319,7 @@ The frame rate is the speed limit of our program.  It is specified in frames per
 
 But why do we care about setting the frame rate here?  We want to be able to accurately know (and control) how many rectangles our code will draw.  We are drawing 10 rectangles each frame when the `draw()` function is called with the mouse pressed, but without setting the frame rate, we don't know how many times the `draw()` function will be called per second.  By explicitly defining the frame rate as 60 frames per second, we can say that our code will generate 60 rectangles per second when the mouse is pressed: `10 rectangles per frame * 60 frames per second = 60 rectangles per second`.
 
-Compile, run and we get a messy, box-shaped spread of random rectangles.  Things are slowly becoming more interesting.  But why didn't our code generate a circular spread?  Since `xOffset` and `yOffset` could be any random values between `-40` and `40`, we were actually picking random locations from a rectangular region of space.  We can imagine the boundaries of that region by thinking about what happens when `xOffset` and `yOffset` take on their most extreme values, i.e. (`xOffset`, `yOffset`) values of ('-40', '-40'), ('40', '-40'), ('40', '40'), ('-40', '40').
+Compile, run and we get a messy, box-shaped spread of random rectangles.  Things are slowly becoming more interesting.  But why didn't our code generate a circular spread?  Since `xOffset` and `yOffset` could be any random values between `-40` and `40`, we were actually picking random locations from a rectangular region of space.  We can imagine the boundaries of that region by thinking about what happens when `xOffset` and `yOffset` take on their most extreme values, i.e. (`xOffset`, `yOffset`) values of (`-40`, `-40`), (`40`, `-40`), (`40`, `40`), (`-40`, `40`).
 
 To generate a circular spread, we need to introduce a tiny bit of mathematics.  If we want to pick a random point that lives within a circle of a particular size, it helps to think in terms of angles.  Imagine that we are at the center of a circle.  If we rotate a random amount (let's call this the *polar angle*) and then move a random distance (let's call this the *polar radius*), we will end up in a random location within the circle (assuming we don't walk so far that we cross the boundary of our circle).  What we have just done is define a point in space by a polar angle and a polar radius instead of using an x coordinate and a y coordinate.  We have just thought about space in terms of [polar coordinates](http://en.wikipedia.org/wiki/Polar_coordinate_system "Polar Coordinates Wiki").  (In contrast, remember that using x and y values to represent a point in space is called the [Cartesian coordinate system](http://en.wikipedia.org/wiki/Cartesian_coordinate_system "Cartesian coordinate system"]).)
 
@@ -433,8 +431,6 @@ It is a bit like drawing with a glowing light.  You can play with the `maxRadius
 
 Kind of cool, right?  But we are tired living in moody shades of gray for so long.  `ofSetColor(...)` can make use of the RGB color model in addition to the grayscale color model.  If you haven't heard of RGB before, you can check out the [wiki](http://en.wikipedia.org/wiki/RGB_color_model "Wiki on RGB Color Model").  RGB allows you to specify a color through specifying the amount of red, blue and green light present.  We refer to these color components as channels, and each channel can be represented by a value from 0 to 255.  (Alpha is an optional fourth channel which gives us RGBA.)  Here are the forms of `ofSetColor(...)` we now know:
 
-**[RGB diagram?]**
-
 	ofSetColor(255); // Opaque grayscale white
 	ofSetColor(255, 10); // Very transparent grayscale white
 	ofSetColor(255, 0, 0); // Opaque red! Hooray for color :)
@@ -541,9 +537,7 @@ We've been defining a point in space by keeping two separate variables - one for
 	
 ofVec2f isn't that scary, right?  Let's start using it to build the triangle brush.  The first step is to draw an isosceles triangle at the mouse cursor. 
 
-![Isosceles Triangle](images/IsoscelesTriangle_800.png "Image of an isosceles triangle from wolfram")
-
-**[stolen graphics from wolfram, generate something similar later]**
+![Isosceles Triangle](images/IsoscelesTriangleDiagram.png "Labeled diagram of an isosceles triangle")
 
 An isosceles triangle has two sides that are of equal length (labeled as b) and one side of a different length (labeled a).  The height (labeled h) is also drawn in the figure.  We are going to draw a skinny triangle using one side (a) and the height (h).  It will become important later, but we are going to draw our triangle starting from the mouse cursor and pointing to the right.  Add these lines to the triangle section of your `draw()` function:
 
@@ -651,30 +645,37 @@ How about we add some color?
 
 Once again, we can play with turning off fill and changing line width.
 
-By now, we are masters of rectangles, circles, ellipses, lines and triangles.  We also have a basic understanding for how to create digital brushes.
+By now, we are masters of rectangles, circles, ellipses, lines and triangles.  We also have a basic understanding for how to create digital brushes.  In the next section, we will extend this knowledge into the realm of freeform shapes.
 
 **Extensions**
 
-- Use keypresses and some public variables to control parameters at runtime (transparency, brush width, etc.)
-- Track the mouse position over time and use the distance it moves between frames to control parameters (brush width, color, offset, etc.)
-- Create an erasure brush by drawing transparent black shapes
-- Think about the ways we can change the brush color on-the-fly
+1. Use keypresses and some public variables to control parameters at runtime (transparency, brush width, etc.)
+1. Track the mouse position over time and use the distance it moves between frames to control parameters (brush width, color, offset, etc.)
+1. Create an erasure brush by drawing transparent black shapes
+1. Think about the ways we can change the brush color on-the-fly
 
 #### 1.3 Saving Raster Graphics ####
 
-...
+Before we move on, why don't we add a couple lines of code to allow us to take a snapshot of our canvas?  In the `keyPressed(...)` function, add the following at the end of our block of `if` statements:
 
-### 1.2 Freeform Shapes ###
+    else if (key == 's') {
+        glReadBuffer(GL_FRONT); // HACK: only needed on windows machines - may be fixed
+        ofSaveScreen("savedScreenshot.png");
+    }
 
-In the last section we drew our graphics directly onto the screen.  We were storing graphics (the brush strokes) as pixels, and therefore using [raster graphics](http://en.wikipedia.org/wiki/Raster_graphics "Raster Graphics Wiki").  For this reason, it is hard for us to erase just the last brush stroke.  It also makes it hard for us to rescale graphics once they are drawn.  In contrast, there is something called [vector graphics](http://en.wikipedia.org/wiki/Vector_graphics "Vector Graphics Wiki").  With vector graphics, the graphics that we draw are stored as a list of geometric objects (also called geometric primitives) instead of pixel values.  Those objects can be modified after we "place" them on our screen.  This allows us to erase or rescale a brush stroke with ease.  Vector graphics are used most prominently with software Adobe Illustrator, Inkscape, etc.
+[`ofSaveScreen(...)`](http://www.openframeworks.cc/documentation/utils/ofUtils.html#show_ofSaveScreen "ofSaveScreen Documentation Page") grabs the current screen and saves it to a file inside of our app's `/bin/data` folder with a filename we specify. So press the `s` key and check out "savedScreenshot.png."
 
-Why does any of that matter?  We are moving into the territory of vector graphics by using freeform shapes in openFrameworks.  We are going to be using structures that allow us to store and draw paths.
+## 2. Brushes from Freeform Shapes ##
 
-#### 1.2a Hello Polyline ####
+In the last section we drew our graphics directly onto the screen.  We were storing graphics (the brush strokes) as pixels, and therefore working with [raster graphics](http://en.wikipedia.org/wiki/Raster_graphics "Raster Graphics Wiki").  For this reason, it is hard for us to isolate and erase a single brush stroke.  It also makes it hard for us to rescale graphics once they are drawn.  In contrast, [vector graphics](http://en.wikipedia.org/wiki/Vector_graphics "Vector Graphics Wiki") store graphics as a list of geometric objects (also called geometric primitives) instead of pixel values.  Those objects can be modified after we "place" them on our screen.  This allows us to erase or rescale a brush stroke with ease.  Vector graphics are used most prominently with software Adobe Illustrator, Inkscape, etc.
 
-Create a new project and call it something like PathBrush.  Then say hello to [`ofPolyline`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html "ofPolyline Documentation Page"), who is about to become our buddy. `ofPolyline` is a data structure that allows us to store a series of sequential points and then draw them to create a line or shape.  Like with `ofColor` and `ofVec2f`, `ofPolyline` gives us a bunch of handy helper functions to make life easier.
+Why does any of that matter?  We are moving into the territory of vector graphics by using freeform shapes in openFrameworks.  We are going to be using structures that allow us to store and draw the path that the mouse takes on the screen.  Then we are going to use play with those paths to create some brushes that do more than just trace out the cursor's movement.  Finally, we will learn how to save our new vector graphics.
 
-How about we get acquainted with `ofPolyline` in the context of some code?  Let's define three `ofPolylines` in the header file (.h):
+### 2.1 Freeform Shapes ###
+
+Create a new project and call it "Polylines."  Then say hello to our new buddy [`ofPolyline`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html "ofPolyline Documentation Page"). `ofPolyline` is a data structure that allows us to store a series of sequential points and then connect them to draw a line.  Like with `ofColor` and `ofVec2f`, `ofPolyline` provides a bunch of handy helper methods to make life easier.
+
+Let's get acquainted with `ofPolyline` in the context of some code.  Define three `ofPolylines` in the header file (.h):
 
 	ofPolyline straightSegmentPolyline;
 	ofPolyline curvedSegmentPolyline;
@@ -713,23 +714,31 @@ We can now draw our polylines in the `draw()` function:
 
 So what did we do here?  We created three different types of polylines.  
 
-For our first polyline, `straightSegmentPolyline`, we used `ofPolyline`'s [`addVertex()`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html#show_addVertex "addVertex Documentation Page") method.  This allows us to add points that will be connected by a series of straight lines.  We can pass an `ofVec2f` (or `ofVec3f`) to `addVertex()`, or we can pass in x and y (and an optional z) into the function in that order.  
+For our first polyline, `straightSegmentPolyline`, we use `ofPolyline`'s [`addVertex(...)`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html#show_addVertex "addVertex Documentation Page") method.  This allows us to add points that will be connected by a series of straight lines.  We can pass an `ofVec2f` (or `ofVec3f`) to `addVertex(...)`, or we can pass in x and y (and an optional z) into the function in that order.  
 
-For the second one, `curvedSegmentPolyline`, we used the same points but they are connected with curved lines using `ofPolyline`'s [`curveTo`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html#show_curveTo "curveTo Function Documentation Page") method.  `curveTo()` accepts the same types of parameters as `addVertex()`.  Notice that we had to add the first vertex and last vertex twice.  The `curveTo()` method, like its name suggests, curves from the last vertex to the vertex that you pass in.  **[note: explain why you need a first duplicate AND a last duplicate]**  
+For the second one, `curvedSegmentPolyline`, we use the same points but connect them with curved lines using `ofPolyline`'s [`curveTo(...)`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html#show_curveTo "curveTo Function Documentation Page") method.  `curveTo(...)` accepts the same types of parameters as `addVertex(...)`.  The `curveTo(...)` method, like its name suggests, draws a curve from the last vertex to the vertex that you pass into the method.
 
-For the final polyline, `closedShapePolyline`, we used straight line segments again, but we called `ofPolyline`'s [`close()`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html#show_close "close Function Documentation Page") method to connect our last vertex to our first vertex.  **[note: explain why you would want to close a polyline]**  
+The curves that `curveTo(...)` creates are called [Catmull–Rom splines](http://en.wikipedia.org/wiki/Centripetal_Catmull%E2%80%93Rom_spline "Wiki on Catmull-Rom splines").  Splines are beyond the scope of this chapter, but the key concept to understand here is that Catmull-Rom splines use four points to define a curve.  Two of the points define the starting and ending points of the curve, while the other two points (the control points) are used to control the shape of the curve.  These control points are the reason why we had to add the first vertex and last vertex twice.  For now, it is enough to remember to just add the first and last vertices in your curve twice.
 
-After we created the polylines in `setup()`, we were able to draw them using the `ofPolyline`'s [`draw()`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html#show_draw "draw Function Documentation Page") method to render them to the screen. Our sketch should look something that looked like this:
+For the final polyline, `closedShapePolyline`, we use straight line segments again, but we call `ofPolyline`'s [`close()`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html#show_close "close Function Documentation Page") method to connect the first and last vertices.
+
+After creating the polylines in `setup()`, we were able to draw them using the `ofPolyline`'s [`draw()`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html#show_draw "draw Function Documentation Page") method. Our sketch should look something that looked like this:
 
 ![Polyline Examples](images/intrographics_polylineexamples.png "Using basic polylines")
 
-Additionally, we can use `ofPolyline`'s `ofSetLineWidth()` method to adjust the line width of each polyline.
+Additionally, we can use `ofPolyline`'s `ofSetLineWidth(...)` method to adjust the line width of each polyline.
 
-The advantage of drawing paths and shapes in this way (versus what we did in the last section) is that those polyline objects become modifiable.  We could easily move, delete, add to, or even scale our vertices on the the fly.  **[note: maybe put a little more effort to explain the power]** 
+The advantage of drawing paths and shapes in this way (versus what we did in the last section) is that the polyline objects are modifiable.  We could easily move, add, delete, scale our vertices on the the fly.
 
-#### 1.2b Polyline Brushes ####
+**Extensions**
 
-Let's start using polylines to track brush "strokes."  When the left mouse button is held down we will add the mouse position to a polyline.  
+1. Check out the [`arc(...)`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html#show_arc "arc Documentation Page"), [`arcNegative(...)`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html#show_arcNegative "arcNegative Documentation Page") and [`bezierTo(...)`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html#show_bezierTo "bezierTo Documentation Page") methods to find some other ways to draw shapes with `ofPolyline`.
+2. Fill the screen with some randomly defined `ofPolylines`.
+3. **These are weak...**
+
+### 2.2 Brushes from Freeform Shapes ###
+
+Now that we know how to use polylines, let's use them to track brush strokes.  Create a new project called "PathBrush."  When the left mouse button is held down we will add the current mouse position to a polyline.  
 
 We are going to need a boolean to tell us whether the left mouse button is being held down.  If it is being held down, then we will need to get the mouse position every frame.  It would be tempting to just add all of those mouse positions to a polyline, but that could cause some problems.  If we were to just hold the left mouse button down without moving the mouse, we would add a duplicate point to our polyline on every frame.  That could potentially add up to cause slowdowns or crashing, so it is best to plan ahead.  Instead of adding *every* mouse position, let's just add the mouse positions where the mouse has moved a sufficient distance away from the last point in our polyline. 
 
@@ -819,6 +828,18 @@ And you can draw a doopy smiley face:
 ![Polyline Smile](images/intrographics_polylinesmile.png "Using a polyline pen to draw a smile")
 
 **[Note: could add a description of how to implement a delete/undo feature]**
+
+
+
+
+
+
+
+
+
+
+#### 2.2 Brushes from Freeform Shapes ####
+
 
 Now that we have the basic drawing in place, why don't we play with how we are rendering our polylines to the screen?  
 
