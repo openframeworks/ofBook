@@ -15,7 +15,7 @@ Finally, you will learn how you can build upon the things you just learned and w
 How do you track the state of your projects over time?
 Have you ever made several copies of your project folder (or text document, Photoshop file,...)?
 Did you name them something like `Awesome_project_1`, `Awesome_project_may10`, `Awesome_project_final`, `Awesome_project_final2`, `Awesome_project_really_final`,...?
-Did you mail around zipped projects to collaborators, and had some trouble syncrhonizing the changes they (or you) made in the meantime?
+Did you mail around zipped projects to collaborators, and had some trouble synchronizing the changes they (or you) made in the meantime?
 Have you run into problems when you had to go back to a previous version, change things, copy those changes to other version, or generally keep tabs on changes?
 
 If you nodded at some of these questions, you've come to the right place - version control is there to help you!
@@ -82,6 +82,10 @@ This new chain of commits, which *branches off* at a certain commit of the origi
 Branches can be **merged** into another branch.
 When this happens, Git analyzes the two different branches and merges their different histories/changes together.
 
+This figure visualizes how this looks like:
+
+![Simple Git branch diagram.](images/branch_diagram.png "Simple Git branch diagram.")
+
 Finally, there are three different "areas" in Git, which you will encounter often when reading about Git:
 
 The **repository** contains all the commits.
@@ -94,12 +98,13 @@ The **working directory** contains the files and folders under version control, 
 When you prepare a commit, you first have to **stage** any changes you want that commit to contain.
 This means that these changes will be put into the **index** (or **staging area**).
 
-So, you modify your files in the working directory, you stage those modifications, putting them into the index, and then you create a commit, taking the files from the index and storing them in the repository.
+So, you modify your files in the working directory, you stage those modifications, putting them into the index, and then you **create a commit**, taking the files from the index and storing them in the repository.
 To get files *back* from the repository (i.e. restore the state as it was at some previous point), you **check out** files, putting them into the working directory.
+This is shown graphically in the following figure:
+
+![The three areas of Git.](images/git_areas.png "The three areas of Git.")
 
 Armed with these basic facts, we can dive right in, and start working on our first project!
-
-**[TODO: simple figure with branch diagram!]**
 
 ### Getting started: project setup
 
@@ -159,7 +164,7 @@ Those ignored files will still exist in your working directory, that means you c
 If, later down the line, you see files appearing in your list of changes which should not be there, or if you can't seem to add a file that belongs in the repository, don't force Git to do what it doesn't want to, but fine-tune the gitignore pattern to match your expectations.
 Note that the `.gitignore` pattern does _not_ affect already committed files.
 
-Because it can be daunting to come up with a generally useful gitignore template, you can (**[TODO: in the future]**) add a pre-made `.gitignore` file when you create your OF project.
+Because it can be daunting to come up with a generally useful gitignore template, you can (**[TODO: in the future, see [this issue](https://github.com/openframeworks/openFrameworks/issues/2791)]**) add a pre-made `.gitignore` file when you create your OF project.
 This file will look similar to this (formatted into three columns for convenience):
 
     $ pr -tW84 -s"|" -i" "1 -3 .gitignore
@@ -802,6 +807,7 @@ Probably the most important thing left now is to point out where you can learn m
     - The [Git home page]([git-scm.com) is probably the most unified but comprehensive online resource. Among others, it hosts:
     - The free [ProGit book](http://git-scm.com/book), readable online. Awesome to get in-depth information about all things Git.
     - The [Git reference](http://git-scm.com/docs), which has the documentation about all Git commands, their options and usage.
+    - There are some websites available which visualize/animate the workings of Git, see [here](http://www.wei-wang.com/ExplainGitWithD3/), [here](http://pcottle.github.io/learnGitBranching/) or [here](http://ndpsoftware.com/git-cheatsheet.html).
 * Get help:
     - [Google](https://www.google.com/) the errors you get!
     - [Stack Overflow](http://stackoverflow.com/) is an awesome resources to find answers to problems you encounter (probably someone had the same problem before), and to ask questions yourself! There's even [a separate tag](http://stackoverflow.com/questions/tagged/git) for Git.
