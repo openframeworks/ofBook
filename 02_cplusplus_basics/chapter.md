@@ -1052,18 +1052,6 @@ OOOOOOOOOOOOOOOO
 OOOOOOOOOOOOOOOOO
 OOOOOOOOOOOOOOOOOO
 OOOOOOOOOOOOOOOOOOO
-OOOOOOOOOOOOOOOOOOOO
-OOOOOOOOOOOOOOOOOOOOO
-OOOOOOOOOOOOOOOOOOOOOO
-OOOOOOOOOOOOOOOOOOOOOOO
-OOOOOOOOOOOOOOOOOOOOOOOO
-OOOOOOOOOOOOOOOOOOOOOOOOO
-OOOOOOOOOOOOOOOOOOOOOOOOOO
-OOOOOOOOOOOOOOOOOOOOOOOOOOO
-OOOOOOOOOOOOOOOOOOOOOOOOOOOO
-OOOOOOOOOOOOOOOOOOOOOOOOOOOOO
-OOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
-OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
 ```
 
 ## For-Loop
@@ -1406,11 +1394,6 @@ The output is a stream of numbers that increment by 0.12.
 
 ```
 ...
-0.72
-0.732
-0.744
-0.756
-0.768
 0.78
 0.792
 0.804
@@ -1422,14 +1405,6 @@ The output is a stream of numbers that increment by 0.12.
 0.876001
 0.888001
 0.900001
-0.912001
-0.924001
-0.936001
-0.948001
-0.960001
-0.972001
-0.984001
-0.996001
 ...
 ```
 
@@ -1539,7 +1514,7 @@ int main() {
 }
 ```
 
-Here is the output:
+The output starts like this:
 
 ```
 A 65
@@ -1549,57 +1524,7 @@ D 68
 E 69
 F 70
 G 71
-H 72
-I 73
-J 74
-K 75
-L 76
-M 77
-N 78
-O 79
-P 80
-Q 81
-R 82
-S 83
-T 84
-U 85
-V 86
-W 87
-X 88
-Y 89
-Z 90
-[ 91
-\ 92
-] 93
-^ 94
-_ 95
-` 96
-a 97
-b 98
-c 99
-d 100
-e 101
-f 102
-g 103
-h 104
-i 105
-j 106
-k 107
-l 108
-m 109
-n 110
-o 111
-p 112
-q 113
-r 114
-s 115
-t 116
-u 117
-v 118
-w 119
-x 120
-y 121
-z 122
+...
 ```
 
 Naturally, you can cast between any of the fundamental types. The computer will increase and decrease precision as needed. Here's an example where I cast from char to float, then to int, then to char again. Try to guess what the output will be.
@@ -1688,48 +1613,9 @@ Notice in the output, all numbers are somewhere between 0 and 1.
 0.911647
 0.197551
 0.335223
-0.76823
-0.277775
-0.55397
 ```
 
-Let's use this normalized random in an ascii art generator. By multiplying a normalized random output by 52, we get random values between 0 and 52. 
-
-```cpp
-#include <iostream>
-#include <math.h>
-using namespace std;
-
-int main() {
-	for(int i=0;i<30;i++){
-		float r = rand() / (float)RAND_MAX; //normalize random
-		cout << '8';                        //snake tail
-		for(int j = 0; j < r * 52;j++){     //from 0 to no more than 52...
-			cout << '=';                    //print snake body
-		}
-		cout << "O~" << endl;               // print snake head
-	}
-	return 0;
-}
-```
-
-In this output, each rattle snake has a different length.
-
-```
-8=====================O~
-8=========================================O~
-8==========================================O~
-8================================================O~
-8===========O~
-8==================O~
-8========================================O~
-8===============O~
-8=============================O~
-8=========================O~
-8=================================O~
-8===================O~
-8===========================O~
-```
+As an exercise, see if you can generate a collection of snakes [  ..oo00=====( )~ ] whose lengths are different, unexpected sizes.
 
 Artists like the random function because it creates a lot of organic aesthetic with very little typing. The experienced eye can spot the random function even several perlin octaves deep, in the same way you can look at an advertisement in the mall and call it out like "that was so photoshopped". Using the random function is like leaving the "Lorem Ipsum" in. Perhaps I can express my sentiment with more concreteness. If you find it sexy to create visual pieces that have *fake nature*, just imagine the impact you could have if you used *not-fake* nature. By that I mean replacing the random function with real world data. For example, you could set up an arduino or raspberry pi with a photocell (light sensor) to measure the way the cars passing by your apartment window temporarily block a nearby streetlight, and use that as an input to drive your software art. Also try working with big data from the past. Creating generative art, data visualizations, and working with physical computing will be covered in later chapters. But don't say I didn't warn you about the politics.
 
@@ -1857,89 +1743,7 @@ The classic random number generator *algorithm* is just a feedback loop wherein 
 
 ![Figure 31. Flowchart by Randall Munroe, xkcd](images/flow_charts.png "Figure 31. Flowchart by Randall Munroe, xkcd")
 
-If you can understand `random()` at an algorithmic level, you will be able to deeply remix it. The following is my own quick random function. It takes a char (0-255) and adds a prime number to it, causing it to wrap around from 255 to 0 as we iterate. The reason the number wraps from 255 to 0 (instead of advancing to 256) is because a char cannot hold more than that amount, so it's an *overflow* behavior.
-
-```cpp
-#include <iostream>
-#include <math.h>
-using namespace std;
-
-int main() {
-	unsigned char iterator = 0;
-	for(int i=0;i<40;i++){
-		iterator += 67;
-		float normalized = iterator / 256.0;
-		cout << normalized << endl;
-	}
-	return 0;
-}
-```
-
-The output looks pretty organic and chaotic from here.
-
-```
-0.261719
-0.523438
-0.785156
-0.046875
-0.308594
-0.570312
-0.832031
-0.09375
-0.355469
-0.617188
-0.878906
-0.140625
-0.402344
-0.664062
-0.925781
-0.1875
-...
-```
-
-Now let's visualize the same number sequence by drawing bars.
-
-```cpp
-#include <iostream>
-#include <math.h>
-using namespace std;
-
-int main() {
-	unsigned char iterator = 0;
-	for(int i=0;i<40;i++){
-		iterator += 67;
-		float normalized = iterator / 256.0;
-		for(int j = 0 ; j < 100 * normalized ; j++){    // new
-			cout << 'Z';
-		}
-		cout <<  endl;
-	}
-	return 0;
-}
-```
-
-The visualization reveals a pattern that is quite different from classic random, and yet it is *algorithmically* related.
-
-```
-ZZZZZZZZZZZZZZZZZZZZZZZZZZZ
-ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
-ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
-ZZZZZ
-ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
-ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
-ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
-ZZZZZZZZZZ
-ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
-ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
-ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
-ZZZZZZZZZZZZZZZ
-ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
-ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
-ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
-ZZZZZZZZZZZZZZZZZZZ
-```
-
-Sometimes, a surprising feedback loop might be all you need, instead of reaching for vanilla `random()` every time.
+If you can understand `random()` at an algorithmic level, you will be able to deeply remix it. See if you can use what you have learned so far to write your own algorithm that produces an unexpected stream of numbers, then use that stream of unexpected numbers to produce a visual output.
 
 ### Signed, Unsigned ###
 
@@ -2195,7 +1999,6 @@ Given the option to break or not break can have *cascading* results. The output 
 You make me come-pletely miserable.
 You make me come-plete.
 You make me come-pletely miserable.
-You make me come.
 You make me come.
 You make me come-plete.
 You make me come.
@@ -2933,7 +2736,7 @@ int main(){
 
 I was able to lose the comments that label the code section since the containing function is called that. Self-documenting code which needs less comments is good code. Some say that if you write a program correctly, it needs no comments. Notice also that I've added dividing lines between the functions just to make it easier to see. Those are optional but do show up all over OpenFrameworks.
 
-In the following example, I use the same pixel buffer technique to draw a spiral (cosine and sine functions) but this time, I only show the last frame.
+In the following example, I use the same pixel buffer technique to draw a spiral (cosine and sine functions) but this time, I only show the last frame. If you don't understand what the sine and cosine functions do, don't worry about it, as I do not build upon it in subsequent lessons.
 
 ```cpp
 #include <iostream>
