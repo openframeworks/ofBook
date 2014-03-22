@@ -167,7 +167,7 @@ The compiler found an error and did not run the program. Instead, it's showing y
 #include <iostream>
 ```
 
-When using OpenFrameworks, you have choice of tools and platforms. Each one shows you an error in a different way. Sometimes the editor will open up and highlight the code for you, placing an error talk bubble for more info. Other times, the editor will show nothing, but the compile output will show a raw error formatted similar to the one above. Whilst sometimes useful that we receive several errors from a compile, it can save a lot of grief if you focus on understanding and fixing the very first error that got reported. After fixing the top error, it is likely that all subsequent errors will elegantly disappear, having all been covered by your first fix.  **[MH: There's an opportunity here to note that by commenting out of a single line, the reader caused two errors]**
+When using OpenFrameworks, you have choice of tools and platforms. Each one shows you an error in a different way. Sometimes the editor will open up and highlight the code for you, placing an error talk bubble for more info. Other times, the editor will show nothing, but the compile output will show a raw error formatted similar to the one above. Whilst sometimes useful that we receive several errors from a compile, it can save a lot of grief if you focus on understanding and fixing the very first error that got reported. After fixing the top error, it is likely that all subsequent errors will elegantly disappear, having all been covered by your first fix.  By commenting out that single line of code at the top, we caused two errors.
 
 ###Namespaces at First Glance
 
@@ -264,9 +264,26 @@ Hi there brush.
 Hi there bowl full of mush.
 ```
 
-In this new code, notice the second function `greet()` which looks the same but different from `main()`. It has the same curley brackets to hold the code block, but the return type is different. It has the same pair of parentheses, but this time there is something inside. And what about that required return statement? The *void* keyword is used in place of a return type when a function does not return anything. So, since `greet()` has a *void* return type, the compiler will not complain should you leave out the `return`. However, you may still use the return statement to end the execution of the function early. More on this when we get to functions that have multiple lines of code. **[MH: Since you are going to explain returning early later in your chapter anyway, I wouldn't bother mentioning it here as it might distract newbies]** In the parentheses, you see `string person`. This is an *argument*, an input-value for the function to use. In this case, it's a bit like find-and-replace. Down in `main()`, you see I call `greet()` five times, and each time, I put a different string in quotes between the parentheses. These five lines of code are all ***function calls***. They are telling `greet()` to execute, and passing it the one string argument so it can do its job. That one string argument is made available to `greet()`'s inner code via the argument called `person`. To see the order of how things happen, take a look at Figure 11.
+In this new code, notice the second function `greet()` which looks the same but different from `main()`. It has the same curly brackets to hold the code block, but the return type is different. It has the same pair of parentheses, but this time there is something inside. And what about that required return statement? The *void* keyword is used in place of a return type when a function does not return anything. So, since `greet()` has a *void* return type, the compiler will not complain should you leave out the `return`. In the parentheses, you see `string person`. This is a parameter, an input-value for the function to use. In this case, it's a bit like find-and-replace. Down in `main()`, you see I call `greet()` five times, and each time, I put a different string in quotes between the parentheses, and those are *arguments*.
 
-**[MH: The distinction between argument and paramter might be important enough to warrent its own graphic?]**
+As an aside, to help in the technicality of discerning between when to call them *arguments* and when to call them *parameters*, see this code example:
+
+```cpp
+
+void myFunction(int parameter1, int parameter2){
+	//todo: code
+}
+
+int main(){
+	int argument1 = 4;
+	int argument2 = 5;
+	myFunction(argument1,argument2);
+	return 0;
+}
+
+```
+
+Getting back to the previous example, those five lines of code are all ***function calls***. They are telling `greet()` to execute, and passing it the one string argument so it can do its job. That one string argument is made available to `greet()`'s inner code via the argument called `person`. To see the order of how things happen, take a look at Figure 11.
 
 ![Figure 11. Function Call Flow](images/function-call.png "Figure 11. Function Call Flow")
 
@@ -283,37 +300,6 @@ Rather than repeating back the entire complicated situation, Neo (the main chara
 ![Figure 13. Standing on Shoulders of Giants](images/shoulders-of-giants.png "Figure 13. Standing on Shoulders of Giants")
 
 There are a few advantages to using C++ over the other options (mostly scripting) for your new media project. The discussion can get quite religious (read: heated) among those who know the details. If you seek to learn C++, then usually it is because you seek faster runtime performance, because C++ has more libraries that you can snap in to your project, or because your mentor is working in that language. An OF project is considered higher level because it is working with a greater encapsulation of complexity, and that is something to be proud of.
-
-## A Brief History
-
-There are many programming languages, each one with its own unique story. Like human languages, they relate in a tangled family tree that eventually leads all the way back to the first computer language by Augusta Ada King, Countess of Lovelace in the 17th century. Languages improve on previous ones for various reasons, such as increasing efficiency/performance, reducing engineering complexity, adding useful features for the programmer, creating new divisions of labor, and in general, making programmers happier. C++, its parent language C, and grandparent language B (BCPL) all come from Bell Laboratories, In fact, the B stands for Bell. Figure 14 shows a picture of Dennis M. Ritchie and Ken Thompson, the creators of C, sitting in front of a PDP-11, the first computer to run Unix. Because C is the next language after B, it uses the next letter in the Roman alphabet.
-
-![Figure 14. Ken Thompson(sitting) and Dennis Richie (standing) in front of a PDP-11, circa 1972](images/kd14.jpg "Figure 14. Ken Thompson(sitting) and Dennis Richie (standing) in front of a PDP-11, circa 1972")
-
-If I ask my father nicely, he will tell stories about his days at Bell Labs in Murray Hill, New Jersey in the late 1960s doing liquid crystal research. Some of his colleagues who did heavier computation work could be seen walking around with shoe boxes filled with punch cards. These punch cards (Figure 15) were difficult to create, share, and maintain (imagine dropping that shoe box). Taking turns running jobs on the GE 600-series mainframes also stifled collaboration because the punch card systems were not multi-user. Perhaps it was a bit like waiting to use the largest CNC machine at TechShop.
-
-![Figure 15. Bell Labs punch card from the mid-1960s, courtesy of Lucent](images/bell1.png "Figure 15. Bell Labs punch card from the mid-1960s, courtesy of Lucent")
-
-
-Thompson and Ritchie initiated the development of the Unix operating system in effort to improve these original problems (and provide a useful jig with which they could create their game "Space Travel"). Part of what made Unix attractive was that its heart was written in C, instead of the lower level assembly language - and that made it more portable. Back then, every new machine invented needed to have an assembly language specific to it - that was always the first job of its users. Because Thompson and Ritche ported Unix over to C, it made Unix very portable - giving it a very good chance to spread virally. The birth of the C language happened along-side the birth of Unix. Hence, the present-day ubiquity of Unix-like OSes may explain the importance of C and its derivative languages.
-
-A decade later, Bjarne Stroustrup created a new strain of the C language in order to update it with a new paradigm called *object oriented programming* which introduces an intermediary container between the function and its program called a *class*. The class system allows a program to do special skateboard tricks that you can read about in the ***OOPS!*** chapter. Since C++ is close enough to C, compiling compatibly with it (if you know what you're doing), C++ rides the popularity of C and Unix. C++ gets its name because putting `++` after something in C means adding 1 to it (or *incrementing* it). C++ is the C language, plus one paradigm. C++ is considered by many to be the most popular programming language of all time.
-
-### Derivative Languages
-
-(My apologies to *The Nails*)
-
-Since establishing the C++ standard, there have been a variety of direct derivative languages - some with the C letter in their name, and some without. *Objective-C* is a decade newer than C++. Intermingled with the NeXT operating system (Figure 16 shows a logo by Paul Rand) and the OpenStep project, Objective-C is most popularly used to develop apps for OS X and iOS. *Java* (20 years newer than C++) is considered a direct derivative of C++. It attempts to remove the "C" and keep only the "++". If you study computer science in university, this language may be one of the first things they teach you, whereas historically, that first language used to be C and C++. *C#* (pronounced C-Sharp) is Microsoft's Java alternative. Originally intended for use in developing .NET apps, you may also use it when developing in Unity - or any platform that uses the Mono project. *C++11* is a newer, more recent version of C++ from 2011 that adds a variety of new features. You may learn more about how it differs from classic C++ in Chapter 15. Finally, *D* is the programming language that takes the next letter in the alphabet after C, also attempting to modernize the language similarly as its contemporaries, and (trivially) did not come from Murray Hill, New Jersey. These different languages are easy to pick up once you grok C++. There are shortcut tutorials to help the C++ programmer understand the other languages and their environments. If you wish to create your own strain of the C++ language, I suggest taking a course on *compiler construction* - for example, the one offered on Coursera by Stanford University's Professor Alex Aiken.
-
-![Figure 16. NeXT Logo by Paul Rand](images/next-logo-paul-rand.jpg "Figure 16. NeXT Logo by Paul Rand")
-
-Although OS X promotes Objective-C and Windows promotes C#, both XCode and Visual Studio will still compile C and C++ along side Linux because the C and C++ language compilers are in higher demand than their proprietary strains. It can be useful to combine code files written in these various languages in order to create a flexible solution that reduces the amount of re-invention you must do. Fundamentally, OpenFrameworks bases its cross-platform portability on the portability of the C++ language. Theoretically, you should be able to write your OpenFrameworks app once, on one platform, then see it compile and run identically in other environments. 
-
-### Conversational Slang
-
-Sometimes I say C, and sometimes I say C++. Since they are closely related, perhaps you can understand how they are almost synonymous. I also leave out the ++ because I am talking about both languages! C++ is almost a superset of C (see figure 17), so when I talk about the properties of C, I am usually also talking about the properties of C++. To make things worse, the greater slang of C applies to all the C-something languages. Let's say you are a famous code artist presenting at the EyeO festival and a member of the audience asks you to talk about the programming of your piece. You may have used a combination of C++, C, and Objective-C on Mac OS X to make your OpenFrameworks project happen (not to mention Java and C# on your Linode server), but because simplicity is elegant, and because you only have 2 minutes left before they kick you off stage, your answer is shortened - and you say "I wrote it in C". Perhaps later when that audience member talks to you individually, you can be more specific about all the strains of C-language you actually used. Like most slang, relaxed conversational use of "C" is also context-sensitive. Sometimes preemptively simplifying speech like that is inappropriate when you are speaking to known engineers, developers, and hackers. In that case, saying C when you mean C++ might be construed as fronting!
-
-![Figure 17. C++ is a non-strict superset of C](images/non-strict-superset.png "Figure 17. C++ is a non-strict superset of C")
 
 ## Variables (part 1)
 
@@ -344,7 +330,9 @@ The answer to the life the universe and everything is 42.
 That number plus 1 is 43.
 ```
 
-We understand from a previous lesson that stuff you put between the `<<` operators will get formatted into the `cout` object, and magically end up in the output console. Notice in the last line, I put a bit of light arithmetic (42+1) in-between parentheses, and it evaluated to 43. That is called an *expression*, in the mathematics sense. These three lines of code all say something about the number 42, and so they all contain a literal integer. **[MH: Worth noting what literal means]** If I want to change that number, I can do what I know from word processing, and "find-and-replace" the 42 to a new value. Now what if I had 100,000 particles in a 3d world. Some have 42's that need changing, but other 42's that should not be changed? Things can get both heavy and complex when you write code. The most obvious application of *variables* is that they are a very powerful find-and-replace mechanism, but you'll see that variables are useful for more than that. So let's declare an integer at the top of the code and use it in place of the literal 42's.
+We understand from a previous lesson that stuff you put between the `<<` operators will get formatted into the `cout` object, and magically end up in the output console. Notice in the last line, I put a bit of light arithmetic (42+1) in-between parentheses, and it evaluated to 43. That is called an *expression*, in the mathematics sense. These three lines of code all say something about the number 42, and so they all contain a *literal* integer. A literal value is the contents typed directly into the code; some would say "hard wired" because the value is fixed once it is compiled in with the rest.
+
+If I want to change that number, I can do what I know from word processing, and "find-and-replace" the 42 to a new value. Now what if I had 100,000 particles in a 3d world. Some have 42's that need changing, but other 42's that should not be changed? Things can get both heavy and complex when you write code. The most obvious application of *variables* is that they are a very powerful find-and-replace mechanism, but you'll see that variables are useful for more than that. So let's declare an integer at the top of the code and use it in place of the literal 42's.
 
 ```cpp
 #include <iostream>
@@ -372,7 +360,7 @@ int answer;
 answer = 42;
 ```
 
-In this case, there is a moment after you declare that variable when its answer may be unpredictable and glitchy because in C (unlike Java), fresh variables are not set to zero for free - you need to do it. Instead, the variable is occupied with what ever old computer memory happens to be sitting there at the time. **[MH: You haven't mentioned memory yet, so this might not make sense to all readers]** So, unless you intend to make glitch art, please always initialize your variable to some number upon declaring it, even if that number is zero.
+In this case, there is a moment after you declare that variable when its answer may be unpredictable and glitchy because in C (unlike Java), fresh variables are not set to zero for free - you need to do it. If you don't, the variable can come up with unpredictable values - computer memory refuse from the past. So, unless you intend to make glitch art, please always initialize your variable to some number upon declaring it, even if that number is zero.
 
 ### Naming your variable
 
@@ -464,16 +452,7 @@ The output should be `012345`. Notice the use of the equals sign. It is differen
 
 ![Figure 20. Minecraft crafting table repurposed for variable assignment](images/minechuck.png "Figure 20. Minecraft crafting table repurposed for variable assignment")
 
-Historically, C uses the = character that different way because it solves an otherwise verbose (and non-portable) assembly routine for storing a value into a variable.
-
-```asm
-mov ax, 4        ; store literal integer into working register
-mov bucket, ax  ; move contents of working register into RAM at address 'bucket'
-```
-
-**[MH: I might have missed something - what does understanding assembly add to understanding the origin of `=`?]**
-
-In the above assembly code, the programmer needs to put the value into an intermediary called a *register* before it can go into the place in memory we know as a variable. The usefulness of having the variable name on the left side rather than the right becomes apparent in practice since the expressions get get quite lengthy! Beginning a line with `varname =` ends up being easier for the eyeball to scan because it's guaranteed to be 2 symbols long before starting in on whatever madness you plan on typing after the equals sign.
+The usefulness of having the variable name on the left side rather than the right becomes apparent in practice since the expressions get get quite lengthy! Beginning a line with `varname =` ends up being easier for the eyeball to scan because it's guaranteed to be 2 symbols long before starting in on whatever madness you plan on typing after the equals sign.
 
 Analyzing the previous code example, we see the number increments by 1 each time before it is output. I am repeatedly storing literal integers into the variable. Since a programming language knows basic arithmetic, let us now try the following modification:
 
@@ -505,10 +484,6 @@ The output should still be `012345`. By saying `counter = counter + 1`, I am inc
 Great Scott, that could make someone dizzy! But after doing it a few times, you'll see it doesn't get much more complicated than what you see there. This is a highly *practical* use of science fiction, and you probably aren't attempting to challenge the fabric of spacetime (unless you are Kyle McDonald, or maybe a Haskell coder <!-- i mean these things as a high compliment, not as mockery -->). The point here is to modify the contents of computer memory, so we have `counter` from one instruction ago, in the same way that there might already be water in our bucket when we go to add water to it. Figure 22 shows `bucket = bucket + water`.
 
 ![Figure 22. bucket = bucket + water](images/minecraft-inc.png "Figure 22. bucket = bucket + water")
-
-~~**[MH: Shouldn't the empty bucket and water bucket be reversed?]**~~
-**[JTN: i don't think so since the extra water tile "increments" onto the existing water already in the bucket, and the empty bucket on the right is more a symbol of the bucket alone]**
-
 
 Incrementing by one, or adding some value to a variable is in fact so commonplace in all programming that there is even syntactic sugar for it. *Syntactic Sugar* is a redundant grammar added to a programming language for reasons of convenience. It helps reduce typing, can increase comprehension or expressiveness, and (like sugar) makes the programmer happier. The following statements all add 1 to `counter`.
 
@@ -745,14 +720,19 @@ The first time it evaluates `counter > 1`, the result is false, and so the inden
 
 ```cpp
 
+//this code happens regardless
+
 if(true){
 	// this code happens if the condition is true
 }else{
 	// this code happens if it is false
 }
+
+//this code happens regardless
+
 ```
 
-This is different from simply putting an un-braced line of code beneath the if-clause since that free-roaming line of code would execute *whether or not* the condition were true. **[MH: adding an example free-roaming line to the above example might help]** So `else` turns out to be pretty convenient. Another similar piece is `else if` that allows you to cascade your if-then clauses in a way similar to CSS.
+This is different from simply putting an un-braced line of code beneath the if-clause since that free-roaming line of code would execute *whether or not* the condition were true. So `else` turns out to be pretty convenient. Another similar piece is `else if` that allows you to cascade your if-then clauses in a way similar to CSS.
 
 ```cpp
 
@@ -776,14 +756,16 @@ The following is debated as something worth avoiding by folks like JSLint (who a
 
 ```cpp
 if (counter > 1) cout << "yes, it's greater";
+cout << "... this line will always execute regardless." endl;
 ```
 
-An if-statement with no curly braces will only "limit" the one immediately following line of code. Even with the other snap-in parts, the same "next line only" rules apply.  **[MH: Maybe add a free roaming line after the if in order to show the next line only rule]**
+An if-statement with no curly braces will only "limit" the one immediately following line of code. Even with the other snap-in parts, the same "next line only" rules apply.
 
 ```cpp
 if (counter > 1) cout << "yes, it's greater";
 else if (counter < 10) cout << "well, it's still smaller than 10";
 else cout << "The counter was outside the 2-10 range.";
+cout << "... this line will always execute regardless." endl;
 ```
 
 The above code will do the exact same thing as:
@@ -946,7 +928,7 @@ I changed the contents of the `while`'s conditional expression so that it will o
 
 ```
 
-This is not the only way to stop a while loop. Let us nest some if-then clauses into the while loop, so I can demonstrate the `break` and `continue` statements.  **[MH: you mention introducing continue and then it doesn't come back for a few paragraphs]**
+This is not the only way to stop a while loop. Let us nest some if-then clauses into the while loop, so I can demonstrate the `break` statement, and later, I will show you the `continue` statement.
 
 ```cpp
 	while(true){
@@ -962,8 +944,6 @@ The output is `1 2 3 4 5 6 7 8 9 10 `. As I loop, I am repeatedly checking to se
 
 ### Modulo %
 
-**[MH: mod is a stumbling block for the people I've tried to teach, and you use it heavily, so it might be worth walking through a little more?]**
-
 For the next example, I'd like to introduce you to the modulo operator, which is not so common in basic arithmetic but turns out to be useful and fun in programming. It is the percent sign operator, placed between 2 numbers, and it computes the *remainder* from dividing the left number by the right number. Here are a few examples:
 
 + 4 % 2 is 0 because 4 / 2 ends up being 2 with no remainder.
@@ -973,7 +953,18 @@ For the next example, I'd like to introduce you to the modulo operator, which is
 + 10 % 10 is 0
 + 11 % 10 is 1
 
-Modulo is great for easily making patterns. The following example prints an alternating pattern of # and space, forever.
+Still confused? You are not alone.
+
+Remember how to divide numbers on paper? The remainder is the little bit left over at the end that did not fit.
+
+
+![Figure 26.5 Long Division with Remainder](images/remainder.png "Figure 26.5 Long Division with Remainder")
+
+It turns out that dividing a fixed number into an incrementing value will produce a remainder that "wraps around" from 0 to that number. So for example, here is the output of (i % 4) while i goes from 0 to 16.
+
+`0 1 2 3 [wrap] 0 1 2 3 [wrap] 0 1 2 3 [wrap] 0 1 2 3`
+
+Because of this easily controllable stepping behavior, Modulo is great for easily making patterns. The following example prints an alternating pattern of # and space, forever.
 
 ```cpp
 while(true){
@@ -1622,7 +1613,7 @@ int main() {
 }
 ```
 
-The output of this code is `02468`, not `026` as if `int i` were shared between the two functions. You see I added an argument/parameter to `addOne()` called `int i`. Notice I manipulate the value of `i` while inside `addOne()` by multiplying it by 2 before printing it out. Each time `addOne()` is called, the value of `i` passed to it is copied over from the `int i` in the for-loop of `main()`, as if it forgot that it was multiplied by 2 in `addOne()`. That is because there are 2 separate *local* versions of `int i`. See figure 28.
+The output of this code is `02468`, not `026` as if `int i` were shared between the two functions. You see I added a parameter to `addOne()` called `int i`. Notice I manipulate the value of `i` while inside `addOne()` by multiplying it by 2 before printing it out. Each time `addOne()` is called, the value of `i` passed to it is copied over from the `int i` in the for-loop of `main()`, as if it forgot that it was multiplied by 2 in `addOne()`. That is because there are 2 separate *local* versions of `int i`. See figure 28.
 
 ![Figure 28. Two separate local variables named i](images/both-named-i.png "Figure 28. Two separate local variables named i")
 
@@ -1716,7 +1707,7 @@ int main() {
 }
 ```
 
-The output becomes a long, serene list of zeros since the `int` data type cannot handle a tiny fraction like 0.012. So during the moment it tries to add 0.012 to myNumber (which is an int), 0.012 gets automatically rounded down **[MH: maybe better to say decimal gets disregarded/truncated since 0.012 gets rounded down whenever you round it]** to an integer, which is zero every time. Now let's try the opposite example, storing ints into a float.
+The output becomes a long, serene list of zeros since the `int` data type cannot handle a tiny fraction like 0.012. So during the moment it tries to add 0.012 to myNumber (which is an int), 0.012 gets everything to the right side of the decimal point trimmed off, and that becomes zero every time. Now let's try the opposite example, storing ints into a float.
 
 ```cpp
 #include <iostream>
@@ -2122,7 +2113,7 @@ The classic random number generator *algorithm* is just a feedback loop wherein 
 
 ![Figure 31. Flowchart by Randall Munroe, xkcd](images/flow_charts.png "Figure 31. Flowchart by Randall Munroe, xkcd")
 
-If you can understand `random()` at an algorithmic level, you will be able to deeply remix it. The following is my own quick random function. It takes a char (0-255) and adds a prime number to it, causing it to wrap around from 255 to 0 as we iterate. **[MH: Big fan of this idea, but wrapping is probably unexpected for newbies and could use a sentence to aknowledge that]**
+If you can understand `random()` at an algorithmic level, you will be able to deeply remix it. The following is my own quick random function. It takes a char (0-255) and adds a prime number to it, causing it to wrap around from 255 to 0 as we iterate. The reason the number wraps from 255 to 0 (instead of advancing to 256) is because a char cannot hold more than that amount, so it's an *overflow* behavior.
 
 ```cpp
 #include <iostream>
@@ -3641,22 +3632,14 @@ Bjarne Stroustrup (2013). The C++ Programming Language (4th ed.).  Addison-Wesle
 For online reference, I recommend http://en.cppreference.com and http://cplusplus.com
 
 ===
-===
-===
-
-TODO
-+ fine tune "argument" vs. "parameter"
-+ MH's inline comments
-+ split this chapter into smaller 25-35 page chapters
 
 ###bibliography
-+ "From the Beginning" - http://snap.nlc.dcccd.edu/learn/selena/history.html
-+ "Dennis M. Ritchie" - http://cm.bell-labs.com/who/dmr
++ Back to the Future II. Dir. Robert Zemeckis. Perf. Michael J Fox, Christopher Lloyd, Lea Thompson,. Universal Pictures, 1989. Film.
 + Carver, Cecily "Things I Wish Someone Had Told Me When I was Learning How to Code." *HACKER MONTHLY Issue 45* February 2014: Page 28 - 30. Print.
 + Cubbi, "C++ keywords." *cppreference.com* 29 November 2013. Web. 15 February 2014. http://en.cppreference.com/w/cpp/keyword
-
-**need formatting**
-
-+ back to the future
-+ minecraft
-+ http://hivelogic.com/articles/top-10-programming-fonts
++ "Dan Benjamin", "Top 10 Programmer Fonts."  *hivelogic.com* 17 May 2009. Web. 22 March 2014. http://hivelogic.com/articles/top-10-programming-fonts
++ "From the Beginning" - http://snap.nlc.dcccd.edu/learn/selena/history.html
++ "Dennis M. Ritchie" - http://cm.bell-labs.com/who/dmr
++ Maeda, John. Design by Numbers. Cambridge, MA: MIT, 1999. Print.
++ The Matrix. Dir. Brothers Wachowski. Perf. Keanu Reeves, Laurence Fishburne, Carrie-Anne Moss. Warner Brothers, 1999. Film.
++ Minecraft. Version 1.7.5. Mojang. February 27, 2014. Video game.
