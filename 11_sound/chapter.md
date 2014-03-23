@@ -30,7 +30,7 @@ Playing a sound file is only a couple lines of code in openFrameworks. Just poin
       soundPlayer.play();
     }
 
-This is fine for adding some background music or ambiance to your app, but `ofSoundPlayer` comes with a few extra features that are particularly handy for handling sound effects.
+This is fine for adding some background music or ambiance to your app, but ofSoundPlayer comes with a few extra features that are particularly handy for handling sound effects.
 
 "Multiplay" allows you to have a file playing several times simultaneously. This is great for any sound effect which might end up getting triggered rapidly, so you don't get stuck with an unnatural cutoff as the player's playhead abruptly jumps back to the beginning of the file. With multiplay enabled, you can get natural sound effect behaviour with dead-simple trigger logic like this:
 
@@ -40,7 +40,7 @@ This is fine for adding some background music or ambiance to your app, but `ofSo
 
 Multiplay isn't on by default. Use `soundPlayer.setMultiPlay(true)` to enable it.
 
-Another feature built-in to `ofSoundPlayer` is speed control. If you set the speed faster than normal, the sound's pitch will rise accordingly, and vice-versa (just like a vinyl record). Playback speed is defined relative to "1", so "0.5" is half-speed and "2" is double speed.
+Another feature built-in to ofSoundPlayer is speed control. If you set the speed faster than normal, the sound's pitch will rise accordingly, and vice-versa (just like a vinyl record). Playback speed is defined relative to "1", so "0.5" is half-speed and "2" is double speed.
 
 Speed control and multiplay are made for each other. Making use of both simultaneously can really extend the life of a single sound effect file. Every time you change a sound player's playback speed with multiplay enabled, previously triggered sound effects continue on unaffected. So, by extending the above trigger logic to something like...
 
@@ -51,9 +51,47 @@ Speed control and multiplay are made for each other. Making use of both simultan
 
 ...you'll introduce a bit of unique character to each instance of the sound.
 
-ofSoundPlayer is a tradeoff between ease-of-use and control. You get access to easy multiplay and pitch-shifted playback but lose precise control and access to the individual samples in the sound. 
+One other big feature of ofSoundPlayer is easy spectrum access. On the desktop platforms, you can make use of ofSoundGetSpectrum() to get the *frequency domain* representation of the sound coming from all of the currently active ofSoundPlayers in your app. An explanation of the frequency domain is coming a little later in this chapter, but running the openFrameworks soundPlayerFFTExample will give you the gist.
 
-On the opposite end of the spectrum, ofSoundFile will allow you to extract an uncompressed ofSoundBuffer out of a file, allowing you access to the raw time domain signal.
+*[ screencap of the soundPlayerFFTExample ]*
+
+Ultimately, ofSoundPlayer is a tradeoff between ease-of-use and control. You get access to easy multiplay and pitch-shifted playback but you don't get extremely precise control or access to the individual samples in the sound file. For this level of control, ofSoundStream is the tool for the job.
+
+##Getting Started With the Sound Stream
+
+ofSoundStream is the gateway to the audio hardware on your computer, such as the microphone and the speakers. If you want to have your app react to live audio input or generate sound on the fly, this is the section for you!
+
+You may never have to use the ofSoundStream directly, but it's the object that manages the resources needed to trigger audioOut() and audioIn() on your app. Here's the basic structure for a sound-producing openFrameworks app:
+
+    class ofApp : public ofBaseApp {
+      ...
+      void audioOut( float * output, int bufferSize, int nChannels );
+      double phase;
+    }
+
+    void ofApp::setup(){
+      phase = 0;
+      ofSoundStreamSetup(2, 0); // 2 output channels (stereo), 0 input channels
+    }
+
+    void ofApp::audioOut( float * output, int bufferSize, int nChannels ) {
+      for(int i = 0; i < bufferSize * nChannels; i+=2) {
+        float sample = sin(phase); // generating a sine wave sample
+        output[i] = sample; // writing to the left channel
+        output[i+1] = sample; // writing to the right channel
+        phase += 0.05;
+      }
+    }
+
+When producing or receiving audio, the format is floating point numbers between -1 and 1 (the reason for this is coming a little later in this chapter). The sound will arrive in your app in the form of *buffers*, which you can treat much like arrays.
+
+The buffer size is adjustable, but it's usually a good idea to leave it at the default. The default isn't any number in particular, but will usually be whatever the hardware on your computer prefers. In practice, this is probably about 512 samples per buffer (256 and 1024 are other common buffer sizes).
+
+Buffers are *interleaved* meaning that the samples for each channel are right next to each other, like:
+
+    [Left] [Right] [Left] [Right] ...
+
+This means you access individual sound channels in much the same way as accessing different colours in an ofPixels object (i.e. buffer[i] for the left channel, buffer[i + 1] for the right channel).
 
 ##Why -1 to 1?
 
@@ -73,7 +111,7 @@ A major way that sound differs from visual content is that there isn't really a 
 
 [footnote] Technically, you'd probably hear a pop right at the beginning as the speaker moves from the "at rest" position to whatever number your buffer is full of, but the remainder of your sound buffer would just be silence.
 
-This is because what you actually hear is the *changes* in values over time. Any individual sample in a buffer doesn't really have a sound on its own. What you hear is the *difference* between the sample and the one before it. For instance, a sound's "loudness" isn't necessarily related to how "big" the individual numbers in a buffer are. A sine wave which osciallates between 0.9 and 1.0 is going to be much much quieter than one that osciallates between -0.5 and 0.5.
+This is because what you actually hear is the *changes* in values over time. Any individual sample in a buffer doesn't really have a sound on its own. What you hear is the *difference* between the sample and the one before it. For instance, a sound's "loudness" isn't necessarily related to how "big" the individual numbers in a buffer are. A sine wave which oscillates between 0.9 and 1.0 is going to be much much quieter than one that oscillates between -0.5 and 0.5.
 
 ##Time Domain vs Frequency Domain
 
@@ -142,5 +180,8 @@ Assuming this isn't your intent, you can generally blame clipping on a misbehavi
 
 If you *want* distortion, it's much more common to use a waveshaping algorithm instead of trying to find a way to make clipping sound good [todo: link].
 
-  - Sample rates, Nyquist, aliasing
-  - Latency
+###Latency
+
+No matter what, sound you produce in your app will arrive at the speakers sometime after the event that triggered the sound. The total time of this round trip, from event -> your app -> speakers is referred to as *latency*.
+
+In practice, this usually isn't a big deal unless you're working on something like a musical instrument with very tight reaction time requirements (a drum instrument, for instance). If you're finding that your app's sound isn't responsive enough, you can try lowering the buffer size of your ofSoundStream. be careful, though! The default buffer size is typically the default because it's determined to be the best tradeoff between latency and reliability. If you use an smaller buffer size, you might experience "popping" (as explained above) if your app can't keep up with the extra-strict audio deadlines.
