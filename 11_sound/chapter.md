@@ -91,7 +91,7 @@ Buffers are *interleaved* meaning that the samples for each channel are right ne
 
     [Left] [Right] [Left] [Right] ...
 
-This means you access individual sound channels in much the same way as accessing different colours in an ofPixels object (i.e. buffer[i] for the left channel, buffer[i + 1] for the right channel).
+This means you access individual sound channels in much the same way as accessing different colours in an ofPixels object (i.e. buffer[i] for the left channel, buffer[i + 1] for the right channel). The total size of the buffer you get in audioIn() / audioOut() can be calculated with bufferSize * nChannels.
 
 ##Why -1 to 1?
 
@@ -127,9 +127,7 @@ You can transform a signal in the time domain into the frequency domain by a ubi
 
 You can also transform a signal from the frequency domain back to the time domain, using an Inverse Fast Fourier Transform (aka IFFT). This is less common, but there is an entire genre of audio synthesis called Additive Synthesis which is built around this principle (generating values in the frequency domain then running an IFFT on them to create synthesized sound).
 
-- ofSoundStream gives you access to sound in the time domain.
-- The time domain is useful for analysing general "loudness", as well as pitch detection ([counterintuitively](http://blog.bjornroche.com/2012/07/frequency-detection-using-fft-aka-pitch.html))
-- Frequency domain is useful for isolating particular elements of a sound, such as instruments in a song. It is also useful for analyzing the character/timbre of a sound.
+The frequency domain is useful for many things, but one of the most straightforward is isolating particular elements of a sound by frequency range, such as instruments in a song. Another common use is analyzing the character or timbre of a sound, in order to drive complex audio-reactive visuals.
 
 ##Reacting to Live Audio
 
@@ -146,16 +144,9 @@ A simple realtime onset detection algorithm can be built on top of the RMS calcu
 *[ naive RMS threshold-based code sample here ]*
 
 ###FFT
-Running an FFT on your input audio will give you back a buffer of values representing the input's frequency content. A straight up FFT *won't* tell you which notes are present in a piece of music, but you will be able to use the data to take the input's sonic "texture" into account. For instance, the FFT data will let you know how much "bass" / "mid" / "treble" there is in the input at a pretty fine granulairty (a typical FFT used for realtime audio-reactive work will give you something like 512 to 4096 individual frequency bins to play with).
-
-NOTE TO SELF/EDITORS: I definitely need to clean up the following paragraph. It's pretty crucial but I haven't found a way to get a succinct explanation of it yet.
+Running an FFT on your input audio will give you back a buffer of values representing the input's frequency content. A straight up FFT *won't* tell you which notes are present in a piece of music, but you will be able to use the data to take the input's sonic "texture" into account. For instance, the FFT data will let you know how much "bass" / "mid" / "treble" there is in the input at a pretty fine granularity (a typical FFT used for realtime audio-reactive work will give you something like 512 to 4096 individual frequency bins to play with).
 
 When using the FFT to analyze music, you should keep in mind that the FFT's bins increment on a *linear* scale, whereas humans interpret frequency on a *logarithmic* scale. So, if you were to use an FFT to split an input signal into 512 bins, the lowest bins (probably bin 0 through bin 30 or so) will contain the bulk of the data, and the remaining bins will mostly just be high frequency content. If you were to isolate the sound on a bin-to-bin basis, you'd be able to easily tell the difference between the sound of bins 3 and 4, but bins 500 and 501 would probably sound exactly the same. Unless you had robot ears.
-
-- Pitch detection
-  - FFT -> Power -> IFFT Autocorrelation sort-of-hack
-  - Zero crossings
-- Conversions to Mel scale, decibels
 
 ##Synthesizing Audio
 - MIDI / OSC
@@ -184,4 +175,4 @@ If you *want* distortion, it's much more common to use a waveshaping algorithm i
 
 No matter what, sound you produce in your app will arrive at the speakers sometime after the event that triggered the sound. The total time of this round trip, from event -> your app -> speakers is referred to as *latency*.
 
-In practice, this usually isn't a big deal unless you're working on something like a musical instrument with very tight reaction time requirements (a drum instrument, for instance). If you're finding that your app's sound isn't responsive enough, you can try lowering the buffer size of your ofSoundStream. be careful, though! The default buffer size is typically the default because it's determined to be the best tradeoff between latency and reliability. If you use an smaller buffer size, you might experience "popping" (as explained above) if your app can't keep up with the extra-strict audio deadlines.
+In practice, this usually isn't a big deal unless you're working on something like a musical instrument with very tight reaction time requirements (a drum instrument, for instance). If you're finding that your app's sound isn't responsive enough, you can try lowering the buffer size of your ofSoundStream. Be careful, though! The default buffer size is typically the default because it's determined to be the best tradeoff between latency and reliability. If you use a smaller buffer size, you might experience "popping" (as explained above) if your app can't keep up with the extra-strict audio deadlines.
