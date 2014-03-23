@@ -1,7 +1,7 @@
 # Case Study: Choreographies for Humans and Stars 
 
 Permanent interactive outdoor installation developed by [Daily tous les jours](http://dailytouslesjours.com/ "Daily tous les jours") for Montreal's planetarium (2014). 
-
+plane
 Chapter by Eva Schindling, Pierre Thirion
 
 ## Project Overview 
@@ -146,9 +146,9 @@ After learning this the hard way, we understood to lower our expectations and al
 
 Similarly we'd detect people spinning - "*Take someone's hand, spin and lean out as far as possible*" - by counting how many times the system loses and re-detects their shapes. As we'd only look for one specific choreography in each scene, we were free to interpret the incoming tracking results as needed.
 
-![Drop](images/planecam_liedown.jpg "Drop to the ground")
+![Drop](images/camview_liedown.jpg "Drop to the ground")
 
-![Spin](images/planecam_spin1.jpg "Spin")
+![Spin](images/camview_spin1.jpg "Spin")
 
 ### Choice of visualization software
 This project provided the perfect excuse to jump back into openFrameworks. Previous company projects relying on computation mostly lived in the realm of music (max/MSP) or the web (python, node.js). On the rare occasion that visuals were involved, a too short timeline asked for a quick solution (processing). And in general we fall victim to the mistake of over-polluting the never ending prototype and simply turning it into production software. 
@@ -424,7 +424,7 @@ The second concern was the drops in framerate that would come too much videoplay
 
 ![On site](images/hopatplane.jpg "Project in action")
 
-![Exahle](images/planecam_onsteles.jpg "Exhale")
+![Exahle](images/camview_onsteles.jpg "Exhale")
 
 The delicate LEDs also caused the most confusion, as participants mistook them to be the secret sensors triggering the interaction.
 
