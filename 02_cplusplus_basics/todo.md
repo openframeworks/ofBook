@@ -1,1 +1,0 @@
-+ Plus the savings that @bilderbuchi suggested from tightening up your print-outs and resizing images. This will depend on whether you try any of the above mentioned omissions. I could see you saving a lot of pages this way. 10 pages saved?

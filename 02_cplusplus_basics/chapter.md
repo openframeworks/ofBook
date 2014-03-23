@@ -1170,6 +1170,8 @@ void doSomething(int a){
 
 The above function has a return type of `void` and so it is not required to return any value. You can see at the top that I am validating the value of `a` to make sure it is above zero before I render that many `#`s into the console. I call the `return` statement early, and it escapes from the function.
 
+#Chapter 2.5, Intro to C++ part 2#
+**[JN: this is where I plan on splitting]**
 
 ## Variables (part 2)
 
