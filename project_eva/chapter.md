@@ -1,22 +1,27 @@
 # Case Study: Choreographies for Humans and Stars 
 
 Permanent interactive outdoor installation developed by [Daily tous les jours](http://dailytouslesjours.com/ "Daily tous les jours") for Montreal's planetarium (2014). 
-
+plane
 Chapter by Eva Schindling, Pierre Thirion
-
-
-
 
 ## Project Overview 
 
-*Choreographies for Humans and Stars* is a 3 year / permanent outdoor installation hosted at Montreal's Rio Tinto Alcan Planetarium. The interactive projection on the building's facade invites passers-by to a series of impromptu performances inspired by the different mechanics of planets and stars. Exploring both dance and astronomy, participants use their bodies to understand celestial dynamics like eclipses, forces of attraction and combustion. Tracked by a camera system, the movements across the dance stage directly control the projected animations. 
+[Choreographies for Humans and Stars](http://www.dailytouslesjours.com/project/choregraphies-pour-des-humains-et-des-etoiles/) is a permanent outdoor installation hosted at Montreal's Rio Tinto Alcan Planetarium. The interactive projection on the building's facade invites passers-by to a series of collective dance performances inspired by the different mechanics of planets and stars.
 
-![On site](images/shootingatplane.jpg "Project in action")
+Seven stones anchored into the ground delimit the dance area in front of the projection. A series of instructions on the screen guide participants through a set of choreographies that combine dance and astronomy. The participants use their bodies to understand celestial dynamics like eclipses, forces of attraction and combustion. 
+
+A camera system tracks the movements across the dance stage and controls the images and animations on the projection. The original image material has been produced through workshops with local kids.
+
+![On site](images/revolutionsatplane.jpg "Project in action")
+
+![On site](images/freezeatplane.jpg "Freeze")
+
+[video](http://vimeo.com/85369669) (longer video with english subtitles coming soon)
 
 ### Call, Competition and Commission
 The project started out as an official call by the [Public Art Bureau of the City of Montreal](http://ville.montreal.qc.ca/artpublic), who is in charge of commissioning and maintening permanent artworks around the city. For the opening of the new planetarium they wanted to commission Montreal's very first interactive and permanent artwork.
 
-The official brief asked for an interactive digital installation utilizing the building facade for projection and simultaneously offering an intervention on the plaza in front of the venue's entrance. Sound excluded. The artist needed to ensure that the work outlasts a minimum of 3 years in the public space, come summer come winter. No light pollution. The budget for realizing the project was set at $262.000 CAD (before taxes).
+The official brief asked for an interactive digital installation utilizing the building facade for projection and simultaneously offering an intervention on the plaza in front of the venue's entrance. The artist needed to ensure that the work outlasts a minimum of 3 years in the public space, come summer come winter. Sound was excluded, and the work should produce no light pollution. The budget for realizing the project was set at $262.000 CAD (before taxes).
 
 The selection process took ~9 months and included three phases:
 
@@ -29,19 +34,23 @@ After passing all phases we were officially commissioned by the Public Art Burea
 ### Timeline, wished-for and realistic
 From first brainstorms to final hand-over the mammoth project took impressive 28 months to complete. That's 10 months longer than the official brief planned for. When you work with that many players (the city, the planetarium, collaborators..) your first and second attempt at a project timeline is bound to fail. Our more pragmatic goal was to get it all done by November 2013, with the main intention to avoid all the snow and coldness that comes along with Montreal's winter season. Naturally we slipped right past that goal, and had our big opening midst lots of snow mid January, with temperatures ranging between -15 to -25. 
 
+**[collecting timeline dates here, but should eventually be presented in visual form]**
+
 - 2011 Sept: official call
-- 2011: preliminary concept
-- 2012: final concept
+- 2011 Fall-Winter: preliminary concept, ideation
+- 2012 Spring: final concept
 - 2012 June: official commission
-- 2012 Fall: ideation (revision)
+- 2012 Fall: ideation revision
 - 2013 May : interaction scenario
-- 2013 June : prototype
+- 2013 May-Sept : prototyping
+- 2013 June : projection tests
 - 2013 July: content animation workshop 1
 - 2013 July-Aug: tech sourcing and purchase
-- 2013 Aug: start software
+- 2013 Aug-Jan: software development
 - 2013 Sept: camera installation, calibration
 - 2013 Dec: content animation workshop 2
-- 2014 Dec/Jan: on site tests and finetuning, install furniture
+- 2014 Dec/Jan: on site tests and finetuning
+- 2014 Jan 17-21: install stones
 - 2014 Jan 23rd: opening
 - 2014 Feb: maintenance
 
@@ -50,96 +59,39 @@ From first brainstorms to final hand-over the mammoth project took impressive 28
 Credit lists quickly grow long. The internal DTLJ team includes Mouna and Melissa being the main artists with the vision, Eva handling software, Pierre being heavily involved with visual identity and video production, Michael handling the LEDs in the outdoor furniture. The list of external collaborators include a producer (Nicolas), a choreographer (Dana), a technical director (Frédérick), a software engineer (Emmanuel), a film animator (Patrick), an industrial design studio (Dikini), a graphic designer (Studio Atelier), a concrete workshop (M3Beton), engineers, a camera man, ... 
 
 
+## Ideation, Narrative, Prototyping and Producing Content
+
+*Choreographies for Humans and Stars* is inspired by space as the great unknown. We felt that our role could be to bring a physical experience that would help the planetarium visitors to not only understand but also feel what space is about. One of our early inspiration was the opening scene of the Belà Tarr's movie "*Werckmeister Harmonies*", where a party ends in dancing a solar system waltz with the Earth and the Moon turning around an eclipsing Sun.
+
+Very early in the process we started collaborating with a choreographer and together we explored how participants could use their bodies in ways that mimic celestial dynamics. 
+
+![Celestrial mechanics](images/PLANE_CELESTIAL_MECHANICS.png "Celestrial mechanics")
+
+We created a choreography-driven narrative build on a sequence of scenes each representing different celestial mechanics. The narrative never strays too far from our solar system to keep the depicted phenomenon recognizable. The individual choreographies would be communicated with text instructions and should allow participants to dance within a group, yet maintain enough freedom to indulge in personal interpretations. 
+
+![Instructions](images/instructionsandvisuals.png "Instructions")
 
 
 
 
+### Challenges in the Interaction design
+Once the overall structure and narrative had been decided on we moved into the iterative process of prototyping, testing and finetuning the interaction design. We went from paper drawings to full scale prototypes and had several test sessions with users of all ages. 
+
+One of the main challenges of the project was to find a balance between providing interesting reactive visuals while also giving people the freedom to perform choreographies without having their eyes constantly stuck on the screen. Being unable to use sound, all interaction feedback needed to be visual. But in order to encourage true freedom of movement, the colorful images of explosions and shooting stars needed to be tuned down in their *reactiveness* to provide more of a backdrop instead of the main attraction of the piece. 
+
+Similar challenging was the task to communicate the instructions to the participants. While some actions could be phrased as one-worders - *"FREEZE!"* - others were more elaborate and cryptic - *"Walk with someone, keep the same distance between you (No hands!)"*. Creating the piece for a bilingual audience also highlighted the possible interpretive differences between English and French instructions. Having test sessions with uninitiated users was important to adjust the exact wording of instructions, and also to refine the timing of the individual scenes. (The factor that eventually ended up influencing the timing the most, was January's outside temperature).
 
 
+### Outlining the dance zone
 
+The projection being intangible, it was important to give the project a physical presence on the ground. Some sort of tangible intervention that would serve as interface for people to interact, and further represent the project during daylight hours. 
 
+At the beginning we imagined a series of stones and platforms arranged to form celestial pathways and encouraged hopping from stone to stone. Yet this would have introduced too many physical obstacles (tripping over, slipping) and severely limited the free movements and interactions in the space. Over the course of prototyping the importance of the physical presence shifted from being an interface to providing a delimiting perimeter around the active dance zone. After going through many design proposals (a stage, a ring, a ballet pole!) we landed on 7 foot-high concrete stones positioned in a circular formation. A single white LED on each stone enhanced their presence. Installing the underground cabling for those 7 LEDs proved a big challenge and required the $10k rental of a ground-unfreezing device. 
 
-
-
-
-## Ideation, Narrative and Content
-
-Where did the ideas come from? And how many ideation stages did we go through? ...
-
-### Ideation process
-[Space, and what is happening in it, feels really abstract for the tiny humans we are. When thinking about it, one can easily feel overwhelmed by its complexity. 
-
-Even helped by an ever increasing amount of impressive technology, the most advanced scientists still can only guess what is happening above our heads. Dark matter, black holes, infinity...those are notions it is hard to wrap our heads around. Partly because it is not something we can feel, touch or smell.]
-
-Space is a great unknown, and that is what inspired us. Being invited by a planetarium – a place where you will find all the latest and accurate data you need to know about space – we felt that our role could be to bring a physical experience that would help visitors to not only understand but also feel what space is about.
-
-The ideation process started with the idea of connecting people to the infinitely big.
-
-One of our early inspiration was the opening scene of the Belà Tarr's movie "*Werckmeister Harmonies*", in which a couple guys end a party by dancing a solar system waltz where the Earth and the Moon are turning around an eclipsing Sun.
-
-### Content
-Solar system, proximity because we wanted people to keep a certain connection with the content.
-Started wrapping our heads around the content, around all the specificities of the planets...
-Felt that it would be more inspiring to open it up a little bit, and think about the relationships between them. Opportunities to create connections between people.
-Celestial mechanics. 
-As described by Wikipedia: Celestial mechanics is the branch of astronomy that deals with the motions of celestial objects.
-
-
-
-### Choreographer
-Working with a choreographer. Using their bodies, participants come to understand celestial dynamics together. 
-
-### The narrative
-The sequential structure.
-Defining the scenes: stars, attraction, revolution, combustion...
-Diagram?
-Choreography-driven narrative
-
-### Interaction design
-Interaction scenarios, testing sessions. ...
-
-Iterative process
-Intervention on the ground. Need to define a physical space as the interface for people to interact.
-From paper to full scale prototyping.
-Challenges: 
-- Communicate the instructions
-- Allow for freedom of movement: have people move inside the space without having their eyes always stucked on the screen
-- No sound feedback
-
-Test sessions with users of all ages. 
-Basic openFrameworks prototype to load videos and display the matching instructions
-These test sessions allowed us to:
-- adjust the writing
-- refine timings of the scenes
+**[3d image showing dance stage with steles?]**
 
 ### Producing video content
-Following the spirit of the ABCs of astronomy and dance, the video content was created using simple analog animation techniques.
-
-Since the project will be permanently installed, we involved locals in the making of these images, aiming to create a sense of ownership within the community that will be living next to the project for many years to come.
-
-We did so through animation workshops with kids aged 7 to 12 from the neighborhood. We invited Patrick Péris, a film director with a strong background in animation, to create a framework for these workshops. After a few days spent exploring techniques for each ones of the scenes, he came up with a list of interesting set ups to trigger the kids' creativity.
-
- - **Shooting stars**: stop-motion animation 
- - **Starry skies**: backliit black foam core in which the kids pierce their constellations
- - **Eclipse**: draw your own planet with watercolor
- - **Revolution**: light painting stop-motion animation
- - **Sun**: liquids filmed in micro video
-
-Every session lasted for 3 hours, with a total number of 80 kids.
-Then post-production
-Lots of time spent selecting content
-
-
-### The dance stage
-
-While camera and projector stay intangible, it was important to give the project a physical presence. The main purpose was to define the active tracking zone for the participants, but also to present a  version of the project during the daylight hours, while the projection was off. After going through many design proposals (a stage, a ring, a ballet pole!) we landed on 7 planet-like concrete steles positioned in a circle formation. A single white LED on each stele enhanced their presence. Installing the underground cabling for those 7 LEDs proved a big challenge and required the $10k rental of a ground-unfreezing device. (most expensive LEDs ever!) The delicate LEDs also caused the most confusion, as participants mistook them to be the secret sensors triggering the interaction.
-
-
-
-
-
-
-
+Since the project would be permanently installed, we involved locals in the making of these images, aiming to create a sense of ownership within the community that will be living next to the project for many years to come. The image and video content was created using simple analog animation techniques in a series of workshops with local kids aged 7 to 12. **[link detailed blogpost about animation workshops?]**
 
 
 
@@ -150,88 +102,67 @@ While camera and projector stay intangible, it was important to give the project
 
 ## Finding the Technical Solutions
 
-### The site and its challenges
-Outdoor installation, all weather conditions, run after sunset, every night for at least the next 3 years. 
+The technical challenges of creating a public artwork definitely multiply when the project is meant to be permanent. Suddenly you can't just hide cables under cable-trays or choose the perfect location for your camera. Your limits are set by year-round weather conditions, architectural building codes and the intended path of the snowplow. 
 
 #### Put the Projector with the animals
-The projection surface being a 20 meter high building covered with shiny tiles, we needed a high-lumen projector, which naturally ate almost half the budget. To save further costs, and for protection and easy-access reasons the projector was placed in the neighbouring building - the Montreal biodome - which has a large glass facade facing the planetarium. A glass replacement window needed to be cut out of the slightly tinted facade of the biodome. A simple $15 heater makes sure our window is kept clear of ice and condensation. Additionally we negotiated with the landscape architects of the site to be able to trim any trees that were likely to grow into our projection cone during the next 3 years.
-
-Distance between projector and projection surface: 87m. 
-
-Projection size: 13.5m times 19m.  
+The projection surface on the planetarium is 20 meter high and covered with shiny tiles. The shininess of these tiles was first worrisome, but an early projection test settled any doubts of projection quality. To cover a large area of the building surface, we required a high-lumen projector [(Barco HDX-W20)](http://www.barco.com/en/Products-Solutions/Projectors/Large-venue-projectors/20000-lumens-WUXGA-3-chip-DLP-projector-with-light-on-demand-option.aspx "Barco HDX-W20") which naturally ate almost half the budget. To save further costs - and for weather-protection and easy-access reasons - the projector was placed in the neighbouring building: the Montreal biodome. We had to build a wooden platform for the projector and cut a glass replacement window out of the slightly tinted facade of the biodome. A simple $15 heater now ensures that that window is kept clear of ice and condensation.  Additionally we negotiated with the landscape architects the trimming of any trees that were likely to grow into our projection cone over the next 3 years.
 
 ![Projector positon](images/sitein3d.jpg "Projector position")
 
 #### Camera style and placement
-In an ideal camera tracking scenario you have a controlled indoor environment that gives you a clean top-down camera view and lets you create the lighting and background design of your choice. Our site at the planetarium is outdoors and therefore subject to all possible weather conditions. The scene can change from dark (cement floor) to white (snow), and often gets temporarily lit up by the flashlights of a driving-by car. 
+In an ideal camera tracking scenario you have a controlled indoor environment that provides a clean top-down camera view and lets you create the lighting and background design of your choice. Our site at the planetarium is outdoors and therefore subject to all possible weather conditions. The foreground-background contrast can invert based on if snow covers the dark pavement or not. The general lighting conditions are poor, but the area can temporarily get lit up by the flashlights of driving-by cars. 
 
-There's the obvious fact that it's rather dark at night, and that our camera system needed to live through -40 degrees in the winter. The distance between any possible camera location and the dance stage being around 20 meters, made it impossible to consider a Kinect solution. When first brainstorming technical solutions for tracking, our list included thermal imaging cameras (\$\$ and low-res), laser range finders (\$\$ and limited to one dimension), stereoscopic 3d cameras (), and cameras placed at 2 different angles to allow for dynamic mapping of two perspectives into one (double the fun). 
+When first brainstorming technical solutions Kinects were quickly excluded due to a distance of at least 20 meters between dance stage and any possible camera location. More viable options included thermal imaging cameras (\$\$ and low-res), laser range finders (\$\$ and limited to one dimension), stereoscopic 3d cameras (too dark environment, also too large distance), and cameras placed at 2 different angles to allow for dynamic mapping of two perspectives into one (double the fun/noise). 
 
-Finally we settled on going with one single camera, with high sensitivity that would make use of the few surrounding lights, and a tracking solution that could convert the 2d information into 3 dimensions.
-
-Strict architecture codes prohibited us from being able to place the camera on top or somewhere along the surface of the planetarium building. After long negotiations we were limited to placing our camera at a quite low angle slightly to the left of the projection site. > more overlapping > need to rotate perspective
+Finally we settled on going with one single camera [(Basler Scout scA1600-28gm)](http://www.baslerweb.com/products/scout.html?model=130 "camera on baslerweb.com"), with a high sensitivity lens [(Fuji HF12.5SA-1)](https://www.fujifilmusa.com/products/optical_devices/machine-vision/2-3-5/hf125sa-1/ "lens on fujifilmusa.com") for low-light situations and a tracking solution that could convert the 2d information into 3 dimensions. Strict architectural codes prohibited us from placing the camera on top or along the surface of the planetarium. After long negotiations we were limited to placing the camera at a quite low angle slightly to the left of the projection site. Surveillance style, we packed the camera into an ugly weatherproof housing (#HEB26D0A000B), together with a power supply, a heater and a fan system. 
 
 
-#### Network negotiations
-After calculating our camera's bandwidth requirements (resolution 800x600px * framerate 28fps * color depth 8bit * compression raw = xxx bit/sec) we discovered that the local network wouldn't allow us to send the camera data directly to the projector site. We had to place one computer in close proximity to the camera, and another computer next to the projector. 
+#### Network setup and negotiations
+After calculating our camera's bandwidth requirements (resolution 800x600px * framerate 28fps * color depth 8bit * raw compression = 13 MB/sec) we discovered that the local network wouldn't allow us to send the camera data directly to the projector site. We had to place one computer (Intel Core i5 3570K 3.40G/6M/S1155 with 8GB ram) in close proximity to the camera and another computer (Intel Core i7 3770K 3.40G/8M/S1155 with 16GB ram and an Asus GTX680 graphics card) next to the projector. (Both computer run Ubuntu 12.04 LTS) **[comp specs as footnotes?]**
 
 The network being part of the city network, was heavily controlled, subject to 15min timeout internet access. A couple of request forms later we had a LAN connection between our two computers. VPN access for remote maintenance and remote updates took about 2-3 months, and we are still in negotiation to get SSH access. (Cities protect their networks).
 
-### Hardware Choices
+![Technical System Diagram](images/PLANETARIUM_TECH_DIAGRAM_20140322.png "Technical System Diagram")
+  
+**[very simple system diagram, maybe not necessary?]**
 
-#### Camera and lens
-We picked Basler's [Scout scA1600-28gm](http://www.baslerweb.com/products/scout.html?model=130 "camera on baslerweb.com") camera for it's high sensitivity. Going black&white eliminates any color focused tracking, but gives you even more sensitivity for low-light situations. High-res camera, gigabit ethernet. lens [Fuji HF12.5SA-1](https://www.fujifilmusa.com/products/optical_devices/machine-vision/2-3-5/hf125sa-1/ "lens on fujifilmusa.com") ... Surveillance style, we packed the camera into an ugly weatherproof housing (#HEB26D0A000B), together with a power supply, a heater and a fan system.
-
-#### Computer hardware and OS
-Computer #1: Intel Core i5 3570K 3.40G/6M/S1155 with 8GB ram
-Computer #2: Intel Core i7 3770K 3.40G/8M/S1155 with 16GB ram and an Asus GTX680 graphics card. 
-Both computer run Ubuntu 12.04 LTS 
-
-#### Projector
-Projector model: Barco HDX-W20, resolution of 1920*1200px (16:10) used in horizontal view. 
-
-### System
-**[include diagram]**
 
 ### Choice of tracking software
-For the tracking software we found a collaborator in Emmanuel Durand, part of the research lab at [Society for Arts and Technologies](http://www.sat.qc.ca/ "Society for Arts and Technologies"). Emmanuel had developed [blobserver](https://github.com/paperManu/blobserver "blobserver on github") - a opencv based software to implement various realtime detection algorithms - and was looking for first test projects. For the project he further developed and adapted blobserver to our needs. Blobserver is designed to take in multiple camera or video sources, detect entities and then report its findings via OSC. Further configuration and communication of blobserver can be done through OSC as well, which allows for easy integration into any OSC-friendly software. 
+For the tracking software we found a collaborator in Emmanuel Durand, part of the research lab at [Society for Arts and Technologies](http://www.sat.qc.ca/ "Society for Arts and Technologies"). Emmanuel had developed [blobserver](https://github.com/paperManu/blobserver "blobserver on github") - a opencv based software to implement various realtime detection algorithms - and was looking for first test projects. For the project he further developed and adapted blobserver to our needs. Blobserver is designed to take in multiple camera or video sources, detect entities and then report its findings via OSC. Live configuration of blobserver can be done through OSC as well, which allows for easy integration with any OSC-friendly software. 
 
 ![tracking](images/blobservertracking.png "Camera view and tracking result")
 
 #### Method of Tracking
-To track participants on our performance stage we used blobserver's HOG detector - [histogram of oriented gradients](http://en.wikipedia.org/wiki/Histogram_of_oriented_gradients "Histogram of Oriented Gradients on wikipedia") - which learns from a database of human shapes to detect human outlines. The HOG detection is processing optimized by limiting its areas of interest to areas with recent movements, detected by background subtraction. 
+To track participants in our dance zone we used blobserver's HOG detector ([histogram of oriented gradients](http://en.wikipedia.org/wiki/Histogram_of_oriented_gradients "Histogram of Oriented Gradients on wikipedia")) which learns from a database of human shapes to detect human outlines. The HOG detection is processing optimized by limiting its areas of interest to areas with recent movements, detected by background subtraction. 
 
-First tracking tests were done based on publicly available databases of human shapes [link?], but to get better results for our environment (camera view at slight top-down angle, specific background, ..) we had to create our own database, and compute our own model:
-
-1. collect images from site
-2. crop images to human shapes with blobcrop
-3. produce model with blobtrainer
-4. run blobserver with model
+First tracking tests were done based on publicly available databases of human shapes [link?], but to get better results we created our own image database. We trained the system on images taken with our camera on site, providing the specific camera angle and the same specific background. Future project updates will include further training of the tracking model by including images showing people and environment in their summer-attire. 
 
 #### Tracking challenges
-finetuning of tracking (challenges: weather, perspective, kids, overlapping)
+The tracking algorithm performs great when dealing with ideal-case scenarios: maximum 3 people, moving at a distance from each other, their silhouettes standing out with high contrast from the background. But naturally, in an public setting without any sort of supervision you can't control how the audience uses your artwork. As soon as too many people enter the dance zone at once, the system can get confused by overlapping shapes. Similarly too tiny children, or clothes in the same brightness as the background can cause the detection algorithm to sporadically fail. Configuring the system to forgive those mistakes and let it pretend it still detects those participants, also widens the door for unintentional noise (fake positives).  
 
-reducing our expectations (tracking gestures, people rotating, specific movements) to a minimum (presence and location), making use of system limitations (onLost events)
+That balance between detection precision and detection forgiveness and the fact that we dealt with a fuzzy system in an uncontrolled environment, took a while to settle in (Side note: this is our first camera tracking project). During early on-site tests we'd settle on tracking settings that performed well, only to come back the next day to a different weather scenario and discover that the same settings didn't apply anymore. 
 
-Even though the camera could output 1628 x 1236px we went with a binning value of 2 and therefore a resolution of 800 x 600px. To achieve better sensitivity. 
+After learning this the hard way, we understood to lower our expectations and also figured out ways to make use of the limitations of the system. Certain instructions ask participants to change into untypical shapes (*"Hop from one spot to the other"*, *"Drop to the ground"*). Instead of training the system on the shapes of people hopping or lying on the ground, we'd use the fact that the detection system lost them, in order to trigger visual reactions. 
 
+Similarly we'd detect people spinning - "*Take someone's hand, spin and lean out as far as possible*" - by counting how many times the system loses and re-detects their shapes. As we'd only look for one specific choreography in each scene, we were free to interpret the incoming tracking results as needed.
 
+![Drop](images/camview_liedown.jpg "Drop to the ground")
 
+![Spin](images/camview_spin1.jpg "Spin")
 
 ### Choice of visualization software
-This project provided the perfect excuse to jump back into openFrameworks. Previous company projects relying on computation have mostly lived in the realm of music (max/MSP) or the web (python, node.js). On the rare occasion that visuals were involved, a short timeline demanded a quick solution (processing). We also fall victim to the general mistake of overpolluting the neverending prototype and simply turning it into production software. 
+This project provided the perfect excuse to jump back into openFrameworks. Previous company projects relying on computation mostly lived in the realm of music (max/MSP) or the web (python, node.js). On the rare occasion that visuals were involved, a too short timeline asked for a quick solution (processing). And in general we fall victim to the mistake of over-polluting the never ending prototype and simply turning it into production software. 
 
-This project, with its demands of high-res video animations, provided a decent time frame allowing for proper project development and gave me all the right reasons to go back to openFrameworks (its been a while). Helpful at this stage was as well that most prototyping of content and interaction happened with non-interactive videos produced with video editing software. Any truly interactive prototype had to wait for all the pieces (camera placement on site, tracking success, etc.) to come together.  
+*Choreographies for Humans and Stars* with its demands of high-res video animations provided a decent time frame allowing for proper project development and gave me all the right reasons to return to openFrameworks. Helpful at this stage was that most prototyping of content and interaction happened with non-interactive videos produced with video editing software. Any truly interactive prototype had to wait for all the pieces (camera placement on site, trained tracking software) to come together.  
 
-OpenFrameworks was chosen as the programming environments because of C++'s fast processing speed, it's addons, the range of projects out there that deal with video and animation content and present their code out there on github, and mostly its avid and rarely not-helpful community forum. A main reason was also openFrameworks cross-platform ability, as i am personally on a Windows 7 laptop, while the office is reigned by Macs, and the decision had been made to give it a try with Linux computers for the installation. So being able to jump between the different operating systems while still developing the same software, naturally a plus. 
+OpenFrameworks was chosen as the programming environments because of C++'s fast processing speed, it's addons, the open-source nature of many similar projects dealing with video and animation content, and mostly its avid and rarely not-helpful community forum. A main reason was also openFrameworks cross-platform ability, as i am personally on a Windows 7 laptop, while the office is reigned by Macs, and the decision had been made to give it a try with Linux computers for the installation. So being able to jump between the different operating systems while still developing the same software, naturally a plus. 
 
 
 ### Additional software used
- - [processing](http://processing.org/ "processing") ... for creating communication dummies
- - [switcher](https://code.sat.qc.ca/redmine/projects/switcher "switcher at code.sat.qc.ca") ... to access the GigE camera via shared memory
+ - [processing](http://processing.org/ "processing") ... for creating OSC communication dummies
+ - [switcher](https://code.sat.qc.ca/redmine/projects/switcher "switcher at code.sat.qc.ca") ... to stream video files to shared memory
  - [libshmdata](https://github.com/sat-metalab/libshmdata "libshmdata on github") ... to share video via shared memory
- - oscdump, ..
- - Photoshop, Final Cut Pro? ... image/video content production
+ - Photoshop, Final Cut Pro ... to produce and edit image / video content
 
 
 
@@ -256,48 +187,20 @@ OpenFrameworks was chosen as the programming environments because of C++'s fast 
 ## Developing the Visualization Software
 
 #### Development setup
-The openFrameworks linux install (# ) is build for codeblocks, yet as i have come to like the code editor Sublime for its lightweightness and simplicity, i chose to program in Sublime and then compile by simply running the `make` command inside the terminal. (Also useful: Run software from terminal with `/bin/emptyExample` command). On my laptop (win7) i code with Sublime, but compile and run the software from within Codeblocks. 
+The openFrameworks linux install (# ) is build for codeblocks, yet as i have come to like the code editor Sublime for its lightweightness and simplicity, i chose to program in Sublime and then compile (`$ make`) and run the program (`$ ./bin/appName`) from the terminal. On my win7 laptop i code with Sublime, but compile and run the software from within Codeblocks. Besides its purpose of providing a history of the code, i used github here mainly to push code between the development and production computers. My usual programming setup includes an open browser with tabs open on the openFrameworks forum, the openFrameworks documentation page, and github (to search specific function uses). 
 
-Besides its purpose of providing a history of the code, i used github here mainly to push code between computers. And to search my own code history, as i still rarely dare to roll back and forth within the git repository itself. 
-
-My usual programming setup includes an open browser with tabs open on the openFrameworks forum, the openFrameworks documentation page, and github (to search specific function uses). 
-
-#### Externals used
+#### Externals, Addons used
 
  - **ofEvents** ... for controlling the animation
- - **ofxOsc** ... for communication btw. computers
- - **ofxOpenCv** ... for running a perspective transformation
+ - **ofxOsc** ... for communication between computers
+ - **ofxOpenCv** ... only for running a perspective transformation
  - **ofxGui** ... to build a GUI
 
 ### Quick summary of what the app does
-The application navigates the projection through a sequence of 6 tableaus that have different themes and interaction instructions. When participants follow the instructions (and hop, or line-up, or run around, or stand still ..) the application receives their position data, analyses it for each scene's interaction requirements, and then controls video elements on the projection. In some scenes the participants movements are directly mapped to a video element movements, in other scenes participant movements simply cause videos to appear/disappear on screen.
+The application navigates the projection through a sequence of 6 scenes that have different themes and interaction instructions. When participants follow the instructions (and hop, or line-up, or run around, or stand still ..) the application receives their position data, analyses it for each scene's interaction requirements, and then controls video elements on the projection. In some scenes the participant's location is directly mapped to a video element location, in other scenes participant movements simply cause videos to appear/disappear on screen.
 
 ### Sequential structure
 The transition from one scene and segment to the next is either time-dependent or based on the participants successful execution of instructions. Yet even if no interaction goal is achieved, a maximum timer will still cause the transition to the next scene. 
-
-#### Transitions based on time or interaction goals
-At the beginning of each segment a time reference is taken, and a global success variable is reset to false.
-
-    segmentStart = ofGetUnixTime();
-    success = false;
-    
-A timing counter is then advanced at every step (use system time and not frames) and checked against the current segment's maximum time limit. Reaching the time limit or a positive flag on the success value both can cause the transition to the next segment.
-
-    segmentClock = ofGetUnixTime() - segmentStart;
-
-    if (autoplay && !transition) {
-    
-        // TRANSITION based on TIME
-        if ( segmentClock >= scenes[scene].duration[segment] ) {
-            endSegment(); 
-        }
-           
-        // TRANSITION based on SUCCESS 
-        if (success) {
-            endSegment();
-        }
-        
-    }
 
 While the system usually goes through all scenes sequentially, one scene can be skipped if not enough participants are detected in the interaction zone. Additionally the system can fall into an idle mode, if no participants has been detected at all during the last 30 seconds. After the idle mode it resumes with scene 1. 
 
@@ -306,18 +209,17 @@ The tracking software *blobserver* on the camera computer acts as OSC server and
 
 **[reference network/OSC chapter]**
 
-To be able to test and simulate the two-way OSC communication i created several processing dummies, which turned out to be very useful for software tests without the full setup. (1: dummy to print out received message, or oscdump. 2: dummy to send tracking parameters. 3: dummy to simulate incoming tracking data)
+To be able to test and simulate the two-way OSC communication i created several processing dummies, which turned out to be very useful for software tests without the full setup. (1: dummy to print out received message. 2: dummy to send tracking parameters. 3: dummy to simulate incoming tracking data).
 
 
 #### Dealing with split message blocks and framerate differences
 
-The OSC messages send by the tracking software take this format:
+The OSC messages sent by the tracking software take this format:
 
     /blobserver/startFrame      389 1
-    /blobserver/hog             1028 4 8 0.4 1.2 77 0 0
-    /blobserver/hog             1028 4 8 0.4 1.2 77 0 0
-    /blobserver/hog             1028 4 8 0.4 1.2 77 0 0
-    // iiiffiii > id x y vx vy age lost occluded
+    /blobserver/hog             128 140 287 0.4 1.2 77 	4 	 1	
+    /blobserver/hog             135 418 103 2.2 2.8 20 	0 	 0
+    /blobserver/hog             136 356 72 	0.3 0.2 18 	0 	 0
     /blobserver/endFrame
 
 Each message with the address line `/blobserver/hog`  signifies the tracking data for one recognized shape, and communicates blob id, position, velocity, age, etc. Bounded by the `/blobserver/startFrame` and `/blobserver/endFrame` messages, an arbitrary amount of tracking messages (= current number of *people* recognized) can be received at any time. The frequency of those message blocks depends on the framerate of *blobserver*. 
@@ -364,13 +266,12 @@ If new tracking data arrives, the system first checks if the blob already exists
 After the new tracking information has been filed away into the blobs map, the blobs map is cleaned of all non-updated members. 
 
 #### Perspective transformation
-For better analysis of the individual blobs x|y position (alignment, position within stage, distance btw blobs, etc.), we transformed their position information into an top-down perspective that is aligned with the projection. This skewing and rotating of the data is achieved via `cv::perspectiveTransform`. 
+For better analysis of the individual blobs x|y position (alignment, position within stage, distance between blobs, etc.), i transformed their position information into an top-down perspective that is aligned with the projection. This skewing and rotating of the data is achieved via `cv::perspectiveTransform`. 
 
-**[maybe graphic showing camera view with detection, and top down view in GUI]**
-
+![perspectiveTransform](images/perspective_transform.jpg "perspectiveTransform")
 
 ### Implementing video content
-All our visual raw material exists in the form of videos (and some images) that originated in analog animation workshops. Besides written instructions that are drawn, everything on the projection is direct video display (no effects). 
+All our visual raw material exists in the form of videos (and some images). Besides written instructions that are drawn, everything on the projection is direct video display without any effects. 
 
 #### The quest for the right codec
 When we first received the computer hardware, i did a series of performance tests with video files of different codecs to determine how we would prepare our video content. The mistake i made was that i primarily focused on video playback. And once the setup would play multiple video instances at HD resolution, 30fps, in every codec (H.264, photoJPEG, quicktimePNG, animation, raw) while still providing a framerate of 60FPS, i was convinced the top-notch CPU and GPU would be able to handle it all. 
@@ -402,10 +303,8 @@ Example: Everytime a user stands still long enough during scene 1, a video eleme
 #### Preloading versus dynamic loading
 In general all video sources that are used in a controlled way (used only as one instance) are preloaded at startup of the software. For video sources that are called up dynamically in possibly multiple instances at once, i use two approaches:
 
- 1. Load the video content when needed, with a threaded video player [possible delay, hickups]
+ 1. Load the video content when needed [freezes whole app momentarily while loading file]
  2. Preload a large enough vector of multiple instances of the video, then cycle through them with a pointer [allows for fast access/display, yet slows down app if used for big video files]
-
-(verdict still out, more testing ahead, also open to helpful insights)
 
 ### Event-driven animation
 The control of video elements by the blobs (detected participants) is implemented with `ofEvent()` calls. **[reference chapter with events]** Events are an good way of giving objects a way of controlling elements in the baseApp without having to query each objects possible states from the baseApp's update() loop, or without having to give objects a pointer to the whole baseApp. 
@@ -500,11 +399,7 @@ The opening day had me glued next to the projection computer, ready to hit a but
 
 
 ### first: keep your app alive
-The one good thing about segmentation faults is that they kill your app very fast. The app crashes and in the next frame you are left with your desktop background (which should be black). The perfect fail-safe solution for this is something like [daemontools]( http://cr.yp.to/daemontools.html) (linux), which is a background process that monitors your app and restarts it within a second in case it crashes. 
-
-launchd, lingon, ...
-
-After setting up supervision with deamontools, the app could crash, but all people would see is a few seconds of black (depending on how long the preloading of videos takes on startup). 
+The one good thing about segmentation faults is that they kill your app very fast. The app crashes and in the next frame you are left with your desktop background (which should be black). The perfect fail-safe solution for this is something like [daemontools]( http://cr.yp.to/daemontools.html) (linux), which is a background process that monitors your app and restarts it within a second in case it crashes. After setting up supervision with deamontools, the app could crash, but all people would see is a few seconds of black (depending on how long the preloading of videos takes on startup). 
 
 ### second: framerate cheats
 The second concern was the drops in framerate that would come too much videoplayer actions. 
@@ -520,3 +415,16 @@ The second concern was the drops in framerate that would come too much videoplay
 ### finally: optimize
 - replace video with opengl-animation
 - what to implement with threads?
+
+
+
+## Results and Reception
+
+![Exahle](images/exhaleatplane.jpg "Exhale")
+
+![On site](images/hopatplane.jpg "Project in action")
+
+![Exahle](images/camview_onsteles.jpg "Exhale")
+
+The delicate LEDs also caused the most confusion, as participants mistook them to be the secret sensors triggering the interaction.
+
