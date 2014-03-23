@@ -1,6 +1,6 @@
 #Sound
 
-This chapter will demonstrate how to use the sound features that you'll find in openFrameworks, as well as some techniques you can use to react to and generate sound.
+This chapter will demonstrate how to use the sound features that you'll find in openFrameworks, as well as some techniques you can use to generate and process sound.
 
 Here's a quick overview of the classes you can use to work with sound in openFrameworks:
 
@@ -16,7 +16,44 @@ Here's a quick overview of the classes you can use to work with sound in openFra
 
 `ofSoundObject` is an interface for chaining bits of sound code together, similar to how a guitarist might use guitar pedals. This is mostly relevant for addon authors or people looking to share their audio processing code.
 
-- Quick and dirty play files w/ofSoundPlayer & beep boop `sin()` ofSoundStream examples to set the stage.
+##Getting Started With Sound Files
+
+Playing a sound file is only a couple lines of code in openFrameworks. Just point an `ofSoundPlayer` at a file stored in your app's data folder and tell it to play.
+
+    class ofApp : public ofBaseApp {
+      ...
+      ofSoundPlayer soundPlayer;
+    };
+
+    void ofApp::setup() {
+      soundPlayer.loadSound("song.mp3");
+      soundPlayer.play();
+    }
+
+This is fine for adding some background music or ambiance to your app, but `ofSoundPlayer` comes with a few extra features that are particularly handy for handling sound effects.
+
+"Multiplay" allows you to have a file playing several times simultaneously. This is great for any sound effect which might end up getting triggered rapidly, so you don't get stuck with an unnatural cutoff as the player's playhead abruptly jumps back to the beginning of the file. With multiplay enabled, you can get natural sound effect behaviour with dead-simple trigger logic like this:
+
+    if ( thingHappened )
+      soundPlayer.play();
+    }
+
+Multiplay isn't on by default. Use `soundPlayer.setMultiPlay(true)` to enable it.
+
+Another feature built-in to `ofSoundPlayer` is speed control. If you set the speed faster than normal, the sound's pitch will rise accordingly, and vice-versa (just like a vinyl record). Playback speed is defined relative to "1", so "0.5" is half-speed and "2" is double speed.
+
+Speed control and multiplay are made for each other. Making use of both simultaneously can really extend the life of a single sound effect file. Every time you change a sound player's playback speed with multiplay enabled, previously triggered sound effects continue on unaffected. So, by extending the above trigger logic to something like...
+
+    if( thingHappened ) {
+      soundPlayer.setSpeed(ofRandom(0.8, 1.2));
+      soundPlayer.play();
+    }
+
+...you'll introduce a bit of unique character to each instance of the sound.
+
+ofSoundPlayer is a tradeoff between ease-of-use and control. You get access to easy multiplay and pitch-shifted playback but lose precise control and access to the individual samples in the sound. 
+
+On the opposite end of the spectrum, ofSoundFile will allow you to extract an uncompressed ofSoundBuffer out of a file, allowing you access to the raw time domain signal.
 
 ##Why -1 to 1?
 
@@ -30,7 +67,7 @@ At the most basic level, a speaker consists of a cone and an electromagnet. The 
 
 From the perspective of an openFrameworks app, it's not important what the sound hardware's specific voltages are. All that really matters is that the speaker cone is being driven between its "fully pushed out" and "fully pulled in" positions, which are represented as 1 and -1. [note: would be good to relate this to zach's bit about numbers between 0 and 1 in the animation chapter].
 
-[footnote] Many other systems use an integer-based representation, moving between something like -65535 and +65535 with 0 still being the representation of "at rest". The Web Audio API provides an unsigned 8-bit representation, which ranges between 0 and 255 with 127 being "at rest". NOTE TO SELF DOUBLE CHECK THE SPECIFIC NUMBERS
+[footnote] Some other systems use an integer-based representation, moving between something like -65535 and +65535 with 0 still being the representation of "at rest". The Web Audio API provides an unsigned 8-bit representation, which ranges between 0 and 255 with 127 being "at rest".
 
 A major way that sound differs from visual content is that there isn't really a "static" representation of sound. For example, if you were dealing with an OpenGL texture which represents 0 as "black" and 1 as "white", you could fill the texture with all 0s or all 1s and end up with a static image of "black" or "white" respectively. This is not the case with sound. If you were to create a sound buffer of all 0s, all 1s, all -1s, or any single number, they would all sound like exactly the same thing: nothing at all.
 
@@ -55,13 +92,6 @@ You can also transform a signal from the frequency domain back to the time domai
 - ofSoundStream gives you access to sound in the time domain.
 - The time domain is useful for analysing general "loudness", as well as pitch detection ([counterintuitively](http://blog.bjornroche.com/2012/07/frequency-detection-using-fft-aka-pitch.html))
 - Frequency domain is useful for isolating particular elements of a sound, such as instruments in a song. It is also useful for analyzing the character/timbre of a sound.
-
-##Sound Files
-- ofSoundPlayer is a tradeoff between ease-of-use and control. You get access to easy multiplay and pitch-shifted playback but lose precise control and access to the individual samples in the sound
-- On the opposite end of the spectrum, ofSoundFile will allow you to extract an uncompressed ofSoundBuffer out of a file, allowing you access to the raw time domain signal.
-- ofSoundPlayer provides access to the frequency domain content of the sounds being played in the form of `ofSoundGetSpectrum()`, but does not give access to the time domain (i.e. the -1 to 1 uncompressed samples)
-- "Multiplay" allows you to have a file playing several times at different pitches simulatenously. Very handy for sound effects.
-- Codec support
 
 ##Reacting to Live Audio
 
