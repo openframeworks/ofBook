@@ -2,9 +2,11 @@
 
 ## Project Overview
 
-Anthropocene ˈanTHrəpəˌsēn
-Adjective
-Relating to or denoting the current geological age, viewed as the period during which human activity has been been the dominant influence on climate and the environment.
+**Anthropocene**
+
+_Adjective_
+
+_Relating to or denoting the current geological age, viewed as the period during which human activity has been been the dominant influence on climate and the environment._
 
 First of all, you should watch this video, to see the finished project, as part of a wider video all about the Greenpeace Field at Glastonbury 2013.
 
@@ -280,6 +282,8 @@ together... Neat demo! synchronised gui controls....both crash on exit
 
 sender:
 
+```cpp
+
 void testApp::setup(){
 	parameters.setName("parameters");
 	parameters.add(size.set("size",10,1,100));
@@ -296,7 +300,11 @@ void testApp::update(){
 	sync.update();
 }
 
+```
+
 receiver:
+
+```cpp
 
 void testApp::setup(){
 	parameters.setName("parameters");
@@ -321,6 +329,8 @@ void testApp::draw(){
 		ofCircle(ofGetWidth()*.5-size*((number-1)*0.5-i), ofGetHeight()*.5, size);
 	}
 }
+
+```
 
 subtle difference in port lines in sync setups...
 
@@ -468,6 +478,8 @@ durationData
 
 too.. The readme sez:
 
+```
+
 Duration: Timeline for Creative Code Demonstration
 
 Code used in the demo of Duration:
@@ -481,6 +493,8 @@ Download Duration
 http://www.duration.cc/ // https://github.com/YCAMInterlab/Duration
 
 Supported by YCAM InterLab Guest Research Project 2012
+
+```
 
 Getting those.. put in here:
 
@@ -514,6 +528,8 @@ OF/openFrameworks-develop/addons/ofxDuration/example-simpleReceiver
 
 opening that and taking the functionality over...
 
+```cpp
+
 ofxDurationTrack sceneTrack = duration.getTrack("/scene");
 string currentScene = sceneTrack.flag;
 
@@ -525,31 +541,38 @@ if(currentScene == "SLITSCANBASIC"){
     currentMode = SLITSCANBASIC;
 }
 
+```
+
 totally works!
 
 #### 16th June 2013
 
 Lets try the video syncing over osc.. Didn't seem to work with:
 
-    float remoteTime = sceneTrack.lastUpdatedTime;
-    cout << "Remote time is:" << remoteTime << endl
-    float totalLengthOfVideo = greenpeaceVideo.getDuration();
-    float percentToSeekTo = remoteTime/totalLengthOfVideo;
-    greenpeaceVideo.setPosition(percentToSeekTo);
+```cpp
+float remoteTime = sceneTrack.lastUpdatedTime;
+cout << "Remote time is:" << remoteTime << endl
+float totalLengthOfVideo = greenpeaceVideo.getDuration();
+float percentToSeekTo = remoteTime/totalLengthOfVideo;
+greenpeaceVideo.setPosition(percentToSeekTo);
+```
 
 Hmmm. Sent this to james and got a response:
 
 On 16 Jun 2013, at 19:00, James George wrote: yea it's impossible to call setPosition on a video every frame and have it playback smoothly. Quicktime needs to control its own time. Try this: play the video back normally in openframeworks and then update Duration every frame based on it's position:
 
+```
 https://github.com/YCAMInterlab/Duration#controlling-duration-through-osc
 
 Specifically make sure Duration has its incoming OSC port set and from OF send it a /duration/seektosecond. Get the seconds from the video player.getPosition()*player.getDuration() then create an outgoing OSC message directed at Duration:
 
 Seek	/duration/seektosecond	Second (Float)	 Sets playhead position to the specified second
 Sending the /seektosecond message will then trigger an update to come back from Duration to your app and update all the other params.
+```
 
 On Sun, Jun 16, 2013 at 1:49 PM, Joel Gethin Lewis wrote: Hey James, I've been trying to get a Duration app to be able to sync the video playback on an OF app - I used your example and have started trying to sync to the time from a track:
 
+```cpp
 ofxDurationTrack sceneTrack = duration.getTrack("/scene");
 string currentScene = sceneTrack.flag;
 float remoteTime = sceneTrack.lastUpdatedTime;
@@ -559,6 +582,7 @@ cout << "totalLengthOfVideo time is:" << totalLengthOfVideo << endl;
 float percentToSeekTo = remoteTime/totalLengthOfVideo;
 cout << "percentToSeekTo time is:" << percentToSeekTo << endl;
 greenpeaceVideo.setPosition(percentToSeekTo);
+```
 
 But it results in stuttering, playback - do you have any tips? How often are the control packets sent? Should I be getting the remote time in a better way? Cheers, Joel
 
@@ -572,6 +596,7 @@ Is what we want...so need to setup osc, trying to get that working with a simple
 
 On 16 Jun 2013, at 20:48, Joel Gethin Lewis wrote: Hey James, Thanks! It kind of works, but not really. I have my app jumping around it's video when I press t:
 
+```cpp
 case 't':
 {
    float newseekposition = (float)mouseX/(float)ofGetWidth();
@@ -579,6 +604,7 @@ case 't':
    greenpeaceVideo.setPosition(newseekposition);
    cout << "New seek position is: " << newseekposition << endl;
 }
+```
 
 If the Duration app is set to paused, it updates fine, the playhead moving around when I press T in my app- but I don't get the messages back from Duration! If it isn't paused (the duration app), I get the messages, but I can't move the Duration playhead around with the above messages! Catch 22? What should I do? I want to get the messages back, have it be playing on both ends and be able to seek. At the moment, I can have seeking in my app and Duration, but without messages back. Or messages back, without seeking.
 
@@ -595,12 +621,14 @@ Made new osc send:
 
 On 16 Jun 2013, at 20:51, Joel Gethin Lewis wrote: This is my send, in my update:
 
+```cpp
 //update duration based on the position of the quicktime player
 float videoTimeToSend = greenpeaceVideo.getPosition()*greenpeaceVideo.getDuration();
 ofxOscMessage m;
 m.setAddress("/duration/seektosecond");
 m.addFloatArg(videoTimeToSend);
 senderToDuration.sendMessage(m);
+```
 
 Got this reply back, and replied:
 
@@ -675,17 +703,21 @@ the first one i found was about singletons which allows you to have global varia
 FBO->SLITSCAN is working:
 
 RGB fbo!
-
+```cpp
 ofImage distortionMap;
 distortionMap.allocate(someSparkles.theFBO.getWidth(), someSparkles.theFBO.getHeight(), OF_IMAGE_COLOR);
 someSparkles.theFBO.readToPixels(distortionMap.getPixelsRef());
 distortionMap.resize(timeline.getVideoPlayer("video")->getWidth(), timeline.getVideoPlayer("video")->getHeight());
 slitScan.setDelayMap(distortionMap);
+```
 
 setup:
+```cpp
 theFBO.allocate(aWidth, aHeight, GL_RGB);
+```
 
 draw:
+```cpp
 theFBO.begin();
 ofSetColor(ofColor::black);
 ofRect(0,0,theFBO.getWidth(), theFBO.getHeight());
@@ -695,9 +727,11 @@ float circleY = theFBO.getHeight()/2.f;
 float circleRadius = min(circleX, circleY);
 ofCircle(circleX,circleY, circleRadius);
 theFBO.end();
+```
 
 So the bug is currently with how the cloud of sparkles is being drawn - is the contour finder being read properly? I'm trying to draw at:581814,23197.4, at size:13.0935 is where things were trying to draw! co-ordinates must be in pixels inside the contour tracker! dumb......sorted it with:
 
+```cpp
 void Sparkles::update(ofxCvContourFinder* aContourFinder){
 	float cloudWidth = theFBO.getWidth();
 	float cloudHeight = theFBO.getHeight();
@@ -719,6 +753,7 @@ void Sparkles::update(ofxCvContourFinder* aContourFinder){
 	    }
 	}
 }
+```
 
 OK that works
 
@@ -771,13 +806,15 @@ lots of fun effects and already in an FBO! just do these effects on either the l
 
 ofxPostProcessing
 3D demo, with 
-    post.createPass<FxaaPass>()->setEnabled(false);
-    post.createPass<BloomPass>()->setEnabled(false);
-    post.createPass<DofPass>()->setEnabled(false);
-    post.createPass<KaleidoscopePass>()->setEnabled(false);
-    post.createPass<NoiseWarpPass>()->setEnabled(false);
-    post.createPass<PixelatePass>()->setEnabled(false);
-    post.createPass<EdgePass>()->setEnabled(false);
+```cpp
+post.createPass<FxaaPass>()->setEnabled(false);
+post.createPass<BloomPass>()->setEnabled(false);
+post.createPass<DofPass>()->setEnabled(false);
+post.createPass<KaleidoscopePass>()->setEnabled(false);
+post.createPass<NoiseWarpPass>()->setEnabled(false);
+post.createPass<PixelatePass>()->setEnabled(false);
+post.createPass<EdgePass>()->setEnabled(false);
+```
 nice, but all in 3D - doing a quick hack to draw the video grabber in the scene. No, couldn't get it working, need to draw it to a texture and draw in space, no thank you...
 
 ofxPSLevels
@@ -805,6 +842,7 @@ left in bangs..turned on snapping...they look ok, can work on these...working on
 
 This is wrong:
 
+```cpp
 case SLIGHTLY BUGGERED RERVERSED VERTICAL MIRROR:
 {
     ofxCvColorImage mirrorImage;
@@ -845,9 +883,11 @@ case SLIGHTLY BUGGERED RERVERSED VERTICAL MIRROR:
     }
     break;
 }
+```
 
 This is right
 
+```cpp
 case HORIZONTALMIRROR:
 {
     ofxCvColorImage mirrorImage;
@@ -888,9 +928,11 @@ case HORIZONTALMIRROR:
         ofDisableNormalizedTexCoords();
     }
 }
+```
 
 Getting a bit better...fixing the controls - some of the keys were clashing. Red lines on the screen indicate track in a and out below the main timeline. 
 
+```
 Keys for Duration/ofxTimeline:
 
 Note on OS X the COMMAND key is used, on Linux and Windows the CTRL key is used
@@ -909,6 +951,7 @@ Nudge keyframes a little more	shift+arrow keys
 Expand Focused track	alt+e
 Collapse all tracks	alt+c
 Evenly distribute track sizes	alt+shift+c
+```
 
 Sped things up by taking off vertical sync and smoothing too, 30fps. Did kaleidoscope, little bugs I think...turned the update into a proper switch statement, really improved performance! All good, enough for tonight....
 
@@ -930,15 +973,18 @@ trying shatter...trying to make it work but there seems to be a conflict when I 
 
 all i had to do was change shatter.h to :
 
+```cpp
 include "ofMain.h"
 include "ofxOpenCv.h"
 include "ofxBox2D.h"
+```
 
 from:
-
+```cpp
 include "ofMain.h"
 include "ofxBox2D.h"
 include "ofxOpenCv.h"
+```
 
 Via OF Forum post: http://forum.openframeworks.cc/index.php?topic=7165.0 :
 
@@ -949,6 +995,7 @@ in testApp.h having #include "ofxOpenCv.h" at the top of my include list solved 
 
 Crazy... OK. got that working, but way too slow...
 
+```cpp
 float timeSinceLastShatter = ofGetElapsedTimef() - timeOfLastShatter;
 
 if(timeSinceLastShatter > 10.f){ //every 2 seconds make some more....
@@ -1002,6 +1049,7 @@ if(timeSinceLastShatter > 10.f){ //every 2 seconds make some more....
     
     timeSinceLastShatter = ofGetElapsedTimef();
 }
+```
 
 Let's just spray triangles out from the top of the blobs...like sparkles but with triangles....triangles lame, circles work! Had it running on pete's laptop all lovely...
 
@@ -1018,10 +1066,11 @@ DONE - flock it .4. try a flock attracted to blobs....
 OF/openFrameworks-develop/apps/HAndLGreenpeace/010WithSpikyBlobsFlockAndSelfSlitScan
 
 Made that. starting with 1. SELFSLITSCAN - super easy:
-
+```cpp
 if(timeline.getVideoPlayer("video")->isFrameNew()){
     slitScan.setDelayMap(timeline.getVideoPlayer("video")->getPixelsRef());
     slitScan.addImage(timeline.getVideoPlayer("video")->getPixelsRef());
+```
 
 Next on to spikey mode! Was going to use:
 
@@ -1029,14 +1078,18 @@ ofxContourUtil-master
 
 From julapy, but it's all in:
 
+```cpp
 void ofPolyline::simplify(float tol){
-
+```
 In core, so lets have a go with that...also have:
 
+```cpp
 ofPolyline ofPolyline::getSmoothed(int smoothingSize, float smoothingShape)
+```
 
 This is the logic from Divide by Zero:
 
+```cpp
 // contour simplification/manipulation
 
 int numberOfBlobs = videoContourFinder.blobs.size();
@@ -1081,6 +1134,7 @@ if(numberOfBlobs > 0){
 		}
 	}
 }
+```
 
 So lets have a look at the demo here:
 
@@ -1144,16 +1198,17 @@ One of the benefits of using a platform like openFrameworks is that when people 
 
 In ofxKinect and ofxSlitScan's case, both addons used the same type of data:
 
+```cpp
 unsigned char* getDepthPixels();       ///< grayscale values //from ofxKinect.h
-
+```
 and
-
+```cpp
 void setDelayMap(unsigned char* map, ofImageType type); //from ofxSlitScan.h
-
+```
 So connecting them was simple:
-
+```cpp
 slitScan.setDelayMap(depthPixels); //from testApp::update() in testApp.cpp
-
+```
 This kind of separation demonstrates encapsulation or the information hiding qualities of software - the utility of not having to know the specifics of the implementation of the functionality described, merely the inputs required and outputs produced.
 
 http://en.wikipedia.org/wiki/Encapsulation_(object-oriented_programming)
