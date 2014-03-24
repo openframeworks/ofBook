@@ -1268,13 +1268,205 @@ Kieran and Pete completed the main sequencing onsite.
 
 ### Code structure, main loop
 
-**[Add code]**
+```cpp
+//--------------------------------------------------------------
+void testApp::update() {
+    //kinect
+    kinect.update();
+    
+    // there is a new frame and we are connected
+    if(kinect.isFrameNew()) {
+        
+        // load grayscale depth image from the kinect source
+        depthPreCrop.setFromPixels(kinect.getDepthPixels(), kinect.width, kinect.height);
+        
+        if(mirror){
+            depthPreCrop.mirror(false, true);
+        }
+        
+        maskGrayImage();
+        
+        depthPreCrop.flagImageChanged();
+        
+        // save original depth, and do some preprocessing
+        
+        depthOrig = depthPreCrop; //coopy cropped image into orig
+        depthProcessed = depthOrig; //copy orig into processd
+        colorImageRGB = kinect.getPixels(); //getting colour pixels
+        //greyIRSingleChannel = kinect.getPixels(); //getting IR single channel pixels
+        
+        if(invert) depthProcessed.invert();
+        if(mirror) {
+            colorImageRGB.mirror(false, true);
+            //greyIRSingleChannel.mirror(false, true);
+        }
+        
+        depthOrig.flagImageChanged();
+        depthProcessed.flagImageChanged();
+        colorImageRGB.flagImageChanged();
+        //greyIRSingleChannel.flagImageChanged();
+        
+        if(preBlur) cvSmooth(depthProcessed.getCvImage(), depthProcessed.getCvImage(), CV_BLUR , preBlur*2+1);
+        if(topThreshold) cvThreshold(depthProcessed.getCvImage(), depthProcessed.getCvImage(), topThreshold * 255, 255, CV_THRESH_TRUNC);
+        if(bottomThreshold) cvThreshold(depthProcessed.getCvImage(), depthProcessed.getCvImage(), bottomThreshold * 255, 255, CV_THRESH_TOZERO);
+        if(dilateBeforeErode) {
+            if(dilateAmount) cvDilate(depthProcessed.getCvImage(), depthProcessed.getCvImage(), 0, dilateAmount);
+            if(erodeAmount) cvErode(depthProcessed.getCvImage(), depthProcessed.getCvImage(), 0, erodeAmount);
+        } else {
+            if(erodeAmount) cvErode(depthProcessed.getCvImage(), depthProcessed.getCvImage(), 0, erodeAmount);
+            if(dilateAmount) cvDilate(depthProcessed.getCvImage(), depthProcessed.getCvImage(), 0, dilateAmount);
+        }
+        depthProcessed.flagImageChanged();
+        
+        // do adaptive threshold
+        //	if(adaptiveThreshold) {
+        //		cvAdaptiveThreshold(depthProcessed.getCvImage(), depthAdaptive.getCvImage(), 255, CV_ADAPTIVE_THRESH_MEAN_C, CV_THRESH_BINARY, 2*adaptiveBlockSize+1, adaptiveThreshold);
+        //		depthAdaptive.invert();
+        //		depthAdaptive.flagImageChanged();
+        //	}
+        
+        // accumulate older depths to smooth out
+        //	if(accumOldWeight) {
+        //		cvAddWeighted(depthAccum.getCvImage(), accumOldWeight, depthProcessed.getCvImage(), accumNewWeight, 0, depthAccum.getCvImage());
+        //		if(accumBlur) cvSmooth(depthAccum.getCvImage(), depthAccum.getCvImage(), CV_BLUR , accumBlur * 2 + 1);
+        //		if(accumThreshold) cvThreshold(depthAccum.getCvImage(), depthAccum.getCvImage(), accumThreshold * 255, 255, CV_THRESH_TOZERO);
+        //
+        //		depthAccum.flagImageChanged();
+        //
+        //	} else {
+        //		depthAccum = depthProcessed;
+        //	}
+        //
+        
+        // find contours
+        depthContours.findContours(depthProcessed,
+                                   minBlobSize * minBlobSize * depthProcessed.getWidth() * depthProcessed.getHeight(),
+                                   maxBlobSize * maxBlobSize * depthProcessed.getWidth() * depthProcessed.getHeight(),
+                                   maxNumBlobs, findHoles, useApproximation);
+        
+        //blobTracker.update(grayImage, -1, minArea, maxArea, nConsidered, 20, findHoles, true);
+        
+        //now do the diff bits for the PAINT mode
+        ofxCvGrayscaleImage thresholdedDepthImageForPaint;
+        thresholdedDepthImageForPaint.setFromPixels(depthProcessed.getPixelsRef());
+        
+        thresholdedDepthImageForPaint.resize(paintCanvas.getWidth(), paintCanvas.getHeight());
+        thresholdedDepthImageForPaint.flagImageChanged();
+        
+        // loop through pixels
+        //  - add new colour pixels into canvas
+        unsigned char *canvasPixels = paintCanvas.getPixels();
+        unsigned char *diffPixels = thresholdedDepthImageForPaint.getPixels();
+        //        int r = colours[colourIndex].r;
+        //        int g = colours[colourIndex].g;
+        //        int b = colours[colourIndex].b;
+        
+        
+        //int r = (int)((0.5f + ofNoise(ofGetElapsedTimef())*0.5f)*255.f);
+        int r = 255;
+        //int matchCount = 0;
+        for(int i = 0; i < paintCanvas.width*paintCanvas.height; i++) {
+            if(diffPixels[i]) {
+                //paint in the new colour if
+                canvasPixels[i*3] = r;
+                canvasPixels[i*3+1] = r;
+                canvasPixels[i*3+2] = r;
+            }else{
+                int greyScale = (int)(canvasPixels[i*3]*0.9f);
+                
+                canvasPixels[i*3] = greyScale;
+                canvasPixels[i*3+1] = greyScale;
+                canvasPixels[i*3+2] = greyScale;
+            }
+            //            if(canvasPixels[i*3]==r && canvasPixels[i*3+1]==g && canvasPixels[i*3+2]==b) {
+            //                matchCount++;
+            //            }
+        }
+        
+//        float totalCount = paintCanvas.width*paintCanvas.height;
+//        float proportionOfMatchedPixels = (float)matchCount/totalCount;
+        
+        paintCanvas.blur();
+        paintCanvas.flagImageChanged();
+        
+        paintCanvasAsOfImage.setFromPixels(paintCanvas.getPixelsRef());
+        paintCanvasAsOfImage.update();
+        
+        flowSolver.setPyramidScale(pyramidScale);
+        flowSolver.setPyramidLevels(pyramidLevels);
+        flowSolver.setWindowSize(windowSize);
+        flowSolver.setExpansionArea(expansionAreaDoubleMe*2);
+        flowSolver.setExpansionSigma(expansionSigma);
+        flowSolver.setFlowFeedback(flowFeedback);
+        flowSolver.setGaussianFiltering(gaussianFiltering);
+        
+        flowSolver.update(depthProcessed);
+    }
+
+
+    //Dirty filthy hack
+    if(currentMode != SLITSCANBASIC){
+        prevSlitScan = -1;
+    }
+    
+    switch(currentMode){
+```
+see below for mode by mode update details
+```cpp
+        default:
+            break;
+    }
+}
+```
+
+```cpp
+void testApp::draw() {
+	ofBackground(0, 0, 0);
+	ofSetColor(255, 255, 255);
+    
+    switch (currentMode) {
+```
+see below for descriptions of various modes drawing
+```cpp
+    }
+    
+    if( bShowNonTimelineGUI ){
+        nonTimelineGUI.draw();
+    }
+
+    
+	if( timeline.getIsShowing() ){
+        ofSetColor(255, 255, 255);
+        
+        //timeline
+        timeline.draw();
+        
+        string modeString;
+        modeString = "Mode is ";
+        
+        switch (currentMode) {
+            case BLANK: //blank mode
+                modeString += "BLANK";
+                break;
+```
+edited for sanity.
+```cpp
+        }
+        
+        ofSetColor(ofColor::red);
+        ofDrawBitmapString(modeString,20,100);
+	}
+}
+```
+
 
 ### Modes, with screen grabs and code explanation
 
 **[Add screenshots below]**
 
 #### BLANK
+
+
 #### GUI
 #### VIDEO
 #### VIDEOCIRCLES
@@ -1294,6 +1486,707 @@ Kieran and Pete completed the main sequencing onsite.
 #### PARTICLES
 #### WHITEFUR
 #### PAINT
+
+```cpp
+        case BLANK: //image drawing mode
+            break;
+        case GUI: //GUI MODE
+            break;
+        case VIDEO:
+            break;
+        case VIDEOCIRCLES: //the film as circles
+            break;
+        case KINECTPOINTCLOUD: //draw the kinect camera depth cloud
+            break;
+        case SLITSCANBASIC: //slit scan the movie on the grey from the kinect depth grey
+        {
+            //check slit scan...
+            int theCurrentSlitScan = timeline.getValue("slitscan");
+            if(prevSlitScan != theCurrentSlitScan){
+                slitScanSliderSlid(); //only update when you have to...
+                prevSlitScan = theCurrentSlitScan;
+            }
+            
+            if(timeline.getVideoPlayer("video")->isFrameNew()){
+                slitScan.addImage(timeline.getVideoPlayer("video")->getPixelsRef());
+            }
+        }
+            break;
+        case SLITSCANKINECTDEPTHGREY: //slit scan the movie on the grey from the kinect depth grey
+        {
+            if(timeline.getVideoPlayer("video")->isFrameNew()){
+                //kinect slitscan
+                //depthPixels.setFromPixels(kinect.getDepthPixelsRef());
+                depthPixels.setFromPixels(depthProcessed.getPixelsRef());
+                depthPixels.resize(timeline.getVideoPlayer("video")->getWidth(), timeline.getVideoPlayer("video")->getHeight());
+                //            slitScanDepthGrey.setDelayMap(depthPixels);
+                //            slitScanDepthGrey.addImage(timeline.getVideoPlayer("video")->getPixelsRef());
+                slitScan.setDelayMap(depthPixels);
+                slitScan.addImage(timeline.getVideoPlayer("video")->getPixelsRef());
+            }
+        }
+            break;
+        case SPARKLE: //sparkles on the slitscan
+        {
+            //update the sparkles come what may...
+            someSparkles.update(&depthContours);
+            someSparkles.draw(ofColor::white);
+            //someSparkles.draw(timeline.getColor("colour"));
+            
+            ofImage distortionMap;
+            distortionMap.allocate(someSparkles.theFBO.getWidth(), someSparkles.theFBO.getHeight(), OF_IMAGE_COLOR);
+            
+            someSparkles.theFBO.readToPixels(distortionMap.getPixelsRef());
+            
+            distortionMap.resize(timeline.getVideoPlayer("video")->getWidth(), timeline.getVideoPlayer("video")->getHeight());
+            slitScan.setDelayMap(distortionMap);
+            
+            if(timeline.getVideoPlayer("video")->isFrameNew()){
+                slitScan.addImage(timeline.getVideoPlayer("video")->getPixelsRef());
+            }
+        }
+            break;
+        case VERTICALMIRROR: //vertical mirror
+        {
+            if(timeline.getVideoPlayer("video")->isFrameNew()){
+                verticalMirrorImage.setFromPixels(timeline.getVideoPlayer("video")->getPixels(), verticalMirrorImage.getWidth(), verticalMirrorImage.getHeight());
+                
+                verticalMirrorImage.updateTexture();
+            }
+        }
+            break;
+        case PAINT: //body painting diff
+        {
+            slitScan.setDelayMap(paintCanvasAsOfImage);
+            if(timeline.getVideoPlayer("video")->isFrameNew()){
+                slitScan.addImage(timeline.getVideoPlayer("video")->getPixelsRef());
+            }
+        }
+            break;
+        case HORIZONTALMIRROR: //HORIZONTALMIRROR mirror
+        {
+            if(timeline.getVideoPlayer("video")->isFrameNew()){
+                horizontalMirrorImage.setFromPixels(timeline.getVideoPlayer("video")->getPixels(), horizontalMirrorImage.getWidth(), horizontalMirrorImage.getHeight());
+                
+                horizontalMirrorImage.updateTexture();
+            }
+        }
+            break;
+        case KALEIDOSCOPE: //kaleidsocope
+        {
+            if(timeline.getVideoPlayer("video")->isFrameNew()){
+                kaleidoscopeMirrorImage.setFromPixels(timeline.getVideoPlayer("video")->getPixels(), kaleidoscopeMirrorImage.getWidth(), kaleidoscopeMirrorImage.getHeight());
+                
+                kaleidoscopeMirrorImage.updateTexture();
+            }
+        }
+            break;
+        case COLOURFUR: //COLOURFUR
+        {
+        }
+            break;
+        case DEPTH: //DEPTH
+        {
+        }
+            break;
+        case SHATTER:
+        {
+            //update the shatter
+            theShatter.update(&depthContours);
+            theShatter.draw(ofColor::white);
+            
+            ofImage distortionMap;
+            distortionMap.allocate(theShatter.theFBO.getWidth(), theShatter.theFBO.getHeight(), OF_IMAGE_COLOR);
+            
+            theShatter.theFBO.readToPixels(distortionMap.getPixelsRef());
+            
+            distortionMap.resize(timeline.getVideoPlayer("video")->getWidth(), timeline.getVideoPlayer("video")->getHeight());
+            slitScan.setDelayMap(distortionMap);
+            
+            if(timeline.getVideoPlayer("video")->isFrameNew()){
+                slitScan.addImage(timeline.getVideoPlayer("video")->getPixelsRef());
+            }
+        }
+            break;
+        case SELFSLITSCAN:
+        {
+            if(timeline.getVideoPlayer("video")->isFrameNew()){
+                //self slitscan
+//                ofImage selfSlitScanDelayMap;
+//                selfSlitScanDelayMap.allocate(timeline.getVideoPlayer("video")->getWidth(), timeline.getVideoPlayer("video")->getHeight(), OF_IMAGE_COLOR);
+//                selfSlitScanDelayMap.setFromPixels(timeline.getVideoPlayer("video")->getPixelsRef());
+               
+                slitScan.setDelayMap(timeline.getVideoPlayer("video")->getPixelsRef());
+                slitScan.addImage(timeline.getVideoPlayer("video")->getPixelsRef());
+            }
+        }
+            break;
+        case SPIKYBLOBSLITSCAN:
+        {
+            //SPIKYBLOBSLITSCAN
+            //update the spikes come what may...
+            theSpikey.update(&depthContours);
+            theSpikey.draw(ofColor::white);
+            
+            ofImage distortionMap;
+            distortionMap.allocate(theSpikey.theFBO.getWidth(), theSpikey.theFBO.getHeight(), OF_IMAGE_COLOR);
+            
+            theSpikey.theFBO.readToPixels(distortionMap.getPixelsRef());
+            
+            distortionMap.resize(timeline.getVideoPlayer("video")->getWidth(), timeline.getVideoPlayer("video")->getHeight());
+            slitScan.setDelayMap(distortionMap);
+            
+            if(timeline.getVideoPlayer("video")->isFrameNew()){
+                slitScan.addImage(timeline.getVideoPlayer("video")->getPixelsRef());
+            }
+        }
+            break;
+        case MIRRORKALEIDOSCOPE: //MIRRORKALEIDOSCOPE mirror
+        {
+            if(timeline.getVideoPlayer("video")->isFrameNew()){
+                verticalMirrorImage.setFromPixels(timeline.getVideoPlayer("video")->getPixels(), verticalMirrorImage.getWidth(), verticalMirrorImage.getHeight());
+                
+                verticalMirrorImage.updateTexture();
+                
+                kaleidoscopeMirrorImage.setFromPixels(timeline.getVideoPlayer("video")->getPixels(), kaleidoscopeMirrorImage.getWidth(), kaleidoscopeMirrorImage.getHeight());
+                
+                kaleidoscopeMirrorImage.updateTexture();
+            }
+        }
+            break;
+        case PARTICLES:
+        {
+            //PARTICLES
+            theParticles.update(&depthContours);
+            theParticles.draw(ofColor::white);
+            
+            ofImage distortionMap;
+            distortionMap.allocate(theParticles.theFBO.getWidth(), theParticles.theFBO.getHeight(), OF_IMAGE_COLOR);
+            
+            theParticles.theFBO.readToPixels(distortionMap.getPixelsRef());
+            
+            distortionMap.resize(timeline.getVideoPlayer("video")->getWidth(), timeline.getVideoPlayer("video")->getHeight());
+            slitScan.setDelayMap(distortionMap);
+            
+            if(timeline.getVideoPlayer("video")->isFrameNew()){
+                slitScan.addImage(timeline.getVideoPlayer("video")->getPixelsRef());
+            }
+        }
+            break;
+        case WHITEFUR: //WHITEFUR, nowt
+        {
+        }
+            break;
+```
+
+```cpp
+        case BLANK: //nothing
+            ofFill();
+            ofSetColor(0);
+            ofRect(0,0,ofGetWidth(),ofGetHeight()); //draw a black rectangle
+            break;
+        case GUI: //image drawing mode
+        {
+            ofFill();
+            ofSetColor(0);
+            ofRect(0,0,ofGetWidth(),ofGetHeight()); //draw a black rectangle
+            
+            int imageOffSet = 10;
+            int imageWidth = 320;
+            int imageHeight = 240;
+            int imageX = imageOffSet;
+            
+            // draw everything
+            ofSetColor(ofColor::white);
+            ofEnableAlphaBlending();
+            flowSolver.drawColored(imageWidth, imageHeight, 10, 3);
+            ofDisableAlphaBlending();
+            ofSetColor(ofColor::royalBlue);
+            ofDrawBitmapString("Flow", imageX, imageOffSet);
+            ofSetColor(ofColor::white);
+            colorImageRGB.draw(imageX, imageHeight+imageOffSet, imageWidth, imageHeight);
+            //greyIRSingleChannel.draw(imageX, imageHeight+imageOffSet, imageWidth, imageHeight);
+            ofSetColor(ofColor::royalBlue);
+            ofDrawBitmapString("Kinect Video", imageX, imageHeight+imageOffSet);
+            imageX += imageOffSet+imageWidth;
+            ofSetColor(ofColor::white);
+            kinect.drawDepth(imageX, imageHeight+imageOffSet, imageWidth, imageHeight);
+            ofSetColor(ofColor::royalBlue);
+            ofDrawBitmapString("Kinect", imageX, imageHeight+imageOffSet);
+            imageX += imageOffSet+imageWidth;
+            ofSetColor(ofColor::white);
+            maskImage.draw(imageX,imageHeight+imageOffSet, imageWidth, imageHeight);
+            ofSetColor(ofColor::royalBlue);
+            ofDrawBitmapString("Mask", imageX, imageHeight+imageOffSet);
+            imageX = imageOffSet;
+            ofSetColor(ofColor::white);
+            depthOrig.draw(imageX,imageHeight+imageOffSet+imageHeight+imageOffSet, imageWidth, imageHeight);
+            ofSetColor(ofColor::royalBlue);
+            ofDrawBitmapString("Original Depth", imageX, imageHeight+imageOffSet+imageHeight+imageOffSet);
+            imageX += imageOffSet+imageWidth;
+            ofSetColor(ofColor::white);
+            depthProcessed.draw(imageX,imageHeight+imageOffSet+imageHeight+imageOffSet, imageWidth, imageHeight);
+            ofSetColor(ofColor::royalBlue);
+            ofDrawBitmapString("Depth Processed", imageX, imageHeight+imageOffSet+imageHeight+imageOffSet);
+            imageX += imageOffSet+imageWidth;
+            ofSetColor(ofColor::white);
+            depthContours.draw(imageX, imageHeight+imageOffSet+imageHeight+imageOffSet, imageWidth, imageHeight);
+            ofSetColor(ofColor::royalBlue);
+            ofDrawBitmapString("Depth Contours", imageX, imageHeight+imageOffSet+imageHeight+imageOffSet);
+            ofSetColor(ofColor::skyBlue);
+            // draw instructions
+            stringstream reportStream;
+            reportStream
+            << "f to fullscreen, g to show/hide timeline, m to show/hide mouse" << endl
+            << "a/s to cycle through scenes" << endl
+            << "Function	                                      Shortcut" << endl
+            << "Cut Selection	                                  command+x" << endl
+            << "Copy Selection	                                  command+c" << endl
+            << "Paste Selection	                                  command+v" << endl
+            << "Undo	                                          command+z" << endl
+            << "Redo	                                          shift+command+z" << endl
+            << "Select all keyframes in Focused track	          command+a" << endl
+            << "Add all keyframes in Focused track to selection   command+shift+a" << endl
+            << "Delete all selected keyframes	                  delete or backspace" << endl
+            << "Nudge keyframes a little	                      arrow keys" << endl
+            << "Nudge keyframes a little more	                  shift+arrow keys" << endl
+            << "Expand Focused track	                          alt+e" << endl
+            << "Collapse all tracks	                              alt+c" << endl
+            << "Evenly distribute track sizes	                  alt+shift+c" << endl
+//                << "accel is: " << ofToString(kinect.getMksAccel().x, 2) << " / "
+//                << ofToString(kinect.getMksAccel().y, 2) << " / "
+//                << ofToString(kinect.getMksAccel().z, 2) << endl
+            << ", fps: " << ofGetFrameRate() << endl
+            << "press shift squerty 1-5 & 0 to change the led mode" << endl;
+            ofDrawBitmapString(reportStream.str(),20,ofGetHeight()/2.f);
+            
+            stringstream m;
+            m << "fps " << ofGetFrameRate() << endl
+            << "pyramid scale: " << flowSolver.getPyramidScale() << " p/P" << endl
+            << "pyramid levels: " << flowSolver.getPyramidLevels() << " l/L" << endl
+            << "averaging window size: " << flowSolver.getWindowSize() << " w/W" << endl
+            << "iterations per level: " << flowSolver.getIterationsPerLevel() << " i/I" << endl
+            << "expansion area: " << flowSolver.getExpansionArea() << " a/A" << endl
+            << "expansion sigma: " << flowSolver.getExpansionSigma() << " s/S" << endl
+            << "flow feedback: " << flowSolver.getFlowFeedback() << " f/F" << endl
+            << "gaussian filtering: " << flowSolver.getGaussianFiltering() << " g/G";
+            
+            ofDrawBitmapString(m.str(), 20+320, 20);
+            
+        }
+            break;
+        case VIDEO: //the film
+            ofFill();
+            ofSetColor(255);
+            timeline.getVideoPlayer("video")->draw(0, 0, ofGetWidth(),ofGetHeight());
+            break;
+        case VIDEOCIRCLES: //the film as circles
+            {
+                ofFill();
+                ofSetColor(0);
+                ofRect(0,0,ofGetWidth(),ofGetHeight()); //draw a black rectangle
+                if (timeline.getVideoPlayer("video")->isLoaded()) {                    
+                    unsigned char * pixels = timeline.getVideoPlayer("video")->getPixels();
+                    ofPixelsRef pixelsRef = timeline.getVideoPlayer("video")->getPixelsRef();
+                    
+                    // let's move through the "RGB(A)" char array
+                    // using the red pixel to control the size of a circle.
+                    //ofSetColor(timeline.getColor("colour"));
+                    ofSetColor(ofColor::lightBlue);
+                    
+                    float circleSpacing = 10.f;
+                    
+                    float widthRatio = ofGetWidth()/timeline.getVideoPlayer("video")->getWidth();
+                    float heightRatio = ofGetHeight()/timeline.getVideoPlayer("video")->getHeight();
+                    
+                    for(int i = 0; i < timeline.getVideoPlayer("video")->getWidth(); i+= 8){
+                        for(int j = 0; j < timeline.getVideoPlayer("video")->getHeight(); j+= 8){
+                            ofColor pixelColor = timeline.getVideoPlayer("video")->getPixelsRef().getColor(i, j);
+                            int b = pixelColor.b;
+                            float val = 1 - ((float)b / 255.0f); //more blue in the arctic!
+                            ofCircle(i*widthRatio, j*heightRatio, circleSpacing * val);
+                        }
+                    }
+                }
+            }
+            break;
+        case KINECTPOINTCLOUD: //draw the kinect camera depth cloud
+            easyCam.begin();
+            drawPointCloud();
+            easyCam.end();
+            break;
+        case SLITSCANBASIC: //slit scan the movie on depth png
+            slitScan.getOutputImage().draw(0, 0, ofGetWidth(), ofGetHeight());
+            
+            //white fur
+            ofEnableAlphaBlending();
+            flowSolver.drawGrey(ofGetWidth(),ofGetHeight(), 10, 3);
+            ofDisableAlphaBlending();
+            
+            break;
+        case SLITSCANKINECTDEPTHGREY: //slit scan the movie on the grey from the kinect depth grey
+            slitScan.getOutputImage().draw(0, 0, ofGetWidth(), ofGetHeight());
+            //slitScanDepthGrey.getOutputImage().draw(0, 0, ofGetWidth(), ofGetHeight());
+            break;
+        case SPARKLE:
+            //do some sparkles - used the slit scan to hold it....
+            slitScan.getOutputImage().draw(0, 0, ofGetWidth(), ofGetHeight());
+            //ofSetColor(255,255,255);
+            //someSparkles.theFBO.draw(0, 0, ofGetWidth(), ofGetHeight());
+            break;
+        case VERTICALMIRROR:
+        {
+            bool usingNormTexCoords = ofGetUsingNormalizedTexCoords();
+            
+            if(!usingNormTexCoords) {
+                ofEnableNormalizedTexCoords();
+            }
+            
+            verticalMirrorImage.getTextureReference().bind();
+            
+            ofMesh mesh;
+            mesh.clear();
+            mesh.addVertex(ofVec3f(0, 0));
+            mesh.addVertex(ofVec3f(0, ofGetHeight()));
+            mesh.addVertex(ofVec3f(ofGetWidth()/2, 0));
+            mesh.addVertex(ofVec3f(ofGetWidth()/2, ofGetHeight()));
+            mesh.addVertex(ofVec3f(ofGetWidth(), 0));
+            mesh.addVertex(ofVec3f(ofGetWidth(), ofGetHeight()));
+            
+            
+            mesh.addTexCoord(ofVec2f(0.25, 0.0));
+            mesh.addTexCoord(ofVec2f(0.25, 1.0));
+            mesh.addTexCoord(ofVec2f(0.75, 0.0));
+            mesh.addTexCoord(ofVec2f(0.75, 1.0));
+            mesh.addTexCoord(ofVec2f(0.25, 0.0));
+            mesh.addTexCoord(ofVec2f(0.25, 1.0));
+            
+            mesh.setMode(OF_PRIMITIVE_TRIANGLE_STRIP);
+            ofSetColor(ofColor::white);
+            mesh.draw();
+            
+            verticalMirrorImage.getTextureReference().unbind();
+            
+            // pop normalized tex coords
+            if(!usingNormTexCoords) {
+                ofDisableNormalizedTexCoords();
+            }
+            
+            //white fur
+            ofEnableAlphaBlending();
+            flowSolver.drawGrey(ofGetWidth(),ofGetHeight(), 10, 3);
+            ofDisableAlphaBlending();
+        }
+            break;
+        case HORIZONTALMIRROR:
+        {
+            bool usingNormTexCoords = ofGetUsingNormalizedTexCoords();
+            
+            if(!usingNormTexCoords) {
+                ofEnableNormalizedTexCoords();
+            }
+            
+            horizontalMirrorImage.getTextureReference().bind();
+            
+            ofMesh mesh;
+            mesh.clear();
+            mesh.addVertex(ofVec3f(ofGetWidth(), 0));
+            mesh.addVertex(ofVec3f(0, 0));
+            mesh.addVertex(ofVec3f(ofGetWidth(), ofGetHeight()/2));
+            mesh.addVertex(ofVec3f(0, ofGetHeight()/2));
+            mesh.addVertex(ofVec3f(ofGetWidth(), ofGetHeight()));
+            mesh.addVertex(ofVec3f(0,ofGetHeight()));
+            
+            mesh.addTexCoord(ofVec2f(1.0, 0.25));
+            mesh.addTexCoord(ofVec2f(0.0, 0.25));
+            mesh.addTexCoord(ofVec2f(1.0, 0.75));
+            mesh.addTexCoord(ofVec2f(0.0, 0.75));
+            mesh.addTexCoord(ofVec2f(1.0, 0.25));
+            mesh.addTexCoord(ofVec2f(0.0, 0.25));
+            
+            mesh.setMode(OF_PRIMITIVE_TRIANGLE_STRIP);
+            ofSetColor(ofColor::white);
+            mesh.draw();
+            
+            horizontalMirrorImage.getTextureReference().unbind();
+            
+            // pop normalized tex coords
+            if(!usingNormTexCoords) {
+                ofDisableNormalizedTexCoords();
+            }
+            
+            //white fur
+            ofEnableAlphaBlending();
+            flowSolver.drawGrey(ofGetWidth(),ofGetHeight(), 10, 3);
+            ofDisableAlphaBlending();
+        }
+            break;
+        case KALEIDOSCOPE:
+        {
+            bool usingNormTexCoords = ofGetUsingNormalizedTexCoords();
+            
+            if(!usingNormTexCoords) {
+                ofEnableNormalizedTexCoords();
+            }
+            
+            kaleidoscopeMirrorImage.getTextureReference().bind();
+            
+            int star = ((int)timeline.getValue("star")*2);//8; //get star from the timeline gui, but multiply by 2 to get to always even
+            float offset = timeline.getValue("offset");//0.5f; // get offset from the timeline gui
+            float angle = 360.f/star; //8 sides to start
+            
+            
+            
+			ofMesh mesh;
+            
+			ofVec3f vec(0,0,0);
+			mesh.addVertex(vec);
+			vec.x += ofGetHeight()/2;
+            
+			for(int i = 0; i < star; i++) {
+				mesh.addVertex(vec);
+				vec.rotate(angle, ofVec3f(0,0,1));
+			}
+            
+			// close the loop
+			mesh.addVertex(vec);
+            
+            
+            
+			// now work out the texcoords
+			/*
+			 __________________
+			 |   \        /   |
+			 |    \      /    |
+			 |     \    /     |
+			 |      \  /      |
+			 |       \/       |
+			 +----------------+
+             
+			 A v shape out of the centre of the camera texture
+			 */
+            
+            
+            
+			float realOffset = 0.5;
+			// normalized distance from the centre (half the width of the above 'V')
+			float dist = ABS((float)kaleidoscopeMirrorImage.getHeight()*tan(ofDegToRad(angle)*0.5))/(float)kaleidoscopeMirrorImage.getHeight();
+            
+            
+			// the realOffset is where the (normalized) middle of the 'V' is on the x-axis
+			realOffset = ofMap(offset, 0, 1, dist, 1-dist);
+            
+            
+			// this is the point at the bottom of the triangle - our centre for the triangle fan
+			mesh.addTexCoord(ofVec2f(realOffset, 1));
+            
+            
+			ofVec2f ta(realOffset-dist, 0);
+			ofVec2f tb(realOffset+dist, 0);
+			for(int i = 0; i <= star; i++) {
+				if(i%2==0) {
+					mesh.addTexCoord(ta);
+				} else {
+					mesh.addTexCoord(tb);
+				}
+			}
+            
+            
+			glPushMatrix();
+			glTranslatef(ofGetWidth()/2, ofGetHeight()/2, 0);
+			mesh.setMode(OF_PRIMITIVE_TRIANGLE_FAN);
+			mesh.draw();
+			glPopMatrix();
+            
+            kaleidoscopeMirrorImage.getTextureReference().unbind();
+            
+            // pop normalized tex coords
+            if(!usingNormTexCoords) {
+                ofDisableNormalizedTexCoords();
+            }
+            
+            //white fur
+            ofEnableAlphaBlending();
+            flowSolver.drawGrey(ofGetWidth(),ofGetHeight(), 10, 3);
+            ofDisableAlphaBlending();
+        }
+            break;
+        case PAINT:
+        {
+            //do some paint - used the slit scan to hold it....
+            slitScan.getOutputImage().draw(0, 0, ofGetWidth(), ofGetHeight());
+            
+            //paintCanvasAsOfImage.draw(0, 0, ofGetWidth(), ofGetHeight());
+        }
+            break;
+        case COLOURFUR:
+        {
+            ofSetColor(ofColor::white);
+            timeline.getVideoPlayer("video")->draw(0, 0, ofGetWidth(),ofGetHeight());
+            ofEnableAlphaBlending();
+            flowSolver.drawColored(ofGetWidth(),ofGetHeight(), 10, 3);
+            ofDisableAlphaBlending();
+        }
+            break;
+        case DEPTH:
+        {
+            depthProcessed.draw(0,0,ofGetWidth(), ofGetHeight());
+        }
+            break;
+        case SHATTER:
+        {
+            //do some shattering - used the slit scan to hold it....
+            slitScan.getOutputImage().draw(0, 0, ofGetWidth(), ofGetHeight());
+            //ofSetColor(255,255,255);
+            //theShatter.theFBO.draw(0, 0, ofGetWidth(), ofGetHeight());
+        }
+            break;
+        case SELFSLITSCAN:
+        {
+            //do some SELFSLITSCAN - used the slit scan to hold it....
+            ofSetColor(255,255,255);
+            slitScan.getOutputImage().draw(0, 0, ofGetWidth(), ofGetHeight());
+        }
+            break;
+        case SPIKYBLOBSLITSCAN:
+        {
+            //do some SPIKYBLOBSLITSCAN - used the slit scan to hold it....
+            ofSetColor(255,255,255);
+            slitScan.getOutputImage().draw(0, 0, ofGetWidth(), ofGetHeight());
+            //theSpikey.theFBO.draw(0,0,ofGetWidth(), ofGetHeight());
+        }
+            break;
+        case MIRRORKALEIDOSCOPE:
+        {
+            bool usingNormTexCoords = ofGetUsingNormalizedTexCoords();
+            
+            if(!usingNormTexCoords) {
+                ofEnableNormalizedTexCoords();
+            }
+            
+            verticalMirrorImage.getTextureReference().bind();
+            
+            ofMesh mirrorMesh;
+            mirrorMesh.clear();
+            mirrorMesh.addVertex(ofVec3f(0, 0));
+            mirrorMesh.addVertex(ofVec3f(0, ofGetHeight()));
+            mirrorMesh.addVertex(ofVec3f(ofGetWidth()/2, 0));
+            mirrorMesh.addVertex(ofVec3f(ofGetWidth()/2, ofGetHeight()));
+            mirrorMesh.addVertex(ofVec3f(ofGetWidth(), 0));
+            mirrorMesh.addVertex(ofVec3f(ofGetWidth(), ofGetHeight()));
+            
+            
+            mirrorMesh.addTexCoord(ofVec2f(0.25, 0.0));
+            mirrorMesh.addTexCoord(ofVec2f(0.25, 1.0));
+            mirrorMesh.addTexCoord(ofVec2f(0.75, 0.0));
+            mirrorMesh.addTexCoord(ofVec2f(0.75, 1.0));
+            mirrorMesh.addTexCoord(ofVec2f(0.25, 0.0));
+            mirrorMesh.addTexCoord(ofVec2f(0.25, 1.0));
+            
+            mirrorMesh.setMode(OF_PRIMITIVE_TRIANGLE_STRIP);
+            ofSetColor(ofColor::white);
+            mirrorMesh.draw();
+            
+            verticalMirrorImage.getTextureReference().unbind();
+            
+            kaleidoscopeMirrorImage.getTextureReference().bind();
+            
+            int star = ((int)timeline.getValue("star")*2);//8; //get star from the timeline gui, but multiply by 2 to get to always even
+            float offset = timeline.getValue("offset");//0.5f; // get offset from the timeline gui
+            float angle = 360.f/star; //8 sides to start
+            
+			ofMesh mesh;
+            
+			ofVec3f vec(0,0,0);
+			mesh.addVertex(vec);
+			vec.x += ofGetHeight()/2;
+            
+			for(int i = 0; i < star; i++) {
+				mesh.addVertex(vec);
+				vec.rotate(angle, ofVec3f(0,0,1));
+			}
+            
+			// close the loop
+			mesh.addVertex(vec);
+            
+            
+            
+			// now work out the texcoords
+			/*
+			 __________________
+			 |   \        /   |
+			 |    \      /    |
+			 |     \    /     |
+			 |      \  /      |
+			 |       \/       |
+			 +----------------+
+             
+			 A v shape out of the centre of the camera texture
+			 */
+            
+            
+            
+			float realOffset = 0.5;
+			// normalized distance from the centre (half the width of the above 'V')
+			float dist = ABS((float)kaleidoscopeMirrorImage.getHeight()*tan(ofDegToRad(angle)*0.5))/(float)kaleidoscopeMirrorImage.getHeight();
+            
+            
+			// the realOffset is where the (normalized) middle of the 'V' is on the x-axis
+			realOffset = ofMap(offset, 0, 1, dist, 1-dist);
+            
+            
+			// this is the point at the bottom of the triangle - our centre for the triangle fan
+			mesh.addTexCoord(ofVec2f(realOffset, 1));
+            
+            
+			ofVec2f ta(realOffset-dist, 0);
+			ofVec2f tb(realOffset+dist, 0);
+			for(int i = 0; i <= star; i++) {
+				if(i%2==0) {
+					mesh.addTexCoord(ta);
+				} else {
+					mesh.addTexCoord(tb);
+				}
+			}
+            
+            
+			glPushMatrix();
+			glTranslatef(ofGetWidth()/2, ofGetHeight()/2, 0);
+			mesh.setMode(OF_PRIMITIVE_TRIANGLE_FAN);
+			mesh.draw();
+			glPopMatrix();
+            
+            kaleidoscopeMirrorImage.getTextureReference().unbind();
+            
+            // pop normalized tex coords
+            if(!usingNormTexCoords) {
+                ofDisableNormalizedTexCoords();
+            }
+            
+            //white fur
+            ofEnableAlphaBlending();
+            flowSolver.drawGrey(ofGetWidth(),ofGetHeight(), 10, 3);
+            ofDisableAlphaBlending();
+        }
+            break;
+        case PARTICLES:
+        {
+            //do some PARTICLES - used the slit scan to hold it....
+            ofSetColor(255,255,255);
+            slitScan.getOutputImage().draw(0, 0, ofGetWidth(), ofGetHeight());
+            //theParticles.theFBO.draw(0,0,ofGetWidth(), ofGetHeight());
+        }
+            break;
+        case WHITEFUR:
+        {
+            ofSetColor(ofColor::white);
+            timeline.getVideoPlayer("video")->draw(0, 0, ofGetWidth(),ofGetHeight());
+            ofEnableAlphaBlending();
+            flowSolver.drawGrey(ofGetWidth(),ofGetHeight(), 10, 3);
+            ofDisableAlphaBlending();
+        }
+            break;
+```
 
 ### Running procedure
 
