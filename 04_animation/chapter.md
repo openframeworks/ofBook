@@ -6,10 +6,12 @@ The word animation is a mideval term stemming from the Latin animare, which mean
 
 As a side note, I studied fine arts, painting and printmaking, and it was accidental that I started using computers.  The moment that I saw how you could write code to move something across the screen, even as simple as silly rectangle, I was hooked.  I began during the first dot com era working with flash / actionscript and lingo / director and have never looked back. 
 
+This chapter will first explain some basic principles that are useful to understanding animation in OF, then attempt to show a few entrypoints to intersting approaches. 
+
 ## animation in OF / useful concepts: 
 
 ### draw cycle 
-The first point to make about animation is that it's based on successive still frame.  In openFrameworks we have a certain loop cycle that's based roughly on game programming paradigms.  It goes like: 
+The first point to make about animation is that it's based on successive still frames.  In openFrameworks we have a certain loop cycle that's based roughly on game programming paradigms.  It goes like: 
 
 - setup()
 - update()
@@ -51,12 +53,14 @@ Finally, there are a few functions that are useful generally for knowing about t
 
 - `ofGetElapsedTimef()` retuns the elapsed time in floating point numbers, starting from 0 when the app starts. 
 - `ofGetElapsedTimeMillis()` similarly returns the elapsed time starting from 0 in milliseconds
-- `ofGetFrameNum()` returns the number of frames the software has drawn
+- `ofGetFrameNum()` returns the number of frames the software has drawn.  If you wanted, for example, to do something every other frame you could use the mod operator, ie, `if (ofGetFrameNum() % 2 == 0)`.
 
 ### objects
 
-* ofPoint
-* object w/ update and draw functions
+In these examples, I'll be using objects pretty heavily.  It's sort of helpful to feel comfortable with OOP to understand the code.  One object that is used really heavily is `ofPoint`, which essentially contains an x,y and a z variable.  In the past this was called ofVec3f (vector of three floating point numbers) but we just use the more convenient ofPoint.  In some animation code you'll see vectors used, you should know that ofPoint is essentially a vector.  
+
+You will also typically see objects that have basic functionality and internal variables.  I will typically have a setup, update and draw inside them.  Alot of times, these objects are either made because they are useful recipies to have many things on the screen or they help by putting all the variables and logic of movement in one place.  I typically like to have as little code as possible at the testApp / ofApp level. If you are familiar with actionscript / flash, this would be similar to having as a little as possible in your main timeline. 
+
 
 ## linear movement
 
@@ -103,7 +107,7 @@ Let's look at a plot of pct raised to the second power:
 **[note: better explanation of how to read the chart]**
 Think about the x value of the plot as the input and y value as the output.  If put in 0, we get out a y value of 0, if we put in 0.1, we get out a y value of 0.01, all the way to putting in a value of 1 and getting out a value of 1.   
 
-The interesting thing is is that things in the world don't move linearly.  They don't take even steps.  Roll a ball on the floor, it slows down.  It's deccellerating.  Something things speed up, like a baseball bat going from resting to swinging.  Curving pct helps us.... **[note:more]**
+The interesting thing is is that things in the world don't move linearly.  They don't take even steps.  Roll a ball on the floor, it slows down.  It's deccellerating.  Something things speed up, like a baseball bat going from resting to swinging.  Curving pct leads to interesting behavior.  The objects still take the same amount of time to get there, but they do it in more lifelike, non-linear ways.
 
 If you raise it to a larger power it looks more extreme.  Interestingly, if you raise this value between 0 and 1 to a fractional (rational) power (ie, a power that's less then 1 and greater then 0), it curves in the other direction.  
 
@@ -112,6 +116,11 @@ The second example shows an animation which uses pct again to get from A to B, b
 http://en.wikipedia.org/wiki/12_basic_principles_of_animation#Slow_in_and_slow_out
 
 **[note: can we get rights for a screenshot of masahiko sato curves DVD ? ]**
+
+Raising percent to a power is one of a whole host of functions that are called "shaping functions" or "easing equations".  Robert Penner wrote about and derived mand of these functions so they are also commonly reffered to as "Penner Easing Equations."  [Easings.net](http://easings.net/) is a good resource, as well there are several openframeworks addons for easing. 
+
+- http://sol.gfxile.net/interpolation/#c1
+- http://easings.net/
 
 ### zeno
 
@@ -145,20 +154,70 @@ In Zeno's paradox, you never actually get to the target, since there's always so
 
 **[note: code walk through]**
 
-### easing equations
-
-**[note: more on easing equations]**
-
-http://sol.gfxile.net/interpolation/#c1
-http://easings.net/
 
 ## function based movement
 
+In this section of the book we'll look at a few examples that show function based movement, essentially using a function that takes some input and returns an output that we'll animated with.  For input, we'll be passing in counters, elapsed time, position, and the output we'll use to control position. 
+
 ### sin cos
-#### all you need to know about sin and cos in one graph:
-#### lisajous figures
+
+Another interesting and simple system to begin experimenting with motion in openframeworks is using sin and cos, two trigonometric functions that are useful inputs into animation. 
+
+Sin and cos (sinus and cosinus) are trigonometric functions, which means they are based on angles.  They are essentially the x and y positon of a point moving in a constant rate around a circle.  The circle is a unit circle, with a radius of 1, which means the diameter is `2*r*PI` or `2*PI`.  In OF you'll see this constant as `TWO_PI`, which is 6.28318...   
+
+*as a side note, sometimes it can be confusing that some functions in OF take degress where others take radians.  sin and cos are part of the math library, so they take radians, whereas most opengl rotation takes degrees.  We have some helper constants such as `DEG_TO_RAD` and `RAD_TO_DEG` which can help you convert one to the other*
+
+#### all you need to know about sin and cos in one graph
+
+So here's a simple drawing
+
+#### simple examples
+
+it's pretty easy to use sin to animate the position of an object.  
+
+Here, we'll take the sin of the elapsed time `sin(ofGetElpasedTimef())`.  This returns a number between negative one and one.  It does this every 6.28 seconds.  We can use of map to map this to a new range.  For example 
+
+	void ofApp::draw(){
+		float xPos = ofMap(sin(ofGetElpasedTimef()), -1, 1, 0, ofGetWidth());
+		ofRect(xPos, ofGetHeight/2, 10,10);
+	}
+	
+This draws a rectangle which move sinusoidally across the screen, back and forth every 6.28 seconds. 
+
+You can do simple things with offseting the phase (how shifted over the sin wave is):
+
+	void ofApp::draw(){
+	
+	}
+
+*nerdy detail!  floating points numbers are not not linearly precise, ie, the there's a different number of floating point numbers between 0.0 and 1.0 than 100.0 and 101.0.  You actually loose precesion the larger a floating point number gets, so taking sin of elapsed time can start looking crunch after some time. for long running installations I will sometimes write code that looks like `sin((ofGetElapsedTimeMillis() % 6283) / 6283.0)` or something similar, to account for this.  Even though ofGetElapsedTime gets larger over time, it's a worse and worse input to sin() as it grows*
+
 #### circular movement
+
+Since sin and cos are derived from the circle, if we want to move things in a circular way, we can figure this out via sin and cos.  We have 4 variables we need to know: 
+
+- the origin of the circle (xOrig,yOrig)
+- the radius of the circle (radius)
+- the angle around the circle (angle)
+
+The formuala is fairly simple: 
+
+	xPos = xOrig + radius * cos(angle);
+	yPos = yOrig + radius * sin(angle);
+
+This allows us to create something moving in a circular way.  For these examples, I start to add a "trail" to the object by using the ofPolyline object.  I keep adding points, and once I have a certain number I delete the oldest one.  This helps us better see the motion of the object. 
+
+If we do things like change the radius of the circle, we can make spirals. 
+
+#### lisajous figures
+
+Finally, if we alter the angles we pass in to x and y for this formula in different rates, we can get interesting figures, called "lissajous" figures, named after the french mathematician Jules Antoine Lissajous.   These formulas look cool. **[note: more]**
+
 ### noise
+
+
+
+
 
 
 
