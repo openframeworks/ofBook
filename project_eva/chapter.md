@@ -32,7 +32,9 @@ The selection process took ~9 months and included three phases:
 After passing all phases we were officially commissioned by the Public Art Bureau in June 2012.
 
 ### Timeline
-From first brainstorms to final hand-over the mammoth project took impressive 28 months to complete. That's 10 months longer than the official brief planned for. When you work with that many players (the city, the planetarium, collaborators..) your first and second attempt at a project timeline is bound to fail. Our more pragmatic goal was to get it all done by November 2013, with the main intention to avoid all the snow and coldness that comes along with Montreal's winter season. Naturally we slipped right past that goal, and had our big opening midst lots of snow mid January, with temperatures ranging between -15 to -25. 
+From first brainstorms to final hand-over the mammoth project took impressive 28 months to complete. That's 10 months longer than the official brief planned for. When you work with that many players (the city, the planetarium, collaborators..) your first and second attempt at a project timeline is bound to fail. A lot of the delay was due to elongated contract negotations with the city, as neither us nor them had negotiated the maintenance of permanent digital artworks before (not your typical bronze statue). 
+
+Our more pragmatic goal was to get it all done by November 2013, with the main intention to avoid all the snow and coldness that comes along with Montreal's winter season. Naturally we slipped right past that goal, and had our big opening midst lots of snow mid January, with temperatures ranging between -15 to -25. 
 
 **[collecting timeline dates here, but should eventually be presented in visual form]**
 
@@ -284,7 +286,7 @@ If new tracking data arrives, the system first checks if the blob-id already exi
 After the new tracking information has been filed away into the blobs map, the blobs map is cleaned of all non-updated members. 
 
 #### Perspective transformation
-The blob location data received from the tracking software is based on the angled view of the slightly off-center mounted camera. To be able to better tell the participants' position within the dance stage and their distance to each other, it was necessary to map that skewed 3d location data into a cleaner top-down perspective. Additionally i also rotated the now 2dimensional data to be able to easily tell if participants aligned themselves along the axis facing the projection. The skewing and rotating of the data is achieved via `cv::perspectiveTransform`. 
+The blob location data received from the tracking software is based on the angled view of the slightly off-center mounted camera. To be able to better tell the participants' position within the dance stage and their distance to each other, it was necessary to map that skewed 3d location data into a cleaner top-down perspective. Additional rotation of the now 2dimensional data enabled it to easily tell if participants aligned themselves along the axis facing the projection. The skewing and rotating of the data is achieved via `cv::perspectiveTransform`. 
 
 ![perspectiveTransform](images/perspective_transform.jpg "perspectiveTransform")
 
@@ -321,7 +323,7 @@ Example: Everytime a user stands still long enough during scene 1, a video eleme
 **[i am sure there's someone to reference about video]**
 
 #### Preloading versus dynamic loading
-In general all video sources that are used in a controlled way (used only as one instance) are preloaded at startup of the software. For video sources that are called up dynamically in possibly multiple instances at once, i use a combination of two approaches:
+In general all video sources that are used in a controlled way (as in: used only as one instance) are preloaded at startup of the software. For video sources that are called up dynamically in possibly multiple instances at once, a combination of two approaches were used:
 
  1. Load the video content when needed ... freezes whole app momentarily while loading file, unless the video loading is executed within a thread
  2. Preload a large enough vector of multiple instances of the video, then cycle through them with a pointer ... allows for faster access/display, yet slows down the application if used for too big or too many video files
@@ -430,7 +432,7 @@ The second concern was the prevent or hide the drops in framerate that would be 
 ### Always: Investigate
 In order to understand and fix what's going wrong in your application, it's necessary to find ways of monitoring what's going on under the hood. 
 
-- I used `ofLogToFile()` to make each run save out its stack trace to a timestamp-named log file. Being able to go back and search for similar interaction sequences in history, allows me to compare if a certain hack solved a problem. 
+- I use `ofLogToFile()` to make each run save out its stack trace to a timestamp-named log file. Being able to go back and search for similar interaction sequences in history, allows me to compare if a certain hack solved a problem. 
 - When implementing memory-related changes (threaded objects, preloading of multiple videos, etc.) it is good to execute extreme use cases while having an eye on the application's CPU and RAM stats (`$ top`). This allows for a systematic comparison and early spotting of potential bottlenecks. 
 
 ### Finally: Optimize
