@@ -1318,26 +1318,6 @@ void testApp::update() {
         }
         depthProcessed.flagImageChanged();
         
-        // do adaptive threshold
-        //	if(adaptiveThreshold) {
-        //		cvAdaptiveThreshold(depthProcessed.getCvImage(), depthAdaptive.getCvImage(), 255, CV_ADAPTIVE_THRESH_MEAN_C, CV_THRESH_BINARY, 2*adaptiveBlockSize+1, adaptiveThreshold);
-        //		depthAdaptive.invert();
-        //		depthAdaptive.flagImageChanged();
-        //	}
-        
-        // accumulate older depths to smooth out
-        //	if(accumOldWeight) {
-        //		cvAddWeighted(depthAccum.getCvImage(), accumOldWeight, depthProcessed.getCvImage(), accumNewWeight, 0, depthAccum.getCvImage());
-        //		if(accumBlur) cvSmooth(depthAccum.getCvImage(), depthAccum.getCvImage(), CV_BLUR , accumBlur * 2 + 1);
-        //		if(accumThreshold) cvThreshold(depthAccum.getCvImage(), depthAccum.getCvImage(), accumThreshold * 255, 255, CV_THRESH_TOZERO);
-        //
-        //		depthAccum.flagImageChanged();
-        //
-        //	} else {
-        //		depthAccum = depthProcessed;
-        //	}
-        //
-        
         // find contours
         depthContours.findContours(depthProcessed,
                                    minBlobSize * minBlobSize * depthProcessed.getWidth() * depthProcessed.getHeight(),
@@ -1357,14 +1337,9 @@ void testApp::update() {
         //  - add new colour pixels into canvas
         unsigned char *canvasPixels = paintCanvas.getPixels();
         unsigned char *diffPixels = thresholdedDepthImageForPaint.getPixels();
-        //        int r = colours[colourIndex].r;
-        //        int g = colours[colourIndex].g;
-        //        int b = colours[colourIndex].b;
         
-        
-        //int r = (int)((0.5f + ofNoise(ofGetElapsedTimef())*0.5f)*255.f);
         int r = 255;
-        //int matchCount = 0;
+
         for(int i = 0; i < paintCanvas.width*paintCanvas.height; i++) {
             if(diffPixels[i]) {
                 //paint in the new colour if
@@ -1378,13 +1353,7 @@ void testApp::update() {
                 canvasPixels[i*3+1] = greyScale;
                 canvasPixels[i*3+2] = greyScale;
             }
-            //            if(canvasPixels[i*3]==r && canvasPixels[i*3+1]==g && canvasPixels[i*3+2]==b) {
-            //                matchCount++;
-            //            }
         }
-        
-//        float totalCount = paintCanvas.width*paintCanvas.height;
-//        float proportionOfMatchedPixels = (float)matchCount/totalCount;
         
         paintCanvas.blur();
         paintCanvas.flagImageChanged();
@@ -1466,225 +1435,33 @@ edited for sanity.
 
 #### BLANK
 
-
-#### GUI
-#### VIDEO
-#### VIDEOCIRCLES
-#### KINECTPOINTCLOUD
-#### SLITSCANBASIC
-#### SLITSCANKINECTDEPTHGREY
-#### SPARKLE
-#### VERTICALMIRROR
-#### HORIZONTALMIRROR
-#### KALEIDOSCOPE
-#### COLOURFUR
-#### DEPTH
-#### SHATTER
-#### SELFSLITSCAN
-#### SPIKYBLOBSLITSCAN
-#### MIRRORKALEIDOSCOPE
-#### PARTICLES
-#### WHITEFUR
-#### PAINT
+Mode update:
 
 ```cpp
         case BLANK: //image drawing mode
             break;
-        case GUI: //GUI MODE
-            break;
-        case VIDEO:
-            break;
-        case VIDEOCIRCLES: //the film as circles
-            break;
-        case KINECTPOINTCLOUD: //draw the kinect camera depth cloud
-            break;
-        case SLITSCANBASIC: //slit scan the movie on the grey from the kinect depth grey
-        {
-            //check slit scan...
-            int theCurrentSlitScan = timeline.getValue("slitscan");
-            if(prevSlitScan != theCurrentSlitScan){
-                slitScanSliderSlid(); //only update when you have to...
-                prevSlitScan = theCurrentSlitScan;
-            }
-            
-            if(timeline.getVideoPlayer("video")->isFrameNew()){
-                slitScan.addImage(timeline.getVideoPlayer("video")->getPixelsRef());
-            }
-        }
-            break;
-        case SLITSCANKINECTDEPTHGREY: //slit scan the movie on the grey from the kinect depth grey
-        {
-            if(timeline.getVideoPlayer("video")->isFrameNew()){
-                //kinect slitscan
-                //depthPixels.setFromPixels(kinect.getDepthPixelsRef());
-                depthPixels.setFromPixels(depthProcessed.getPixelsRef());
-                depthPixels.resize(timeline.getVideoPlayer("video")->getWidth(), timeline.getVideoPlayer("video")->getHeight());
-                //            slitScanDepthGrey.setDelayMap(depthPixels);
-                //            slitScanDepthGrey.addImage(timeline.getVideoPlayer("video")->getPixelsRef());
-                slitScan.setDelayMap(depthPixels);
-                slitScan.addImage(timeline.getVideoPlayer("video")->getPixelsRef());
-            }
-        }
-            break;
-        case SPARKLE: //sparkles on the slitscan
-        {
-            //update the sparkles come what may...
-            someSparkles.update(&depthContours);
-            someSparkles.draw(ofColor::white);
-            //someSparkles.draw(timeline.getColor("colour"));
-            
-            ofImage distortionMap;
-            distortionMap.allocate(someSparkles.theFBO.getWidth(), someSparkles.theFBO.getHeight(), OF_IMAGE_COLOR);
-            
-            someSparkles.theFBO.readToPixels(distortionMap.getPixelsRef());
-            
-            distortionMap.resize(timeline.getVideoPlayer("video")->getWidth(), timeline.getVideoPlayer("video")->getHeight());
-            slitScan.setDelayMap(distortionMap);
-            
-            if(timeline.getVideoPlayer("video")->isFrameNew()){
-                slitScan.addImage(timeline.getVideoPlayer("video")->getPixelsRef());
-            }
-        }
-            break;
-        case VERTICALMIRROR: //vertical mirror
-        {
-            if(timeline.getVideoPlayer("video")->isFrameNew()){
-                verticalMirrorImage.setFromPixels(timeline.getVideoPlayer("video")->getPixels(), verticalMirrorImage.getWidth(), verticalMirrorImage.getHeight());
-                
-                verticalMirrorImage.updateTexture();
-            }
-        }
-            break;
-        case PAINT: //body painting diff
-        {
-            slitScan.setDelayMap(paintCanvasAsOfImage);
-            if(timeline.getVideoPlayer("video")->isFrameNew()){
-                slitScan.addImage(timeline.getVideoPlayer("video")->getPixelsRef());
-            }
-        }
-            break;
-        case HORIZONTALMIRROR: //HORIZONTALMIRROR mirror
-        {
-            if(timeline.getVideoPlayer("video")->isFrameNew()){
-                horizontalMirrorImage.setFromPixels(timeline.getVideoPlayer("video")->getPixels(), horizontalMirrorImage.getWidth(), horizontalMirrorImage.getHeight());
-                
-                horizontalMirrorImage.updateTexture();
-            }
-        }
-            break;
-        case KALEIDOSCOPE: //kaleidsocope
-        {
-            if(timeline.getVideoPlayer("video")->isFrameNew()){
-                kaleidoscopeMirrorImage.setFromPixels(timeline.getVideoPlayer("video")->getPixels(), kaleidoscopeMirrorImage.getWidth(), kaleidoscopeMirrorImage.getHeight());
-                
-                kaleidoscopeMirrorImage.updateTexture();
-            }
-        }
-            break;
-        case COLOURFUR: //COLOURFUR
-        {
-        }
-            break;
-        case DEPTH: //DEPTH
-        {
-        }
-            break;
-        case SHATTER:
-        {
-            //update the shatter
-            theShatter.update(&depthContours);
-            theShatter.draw(ofColor::white);
-            
-            ofImage distortionMap;
-            distortionMap.allocate(theShatter.theFBO.getWidth(), theShatter.theFBO.getHeight(), OF_IMAGE_COLOR);
-            
-            theShatter.theFBO.readToPixels(distortionMap.getPixelsRef());
-            
-            distortionMap.resize(timeline.getVideoPlayer("video")->getWidth(), timeline.getVideoPlayer("video")->getHeight());
-            slitScan.setDelayMap(distortionMap);
-            
-            if(timeline.getVideoPlayer("video")->isFrameNew()){
-                slitScan.addImage(timeline.getVideoPlayer("video")->getPixelsRef());
-            }
-        }
-            break;
-        case SELFSLITSCAN:
-        {
-            if(timeline.getVideoPlayer("video")->isFrameNew()){
-                //self slitscan
-//                ofImage selfSlitScanDelayMap;
-//                selfSlitScanDelayMap.allocate(timeline.getVideoPlayer("video")->getWidth(), timeline.getVideoPlayer("video")->getHeight(), OF_IMAGE_COLOR);
-//                selfSlitScanDelayMap.setFromPixels(timeline.getVideoPlayer("video")->getPixelsRef());
-               
-                slitScan.setDelayMap(timeline.getVideoPlayer("video")->getPixelsRef());
-                slitScan.addImage(timeline.getVideoPlayer("video")->getPixelsRef());
-            }
-        }
-            break;
-        case SPIKYBLOBSLITSCAN:
-        {
-            //SPIKYBLOBSLITSCAN
-            //update the spikes come what may...
-            theSpikey.update(&depthContours);
-            theSpikey.draw(ofColor::white);
-            
-            ofImage distortionMap;
-            distortionMap.allocate(theSpikey.theFBO.getWidth(), theSpikey.theFBO.getHeight(), OF_IMAGE_COLOR);
-            
-            theSpikey.theFBO.readToPixels(distortionMap.getPixelsRef());
-            
-            distortionMap.resize(timeline.getVideoPlayer("video")->getWidth(), timeline.getVideoPlayer("video")->getHeight());
-            slitScan.setDelayMap(distortionMap);
-            
-            if(timeline.getVideoPlayer("video")->isFrameNew()){
-                slitScan.addImage(timeline.getVideoPlayer("video")->getPixelsRef());
-            }
-        }
-            break;
-        case MIRRORKALEIDOSCOPE: //MIRRORKALEIDOSCOPE mirror
-        {
-            if(timeline.getVideoPlayer("video")->isFrameNew()){
-                verticalMirrorImage.setFromPixels(timeline.getVideoPlayer("video")->getPixels(), verticalMirrorImage.getWidth(), verticalMirrorImage.getHeight());
-                
-                verticalMirrorImage.updateTexture();
-                
-                kaleidoscopeMirrorImage.setFromPixels(timeline.getVideoPlayer("video")->getPixels(), kaleidoscopeMirrorImage.getWidth(), kaleidoscopeMirrorImage.getHeight());
-                
-                kaleidoscopeMirrorImage.updateTexture();
-            }
-        }
-            break;
-        case PARTICLES:
-        {
-            //PARTICLES
-            theParticles.update(&depthContours);
-            theParticles.draw(ofColor::white);
-            
-            ofImage distortionMap;
-            distortionMap.allocate(theParticles.theFBO.getWidth(), theParticles.theFBO.getHeight(), OF_IMAGE_COLOR);
-            
-            theParticles.theFBO.readToPixels(distortionMap.getPixelsRef());
-            
-            distortionMap.resize(timeline.getVideoPlayer("video")->getWidth(), timeline.getVideoPlayer("video")->getHeight());
-            slitScan.setDelayMap(distortionMap);
-            
-            if(timeline.getVideoPlayer("video")->isFrameNew()){
-                slitScan.addImage(timeline.getVideoPlayer("video")->getPixelsRef());
-            }
-        }
-            break;
-        case WHITEFUR: //WHITEFUR, nowt
-        {
-        }
-            break;
+
 ```
 
+Mode draw:
+
 ```cpp
-        case BLANK: //nothing
-            ofFill();
-            ofSetColor(0);
-            ofRect(0,0,ofGetWidth(),ofGetHeight()); //draw a black rectangle
+
+```
+
+#### GUI
+
+Mode update:
+
+```cpp
+        case GUI: //GUI MODE
             break;
+
+```
+
+Mode draw:
+
+```cpp
         case GUI: //image drawing mode
         {
             ofFill();
@@ -1775,11 +1552,37 @@ edited for sanity.
             
         }
             break;
+```
+#### VIDEO
+
+Mode update:
+
+```cpp
+        case VIDEO:
+            break;
+```
+
+Mode draw:
+
+```cpp
         case VIDEO: //the film
             ofFill();
             ofSetColor(255);
             timeline.getVideoPlayer("video")->draw(0, 0, ofGetWidth(),ofGetHeight());
             break;
+```
+#### VIDEOCIRCLES
+
+Mode update:
+
+```cpp
+        case VIDEOCIRCLES: //the film as circles
+            break;
+```
+
+Mode draw:
+
+```cpp
         case VIDEOCIRCLES: //the film as circles
             {
                 ofFill();
@@ -1810,11 +1613,52 @@ edited for sanity.
                 }
             }
             break;
+
+```
+#### KINECTPOINTCLOUD
+
+Mode update:
+
+```cpp
+        case KINECTPOINTCLOUD: //draw the kinect camera depth cloud
+            break;
+
+```
+
+Mode draw:
+
+```cpp
         case KINECTPOINTCLOUD: //draw the kinect camera depth cloud
             easyCam.begin();
             drawPointCloud();
             easyCam.end();
             break;
+```
+#### SLITSCANBASIC
+
+Mode update:
+
+```cpp
+        case SLITSCANBASIC: //slit scan the movie on the grey from the kinect depth grey
+        {
+            //check slit scan...
+            int theCurrentSlitScan = timeline.getValue("slitscan");
+            if(prevSlitScan != theCurrentSlitScan){
+                slitScanSliderSlid(); //only update when you have to...
+                prevSlitScan = theCurrentSlitScan;
+            }
+            
+            if(timeline.getVideoPlayer("video")->isFrameNew()){
+                slitScan.addImage(timeline.getVideoPlayer("video")->getPixelsRef());
+            }
+        }
+            break;
+
+```
+
+Mode draw:
+
+```cpp
         case SLITSCANBASIC: //slit scan the movie on depth png
             slitScan.getOutputImage().draw(0, 0, ofGetWidth(), ofGetHeight());
             
@@ -1824,16 +1668,95 @@ edited for sanity.
             ofDisableAlphaBlending();
             
             break;
+```
+#### SLITSCANKINECTDEPTHGREY
+
+Mode update:
+
+```cpp
+        case SLITSCANKINECTDEPTHGREY: //slit scan the movie on the grey from the kinect depth grey
+        {
+            if(timeline.getVideoPlayer("video")->isFrameNew()){
+                //kinect slitscan
+                //depthPixels.setFromPixels(kinect.getDepthPixelsRef());
+                depthPixels.setFromPixels(depthProcessed.getPixelsRef());
+                depthPixels.resize(timeline.getVideoPlayer("video")->getWidth(), timeline.getVideoPlayer("video")->getHeight());
+                //            slitScanDepthGrey.setDelayMap(depthPixels);
+                //            slitScanDepthGrey.addImage(timeline.getVideoPlayer("video")->getPixelsRef());
+                slitScan.setDelayMap(depthPixels);
+                slitScan.addImage(timeline.getVideoPlayer("video")->getPixelsRef());
+            }
+        }
+            break;
+
+```
+
+Mode draw:
+
+```cpp
         case SLITSCANKINECTDEPTHGREY: //slit scan the movie on the grey from the kinect depth grey
             slitScan.getOutputImage().draw(0, 0, ofGetWidth(), ofGetHeight());
             //slitScanDepthGrey.getOutputImage().draw(0, 0, ofGetWidth(), ofGetHeight());
             break;
+
+```
+#### SPARKLE
+
+Mode update:
+
+```cpp
+        case SPARKLE: //sparkles on the slitscan
+        {
+            //update the sparkles come what may...
+            someSparkles.update(&depthContours);
+            someSparkles.draw(ofColor::white);
+            //someSparkles.draw(timeline.getColor("colour"));
+            
+            ofImage distortionMap;
+            distortionMap.allocate(someSparkles.theFBO.getWidth(), someSparkles.theFBO.getHeight(), OF_IMAGE_COLOR);
+            
+            someSparkles.theFBO.readToPixels(distortionMap.getPixelsRef());
+            
+            distortionMap.resize(timeline.getVideoPlayer("video")->getWidth(), timeline.getVideoPlayer("video")->getHeight());
+            slitScan.setDelayMap(distortionMap);
+            
+            if(timeline.getVideoPlayer("video")->isFrameNew()){
+                slitScan.addImage(timeline.getVideoPlayer("video")->getPixelsRef());
+            }
+        }
+            break;
+
+```
+
+Mode draw:
+
+```cpp
         case SPARKLE:
             //do some sparkles - used the slit scan to hold it....
             slitScan.getOutputImage().draw(0, 0, ofGetWidth(), ofGetHeight());
             //ofSetColor(255,255,255);
             //someSparkles.theFBO.draw(0, 0, ofGetWidth(), ofGetHeight());
             break;
+```
+#### VERTICALMIRROR
+
+Mode update:
+
+```cpp
+        case VERTICALMIRROR: //vertical mirror
+        {
+            if(timeline.getVideoPlayer("video")->isFrameNew()){
+                verticalMirrorImage.setFromPixels(timeline.getVideoPlayer("video")->getPixels(), verticalMirrorImage.getWidth(), verticalMirrorImage.getHeight());
+                
+                verticalMirrorImage.updateTexture();
+            }
+        }
+            break;
+```
+
+Mode draw:
+
+```cpp
         case VERTICALMIRROR:
         {
             bool usingNormTexCoords = ofGetUsingNormalizedTexCoords();
@@ -1878,6 +1801,26 @@ edited for sanity.
             ofDisableAlphaBlending();
         }
             break;
+```
+#### HORIZONTALMIRROR
+
+Mode update:
+
+```cpp
+        case HORIZONTALMIRROR: //HORIZONTALMIRROR mirror
+        {
+            if(timeline.getVideoPlayer("video")->isFrameNew()){
+                horizontalMirrorImage.setFromPixels(timeline.getVideoPlayer("video")->getPixels(), horizontalMirrorImage.getWidth(), horizontalMirrorImage.getHeight());
+                
+                horizontalMirrorImage.updateTexture();
+            }
+        }
+            break;
+```
+
+Mode draw:
+
+```cpp
         case HORIZONTALMIRROR:
         {
             bool usingNormTexCoords = ofGetUsingNormalizedTexCoords();
@@ -1921,6 +1864,26 @@ edited for sanity.
             ofDisableAlphaBlending();
         }
             break;
+```
+#### KALEIDOSCOPE
+
+Mode update:
+
+```cpp
+        case KALEIDOSCOPE: //kaleidsocope
+        {
+            if(timeline.getVideoPlayer("video")->isFrameNew()){
+                kaleidoscopeMirrorImage.setFromPixels(timeline.getVideoPlayer("video")->getPixels(), kaleidoscopeMirrorImage.getWidth(), kaleidoscopeMirrorImage.getHeight());
+                
+                kaleidoscopeMirrorImage.updateTexture();
+            }
+        }
+            break;
+```
+
+Mode draw:
+
+```cpp
         case KALEIDOSCOPE:
         {
             bool usingNormTexCoords = ofGetUsingNormalizedTexCoords();
@@ -2011,14 +1974,23 @@ edited for sanity.
             ofDisableAlphaBlending();
         }
             break;
-        case PAINT:
+
+```
+#### COLOURFUR
+
+Mode update:
+
+```cpp
+        case COLOURFUR: //COLOURFUR
         {
-            //do some paint - used the slit scan to hold it....
-            slitScan.getOutputImage().draw(0, 0, ofGetWidth(), ofGetHeight());
-            
-            //paintCanvasAsOfImage.draw(0, 0, ofGetWidth(), ofGetHeight());
         }
             break;
+```
+
+Mode draw:
+
+```cpp
+
         case COLOURFUR:
         {
             ofSetColor(ofColor::white);
@@ -2028,11 +2000,57 @@ edited for sanity.
             ofDisableAlphaBlending();
         }
             break;
+```
+#### DEPTH
+
+Mode update:
+
+```cpp
+        case DEPTH: //DEPTH
+        {
+        }
+```
+
+Mode draw:
+
+```cpp
         case DEPTH:
         {
             depthProcessed.draw(0,0,ofGetWidth(), ofGetHeight());
         }
             break;
+```
+#### SHATTER
+
+Mode update:
+
+```cpp
+        case SHATTER:
+        {
+            //update the shatter
+            theShatter.update(&depthContours);
+            theShatter.draw(ofColor::white);
+            
+            ofImage distortionMap;
+            distortionMap.allocate(theShatter.theFBO.getWidth(), theShatter.theFBO.getHeight(), OF_IMAGE_COLOR);
+            
+            theShatter.theFBO.readToPixels(distortionMap.getPixelsRef());
+            
+            distortionMap.resize(timeline.getVideoPlayer("video")->getWidth(), timeline.getVideoPlayer("video")->getHeight());
+            slitScan.setDelayMap(distortionMap);
+            
+            if(timeline.getVideoPlayer("video")->isFrameNew()){
+                slitScan.addImage(timeline.getVideoPlayer("video")->getPixelsRef());
+            }
+        }
+            break;
+
+
+```
+
+Mode draw:
+
+```cpp
         case SHATTER:
         {
             //do some shattering - used the slit scan to hold it....
@@ -2041,6 +2059,30 @@ edited for sanity.
             //theShatter.theFBO.draw(0, 0, ofGetWidth(), ofGetHeight());
         }
             break;
+```
+#### SELFSLITSCAN
+
+Mode update:
+
+```cpp
+        case SELFSLITSCAN:
+        {
+            if(timeline.getVideoPlayer("video")->isFrameNew()){
+                //self slitscan
+//                ofImage selfSlitScanDelayMap;
+//                selfSlitScanDelayMap.allocate(timeline.getVideoPlayer("video")->getWidth(), timeline.getVideoPlayer("video")->getHeight(), OF_IMAGE_COLOR);
+//                selfSlitScanDelayMap.setFromPixels(timeline.getVideoPlayer("video")->getPixelsRef());
+               
+                slitScan.setDelayMap(timeline.getVideoPlayer("video")->getPixelsRef());
+                slitScan.addImage(timeline.getVideoPlayer("video")->getPixelsRef());
+            }
+        }
+            break;
+```
+
+Mode draw:
+
+```cpp
         case SELFSLITSCAN:
         {
             //do some SELFSLITSCAN - used the slit scan to hold it....
@@ -2048,6 +2090,36 @@ edited for sanity.
             slitScan.getOutputImage().draw(0, 0, ofGetWidth(), ofGetHeight());
         }
             break;
+```
+#### SPIKYBLOBSLITSCAN
+
+Mode update:
+
+```cpp
+        case SPIKYBLOBSLITSCAN:
+        {
+            //SPIKYBLOBSLITSCAN
+            //update the spikes come what may...
+            theSpikey.update(&depthContours);
+            theSpikey.draw(ofColor::white);
+            
+            ofImage distortionMap;
+            distortionMap.allocate(theSpikey.theFBO.getWidth(), theSpikey.theFBO.getHeight(), OF_IMAGE_COLOR);
+            
+            theSpikey.theFBO.readToPixels(distortionMap.getPixelsRef());
+            
+            distortionMap.resize(timeline.getVideoPlayer("video")->getWidth(), timeline.getVideoPlayer("video")->getHeight());
+            slitScan.setDelayMap(distortionMap);
+            
+            if(timeline.getVideoPlayer("video")->isFrameNew()){
+                slitScan.addImage(timeline.getVideoPlayer("video")->getPixelsRef());
+            }
+        }
+```
+
+Mode draw:
+
+```cpp
         case SPIKYBLOBSLITSCAN:
         {
             //do some SPIKYBLOBSLITSCAN - used the slit scan to hold it....
@@ -2056,6 +2128,31 @@ edited for sanity.
             //theSpikey.theFBO.draw(0,0,ofGetWidth(), ofGetHeight());
         }
             break;
+```
+#### MIRRORKALEIDOSCOPE
+
+Mode update:
+
+```cpp
+        case MIRRORKALEIDOSCOPE: //MIRRORKALEIDOSCOPE mirror
+        {
+            if(timeline.getVideoPlayer("video")->isFrameNew()){
+                verticalMirrorImage.setFromPixels(timeline.getVideoPlayer("video")->getPixels(), verticalMirrorImage.getWidth(), verticalMirrorImage.getHeight());
+                
+                verticalMirrorImage.updateTexture();
+                
+                kaleidoscopeMirrorImage.setFromPixels(timeline.getVideoPlayer("video")->getPixels(), kaleidoscopeMirrorImage.getWidth(), kaleidoscopeMirrorImage.getHeight());
+                
+                kaleidoscopeMirrorImage.updateTexture();
+            }
+        }
+            break;
+
+```
+
+Mode draw:
+
+```cpp
         case MIRRORKALEIDOSCOPE:
         {
             bool usingNormTexCoords = ofGetUsingNormalizedTexCoords();
@@ -2169,6 +2266,36 @@ edited for sanity.
             ofDisableAlphaBlending();
         }
             break;
+```
+#### PARTICLES
+
+Mode update:
+
+```cpp
+        case PARTICLES:
+        {
+            //PARTICLES
+            theParticles.update(&depthContours);
+            theParticles.draw(ofColor::white);
+            
+            ofImage distortionMap;
+            distortionMap.allocate(theParticles.theFBO.getWidth(), theParticles.theFBO.getHeight(), OF_IMAGE_COLOR);
+            
+            theParticles.theFBO.readToPixels(distortionMap.getPixelsRef());
+            
+            distortionMap.resize(timeline.getVideoPlayer("video")->getWidth(), timeline.getVideoPlayer("video")->getHeight());
+            slitScan.setDelayMap(distortionMap);
+            
+            if(timeline.getVideoPlayer("video")->isFrameNew()){
+                slitScan.addImage(timeline.getVideoPlayer("video")->getPixelsRef());
+            }
+        }
+            break;
+```
+
+Mode draw:
+
+```cpp
         case PARTICLES:
         {
             //do some PARTICLES - used the slit scan to hold it....
@@ -2177,6 +2304,21 @@ edited for sanity.
             //theParticles.theFBO.draw(0,0,ofGetWidth(), ofGetHeight());
         }
             break;
+```
+#### WHITEFUR
+
+Mode update:
+
+```cpp
+        case WHITEFUR: //WHITEFUR, nowt
+        {
+        }
+            break;
+```
+
+Mode draw:
+
+```cpp
         case WHITEFUR:
         {
             ofSetColor(ofColor::white);
@@ -2186,6 +2328,37 @@ edited for sanity.
             ofDisableAlphaBlending();
         }
             break;
+```
+#### PAINT
+
+Mode update:
+
+```cpp
+        case PAINT: //body painting diff
+        {
+            slitScan.setDelayMap(paintCanvasAsOfImage);
+            if(timeline.getVideoPlayer("video")->isFrameNew()){
+                slitScan.addImage(timeline.getVideoPlayer("video")->getPixelsRef());
+            }
+        }
+            break;
+```
+
+Mode draw:
+
+```cpp
+        case PAINT:
+        {
+            //do some paint - used the slit scan to hold it....
+            slitScan.getOutputImage().draw(0, 0, ofGetWidth(), ofGetHeight());
+            
+            //paintCanvasAsOfImage.draw(0, 0, ofGetWidth(), ofGetHeight());
+        }
+            break;
+```
+
+```cpp
+
 ```
 
 ### Running procedure
@@ -2214,7 +2387,9 @@ edited for sanity.
 
 #### Broadcast
 
-**[Broadcast this interaction]**
+The potential for broadcasting this interaction are clear.
+
+**[Refernce Nike and Coke projects]**
 
 #### Social interaction
 
