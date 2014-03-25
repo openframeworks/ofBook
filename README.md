@@ -2,6 +2,8 @@
 
 openFrameworks community book
 
+**please note that this is still work-in-progress**
+
 ##Mailing List
 [openFrameworks Book discussion](http://dev.openframeworks.cc/listinfo.cgi/ofbook-openframeworks.cc).
 

@@ -26,17 +26,17 @@ The official brief asked for an interactive digital installation utilizing the b
 The selection process took ~9 months and included three phases:
 
  1. Request for qualifications (RFQ): jury select 6 artists based on portfolio
- 2. Request for Proposals (RFP): jury select 3 finalists based on preliminary artistic concept
+ 2. Request for proposals (RFP): jury select 3 finalists based on preliminary artistic concept
  3. Final concept: jury selects winner based on complete project proposal (photo montage, video simulation, detailed budget, technical details, production calendar, supplier and collaborator list)
 
 After passing all phases we were officially commissioned by the Public Art Bureau in June 2012.
 
 ### Timeline
-From first brainstorms to final hand-over the mammoth project took impressive 28 months to complete. That's 10 months longer than the official brief planned for. When you work with that many players (the city, the planetarium, collaborators..) your first and second attempt at a project timeline is bound to fail. Our more pragmatic goal was to get it all done by November 2013, with the main intention to avoid all the snow and coldness that comes along with Montreal's winter season. Naturally we slipped right past that goal, and had our big opening midst lots of snow mid January, with temperatures ranging between -15 to -25. 
+From first brainstorms to final hand-over the mammoth project took impressive 28 months to complete. That's 10 months longer than the official brief planned for. When you work with that many players (the city, the planetarium, collaborators..) your first and second attempt at a project timeline is bound to fail. A lot of the delay was due to elongated contract negotations with the city, as neither us nor them had negotiated the maintenance of permanent digital artworks before (not your typical bronze statue). 
+
+Our more pragmatic goal was to get it all done by November 2013, with the main intention to avoid all the snow and coldness that comes along with Montreal's winter season. Naturally we slipped right past that goal, and had our big opening midst lots of snow mid January, with temperatures ranging between -15 to -25. 
 
 **[collecting timeline dates here, but should eventually be presented in visual form]**
-
->> a visual attempt: https://www.dropbox.com/s/c4hvj17qj2zi8e4/140323_timeline.pdf
 
 - 2011 Sept: official call
 - 2011 Fall-Winter: preliminary concept, ideation
@@ -69,16 +69,7 @@ Very early in the process we started collaborating with a choreographer and toge
 
 ![Celestial mechanics](images/PLANE_CELESTIAL_MECHANICS.png "Celestial mechanics")
 
-**[IMG TODO: engl, add choreography instruction to each dynamic)**
->> see https://www.dropbox.com/s/8xqfz4nhzhqcc9v/140323_PLANE_CELESTIAL_MECHANICS_EN.pdf
-
 The individual choreographies would be communicated with text instructions and should allow participants to dance within a group, yet maintain enough freedom to indulge in personal interpretations. 
-
-
-![Instructions](images/instructionsandvisuals.png "Instructions")
-
-**[IMG TODO: update scene images, update instructions)**
-
 
 ### Challenges in the Interaction design
 Once the overall structure and narrative had been decided on we moved into the iterative process of prototyping, testing and finetuning the interaction design. We went from paper drawings to full scale prototypes and had several test sessions with users of all ages. 
@@ -88,25 +79,22 @@ One of the main challenges of the project was to find a balance between providin
 Similar challenging was the task to communicate the instructions to the participants. While some actions could be phrased as one-worders - *"FREEZE!"* - others were more elaborate and cryptic - *"Walk with someone, keep the same distance between you (No hands!)"*. Creating the piece for a bilingual audience also highlighted the possible interpretive differences between English and French instructions. Having test sessions with uninitiated users was important to adjust the exact wording of instructions, and also to refine the timing of the individual scenes. (The factor that eventually ended up influencing the timing the most, was January's outside temperature).
 
 
+![Instructions](images/instructionsandvisuals.png "Instructions")
+**[IMG TODO: update scene images, update instructions)**
+
+
 ### Outlining the dance zone
 
 The projection being intangible, it was important to give the project a physical presence on the ground. Some sort of tangible intervention that would serve as interface for people to interact, and further represent the project during daylight hours. 
 
 At the beginning we imagined a series of stones and platforms arranged to form celestial pathways and encouraged hopping from stone to stone. Yet this would have introduced too many physical obstacles (tripping over, slipping) and severely limited the free movements and interactions in the space. Over the course of prototyping the importance of the physical presence shifted from being an interface to providing a delimiting perimeter around the active dance zone. After going through many design proposals (a stage, a ring, a ballet pole!) we landed on 7 foot-high concrete stones positioned in a circular formation. A single white LED on each stone enhanced their presence. Installing the underground cabling for those 7 LEDs proved a big challenge and required the $10k rental of a ground-unfreezing device. 
 
-**[3d image showing dance stage with steles?]**
->> top view plan https://www.dropbox.com/s/9rscv2saw2uqebj/140323_steles_topview.pdf
+![Dance zone](images/plane_dancezone.png "Dance zone encircled by 7 stones")
+**[image todo: correct position of steles, add projection img?]**
+
 
 ### Producing video content
-Since the project would be permanently installed, we involved locals in the making of these images, aiming to create a sense of ownership within the community that will be living next to the project for many years to come. The image and video content was created using simple analog animation techniques in a series of workshops with local kids aged 7 to 12. **[link detailed blogpost about animation workshops?]**
-
->> blogpost http://www.dailytouslesjours.com/to-community-and-beyond
-
-
-
-
-
-
+Since the project would be permanently installed, we involved locals in the making of these images, aiming to create a sense of ownership within the community that will be living next to the project for many years to come. The image and video content was created using simple analog animation techniques in a series of [workshops](http://www.dailytouslesjours.com/to-community-and-beyond) with local kids aged 7 to 12. **[possibly another blogpost link, with how-to instructions for the analog animation techniques]**
 
 
 ## Finding the Technical Solutions
@@ -114,14 +102,13 @@ Since the project would be permanently installed, we involved locals in the maki
 The technical challenges of creating a public artwork definitely multiply when the project is meant to be permanent. Suddenly you can't just hide cables under cable-trays or choose the perfect location for your camera. Your limits are set by year-round weather conditions, architectural building codes and the intended path of the snowplow. 
 
 #### Put the Projector with the animals
-The projection surface on the planetarium is 20 meter high and covered with shiny tiles. The shininess of these tiles was first worrisome, but an early projection test settled any doubts of projection quality. To cover a large area of the building surface, we required a high-lumen projector [(Barco HDX-W20)](http://www.barco.com/en/Products-Solutions/Projectors/Large-venue-projectors/20000-lumens-WUXGA-3-chip-DLP-projector-with-light-on-demand-option.aspx "Barco HDX-W20") which naturally ate almost half the budget. To save further costs - and for weather-protection and easy-access reasons - the projector was placed in the neighbouring building: the Montreal biodome. We had to build a wooden platform for the projector and cut a glass replacement window out of the slightly tinted facade of the biodome. A simple $15 heater now ensures that that window is kept clear of ice and condensation.  Additionally we negotiated with the landscape architects the trimming of any trees that were likely to grow into our projection cone over the next 3 years. 
+The projection surface on the planetarium is 20 meter high and covered with shiny tiles. The shininess of these tiles was first worrisome, but an early projection test settled any doubts of projection quality. To cover a large area of the building surface, we required a high-lumen projector ([Barco HDX-W20](http://www.barco.com/en/Products-Solutions/Projectors/Large-venue-projectors/20000-lumens-WUXGA-3-chip-DLP-projector-with-light-on-demand-option.aspx "Barco HDX-W20")) which naturally ate almost half the budget. To save further costs - and for weather-protection and easy-access reasons - the projector was placed in the neighbouring building: the Montreal biodome. We had to build a wooden platform for the projector and cut a glass replacement window out of the slightly tinted facade of the biodome. A simple $15 heater now ensures that that window is kept clear of ice and condensation.  Additionally we negotiated with the landscape architects the trimming of any trees that were likely to grow into our projection cone over the next 3 years. 
 
 Working inside the biodome turned out to be quite entertaining: my access route to our equipment led directly by the penguin compound, and work sessions were accompanied by a constant backdrop of bird chirping. 
 
-![Projector and camera positon](images/sitein3d.jpg "Projector and camera position")
+![Projector and camera positon](images/sitein3d.png "Projector and camera position")
 
-**[IMG TODO: sketchup update show steles)**
->> https://www.dropbox.com/s/x9thzw5jeftrd4g/1309-PLANE_STELES_131128-02-2_NIGHT.jpg
+**[IMG TODO: nicer rendering)**
 
 #### Camera style and placement
 In an ideal camera tracking scenario you have a controlled indoor environment that provides a clean top-down camera view and lets you create the lighting and background design of your choice. Our site at the planetarium is outdoors and therefore subject to all possible weather conditions. The foreground-background contrast can invert based on if snow covers the dark pavement or not. The general lighting conditions are poor, but the area can temporarily get lit up by the flashlights of driving-by cars. 
@@ -139,6 +126,7 @@ The network being part of the city network, was heavily controlled, subject to 1
 ![Technical System Diagram](images/PLANETARIUM_TECH_DIAGRAM_20140322.png "Technical System Diagram")
   
 **[very simple system diagram, maybe not necessary?]**
+**maybe these can just be annotations on the previous 3d picture?**
 
 
 ### Choice of tracking software
@@ -207,49 +195,48 @@ OpenFrameworks was chosen as the programming environments because of C++'s fast 
 ## Developing the Visualization Software
 
 #### Development setup
-The openFrameworks linux install (# ) is build for codeblocks, yet as i have come to like the code editor Sublime for its lightweightness and simplicity, i chose to program in Sublime and then compile (`$ make`) and run the program (`$ ./bin/appName`) from the terminal. On my win7 laptop i code with Sublime, but compile and run the software from within Codeblocks. Besides its purpose of providing a history of the code, i used github here mainly to push code between the development and production computers. My usual programming setup includes an open browser with tabs open on the openFrameworks forum, the openFrameworks documentation page, and github (to search specific function uses). 
+The openFrameworks linux install is build for codeblocks, yet as i have come to like the code editor [Sublime Text](http://www.sublimetext.com/ "Sublime Text") for its lightweightness and simplicity, i chose to program in Sublime and then compile (`$ make`) and run the program (`$ ./bin/appName`) from the terminal (or [terminator](http://gnometerminator.blogspot.ca/p/introduction.html)). On my win7 laptop i code with Sublime, but compile and run the software from within Codeblocks. Besides its purpose of providing a history of the code, i use github mainly to push code between development and production computers. Alongside Sublime and a bunch of terminal windows, my typical programming setup includes a browser with tabs open on the openFrameworks forum, the openFrameworks documentation page, and github (to search specific function uses). 
 
-#### Externals, Addons used
+### Quick summary of what the app does
+The application navigates the projection through a sequence of 6 scenes that have different visuals and choreography instructions. When participants follow the instructions (and hop, or line-up, or run around ..) the application receives their position data, analyses it for each scene's interaction requirements, and then controls video elements on the projection. In some scenes the participant's location is directly mapped to a video element location, in other scenes participant movements simply cause videos to appear/disappear on screen.
+
+The addons used for the application:
 
  - **ofEvents** ... for controlling the animation
  - **ofxOsc** ... for communication between computers
  - **ofxOpenCv** ... only for running a perspective transformation
  - **ofxGui** ... to build a GUI
-
-### Quick summary of what the app does
-The application navigates the projection through a sequence of 6 scenes that have different themes and interaction instructions. When participants follow the instructions (and hop, or line-up, or run around, or stand still ..) the application receives their position data, analyses it for each scene's interaction requirements, and then controls video elements on the projection. In some scenes the participant's location is directly mapped to a video element location, in other scenes participant movements simply cause videos to appear/disappear on screen.
-
+ - 
 ### Sequential structure
-The transition from one scene and segment to the next is either time-dependent or based on the participants successful execution of instructions. Yet even if no interaction goal is achieved, a maximum timer will still cause the transition to the next scene. 
+The transition from one scene and segment to the next is either time-dependent (elapsed time comparison with `ofGetUnixTime()`) or based on the participants successful execution of instructions (did they all freeze?). Yet even if no interaction goal is achieved, a set maximum timer will still cause the transition to the next scene. 
 
-While the system usually goes through all scenes sequentially, one scene can be skipped if not enough participants are detected in the interaction zone. Additionally the system can fall into an idle mode, if no participants has been detected at all during the last 30 seconds. After the idle mode it resumes with scene 1. 
+While the system usually goes through all scenes sequentially, the scene requiring at least 2 participants will be skipped if not enough people are detected in the dance zone. Additionally the system will fall into an idle mode, if no participants have been detected during the last 30 seconds. After the idle mode it restarts the sequence with scene 1. 
 
 ### Incoming tracking data
 The tracking software *blobserver* on the camera computer acts as OSC server and is configured to send tracking data to the IP address of the projection computer. Similarly the openFrameworks app registers itself as OSC client on the OSC server and is able to tune the tracking parameters according to specific scene requirements. **[reference network/OSC chapter]**
 
-To be able to test and simulate the two-way OSC communication i created several processing dummies, which turned out to be very useful for software tests without the full setup. (1: dummy to print out received message. 2: dummy to send tracking parameters. 3: dummy to simulate incoming tracking data).
-
+To be able to test and simulate the two-way OSC communication i created several processing dummies, which turned out to be very useful for occasions without the full technical setup. (1: dummy to print out received message. 2: dummy to send tracking parameters. 3: dummy to simulate incoming tracking data).
 
 #### Dealing with split message blocks and framerate differences
 
 The OSC messages sent by the tracking software take this format:
 
     /blobserver/startFrame      389 1
-    /blobserver/hog             128 140 287 0.4 1.2 77 	4 	 1	
-    /blobserver/hog             135 418 103 2.2 2.8 20 	0 	 0
-    /blobserver/hog             136 356 72 	0.3 0.2 18 	0 	 0
+    /blobserver/hog             128 140 287 0.4 1.2 77 4 1	
+    /blobserver/hog             135 418 103 2.2 2.8 20 0 0
+    /blobserver/hog             136 356 72 0.3 0.2 18 0 0
     /blobserver/endFrame
 
 Each message with the address line `/blobserver/hog`  signifies the tracking data for one recognized shape, and communicates blob id, position, velocity, age, etc. Bounded by the `/blobserver/startFrame` and `/blobserver/endFrame` messages, an arbitrary amount of tracking messages (= current number of *people* recognized) can be received at any time. The frequency of those message blocks depends on the framerate of *blobserver*. 
 
-As it can't be guaranteed that *blobserver* and openFrameworks always run on the same framerate, it could happen that multiple tracking updates arrive before openFrameworks calls `update()` again. It was therefore necessary to *store away* new incoming data and only trigger the actual processing of that data after all incoming messages have been parsed. 
+As it can't be guaranteed that *blobserver* and openFrameworks always run on the same framerate, it could happen that multiple tracking updates arrive before the openFrameworks baseApp calls `update()` again. It was therefore necessary to *store away* new incoming data and only trigger the actual processing of that data after all incoming messages have been parsed. 
 
-Similarly it could happen that half of the tracking messages are received before, and the other half after the `update()` loop. To avoid this splitting of data to cause glitches (system thinks a specific blob-id disappeared, but just hasn't been updated yet), it was necessary to hold off all processing of data, before at least one `/blobserver/endFrame` has been received during each openFrameworks frame. 
+Similarly it could happen that half of the tracking messages are received before, and the other half after the baseApp's `update()` loop. To avoid this splitting of data to cause glitches (system thinks a specific blob-id disappeared, while it just hasn't been updated yet), it was necessary to hold off all processing of data, before at least one `/blobserver/endFrame` has been received during each openFrameworks frame. 
 
 #### Storing and updating tracking data
-The received tracking data is stored in a map of `Blob` objects `std::map<int,Blob> blobs`. Maps gives all the flexibility of vectors (loop, iterator, etc.) but also allow for easy access of entities via their id. **[see chapter ref maps/vectors]**  
+The received tracking data is stored in a map of `Blob` objects `std::map<int,Blob> blobs`. Maps give all the flexibility of vectors (loop, iterator, etc.) but also allow for easy access of entities via their id. **[see chapter ref maps/vectors]**  
 
-If new tracking data arrives, the system first checks if the blob already exists in the map or if it needs to be created. Then it updates the instance with the new data. 
+If new tracking data arrives, the system first checks if the blob-id already exists in the map or if it needs to be created. Then it updates the instance with the new data. 
 
     while (receiver.hasWaitingMessages()) {
     
@@ -284,26 +271,26 @@ If new tracking data arrives, the system first checks if the blob already exists
 After the new tracking information has been filed away into the blobs map, the blobs map is cleaned of all non-updated members. 
 
 #### Perspective transformation
-For better analysis of the individual blobs x|y position (alignment, position within stage, distance between blobs, etc.), i transformed their position information into an top-down perspective that is aligned with the projection. This skewing and rotating of the data is achieved via `cv::perspectiveTransform`. 
+The blob location data received from the tracking software is based on the angled view of the slightly off-center mounted camera. To be able to better tell the participants' position within the dance stage and their distance to each other, it was necessary to map that skewed 3d location data into a cleaner top-down perspective. Additional rotation of the now 2dimensional data enabled it to easily tell if participants aligned themselves along the axis facing the projection. The skewing and rotating of the data is achieved via `cv::perspectiveTransform`. 
 
 ![perspectiveTransform](images/perspective_transform.jpg "perspectiveTransform")
 
-**[IMG TODO: redraw?)**
+**[IMG TODO: redraw, add blob-ids)**
 
 ### Implementing video content
 All our visual raw material exists in the form of videos (and some images). Besides written instructions that are drawn, everything on the projection is direct video display without any effects. 
 
 #### The quest for the right codec
-When we first received the computer hardware, i did a series of performance tests with video files of different codecs to determine how we would prepare our video content. The mistake i made was that i primarily focused on video playback. And once the setup would play multiple video instances at HD resolution, 30fps, in every codec (H.264, photoJPEG, quicktimePNG, animation, raw) while still providing a framerate of 60FPS, i was convinced the top-notch CPU and GPU would be able to handle it all. 
+When we first received the computer hardware i did a series of performance tests with video files of different codecs to determine how we would prepare our video content. The mistake i made was that i primarily focused on video playback. And once the setup would play multiple video instances at HD resolution, 30fps, in every codec (H.264, photoJPEG, quicktimePNG, animation, raw) while still providing a framerate of 60FPS, i was convinced the top-notch CPU and GPU would be able to handle it all. 
 
-What i didn't consider was the load on the processor that comes from loading, decoding, starting, releasing and deleting of multiple video files within short time spans. This insight finally dawned close to the project's opening date, when more and more photoJPEG and quicktimePNG (alpha) video files were added to the project and the framerate suddenly started to drop. 
+What i didn't consider was the load on the processor that comes from loading, decoding, starting, releasing and deleting of multiple video objects within short time spans. This insight finally dawned close to the project's opening date, when more and more photoJPEG and quicktimePNG (alpha) video files were added to the project and the framerate suddenly started to dwindle. Luckily for us, that drop in performance was not clearly visible to the *unknowing* eye, as the project's overall handmade look'n'feel (due to the material's origin from analog stop-motion techniques) allowed for more tolerance regarding the framerate.
 
-Another round of video performance tests (post opening) at that point led to the conclusion that we'd re-encode all videos with the animation codec, and the lowest framerate the video content allowed (5, 10, 15fps). Even though the video files were larger in size, the less strong compression factor minimized the processor's decoding time. LESSON learned.
+Another round of video performance tests (post opening) led to the conclusion that we'd re-encode all videos with the animation codec at the lowest framerate the video content allowed (5, 10, 15fps). Even though the video files were larger in size, the less strong compression factor minimized the processor's decoding time. 
 
-Still, we encountered a few platform and player-dependent idiosyncrasies. Unsolved mystery: gstreamer doesn't like certain custom resolutions and displays a green line underneath the video (our fix: find a new resolution). 
+Still, we encountered a few platform and player-dependent idiosyncrasies. an unsolved mystery is still why gstreamer doesn't like certain custom resolutions and displays a green line underneath those video (our fix: find a new resolution). 
 
 #### Dynamic video elements
-While the background videos appear on schedule and are preloaded by the system, most foreground videos appear dynamically based on participant actions. To be able to handle them easily all dynamic video elements are stored in a vector of shared pointers `std::vector< ofPtr<mediaElement> > fgMedia`. The whole vector of pointers can then be updated and drawn, no matter how few or many videos of shootings stars or planets are currently visible. By using `ofPtr` one doesn't need to worry about properly releasing dynamically allocated memory.  **[ref pointers / shared pointers?]** 
+While the background videos appear on schedule and are preloaded by the system, most foreground videos appear dynamically based on participant actions. To be able to handle them easily all dynamic video elements are stored in a vector of shared pointers `std::vector< ofPtr<mediaElement> > fgMedia`. The whole vector of pointers can then be updated and drawn, no matter how few or many videos of shootings stars or planets are currently being displayed. By using `ofPtr` one doesn't need to worry about properly releasing dynamically allocated memory.  **[ref pointers / shared pointers?]** 
 
 Example: Everytime a user stands still long enough during scene 1, a video element displaying a blinking star gets added to the vector:
 
@@ -321,29 +308,29 @@ Example: Everytime a user stands still long enough during scene 1, a video eleme
 **[i am sure there's someone to reference about video]**
 
 #### Preloading versus dynamic loading
-In general all video sources that are used in a controlled way (used only as one instance) are preloaded at startup of the software. For video sources that are called up dynamically in possibly multiple instances at once, i use two approaches:
+In general all video sources that are used in a controlled way (as in: used only as one instance) are preloaded at startup of the software. For video sources that are called up dynamically in possibly multiple instances at once, a combination of two approaches were used:
 
- 1. Load the video content when needed [freezes whole app momentarily while loading file]
- 2. Preload a large enough vector of multiple instances of the video, then cycle through them with a pointer [allows for fast access/display, yet slows down app if used for big video files]
+ 1. Load the video content when needed ... freezes whole app momentarily while loading file, unless the video loading is executed within a thread
+ 2. Preload a large enough vector of multiple instances of the video, then cycle through them with a pointer ... allows for faster access/display, yet slows down the application if used for too big or too many video files
 
 ### Event-driven animation
 The control of video elements by the blobs (detected participants) is implemented with `ofEvent()` calls. **[reference chapter with events]** Events are an good way of giving objects a way of controlling elements in the baseApp without having to query each objects possible states from the baseApp's update() loop, or without having to give objects a pointer to the whole baseApp. 
 
-Blob objects have multiple events they can trigger to cause actions in the baseApp:
+Blob objects have multiple events they can trigger actions in the baseApp:
 
- - **onEnterStage** ... enter stage diameter, used to make videos appear
- - **onLeaveStage** ... leave stage diameter, used to make videos disappear
+ - **onEnterStage** ... enter dance zone, used to make videos appear
+ - **onLeaveStage** ... leave dance zone, used to make videos disappear
  - **updatePosition** ... called on every frame, to update position-mapped video elements
- - **onLost** ... not detected anymore (but still alive!), used for Hop! Run! video triggers
+ - **onLost** ... not detected anymore (but still alive!), used for Hop! Run! Drop! video triggers
  - **onFreeze** ... stopped moving, used to make videos appear or force transitions (all freeze!)
  - **unFreeze** ... started moving again, used to make videos disappear
- - **overFreeze** ... hasn't moved for x seconds
- - **onSteady** ... at same distance to neighbor for x seconds, used to create video bridge
- - **onBreakSteady** ... broke steady distance with neighbor, 
+ - **overFreeze** ... hasn't moved for x seconds, used to make constellations appear
+ - **onSteady** ... at same distance to neighbor for x seconds, used to create star bridges between neighbors
+ - **onBreakSteady** ... broke steady distance with neighbor, let star bridge disappear
  - **prepareToDie** ... make sure to disconnect all connected videos
  - ... 
 
-**[all the following event-code can probably be skipped]**
+**[all the following event-code can probably be skipped, if ofEvent is demonstrated elsewhere]**
 
 `ofEvent` instances are defined in the blob object header:
 
@@ -355,7 +342,7 @@ Blob objects have multiple events they can trigger to cause actions in the baseA
         
     }
 
-When a new blob object is created in the baseApp, `ofAddListener()` connect the object's event calls to functions in the baseApp with . 
+When a new blob object is created in the baseApp, `ofAddListener()` connects the object's events to functions within the baseApp. 
 
     // create new blob
     blobs[blobid].id = blobid;
@@ -383,7 +370,7 @@ When a blob then updates and analyses its position, velocity etc. it can trigger
         
     }
 
-The `ofNotifyEvent()` then triggers the connected function in the baseApp:
+The `ofNotifyEvent()` call then triggers the connected function in the baseApp:
 
     void planeApp::blobOnFreeze(int & blobID) {
     
@@ -400,10 +387,9 @@ The `ofNotifyEvent()` then triggers the connected function in the baseApp:
 
 
 ### Debug screen and finetuning interaction
-For testing and tuning purposes i run the application on 2 screens with `window.setMultiDisplayFullscreen(true)`, the projection and the debug screen. The debug screen shows a visualization of the tracking data, the scene-relevant states of the blobs, two GUI panels for finetuning parameters, and preview of the projection view. 
+For testing and tuning purposes the application is run on 2 screens: the projection and the debug screen (by using `window.setMultiDisplayFullscreen(true)`). The debug screen shows a visualization of the tracking data, the states of the blobs relevant for the current scene, two GUI panels for finetuning parameters, and a smaller preview of the projection view. 
 
-To be able to finetune all the parameters that define the interaction (what velocity threshold defines "standing still", how exact does the alignment need to be to activate the eclipse effect, etc.) while testing it on site, it's important to have all variables accessible via a GUI. 
-
+When doing live testruns on site it is important to have all interaction parameters easily accessible via a GUI. Thresholds like: what velocity defines "standing still", or how exact does the alignment need to be to activate the eclipse - are easier to tune if comparison runs don't need to get interrupted by software compilation time.  
 ![GUI](images/blackGUI.png "GUI screen")
 
 
@@ -413,48 +399,54 @@ To be able to finetune all the parameters that define the interaction (what velo
 
 
 ## Fail-safes and dirty fixes 
-The nights before the opening were naturally used for heavy test sessions that led to some restructuring, some video updates and lots of parameters finetunings. Late night coding over remote desktop while dressing up every 5 minutes to run outside into the cold to test the changes with camera vision and projection - not the best of scenarios. Combined with the natural occurrence of bugs, suddenly the software didn't seem as stable and fast as a few days ago. A mysterious segmentation fault error kept appearing (not often enough to be obvious), but other pressing issues didn't allow for proper tracing of the error's roots. 
+The nights before the opening were naturally used for heavy test sessions that led to some restructuring, some video updates and lots of parameters finetunings. Late night coding over remote desktop while dressing up every 5 minutes to run outside into the cold to test the changes with camera vision and projection - not the best of scenarios. Combined with the natural occurrence of bugs, suddenly the software didn't seem as stable and fast as just a few days ago. A mysterious segmentation fault error kept appearing (not often enough to be easily traceable), but other pressing issues didn't allow for proper investigations into the error's roots. 
 
 The opening day had me glued next to the projection computer, ready to hit a button or change a parameter, in case of unexpected crashes or lagging framerates. The next day - before the project went live on its daily schedule of 5pm to midnight - turned into an exercise of setting priorities. Instead of going into debug mode and investigating errors, the main goal was to to keep the app going seamlessly during showtime.
 
 
-### first: keep your app alive
-The one good thing about segmentation faults is that they kill your app very fast. The app crashes and in the next frame you are left with your desktop background (which should be black). The perfect fail-safe solution for this is something like [daemontools]( http://cr.yp.to/daemontools.html) (linux), which is a background process that monitors your app and restarts it within a second in case it crashes. After setting up supervision with deamontools, the app could crash, but all people would see is a few seconds of black (depending on how long the preloading of videos takes on startup). 
+### First: Keep your App alive
+The one good thing about segmentation faults is that they kill your application very fast. The software crashes and in the next frame you are left with your desktop background (which should be black). The perfect fail-safe solution for this is something like [daemontools]( http://cr.yp.to/daemontools.html) (linux), which is a background process that monitors your application and restarts it within a second in case it crashes. After setting up supervision with daemontools, the application could crash, but all people would see is a few seconds of black (depending on how long the preloading of video files takes on startup). 
 
-### second: framerate cheats
-The second concern was the drops in framerate that would come too much videoplayer actions. 
-- variables FPS: update animation with fps-dependent value, ofGetLastFrameTime() 
-- memory leaks, dropping FPS: regularly terminate app, seamless transitions
-- put limits on your number of objects (blobs, video elements)
+### Second: Framerate cheats
+The second concern was the prevent or hide the drops in framerate that would be caused by too many dynamic videos being active at the same time. 
 
-### always: investigate
-- ofLogToFile with dynamic date
-- monitor process times for operations to find the bottleneck
-- try + catch: not everything throws exceptions!
+- Erratic framerate variations can be hidden by updating animations with a FPS-dependent value **[ possible reference ? ]** `ofGetLastFrameTime()`
+- If the application's memory usage grows over time it probably has hidden memory leaks. To counter a steady drop in framerate it's not a bad idea to regularly terminate the app voluntarily. We found a natural and seamless opportunity to restart our application at the end of each 6-scene sequence.
+- By putting realistic limits on the number of your processed objects (blobs, video elements), you can avoid major framerate drops when mysterious glitches suddenly report the simultaneous detection of 100 blobs. 
 
-### finally: optimize
-- replace video with opengl-animation
-- what to implement with threads?
+### Always: Investigate
+In order to understand and fix what's going wrong in your application, it's necessary to find ways of monitoring what's going on under the hood. 
+
+- I use `ofLogToFile()` to make each run save out its stack trace to a timestamp-named log file. Being able to go back and search for similar interaction sequences in history, allows me to compare if a certain hack solved a problem. 
+- When implementing memory-related changes (threaded objects, preloading of multiple videos, etc.) it is good to execute extreme use cases while having an eye on the application's CPU and RAM stats (`$ top`). This allows for a systematic comparison and early spotting of potential bottlenecks. 
+
+### Finally: Optimize
+Once an installation has been open to the public for a few days, it hopefully has revealed all its weak points. After the stress of finding quick fixes to hide those weaknesses - and a few days of healthy mental detachment from the project - it was time to tackle and optimize the software with a clear mind. 
+
+- By replacing all video files that can easily also be drawn with opengl, your application will perform better. 
+- What to implement with threads?
 
 
 
 ## Results and Reception
 
-![Exahle](images/exhaleatplane.jpg "Exhale")
+**[TODO]**
 
-![On site](images/hopatplane.jpg "Project in action")
-
-![Exahle](images/camview_onsteles.jpg "Exhale")
-
-Surveillance, statistics, nuit blanche, ...
+After a few weeks/months of running the reception of the project is very good. The installation seems successful in addressing several kinds of audiences: kids, teens and parents engage in different ways. Some people also just stop and watch others performing.
 
 The delicate LEDs also caused the most confusion, as participants mistook them to be the secret sensors triggering the interaction.
 
-After a few weeks running, reception seems pretty good.
-The installation seems successful in addressing several kinds of audience: kids, teens and parents. Some people just stop and watch others performing.
+![On steles](images/camview_onsteles.jpg "On steles")
+
+
 We are gathering data to get objective analysis of the usage and behaviors.
 **[insert stats]**
 
 Curious to see how people (staff, visitors and passersby) will live with the piece over time.
 
 Even though snow gives the site a beautiful lunar feeling, we look forward to monitoring the usage over summer.
+
+
+![Exahle](images/exhaleatplane.jpg "Exhale")
+
+![On site](images/hopatplane.jpg "Project in action")
