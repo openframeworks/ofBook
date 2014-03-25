@@ -55,6 +55,54 @@ Before running, let's comment out our `polyline.draw()` line of code.  Then let'
 
 
 
+Before we get to that, we should modify our code so that we can switch between brushes while our code is running.
+
+Let's define an integer, `drawingMode`, to identify which brush we are currently using, and the numbers `0`, `1`, `2` and `3` will represent the individual brushes.  We will use keyboard inputs to change the `drawingMode`, and then in `draw()`, we will use `drawingMode` to determine which brush code to execute.  So add these public variables to the header file:
+
+	int drawingMode;
+	int rectangleMode = 0;  // We define these modes to make our code more readable
+	int circleMode = 1;  // This will make more sense when you see the draw() function
+	int lineMode = 2;
+	int triangleMode = 3;
+
+Assign the initial drawing mode to the rectangle brush in `setup()` using: `drawingMode = rectangleMode`.  Now, we are going to reorganize the `draw()` function so that it looks like this:
+
+	if (isRightMousePressed) ofBackground(0);  // If right mouse button is pressed, then erase the screen
+	
+	// If left mouse button is pressed, then draw the appropriate brush
+	if (isLeftMousePressed) {	
+		if (drawingMode == rectangleMode) {
+			// Insert the rectangle drawing code here
+		}		
+		else if (drawingMode == circleMode) { }		
+		else if (drawingMode == lineMode) { }		
+		else if (drawingMode == triangleMode) { }
+	}
+
+Scroll down to find [`keyPressed(int key)`](http://openframeworks.cc/documentation/application/ofBaseApp.html#!show_keyPressed "keyPressed Documentation Page").  Similar to `mousePressed(...)`, this function is called any time a key is pressed, and it receives  an `int` called `key` to identify which key is currently being pressed.    That `int` is the [ASCII](http://en.wikipedia.org/wiki/ASCII "ASCII Wiki Page") code for the key that was pressed.  ASCII is an agreed upon system for assigning numbers to characters.  We will use `key` to change `drawingMode`: “r” for rectangle mode, “c” for circle mode, etc.  In C++, we can compare an integer like `key` with a character directly using `==` or `!=`.  Add these lines to `keyPressed(...)`:
+
+	if (key == 'r') drawingMode = rectangleMode;  // It is important to use `r` and not "r" here
+	else if (key == 'c') drawingMode = circleMode;  // See C++ Basics chapter on strings vs char for more info
+	else if (key == 'l') drawingMode = lineMode;
+	else if (key == 't') drawingMode = triangleMode;
+
+
+
+
+
+
+
+
+Maybe circles are just too symmetric?   We can turn our circle into an ellipse using:
+	
+	float scaledWidth = radius * ofRandom(0.8, 1.2);
+	float scaledHeight = radius * ofRandom(0.8, 1.2);
+	ofEllipse(mouseX+xOffset, mouseY+yOffset, scaledWidth, scaledHeight);
+
+What about outlines?  We can insert `ofNoFill()` into our circle brush code.  Try increasing our `alpha` to 10 and lowering our `radiusStepSize` to 1.  Don't forget that if we start using `ofNoFill()` in our circle brush, we should add `ofFill()` to our rectangle brush!
+
+
+
 
 
 
