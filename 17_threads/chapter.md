@@ -448,7 +448,6 @@ public:
 
 That will solve the tearing, but we are stopping the main thread while the frame_cb **[BD: Do you mean to be referring to these function_names as `function_names`. Also, why the underscore instead of camelCase?]** is updating the pixels and stopping the camera thread while the main one is uploading the texture. For small images this is usually ok, but for bigger images we could loose some frames. A possible solution is to use a technique called double or even triple buffering:
 
-COME BACK
 
 ```cpp
 class VideoReader{
@@ -492,15 +491,15 @@ public:
 }
 ```
 
-With this we are locking the mutex for a really short time, in the frame callback only to set `newFrame = true` in the main thread, to check if there's a new frame and then to swap the front and back buffers, swap, is overrided for ofPixels and what it does is that it swaps the internal pointers to memory inside `frontPixels` and `backPixels` to point to one another, so after calling it, now `frontPixels` is now pointing to what `backPixels` was pointing before and viceversa. This operation only involves copying the values of a couple of memory addresses plus the size and number of channels so it's way faster than copying the whole image or uploading to a texture.
+With this we are locking the mutex for a very short time in the frame callback to set `newFrame = true` in the main thread. We do this to check if there's a new frame and then to swap the front and back buffers. swap **[BD: ?]**, is overridden for ofPixels and swaps the internal pointers to memory inside `frontPixels` and `backPixels` to point to one another. After calling it **[BD: Be explicit about what "it" is referring to]**, `frontPixels` will be pointing to what `backPixels` was pointing to before, and viceversa. This operation only involves copying the values of a couple of memory addresses plus the size and number of channels. For this reason it's way faster than copying the whole image or uploading to a texture.
 
-Triple buffering is a similar technique that involves using 3 buffers instead of 2 and is useful in some cases but we won't see it in this chapter.
+Triple buffering is a similar technique that involves using 3 buffers instead of 2 and is useful in some cases. We won't see it in this chapter.
 
 ## ofScopedLock
 
-Some times we need to lock a function until it returns a function, or lock for the duration of a full block, that's what a scoped lock does, if you've read the memory chpater probably you remmeber about what we called stack semantics, or RAII [Resource Adquisition Is Initialization](http://en.wikipedia.org/wiki/Resource_Acquisition_Is_Initialization). A scoped lock makes use of that technique to lock a mutex while a block lasts:
+Sometimes we need to lock a function until it returns a function **[BD: Perhaps just "returns"]**, or lock for the duration of a full block. That is exactly what a scoped lock does. If you've read the memory chapter you probably remember about stack semantics, or RAII [Resource Adquisition Is Initialization](http://en.wikipedia.org/wiki/Resource_Acquisition_Is_Initialization). A scoped lock makes use of that technique to lock a mutex while a block lasts **[BD: A block lasts what? Sorry, I don't mean to be this nitpicky, I am just trying to assume as naive a position as possible.]**:
 
-For example the previous example could be turned into:
+For example, the previous example could be turned into:
 
 ```cpp
 class VideoReader{
@@ -545,9 +544,9 @@ public:
 }
 ```
 
-As you can see in some cases it makes more sense than others but it's also a good way of avoiding problems because we forgot to unlock a mutex and allows us to usethe `{}` to define the duration of the lock which is more natural to c++.
+As you can see, in some cases it makes more sense than others **[BD: What really illustrates that?]**. It's **[BD: Define what it is]** also a good way of avoiding problems because we forgot to unlock a mutex and allows us to use the `{}` to define the duration of the lock which is more natural to C++ **[BD: I think its capitalized but I could be wrong]**.
 
-There's one case when the only way to properly lock is by using a scoped lock and that's when we want to return a value and keep the function locked until after the value was returned, in that case we can't use a normal lock:
+There's one particular case when the only way to properly lock is by using a scoped lock. That's when we want to return a value and keep the function locked until after the value was returned. In that case we can't use a normal lock:
 
 ```cpp
 
@@ -558,19 +557,20 @@ ofPixels accessSomeSharedData(){
 
 ```
 
-In this case we could make a copy internally and return that later, but still with this pattern we avoid a copy and the syntax is shorter.
+We could make a copy internally and return that later, but with this pattern we avoid a copy and the syntax is shorter.
 
 
 ## Poco::Condition
 
-A condition in threads terminology, is an object that allows to synchronize 2 threads. The pattern is something like this: one thread waits for something to happen to start it's processing, when it finishes instead of finishing the thread, it locks in the condition and waits till there's new data to process. An example could be the image loader class we were working with some sections ago. Instead of starting one thread for every image we want to load we might have a queue of images to load, the main thread adds image paths into that queue and the auxiliary thread loads the images from that queue till is empty then locks on a condition till there's more images to load.
+A condition, in threads terminology, is an object that allows **[BD: Allows what?]** to synchronize 2 threads. The pattern is something like this: one thread waits for something to happen before starting it's processing. When it finishes, instead of finishing the thread **[BD: Waiting for the thread to finish?]**, it locks in the condition and waits till there's new data to process. An example of this could be the image loader class we were working with earlier. Instead of starting one thread for every image, we might have a queue of images to load. The main thread adds image paths to that queue and the auxiliary thread loads the images from that queue until it is empty. The auxiliary thread then locks on a condition until there's more images to load.
 
-Such an example would be too long to write in this book but if you are interested into how something like that might work take a look at ofxThreadedImageLoaded which does just that.
+Such an example would be too long to write in this section, but if you are interested in how something like that might work, take a look at ofxThreadedImageLoaded (which does just that).
 
-Instead let's see a simple example, imagine a class where we can push urls so it pings those adresses in a different thread, something like:
+Instead let's see a simple example. Imagine a class where we can push urls to pings addresses in a different thread. Something like:
 
 ```cpp
 class ThreadedHTTPPing: public ofThread{
+public:
     void pingServer(string url){
         mutex.lock();
         queueUrls.push(url);
@@ -593,12 +593,13 @@ private:
 }
 ```
 
-The problem with that example is that the auxiliary thread keeps running as fast as possible in a loop consuming a full cpu from our computer which is not a very good idea.
+The problem with that example is that the auxiliary thread keeps running as fast as possible in a loop, consuming full CPU from our computer which is not a very good idea.
 
-A tipical solution to this problem is to sleep for a while at the end of each cycle like:
+A typical solution to this problem is to sleep for a while at the end of each cycle like:
 
 ```cpp
 class ThreadedHTTPPing: public ofThread{
+public:
     void pingServer(string url){
         mutex.lock();
         queueUrls.push(url);
@@ -622,7 +623,7 @@ private:
 }
 ```
 
-That alleviates the problem slightly but not completely, the thread won't consume as much cpu now, but it sleeps for a while unnecesarily when there's still urls to load and continues to run in the background even when there's no more urls to ping. Specially in small devices powered by batteries like a phone this pattern will drain the battery in a few hours.
+That alleviates the problem slightly but not completely. The thread won't consume as much CPU now, but it sleeps for an unnecesarily while when there's still urls to load. It also continues to run in the background even when there's no more urls to ping. Specially in small devices powered by batteries, like a phone, this pattern would drain the battery in a few hours.
 
 The best solution to this problem is to use a condition:
 
@@ -655,10 +656,11 @@ private:
 }
 ```
 
-When we call `condition.wait(mutex)` the mutex needs to be locked before, then the condition unlocks the mutex and blocks the execution of that thread until `condition.signal()` is called. When the condition awakes the thread because it's been signaled, it locks the mutex again and continues the execution, there, we can read the queue without problem because we know that the other thread won't be able to access it since we are holding the mutex, copy the next url to ping and unlock the mutex to keep the lock time to a minimum. Then outside the lock we ping the server and start the process again.
+When we call `condition.wait(mutex)` the mutex needs to be locked before **[BD: Be specific about before what]**, then the condition unlocks the mutex and blocks the execution of that thread until `condition.signal()` is called. When the condition awakens the thread because it's been signaled, it locks the mutex again and continues the execution. We can read the queue without problem because we know that the other thread won't be able to access it. We copy the next url to ping and unlock the mutex to keep the lock time to a minimum. Then outside the lock we ping the server and start the process again.
 
-Whenever the queue gets emptied the condition will block the execution of the thread avoiding to have to run it constantly in the background.
+Whenever the queue gets emptied the condition will block the execution of the thread to avoid it from running in the background.
 
+**[BD: Perhaps some sort of conclusion would be nice here]**
 
 <em style="font-size:0.8em; text-align:center; display:block;">This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.en_US">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.</em>
 
