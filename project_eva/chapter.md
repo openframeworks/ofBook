@@ -26,7 +26,7 @@ The official brief asked for an interactive digital installation utilizing the b
 The selection process took ~9 months and included three phases:
 
  1. Request for qualifications (RFQ): jury select 6 artists based on portfolio
- 2. Request for Proposals (RFP): jury select 3 finalists based on preliminary artistic concept
+ 2. Request for proposals (RFP): jury select 3 finalists based on preliminary artistic concept
  3. Final concept: jury selects winner based on complete project proposal (photo montage, video simulation, detailed budget, technical details, production calendar, supplier and collaborator list)
 
 After passing all phases we were officially commissioned by the Public Art Bureau in June 2012.
@@ -37,8 +37,6 @@ From first brainstorms to final hand-over the mammoth project took impressive 28
 Our more pragmatic goal was to get it all done by November 2013, with the main intention to avoid all the snow and coldness that comes along with Montreal's winter season. Naturally we slipped right past that goal, and had our big opening midst lots of snow mid January, with temperatures ranging between -15 to -25. 
 
 **[collecting timeline dates here, but should eventually be presented in visual form]**
-
->> a visual attempt: https://www.dropbox.com/s/c4hvj17qj2zi8e4/140323_timeline.pdf
 
 - 2011 Sept: official call
 - 2011 Fall-Winter: preliminary concept, ideation
@@ -71,16 +69,7 @@ Very early in the process we started collaborating with a choreographer and toge
 
 ![Celestial mechanics](images/PLANE_CELESTIAL_MECHANICS.png "Celestial mechanics")
 
-**[IMG TODO: add physical movement to each dynamic)**
->> see https://www.dropbox.com/s/8xqfz4nhzhqcc9v/140323_PLANE_CELESTIAL_MECHANICS_EN.pdf
-
 The individual choreographies would be communicated with text instructions and should allow participants to dance within a group, yet maintain enough freedom to indulge in personal interpretations. 
-
-
-![Instructions](images/instructionsandvisuals.png "Instructions")
-
-**[IMG TODO: update scene images, update instructions)**
-
 
 ### Challenges in the Interaction design
 Once the overall structure and narrative had been decided on we moved into the iterative process of prototyping, testing and finetuning the interaction design. We went from paper drawings to full scale prototypes and had several test sessions with users of all ages. 
@@ -90,25 +79,22 @@ One of the main challenges of the project was to find a balance between providin
 Similar challenging was the task to communicate the instructions to the participants. While some actions could be phrased as one-worders - *"FREEZE!"* - others were more elaborate and cryptic - *"Walk with someone, keep the same distance between you (No hands!)"*. Creating the piece for a bilingual audience also highlighted the possible interpretive differences between English and French instructions. Having test sessions with uninitiated users was important to adjust the exact wording of instructions, and also to refine the timing of the individual scenes. (The factor that eventually ended up influencing the timing the most, was January's outside temperature).
 
 
+![Instructions](images/instructionsandvisuals.png "Instructions")
+**[IMG TODO: update scene images, update instructions)**
+
+
 ### Outlining the dance zone
 
 The projection being intangible, it was important to give the project a physical presence on the ground. Some sort of tangible intervention that would serve as interface for people to interact, and further represent the project during daylight hours. 
 
 At the beginning we imagined a series of stones and platforms arranged to form celestial pathways and encouraged hopping from stone to stone. Yet this would have introduced too many physical obstacles (tripping over, slipping) and severely limited the free movements and interactions in the space. Over the course of prototyping the importance of the physical presence shifted from being an interface to providing a delimiting perimeter around the active dance zone. After going through many design proposals (a stage, a ring, a ballet pole!) we landed on 7 foot-high concrete stones positioned in a circular formation. A single white LED on each stone enhanced their presence. Installing the underground cabling for those 7 LEDs proved a big challenge and required the $10k rental of a ground-unfreezing device. 
 
-**[3d image showing dance stage with steles?]**
->> top view plan https://www.dropbox.com/s/9rscv2saw2uqebj/140323_steles_topview.pdf
+![Dance zone](images/plane_dancezone.png "Dance zone encircled by 7 stones")
+**[image todo: correct position of steles, add projection img?]**
+
 
 ### Producing video content
-Since the project would be permanently installed, we involved locals in the making of these images, aiming to create a sense of ownership within the community that will be living next to the project for many years to come. The image and video content was created using simple analog animation techniques in a series of workshops with local kids aged 7 to 12. **[link detailed blogpost about animation workshops?]**
-
->> blogpost http://www.dailytouslesjours.com/to-community-and-beyond
-
-
-
-
-
-
+Since the project would be permanently installed, we involved locals in the making of these images, aiming to create a sense of ownership within the community that will be living next to the project for many years to come. The image and video content was created using simple analog animation techniques in a series of [workshops](http://www.dailytouslesjours.com/to-community-and-beyond) with local kids aged 7 to 12. **[possibly another blogpost link, with how-to instructions for the analog animation techniques]**
 
 
 ## Finding the Technical Solutions
@@ -116,14 +102,13 @@ Since the project would be permanently installed, we involved locals in the maki
 The technical challenges of creating a public artwork definitely multiply when the project is meant to be permanent. Suddenly you can't just hide cables under cable-trays or choose the perfect location for your camera. Your limits are set by year-round weather conditions, architectural building codes and the intended path of the snowplow. 
 
 #### Put the Projector with the animals
-The projection surface on the planetarium is 20 meter high and covered with shiny tiles. The shininess of these tiles was first worrisome, but an early projection test settled any doubts of projection quality. To cover a large area of the building surface, we required a high-lumen projector [(Barco HDX-W20)](http://www.barco.com/en/Products-Solutions/Projectors/Large-venue-projectors/20000-lumens-WUXGA-3-chip-DLP-projector-with-light-on-demand-option.aspx "Barco HDX-W20") which naturally ate almost half the budget. To save further costs - and for weather-protection and easy-access reasons - the projector was placed in the neighbouring building: the Montreal biodome. We had to build a wooden platform for the projector and cut a glass replacement window out of the slightly tinted facade of the biodome. A simple $15 heater now ensures that that window is kept clear of ice and condensation.  Additionally we negotiated with the landscape architects the trimming of any trees that were likely to grow into our projection cone over the next 3 years. 
+The projection surface on the planetarium is 20 meter high and covered with shiny tiles. The shininess of these tiles was first worrisome, but an early projection test settled any doubts of projection quality. To cover a large area of the building surface, we required a high-lumen projector ([Barco HDX-W20](http://www.barco.com/en/Products-Solutions/Projectors/Large-venue-projectors/20000-lumens-WUXGA-3-chip-DLP-projector-with-light-on-demand-option.aspx "Barco HDX-W20")) which naturally ate almost half the budget. To save further costs - and for weather-protection and easy-access reasons - the projector was placed in the neighbouring building: the Montreal biodome. We had to build a wooden platform for the projector and cut a glass replacement window out of the slightly tinted facade of the biodome. A simple $15 heater now ensures that that window is kept clear of ice and condensation.  Additionally we negotiated with the landscape architects the trimming of any trees that were likely to grow into our projection cone over the next 3 years. 
 
 Working inside the biodome turned out to be quite entertaining: my access route to our equipment led directly by the penguin compound, and work sessions were accompanied by a constant backdrop of bird chirping. 
 
-![Projector and camera positon](images/sitein3d.jpg "Projector and camera position")
+![Projector and camera positon](images/sitein3d.png "Projector and camera position")
 
-**[IMG TODO: sketchup update show steles)**
->> https://www.dropbox.com/s/x9thzw5jeftrd4g/1309-PLANE_STELES_131128-02-2_NIGHT.jpg
+**[IMG TODO: nicer rendering)**
 
 #### Camera style and placement
 In an ideal camera tracking scenario you have a controlled indoor environment that provides a clean top-down camera view and lets you create the lighting and background design of your choice. Our site at the planetarium is outdoors and therefore subject to all possible weather conditions. The foreground-background contrast can invert based on if snow covers the dark pavement or not. The general lighting conditions are poor, but the area can temporarily get lit up by the flashlights of driving-by cars. 
@@ -290,7 +275,7 @@ The blob location data received from the tracking software is based on the angle
 
 ![perspectiveTransform](images/perspective_transform.jpg "perspectiveTransform")
 
-**[IMG TODO: redraw?)**
+**[IMG TODO: redraw, add blob-ids)**
 
 ### Implementing video content
 All our visual raw material exists in the form of videos (and some images). Besides written instructions that are drawn, everything on the projection is direct video display without any effects. 
@@ -445,19 +430,14 @@ Once an installation has been open to the public for a few days, it hopefully ha
 
 ## Results and Reception
 
-![Exahle](images/exhaleatplane.jpg "Exhale")
-
-![On site](images/hopatplane.jpg "Project in action")
-
-![Exahle](images/camview_onsteles.jpg "Exhale")
-
 **[TODO]**
 
-Surveillance, statistics, nuit blanche, ...
+After a few weeks/months of running the reception of the project is very good. The installation seems successful in addressing several kinds of audiences: kids, teens and parents engage in different ways. Some people also just stop and watch others performing.
 
 The delicate LEDs also caused the most confusion, as participants mistook them to be the secret sensors triggering the interaction.
 
-After a few weeks/months of running the reception of the project is very good. The installation seems successful in addressing several kinds of audiences: kids, teens and parents engage in different ways. Some people also just stop and watch others performing.
+![On steles](images/camview_onsteles.jpg "On steles")
+
 
 We are gathering data to get objective analysis of the usage and behaviors.
 **[insert stats]**
@@ -465,3 +445,8 @@ We are gathering data to get objective analysis of the usage and behaviors.
 Curious to see how people (staff, visitors and passersby) will live with the piece over time.
 
 Even though snow gives the site a beautiful lunar feeling, we look forward to monitoring the usage over summer.
+
+
+![Exahle](images/exhaleatplane.jpg "Exhale")
+
+![On site](images/hopatplane.jpg "Project in action")
