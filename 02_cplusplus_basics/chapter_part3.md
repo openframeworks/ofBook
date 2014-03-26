@@ -1,4 +1,4 @@
-#Chapter 2.5, C++ Language Basics, Part II
+#C++ Language Basics, Continued
 
 *by [jtnimoy](http://jtnimoy.net)*
 
