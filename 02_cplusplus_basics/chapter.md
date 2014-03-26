@@ -1,4 +1,4 @@
-# Chapter 2. C++ Language Basics #
+#C++ Language Basics#
 
 *by [jtnimoy](http://jtnimoy.net)*
 
