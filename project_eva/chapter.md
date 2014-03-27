@@ -206,7 +206,7 @@ The addons used for the application:
  - **ofxOsc** ... for communication between computers
  - **ofxOpenCv** ... only for running a perspective transformation
  - **ofxGui** ... to build a GUI
- - 
+
 ### Sequential structure
 The transition from one scene and segment to the next is either time-dependent (elapsed time comparison with `ofGetUnixTime()`) or based on the participants successful execution of instructions (did they all freeze?). Yet even if no interaction goal is achieved, a set maximum timer will still cause the transition to the next scene. 
 
