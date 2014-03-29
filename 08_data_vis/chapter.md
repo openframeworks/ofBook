@@ -29,21 +29,13 @@ As Fry (2008) outlines, the mining stage of visualising data involves applying s
 
 *Represent: Choose a basic visual model, such as a bar graph, list, or tree.
 
-XXXXXXXX
-
 *Refine: Improve the basic representation to make it clearer and more visually engaging.
-XXXXXXXX
 
 *Interact: Add methods for manipulating the data or controlling what features are visible.
 
-XXXXXXXX
-
-
-
-
 ##2. Working with data 
 
-##2.1 Common data file structures: tsv, csv, xml, json 
+###2.1 Common data file structures: tsv, csv, xml, json 
 Data is available and stored in specific file types that have particular structures and syntax. The following file types are some of the most common forms of structuring data.
 
 
@@ -61,7 +53,7 @@ Reading an XML file in OF requires the use of an OF addon called ofXmlSettings.
 *JSON: JSON stands for ‘javascript object notation’. This is a human readable file that is built on two structures, a collection of name/value pairs which can be realised in OF as a struct and an ordered list of values, realised as a vector. Json files also are parsed using an OF addon called ofxJSON, see example 2.XX for how to implement this. 
 
 
-##2.2 Example - Visualising Time Series Plot
+###2.2 Example - Visualising Time Series Plot
 
 **Step 1 Acquire:** This section works through an example of a data visualisation of US population data downloaded from the United States Census service here: http://www.nber.org/data/census-decennial-population.html
 
@@ -211,7 +203,7 @@ Load this file into your OF program using the ofBuffer class.
 ofBuffer will read the data into a buffer which is a temporary storage for our data as we write code to restructure and process it.
 ofBuffer is what is known as a convenience class, and provides easy methods for reading from and writing to files. A convenience class simply means that this is a class that doesn’t do anything by itself but wraps or allows access to the functionality of a group of other classes.
 
-### 2.2.2 Buffer Functions
+#### 2.2.2 Buffer Functions
 ofBufferFromFile();  is a function that allows you to load your data file.
 ```cpp	
 ofBuffer file = ofBufferFromFile(“population.tsv");
