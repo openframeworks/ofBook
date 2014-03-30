@@ -19,6 +19,8 @@ Some people right about now may be letting off long desperate sighs, thinking - 
 
 Obj-C syntax can look a little daunting when you first look at it. It certainly scared the hell out of me the first time I saw it. And you may notice its unusually very long which is due to it's very explicit nature, meaning that all function names are very descriptive of the functionality they perform and all those words add up. You may think that it would take longer to work with an explicit language but its actually the opposite, because the functions are easier to find and in XCode you can usually start typing the function you are looking for and XCode will give you a list of suggestions and complete the function name for you.
 
+###Obj-C Class structure
+
 Like in C++, in Obj-C your code is broken down into two files, the header file and the implementation file. The header file still has the same .h extension but a implementation file has a .m extension. Here is a very basic example of how these two files look like.
 
 I created a class called MyClass which extends a UIView class.
@@ -43,10 +45,14 @@ The implementation (.m) file is where you add your actual code for the methods d
 @end
 ```
 
+###Make new Obj-C Class in XCode
+
 Nice thing about XCode is that it makes programming easier by creating the basic structure of a class when you first create it, so you don't have to type out the above code structure everytime. By going to File menu, selecting New and then File... a dialogue will appear showing all the files that XCode can create for you. Select `Objective-C class` and another dialogue will appear where you can name your new Class and specify which Subclass it will extend. MyClass will then be automatically generated, ready for you to enter your code into.
 
 ![Figure 1: OF on iPhone.](images/ofxiOS_objc_0_sml.jpg "Figure 1: OF on iPhone.")
 ![Figure 1: OF on iPhone.](images/ofxiOS_objc_1_sml.jpg "Figure 1: OF on iPhone.")
+
+###Variables and Methods
 
 So now that we have the bare bones of our class, lets add some methods and variables to it so it actually does something. Lets start simple and say that MyClass contains two string variables, one for my first name and one for my last name. We will also want to create some methods for setting and retrieving these variables from the class.
 
@@ -75,7 +81,7 @@ Lets look at how methods are structured in Obj-C and take `setFirstName` as an e
 - (void)setFirstName:(NSString *)nameStr;
 ```
 
-The very first thing that comes before every Obj-C method is a dash `-` or a plus `+`. A dash means that the method is a instance method and a plus means that the method is a class method. Moving across in the brackets we have the return type of the method. In this instance method we are setting the first name and not returning any value, so therefor the return type is `void`. Next is the name of the method `setFirstName` and then separated by a colon `:` are the variables that we pass into the method. In this example we are passing in a `nameStr` variable and we have to specify the type of that variable which is `NSString`.
+The very first thing that comes before every Obj-C method is a dash `-` or a plus `+`. A dash means that the method is a instance method and a plus means that the method is a class method. Next in line we have the return type of the method. In this instance method we are setting the first name and not returning any value, so therefor the return type is `void`. Next is the name of the method `setFirstName` and then separated by a colon `:` are the variables that we pass into the method. In this example we are passing in a `nameStr` variable and we have to specify the type of that variable which is `NSString`.
 
 Now that we have defined our variables and methods in the class interface, lets look at the implementation file where our functional code will live.
 
@@ -105,7 +111,9 @@ Now that we have defined our variables and methods in the class interface, lets 
 @end
 ```
 
-In terms of structure, the methods look almost exactly the same as the in the class interface, only now each method has curly braces on the end `{` and `}` which symbolise the begining and end of the method code. The two getter methods (`getFirstName` and `getLastName`) are pretty straight forward and simply return a pointer to a `NSString` variable. The setter methods (`setFirstName` and `setLastName`) contain code which is more specific to Obj-C and here is where we first touch up the topic of memory managemen in Obj-C. 
+In terms of structure, the methods look almost exactly the same as the in the class interface, only now each method has curly braces on the end `{` and `}` which symbolise the begining and end of the method code. The two getter methods (`getFirstName` and `getLastName`) are pretty straight forward and simply return a pointer to a `NSString` variable. The setter methods (`setFirstName` and `setLastName`) contain code which is more specific to Obj-C and here is where we first touch upon the topic of memory managemen in Obj-C. 
+
+###Memory Management
 
 Lets look at what is going on inside the `setFirstName` method.
 
@@ -114,14 +122,14 @@ Lets look at what is going on inside the `setFirstName` method.
 firstName = [nameStr retain];
 ```
 
-All that the above is doing is assigning a new string value to `firstName` but it's also making sure the previous value is released before a new one is retained to prevent memory leaks. Calling `autorelease` on a object is telling the object to `release` at some stage in the not too distant future when it is no longer being used, usually at the end of the method when it is no longer needed. We then need to `retain` the new string which you can think of as binding it to the `NSString * firstName` pointer reference. Retaining and releasing objects is at the core of the Obj-C memory management and is know as reference counting.
+All that the above is doing is assigning a new string value to `firstName` but it's also making sure the previous value is released before a new one is retained to prevent memory leaks. Calling `autorelease` on a object is telling the object to `release` at some stage in the not too distant future when it is no longer being used, usually at the end of the method when it is no longer needed. We then need to `retain` the new string which you can think of as binding it to the `NSString * firstName` pointer reference. Retaining and releasing objects is at the core of the Obj-C memory management system and is know as reference counting.
 
 The basic theory behind reference counting is that when ever an object is retained, the reference count goes up by +1 and everytime it is released, the reference count is goes down by -1. When the reference count is back down to zero, the object is released from memory.
 
 ![Figure 1: OF on iPhone.](images/ofxiOS_objc_2.png "Figure 2: ofxiOS XCode.")
 NEED TO RECREATE THIS DIAGRAM.
 
-There are a couple way of creating an Obj-C object and we'll use the NSString class to demonstrate. Below is a code sample of how a `NSString` object is created using the `alloc` method. Calling `alloc` on a `NSString` class returns a new `NSString` object. A very important thing to note here is that when an object is created using `alloc`, it's reference count is at +1. So behind the scenes, Obj-C has created a new string object and has already called `retain` on the object for us. The final line in the code example is initialising the string object with some text which says `I'm a string`.
+There are a couple way of creating an Obj-C object and we'll use the NSString class to demonstrate. Below is a code sample of how a `NSString` object is created using the `alloc` method. Calling `alloc` on a `NSString` class returns a new `NSString` object. A very important thing to note here is that when an object is created using `alloc`, it's reference count is at +1. So behind the scenes, Obj-C has created a new string object and has already called `retain` on the object for us. The final line in the code example is initialising the string object with some text which says `"I'm a string"`.
 
 ```
 firstName = [NSString alloc];
@@ -137,6 +145,8 @@ firstName = [NSString stringWithString:@"I'm a string"];
 ```
 
 The general rule when it comes to Obj-C memory management is if you create an object using the `alloc` method or call `retain` on a object, you have taken responsibility for that object and sometime in the the future you will have to `release` it.
+
+###Ins and Outs
 
 With everything that was just discussed, lets take another look at MyClass which will now include the `init` and `dealloc` methods, the entry and exit points of all Obj-C objects.
 
@@ -183,7 +193,76 @@ With everything that was just discussed, lets take another look at MyClass which
 
 Both the `init` and `dealloc` methods are already defined in every Obj-C object so we are then extending these methods and overriding their behaviour. The `init` method is the first method to be called on every Obj-C object which makes it the ideal place to intialise your variables. The `init` method always returns a reference of itself with type `id`, which in C++ is equivalent to returning `void *`. Because we are extending the `init` method, we need to make sure we call it's super method first, otherwise the object will not initialise correctly. We then make sure that `[super init]` is called successfully without any issues before initialising variables `firstName` and `lastName`. The last thing an `init` method needs to do is return a reference to itself.
 
-The `dealloc` method is called when an object is released from memory, which makes it the place to release any other memory the object is holding onto. `firstName` and `lastName` objects are released and the last order of business is calling the `[super dealloc]` method, before the object is completely removed from memory.
+The `dealloc` method is called when an object is about to be released from memory, which makes it the perfect place to release any other memory the object is holding onto. `firstName` and `lastName` objects are released and the last order of business is calling the `[super dealloc]` method, before the object is completely removed from memory.
+
+###Properties
+
+Nice thing about Obj-C is that it really makes programming a lot faster by providing syntax shortcuts where possible. In `MyClass` we had to create getter and setter methods for passing in the `firstName` and `lastName` into the object. In Obj-C there is actually a much faster way of declaring getters and setters with the use of properties. Properties are a syntax feature that allow to automatically declare getter and setter accessors. Here is how the `@property` syntax looks like in the header file,
+
+```
+@interface MyClass : NSObject {
+    NSString * firstName;
+    NSString * lastName;
+}
+
+@property (retain) NSString * firstName;
+@property (retain) NSString * lastName;
+
+@end
+```
+
+You can see that we've ditched the old getter and setter methods and have now replaced it with the `@property` syntax. After the `@property` tag we can also declare some extra setter behaviour, where we have `retain` in brackets. This means that every time we use the `firstName` property to set a new value, it will automatically `retain` the new `NSString` which is super handy and means we're writing less code to get the same result.
+
+Next lets jump into the implementation file,
+
+```
+#import "MyClass.h"
+
+@implementation MyClass
+
+@synthesize firstName;
+@synthesize lastName;
+
+- (id)init {
+    self = [super init];
+    if(self != nil) {
+        self.firstName = [[[NSString alloc] initWithString:@"Lukasz"] autorelease];
+        self.lastName = [[[NSString alloc] initWithString:@"Karluk"] autorelease];
+    }
+    return self;
+}
+
+- (void)dealloc {
+    self.firstName = nil;
+    self.lastName = nil;
+    [super dealloc];
+}
+
+@end
+```
+
+The first thing we need to do inside the implementation file is `@synthesize` the `@property` that we declared in the header file. `@synthesize` tells the Obj-C compiler to generate the getter and setters methods defined through the `@property` directive in the header.
+
+Now we can access the `firstName` and `lastName` string objects via the getter and setter methods created by the `@property` directive. These methods are generated internally and we don't actually see them but everytime we write `self.firstName` or `self.lastName`, we are accessing the getter and setter methods.
+
+In the `init` method, one thing that has changed is that an `autorelease` method is being called on the `NSString` object as soon as it is created. This might initially look incorrect as it appears that we are creating an object, retaining it and then releasing it which will bring the reference count back down to zero and means the object will be released from memory. But we have to realise that we are using the setter method created by the `@property` directive which automatically retains the object. This means the final reference count will be +1.
+
+In the `dealloc` method you will notice that `firstName` and `lastName` are not actually being released but are set to `nil` via the `@property` setter. Behind the scenes, when the setter receives a `nil` value it first checks if the object is valid and if so it automatically calls `release` on the object and invalidates the object by setting it to nil. If we were to write out this logic it would look like this,
+
+```
+if(firstName != nil) {
+    [firstName release];
+    firstName = nil;
+}
+```
+
+Properties definitely take a little while to get used to but when mastered are very powerful tool to faster and flexible coding.
+
+###Delegates
+
+###Automatic Reference Counting (ARC)
+
+###Mixing Obj-C and C++
 
 - what does objective-C look like?
 - differences between C++ and Obj-C (string, arrays)
