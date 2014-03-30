@@ -111,6 +111,8 @@ iOS dispatches orientation events when ever the device orientation changes. Orie
 - addons for ofxiOS
 - dispatching on main queue from OF to UIKIT using blocks.
 
+http://www.creativeapplications.net/iphone/integrating-native-uikit-to-your-existing-openframeworks-ios-project/
+
 
 ##Media Playback and Capture
 
@@ -190,3 +192,23 @@ avVideoPlayer = (AVFoundationVideoPlayer *)video.getAVFoundationVideoPlayer();
 - App distribution, preparing your OF app for the app store.
 - examples of OF iOS apps already in the app store.
 
+
+##Case Studies
+
+https://itunes.apple.com/au/app/john-lennon-the-bermuda-tapes/id731652276?mt=8
+
+https://itunes.apple.com/au/app/sadly-by-your-side/id687252928?mt=8
+
+https://itunes.apple.com/us/app/swipin-safari/id635434195?mt=8
+
+https://itunes.apple.com/au/app/tunetrace/id638180873?mt=8
+
+https://itunes.apple.com/au/app/hana/id556557031?mt=8
+
+https://itunes.apple.com/gb/app/starry-night-interactive-animation/id511943282
+
+https://itunes.apple.com/au/app/snake-the-planet!/id528414021?mt=8
+
+https://itunes.apple.com/au/app/horizons/id391748891?mt=8
+
+https://itunes.apple.com/us/app/spelltower/id476500832?mt=8
