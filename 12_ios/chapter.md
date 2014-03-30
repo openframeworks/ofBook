@@ -272,7 +272,14 @@ When ARC is turned on, it is possible to specify which Obj-C class should use AR
 
 ![Figure 1: OF on iPhone.](images/ofxiOS_ARC_1.png "Figure 2: ofxiOS XCode.")
 
-###Mixing Obj-C and C++
+###Mixing Obj-C and C++ (Objective-C++)
+
+Since both the Obj-C and C++ languages are a subset of the C language, it is possible to mix the two together. First of all before you start typing C++ code into your Obj-C classes or vise versa you need to rename your implementation file extension from `(*.m)` => `(*.mm)`. This lets the XCode compiler know that the file is a combination of Obj-C and C++.
+
+`ofApp.mm` by default is already to setup this way so you can start using Obj-C code inside your app. One example of this might be that you would like to use UIKit to add some kind of user interface over the top of your ofApp. There are many very useful possibilities of mixing Obj-C with C++ and we'll go into more detail later in this chapter. 
+
+
+###TODO
 
 - what does objective-C look like?
 - differences between C++ and Obj-C (string, arrays)
