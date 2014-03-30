@@ -162,14 +162,14 @@ Here are the folder names of all the folders in my greenpeaceArcticGlastonbury20
 ### Development Hardware and Software setup
 
 MacBook Pro
-15-inch, Mid 2009
-Processor  3.06 GHz Intel Core 2 Duo
-Memory  4 GB 1067 MHz DDR3
-Graphics  NVIDIA GeForce 9600M GT 512 MB
+* 15-inch, Mid 2009
+* Processor: 3.06 GHz Intel Core 2 Duo
+* Memory: 4 GB 1067 MHz DDR3
+* Graphics: NVIDIA GeForce 9600M GT 512 MB
 
-XCode for Development
-Chrome for Web Browsing
-Sublime Text for logging
+* XCode for Development
+* Chrome for Web Browsing
+* Sublime Text for logging
 
 ### Edited development notes
 
@@ -1236,25 +1236,76 @@ After dealing with Quicktime perfomance issues (see below), the main challenge w
 
 #### ofxGui, running the Latest branch from Github, multiple input methods and GUI addons
 
-I knew that I wanted to augment ofxTimelines interface with controls for the setup of the Kinect and other custom requirements for the project. Watching the GitHub development branch revealed the release of an official core GUI addon - something I wanted to experiment with, which meant that I had to switch from an official static release of OF to the live development branch via Github.
-
-**[Wanting to get access to the latest features mid development, github, ending up with multiple guis]**
+I knew that I wanted to augment ofxTimelines interface with controls for the setup of the Kinect and other custom requirements for the project. Watching the GitHub development branch revealed the release of an official core GUI addon - something I wanted to experiment with, which meant that I had to switch from an official static release of OF to the live development branch via Github. The project ended up with multiple interfaces - two graphical ones (ofxTimeline and ofxKinect control mainly) and a keyboard based one (consisting mainly of single boolean switches together with playback and editing shortcuts). With further development, a unified GUI would be desirable, but development pressures meant it wasn't a priority.
 
 #### ofxOpticalFlowFarneback, making a polar bear
 
-**[Serendipity of seeing the addon come up, looking at different versions, fitting perfectly with the film, transforming to different forms of polar bear and coloured aurora]**
+During development and testing, I realised a furry look could serve well for making people feel like they were polar bears. I had seen "spikey" outline looks before - all achieved by drawing normals along the circumference of a blob. I'd also experimented with optical flow in previous projects and started thinking about how the two could be combined - I looked for optical flow addons on [ofxaddons.com](http://ofxaddons.com) and discovered a flurry of recent activity since I'd last checked. Development tends to flow like this - periods of fallow followed by simulataneous parallel development from several quarters.   
+
+* [ofxCvOpticalFlowLK by James George](https://github.com/Flightphase/ofxCvOpticalFlowLK) 
+* [ofxOpticalFlowFarneback by Tim Scaffidi](https://github.com/timscaffidi/ofxOpticalFlowFarneback)
+* [ofxOpticalFlowLK by Lukasz Karluk](https://github.com/julapy/ofxOpticalFlowLK)
+
+Tim Scaffidi's version immediately stood out to Pete, so I developed two simple colourings for Aurora and Polar Bear modes, merely tweaking Tim's excellent demo code.
 
 ### Naming
 
-**[No bad characters?]**
+Mid development, I found that saving the XML wasn't functioning as expected, it turned out to be the fault of non alpha numberic characters in scene names - I find it's always good to avoid punctuation and spaces altogether and use [CamelCase](http://en.wikipedia.org/wiki/CamelCase).
 
 ### Video Performance, using the HighPerformanceExample
 
-**[Wanting to get access to the latest features mid development, github, ending up with multiple guis]**
+Right from the beginning of the project, it was obvious that video decoding would be significant portion of processing time per frame. Others in the openFrameworks community had been investigating performance in recent years, with James George contributing an [OSX only High Performance video example](https://github.com/openframeworks/openFrameworks/commit/4e02db8d82c520bef6c09d58b37076a84fe37571). This used native Quicktime playback features, enabling far higher peformance on compatible hardware. While this undoubtlby enabled the film playback to function smoothly, it did make the code less platform independent - one of the inevitable compromises that happens during development.
 
 ### Counting the items in an Enum
 
-**[c++ searching strategy, link to article]**
+I knew that I would have to switch between different visual looks as the film was played back by the program. C++ provides the ENUM keyword to allow the coder to define a data set of named elements, but I needed a way to count the number of modes programmatically. [Stack Overflow](http://stackoverflow.com/questions/2102582/how-can-i-count-the-items-in-an-enum) provided the solution.
+
+```cpp
+enum GreenpeaceModes {BLANK, GUI, VIDEO, VIDEOCIRCLES, KINECTPOINTCLOUD, SLITSCANBASIC, SLITSCANKINECTDEPTHGREY, SPARKLE, VERTICALMIRROR, HORIZONTALMIRROR, KALEIDOSCOPE, COLOURFUR, DEPTH, SHATTER, SELFSLITSCAN, SPIKYBLOBSLITSCAN, MIRRORKALEIDOSCOPE, PARTICLES, WHITEFUR, PAINT, GreenpeaceModes_MAX = PAINT}; //best to use ALL CAPS for enumerated types and constants so you can tell them from ClassNames and variableNames. Use camelCase for variableNames - http://en.wikipedia.org/wiki/CamelCase
+ 
+/* http://stackoverflow.com/questions/2102582/how-can-i-count-the-items-in-an-enum
+ For C++, there are various type-safe enum techniques available, and some of those (such as the proposed-but-never-submitted Boost.Enum) include support for getting the size of a enum.
+ 
+ The simplest approach, which works in C as well as C++, is to adopt a convention of declaring a ...MAX value for each of your enum types:
+ 
+ enum Folders { FA, FB, FC, Folders_MAX = FC };
+ ContainerClass *m_containers[Folders_MAX + 1];
+ ....
+ m_containers[FA] = ...; // etc.
+ Edit: Regarding { FA, FB, FC, Folders_MAX = FC} versus {FA, FB, FC, Folders_MAX]: I prefer setting the ...MAX value to the last legal value of the enum for a few reasons:
+ 
+ The constant's name is technically more accurate (since Folders_MAX gives the maximum possible enum value).
+ Personally, I feel like Folders_MAX = FC stands out from other entries out a bit more (making it a bit harder to accidentally add enum values without updating the max value, a problem Martin York referenced).
+ GCC includes helpful warnings like "enumeration value not included in switch" for code such as the following. Letting Folders_MAX == FC + 1 breaks those warnings, since you end up with a bunch of ...MAX enumeration values that should never be included in switch.
+ switch (folder)
+ {
+ case FA: ...;
+ case FB: ...;
+ // Oops, forgot FC!
+ }
+*/
+```
+I used the Stack Overflow tip in the `void testApp::keyPressed (int key)` method. 
+
+```cpp
+case 'a': //used to be key left, but it interferes with ofxtimeline
+{
+    currentMode = (GreenpeaceModes)((int)currentMode - 1);
+    if(currentMode < 0){
+        currentMode = GreenpeaceModes_MAX;//see .h file for stackoverflow justification
+    }
+    break;
+}
+case 's': //used to be key right, but it interferes with ofxtimeline
+{
+    currentMode = (GreenpeaceModes)((int)currentMode + 1);
+    if(currentMode > GreenpeaceModes_MAX){
+        currentMode = (GreenpeaceModes)0;//see .h file for stackoverflow justification
+    }
+}
+```
+
+While I could have gone down the [polymorphic](http://en.wikipedia.org/wiki/Polymorphism_(computer_science)) custom class route, I felt that the ENUM apporach provided good performance (through compiler optimisation of common C++ coding paradigms), speed of development (lower file overhead) and clarity of code.
 
 ### Sequencing
 
@@ -1267,6 +1318,8 @@ Kieran and Pete completed the main sequencing onsite.
 ![The Installation in Action, 27th June 2013](images/2013_06_27_HandsInTheAir.jpg "The Installation in Action, 27th June 2013")
 
 ### Code structure, main loop
+
+The structure of setup(), update() and draw() methods is common to openFrameworks code - with the addition of two large switch statements for switching between modes at runtime.
 
 ```cpp
 //--------------------------------------------------------------
@@ -1381,6 +1434,7 @@ void testApp::update() {
     switch(currentMode){
 ```
 see below for mode by mode update details
+
 ```cpp
         default:
             break;
@@ -1435,6 +1489,8 @@ edited for sanity.
 
 #### BLANK
 
+Blank mode simply displayed a blank screen. A useful default for measuring idle performance.
+
 Mode update:
 
 ```cpp
@@ -1450,6 +1506,8 @@ Mode draw:
 ```
 
 #### GUI
+
+GUI displayed several program variables and image previews of various stages of Kinect image and blob outline processing.
 
 Mode update:
 
@@ -1555,6 +1613,8 @@ Mode draw:
 ```
 #### VIDEO
 
+Video mode displayed the current frame of the unprocessed video file.
+
 Mode update:
 
 ```cpp
@@ -1572,6 +1632,8 @@ Mode draw:
             break;
 ```
 #### VIDEOCIRCLES
+
+VideoCircles was a direct cut and paste from the `examples/video/osxHighPerformanceVideoPlayerExample`. This code was useful during initial development to discover the performance hit for individual pixel array access. Alot of my early development during projects is based around finding what the limits of various prospective coding funtionality is - getting to a happy mix of performance and functionality.
 
 Mode update:
 
@@ -1617,6 +1679,8 @@ Mode draw:
 ```
 #### KINECTPOINTCLOUD
 
+Another cut and paste from addon example code, this time from the now core `ofxKinect`.
+
 Mode update:
 
 ```cpp
@@ -1635,6 +1699,8 @@ Mode draw:
             break;
 ```
 #### SLITSCANBASIC
+
+The most basic of the slitscan modes on this project - a direct port of example functionality in ofxSlitscan - but with the possibility of changing the slitscan PNG source file on the ofxTimeline GUI.
 
 Mode update:
 
@@ -1671,6 +1737,8 @@ Mode draw:
 ```
 #### SLITSCANKINECTDEPTHGREY
 
+The most basic of novel slitscan modes developed for this project - feeding the Kinect depth image into ofxSlitscan on a per frame basis - once I realised this would still result in interactive frame rates I knew the project would succeed.
+
 Mode update:
 
 ```cpp
@@ -1701,6 +1769,8 @@ Mode draw:
 
 ```
 #### SPARKLE
+
+An experiment with using previously developed Somantics functionality into ofxTimeline.
 
 Mode update:
 
@@ -1739,6 +1809,8 @@ Mode draw:
             break;
 ```
 #### VERTICALMIRROR
+
+A vertical mirror on the video playback - again ported directly from Somantics.
 
 Mode update:
 
@@ -1804,6 +1876,8 @@ Mode draw:
 ```
 #### HORIZONTALMIRROR
 
+A horizontal mirror on the video playback - again ported directly from Somantics.
+
 Mode update:
 
 ```cpp
@@ -1866,6 +1940,8 @@ Mode draw:
             break;
 ```
 #### KALEIDOSCOPE
+
+A Kaleidsocope mirror on the video playback - again ported directly from Somantics, using [Marek Bereza's](http://mazbox.com/) logic.
 
 Mode update:
 
@@ -1978,6 +2054,8 @@ Mode draw:
 ```
 #### COLOURFUR
 
+A direct port of [Tim Scaffidi's ofxOpticalFlowFarneback](https://github.com/timscaffidi/ofxOpticalFlowFarneback) demo code.
+
 Mode update:
 
 ```cpp
@@ -2003,6 +2081,8 @@ Mode draw:
 ```
 #### DEPTH
 
+A simple mode to display the depth image directly - useful for debugging when onsite.
+
 Mode update:
 
 ```cpp
@@ -2021,6 +2101,8 @@ Mode draw:
             break;
 ```
 #### SHATTER
+
+A direct port of [Todd Vanderlin's](http://vanderlin.cc/projects/feedback/) code that he wrote for the Feedback project, but using it as live delay map input to the Slitscan.
 
 Mode update:
 
@@ -2062,6 +2144,8 @@ Mode draw:
 ```
 #### SELFSLITSCAN
 
+Feeding the greyscale image of the current film frame back into the SlitScan delay map made for some interesting feedback effects.
+
 Mode update:
 
 ```cpp
@@ -2092,6 +2176,8 @@ Mode draw:
             break;
 ```
 #### SPIKYBLOBSLITSCAN
+
+Feeding the Spikied blob outline back into the SlitScan delay map.
 
 Mode update:
 
@@ -2130,6 +2216,8 @@ Mode draw:
             break;
 ```
 #### MIRRORKALEIDOSCOPE
+
+Combining Mirror and Kaleidsocope modes.
 
 Mode update:
 
@@ -2269,6 +2357,8 @@ Mode draw:
 ```
 #### PARTICLES
 
+Using Somantics particle functionality as a SlitScan delay map.
+
 Mode update:
 
 ```cpp
@@ -2307,6 +2397,8 @@ Mode draw:
 ```
 #### WHITEFUR
 
+Turning the ofxOpticalFlowFarneback demo code, but making the graphical output monochrome.
+
 Mode update:
 
 ```cpp
@@ -2330,6 +2422,8 @@ Mode draw:
             break;
 ```
 #### PAINT
+
+Porting the Paint mode from Somantics as a delay map.
 
 Mode update:
 
