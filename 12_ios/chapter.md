@@ -19,10 +19,105 @@ Some people right about now may be letting off long desperate sighs, thinking - 
 
 Obj-C syntax can look a little daunting when you first look at it. It certainly scared the hell out of me the first time I saw it. And you may notice its unusually very long which is due to it's very explicit nature, meaning that all function names are very descriptive of the functionality they perform and all those words add up. You may think that it would take longer to work with an explicit language but its actually the opposite, because the functions are easier to find and in XCode you can usually start typing the function you are looking for and XCode will give you a list of suggestions and complete the function name for you.
 
-Like in C++, in Obj-C your code is broken down into two files, the header file and the implementation file. The header file still has the same .h extension but a implementation file has a .m extension. Here is a very basic example of how these two files look like,
+Like in C++, in Obj-C your code is broken down into two files, the header file and the implementation file. The header file still has the same .h extension but a implementation file has a .m extension. Here is a very basic example of how these two files look like.
+
+I created a class called MyClass which extends a UIView class.
+
+In the header (.h) file below we need to define our class interface and we do this between the `@interface` and `@end` tags. The class interface defines instance variables and public methods, but for now we're going to leave it empty.
+
+```
+@interface MyClass : NSObject {
+    //
+}
+
+@end
+```
+
+The implementation (.m) file is where you add your actual code for the methods defined in the header file. The first thing you need to do is import your `MyClass.h` header file which defines the structure and then write your implementation between the `@implementation` and `@end` tags.
+
+```
+#import "MyClass.h"
+
+@implementation MyClass
+
+@end
+```
+
+Nice thing about XCode is that it makes programming easier by creating the basic structure of a class when you first create it, so you don't have to type out the above code structure everytime. By going to File menu, selecting New and then File... a dialogue will appear showing all the files that XCode can create for you. Select `Objective-C class` and another dialogue will appear where you can name your new Class and specify which Subclass it will extend. MyClass will then be automatically generated, ready for you to enter your code into.
+
+![Figure 1: OF on iPhone.](images/ofxiOS_objc_0_sml.jpg "Figure 1: OF on iPhone.")
+![Figure 1: OF on iPhone.](images/ofxiOS_objc_1_sml.jpg "Figure 1: OF on iPhone.")
+
+So now that we have the bare bones of our class, lets add some methods and variables to it so it actually does something. Lets start simple and say that MyClass contains two string variables, one for my first name and one for my last name. We will also want to create some methods for setting and retrieving these variables from the class.
+
+MyClass header (.h) file now looks like this,
+
+```
+@interface MyClass : NSObject {
+    NSString * firstName;
+    NSString * lastName;
+}
+
+- (void)setFirstName:(NSString *)nameStr;
+- (void)setLastName:(NSString *)nameStr;
+
+- (NSString *)getFirstName;
+- (NSString *)getLastName;
+
+@end
+```
+
+Inside MyClass interface, you can now see two `NSString` variables being defined, `firstName` and `lastName`. `NSString` is the Obj-C equivalent of `string` in C++. The `*` means that `firstName` and `lastName` are pointers to `NSString` objects. In Obj-C, all instance variables are private by default, which means you can not access them directly from outside of the class object, so you need to create accessor methods to set and get these values.
+
+Lets look at how methods are structured in Obj-C and take `setFirstName` as an example,
+
+```
+- (void)setFirstName:(NSString *)nameStr;
+```
+
+The very first thing that comes before every Obj-C method is a dash `-` or a plus `+`. A dash means that the method is a instance method and a plus means that the method is a class method. Moving across in the brackets we have the return type of the method. In this instance method we are setting the first name and not returning any value, so therefor the return type is `void`. Next is the name of the method `setFirstName` and then separated by a colon `:` are the variables that we pass into the method. In this example we are passing in a `nameStr` variable and we have to specify the type of that variable which is `NSString`.
+
+Now that we have defined our variables and methods in the class interface, lets look at the implementation file where our functional code will live.
+
+```
+#import "MyClass.h"
+
+@implementation MyClass
+
+- (void)setFirstName:(NSString *)nameStr {
+    [firstName autorelease];
+    firstName = [nameStr retain];
+}
+
+- (void)setLastName:(NSString *)nameStr {
+    [lastName autorelease];
+    lastName = [nameStr retain];
+}
+
+- (NSString *)getFirstName {
+    return firstName;
+}
+
+- (NSString *)getLastName {
+    return lastName;
+}
+
+@end
+```
+
+In terms of structure, the methods look almost exactly the same as the in the class interface, only now each method has curly braces on the end `{` and `}` which symbolise the begining and end of the method code. The two getter methods (`getFirstName` and `getLastName`) are pretty straight forward and simply return a pointer to the `NSString` variables. The setter methods (`setFirstName` and `setLastName`) contain code which is more specific to Obj-C and here is where we first touch up the topic of memory managemen in Obj-C. 
+
+Lets look at what is going on inside the `setFirstName` method.
+
+```
+[firstName autorelease];
+firstName = [nameStr retain];
+```
+
+
 
 - what does objective-C look like?
-- differences between C++ and Obj-C
+- differences between C++ and Obj-C (string, arrays)
 - brief overview of Obj-C memory management compared to C++ (retain/release and ARC)
 - How C++ and Obj-C can be mixed together. Mention .mm files.
 
