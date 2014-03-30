@@ -11,7 +11,7 @@ Support for the iPhone in OpenFrameworks started when the very early iPhones (iP
 Since then Apple have released a number of other devices like the iPad and so the ofxiPhone title became less accurate and was eventually changed to ofxiOS, OpenFrameworks support for all iOS devices.
 
 
-##Objective-C
+##Intro to Objective-C
 
 We've briefly mentioned Objective-C or Obj-C for short and some people may know or may not know what it is. Obj-C is the main programming language used by Apple for OSX and iOS systems. Obj-C is also a superset of the C programming language which makes it possible to compile C and C++ code with an Obj-C compiler, which means its possible to mix OF C++ code with native Obj-C code.
 
@@ -105,7 +105,7 @@ Now that we have defined our variables and methods in the class interface, lets 
 @end
 ```
 
-In terms of structure, the methods look almost exactly the same as the in the class interface, only now each method has curly braces on the end `{` and `}` which symbolise the begining and end of the method code. The two getter methods (`getFirstName` and `getLastName`) are pretty straight forward and simply return a pointer to the `NSString` variables. The setter methods (`setFirstName` and `setLastName`) contain code which is more specific to Obj-C and here is where we first touch up the topic of memory managemen in Obj-C. 
+In terms of structure, the methods look almost exactly the same as the in the class interface, only now each method has curly braces on the end `{` and `}` which symbolise the begining and end of the method code. The two getter methods (`getFirstName` and `getLastName`) are pretty straight forward and simply return a pointer to a `NSString` variable. The setter methods (`setFirstName` and `setLastName`) contain code which is more specific to Obj-C and here is where we first touch up the topic of memory managemen in Obj-C. 
 
 Lets look at what is going on inside the `setFirstName` method.
 
@@ -114,7 +114,76 @@ Lets look at what is going on inside the `setFirstName` method.
 firstName = [nameStr retain];
 ```
 
+All that the above is doing is assigning a new string value to `firstName` but it's also making sure the previous value is released before a new one is retained to prevent memory leaks. Calling `autorelease` on a object is telling the object to `release` at some stage in the not too distant future when it is no longer being used, usually at the end of the method when it is no longer needed. We then need to `retain` the new string which you can think of as binding it to the `NSString * firstName` pointer reference. Retaining and releasing objects is at the core of the Obj-C memory management and is know as reference counting.
 
+The basic theory behind reference counting is that when ever an object is retained, the reference count goes up by +1 and everytime it is released, the reference count is goes down by -1. When the reference count is back down to zero, the object is released from memory.
+
+![Figure 1: OF on iPhone.](images/ofxiOS_objc_2.png "Figure 2: ofxiOS XCode.")
+NEED TO RECREATE THIS DIAGRAM.
+
+There are a couple way of creating an Obj-C object and we'll use the NSString class to demonstrate. Below is a code sample of how a `NSString` object is created using the `alloc` method. Calling `alloc` on a `NSString` class returns a new `NSString` object. A very important thing to note here is that when an object is created using `alloc`, it's reference count is at +1. So behind the scenes, Obj-C has created a new string object and has already called `retain` on the object for us. The final line in the code example is initialising the string object with some text which says `I'm a string`.
+
+```
+firstName = [NSString alloc];
+[firstName initWithString:@"I'm a string"];
+
+```
+
+Another way of creating a string is using `NSString` class methods shown in the code sample below. When a object is created using class method, it is created in a `autorelease` state which means it's reference count is at +1 but because it has been marked as `autorelease`, it will be released from memory soon after if not retained. This is why we need to call `retain` on the new string object, so that we can hold onto its reference and use it somewhere else in our code.
+
+```
+firstName = [NSString stringWithString:@"I'm a string"];
+[firstName retain];
+```
+
+The general rule when it comes to Obj-C memory management is if you create an object using the `alloc` method or call `retain` on a object, you have taken responsibility for that object and sometime in the the future you will have to `release` it.
+
+With everything that was just discussed, lets take another look at MyClass which will now include the `init` and `dealloc` methods, the entry and exit points of all Obj-C objects.
+
+```
+#import "MyClass.h"
+
+@implementation MyClass
+
+- (id)init {
+    self = [super init];
+    if(self != nil) {
+        firstName = [[NSString alloc] initWithString:@"Lukasz"];
+        lastName = [[NSString alloc] initWithString:@"Karluk"];
+    }
+    return self;
+}
+
+- (void)dealloc {
+    [firstName release];
+    [lastName release];
+    [super dealloc];
+}
+
+- (void)setFirstName:(NSString *)nameStr {
+    [firstName autorelease];
+    firstName = [nameStr retain];
+}
+
+- (void)setLastName:(NSString *)nameStr {
+    [lastName autorelease];
+    lastName = [nameStr retain];
+}
+
+- (NSString *)getFirstName {
+    return firstName;
+}
+
+- (NSString *)getLastName {
+    return lastName;
+}
+
+@end
+```
+
+Both the `init` and `dealloc` methods are already defined in every Obj-C object so we are then extending these methods and overriding their behaviour. The `init` method is the first method to be called on every Obj-C object which makes it the ideal place to intialise your variables. The `init` method always returns a reference of itself with type `id`, which in C++ is equivalent to returning `void *`. Because we are extending the `init` method, we need to make sure we call it's super method first, otherwise the object will not initialise correctly. We then make sure that `[super init]` is called successfully without any issues before initialising variables `firstName` and `lastName`. The last thing an `init` method needs to do is return a reference to itself.
+
+The `dealloc` method is called when an object is released from memory, which makes it the place to release any other memory the object is holding onto. `firstName` and `lastName` objects are released and the last order of business is calling the `[super dealloc]` method, before the object is completely removed from memory.
 
 - what does objective-C look like?
 - differences between C++ and Obj-C (string, arrays)
