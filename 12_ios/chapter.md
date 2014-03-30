@@ -211,7 +211,7 @@ Nice thing about Obj-C is that it really makes programming a lot faster by provi
 @end
 ```
 
-You can see that we've ditched the old getter and setter methods and have now replaced it with the `@property` syntax. After the `@property` tag we can also declare some extra setter behaviour, where we have `retain` in brackets. This means that every time we use the `firstName` property to set a new value, it will automatically `retain` the new `NSString` which is super handy and means we're writing less code to get the same result.
+You can see that we've ditched the old getter and setter methods and have now replaced it with the `@property` syntax. After the `@property` tag we can also declare some extra setter attributes, where we have `retain` in brackets. This means that every time we use the `firstName` property to set a new value, it will automatically `retain` the new `NSString` which is super handy and means we're writing less code to get the same result.
 
 Next lets jump into the implementation file,
 
@@ -261,6 +261,16 @@ Properties definitely take a little while to get used to but when mastered are v
 ###Delegates
 
 ###Automatic Reference Counting (ARC)
+
+All this talk of memory management can get pretty heavy, so you'll be happy to know that Obj-C have made programming easier using Automatic Reference Countng (ARC). ARC does all the memory management for you so you no longer have to worry about retaining and releasing objects, its all done by the compiler. ARC works by looking at your code at compile time and making sure that each object is retained for as long as it needs to be but also that its released as soon as it no longer used.
+
+By default ARC is turned off inside ofxiOS XCode projects, but can be easily turned on in the project's Build Settings. Worth noting is that even though ARC can be turned on, ofxiOS source files are still compiled with non-ARC. ARC is only applied to Obj-C files in the main XCode project.
+
+![Figure 1: OF on iPhone.](images/ofxiOS_ARC_0_sml.jpg "Figure 2: ofxiOS XCode.")
+
+When ARC is turned on, it is possible to specify which Obj-C class should use ARC and which should use regular memory management. You can disable ARC for a specific class using the -fno-objc-arc compiler flag for that class.
+
+![Figure 1: OF on iPhone.](images/ofxiOS_ARC_1.png "Figure 2: ofxiOS XCode.")
 
 ###Mixing Obj-C and C++
 
