@@ -1,0 +1,500 @@
+   43  ffmpeg -i http://tlemcen.ice.infomaniak.ch/13.aac  -acodec copy $(date +“%Y‐%m‐%d_%H%M%S“).mp3
+   44  mplayer http://tlemcen.ice.infomaniak.ch/13.aac -dumpstream | ffmpeg -acodec copy test.mp3
+   45  mplayer http://tlemcen.ice.infomaniak.ch/13.aac -dumpstream -du
+   46  mplayer http://3323.live.streamtheworld.com/CKXDFMAAC -dumpstream -dumpfile stream.mp3
+   47  open .
+   48  mplayer http://3323.live.streamtheworld.com/CKXDFMAAC -dumpstream -dumpfile stream2.aac
+   49  open .
+   50  mplayer http://tlemcen.ice.infomaniak.ch/13.aac -dumpstream -dumpfile stream.mp3
+   51  open .
+   52  mplayer http://tlemcen.ice.infomaniak.ch/1312.aac -dumpstream -dumpfile stream.mp3
+   53  mplayer http://tlemcen.ice.infomaniak.ch/13.aac -dumpstream -dumpfile stream.mp3
+   54  open .
+   55  mplayer mms://albeniz.serveisweb.com/lb029  -dumpstream -dumpfile stream.mp3
+   56  mplayer mms://albeniz.serveisweb.com/lb029  -dumpstream -dumpfile stream3.mp3
+   57  mplayer http://vipicecast.yacast.net/funradio.m3u   -dumpstream -dumpfile stream3.mp3
+   58  mplayer http://www.happyfm.com/happy.wax   -dumpstream -dumpfile stream3.mp3
+   59  mplayer http://67.212.179.138:7090/ -dumpstream -dumpfile stream3.mp3
+   60  mplayer http://tdcat.com:8000/ -dumpstream -dumpfile stream3.mp3
+   61  http://free.freeshoutcast.com:39066
+   62  curl http://free.freeshoutcast.com:39066
+   63  curl http://3323.live.streamtheworld.com/CKXDFMAAC
+   64  cd /Users/zach/Desktop/output 
+   65  ls
+   66  cd 0 
+   67  mkdir 0 1 2 3 4 5 6 7 8 9 10
+   68  cd /Users/zach/Desktop/samples/rebelradi_82.0593.wav 
+   69  cd /Users/zach/Desktop/samples/
+   70  sox -h
+   71  sox --i /Users/zach/Desktop/samples/rebelradi_82.0593.wav 
+   72  sox --i /Users/zach/Desktop/samples/rebelradi_82.0593.wav  -n stat
+   73  sox -n stat /Users/zach/Desktop/samples/rebelradi_82.0593.wav
+   74  sox /Users/zach/Desktop/samples/rebelradi_82.0593.wav -n stat
+   75  sox /Users/zach/Desktop/samples/rebelradi_82.0593.wav -n stat
+   76  sox /Users/zach/Desktop/samples/sr_program_2014_01_28_12_42_47_0.603719.wav  -n stat
+   77  sox /Users/zach/Desktop/samples/0003_\ -\ Back\ After\ The\ Break_13.5605.wav  -n stat
+   78  sox /Users/zach/Desktop/samples/sr_program_2014_03_05_11_44_42_0.278639.wav  -n stat
+   79  sox /Users/zach/Desktop/samples/sr_program_2014_03_05_11_11_26_86.7033   -n stat
+   80  sox /Users/zach/Documents/OF/of_v0.8.0_osx_release/devart/noteDetection/chromeNoteSegmenter/bin/data/output/3/sr_program_2014_03_05_10_47_45_110.852.wav -n stat
+   81  sox /Users/zach/Documents/OF/of_v0.8.0_osx_release/devart/noteDetection/chromeNoteSegmenter/bin/data/output/3/sr_program_2014_03_05_10_47_45_113.36.wav  -n stat
+   82  sox /Users/zach/Documents/OF/of_v0.8.0_osx_release/devart/noteDetection/chromeNoteSegmenter/bin/data/output/3/sr_program_2014_03_05_10_48_45_20.9444.wav -n stat
+   83  sox /Users/zach/Documents/OF/of_v0.8.0_osx_release/devart/noteDetection/chromeNoteSegmenter/bin/data/output/3/sr_program_2014_03_05_11_23_50_102.446.wav -n stat
+   84  sox /Users/zach/Documents/OF/of_v0.8.0_osx_release/devart/noteDetection/chromeNoteSegmenter/bin/data/output/3/sr_program_2014_03_05_13_31_30_28.9321.wav -n stat
+   85  sox /Users/zach/Documents/OF/of_v0.8.0_osx_release/devart/noteDetection/chromeNoteSegmenter/bin/data/output/3/sr_program_2014_03_05_13_31_30_28.9321.wav -n stat
+   86  sox /Users/zach/Documents/OF/of_v0.8.0_osx_release/devart/noteDetection/chromeNoteSegmenter/bin/data/output/3/sr_program_2014_03_05_13_31_30_28.9321.wav -n stat
+   87  sox /Users/zach/Desktop/samples/sr_program_2014_03_05_11_44_42_0.278639.wav -n stat | grep frequency
+   88  sox /Users/zach/Desktop/samples/sr_program_2014_03_05_11_44_42_0.278639.wav -n stat
+   89  sox /Users/zach/Desktop/samples/rebelradi_82.0593.wav -stat n
+   90  sox /Users/zach/Desktop/samples/rebelradi_82.0593.wav -n stat
+   91  sox /Users/zach/Desktop/samples/sr_program_2014_01_28_12_42_47_0.603719.wav -n stat
+   92  sox /Users/zach/Desktop/samples/rebelradi_82.0593.wav -n stat | rough frequency
+   93  sox /Users/zach/Desktop/samples/rebelradi_82.0593.wav -n stat | grep "rough frequency"
+   94  sox /Users/zach/Desktop/samples/rebelradi_82.0593.wav -n 
+   95  sox /Users/zach/Desktop/samples/rebelradi_82.0593.wav -n stat
+   96  sox /Users/zach/Desktop/samples/rebelradi_82.0593.wav -n stat > grep Rough
+   97  sox /Users/zach/Desktop/samples/rebelradi_82.0593.wav -n stat | grep Rough
+   98  sox /Users/zach/Desktop/samples/rebelradi_82.0593.wav -n stat 2>&1 | sed -n 's#^Length (seconds):[^0-9]*\([0-9.]*\)$#\1#p'
+   99  sox /Users/zach/Desktop/samples/rebelradi_82.0593.wav -n stat 2>&1 | sed -n 's#^Rough frequency:[^0-9]*\([0-9.]*\)$#\1#p'
+  100  sox /Users/zach/Desktop/samples/rebelradi_82.0593.wav -n stat 2>&1 | sed -n 's#^Rough [^0-9]*\([0-9.]*\)$#\1#p'
+  101  sox /Users/zach/Desktop/samples/rebelradi_82.0593.wav -n stat 2>&1 | sed -n 's#^Rough [^0-9]*\([0-9.]*\)$#\1#p'
+  102  sox /Users/zach/Desktop/samples/rebelradi_82.0593.wav -n stat 2>&1 | sed -n 's#^Rough [^0-9]*\([0-9.]*\)$#\1#p'
+  103  sox /Users/zach/Desktop/samples/rebelradi_82.0593.wav -n stat 2>&1 | sed -n 's#^Rough [^0-9]*\([0-9.]*\)$#\1#p'
+  104  sox /Users/zach/Desktop/samples/rebelradi_82.0593.wav  -n stat 2>&1 | sed -n 's#^Rough [^0-9]*\([0-9.]*\)$#\1#p'
+  105  sox /Users/zach/Desktop/samples/sr_program_2014_03_05_11_11_26_86.7033.wav  -n stat 2>&1 | sed -n 's#^Rough [^0-9]*\([0-9.]*\)$#\1#p'
+  106  sox /Users/zach/Desktop/samples/sr_program_2014_03_05_11_44_42_0.278639.wav -n stat 2>&1 | sed -n 's#^Rough [^0-9]*\([0-9.]*\)$#\1#p'
+  107  sox /Users/zach/Desktop/samples/sr_program_2014_03_05_11_11_26_86.7033.wav  -n stat 2>&1 | sed -n 's#^Rough [^0-9]*\([0-9.]*\)$#\1#p'
+  108  sox /Users/zach/Desktop/samples/sr_program_2014_03_05_11_11_26_86.7033.wav  -n stat 2>&1 | sed -n 's#^Rough [^0-9]*\([0-9.]*\)$#\1#p
+  109  sox /Users/zach/Desktop/samples/d.wav  -n stat 2>&1 | sed -n 's#^Rough [^0-9]*\([0-9.]*\)$#\1#p
+  110  sox /Users/zach/Desktop/samples/d.wav -n stat 2>&1 | sed -n 's#^Rough [^0-9]*\([0-9.]*\)$#\1#p'
+  111  sox /Users/zach/Desktop/samples/d.wav -n stat 2>&1 | sed -n 's#^Rough [^0-9]*\([0-9.]*\)$#\1#p'
+  112  sox '/Users/zach/Desktop/samples/sr_program_2014_03_05_11_11_26_86.7033.wav' -n stat 2>&1 | sed -n 's#^Rough [^0-9]*\([0-9.]*\)$#\1#p' 
+  113  sox '/Users/zach/Desktop/samples/sr_program_2014_03_05_11_11_26_86.7033.wav' -n stat 2>&1 | sed -n 's#^Rough [^0-9]*\([0-9.]*\)$#\1#p' 
+  114  sox '/Users/zach/Desktop/samples/sr_program_2014_03_05_11_11_26_86.7033.wav' -n stat 2>&1 | sed -n 's#^Rough [^0-9]*\([0-9.]*\)$#\1#p' | echo  
+  115  sox '/Users/zach/Desktop/samples/sr_program_2014_03_05_11_11_26_86.7033.wav' -n stat 2>&1 | sed -n 's#^Rough [^0-9]*\([0-9.]*\)$#\1#p' > out.txt
+  116  open .
+  117  sox '/Users/zach/Desktop/samples/sr_program_2014_03_05_11_11_26_86.7033.wav' -n stat 2>&1 | sed -n 's#^Rough [^0-9]*\([0-9.]*\)$#\1#p' | echo$!
+  118  sox '/Users/zach/Desktop/samples/sr_program_2014_03_05_11_11_26_86.7033.wav' -n stat 2>&1 | sed -n 's#^Rough [^0-9]*\([0-9.]*\)$#\1#p' | echo $!
+  119  sox '/Users/zach/Desktop/samples/sr_program_2014_03_05_11_11_26_86.7033.wav' -n stat 2>&1 | sed -n 's#^Rough [^0-9]*\([0-9.]*\)$#\1#p' | echo $1
+  120  sox '/Users/zach/Desktop/samples/sr_program_2014_03_05_11_11_26_86.7033.wav' -n stat 2>&1 | sed -n 's#^Rough [^0-9]*\([0-9.]*\)$#\1#p' | tail
+  121  sox '/Users/zach/Desktop/samples/sr_program_2014_03_05_11_11_26_86.7033.wav' -n stat 2>&1 | sed -n 's#^Rough [^0-9]*\([0-9.]*\)$#\1#p' | tail
+  122  essentia
+  123  cd /Users/zach/Documents/projects/playTheWorld/GOOGLE/essentia/build/src/examples 
+  124  ./streaming_extractor_short_sounds /Users/zach/Desktop/samples/0000_NEW\ Ð¡ÐÐÐÐ¦ÐÐÐ¢Ð«\ -\ ÐÐÐ\ ÐÐÐÐ_21.9661
+  125  ./streaming_extractor_short_sounds /Users/zach/Desktop/samples/rebelradi_82.0593.wav -o out.txt
+  126  ./streaming_extractor_short_sounds /Users/zach/Desktop/samples/rebelradi_82.0593.wav
+  127  ./streaming_extractor_short_sounds /Users/zach/Desktop/samples/rebelradi_82.0593.wav -o out.txt
+  128  ./streaming_extractor_short_sounds /Users/zach/Desktop/samples/rebelradi_82.0593.wav 
+  129  ./streaming_extractor_short_sounds /Users/zach/Desktop/samples/rebelradi_82.0593.wav out.txt
+  130  open out.txt
+  131  open out.txt
+  132  open .
+  133  ./streaming_extractor_freesound /Users/zach/Desktop/samples/rebelradi_82.0593.wav out2.txt
+  134  open .
+  135  cd /Users/zach/Documents/OF/of_v0.8.0_osx_release/devart/noteDetection/spectralCentroid/bin/data 
+  136  ./vampTestDebug --list-ids
+  137  ./vampTestDebug -s vamp-libxtract:spectral_centroid /Users/zach/Desktop/samples/rebelradi_82.0593.wav 
+  138  ./vampTestDebug -s vamp-libxtract:spectral_centroid /Users/zach/Desktop/samples/sr_program_2014_03_05_11_11_26_86.7033.wav 
+  139  ./vampTestDebug -s vamp-libxtract:spectral_centroid /Users/zach/Desktop/samples/0003_\ -\ Back\ After\ The\ Break_13.5605.wav 
+  140  ./vampTestDebug -s vamp-libxtract:spectral_centroid /Users/zach/Desktop/samples/rebelradi_82.0593.wav 
+  141  ./vampTestDebug -s vamp-libxtract:spectral_centroid /Users/zach/Desktop/samples/0000_NEW\ Ð¡ÐÐÐÐ¦ÐÐÐ¢Ð«\ -\ ÐÐÐ\ ÐÐÐÐ_21.9661.wav 
+  142  ./vampTestDebug -s vamp-libxtract:spectral_centroid /Users/zach/Desktop/samples/sr_program_2014_01_28_12_42_47_0.603719.wav 
+  143  ./vampTestDebug -s vamp-libxtract:spectral_centroid /Users/zach/Documents/OF/of_v0.8.0_osx_release/devart/noteDetection/chromeNoteSegmenter/bin/data/output/3/sr_program_2014_03_05_13_31_30_28.9321.wav 
+  144  ./vampTestDebug --list-ids
+  145  ./vampTestDebug vamp:vamp-libxtract:spectrum /Users/zach/Documents/OF/of_v0.8.0_osx_release/devart/noteDetection/chromeNoteSegmenter/bin/data/output/3/sr_program_2014_03_05_13_31_30_28.9321.wav 
+  146  ./vampTestDebug 
+  147  ./vampTestDebug --list-ids
+  148  ./vampTestDebug -s vamp-libxtract:spectral_centroid /Users/zach/Documents/OF/of_v0.8.0_osx_release/devart/noteDetection/chromeNoteSegmenter/bin/data/output/3/sr_program_2014_03_05_13_31_30_28.9321.wav 
+  149  history
+  150  cd /Users/zach/Documents/projects/playTheWorld/DEVDEVARTART/devart-template/
+  151  git status
+  152  git pull
+  153  git status
+  154  git add -A .
+  155  git commit -m "new post about chroma progress"
+  156  git push
+  157  cd Desktop/
+  158  git clone https://github.com/ofZach/sfpc_site.git
+  159  cd sfpc_site/
+  160  git pull
+  161  git status
+  162  rm public/.*
+  163  rm -rf public/.sub*
+  164  git add -A .
+  165  git commit -m "updates for the call"
+  166  git push
+  167  open .
+  168  ./hugo-darwin-386 -S -w
+  169  cd /Users/zach/Desktop/sfpc_site 
+  170  git pull
+  171  open .
+  172  ./hugo-darwin-386 ./hugo-darwin-386 -S -w
+  173  ./hugo-darwin-386 -S -w
+  174  ./hugo-darwin-386 -S -w
+  175  ./hugo-darwin-386 -S -w
+  176  ./hugo-darwin-386 -S -w
+  177  ./hugo-darwin-386 -S -w
+  178  ./hugo-darwin-386 -S -w
+  179  ./hugo-darwin-386 -S -w
+  180  open .
+  181  ./hugo-darwin 386 -b "http://sfpc.io"
+  182  ls
+  183  ./hugo-darwin-386 -b "http://sfpc.io"
+  184  mv public/indexhtml "index.html"
+  185  open .
+  186  ./hugo-darwin-386 -b "http://sfpc.io"
+  187  open .
+  188  mv public/indexhtml "index.html"
+  189  ./hugo-darwin-386 -b "http://sfpc.io"
+  190  mv public/indexhtml public/index.html
+  191  open .
+  192  ./hugo-darwin-386 -b "http://sfpc.io"
+  193  open .
+  194  ./hugo-darwin-386 -b "http://sfpc.io"
+  195  open .
+  196  ./hugo-darwin-386 -b "http://sfpc.io"
+  197  open .
+  198  ls
+  199  git status
+  200  git add -A .
+  201  git commit -m "changes for the call"
+  202  git push
+  203  ssh -l pi 10.0.0.13
+  204  ssh -l pi 10.0.0.13
+  205  ssh -l pi 10.0.0.13
+  206  sudo apt-get install libnss-mdns avahi-utils
+  207  ssh -l pi 10.0.0.13
+  208  ssh -l pi 10.0.0.13
+  209  ping raspberrypi.local
+  210  cd Desktop/
+  211  git clone https://github.com/nanoant/osxglut.git
+  212  open .
+  213  cd /Users/zach/Documents/OF/of_v0.8.0_ios_release/apps/zoomDraw/zoomDraw
+  214  git status
+  215  git pull
+  216  git add -A /
+  217  git add -A .
+  218  git commit -m "pan now working"
+  219  git push
+  220  cd /Users/zach/Documents/OF/github/openFrameworks 
+  221  git pull
+  222  cd /Users/zach/Documents/OF/github/openFrameworks/apps/projectGenerator/projectGeneratorSimple 
+  223  git pull
+  224  git stash
+  225  git pull
+  226  cd /Users/zach/Documents/OF/github/openFrameworks 
+  227  cd apps
+  228  git clone https://github.com/ofZach/projectGeneratorSimple.git
+  229  cd /Users/zach/Documents/OF/github/openFrameworks/apps/projectGenerator/projectGeneratorSimple 
+  230  git status
+  231  git status
+  232  git checkout -b newProjectFiles
+  233  git push remote newProjectFiles
+  234  git push upstream newProjectFiles
+  235  git push master/newProjectFiles
+  236  git push master
+  237  git status
+  238  git pull
+  239  git push -u origin newProjectFiles
+  240  git push
+  241  git add -A .
+  242  git commit -m "new project files"
+  243  git push
+  244  git status
+  245  git add -A .
+  246  git commit -m "changed testApp to ofApp, probably have to regenerate files"
+  247  git push
+  248  ls /dev/tty*
+  249  cd 
+  250  cd /Users/zach/Documents/OF/github 
+  251  git pull
+  252  cd openFrameworks/
+  253  git pull
+  254  cd Desktop/
+  255  svn checkout http://smallbase.googlecode.com/svn/trunk/ smallbase-read-only
+  256  open .
+  257  open .
+  258  cd Desktop/
+  259  git clone https://github.com/openframeworks/openFrameworks.git
+  260  open .
+  261  cd /Users/zach/Documents/OF/of_v0.8.0_osx_release/devart/noteDetection/chromeNoteSegmenter/bin/data/output 
+  262  mkdir 0 1 2 3 4 5 6 7 8 9 10 11
+  263  cd /Users/zach/Documents/OF/of_v0.8.0_osx_release/devart/noteDetection/chromeNoteSegmenter/bin/data/output 
+  264  mkdir 0 1 2 3 4 5 6 7 8 9 10 11
+  265  cd Desktop/
+  266  git clone https://github.com/taglib/taglib.git
+  267  cd /Users/zach/Documents/OF/of_v0.8.0_osx_release/apps/myApps/mp3test/bin/mp3testDebug.app/Contents/MacOS/
+  268  ls
+  269  ./mp3testDebug /Users/zach/Music/iTunes/iTunes\ Media/Music/Schoolboy\ Q/Oxymoron\ \(Deluxe\ Edition\)/04\ What\ They\ Want\ \(Feat.\ 2\ Chainz\).mp3 
+  270  ./mp3testDebug /Users/zach/Music/iTunes/iTunes\ Media/Music/Schoolboy\ Q/Oxymoron\ \(Deluxe\ Edition\)/04\ What\ They\ Want\ \(Feat.\ 2\ Chainz\).mp3 
+  271  ./mp3testDebug /Users/zach/Music/iTunes/iTunes\ Media/Music/Schoolboy\ Q/Oxymoron\ \(Deluxe\ Edition\)/04\ What\ They\ Want\ \(Feat.\ 2\ Chainz\).mp3 
+  272  ./mp3testDebug /Users/zach/Music/iTunes/iTunes\ Media/Music/Schoolboy\ Q/Oxymoron\ \(Deluxe\ Edition\)/04\ What\ They\ Want\ \(Feat.\ 2\ Chainz\).mp3 
+  273  ./mp3testDebug /Users/zach/Music/iTunes/iTunes\ Media/Music/Schoolboy\ Q/Oxymoron\ \(Deluxe\ Edition\)/04\ What\ They\ Want\ \(Feat.\ 2\ Chainz\).mp3 
+  274  ./mp3testDebug /Users/zach/Music/iTunes/iTunes\ Media/Music/Schoolboy\ Q/Oxymoron\ \(Deluxe\ Edition\)/04\ What\ They\ Want\ \(Feat.\ 2\ Chainz\).mp3 
+  275  ./mp3testDebug /Users/zach/Music/iTunes/iTunes\ Media/Music/Schoolboy\ Q/Oxymoron\ \(Deluxe\ Edition\)/04\ What\ They\ Want\ \(Feat.\ 2\ Chainz\).mp3 
+  276  cd /Users/zach/Desktop/taglib
+  277  cmake -DCMAKE_BUILD_TYPE=Release     -DCMAKE_OSX_DEPLOYMENT_TARGET=10.6     -DCMAKE_OSX_ARCHITECTURES="i386;x86_64"     -DENABLE_STATIC=ON     -DCMAKE_INSTALL_PREFIX="<folder you want to build to>"
+  278  cmake -DCMAKE_BUILD_TYPE=Release     -DCMAKE_OSX_DEPLOYMENT_TARGET=10.6     -DCMAKE_OSX_ARCHITECTURES="i386;x86_64"     -DENABLE_STATIC=ON     -DCMAKE_INSTALL_PREFIX="/Users/zach/Desktop/"
+  279  make
+  280  make install
+  281  cd Desktop/
+  282  mkdir fftExtract
+  283  cd fftExtract/
+  284  svn checkout http://source.omras2.org/svn/fftExtract/fftExtract/trunk/ .
+  285  svn checkout http://source.omras2.org/svn/fftExtract/fftExtract/trunk/
+  286  cd ../
+  287  ./fftExtract.osx64 
+  288  ls
+  289  cd fftExtract
+  290  ls
+  291  vi fftExtract.cpp
+  292  gcc fftExtract.cpp 
+  293  gcc -m32 fftExtract.cpp 
+  294  open .
+  295  brew install id3v2
+  296  brew install id3lib
+  297  id3tag
+  298  id3tag
+  299  id3v2
+  300  id3v2 
+  301  id3v2 
+  302  id3v2   -l /Users/zach/Documents/personal/Filastine-We_Are_Experiencing_Turbulence_\(DUTTYARTZ.COM\).mp3 
+  303  cd Desktop/
+  304  git clone https://github.com/AlanQuatermain/AQGridView.git
+  305  cd AQGridView/
+  306  open .
+  307  find /usr/local/ | grep fftw
+  308  cd 
+  309  cd Desktop/
+  310  sox compand 0.1,0.3 -60,-60,-30,-15,-20,-12,-4,-8,-2,-7 -2 a.wav b.wav
+  311  sox a.wav b.wav compand 0.1,0.3 -60,-60,-30,-15,-20,-12,-4,-8,-2,-7 -2 
+  312  open .
+  313  sox a.wav b.wav gain −n −3
+  314  sox a.wav b.wav gain −n 
+  315  sox a.wav b.wav gain −n −3
+  316  sox loudness a.wav b.wav
+  317  sox a.wav b.wav loudness
+  318  open .
+  319  sox c.wav d.wav loudness
+  320  open .
+  321  sox c.wav e.wav compand 0,0.1 -80.1,-inf,-80,-160,-48,-24,-24,-6,-12,-1.5,-6,-0.3 -1 -6 gain -n -0.1
+  322  open .
+  323  sox g.wav h.wav compand 0,0.1 -80.1,-inf,-80,-160,-48,-24,-24,-6,-12,-1.5,-6,-0.3 -1 -6 gain -n -0.1
+  324  sox g.wav h.wav compand 0,0.1 -80.1,-inf,-80,-160,-48,-24,-24,-6,-12,-1.5,-6,-0.3 -1 -6 loudness
+  325  sox e.wav i.wav compand 0,0.1 -80.1,-inf,-80,-160,-48,-24,-24,-6,-12,-1.5,-6,-0.3 -1 -6 loudness
+  326  cd /Users/zach/Documents/OF/of_v0.8.0_osx_release/devart/noteDetection/fftExtract/bin/fftExtract.app/Contents/MacOS/
+  327  ./fftExtract 
+  328  ./fftExtract.exe -C 2 -n 4096 -w 2048 -h 1024 -c 12 /Users/zach/Documents/OF/of_v0.8.0_osx_release/devart/audio/a.wav out.chroma
+  329  ls
+  330  ./fftExtract -C 2 -n 4096 -w 2048 -h 1024 -c 12 /Users/zach/Documents/OF/of_v0.8.0_osx_release/devart/audio/a.wav out.chroma
+  331  ./fftExtract 
+  332  ./fftExtract -n 4096 -w 2048 -h 1024 -c 12 /Users/zach/Documents/OF/of_v0.8.0_osx_release/devart/audio/a.wav out.chroma
+  333  rm out.chrome
+  334  rm out.chroma
+  335  ./fftExtract -n 4096 -w 2048 -h 1024 -c 12 /Users/zach/Documents/OF/of_v0.8.0_osx_release/devart/audio/a.wav out.chroma
+  336  cd /usr/local/
+  337  open .
+  338  cd /usr/local/lib
+  339  ls
+  340  open .
+  341  cd /Users/zach/Documents/OF/of_v0.8.0_osx_release/devart/noteDetection/fftExtract/bin/fftExtract.app
+  342  cd Contents/MacOS/
+  343  ls
+  344  history
+  345  ./fftExtract -n 4096 -w 2048 -h 1024 -c 12 /Users/zach/Documents/OF/of_v0.8.0_osx_release/devart/audio/a.wav out.chroma
+  346  rm out.chroma
+  347  ./fftExtract -n 4096 -w 2048 -h 1024 -c 12 /Users/zach/Documents/OF/of_v0.8.0_osx_release/devart/audio/a.wav out.chroma
+  348  ./fftExtract -n 4096 -w 2048 -h 1024 -c 12 /Users/zach/Documents/OF/of_v0.8.0_osx_release/devart/audio/a.wav out.chroma
+  349  rm out.chroma
+  350  ./fftExtract -n 4096 -w 2048 -h 1024 -c 12 /Users/zach/Documents/OF/of_v0.8.0_osx_release/devart/audio/a.wav out.chroma
+  351  open .
+  352  ./fftExtract -n 4096 -w 2048 -h 1024 -c 12 /Users/zach/Documents/OF/of_v0.8.0_osx_release/devart/audio/a.wav out.chroma
+  353  rm out.chroma
+  354  ./fftExtract -n 4096 -w 2048 -h 1024 -c 12 /Users/zach/Documents/OF/of_v0.8.0_osx_release/devart/audio/a.wav out.chroma
+  355  rm out.chroma
+  356  ./fftExtract -n 4096 -w 2048 -h 1024 -c 12 /Users/zach/Documents/OF/of_v0.8.0_osx_release/devart/audio/a.wav out.chroma
+  357  rm out.chroma
+  358  ./fftExtract -n 4096 -w 2048 -h 1024 -c 12 /Users/zach/Documents/OF/of_v0.8.0_osx_release/devart/audio/a.wav out.chroma
+  359  rm out.chroma
+  360  ./fftExtract -n 4096 -w 2048 -h 1024 -c 12 /Users/zach/Documents/OF/of_v0.8.0_osx_release/devart/audio/a.wav out.chroma > out.txt
+  361  open .
+  362  cd Desktop/
+  363  git clone https://github.com/vinniefalco/DSPFilters.git
+  364  cd Desktop/
+  365  git clone https://github.com/danomatika/ofxMidi.git
+  366  open .
+  367  open .
+  368  brew install fftw --universal
+  369  brew remove fftw
+  370  brew install fftw --universal
+  371  file /usr/local/Cellar/fftw/3.3.3/lib/libfftw3.a
+  372  file /usr/local/Cellar/fftw/3.3.3/lib/libfftw3.dylib
+  373  brew remove libsndfile
+  374  brew install libsndfile --universal
+  375  brew install libsndfile --universal
+  376  brew install libsndfile --universal
+  377  brew uninstall flac
+  378  brew install flac --universal
+  379  brew uninstall lame
+  380  brew install lame--universal
+  381  brew install lame --universal
+  382  brew install flac --universal
+  383  brew install flac
+  384  brew install libsndfile
+  385  cd Desktop/
+  386  git clone https://github.com/ruohoruotsi/Butterworth-Filter-Design.git
+  387  open .
+  388  open .
+  389  history 
+  390  history | grep sox
+  391  cd Desktop/
+  392  git clone https://github.com/steipete/PSTCollectionView.git
+  393  git clone https://github.com/ptshih/PSCollectionView.git
+  394  cd De
+  395  git clone https://github.com/gmoledina/GMGridView.git
+  396  cd Desktop/
+  397  ls
+  398  cd output_sorted/
+  399  vi soxCleanUp.sh
+  400  ls
+  401  cd 0/4
+  402  ls
+  403  ../..
+  404  ls
+  405  cd ../
+  406  cd ../
+  407  ls
+  408  cd 4/4
+  409  sh ../../soxCleanUp.sh
+  410  open .
+  411  sh ../../soxCleanUp.sh
+  412  open .
+  413  cd ../../
+  414  ls
+  415  cd 0/0
+  416  sh ../../soxCleanUp.sh
+  417  cd ../1
+  418  sh ../../soxCleanUp.sh
+  419  cd ../
+  420  ls
+  421  cd ../
+  422  ls
+  423  ls
+  424  vi doAllCleanup.sh
+  425  sh doAllCleanup.sh 
+  426  vi doAllCleanup.sh
+  427  sh doAllCleanup.sh 
+  428  open .
+  429  open .
+  430  sh doAllCleanup.sh 
+  431  ls
+  432  cd 0
+  433  ls
+  434  cd ../
+  435  sh doAllCleanup.sh 
+  436  open .
+  437  sh doAllCleanup.sh 
+  438  ls
+  439  sh doAllCleanup.sh 
+  440  open .
+  441  cd Desktop/output_sorted/
+  442  ls
+  443  vi soxCleanUp.sh 
+  444  cd Desktop/
+  445  git clone https://github.com/JoshuaBatty/ofxReverb.git
+  446  cd De
+  447  git clone https://github.com/watterott/WebRadio.git
+  448  open .
+  449  git clone https://github.com/yoannsculo/SHOUTcast-Recorder
+  450  open. 
+  451  open .
+  452  cd /Users/zach/Documents/OF/of_v0.8.0_osx_release/apps/myApps/stramripperTest/src/libmad-0.15.1b 
+  453  ./configure "CFLAGS=-m32" "CXXFLAGS=-m32" "LDFLAGS=-m32"
+  454  make 
+  455  open .
+  456  ls -la
+  457  open .libs
+  458  open .
+  459  brew install glib
+  460  brew uninstall glib
+  461  brew install glib --universal
+  462  brew install glib --32-bit
+  463  open /usr/local/Cellar/glib/
+  464  open /usr/local/Cellar/glib/
+  465  brew uninstall glib
+  466  brew install glib
+  467  open .
+  468  cd /Users/zach/Desktop/streamripper/streamripper/src/libmad-0.15.1b 
+  469  ls
+  470  open .libs
+  471  cd /Users/zach/Desktop/streamripper-1.64.6 
+  472  ./configure
+  473  brew install glib
+  474  streamripper --h
+  475  streamripper
+  476  cd /usr/local/Cellar/
+  477  ls
+  478  cd streamripper/
+  479  ls
+  480  ls
+  481  open .
+  482  cd Desktop/
+  483  git clone https://github.com/rezaali/ofxUI.git
+  484  cd Desktop/
+  485  git clone https://github.com/kylemcdonald/ofxControlPanel.git
+  486  cd Desktop/
+  487  git clone https://github.com/openframeworks/ofBook.git
+  488  open .
+  489  cd /Users/zach/Desktop/ofBook
+  490  git pull
+  491  git status
+  492  git add -A .
+  493  git commit -m "working on animation"
+  494  git push
+  495  cd Desktop/
+  496  git clone https://github.com/ofZach/openFrameworks.git
+  497  brew install pandoc
+  498  brew update
+  499  sudo chown -R `whoami` /usr/local/texlive
+  500  tlmgr update --self
+  501  tlmgr
+  502  brew install tlmgr
+  503  /usr/local/texlive/2013basic/bin/x86_64-darwin/tlmgr  update --self
+  504  /usr/local/texlive/2013basic/bin/x86_64-darwin/tlmgr install ucs
+  505  /usr/local/texlive/2013basic/bin/x86_64-darwin/tlmgr install etoolbox
+  506  brew install haskell-platform
+  507  cabal update
+  508  cabal install cabal-install
+  509  cabal install pandoc
+  510  cd /Users/zach/Desktop/ofBook 
+  511  ./create_ofBook.sh pdf
+  512  export PATH=~/.cabal/bin:$PATH
+  513  ./create_ofBook.sh pdf
+  514  brew install xelatex
+  515  ls
+  516  open .
+  517  ./create_ofBook.sh pdf
+  518  history
+  519  /usr/local/texlive/2013basic/bin/x86_64-darwin/
+  520  export PATH=/usr/local/texlive/2013basic/bin/x86_64-darwin/:$PATH
+  521  ./create_ofBook.sh pdf
+  522  ls
+  523  vi ulem.sty
+  524  ./create_ofBook.sh pdf
+  525  open .
+  526  open .
+  527  pandoc --h
+  528  pandoc -v
+  529  pandoc --verbose
+  530  pandoc --help
+  531  ./create_ofBook.sh pdf
+  532  ./create_ofBook.sh pdf
+  533  ./create_ofBook.sh pdf
+  534  mktexlsr
+  535  ./create_ofBook.sh pdf
+  536  ./create_ofBook.sh pdf
+  537  ./create_ofBook.sh pdf
+  538  ls
+  539  pandoc 04_animation/chapter.md -o test.pdf
+  540  open .
+  541  history
+  542  history > out.txt
