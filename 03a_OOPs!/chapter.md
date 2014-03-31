@@ -120,7 +120,6 @@ Here's how you can write the class *.cpp file, the implementation file:
 	}
 
 	void ofBall::draw(){
-		// set Color based on values for Red, Green and Blue
 		ofSetColor(color);
 		ofCircle(x, y, dim);
 	} 
@@ -179,6 +178,7 @@ We've just created 3 objects but what if we wanted to created 10, 100 or maybe 1
 
 **[KL: The pseudo code-like explanation above is an effective approach. This is a good method to use before writing out the ofBall class above, too. Also, I've been taking out words like "just" before steps and simplifying verb tenses for clarity. I'd keep that in mind as you continue writing this chapter. The more concise, the better.]** 
 **[KL: Restate which file this is happening in.]**
+in the testApp class header file, where you define the balls objects also define the constant that we'll use for the number of objects:
 
 	#define NBALLS 5
 
