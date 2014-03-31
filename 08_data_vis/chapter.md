@@ -336,6 +336,7 @@ The draw() part of the code incorporates a for loop maps the full range of value
 
 Now you have a very basic working graph, the next steps are to add labels and interactivity.
 
+**Step 6 Refine.**
 We need to declare a font in testApp.h file:
 ```cpp
     ofTrueTypeFont font;
@@ -400,7 +401,7 @@ for (int i = 0; i <= (int)maxValue; i++){
 ```
 Here we have a for loop generating values for i that range from 0 to maxValue. Similarly, the if statement will only generate ticks and labels for every 1000000 of these values. What interval is chosen for this statement will depend on the range of the data. As we are dealing with population data, we will choose to have a label at intervals of 1 million. This time y values are mapped from 0 to the height of the graph so they are spread evenly. And then text and a line is drawn using the same functions as on the x axis.
 
-**Step 5 Interact.**
+**Step 6 Interact.**
 
 Finally we can add interactivity by creating clickable tabs that will switch between the different datasets in our file. This section turns our code into a state machine, where we define a variable called ‘which’ which is toggled between the values 0,1 and 2. The value of ‘which’, dictates what dataset will be displayed.
 
