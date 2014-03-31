@@ -6,9 +6,6 @@ The word animation is a medieval term stemming from the Latin animare, which mea
 
 As a side note, I studied fine arts, painting and printmaking, and it was accidental that I started using computers. The moment that I saw how you could write code to move something across the screen, even as simple as silly rectangle, I was hooked. I began during the first dot-com era working with flash / actionscript and lingo / director and have never looked back.
 
-**[KL: This bit of background information is a nice way of easing into the chapter and giving you more credibility for people who also come from, say, fine arts backgrounds. Also, it's just the right length. The introduction paragraph beforehand is successful, too.]** 
-
-
 This chapter will first explain some basic principles that are useful to understanding animation in OF, then attempt to show a few entrypoints to interesting approaches. 
 
 ## Animation in OF / useful concepts: 
@@ -23,7 +20,7 @@ The first point to make about animation is that it's based on successive still f
 - draw()
 - ....
 
-Setup gets called once and update / draw get called repeatedly. **[KL: Setup also gets called if update/draw are called once, though. I'd reword this.]**  Sometimes people ask why two functions get called repeatedly, especially if they are used to Processing, which has only a setup and a draw command. There are a few reasons. The first is that drawing in openGL is asynchronous, meaning there's a chance, when you send drawing code to the computer, that it can return execution back to your program so that it can perform other operations while it draws. The second is that it's generally very practical to have your drawing code separated from your non-drawing code. If you need to quickly debug something–say, for example, your code is running slow–you can comment out the draw function and just leave the update running. It's separating out the update of the world from the presentation and it can often help clean up and organize your code. Think about it like a stop frame animator working with an overhead camera that might reposition objects while the camera is not taking a picture then snap a photograph the moment things are ready. **[KL: Fantastic analogy.]** In the update function you would be moving things around and in the draw function you draw things exactly as they are at that moment. 
+Setup gets called once, right at the start of an OF apps lifecycle and update / draw get called repeatedly. Sometimes people ask why two functions get called repeatedly, especially if they are used to Processing, which has only a setup and a draw command. There are a few reasons. The first is that drawing in openGL is asynchronous, meaning there's a chance, when you send drawing code to the computer, that it can return execution back to your program so that it can perform other operations while it draws. The second is that it's generally very practical to have your drawing code separated from your non-drawing code. If you need to quickly debug something–say, for example, your code is running slow–you can comment out the draw function and just leave the update running. It's separating out the update of the world from the presentation and it can often help clean up and organize your code. Think about it like a stop frame animator working with an overhead camera that might reposition objects while the camera is not taking a picture then snap a photograph the moment things are ready.  In the update function you would be moving things around and in the draw function you draw things exactly as they are at that moment. 
 
 ### Variables
 
@@ -48,8 +45,27 @@ We have a function in OF for controlling this. Some graphics card drivers (see f
 
 By default, OF enables vertical sync and sets a frame rate of 60FPS. You can adjust the VSYCN and frame rate settings if you want to animate faster, but please note that by default OF wants to run as fast as possible. It's not uncommon if you are drawing a simple scene to see frame rates of 800 FPS if you don't have VSYNC enabled (and the frame rate cap set really high or disabled).
 
-**[note: discuss frame rate independence?]**
-**[KL: Yes, I'd definitely cover this in more detail.]**
+Another imporant point which is a bit hard to cover deeply in this chapter is frame rate independence. If you animate using a simple model -- say for example, you create a variable called xPos, increase it by a certain amount every frame and draw it. 
+
+	void testApp::setup(){
+		xPos = 100;
+	}
+	
+	void testApp::update(){
+		xPos += 0.5;
+	}
+	
+	void testApp::draw(){
+		ofRect(xPos, 100, 10, 10);
+	}
+
+this kind of animation works fine, but it assumes that your frame rate is constant.  If you app runs faster, say by jumping from 30fps to 60fps, the object will appear to go twice as fast, since there will be 2x the number of update and draw functions called per second.   Typically more complex animation will be written to take this into account, either by using functions like time (explained below) or mixing the frame rate or elapsed time into your update.  For example, a solution might be something like: 
+
+	void testApp::update(){
+		xPos += 0.5 * (30.0 / ofGetFrameRate());
+	}
+	
+if ofGetFrameRate() returns 30, we multiply 0.5 by 1, if ofGetFrameRate() returns 60, we multiply it by 1/2, so although we are animating twice as fast, we take half sized steps, therefore effectively moving at the same speed regardless of framerate.  Framerate indepence is fairly important to think about once you get the hang of things, since as observers of animation, we really do feel objects speeding up or slowwing down even slightly, but in this chapter I will skip it for the sake of simplicity in the code. 
 
 ### Time functions
 
@@ -113,7 +129,7 @@ Think about the x value of the plot as the input and y value as the output. If p
 
 Things in the world don't move linearly. They don't take even steps. Roll a ball on the floor, it slows down. It's accelerating in a negative direction. Sometimes things speed up, like a baseball bat going from resting to swinging. Curving pct leads to interesting behavior. The objects still take the same amount of time to get there, but they do it in more lifelike, non-linear ways.
 
-If you raise it **[KL: re-word what "it" is.]** to a larger power it looks more extreme. Interestingly, if you raise this value between 0 and 1 to a fractional (rational) power (i.e., a power that's less than 1 and greater than 0), it curves in the other direction.  
+If you raise the incoming number between 0 and 1 to a larger power it looks more extreme. Interestingly, if you raise this value between 0 and 1 to a fractional (rational) power (i.e., a power that's less than 1 and greater than 0), it curves in the other direction.  
 
 The second example shows an animation that uses pct again to get from A to B, but in this case, pct is raised to a power: 
 
@@ -128,10 +144,11 @@ Raising percent to a power is one of a whole host of functions that are called "
 
 ### Zeno
 
-A small twist on the linear interpolation is a technique that I call "Zeno" based on Zeno the greek philosopher's Dichotomy paradox. If you are running a race and run 1/2 of the remaining distance (getting to 1/2 of the goal), and then 1/2 of that remaining distance (3/4), and finally 1/2 of that remaining distance (7/8ths)...  **[note: better write up]** 
-**[KL: I second this.]**
+A small twist on the linear interpolation is a technique that I call "Zeno" based on Zeno the greek philosopher's Dichotomy paradox: 
 
-If we take the linear interpolation code but always alter our own position instead (e.g., take 50% of our current position + 50% of our target position), we can animate our way from one value to another. This algorithm is similar to standing up and moving: 
+> Imagine there is a runner running a race and the runner runs 1/2 of the distance in a certain amount of time, and then they run 1/2 of the remaining distance in the same amount of time, and run 1/2 of the remaining the distance the distance, etc. Do they finish the race?  There is always some portion of the distance remaining left to run one half of.  The idea is that you can always keep splitting the distance.
+
+If we take the linear interpolation code but always alter our own position instead (e.g., take 50% of our current position + 50% of our target position), we can animate our way from one value to another. I usually explain the algorithm in class by asking someone to do this: 
 
 1. Start at one position in your room.
 2. Pick a point to move to.
@@ -168,11 +185,7 @@ In this section of the book we'll look at a few examples that show function base
 
 Another interesting and simple system to experiment with motion in openframeworks is using sin and cos.
 
-**[KL: I deleted the end of this sentence because it repeats itself in the following paragraph.]** 
-
 Sin and cos (sine and cosine) are trigonometric functions, which means they are based on angles. They are the x and y position of a point moving in a constant rate around a circle. The circle is a unit circle with a radius of 1, which means the diameter is `2*r*PI` or `2*PI`.  In OF you'll see this constant as `TWO_PI`, which is 6.28318... 
-
-**[KL: I think sine and cosine is the more accepted form...I'd never heard sinus and cosinus. If it is truly meant to be those, by all means keep them.]**  
 
 *As a side note, sometimes it can be confusing that some functions in OF take degress where others take radians. Sin and cos are part of the math library, so they take radians, whereas most openGL rotation takes degrees. We have some helper constants such as `DEG_TO_RAD` and `RAD_TO_DEG`, which can help you convert one to the other.*
 
@@ -199,7 +212,7 @@ You can do simple things with offseting the phase (how shifted over the sin wave
 	
 	}
 
-*As a nerdy detail, floating point numbers are not linearly precise, e.g., there's a different number of floating point numbers between 0.0 and 1.0 than 100.0 and 101.0. You actually lose precision the larger a floating point number gets, so taking sin of elapsed time can start looking crunch after some time. For long running installations I will sometimes write code that looks like `sin((ofGetElapsedTimeMillis() % 6283) / 6283.0)` or something similar, to account for this. Even though ofGetElapsedTime() **[KL: I'd clarify the difference between ofGetElapsedTime() and ofGetElapsedTimef(), which I'm assuming is returning a float value?]** gets larger over time, it's a worse and worse input to sin() as it grows*
+*As a nerdy detail, floating point numbers are not linearly precise, e.g., there's a different number of floating point numbers between 0.0 and 1.0 than 100.0 and 101.0. You actually lose precision the larger a floating point number gets, so taking sin of elapsed time can start looking crunch after some time. For long running installations I will sometimes write code that looks like `sin((ofGetElapsedTimeMillis() % 6283) / 6283.0)` or something similar, to account for this. Even though ofGetElapsedTimef() gets larger over time, it's a worse and worse input to sin() as it grows.  ofGetElapsedTimeMillis() doesn't suffer from this problem since it's an integer number and the number of integers between 0 and 10 is the same as between 1000 and 1010.*
 
 #### Circular movement
 
