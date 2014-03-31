@@ -64,17 +64,20 @@ To print the value of the pushbutton to Serial, store the returned value from di
     buttonState = digitalRead(buttonPin);
     Serial.println( buttonState );
 
+If you're feeling limited by the binary nature of the pushbutton, you can also read from an analog input, using a component like a potentiometer, photoresistor, or any of the wide variety of sensors that provide non-binary input.
 
-Analog read - ADC analog-digital converter chip on pins A0-A5; requires small delay because of electrical noise / jitter from the Atmega analog pin
+Analog inputs can only be connected on pins A0-A5 on a standard Arduino.  These analog-specific pins have an ADC (analog-digital converter) chip which enables them to convert the amount of voltage returning from the circuit into a digital-readable number between 0 and 1023.
 
-use a photoresistor / light sensor - this will convert the resistance coming in to a value between 0 and 1KB, or 0 and 1023
+There are a number of examples and tutorials for working with analog input; a basic one using a potentiometer can be found here:
+
+http://arduino.cc/en/Tutorial/AnalogInput
+
+Printing the incoming variables to the Serial monitor is the same as with a digital input, except that you'll be using the Arduino function for analogRead() rather than digitalRead():
+
+    sensorValue = analogRead(sensorPin);
+    Serial.println( sensorValue );
 
 
-Convert incoming value to an outgoing value
-
-PWM (pulse width modulation) - on pwm pins
-
-map()
 
 ## using serial for communication between arduino and openframeworks
 
