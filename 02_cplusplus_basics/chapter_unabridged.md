@@ -1,4 +1,4 @@
-# Chapter 2. C++ Language Basics #
+#C++ Language Basics (unabridged)#
 
 *by [jtnimoy](http://jtnimoy.net)*
 
@@ -9,8 +9,6 @@
 ##Look Alive!
 
 This chapter introduces you to writing small computer programs using the C++ language. Although I assume very little about your previous knowledge, the literacy you gain from this chapter will directly influence your comprehension in subsequent chapters of the book, as most other topics stand on the shoulders of this one. Furthermore, the lessons herein are cumulative, meaning you can't skip one of the topics or you will get lost. If you get stuck on one of the concepts, please seek help in understanding specifically the part that did not make sense before moving on to the next topic. Following the lessons with this sort of rigor will insure that you will get the most out of OpenFrameworks, but also computers in general.
-
-
 
 ##Iteration
 
