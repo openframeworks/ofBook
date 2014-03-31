@@ -26,7 +26,7 @@ This tutorial is an quick and practical introduction to Object Oriented Programm
 By the end of this chapter you should understand how to create your own objects and have a lot of balls bouncing on your screen!
 
 ##• 2 - What is OOP
-Object Oriented Programming is a programming paradigm based on the use of objects and their interactions. **[KL: Some terms and definitions used within OOP are listed below:]**
+Object Oriented Programming is a programming paradigm based on the use of objects and their interactions. Some terms and definitions used within OOP are listed below:
 
 -A Class defines the characteristics of a thing - the object - and its behaviors; it defines not only its properties and attributes but also what it can do.
 
@@ -39,9 +39,14 @@ A recurring analogy is to see a Class as a the cookie cutter and the cookies as 
 Note: please see chapter (Josh Nimoy's) for amore detailed explanation of Objected Oriented languages.
 
 ##• 3 - How to build your own Classes (simple Class)
-Classes and objects are similar to the concepts of movie clips and instances in Flash and are also a fundamental part of Java programming. If you have a background in Java and/or Processing this other tutorial will be useful. **[KL: how is this tutorial useful for people with Java/Processing experience versus someone without these backgrounds? Clarify how it's useful for both.]**
-**[KL: maybe some lead up to the example below would be nice. "Now we will build an example of a class in oF to see exactly how it works."]**
-Declare a class in the header file (*.h), otherwise known as the declarations file. In this case, the file name should be ofBall.h. **[KL: "Type the code below into your ofBall.h file and note the comments I've included to guide you along."]**
+Classes and objects are similar to the concepts of movie clips and instances in Flash and are also a fundamental part of Java programming. 
+Because like coding, cooking is fun and we tend to experiment in the kitchen let's continue with the classic metaphor of a cookie cutter as a class and cookies as the objects.
+Every class has two files: a header file, also known as a Declarations file with the termination '.h' and an implementation file, terminating in '.cpp'.
+A very easy way of knowing what these two files do is to think of the header file (.h) as a recipe, a list of the main ingredients of your cookie. The implementation file (.cpp) is what we're going to do with them, how you mix and work them to be the perfect cookie!
+So let's see how it works:
+
+Declare a class in the header file (.h), otherwise known as the declarations file. In this case, the file name should be ofBall.h. 
+Folllow the code below and type into your own ofBall.h file, please note the comments I've included to guide you along.
 
 
 	#ifndef _OF_BALL // if this class hasn't been defined, the program can define it
@@ -61,6 +66,7 @@ Declare a class in the header file (*.h), otherwise known as the declarations fi
 		float speedY; // speed and direction
 		float speedX;
 		int dim;      // size
+		ofColor color; // color using ofColor type
 		
 		ofBall(); // constructor - used to initialize an object, if no properties are passed the program sets them to the default value
 		private: // place private functions or variables declarations here
@@ -69,9 +75,8 @@ Declare a class in the header file (*.h), otherwise known as the declarations fi
 
 
 We have declared the Ball class header file (the list of ingredients) and now lets get to the cooking part **[KL: I wouldn't use an arrow symbol within this text.]** to see what these ingredients can do!
-Please notice the '#include' tag, this is a way to tell the compiler which file to include for each implementation file. When the program is compiled these '#include' tags will be replaced by the original file they're referring to. The 'if statement' (#ifndef) is a way to prevent the repetition of header files which could easily occur. Here's an example of how easily this could happen due to the recursive structure of the program: Lets say we're building a Pool game, we'll have the ofApp class, dependent on this there will be the pool table class and also the pool stick class and as both of these will be needed for our balls collision detection function both will refer to the ball class individually. If we didn't use the '#ifndef' 'if' statement the compiler would try to compile the ball class repeatedly and would find some conflicts.
-
-**[KL: Inheritance issues could be addressed later on because that's a little more complex. For now we just have ofBall.h so delving into repetition issues could be approached in more detail later. It seems like an afterthought here. It deserves its own section.]**
+Please notice the '#include' tag, this is a way to tell the compiler which file to include for each implementation file. When the program is compiled these '#include' tags will be replaced by the original file they're referring to. 
+The 'if statement' (#ifndef) is a way to prevent the repetition of header files which could easily occur, by using this expression it helps the compiler to only include the file once and avoid repetition. Don;t worry about this now, we'll talk about it later on!
 
 Here's how you can write the class *.cpp file, the implementation file:
 
@@ -88,6 +93,8 @@ Here's how you can write the class *.cpp file, the implementation file:
 		speedY = ofRandom(-1, 1);
 		
 		dim = 20;
+		
+		color.set(ofRandom(255),ofRandom(255),ofRandom(255)); // one way of defining digital color is by adddressing its 3 components individually (Red, Green, Blue) in a value from 0-255, in this example we're setting each to a random value
 	}
 	
 	
@@ -113,14 +120,17 @@ Here's how you can write the class *.cpp file, the implementation file:
 	}
 
 	void ofBall::draw(){
-		// set Color based on values for Red, Green and Blue
-		ofSetColor(120,120,120);
+		ofSetColor(color);
 		ofCircle(x, y, dim);
 	} 
 **[KL: Explain exactly why we are creating this class outside of ofApp. This and the explanation below seem kind of rushed and OOP can benefit by using some real life analogies to demonstrate class relationships.]**
 
 ##• 4 - make an Object from your Class 
-Now that we've created a class let's make the real object! In your testApp.h (header file) we'll have to declare a new object and get some free memory for it. First declare an instance of the class:
+Now that we've created a class let's make the real object! In your testApp.h (header file) we'll have to declare a new object and get some free memory for it. But first we need to include (or give the instructions to do so) your ofBall class in our program. To do this we need to write:
+
+	#include "ofBall.h"
+
+on the top of your testApp.h file. Then we can finally declare an instance of the class i our progam:
 
 	ofBall myBall;
 
@@ -168,6 +178,7 @@ We've just created 3 objects but what if we wanted to created 10, 100 or maybe 1
 
 **[KL: The pseudo code-like explanation above is an effective approach. This is a good method to use before writing out the ofBall class above, too. Also, I've been taking out words like "just" before steps and simplifying verb tenses for clarity. I'd keep that in mind as you continue writing this chapter. The more concise, the better.]** 
 **[KL: Restate which file this is happening in.]**
+in the testApp class header file, where you define the balls objects also define the constant that we'll use for the number of objects:
 
 	#define NBALLS 5
 
@@ -212,7 +223,53 @@ Since we've changed the constructor, we'll need to update the ofBall implementat
 		speedY = ofRandom(-1, 1);
 	}
 
-**[KL: Give an image of the entire .cpp file and not just the part we changed because you can't tell how this fits in to the original .cpp file.]**
+Your ofBall.cpp file should look like this by now:
+	
+	#include "ofBall.h"
+	
+	ofBall::ofBall(float _x, float _y, int _dim){
+    		x = _x;
+    		y = _y;
+    		dim = _dim;
+		   
+    		speedX = ofRandom(-1, 1);
+    		speedY = ofRandom(-1, 1);
+		
+    		color.set(ofRandom(255), ofRandom(255), ofRandom(255));
+		
+	}
+	
+	
+	void ofBall::update(){
+    	
+	    if(x < 0 ){
+	        x = 0;
+        	speedX *= -1;
+    	} else if(x > ofGetWidth()){
+        	x = ofGetWidth();
+		speedX *= -1;
+    	}
+    
+	    if(y < 0 ){
+        	y = 0;
+        	speedY *= -1;
+	    } else if(y > ofGetHeight()){
+	        y = ofGetHeight();
+	        speedY *= -1;
+	    }
+		 
+	    x+=speedX;
+	    y+=speedY;
+	    
+	}
+	
+	void ofBall::draw(){
+	    ofSetColor(color);
+	    ofCircle(x, y, dim);
+	}
+	
+	
+
 By implementing these changes we'll also need to create space in memory for these objects. We'll do this by creating a pointer (a reference in memory) for each object. Back to the ofApp.h (definitions) file we'll declare a new object like this:
 
 

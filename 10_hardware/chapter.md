@@ -17,11 +17,6 @@ Additionally, following along with the examples in this chapter requires you to 
 ## getting started with serial communication
 
 
-
-**SETTING UP YOUR ARDUINO**
-
-Connecting to the computer (how in-depth to go here?)
-
 **SERIAL: ONE AFTER THE OTHER**
 
 Serial, in the most basic language sense, refers to things that come one after another; it’s a term often used to describe magazines, crimes, and television programs.  That meaning also applies when talking about serial data:  “serial communication” means that all information between two entities is being sent one piece at a time, following in a single stream.  One piece of data, or one bit, is just a binary piece of information: you’re either sending a 0 or a 1.  Using the terminology of digital electronics, these are frequently referred to as “high” and “low”; 0 is low (like turning a light off) and 1 is high (flipping it back on).  8 bits (for example the stream 01000001, which represents the letter A) are sometimes packaged together to create a single byte.
@@ -39,8 +34,6 @@ The speed at which data is transmitted between the Arduino and your software is 
 
 
 ## digital and analog communication
-
-*basic notes - flesh this section out more*
 
 **USING SERIAL MONITOR WITH ARDUINO**
 
@@ -83,7 +76,8 @@ Printing the incoming variables to the Serial monitor is the same as with a digi
 
 In the same way that Arduino uses Serial communication for communication between hardware and the Serial monitor, it can also use Serial communication to communicate between the Arduino board and any other running application, including openFrameworks.  This can be done quite simply using the ofSerial class, native to openFrameworks.  This class sets up a Serial listener at a specified baud rate and Serial port, giving it access to the same streaming data as the Serial library in the native Arduino IDE.  
 
-// code missing: ofSerial example
+There's a good, heavily commented demonstration of this in the communications folder of examples that comes bundled with openFrameworks.  The basic components needed to get this working are a Serial object, a toggle for knowing whether a message has been sent or not, and an array for storing the data that we receive.
+
 
 **USING FIRMATA AS A SERIAL PROTOCOL**
 
@@ -187,14 +181,6 @@ Because I'm controlling activity with keyboard keys, I'm going to use the `void 
 	}
 	
 When all the parts are together, run the app and toggle your UP and DOWN arrow keys to turn the on-board LED on your Arduino on and off!  You can also put in a 3mm or 5mm LED on pin 13 to make the effect more obvious.  Remember that pin 13 is the only Arduino pin with a built-in resistor, so if you want to add LEDs or other components on other pins, you'll need to build a full circuit with resistors to avoid burning out your parts.
-
-**still to come**
-
-*checking for pin activity*
-
-*analog input, example with receiving input and mapping it into a program graphic (potentiometer game)*
-
-*servo control with mouse*
 
  
 ## Lights On - controlling hardware via DMX
