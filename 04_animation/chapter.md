@@ -144,7 +144,7 @@ Raising percent to a power is one of a whole host of functions that are called "
 
 ### Zeno
 
-A small twist on the linear interpolation is a technique that I call "Zeno" based on Zeno the greek philosopher's Dichotomy paradox: 
+A small twist on the linear interpolation is a technique that I call "Zeno" based on Zeno the greek philosopher's *dichotomy paradox*: 
 
 > Imagine there is a runner running a race and the runner runs 1/2 of the distance in a certain amount of time, and then they run 1/2 of the remaining distance in the same amount of time, and run 1/2 of the remaining the distance the distance, etc. Do they finish the race?  There is always some portion of the distance remaining left to run one half of.  The idea is that you can always keep splitting the distance.
 
@@ -156,7 +156,7 @@ If we take the linear interpolation code but always alter our own position inste
 4. Move 50% closer.
 5. Go to (3).
 
-**[note: diagram for zeno]**
+![xeno diagram](images/xeno.png)
 
 In code, that's basically the same as saying 
 
@@ -264,7 +264,7 @@ or
     
 The key expression–position = position + velocity–in shorthand would be `p=p+v`.
 
-*Note, the elapsed time part is important, but when we animate we'll be doing p=p+v quite regularly and you may see us drop this to simplify things (assume every frame has an elapsed time of one). This isn't entirely accurate but it keeps things simple.* 
+*Note, the elapsed time part is important, but when we animate we'll be doing p=p+v quite regularly and you may see us drop this to simplify things (assume every frame has an elapsed time of one). This isn't entirely accurate but it keeps things simple. See the previous section on frame rate (and frame rate independence) for more details* 
 
 In addition, if you are traveling at 50 miles per hour (apologies to everyone who thinks in km!) and you accelerate by 5 miles per hour, how fast are you driving in 1 hr? The answer is 55 mph. In 2 hrs, you'd be traveling 60 mph.  In these examples, you are doing the following: 
 
