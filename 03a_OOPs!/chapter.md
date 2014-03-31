@@ -26,7 +26,7 @@ This tutorial is an quick and practical introduction to Object Oriented Programm
 By the end of this chapter you should understand how to create your own objects and have a lot of balls bouncing on your screen!
 
 ##• 2 - What is OOP
-Object Oriented Programming is a programming paradigm based on the use of objects and their interactions. **[KL: Some terms and definitions used within OOP are listed below:]**
+Object Oriented Programming is a programming paradigm based on the use of objects and their interactions. Some terms and definitions used within OOP are listed below:
 
 -A Class defines the characteristics of a thing - the object - and its behaviors; it defines not only its properties and attributes but also what it can do.
 
@@ -39,8 +39,12 @@ A recurring analogy is to see a Class as a the cookie cutter and the cookies as 
 Note: please see chapter (Josh Nimoy's) for amore detailed explanation of Objected Oriented languages.
 
 ##• 3 - How to build your own Classes (simple Class)
-Classes and objects are similar to the concepts of movie clips and instances in Flash and are also a fundamental part of Java programming. If you have a background in Java and/or Processing this other tutorial will be useful. **[KL: how is this tutorial useful for people with Java/Processing experience versus someone without these backgrounds? Clarify how it's useful for both.]**
-**[KL: maybe some lead up to the example below would be nice. "Now we will build an example of a class in oF to see exactly how it works."]**
+Classes and objects are similar to the concepts of movie clips and instances in Flash and are also a fundamental part of Java programming. 
+Because like coding, cooking is fun and we tend to experiment in the kitchen let's continue with the classic metaphor of a cookie cutter as a class and cookies as the objects.
+Every class has two files: a header file, also known as a Declarations file with the termination '.h' and an implementation file, terminating in '.cpp'.
+A very easy way of knowing what these two files do is to think of the header file (.h) as a recipe, a list of the main ingredients of your cookie. The implementation file (.cpp) is what we're going to do with them, how you mix and work them to be the perfect cookie!
+So let's see how it works:
+
 Declare a class in the header file (*.h), otherwise known as the declarations file. In this case, the file name should be ofBall.h. **[KL: "Type the code below into your ofBall.h file and note the comments I've included to guide you along."]**
 
 
