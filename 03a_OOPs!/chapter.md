@@ -223,7 +223,53 @@ Since we've changed the constructor, we'll need to update the ofBall implementat
 		speedY = ofRandom(-1, 1);
 	}
 
-**[KL: Give an image of the entire .cpp file and not just the part we changed because you can't tell how this fits in to the original .cpp file.]**
+Your ofBall.cpp file should look like this by now:
+	
+	#include "ofBall.h"
+	
+	ofBall::ofBall(float _x, float _y, int _dim){
+    		x = _x;
+    		y = _y;
+    		dim = _dim;
+		   
+    		speedX = ofRandom(-1, 1);
+    		speedY = ofRandom(-1, 1);
+		
+    		color.set(ofRandom(255), ofRandom(255), ofRandom(255));
+		
+	}
+	
+	
+	void ofBall::update(){
+    	
+	    if(x < 0 ){
+	        x = 0;
+        	speedX *= -1;
+    	} else if(x > ofGetWidth()){
+        	x = ofGetWidth();
+		speedX *= -1;
+    	}
+    
+	    if(y < 0 ){
+        	y = 0;
+        	speedY *= -1;
+	    } else if(y > ofGetHeight()){
+	        y = ofGetHeight();
+	        speedY *= -1;
+	    }
+		 
+	    x+=speedX;
+	    y+=speedY;
+	    
+	}
+	
+	void ofBall::draw(){
+	    ofSetColor(color);
+	    ofCircle(x, y, dim);
+	}
+	
+	
+
 By implementing these changes we'll also need to create space in memory for these objects. We'll do this by creating a pointer (a reference in memory) for each object. Back to the ofApp.h (definitions) file we'll declare a new object like this:
 
 
