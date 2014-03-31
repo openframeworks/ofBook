@@ -61,6 +61,7 @@ Declare a class in the header file (*.h), otherwise known as the declarations fi
 		float speedY; // speed and direction
 		float speedX;
 		int dim;      // size
+		ofColor color; // color using ofColor type
 		
 		ofBall(); // constructor - used to initialize an object, if no properties are passed the program sets them to the default value
 		private: // place private functions or variables declarations here
@@ -120,7 +121,11 @@ Here's how you can write the class *.cpp file, the implementation file:
 **[KL: Explain exactly why we are creating this class outside of ofApp. This and the explanation below seem kind of rushed and OOP can benefit by using some real life analogies to demonstrate class relationships.]**
 
 ##• 4 - make an Object from your Class 
-Now that we've created a class let's make the real object! In your testApp.h (header file) we'll have to declare a new object and get some free memory for it. First declare an instance of the class:
+Now that we've created a class let's make the real object! In your testApp.h (header file) we'll have to declare a new object and get some free memory for it. But first we need to include (or give the instructions to do so) your ofBall class in our program. To do this we need to write:
+
+	#include "ofBall.h"
+
+on the top of your testApp.h file. Then we can finally declare an instance of the class i our progam:
 
 	ofBall myBall;
 
