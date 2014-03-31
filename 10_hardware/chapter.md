@@ -1,4 +1,4 @@
-#hardware
+ #hardware
 
 ## introduction
 
@@ -42,21 +42,33 @@ The speed at which data is transmitted between the Arduino and your software is 
 
 *basic notes - flesh this section out more*
 
-Digital read / write - will also be binary (1 or 0) -- use a pushbutton
+**USING SERIAL MONITOR WITH ARDUINO**
+
+The Arduino IDE has a built-in Serial monitor, which enables you to "tune in" to the data coming across a serial port at a specified baud rate.  You can find the Serial Monitor either under Tools - Serial Monitor in the Arduino menu bar, or in the "magnifying glass" icon at the top of the IDE.
+
+In the Arduino sketch, set up Serial communication and print a basic "Hello world!" phrase to the Serial monitor in the setup() function:
+
+	Serial.begin(9600);
+    Serial.println("Hello world!");
+    
+Open the Serial monitor and make sure that your monitor is set to the same baud rate as your sketch (the variable that you set in Serial.begin() ). Note that the TX/RX lights on your Arduino flash once on setup - you can press the reset button on your Arduino (on most devices) to run setup again to see this more clearly.  The Arduino itself is sending the printed text over Serial and the Serial Monitor is picking up that text and printing it for us to read.
+
+Of course, you can also use the Serial monitor to reflect more interesting data coming from devices that are connected to your Arduino.  You can print both digital and analog input data to Serial.
+
+Digital inputs like pushbuttons, or a switch that only has open and closed positions, will send a binary value as their status.  You can walk through an example of connecting a pushbutton to your Arduino in the excellent Arduino tutorial found here:
+
+http://arduino.cc/en/tutorial/button
+
+To print the value of the pushbutton to Serial, store the returned value from digitalRead in a variable and print that variable to Serial, just as done previously with the "hello world!" example.  Here, though, print in the loop() function rather than setup() so that the value updates continuously rather than only once on reset.
+
+    buttonState = digitalRead(buttonPin);
+    Serial.println( buttonState );
+
 
 Analog read - ADC analog-digital converter chip on pins A0-A5; requires small delay because of electrical noise / jitter from the Atmega analog pin
 
 use a photoresistor / light sensor - this will convert the resistance coming in to a value between 0 and 1KB, or 0 and 1023
 
-**USING SERIAL MONITOR WITH ARDUINO**
-
-*basic notes - flesh this section out more*
-
-The Arduino IDE has a built-in Serial monitor, which enables you to "tune in" to the data coming across a serial port at a specified baud rate. 
-
-Serial.println("Hello world!");
-
-Serial.println(incoming value)
 
 Convert incoming value to an outgoing value
 
