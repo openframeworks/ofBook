@@ -127,11 +127,18 @@ Let's look at a plot of pct raised to the second power:
 **[note: better explanation of how to read the chart]**
 Think about the x value of the plot as the input and y value as the output. If put in 0, we get out a y value of 0, if we put in 0.1, we get out a y value of 0.01, all the way to putting in a value of 1 and getting out a value of 1.   
 
-Things in the world don't move linearly. They don't take even steps. Roll a ball on the floor, it slows down. It's accelerating in a negative direction. Sometimes things speed up, like a baseball bat going from resting to swinging. Curving pct leads to interesting behavior. The objects still take the same amount of time to get there, but they do it in more lifelike, non-linear ways.
+As side note, it's important to note that things in the world often don't move linearly. They don't take "even" steps. Roll a ball on the floor, it slows down. It's accelerating in a negative direction. Sometimes things speed up, like a baseball bat going from resting to swinging. Curving pct leads to interesting behavior. The objects still take the same amount of time to get there, but they do it in more lifelike, non-linear ways.
+
+![nonlinear](images/atob_nonlinear.png)
 
 If you raise the incoming number between 0 and 1 to a larger power it looks more extreme. Interestingly, if you raise this value between 0 and 1 to a fractional (rational) power (i.e., a power that's less than 1 and greater than 0), it curves in the other direction.  
 
 The second example shows an animation that uses pct again to get from A to B, but in this case, pct is raised to a power: 
+
+
+In the 4th example (**4_rectangleInterpolatePowfMultiple**), you can see a variety of these rectangles, all moving with different shaping functions.  They take the same amount of time to get from A to B, but do it in very different ways. I usually ask my students to guess which one is moving linearly -- see if you can figure it out without looking at the code: 
+
+![xeno diagram](images/multiCurved.png)
 
 http://en.wikipedia.org/wiki/12_basic_principles_of_animation#Slow_in_and_slow_out
 
@@ -172,10 +179,18 @@ If you expand the expression, you can write the same thing this way:
     
 This is a form of smoothing: you take some percentage of your current value and another percentage of the target and add them together. Those percentages have to add up to 100%, so if you take 95% of the current position, you need to take 5% of the target (e.g., currentValue * 0.95 + target * 0.05).
 
-In Zeno's paradox, you never actually get to the target, since there's always some remaining distance to go. On the computer, since we are dealing with pixel positions on the screen and floating point numbers at a specific range, the object appears to stop. 
+In Zeno's paradox, you never actually get to the target, since there's always some remaining distance to go. On the computer, since we are dealing with pixel positions on the screen and floating point numbers at a specific range, the object appears to stop.  
 
-**[note: code walk through]**
+In the 5th example **(5_rectangleXeno)**, we add a function to the rectangle that uses xeno to catch up to a point: 
 
+	void rectangle::xenoToPoint(float catchX, float catchY){
+		pos.x = catchUpSpeed * catchX + (1-catchUpSpeed) * pos.x; 
+		pos.y = catchUpSpeed * catchY + (1-catchUpSpeed) * pos.y; 
+	}
+
+Here, we have a value, `catchUpSpeed`,  that represents how fast we catch up to the object we are trying to get to.   It's set to 0.01 (1%) in this example code, which means take 99% of my own postion, 1% of the target position and move to their sum.  If you alter this number you'll see the rectangle catch up to the mouse faster or slower.  0.001 means it will run 10 times slower, 0.1 means ten times faster. 
+
+This technique is very useful if you are working with noisy data -- a sensor for example.  You can create a variable that catched up to it using xeno and smoothes out the result.  I use this quite often when I'm working with hardware sensors / physical computing, or when I have noisy data.  The nice thing is that the catch up speed becomes a knob that you can adjust between more real-time (and more noisey data) and less real-time (and more smooth) data.  Having that kind of control comes in handy!
 
 ## Function based movement
 
@@ -191,7 +206,11 @@ Sin and cos (sine and cosine) are trigonometric functions, which means they are 
 
 #### Everything about sin and cos in one graph
 
-So here's a simple drawing
+So here's a simple drawing that helps explain sin and cos. 
+
+![sin](images/atob_circle.png)
+
+All you have to is imagine a unit circle, which has a radius of 1 and a center position of 0,0.  Now, imagine a point moving counter clockwise around that point as a constant speed.  If you look at the height of that point, it goes from 0 at the far right (3 o'clock position), up to 1 at the top (12 o'clock), back at 0 at the left (9 o'clock) and down to -1 at the bottom (6 o'clock).  So it's a smooth, curving line that moves between -1 and 1.  That's it.  Sin is the height of this dot and cos is the horizontal position of this dot.  At the far right, where the height of this dot is 0, the horizontal position is 1.  When sin is 1, cos is 0, etc.   They are in sync, but shifted. 
 
 #### Simple examples
 
@@ -206,9 +225,26 @@ Here, we'll take the sin of the elapsed time `sin(ofGetElpasedTimef())`. This re
 	
 This draws a rectangle which move sinusoidally across the screen, back and forth every 6.28 seconds. 
 
-You can do simple things with offseting the phase (how shifted over the sin wave is):
+You can do simple things with offseting the phase (how shifted over the sin wave is).  In example 7 **(7_sinExample_phase)**, we calculate the sin of time twice, but the second time, we add PI: `ofGetElapsedTimef() + PI`.  This means to the two values will be offset from each other by 180 degrees on the circle (imaginging our dot, when one is far right, the other will be far left.  When one is up, the other is down).  Here we set the background color and the color of a rectangle using these offset values.  It's useful if you start playing with sin and cos to start to manipulate phase. 
 
-	void ofApp::draw(){
+	//--------------------------------------------------------------
+	void testApp::draw(){
+		
+		
+		float sinOfTime				= sin( ofGetElapsedTimef() );
+		float sinOfTimeMapped		= ofMap( sinOfTime, -1, 1, 0, 255);
+		
+		
+		ofBackground(sinOfTimeMapped, sinOfTimeMapped, sinOfTimeMapped);
+	
+		
+		float sinOfTime2			= sin( ofGetElapsedTimef() + PI);
+		float sinOfTimeMapped2		= ofMap( sinOfTime2, -1, 1, 0, 255);
+		
+		ofSetColor(sinOfTimeMapped2, sinOfTimeMapped2, sinOfTimeMapped2);
+		ofRect(100,100,ofGetWidth()-200, ofGetHeight()-200);
+		
+		
 	
 	}
 
@@ -227,13 +263,29 @@ The formula is fairly simple:
 	xPos = xOrig + radius * cos(angle);
 	yPos = yOrig + radius * sin(angle);
 
-This allows us to create something moving in a circular way. For these examples, I start to add a "trail" to the object by using the ofPolyline object. I keep adding points, and once I have a certain number I delete the oldest one. This helps us better see the motion of the object. 
+This allows us to create something moving in a circular way.  In the circle example, I will animate using this approach.  
 
-If we do things like change the radius of the circle, we can make spirals. 
+	float xorig = 500;
+	float yorig = 300;
+	float angle = ofGetElapsedTimef()*3.5;
+	float x = xorig + radius * cos(angle);
+	float y = yorig + radius * sin(angle);
+
+*Note: In OF, the top left corner is 0,0 (y axis is increasing as you go down) so you'll notive that the point travels clockwise instead of counter-clockwise.  If this bugs you (since above, I asked you imagine it moving counter clockwise) you can modify this line `float y = yorig + radius * sin(angle)` to `float y = yorig + radius * -sin(angle)` and see the circle go in the counter clockwise direction.*
+
+For these examples, I start to add a "trail" to the object by using the ofPolyline object. I keep adding points, and once I have a certain number I delete the oldest one. This helps us better see the motion of the object. 
+
+If we increase the radius, for example by doing: 
+
+	void testApp::update(){
+		radius = radius + 0.1;
+	}
+
+we get spirals. 
 
 #### Lisajous figures
 
-Finally, if we alter the angles we pass in to x and y for this formula in different rates, we can get interesting figures, called "Lissajous" figures, named after the French mathematician, Jules Antoine Lissajous. These formulas look cool. **[note: more]**
+Finally, if we alter the angles we pass in to x and y for this formula in different rates, we can get interesting figures, called "Lissajous" figures, named after the French mathematician, Jules Antoine Lissajous. These formulas look cool.   Often times I joke with my students in algo class about how this is really a course to make cool screen savers. 
 
 ### Noise
 
