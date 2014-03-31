@@ -118,7 +118,6 @@ We define a struct called timeData which will hold the values from each line of 
 typedef struct {
     
 	int year;
-	float pop;
 	float ny;
 	float lou;
 	float ala;
@@ -156,7 +155,6 @@ In summary, our H FILE will look like this:
 typedef struct {
     
     int year;
-    float pop;
     float ny;
     float lou;
     float ala;
@@ -234,10 +232,9 @@ We can nest this function in a conditional function that checks we are not at th
         	vector < string > split = ofSplitString(line, "\t");
         	popData data;
         	data.year = ofToInt(split[0]);
-        	data.pop = ofToFloat(split[1]);
-        	data.ny = ofToFloat(split[2]);
-        	data.lou = ofToFloat(split[3]);
-        	data.ala = ofToFloat(split[4]);
+        	data.ny = ofToFloat(split[1]);
+        	data.lou = ofToFloat(split[2]);
+        	data.ala = ofToFloat(split[3]);
         	dataPoints.push_back(data);
     	}
 
