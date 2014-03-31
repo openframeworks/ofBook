@@ -132,20 +132,41 @@ float foo (float t){
 We'll skip the entire solution, and just reveal that the result will appear in the form of $$ax^{3} + bx^{2} + cx + d$$
 See the pattern here? The highest exponent is the number of successive `ofLerp`s we applied, i.e. the number of successive times we changed using our parameter $t$.
 
-**//TODO: Add thanks to Steven Wittens for the idea of lerping**
-
 ##### …And So On
 The general notion in Uni level Calculus is that _you can do anything if you have enough of something_. So fittingly, there's a curious little idea in Mathematics which allows us, with enough of these nested control points, to approximate any curve segment we can imagine. In the original formulation of that idea (called a _Taylor Series_), we only reach a good approximation if the amount of degrees (successive `lerp`s we applied) is close to infinity.
 
 In Computer Graphics, as you're about to see - 3 is close enough.
 
 ### Splines
-What we've done in the previous chapter is really quite remarkable. We have built a series of control points for 
-** //TODO: Write this **
+What we've done in the previous chapter is really quite remarkable. We have built a rig fo control points, on top of which we built a rig for controlling these points in pairs, and we continued to do so until we ended up with one parameter, $t$, to control them all. For reasons you're about to see, Mathematicians will often shy away from the description of polynomials as a physical metaphor, so not many math books will describe this process to you this way. But anyone who's done even the slightest bit of design will benefit from that idea immensely. 
+
+The reason to avoid describing polynomials to a physical being is what happens to them soon after they step away from their control points. Every polynomial will eventually go to infinity - which is a broad term, but for us designers it means that slightly off it's range, we'll need a lot more paper, or computer screen real estate, or yarn, or cockroaches (true story) in order to draw it. 
+
+** //TODO: Draw a polynomial going to infinity **
+
+So instead of using polynomials the way they are, some mathematicians thought of a clever thing to do: use only the good range, wait for the polynomial to do something we don't like (like turn from positive to negative), **then mix it with another polynomial**. That acutally works pretty well:
+
+** //TODO: Drawing of a spline with 4 basis curves **
+
+In the illustration, we've taken a few parts of the same cubic (3rd dgree) polynomial, moved it around and scaled it to taste, and added all of them together at each point (let's call it 'mixing'). 
+
+**//TODO: Formulae **
+
+The resulting curve is seamless and easy to deal with. It also carries some sweet properties: using it, one can use the absolute minimum of direction changes to draw any cubic polynomial between any two points. In other words, _it's smooth_.
+
+These propeties make this way of creating curves pretty popular in computer graphics, and you may find its variants under different names, like _Beziér Curves_ or Spline Curves. 
+
+**//TODO: Write method decription **
+
 ### Tweening
-** //TODO: Write this **
+
+So far we've learned how to use a bunch of control points to create an intersting curve in space. We've used our parameter $t$ to simulate the time it takes to draw each point on the curve, but never really tested what it looks like to run it through time.
+
+** //TODO: Finish **
+
+
 #### Example:
-Make a ball bounce, an eye blink, and a door to slam from the wind.
+** //TODO: Make a ball bounce, an eye blink, and a door to slam from the wind. **
 
 ## More Dimensions: Some Linear Algebra
 Until now, we explored several ideas on how to change what's going on the number line. That's cool, but we want to know how to do graphics, and graphics has more than one dimension. Our ancient Mathematician ancestors (Just kidding, most important Mathematicians die before 30. Not kidding) also faced this problem when trying to address the space of shapes and structures, and invented some complex machinery to do so. The fancy name for this machinery is _Linear Algebra_, which is exactly what it sounds like: using algebraic operations (add and multiply, mostly), in order to control many lines. 
@@ -561,4 +582,7 @@ Later you'll learn about two similar matrices:
 
 
 #### Normals for directions
-                
+
+
+###### Thanks
+Thanks to Prof. Ken Perlin and Prof. Bo'az Klartag for ideas on teaching mathematics.
