@@ -45,7 +45,8 @@ Every class has two files: a header file, also known as a Declarations file with
 A very easy way of knowing what these two files do is to think of the header file (.h) as a recipe, a list of the main ingredients of your cookie. The implementation file (.cpp) is what we're going to do with them, how you mix and work them to be the perfect cookie!
 So let's see how it works:
 
-Declare a class in the header file (*.h), otherwise known as the declarations file. In this case, the file name should be ofBall.h. **[KL: "Type the code below into your ofBall.h file and note the comments I've included to guide you along."]**
+Declare a class in the header file (.h), otherwise known as the declarations file. In this case, the file name should be ofBall.h. 
+Folllow the code below and type into your own ofBall.h file, please note the comments I've included to guide you along.
 
 
 	#ifndef _OF_BALL // if this class hasn't been defined, the program can define it
@@ -74,9 +75,8 @@ Declare a class in the header file (*.h), otherwise known as the declarations fi
 
 
 We have declared the Ball class header file (the list of ingredients) and now lets get to the cooking part **[KL: I wouldn't use an arrow symbol within this text.]** to see what these ingredients can do!
-Please notice the '#include' tag, this is a way to tell the compiler which file to include for each implementation file. When the program is compiled these '#include' tags will be replaced by the original file they're referring to. The 'if statement' (#ifndef) is a way to prevent the repetition of header files which could easily occur. Here's an example of how easily this could happen due to the recursive structure of the program: Lets say we're building a Pool game, we'll have the ofApp class, dependent on this there will be the pool table class and also the pool stick class and as both of these will be needed for our balls collision detection function both will refer to the ball class individually. If we didn't use the '#ifndef' 'if' statement the compiler would try to compile the ball class repeatedly and would find some conflicts.
-
-**[KL: Inheritance issues could be addressed later on because that's a little more complex. For now we just have ofBall.h so delving into repetition issues could be approached in more detail later. It seems like an afterthought here. It deserves its own section.]**
+Please notice the '#include' tag, this is a way to tell the compiler which file to include for each implementation file. When the program is compiled these '#include' tags will be replaced by the original file they're referring to. 
+The 'if statement' (#ifndef) is a way to prevent the repetition of header files which could easily occur, by using this expression it helps the compiler to only include the file once and avoid repetition. Don;t worry about this now, we'll talk about it later on!
 
 Here's how you can write the class *.cpp file, the implementation file:
 
@@ -93,6 +93,8 @@ Here's how you can write the class *.cpp file, the implementation file:
 		speedY = ofRandom(-1, 1);
 		
 		dim = 20;
+		
+		color.set(ofRandom(255),ofRandom(255),ofRandom(255)); // one way of defining digital color is by adddressing its 3 components individually (Red, Green, Blue) in a value from 0-255, in this example we're setting each to a random value
 	}
 	
 	
@@ -119,7 +121,7 @@ Here's how you can write the class *.cpp file, the implementation file:
 
 	void ofBall::draw(){
 		// set Color based on values for Red, Green and Blue
-		ofSetColor(120,120,120);
+		ofSetColor(color);
 		ofCircle(x, y, dim);
 	} 
 **[KL: Explain exactly why we are creating this class outside of ofApp. This and the explanation below seem kind of rushed and OOP can benefit by using some real life analogies to demonstrate class relationships.]**
