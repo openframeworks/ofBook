@@ -40,10 +40,13 @@ Data is available and stored in specific file types that have particular structu
 *TSV: Tab separated value files are text files where entries in the lines of the file are separated by tabs. These can be directly imported into OF. 
 *XML: XML files are written in EXtensible Markup Language. XML files are composed of tags that define a data hierarchy for the values within them. A tag has a name, attributes and values within it. If tags are nested the enclosing tags are called parent tags and the nested tags are the children. The tags next to one another are siblings.
 
+```html
 <parentTagName>
     <childtagName attributeName="attributeValue">TagValue</childtagName>
     <siblingTag />
 </parentName> 
+```
+
 
 Reading an XML file in OF requires the use of an OF addon called ofXmlSettings.
 
@@ -115,7 +118,6 @@ We define a struct called timeData which will hold the values from each line of 
 typedef struct {
     
 	int year;
-	float pop;
 	float ny;
 	float lou;
 	float ala;
@@ -153,7 +155,6 @@ In summary, our H FILE will look like this:
 typedef struct {
     
     int year;
-    float pop;
     float ny;
     float lou;
     float ala;
@@ -194,10 +195,10 @@ public:
 
 IN THE TESTAPP FILE:
 
-Load this file into your OF program using the ofBuffer class. 
+We will now load the data file into OF using the ofBuffer class. 
 
-###2.2.1 ofBuffer Class
-ofBuffer will read the data into a buffer which is a temporary storage for our data as we write code to restructure and process it.
+####2.2.1 ofBuffer Class
+ofBuffer will read the data into a buffer which is temporary storage for it as we write code to restructure and process it.
 ofBuffer is what is known as a convenience class, and provides easy methods for reading from and writing to files. A convenience class simply means that this is a class that doesn’t do anything by itself but wraps or allows access to the functionality of a group of other classes.
 
 #### 2.2.2 Buffer Functions
@@ -231,10 +232,9 @@ We can nest this function in a conditional function that checks we are not at th
         	vector < string > split = ofSplitString(line, "\t");
         	popData data;
         	data.year = ofToInt(split[0]);
-        	data.pop = ofToFloat(split[1]);
-        	data.ny = ofToFloat(split[2]);
-        	data.lou = ofToFloat(split[3]);
-        	data.ala = ofToFloat(split[4]);
+        	data.ny = ofToFloat(split[1]);
+        	data.lou = ofToFloat(split[2]);
+        	data.ala = ofToFloat(split[3]);
         	dataPoints.push_back(data);
     	}
 
@@ -264,12 +264,14 @@ void testApp::setup(){
         vector < string > split = ofSplitString(line, "\t");
         popData data;
         data.year = ofToInt(split[0]);
-        data.pop = ofToFloat(split[1]);
-        data.ny = ofToFloat(split[2]);
-        data.lou = ofToFloat(split[3]);
-        data.ala = ofToFloat(split[4]);
+        data.ny = ofToFloat(split[1]);
+        data.lou = ofToFloat(split[2]);
+        data.ala = ofToFloat(split[3]);
         dataPoints.push_back(data);
     }
+
+ // let's round up to the next "10" on the max value
+    maxValue = ceil(maxValue / 10) * 10;
     
     
     // let's find the min and max years, and the max value for the data.
@@ -278,13 +280,10 @@ void testApp::setup(){
     minYear = dataPoints[0].year;
     maxYear = dataPoints[dataPoints.size()-1].year;
     
-    // search lineraly through the data to find the max value;
+    // search linealy through the data to find the max value;
     
     maxValue = 0;
     for (int i = 0; i < dataPoints.size(); i++){
-        if (dataPoints[i].pop > maxValue){
-            maxValue = dataPoints[i].pop;
-        }
         if (dataPoints[i].ny > maxValue){
             maxValue = dataPoints[i].ny;
         }
@@ -295,6 +294,9 @@ void testApp::setup(){
             maxValue = dataPoints[i].ala;
         }
     }
+ 
+    // let's round up to the next "10" on the max value
+    maxValue = ceil(maxValue / 10) * 10;
     
     
     dimensions.x = 150;
@@ -332,7 +334,153 @@ The draw() part of the code incorporates a for loop maps the full range of value
 }
 ```
 
-Now you will have a very basic working graph. The next steps will be to add labels and additional visual information like grids or animations.
+Now you have a very basic working graph, the next steps are to add labels and interactivity.
+
+**Step 6 Refine.**
+We need to declare a font in testApp.h file:
+```cpp
+    ofTrueTypeFont font;
+    ofTrueTypeFont labelFont;
+```
+
+and then in the testApp.cpp file in setup we load the font:
+
+```cpp
+	font.loadFont("bfont.ttf", 20);
+	labelFont.loadFont("bFont.ttf", 10);
+```
+
+We add x axis labels using the following block of code:
+
+```cpp
+    
+    for (int i = 0; i < dataPoints.size(); i++){
+        
+        if (dataPoints[i].year % 10 == 0){
+            float x = dimensions.x + ofMap( dataPoints[i].year, minYear, maxYear, 0,dimensions.width);
+            float y = dimensions.y + dimensions.height;
+            ofSetColor(90,90,90);
+            labelFont.drawString(ofToString( dataPoints[i].year), x, y + 20);
+            ofSetColor(220,220,220);
+            ofLine(x, y, x,  dimensions.y);
+        }
+    }
+
+```
+
+So what does this mean? First we are iterating though each line of the dataPoints vector using a for loop. For each value of i, we access each line of the vector. As we do this we check: 
+
+```cpp
+if (dataPoints[i].year % 10 == 0){
+```
+This if statement asks if the year is divided by 10, is there a remainder? In other words, it is a conditional that will only be true for every 10 year interval (no remainder). Within this conditional, we are then calculating an x value that is mapped from the start of our graph area to the end (0 to dimensions.width). This evenly spaces our x values. The y value is calculating the top of the graph (dimensions.y + dimensions.height). 
+
+We then print the labels to the screen with: 
+```cpp
+labelFont.drawString(ofToString( dataPoints[i].year), x, y + 20);
+```
+
+So this selects the font (labelFont.) writes to the screen (drawString) converts the data to a string variable type (ofToString) and then takes the year from each line of the vector (dataPoints[i].year) and positions it at the x and (y+20) calculated.
+
+Lastly we draw some grid lines at each x value from the top of the graph (y) to the bottom of the graph (dimensions.height).
+
+
+We add y axis labels using this code:
+```cpp
+for (int i = 0; i <= (int)maxValue; i++){
+        if (i % 1000000 == 0){
+            float x = dimensions.x;
+            float y = dimensions.y + ofMap(i, 0, maxValue, dimensions.height, 0);
+            
+            ofSetColor(90,90,90);
+            labelFont.drawString(ofToString( i ), x - 30, y + 5);
+            ofLine(x,y, x-5,y);
+        }
+    }
+
+```
+Here we have a for loop generating values for i that range from 0 to maxValue. Similarly, the if statement will only generate ticks and labels for every 1000000 of these values. What interval is chosen for this statement will depend on the range of the data. As we are dealing with population data, we will choose to have a label at intervals of 1 million. This time y values are mapped from 0 to the height of the graph so they are spread evenly. And then text and a line is drawn using the same functions as on the x axis.
+
+**Step 6 Interact.**
+
+Finally we can add interactivity by creating clickable tabs that will switch between the different datasets in our file. This section turns our code into a state machine, where we define a variable called ‘which’ which is toggled between the values 0,1 and 2. The value of ‘which’, dictates what dataset will be displayed.
+
+In testApp.h, declare which:
+```cpp
+int which;
+```
+
+Then insert this block of code to the mousePressed part of the openFrameworks template. These conditionals define regions around the title labels and turns them into buttons. When the button is clicked, ‘which’ changes state to the value shown.
+
+
+```cpp
+void testApp::mousePressed(int x, int y, int button){
+
+
+ofRectangle rect = font.getStringBoundingBox(“NewYork”, dimensions.x, dimensions.y-15);
+    if (rect.inside(ofPoint(x,y))){
+        which = 0;
+    }
+    
+    rect = font.getStringBoundingBox(“Louisiana”, dimensions.x + 80, dimensions.y-15);
+    if (rect.inside(ofPoint(x,y))){
+        which = 1;
+    }
+    
+    rect = font.getStringBoundingBox(“Alabama”, dimensions.x + 160, dimensions.y-15);
+    if (rect.inside(ofPoint(x,y))){
+        which = 2;
+    }
+```
+
+
+Finally we must return to void testApp::draw() and make some changes. In the for loop where we draw the data points we change from this:
+```cpp
+    for (int i = 0; i < dataPoints.size(); i++){
+        
+        float x = dimensions.x + ofMap( dataPoints[i].year, minYear, maxYear, 0,dimensions.width);
+        float y = dimensions.y + ofMap( dataPoints[i].ny, 0, maxValue, dimensions.height, 0);
+        
+        ofCircle(x,y, 2);
+    }
+
+```
+to this:
+```cpp
+    for (int i = 0; i < dataPoints.size(); i++){
+        
+        float value;
+        if (which == 0) value = dataPoints[i].ny;
+        if (which == 1) value = dataPoints[i].lou;
+        if (which == 2) value = dataPoints[i].ala;
+        
+        float x = dimensions.x + ofMap( dataPoints[i].year, minYear, maxYear, 0,dimensions.width);
+        float y = dimensions.y + ofMap( value, 0, maxValue, dimensions.height, 0);
+        
+        
+        ofCircle(x,y, 2);
+    }
+
+```
+We have created a new float ‘value’ to hold each data point. Depending on the value of ‘which’, value is assigned data from one of the three data sets in the tsp file. 
+
+Finally the last step here is to draw the titles to the screen which is done by adding the last block of code underneath the for loop we just changed.
+
+```cpp
+
+	if (which == 0) ofSetColor(180,90,90);
+    	else ofSetColor(90,90,90);
+    	font.drawString("Milk", dimensions.x, dimensions.y-15);
+    
+    	if (which == 1) ofSetColor(180,90,90);
+    	else ofSetColor(90,90,90);
+    	font.drawString("Tea", dimensions.x + 80, dimensions.y-15);
+    
+    	if (which == 2) ofSetColor(180,90,90);
+    	else ofSetColor(90,90,90);
+    	font.drawString("Coffee", dimensions.x + 160, dimensions.y-15); 
+
+```
 
 
 ##2.3 More Useful functions for working with data
@@ -357,6 +505,13 @@ ofToFloat(const string &intString);
 ofToFloat(string);
 ```
 This object converts another variable type into an a float variable. 
+
+
+
+
+
+
+
 
 ##3. Geolocated data example using a json file and an API
  

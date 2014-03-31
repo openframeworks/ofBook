@@ -2,15 +2,13 @@
 
 Permanent interactive outdoor installation developed by [Daily tous les jours](http://dailytouslesjours.com/ "Daily tous les jours") for Montreal's planetarium (2014). 
 
-Chapter by Eva Schindling, Pierre Thirion
+Chapter by Eva Schindling (with help from Pierre Thirion)
 
 ## Project Overview 
 
 [Choreographies for Humans and Stars](http://www.dailytouslesjours.com/project/choregraphies-pour-des-humains-et-des-etoiles/) is a permanent outdoor installation hosted at Montreal's Rio Tinto Alcan Planetarium. The interactive projection on the building's facade invites passers-by to a series of collective dance performances inspired by the different mechanics of planets and stars.
 
-Seven stones anchored into the ground delimit the dance area in front of the projection. A series of instructions on the screen guide participants through a set of choreographies that combine dance and astronomy. The participants use their bodies to understand celestial dynamics like eclipses, forces of attraction and combustion. 
-
-A camera system tracks the movements across the dance stage and controls the images and animations on the projection. The original image material has been produced through workshops with local kids.
+Seven stones anchored into the ground delimit the dance area in front of the projection. A series of instructions on the screen guide participants through a set of choreographies that combine dance and astronomy. The participants use their bodies to understand celestial dynamics like eclipses, forces of attraction and combustion. A camera system tracks the movements across the dance stage and controls the images and animations on the projection. The original image material has been produced through workshops with local kids.
 
 ![On site](images/revolutionsatplane.jpg "Project in action")
 
@@ -58,12 +56,12 @@ Our more pragmatic goal was to get it all done by November 2013, with the main i
 
 ### Everyone involved
 
-Credit lists quickly grow long. The internal DTLJ team includes Mouna and Melissa being the main artists with the vision, Eva handling software, Pierre being heavily involved with visual identity and video production, Michael handling the LEDs in the outdoor furniture. The list of external collaborators include a producer (Nicolas), a choreographer (Dana), a technical director (Frédérick), a software engineer (Emmanuel), a film animator (Patrick), an industrial design studio (Dikini), a graphic designer (Studio Atelier), a concrete workshop (M3Beton), engineers, a camera man, ... 
+Credit lists quickly grow long. The internal DTLJ team includes Mouna and Melissa being the main artists with the vision, Eva handling software, Pierre being heavily involved with visual identity and video production, Michael handling the LEDs in the outdoor furniture. The list of external collaborators include a producer (Nicolas), a choreographer (Dana), a technical director (Frederick), a software engineer (Emmanuel), a film animator (Patrick), an industrial design studio (Dikini), a graphic designer (Studio Atelier), a concrete workshop (M3Beton), engineers, a camera man, ... 
 
 
-## Ideation, Narrative, Prototyping and Producing Content
+## Ideation and Prototyping
 
-*Choreographies for Humans and Stars* is inspired by space as the great unknown. We felt that our role could be to bring a physical experience that would help the planetarium visitors to not only understand but also feel what space is about. One of our early inspiration was the opening scene of the Belà Tarr's movie "*Werckmeister Harmonies*", where a party ends in dancing a solar system waltz with the Earth and the Moon turning around an eclipsing Sun.
+*Choreographies for Humans and Stars* is inspired by space as the great unknown. We felt that our role could be to bring a physical experience that would help the planetarium visitors to not only understand but also feel what space is about. One of our early inspiration was the opening scene of the Béla Tarr's movie "*Werckmeister Harmonies*", where a party ends in dancing a solar system waltz with the Earth and the Moon turning around an eclipsing Sun.
 
 Very early in the process we started collaborating with a choreographer and together we explored how participants could use their bodies in ways that mimic celestial dynamics. In a choreography-driven narrative each scene would represent a recognizable space phenomena, instigating a journey from spinning like revolving planets, to lining up to cause an eclipse. 
 
@@ -80,7 +78,6 @@ Similar challenging was the task to communicate the instructions to the particip
 
 
 ![Instructions](images/instructionsandvisuals.png "Instructions")
-**[IMG TODO: update scene images, update instructions)**
 
 
 ### Outlining the dance zone
@@ -90,7 +87,6 @@ The projection being intangible, it was important to give the project a physical
 At the beginning we imagined a series of stones and platforms arranged to form celestial pathways and encouraged hopping from stone to stone. Yet this would have introduced too many physical obstacles (tripping over, slipping) and severely limited the free movements and interactions in the space. Over the course of prototyping the importance of the physical presence shifted from being an interface to providing a delimiting perimeter around the active dance zone. After going through many design proposals (a stage, a ring, a ballet pole!) we landed on 7 foot-high concrete stones positioned in a circular formation. A single white LED on each stone enhanced their presence. Installing the underground cabling for those 7 LEDs proved a big challenge and required the $10k rental of a ground-unfreezing device. 
 
 ![Dance zone](images/plane_dancezone.png "Dance zone encircled by 7 stones")
-**[image todo: correct position of steles, add projection img?]**
 
 
 ### Producing video content
@@ -108,8 +104,6 @@ Working inside the biodome turned out to be quite entertaining: my access route 
 
 ![Projector and camera positon](images/sitein3d.png "Projector and camera position")
 
-**[IMG TODO: nicer rendering)**
-
 #### Camera style and placement
 In an ideal camera tracking scenario you have a controlled indoor environment that provides a clean top-down camera view and lets you create the lighting and background design of your choice. Our site at the planetarium is outdoors and therefore subject to all possible weather conditions. The foreground-background contrast can invert based on if snow covers the dark pavement or not. The general lighting conditions are poor, but the area can temporarily get lit up by the flashlights of driving-by cars. 
 
@@ -126,7 +120,6 @@ The network being part of the city network, was heavily controlled, subject to 1
 ![Technical System Diagram](images/PLANETARIUM_TECH_DIAGRAM_20140322.png "Technical System Diagram")
   
 **[very simple system diagram, maybe not necessary?]**
-**maybe these can just be annotations on the previous 3d picture?**
 
 
 ### Choice of tracking software
@@ -139,24 +132,18 @@ To track participants in our dance zone we used blobserver's HOG detector ([hist
 
 First tracking tests were done based on publicly available databases of human shapes [link?], but to get better results we created our own image database. We trained the system on images taken with our camera on site, providing the specific camera angle and the same specific background. Future project updates will include further training of the tracking model by including images showing people and environment in their summer-attire. 
 
-![tracking](images/blobservertracking.png "Camera view and tracking result")
-
-**[IMG TODO: find nicer image or make this one prettier)**
+![tracking](images/blobservertracking.png "left: camera source footage, right: blobserver tracking")
 
 #### Tracking challenges
 The tracking algorithm performs great when dealing with ideal-case scenarios: maximum 3 people, moving at a distance from each other, their silhouettes standing out with high contrast from the background. But naturally, in an public setting without any sort of supervision you can't control how the audience uses your artwork. As soon as too many people enter the dance zone at once, the system can get confused by overlapping shapes. Similarly too tiny children, or clothes in the same brightness as the background can cause the detection algorithm to sporadically fail. Configuring the system to forgive those mistakes and let it pretend it still detects those participants, also widens the door for unintentional noise (fake positives).  
 
-That balance between detection precision and detection forgiveness and the fact that we dealt with a fuzzy system in an uncontrolled environment, took a while to settle in (Side note: this is our first camera tracking project). During early on-site tests we'd settle on tracking settings that performed well, only to come back the next day to a different weather scenario and discover that the same settings didn't apply anymore. 
+That balance between detection precision and detection forgiveness and the fact that we deal with a fuzzy system in an uncontrolled environment, took a while to settle in (Side note: this is our first camera tracking project). During early on-site tests we'd settle on tracking settings that performed well, only to come back the next day to a different weather scenario and discover that the same settings didn't apply anymore. 
 
 After learning this the hard way, we understood to lower our expectations and also figured out ways to make use of the limitations of the system. Certain instructions ask participants to change into untypical shapes (*"Hop from one spot to the other"*, *"Drop to the ground"*). Instead of training the system on the shapes of people hopping or lying on the ground, we'd use the fact that the detection system lost them, in order to trigger visual reactions. 
 
 Similarly we'd detect people spinning - "*Take someone's hand, spin and lean out as far as possible*" - by counting how many times the system loses and re-detects their shapes. As we'd only look for one specific choreography in each scene, we were free to interpret the incoming tracking results as needed.
 
-![Drop](images/camview_liedown.jpg "Drop to the ground")
-
-![Spin](images/camview_spin1.jpg "Spin")
-
-**[IMG TODO: make prettier, possibly overlay tracking windows)**
+![Drop and Spin](images/camview_dropandspin.png "Left: Drop to the ground, Right: Spin")
 
 ### Choice of visualization software
 This project provided the perfect excuse to jump back into openFrameworks. Previous company projects relying on computation mostly lived in the realm of music (max/MSP) or the web (python, node.js). On the rare occasion that visuals were involved, a too short timeline asked for a quick solution (processing). And in general we fall victim to the mistake of over-polluting the never ending prototype and simply turning it into production software. 
@@ -275,8 +262,6 @@ The blob location data received from the tracking software is based on the angle
 
 ![perspectiveTransform](images/perspective_transform.jpg "perspectiveTransform")
 
-**[IMG TODO: redraw, add blob-ids)**
-
 ### Implementing video content
 All our visual raw material exists in the form of videos (and some images). Besides written instructions that are drawn, everything on the projection is direct video display without any effects. 
 
@@ -390,11 +375,8 @@ The `ofNotifyEvent()` call then triggers the connected function in the baseApp:
 For testing and tuning purposes the application is run on 2 screens: the projection and the debug screen (by using `window.setMultiDisplayFullscreen(true)`). The debug screen shows a visualization of the tracking data, the states of the blobs relevant for the current scene, two GUI panels for finetuning parameters, and a smaller preview of the projection view. 
 
 When doing live testruns on site it is important to have all interaction parameters easily accessible via a GUI. Thresholds like: what velocity defines "standing still", or how exact does the alignment need to be to activate the eclipse - are easier to tune if comparison runs don't need to get interrupted by software compilation time.  
+
 ![GUI](images/blackGUI.png "GUI screen")
-
-
-
-
 
 
 
@@ -432,21 +414,19 @@ Once an installation has been open to the public for a few days, it hopefully ha
 
 **[TODO]**
 
-After a few weeks/months of running the reception of the project is very good. The installation seems successful in addressing several kinds of audiences: kids, teens and parents engage in different ways. Some people also just stop and watch others performing.
+At the point of writing this chapter *Choreographies for Humans and Stars* has been on show for 2-3 winter months. The projection on the shiny building looks very stunning and the snow landscape gives the site a beautiful lunar feeling. The project seems successful in addressing different kinds of audiences and manages to engage kids, teens and parents alike. 
 
-The delicate LEDs also caused the most confusion, as participants mistook them to be the secret sensors triggering the interaction.
+While for most people the choreography instructions seem easy to follow, we've also observed  several people mistaking the 7 concrete stones as interactive trigger elements. The confusion might be due to the delicate LEDs in the stones looking like sensors, or the descriptive text relief sculpted on top of the stones. 
 
-![On steles](images/camview_onsteles.jpg "On steles")
+![On stones](images/camview_onsteles.jpg "Participants mistaking the stones as trigger elements")
 
+The reception from the audience is very good even though the usage count is not very high yet. Besides at events like Montreal's Nuit Blanche - luring with fires and hot beverages - the winter season with its low temperatures currently prohibits people from hanging out and letting the site become a destination in itself. 
 
-We are gathering data to get objective analysis of the usage and behaviors.
-**[insert stats]**
-
-Curious to see how people (staff, visitors and passersby) will live with the piece over time.
-
-Even though snow gives the site a beautiful lunar feeling, we look forward to monitoring the usage over summer.
+For objective analysis of usage and interaction behaviours we are gathering data with a simple logging system. It will be interesting to observe the usage over time and analyse the difference between seasons and succeeding years. Besides looking at number, we are also curious to see how people (the planetarium staff, visitors and passersby) will live with the piece over time.
 
 
-![Exahle](images/exhaleatplane.jpg "Exhale")
+
+
+![Exahle](images/exhaleatplane.jpg "Participants following the instruction to lie down, exhale and look at the sky")
 
 ![On site](images/hopatplane.jpg "Project in action")
