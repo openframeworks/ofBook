@@ -505,19 +505,13 @@ ofToFloat(const string &intString);
 ofToFloat(string);
 ```
 This object converts another variable type into an a float variable. 
-
-
-
-
-
-
-
-
-##3. Geolocated data example using a json file and an API
  
 
 ##3. Working with APIs 
 ###3.1 What are APIs?
+An API is an Application Programming Interface. This means it is a software to software interface allowing one piece of software to interact automatically with another online software. It takes the form of a set of instructions for how a program can be designed to interface with the online service. Every API is different with some being very well documented while others are not. 
+
+You can write programs in OpenFrameworks so that data an be pulled from an API automatically and used in your sketch. For example if we want to be able to pull data from the New York Times API we would inspect the instructions for doing so here: http://developer.nytimes.com/docs.
 
 
 ##Further resources
