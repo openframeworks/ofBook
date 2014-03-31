@@ -2,18 +2,28 @@
 
 **NOTE: This chapter is formatted with MD and LaTeX. Github won't render it properly. Try [stackedit.io](http://stackedit.io) instead**
 
-## Intro: How Artists Approach Math
-** // TODO: Write intro **
+## How Artists Approach Math
+Math is a curious thing in arts. Many artists reference it directly as inspiration for their work, from Leonardo Da Vinci's _Vitruvian Man_, through Escher's different views of fields of numbers, to the tedious namedrop of "The Golden Ratio" for every concept product made in a design school since the iPhone (if you think that's a neat idea, please read this chapter more than twice).
 
-…
+Computers allowed simulation to happen, which means people could draw more than (and faster than) they could think. When Benoît Mandelbrot worked for IBM, his attempt at printing the density map of a self-repeating sequence of complex numbers – something that would have taken forever for a human hand and head – resulted in a scientific measurement being reappropriated for its aesthetic value, in what we now call [Fractal Art](https://en.wikipedia.org/wiki/Fractal_art), a family that also grew to include tree-like structures generated from [L-System](http://en.wikipedia.org/wiki/L-system) grammars and three-dimensional extensions with lovely names such as "Mandelbulb". It's acceptable to call these things _Art_, because the thought that mathematicians had done this deliberately in their work would simply confuse the audience.
+
+Thing is, we know better than all of that. Math is everywhere in Art, just like Art is everywhere in Math. 
+When using a brush or pen or chisel, we're taking advantage of the hard work that nature is doings, calculating physics, rendering things perfectly for us, all in real time. Our brains apply direct aesthetic knowledge to a work, and we're done. WYSIWYG. In the computer world, none of that is true. Things like L-Systems had to be created for us to use, because our hands can't reach into the computer. If you're doing any bit of digital art, the math is happening somewhere, whether you control it or not. This chapter will try to explain some of the basics of the black arts of graphics programming. I wish I could make this chapter 5 times as long and include the really neat stuff, but that would make this book too heavy to put in a rucksack.
 
 ## About this Chapter
+A Math chapter for a book about graphics will always miss out on many ideas. In fact, there are entire books covering "math for graphics", mostly consisting of references to other books, focusing on a specific topic (like Linear Algebra, Multivariable Calculus, Differential Geometry, and many other words mysteriously connected to other words). This chapter must therefore be very concise about ideas. All topics here are explained in a friendly way, but please - never fear googling a thing you need better examples for.
+
 This chapter will be divided into _'numbers of D's'_ : we'll start from one dimension, and slowly explore the possibilities of using scale and change in different dimensions. Depending on how you choose to read it, this section contains hundreds of Mathematicians' lifetime research, or in other words, several classes of college math, so it's worth bookmarking.
 
 When bringing math to innocent readers, most programming books will try to explain the idea, not necessarily the exact implementation. This book is no different. This chapter contains detailed breakdowns of concepts, but if you want to find out what's going on under the hood, there's no alternative to reading the source code - in fact, since all the math here is only a few lines long - it's actually _encouraged_ to have a look at the source.
 
 ## One Dimension: Using Change
-**// TODO: Write intro**
+
+Let's start our journey by looking at the number line. It's a stretch of numbers going to inifinity in both the positive and negative direction. Supppose we were ants or microbes, so that we could stand on exactly one value here, and travel to any other value by walking in that direction.
+That's pretty much the definition of a _dimension_. It's an infinite collection of values that are all accessible, and any value of it can be describted with one number. As you're about to see, these properties are going to enable quite a lot of options.
+
+**//TODO: Draw the number line **
+
 ### Interpolation
 #### Linear Interpolation: The `ofLerp`
 ```cpp 
@@ -160,13 +170,16 @@ These propeties make this way of creating curves pretty popular in computer grap
 
 ### Tweening
 
-So far we've learned how to use a bunch of control points to create an intersting curve in space. We've used our parameter $t$ to simulate the time it takes to draw each point on the curve, but never really tested what it looks like to run it through time.
+So far we've learned how to use a bunch of control points to create an intersting curve in space. We've used our parameter $t$ to simulate the time it takes to draw each point on the curve. We also implicitly assumed that time runs only in the period that we let it run in, in the case of our examples, between 0 and 1. But we never really tested what it looks like to run all of that in real time. 
 
-** //TODO: Finish **
+**//TODO: Drawing of a smoothstep curve **
 
+Apparently, it's not that different from running it through space. By looking at the $x$ dimension of this graph as time and the $y$ dimension of this graph as a value for our creation, we can see some patterns of animation forming. The trick is simple: think of all of the values that need to change in your animation, and control them using functions. 
 
 #### Example:
 ** //TODO: Make a ball bounce, an eye blink, and a door to slam from the wind. **
+
+Tweening is not yet a standard part of the openFrameworks library. In the meantime, some nice utility functions for tweening are available in the ofxTween library.
 
 ## More Dimensions: Some Linear Algebra
 Until now, we explored several ideas on how to change what's going on the number line. That's cool, but we want to know how to do graphics, and graphics has more than one dimension. Our ancient Mathematician ancestors (Just kidding, most important Mathematicians die before 30. Not kidding) also faced this problem when trying to address the space of shapes and structures, and invented some complex machinery to do so. The fancy name for this machinery is _Linear Algebra_, which is exactly what it sounds like: using algebraic operations (add and multiply, mostly), in order to control many lines. 
@@ -573,11 +586,12 @@ Later you'll learn about two similar matrices:
 * The _View_ matrix tramsforms the result of the _Model_ matrix to simulate where our camera is supposed to be at.
 * The _Projection_ matrix applies the optical properties of the camera we defined and turns the result of the _View_ matrix from a 3D space to a 2D image. The Projection matrix is built slightly different than the _Model-View_ matrix, but if you've made it this far, you won't have trouble reading about it in a special Graphics topic.
 
-* Example: a pack of sharks swimming
+** //TODO: Example: a pack of sharks swimming **
 
 ### Really using normals
-#### The cross product
+
 #### Normals for lighting
+
 * Example: Lambert and Phong shading
 
 
