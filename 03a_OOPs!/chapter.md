@@ -87,7 +87,7 @@ Here's how you can write the class *.cpp file, the implementation file:
 **[KL: did the previous chapter talk about how to create a new class in oF? If so, no worries, but if it didn't, it's a good idea to address how to do that, and that the example below is ofBall.cpp.]**
 
 **[JTN: yes it did but only in the unabridged version ]**
-**[RX: will add xcode instructions, anyone up to help with other IDEs? ]**
+**[RX: added xcode instructions below, anyone up to help with other IDEs? ]**
 
 	#include "ofBall.h"
 	
@@ -282,11 +282,11 @@ By implementing these changes we'll also need to create space in memory for thes
 	ofBall *myBall;  
 
 
-The star(*) means it will be created in a reserved part of memory just for it.
+The star(*) means it will be created in a reserved part of memory just for it, we'll dynamically allocate this instance of the ofBall class.
 
 **[KL: specify why we'd make it into a pointer vs not a pointer]**
 
-Now in the TestApp.cpp file we will need to create the object in the setup and we'll call the object's methods on the draw() and update() functions in a different way than before. In setup()
+Now in the TestApp.cpp file we will need to create the object in the setup and we'll call the object's methods on the draw() and update() functions in a different way than before. Instead of using the (.) dot syntax like we have been doing so far, from now on we'll use the (->) arrow syntax. Also, we'll also be creating a new instance way more explicitily. So, in setup()
 
 				// x-position,        y-position,           size
 	myBall = new ofBall(ofRandom(300,400), ofRandom(200,300), ofRandom(10,40));
