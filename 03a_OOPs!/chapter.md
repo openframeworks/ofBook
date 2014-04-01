@@ -45,13 +45,16 @@ Every class has two files: a header file, also known as a Declarations file with
 A very easy way of knowing what these two files do is to think of the header file (.h) as a recipe, a list of the main ingredients of your cookie. The implementation file (.cpp) is what we're going to do with them, how you mix and work them to be the perfect cookie!
 So let's see how it works:
 
-Declare a class in the header file (.h), otherwise known as the declarations file. In this case, the file name should be ofBall.h. 
+first of all let's create the two class files: 
+If you're using XCODE as your IDE (it stands for: Integrated Development Environment), select the src folder and left Click (or CTRL + click), on the pop menu select 'New File' and you'll be taken to a new window menu, choose the appropriate platform you're developping for (OSX or iOS) and select C++ class and finally choose a name (we used 'ofBall'). You'll automatically see the two files in your 'src' folder: ofBall.h and ofBall.cpp .
+Now let's edit your class header (.h) file. Feel free to delete all its contents and let's start from scratch:
+Declare a class in the header file (.h). In this case, the file name should be ofBall.h. 
 Folllow the code below and type into your own ofBall.h file, please note the comments I've included to guide you along.
 
 
 	#ifndef _OF_BALL // if this class hasn't been defined, the program can define it
 	#define _OF_BALL // by using this if statement you prevent the class to be called more than once which would confuse the compiler
-	#include "ofMain.h"
+	#include "ofMain.h" // we need to include this to have a reference to the OpenFrameworks framework
 	class ofBall {
 		
 		public: // place public functions or variables declarations here
@@ -76,14 +79,15 @@ Folllow the code below and type into your own ofBall.h file, please note the com
 
 We have declared the Ball class header file (the list of ingredients) and now lets get to the cooking part **[KL: I wouldn't use an arrow symbol within this text.]** to see what these ingredients can do!
 Please notice the '#include' tag, this is a way to tell the compiler which file to include for each implementation file. When the program is compiled these '#include' tags will be replaced by the original file they're referring to. 
-The 'if statement' (#ifndef) is a way to prevent the repetition of header files which could easily occur, by using this expression it helps the compiler to only include the file once and avoid repetition. Don;t worry about this now, we'll talk about it later on!
+The 'if statement' (#ifndef) is a way to prevent the repetition of header files which could easily occur, by using this expression it helps the compiler to only include the file once and avoid repetition. Don't worry about this now, we'll talk about it later on!
+
 
 Here's how you can write the class *.cpp file, the implementation file:
 
 **[KL: did the previous chapter talk about how to create a new class in oF? If so, no worries, but if it didn't, it's a good idea to address how to do that, and that the example below is ofBall.cpp.]**
 
 **[JTN: yes it did but only in the unabridged version ]**
-
+**[RX: will add xcode instructions, anyone up to help with other IDEs? ]**
 
 	#include "ofBall.h"
 	
