@@ -306,7 +306,7 @@ As you see it is now possible to directly control the objects properties on its 
 
 
 ##• 6.1 - make even more Objects from your Class
-The final part of our OOP tutorial **[KL: I simplified two statements into one for concision.]** will demonstrate an automation process to create objects from our previously built class. We'll be creating **[KL: "We'll create" works better than "we'll be creating." This is an example of verb tenses I've been changing. It's shorter and clearer.]**  objects through arrays as we did in part 2.1 with some minor changes:
+In this part of our OOPs! tutorial **[KL: I simplified two statements into one for concision.]** we'll demonstrate an automation process to create objects from our previously built class. We'll create more **[KL: "We'll create" works better than "we'll be creating." This is an example of verb tenses I've been changing. It's shorter and clearer.]**  objects by using arrays like we did in part 2.1 but this time we'll have to do some minor changes:
 
 	ofBall** myBall;   // an array of pointers of type ofBall
 	int nBalls;        //variable for the number of balls 
@@ -342,7 +342,48 @@ similarly when we want to draw and update the objects we've created we'll need '
 
 **[KL: Great tutorial so far. The organization works well. I'm eager to see the rest. The main thing so far would be focusing on concision in your writing.]**
 
-##• 7 - make and delete as you wish  - vectors
+##• 7 - Make and delete as you wish  - using vectors
+
+In this part we'll look into more dynamic ways of creating and destroying objects from our class.
+Vectors are special arrays that don;t need a pre-fixed number of elements, that's their magic: vectors are elastic! 
+note: You'll be hearing baout two different types of vectors throughout this book. Please don't confuse stl::vectors (the elastic arrays type we're talking about) with the math vectors (forces).
+
+Back to our beloved testApp.h file, let's define a vector of ofBall objects by typing:
+	
+	vector <ofBall*> myBall;
+
+In this expression we're creating a type (vector) of type (ofBall pointers) and naming it myBall.
+Now, let's head to our (.cpp) and start cooking!
+Ignore the setup, update and draw methods for now, let's jump to
+
+	void testApp::mouseDragged(int x, int y, int button){
+		
+	}
+
+In this method we're listening to the dragging activity of your mouse or trackpad and we'll use this simplicity to create interaction! So let's just create some code to create ofBalls and add them to our porgram when we drag the mouse.
+
+	void testApp::mouseDragged(int x, int y, int button){
+		ofBall *tempBall;
+    		tempBall = new ofBall(x,y, ofRandom(10,40));
+    		myBall.push_back(tempBall);
+	}
+
+A few new things in our code, first we declare a temporary object pointer, we them create it and assign 'x' and 'y' mouse Coordinates to it's contructor variables. We later use this temporary object as a shortcut to add ofBall objects to our vector.
+Back to our Update and Draw methids we can add the needed 'for loops' to iterate over the objects in the vector to update and draw them liek we would do with arrays. This time though we didn't declare a variable that stores the maximum number of objects but instead we call a method that vectors have that allwos us to know their size. See code below for Update:
+	
+	for (int i = 0 ; i<myBall.size(); i++) {
+        	myBall[i]->update();
+    	}
+
+and for Draw:
+    for (int i = 0 ; i<myBall.size(); i++) {
+        myBall[i]->draw();
+    }
+    
+    
+
+
+
 Quick example showing how to create dynamically objects, push them to a vector and delete them.
 Basic example : 
 - when mouse drag create objects, when objects leave the screen delete them.
