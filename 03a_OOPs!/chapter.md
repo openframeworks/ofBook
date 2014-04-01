@@ -376,17 +376,24 @@ Back to our Update and Draw methids we can add the needed 'for loops' to iterate
     	}
 
 and for Draw:
-    for (int i = 0 ; i<myBall.size(); i++) {
-        myBall[i]->draw();
-    }
+
+	for (int i = 0 ; i<myBall.size(); i++) {
+		myBall[i]->draw();
+	}
     
     
 
+Now let's also implement a way to delete them before we have way too many ofBalls:
+On the testApp::MousePressed Call we will loop though our vector and check the distance between the coordinates of the mouse with the ofBall position, if this distance is smaller than the ofBall dimension then, we know that we're clicking inside it, we can delete it.
 
+	for (int i =0; i < myBall.size(); i++) {
+		float distance = ofDist(x,y, myBall[i]->x, myBall[i]->y); // a method OF give us to check the distance between two coordinates
+        
+		if (distance < myBall[i]->dim) {
+			myBall.erase(myBall.begin()+i); // we need to use an iterator/ reference to the vector position we want to delete
+		}
+	}
 
-Quick example showing how to create dynamically objects, push them to a vector and delete them.
-Basic example : 
-- when mouse drag create objects, when objects leave the screen delete them.
 
 ##• 8 - quick intro to polymorphism
 Quick intro to polymorphism by example.
