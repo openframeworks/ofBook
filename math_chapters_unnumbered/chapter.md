@@ -572,6 +572,9 @@ Now grab a pack of ice, place it on your head for 15 minutes and go on reading t
 
 
 ### "The Full Stack"
+
+Now that we know how to construct its major components, let's have a look at all the math that constructs graphics in openFrameworks before sending it to the screen. For that, we'l have to – once again – increase our number of D's.
+
 #### Translation matrices
 
 If you recall the comment in the beginning of this chapter, mathematicians are very careful when calling things linear. In 2D, a linear operation can basically do 2 things: Rotation and Scaling (including negative scaling - "mirroring"). 
@@ -580,13 +583,18 @@ The reason for this is that these are all operations that can be done in n dimen
 If the entire shape lifts itself magically and moves away from the origin - it can't be done with a matrix, therefore it's not linear. This presents a problem to people who want to use matrices as an algebraic system for controlling 3d: in real life we need to move some stuff around.
 
 ##### Homogenous coordinates: Hacking 3d in 4d
-This problem has caused hundreds of years of agony to the openFrameworks community, until in 1827 a hacker called Möbius pushed an update to the ofMäth SVN repo: use them 4 dimensions to control a 3 dimensional shape. Here's the shtick: a 3d operation can be described as a 4d operation which doesn't do anything to the 4th dimension. Written as a matrix, we can describe it like this:
+This problem has caused hundreds of years of agony to the openFrameworks community, until in 1827 a hacker called Möbius pushed an update to the ofMäth SVN repo: use the matrix in 4 dimensions to control a 3 dimensional shape. Here's the shtick: a 3d operation can be described as a 4d operation which doesn't do anything to the 4th dimension. Written as a matrix, we can describe it like this:
 
-**//TODO: do**
+$$ A _{4\times 4} = \left(\begin{array}{ccc|c}
+a_{1,1} & a_{1,2} & a_{1,3} & 0\\
+a_{2,1} & a_{2,2} & a_{2,3} & 0\\
+a_{3,1} & a_{3,2} & a_{3,3} & 0\\
+\hline 0 & 0 & 0 & 1
+\end{array}\right)$$
 
 Now we already know that a 1D Skew can move all lines in that axis in a certain direction without affecting the other dimensions, and that a 2D skew will do that for all things on a certain plane, so it's easy to imagine that a 3D skew will do that to 3D spaces embedded in a space with more dimension. Möbius figured that feature is useful, and he proposed on the bianual openFrämeworks meeting in Tübingen that all operations will be conducted in 4D space, and then projected back into 3D space, like this:
 
-$$\left(\begin{array}{ccc|c}
+$$T = \left(\begin{array}{ccc|c}
 1 & 0 & 0 & t_{x}\\
 0 & 1 & 0 & t_{y}\\
 0 & 0 & 1 & t_{z}\\
@@ -595,7 +603,7 @@ $$\left(\begin{array}{ccc|c}
 
 The 3D Transform vector $t$ is placed in the 4th dimension, with it's 4th entry as 1 (because 1 is neutral to multiplication). The bottom row that is added has zeroes in the $x,y,z$ entries, in order to avoid interfering with other operations. Check out what happens when a vector is multiplied by this matrix: 
 
-$$\left(\begin{array}{ccc|c}
+$$T\cdot v = \left(\begin{array}{ccc|c}
 1 & 0 & 0 & t_{x}\\
 0 & 1 & 0 & t_{y}\\
 0 & 0 & 1 & t_{z}\\
@@ -637,11 +645,9 @@ If you recall, we can multiply all of these matrices to get one matrix represent
 
 We call this matrix $M$, because it places objects we give it in their place in the _Model_. Whenever you call `ofTranslate()`, `ofRotate()`, `ofScale()` (or equivalent) on an object, that operation is applied to the **currently active _Model_ matrix**. Whenever you execute `ofPushMatrix()`, a copy of that matrix is saved in _the matrix stack_, so that you can go back to it when neccessary. And when necessary, you will then use `ofPopMatrix()`, which will cause the current matrix $M$ to be deleted and replace it with a matrix from the top of the matrix stack. That is the entire mystery about matrices. That's it. 
 
-Later you'll learn about two similar matrices: 
+In the 'Advanced Graphics' chapter you'll learn about two similar matrices: 
 * The _View_ matrix tramsforms the result of the _Model_ matrix to simulate where our camera is supposed to be at.
 * The _Projection_ matrix applies the optical properties of the camera we defined and turns the result of the _View_ matrix from a 3D space to a 2D image. The Projection matrix is built slightly different than the _Model-View_ matrix, but if you've made it this far, you won't have trouble reading about it in a special Graphics topic.
-
-** //TODO: Example: a pack of sharks swimming **
 
 
 ###### Thanks
