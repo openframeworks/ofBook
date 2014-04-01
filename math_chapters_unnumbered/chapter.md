@@ -98,7 +98,7 @@ In this discussion, we're about to see how we can describe higher orders of comp
 Consider this function:
 
 ```cpp
-float foo (float t){
+float quadratic (float t){
 	float a1 = ofLerp(t, 5, 8);
 	float a2 = ofLerp(t, 2, 9);
 	float b = ofLerp(t, a1, a2);
@@ -122,12 +122,11 @@ $$
 
 Something interesting happened here. Without noticing, we introduced a second order of complexity, a _quadratic_ one. If you don't find this relationship remarkable, please give this book to someone who does.
 
-**//TODO: Write code for this example**
 
 The same manipulation can be applied for a third order:
 
 ```cpp
-float foo (float t){
+float cubic (float t){
 	float a1 = ofLerp(t, 5, 8);
 	float a2 = ofLerp(t, 2, 9);
 	float a3 = ofLerp(t, 3, -11);
@@ -152,21 +151,31 @@ What we've done in the previous chapter is really quite remarkable. We have buil
 
 The reason to avoid describing polynomials to a physical being is what happens to them soon after they step away from their control points. Every polynomial will eventually go to infinity - which is a broad term, but for us designers it means that slightly off it's range, we'll need a lot more paper, or computer screen real estate, or yarn, or cockroaches (true story) in order to draw it. 
 
-** //TODO: Draw a polynomial going to infinity **
+**//TODO: Draw a polynomial going to infinity **
 
 So instead of using polynomials the way they are, some mathematicians thought of a clever thing to do: use only the good range, wait for the polynomial to do something we don't like (like turn from positive to negative), **then mix it with another polynomial**. That acutally works pretty well:
 
-** //TODO: Drawing of a spline with 4 basis curves **
+**//TODO: Drawing of a spline with 4 basis curves **
 
 In the illustration, we've taken a few parts of the same cubic (3rd dgree) polynomial, moved it around and scaled it to taste, and added all of them together at each point (let's call it 'mixing'). 
 
-**//TODO: Formulae **
-
 The resulting curve is seamless and easy to deal with. It also carries some sweet properties: using it, one can use the absolute minimum of direction changes to draw any cubic polynomial between any two points. In other words, _it's smooth_.
 
-These propeties make this way of creating curves pretty popular in computer graphics, and you may find its variants under different names, like _Beziér Curves_ or Spline Curves. 
+These propeties make this way of creating curves pretty popular in computer graphics, and you may find its variants under different names, like _Beziér Curves_ or Spline Curves. The code for implementing this is a little long and tedious in C++, so this chapter won't go into it - but in case you were wondering, it's just the same code for making polynomials we discussed above, only with a lot of `if` statements to check if `t` is in the correct range.
 
-**//TODO: Write method decription **
+Using the curve functions in openFrameworks is pretty straightforward: All you have to do is start from a point, and then add a destination, along with the control points to reach it:
+```cpp
+//The beginning point
+line.addVertex(ofPoint(200, 400)); 
+//A sequence of two control points and a destination: 
+//control 1's x and y, control 2's x and y, and the destination
+line.bezierTo(100, 100, 800, 100, 700, 400); 
+```
+This generates this image:
+![Beziér](http://openframeworks.cc/documentation/graphics/bezier.png)
+
+This is just one example of use though. All of the different combinations are documented extensively in the _Advanced Graphics_ chapter. 
+
 
 ### Tweening
 
@@ -392,12 +401,19 @@ As a convention, we'll be marking vectors with lowercase letters and matrices wi
 #### Matrix Multiplication as a dot product
 The easiest way to look at a matrix is to look at it as a bunch of vectors. Depending on what we care about, we can either look at the columns or rows as vectors. 
 
-**//TODO: 2x2 example**
+**//TODO: Draw 2x2 example**
 
 ##### Identity
 Let's start from the simplest case. Just like with numbers, it is a very important property of any algebraic structure to have a _neutral_ member for each operation. For example, in Numberland, multiplication of any $x$ by 1 returns $x$, same goes for addition to 0.
-In Matrixland, that identity element is a matrix with 1s along the diagonal zeroes elsewhere:
-**//TODO: Make example**
+In Matrixland, that identity element is a matrix with 1s along the diagonal zeroes elsewhere. For example, the identity matrix for 3 dimensions is:
+
+$$I_{3} = \left(\begin{array}{ccc}
+1 & 0 & 0\\
+0 & 1 & 0\\
+0 & 0 & 1
+\end{array}\right)$$
+
+So for any matrix $M$, $MI = IM = M$.
 
 ##### Scale
 You might remember that when scaling a vector (i.e point in space and/or velocity and/or force and/or brightness value for a colour, etc), we may choose to scale it uniformly by scalar multiplication **/\* TODO:Example \*/** or, because of a weird language design choice, most graphics applications will allow you to scale non-uniformly on a per-component basis: **/\* TODO:Example \*/**
@@ -440,11 +456,50 @@ $$
 
 So, in order to get a multiplication through that only affects $x$, we tune the vector (upper row of the matrix) $M_{1}$ to be zero anywhere but the interface with $x$: $$M_{1} = \left(a,0,0\right)$$ so the entire calculation would be:
 
-**//TODO: Write this**
+$$
+M\cdot v=\left(\begin{array}{c}
+M_{1}\\
+M_{2}\\
+M_{3}
+\end{array}\right)\cdot v=
+\left(\begin{array}{ccc}
+a & 0 & 0\\
+M_{2,1} & M_{2,2} & M_{2,3}\\
+M_{3,1} & M_{3,2} & M_{3,3}
+\end{array}\right)\cdot v=\left(\begin{array}{c}
+\begin{array}{c}
+a\cdot v_{x} + 0\cdot v_{y} + 0\cdot v_{z}\\
+M_{2,1}\cdot v_{x} + M_{2,2}\cdot v_{y} + M_{2,3}\cdot v_{z}\\
+M_{3,1}\cdot v_{x} + M_{3,2}\cdot v_{y} + M_{3,3}\cdot v_{z}
+\end{array}\end{array}\right)
+$$
+Making the $x$ component of the resulting vector to be just $a\cdot v_{x}$, as promised.
 
 Scalar multiplication of any matrix $M$ becomes really easy, then: it's essentially right multiplication by a diagonal matrix full of $a$'s: $$a\cdot M = a \cdot I \cdot M$$
 
 ##### Skew matrices
+Odd operations like skewing are where things need to get a little less intuitive and more logical. When we think of _skewing_ we normally imagine adding to a certain dimension, suppose $x$, a proportion of a quantity from another dimension, let's say $y$. Suppose that proportion is some $0 < a \leq 1$, as if to say, 'I want to nudge it a little, the more it leaves the ground'. The matrix for doing that in 2 dimensions would look like this: 
+$$S = \left(\begin{array}{cc} 
+1 & a\\
+0 & 1 
+\end{array}\right)$$
+See what we did there? We made the resulting $x$ value depend on the input $x$ value (being multiplied by 1), but also slightly depend on the input $y$, exactly how slightly being determined by the magnitude of $a$:
+
+$$S\cdot v = \left(\begin{array}{cc} 
+1 & a\\
+0 & 1 
+\end{array}\right)
+\left(\begin{array}{c}
+x\\
+y\end{array}\right) = 
+\left(\begin{array}{c}
+1\cdot x + a\cdot y\\
+0\cdot x + 1 \cdot y\end{array}\right) = 
+\left(\begin{array}{c}
+x + ay\\
+y\end{array}\right)$$
+
+Pretty neat, right? Try to remember this trick, as we're going to use it quite a lot when we move stuff around in the fourth dimension. I'm not even joking.
 
  
 ##### Rotation matrices
@@ -587,15 +642,6 @@ Later you'll learn about two similar matrices:
 * The _Projection_ matrix applies the optical properties of the camera we defined and turns the result of the _View_ matrix from a 3D space to a 2D image. The Projection matrix is built slightly different than the _Model-View_ matrix, but if you've made it this far, you won't have trouble reading about it in a special Graphics topic.
 
 ** //TODO: Example: a pack of sharks swimming **
-
-### Really using normals
-
-#### Normals for lighting
-
-* Example: Lambert and Phong shading
-
-
-#### Normals for directions
 
 
 ###### Thanks
