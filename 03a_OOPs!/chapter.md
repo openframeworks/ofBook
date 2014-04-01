@@ -82,6 +82,8 @@ Here's how you can write the class *.cpp file, the implementation file:
 
 **[KL: did the previous chapter talk about how to create a new class in oF? If so, no worries, but if it didn't, it's a good idea to address how to do that, and that the example below is ofBall.cpp.]**
 
+**[JTN: yes it did but only in the unabridged version ]**
+
 
 	#include "ofBall.h"
 	
@@ -294,6 +296,8 @@ As you see it is now possible to directly control the objects properties on its 
 	myBall->draw();
 
 **[KL: We've changed myBall.update() to myBall->update(). That's kind of a big deal and warrants explanation concerning pointers.]**
+
+**[JTN: no harm in explaining it twice, but i introduced it at the end of my unabridged chapter https://github.com/openframeworks/ofBook/blob/master/02_cplusplus_basics/unabridged.md#classes  ]**
 
 
 
