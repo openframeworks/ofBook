@@ -16,10 +16,7 @@ void testApp::setup(){
 
 //--------------------------------------------------------------
 void testApp::update(){
-	
-	
 	radius = radius + 0.1;
-
 }
 
 //--------------------------------------------------------------
@@ -28,7 +25,6 @@ void testApp::draw(){
 	float xorig = 500;
 	float yorig = 300;
 	float angle = ofGetElapsedTimef()*3.5;
-	
 	float x = xorig + radius * cos(angle);
 	float y = yorig + radius * -sin(angle);
 	
