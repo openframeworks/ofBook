@@ -21,35 +21,30 @@ As said before, the Integrated Development Environment, IDE, is the application 
 There are several different IDEs, at least 1 for each platform you might be developing for.
 The IDE is your new kitchen, where you'll find all the tools to cook incredible stuff. Yet there are a lot of different kitchen brands, just like IDEs. All do the same but things might be laid out and named in a slightly different way, but if you know how to use one you can use any other, you only need to get used to each one. This said, I will go through each IDE showing where you will find the most used commands, controls and settings. Only read for the IDE yo are going to use.    
 All IDE's have a very similar interface, all of which will have the following, but perhaps arranged in a slightly different way.
-[abstract IDE diagram]
-
-
-
+![Abstract IDE interface](images/IDE_Interfase.jpg "Abstract IDE interface")
 - Toolbar and Run Button: In the tool bar you'll find several often used buttons, such as open, save, save all, et cetera. The one that is very important for us right now is the run button. Usually it is labeled with a triangle pointing to the right, like the "play" button. When you press it it will compile your code and if it went with no problem it will automatically run your code. Hence this is a very often used button.
 - File selector and project navigator: in this area you will see your project and the files associated to it, Usually it is displayed like a hierarchically ordered list of files. Here you'll find all the OF library files, as well as the files that are particular to your object.
 - Editing area: When you open a file in the project navigation area, usually by double clicking it, it should open in the editing area. This looks just like any regular text editing software, and behaves quite much the same.
 - Console: This is where your app, when running, outputs messages. This messages are really useful for debugging, You can print text messages to the console using the ````cout```` comand  or ````ofLog(...)```` function.
 
-
-
-####Apple xCode####     
+####Apple xCode####
 
 xCode is Apple's IDE. Used both for iOS apps and desktop apps.
 Even though there are other IDEs for MacOSX, xCode is a a pretty mature one, with lots of nice and useful features, specially for dealing with iOS apps.
 The latest xCode version is 5.0.2 yet the OF projects can be opened in version 3 onwards. **[Cofirm this]**
-**[add xCode screenshot]**
+![xCode screenshot](images/xCodeScreenShot.jpg "xCode screenshot")
+
 ####Microsoft Visual Studio 2012 Express####
 This is Microsoft's IDE, it is aimed for Windows development. Even though this is the express version it comes packed with lot's of really nice stuff.
-**[add VS screenshot]**
+![VS screenshot](images/VS_ScreenShot.jpg"VS screenshot")
 
 #### Code::Blocks####
 Code::Blocks is a free IDE. It runs on several platforms(several Linux distros, Windows and MacOSX). It is quite nice.
 **[add C::B QUICK START GUIDE]**
 
-####Eclipse####   
+####Eclipse####
 Eclipse is the IDE of choice for Linux, yet it also runs on Mac and Windows machines. For Android development you'll need to use Eclipse, regardless of your platform.
 **[add Eclipse screenshot]**
-
 
 ####The NO-IDE IDE.####
 Using the terminal and makefiles. 
@@ -64,22 +59,101 @@ If you are developing for the Raspberry Pi you'll have to make use of the Makefi
 - Using addons
                                  
 So once you've done this and tested that installation went fine, by opening any example, compiling and running it without problems we are ready to continue.
-  
-###OF structure###
+ 
+###Running examples###    
+Find the uncompressed OF version that you downloaded. From now on we will refer to this folder as the OF root folder.
+You can place the OF root folder anywhere you like. Open it. Inside of it you will find several folder. For now, open the one named "examples". (further down this chapter we will see what are all the other folder for). Inside of it you will see a lot of folders, choose anyone you want (these are named according to the topic covered by the example). Open it, once again there will be more folders, these are for each example. Open anyone you like. Inside of it you will find the project file for the example. It depends on the version of OF you downloaded which project files you'll find.
+Look at the image below and open, by double-clicking, the project file. 
+**[add project files icons]** 
+Now your IDE should open and load the OF example you chose. It should look like the IDE screenshots above.
+Locate the "Run Button" and click on it. The example should compile and run. It might take some seconds for this. If everything went fine a new window will popup and display the example you just compiled. If this happened, Congrats! You just have installed and compiled openFrameworks successfully and you are ready to go on. If this didn't happen check the notes below for each IDE. 
+- xCode: make sure that the popdown menu just at the right of the run button has selected the item with the name of your example and not the one named "openFrameworks". There might be more than one item with the name of the example you are trying to run. Select anyone as long as it is not the one named "openFrameworks". This popdown menu selects the target you want to compile. If "openFrameworks" is selected you will just compile the openFrameworks core and not the example code. When you select the other items xcode will compile both the OF core and the code for your example and when done it will run the example. 
+- **[add VS notes]**
+- **[add C::B notes]**
+- **[add Eclipse notes]** 
+- **[add makefile notes]**
+                           
+Spend some time going through the examples and running them. It should be fun! 
+Once done continue reading.
 
-If you go into the uncompressed OF version that you downloaded you will find several folders, with several others inside, so let's take a look at what these are and how to use them.
-We will call the OF root folder the one that your uncompressed OF download created, that should contain, at least, the following:
+###OF folder structure###
 
-- addons
-- apps
-- examples
-- libs
-- other
-- projectGenerator_
-- scripts
+Inside the OF root folder you will find several other folders, at least, the following:
+
 ####Addons####
-Addons folder will contain the included "core" addons. Addons are extra pieces of code that extend OF's functionalities, allowing you to do almost anything with OF. Addons are usually written by third parties that have shared these. The "core" addons, the ones already included in your OF download, are addons that are used so frequently that it has been decided to include them as part of the oficial OF download. These are coded and mantained by the OF's core developers. 
-You can go to [ofxAddons](http://ofxaddons.com/ "ofxaddons, a collection of OF addons") where you'll find almost every other Addon there is.
+Addons folder will contain the included "core" addons. Addons are extra pieces of code that extend OF's functionalities, allowing you to do almost anything with OF. Addons are usually written by third parties that have shared these. The "core" addons, the ones already included in your OF download, are addons that are used so frequently that it has been decided to include them as part of the official OF download. These are coded and maintained by the OF's core developers.     
+Check the examples/addons folder in your OF root folder where you will find at least one example about how to use each of these addons.
+You can also go to [ofxAddons](http://ofxaddons.com/ "ofxaddons, a collection of OF addons") where you'll find almost every other addon there is.
+
+####Apps####
+This is the folder where you put your project files.
+Your current OF download just contains the folder named "myApps" inside of "apps",
+which just has an empty example project folder.
+IMPORTANT: you have to respect the folder structure within the apps folder, otherwise your projects won't compile. This should be like this:
+**[add image depicting a correct and incorrect apps folder structure usage]**
+
+####Examples####
+Quite obvious. A folder with examples, sorted out by topic. There are a big bunch of examples that cover almost all of OF's aspects. Each example is made with the idea of keeping it simple and focused to the particular aspect it tries to address, thus making it easily understandable and a good startpoint when you want to do something similar in your project.
+
+####libs####
+If you don't know what you are doing, **keep your hands out from this folder**.
+Anything you change in here will affect your OF projects and probably you will not be able to compile.
+
+####other##
+Here you'll find an Arduino sketch for using with the serial example located at examples/communication/. This is handy to check that your serial communication with Arduino is setup correctly and working.
+
+####projectGenerator_####
+Here you'll find the OF project generator app. This is a super useful app that lets you create new OF projects, add to it the addons you need  and configure the project correctly so the addons work. Check the readme file inside where the usage of this app is described.
+
+####scripts####
+Just a few bash scipts usefull for compiling, cleaning and testing all the examples.
+**[Should I add here how to use these bash scripts?]**
+
+
+###The OF Pantry:###
+Your default new kitchen will only have tools for coding, but the OF kitchen comes with a super nice pantry, filled up with really nice, cool and useful stuff. 
+Imagine that you want to cook something but your kitchen has no pantry or if it has it is completely empty. In such conditions cooking anything should be at least something long, as you'll have to go out and buy the things you need and probably you won't find everything needed. This is not a nice scenario, specially if you want to get creative and make awesome things. 
+
+So, what happens when you have your pantry filled with OFs stuff? You will be able to cook whatever you wanted to, because some really good ingredients are already there. Not to say that there are some really nice tools in there. This will let you have your stuff done in a very short time, leaving you more time to get creative and try out new and more delicious recipes.
+
+####What is inside the OF pantry####
+Here you will find a lot of different things, from ingredients to tools, all ordered according to its use.
+
+*- 3d
+    - Tools for drawing basic 3d polygonal objects, such as spheres, cubes, pyramids, etc.
+    - 3D cameras. For navigating and viewing your 3D scene. Either interactively or not.
+    - 3D node. the base type for any 3d object, which allows it to be moved, rotated, scaled, parented
+**[should I say "nested" instead]** and drawn.
+    - 3D mesh. A collection of points in 3D space that allow you to draw them in several different ways,  such as points, lines, lines strips, triangles, triangles strips, and to attach textures (images) to these. All this done very efficiently using your computer's GPU. 
+    - Load and save 3D objects.
+- app
+    - Tools for setting and getting properties of your app such as window size, position, different drawing modes, framerate, et cetera.
+- communication
+    - Arduino communication via Firmata
+    - Common serial port communication
+- events
+    - OF base events, event manager.
+    - Listen to the base events, such as setup, draw, update, mouse, keys and window events.
+    - You can also create your own custom events and listen to them, in a fast and straight forwards way, yet very reliable.
+- gl 
+    - OpenGL is the library for using the computer's GPU. 
+    - OF comes wit several openGL related stuff already implemented for multi-platform use, such as VBOs (Vertex Buffer Object), FBOs (Frame Buffer Object), Renderers, Lights, Materials, Shaders, Textures, and several other Gl utilities.
+- graphics
+    - Here's a lot of things. Loading and saving images of almost any kind. Several different methods for drawing on 2D. colors and styles. Most of the drawing tools rely on OpenGl so these are usually very fast. Render as PDF. Typography with several kinds of rendering options and utilities.
+- math
+    - Vectors, Matrices, Quaternions and some really useful math helpers.
+- sound
+    - Sound player and sound grabber, with behind-the-scenes implementations for all the supported platforms.
+    - Base sound object that allows to chain different sound objects, creating sound processing chains.
+- types
+    - A lot of different base types used extensively within OF.
+- utils
+    -  File I/O utilities. Logging.Threading. System dialogs (open, save, alert). URL file loader. XML read and save (super useful for storing and reading your app's settings).
+- video
+    - Video Grabbers and players.
+
+####Addons####
+As mentioned before, addons extend OF core functionalities, and in each OF distribution there are several included addons, usually referred to as "core addons". This are the following:
 The included addons are the following:
 
 - **ofx3DModelLoader**
@@ -103,71 +177,7 @@ Loads images on a different thread, so your main thread (the one that draws to y
 - **ofxVectorGraphics**
 Used to write out EPS vector graphics files. It the same drawing syntax as OF's regular drawing syntax, so it is really easy to use. Check chapter **[add correct chapter numbre]** for more info about OF's drawing capabilities. 
 - **ofxXmlSettings**
-This is OF's old XML implementation. It is still here because a lot of addons and rely on it. The current XML implementation is called ofXml. The first uses the tinyxml library to parse the xml files, the latter uses Poco library to do such, which happens to be more powerful than tinyxml.
-
-Check the examples/addons folder where you will find at least one example about how to use each of these addons.
-
-####Apps####
-This is the folder where you put your project files.
-Your current OF download just contains the folder named "myApps" inside of "apps",
-which just has an empty example project folder.
-IMPORTANT: you have to respect the folder structure within the apps folder, otherwise your projects won't compile. This should be like this:
-**[add image depicting a correct and incorrect apps folder structure usage]**
-
-####Examples####
-Quite obvious. A folder with examples, sorted out by topic. There are a big bunch of examples that cover almost all of OF's aspects. Each example is made with the idea of keeping it simple and focused to the particular aspect it tries to address, thus making it easily understandable and a good startpoint when you want to do something similar in your project.
-
-####libs####
-If you don't know what you are doing, **keep your hands out from this folder**.
-Anything you change in here will affect your OF projects and probably you will not be able to compile.
-
-####other##
-Here you'll find an Arduino sketch for using with the serial example located at examples/communication/. This is handy to check that your serial communication with Arduino is setup correctly and working.
-
-####projectGenerator_####
-Here you'll find the OF project generator app. This is a super usefull app that lets you create new OF projects, add the addons you need to it and configure the project correctly so the addons work. Check the readme file inside where the usage of this app is described.
-
-####scripts####
-Just a few bash scipts usefull for compiling, cleaning and testing all the examples.
-**[Should I add here how to use these bash scripts?]**
-
-
-###The OF Pantry:###
-Your default new kitchen will only have tools for coding, but the OF kitchen comes with a super nice pantry, filled up with really nice, cool and usefull stuff. 
-Imagine that you want to cook a hamburger sandwich. There are lots of ingredients that you need. In the no-stuff-in-the-pantry scenario, you'll have to go out and buy all the needed ingredients, meaning that you won't be able to immediately cook and eat your delicious sandwich. What if you don't find the ingredients you need? You'll have to go out and kill a cow for its meat or grow up and harvest some veggies or both, all of which involve a lot of time and specific skills. And to make it worst you'll probably wont be able to do the best ones. All this means, cooking a sandwich is a real pain, and probably you will go out to the nearest fast food restaurant and buy there something. Just the usual stuff, not that deliciously homemade hamburger sandwich you envisioned at first. 
-So, what happens when you have your pantry filled with OFs stuff? You will be able to cook and eat your sandwich, because some really good ingredients are already there. This will take you very little time to have it ready, letting you more time to get creative and try out new and more delicious recipes.
-
-####What is inside the OF pantry####
-Here you will find a lot of different things, from ingredients to tools, all ordered according to its use.
-
-- 3d
-    - Tools for drawing basic 3d poligonal objects, such as spheres, cubes, piramids, etc.
-    - 3D cameras. For navigating and viewing your 3D scene. Either interactively or not.
-    - 3D node. the base type for any 3d object, which allows it to be moved, rotated, scaled, parented
-**[should I say "nested" instead]** and drawn.
-    - 3D mesh. A collection of points in 3D space that allow you to draw them in several different ways,  such as points, lines, lines strips, triangles, triangles strips, and to attach textures (images) to these.
-- app
-- communication
-    - Arduino communication via Firmata
-    - Common serial port communication
-- events
-    - OF base events, event manager
-- gl
-    - OpenGL related handy things, such as VBOs (Vertex Buffer Object), FBOs (Frame Buffer Object), Renderers, Lights, Materials, Shaders, Textures, and several Gl utilities.
-- graphics
-    - 
-- math
-    - Vectors, Matrices, Quaternions and some really useful math helpers.
-- sound
-    - Sound player and sound grabber, with behind-the-scenes implementations for all the supported platforms.
-    - Base sound object that allows to chain different sound objects, creating sound processing chains.
-- types
-    - A lot of different base types used extensively within OF.
-- utils
-    - 
-- video
-    - Video Grabbers and players.
-
+This is OF's old XML implementation. It is still here because a lot of addons and rely on it. The current XML implementation is called ofXml. The first uses the tinyxml library to parse the xml files, the latter uses Poco library to do such, which happens to be more powerful than tinyxml.  
 
 ###The recipes; .h and .cpp files:###
 - Make a straight analogy between these files and recipes, the bill of materials, needed tools and instructions-steps.
