@@ -2,18 +2,28 @@
 
 **NOTE: This chapter is formatted with MD and LaTeX. Github won't render it properly. Try [stackedit.io](http://stackedit.io) instead**
 
-## Intro: How Artists Approach Math
-** // TODO: Write intro **
+## How Artists Approach Math
+Math is a curious thing in arts. Many artists reference it directly as inspiration for their work, from Leonardo Da Vinci's _Vitruvian Man_, through Escher's different views of fields of numbers, to the tedious namedrop of "The Golden Ratio" for every concept product made in a design school since the iPhone (if you think that's a neat idea, please read this chapter more than twice).
 
-…
+Computers allowed simulation to happen, which means people could draw more than (and faster than) they could think. When Benoît Mandelbrot worked for IBM, his attempt at printing the density map of a self-repeating sequence of complex numbers – something that would have taken forever for a human hand and head – resulted in a scientific measurement being reappropriated for its aesthetic value, in what we now call [Fractal Art](https://en.wikipedia.org/wiki/Fractal_art), a family that also grew to include tree-like structures generated from [L-System](http://en.wikipedia.org/wiki/L-system) grammars and three-dimensional extensions with lovely names such as "Mandelbulb". It's acceptable to call these things _Art_, because the thought that mathematicians had done this deliberately in their work would simply confuse the audience.
+
+Thing is, we know better than all of that. Math is everywhere in Art, just like Art is everywhere in Math. 
+When using a brush or pen or chisel, we're taking advantage of the hard work that nature is doings, calculating physics, rendering things perfectly for us, all in real time. Our brains apply direct aesthetic knowledge to a work, and we're done. WYSIWYG. In the computer world, none of that is true. Things like L-Systems had to be created for us to use, because our hands can't reach into the computer. If you're doing any bit of digital art, the math is happening somewhere, whether you control it or not. This chapter will try to explain some of the basics of the black arts of graphics programming. I wish I could make this chapter 5 times as long and include the really neat stuff, but that would make this book too heavy to put in a rucksack.
 
 ## About this Chapter
+A Math chapter for a book about graphics will always miss out on many ideas. In fact, there are entire books covering "math for graphics", mostly consisting of references to other books, focusing on a specific topic (like Linear Algebra, Multivariable Calculus, Differential Geometry, and many other words mysteriously connected to other words). This chapter must therefore be very concise about ideas. All topics here are explained in a friendly way, but please - never fear googling a thing you need better examples for.
+
 This chapter will be divided into _'numbers of D's'_ : we'll start from one dimension, and slowly explore the possibilities of using scale and change in different dimensions. Depending on how you choose to read it, this section contains hundreds of Mathematicians' lifetime research, or in other words, several classes of college math, so it's worth bookmarking.
 
 When bringing math to innocent readers, most programming books will try to explain the idea, not necessarily the exact implementation. This book is no different. This chapter contains detailed breakdowns of concepts, but if you want to find out what's going on under the hood, there's no alternative to reading the source code - in fact, since all the math here is only a few lines long - it's actually _encouraged_ to have a look at the source.
 
 ## One Dimension: Using Change
-**// TODO: Write intro**
+
+Let's start our journey by looking at the number line. It's a stretch of numbers going to inifinity in both the positive and negative direction. Supppose we were ants or microbes, so that we could stand on exactly one value here, and travel to any other value by walking in that direction.
+That's pretty much the definition of a _dimension_. It's an infinite collection of values that are all accessible, and any value of it can be describted with one number. As you're about to see, these properties are going to enable quite a lot of options.
+
+**//TODO: Draw the number line **
+
 ### Interpolation
 #### Linear Interpolation: The `ofLerp`
 ```cpp 
@@ -88,7 +98,7 @@ In this discussion, we're about to see how we can describe higher orders of comp
 Consider this function:
 
 ```cpp
-float foo (float t){
+float quadratic (float t){
 	float a1 = ofLerp(t, 5, 8);
 	float a2 = ofLerp(t, 2, 9);
 	float b = ofLerp(t, a1, a2);
@@ -112,12 +122,11 @@ $$
 
 Something interesting happened here. Without noticing, we introduced a second order of complexity, a _quadratic_ one. If you don't find this relationship remarkable, please give this book to someone who does.
 
-**//TODO: Write code for this example**
 
 The same manipulation can be applied for a third order:
 
 ```cpp
-float foo (float t){
+float cubic (float t){
 	float a1 = ofLerp(t, 5, 8);
 	float a2 = ofLerp(t, 2, 9);
 	float a3 = ofLerp(t, 3, -11);
@@ -132,20 +141,54 @@ float foo (float t){
 We'll skip the entire solution, and just reveal that the result will appear in the form of $$ax^{3} + bx^{2} + cx + d$$
 See the pattern here? The highest exponent is the number of successive `ofLerp`s we applied, i.e. the number of successive times we changed using our parameter $t$.
 
-**//TODO: Add thanks to Steven Wittens for the idea of lerping**
-
 ##### …And So On
 The general notion in Uni level Calculus is that _you can do anything if you have enough of something_. So fittingly, there's a curious little idea in Mathematics which allows us, with enough of these nested control points, to approximate any curve segment we can imagine. In the original formulation of that idea (called a _Taylor Series_), we only reach a good approximation if the amount of degrees (successive `lerp`s we applied) is close to infinity.
 
 In Computer Graphics, as you're about to see - 3 is close enough.
 
 ### Splines
-What we've done in the previous chapter is really quite remarkable. We have built a series of control points for 
-** //TODO: Write this **
+What we've done in the previous chapter is really quite remarkable. We have built a rig fo control points, on top of which we built a rig for controlling these points in pairs, and we continued to do so until we ended up with one parameter, $t$, to control them all. For reasons you're about to see, Mathematicians will often shy away from the description of polynomials as a physical metaphor, so not many math books will describe this process to you this way. But anyone who's done even the slightest bit of design will benefit from that idea immensely. 
+
+The reason to avoid describing polynomials to a physical being is what happens to them soon after they step away from their control points. Every polynomial will eventually go to infinity - which is a broad term, but for us designers it means that slightly off it's range, we'll need a lot more paper, or computer screen real estate, or yarn, or cockroaches (true story) in order to draw it. 
+
+**//TODO: Draw a polynomial going to infinity **
+
+So instead of using polynomials the way they are, some mathematicians thought of a clever thing to do: use only the good range, wait for the polynomial to do something we don't like (like turn from positive to negative), **then mix it with another polynomial**. That acutally works pretty well:
+
+**//TODO: Drawing of a spline with 4 basis curves **
+
+In the illustration, we've taken a few parts of the same cubic (3rd dgree) polynomial, moved it around and scaled it to taste, and added all of them together at each point (let's call it 'mixing'). 
+
+The resulting curve is seamless and easy to deal with. It also carries some sweet properties: using it, one can use the absolute minimum of direction changes to draw any cubic polynomial between any two points. In other words, _it's smooth_.
+
+These propeties make this way of creating curves pretty popular in computer graphics, and you may find its variants under different names, like _Beziér Curves_ or Spline Curves. The code for implementing this is a little long and tedious in C++, so this chapter won't go into it - but in case you were wondering, it's just the same code for making polynomials we discussed above, only with a lot of `if` statements to check if `t` is in the correct range.
+
+Using the curve functions in openFrameworks is pretty straightforward: All you have to do is start from a point, and then add a destination, along with the control points to reach it:
+```cpp
+//The beginning point
+line.addVertex(ofPoint(200, 400)); 
+//A sequence of two control points and a destination: 
+//control 1's x and y, control 2's x and y, and the destination
+line.bezierTo(100, 100, 800, 100, 700, 400); 
+```
+This generates this image:
+![Beziér](http://openframeworks.cc/documentation/graphics/bezier.png)
+
+This is just one example of use though. All of the different combinations are documented extensively in the _Advanced Graphics_ chapter. 
+
+
 ### Tweening
-** //TODO: Write this **
+
+So far we've learned how to use a bunch of control points to create an intersting curve in space. We've used our parameter $t$ to simulate the time it takes to draw each point on the curve. We also implicitly assumed that time runs only in the period that we let it run in, in the case of our examples, between 0 and 1. But we never really tested what it looks like to run all of that in real time. 
+
+**//TODO: Drawing of a smoothstep curve **
+
+Apparently, it's not that different from running it through space. By looking at the $x$ dimension of this graph as time and the $y$ dimension of this graph as a value for our creation, we can see some patterns of animation forming. The trick is simple: think of all of the values that need to change in your animation, and control them using functions. 
+
 #### Example:
-Make a ball bounce, an eye blink, and a door to slam from the wind.
+** //TODO: Make a ball bounce, an eye blink, and a door to slam from the wind. **
+
+Tweening is not yet a standard part of the openFrameworks library. In the meantime, some nice utility functions for tweening are available in the ofxTween library.
 
 ## More Dimensions: Some Linear Algebra
 Until now, we explored several ideas on how to change what's going on the number line. That's cool, but we want to know how to do graphics, and graphics has more than one dimension. Our ancient Mathematician ancestors (Just kidding, most important Mathematicians die before 30. Not kidding) also faced this problem when trying to address the space of shapes and structures, and invented some complex machinery to do so. The fancy name for this machinery is _Linear Algebra_, which is exactly what it sounds like: using algebraic operations (add and multiply, mostly), in order to control many lines. 
@@ -358,12 +401,19 @@ As a convention, we'll be marking vectors with lowercase letters and matrices wi
 #### Matrix Multiplication as a dot product
 The easiest way to look at a matrix is to look at it as a bunch of vectors. Depending on what we care about, we can either look at the columns or rows as vectors. 
 
-**//TODO: 2x2 example**
+**//TODO: Draw 2x2 example**
 
 ##### Identity
 Let's start from the simplest case. Just like with numbers, it is a very important property of any algebraic structure to have a _neutral_ member for each operation. For example, in Numberland, multiplication of any $x$ by 1 returns $x$, same goes for addition to 0.
-In Matrixland, that identity element is a matrix with 1s along the diagonal zeroes elsewhere:
-**//TODO: Make example**
+In Matrixland, that identity element is a matrix with 1s along the diagonal zeroes elsewhere. For example, the identity matrix for 3 dimensions is:
+
+$$I_{3} = \left(\begin{array}{ccc}
+1 & 0 & 0\\
+0 & 1 & 0\\
+0 & 0 & 1
+\end{array}\right)$$
+
+So for any matrix $M$, $MI = IM = M$.
 
 ##### Scale
 You might remember that when scaling a vector (i.e point in space and/or velocity and/or force and/or brightness value for a colour, etc), we may choose to scale it uniformly by scalar multiplication **/\* TODO:Example \*/** or, because of a weird language design choice, most graphics applications will allow you to scale non-uniformly on a per-component basis: **/\* TODO:Example \*/**
@@ -406,11 +456,50 @@ $$
 
 So, in order to get a multiplication through that only affects $x$, we tune the vector (upper row of the matrix) $M_{1}$ to be zero anywhere but the interface with $x$: $$M_{1} = \left(a,0,0\right)$$ so the entire calculation would be:
 
-**//TODO: Write this**
+$$
+M\cdot v=\left(\begin{array}{c}
+M_{1}\\
+M_{2}\\
+M_{3}
+\end{array}\right)\cdot v=
+\left(\begin{array}{ccc}
+a & 0 & 0\\
+M_{2,1} & M_{2,2} & M_{2,3}\\
+M_{3,1} & M_{3,2} & M_{3,3}
+\end{array}\right)\cdot v=\left(\begin{array}{c}
+\begin{array}{c}
+a\cdot v_{x} + 0\cdot v_{y} + 0\cdot v_{z}\\
+M_{2,1}\cdot v_{x} + M_{2,2}\cdot v_{y} + M_{2,3}\cdot v_{z}\\
+M_{3,1}\cdot v_{x} + M_{3,2}\cdot v_{y} + M_{3,3}\cdot v_{z}
+\end{array}\end{array}\right)
+$$
+Making the $x$ component of the resulting vector to be just $a\cdot v_{x}$, as promised.
 
 Scalar multiplication of any matrix $M$ becomes really easy, then: it's essentially right multiplication by a diagonal matrix full of $a$'s: $$a\cdot M = a \cdot I \cdot M$$
 
 ##### Skew matrices
+Odd operations like skewing are where things need to get a little less intuitive and more logical. When we think of _skewing_ we normally imagine adding to a certain dimension, suppose $x$, a proportion of a quantity from another dimension, let's say $y$. Suppose that proportion is some $0 < a \leq 1$, as if to say, 'I want to nudge it a little, the more it leaves the ground'. The matrix for doing that in 2 dimensions would look like this: 
+$$S = \left(\begin{array}{cc} 
+1 & a\\
+0 & 1 
+\end{array}\right)$$
+See what we did there? We made the resulting $x$ value depend on the input $x$ value (being multiplied by 1), but also slightly depend on the input $y$, exactly how slightly being determined by the magnitude of $a$:
+
+$$S\cdot v = \left(\begin{array}{cc} 
+1 & a\\
+0 & 1 
+\end{array}\right)
+\left(\begin{array}{c}
+x\\
+y\end{array}\right) = 
+\left(\begin{array}{c}
+1\cdot x + a\cdot y\\
+0\cdot x + 1 \cdot y\end{array}\right) = 
+\left(\begin{array}{c}
+x + ay\\
+y\end{array}\right)$$
+
+Pretty neat, right? Try to remember this trick, as we're going to use it quite a lot when we move stuff around in the fourth dimension. I'm not even joking.
 
  
 ##### Rotation matrices
@@ -483,6 +572,9 @@ Now grab a pack of ice, place it on your head for 15 minutes and go on reading t
 
 
 ### "The Full Stack"
+
+Now that we know how to construct its major components, let's have a look at all the math that constructs graphics in openFrameworks before sending it to the screen. For that, we'l have to – once again – increase our number of D's.
+
 #### Translation matrices
 
 If you recall the comment in the beginning of this chapter, mathematicians are very careful when calling things linear. In 2D, a linear operation can basically do 2 things: Rotation and Scaling (including negative scaling - "mirroring"). 
@@ -491,13 +583,18 @@ The reason for this is that these are all operations that can be done in n dimen
 If the entire shape lifts itself magically and moves away from the origin - it can't be done with a matrix, therefore it's not linear. This presents a problem to people who want to use matrices as an algebraic system for controlling 3d: in real life we need to move some stuff around.
 
 ##### Homogenous coordinates: Hacking 3d in 4d
-This problem has caused hundreds of years of agony to the openFrameworks community, until in 1827 a hacker called Möbius pushed an update to the ofMäth SVN repo: use them 4 dimensions to control a 3 dimensional shape. Here's the shtick: a 3d operation can be described as a 4d operation which doesn't do anything to the 4th dimension. Written as a matrix, we can describe it like this:
+This problem has caused hundreds of years of agony to the openFrameworks community, until in 1827 a hacker called Möbius pushed an update to the ofMäth SVN repo: use the matrix in 4 dimensions to control a 3 dimensional shape. Here's the shtick: a 3d operation can be described as a 4d operation which doesn't do anything to the 4th dimension. Written as a matrix, we can describe it like this:
 
-**//TODO: do**
+$$ A _{4\times 4} = \left(\begin{array}{ccc|c}
+a_{1,1} & a_{1,2} & a_{1,3} & 0\\
+a_{2,1} & a_{2,2} & a_{2,3} & 0\\
+a_{3,1} & a_{3,2} & a_{3,3} & 0\\
+\hline 0 & 0 & 0 & 1
+\end{array}\right)$$
 
 Now we already know that a 1D Skew can move all lines in that axis in a certain direction without affecting the other dimensions, and that a 2D skew will do that for all things on a certain plane, so it's easy to imagine that a 3D skew will do that to 3D spaces embedded in a space with more dimension. Möbius figured that feature is useful, and he proposed on the bianual openFrämeworks meeting in Tübingen that all operations will be conducted in 4D space, and then projected back into 3D space, like this:
 
-$$\left(\begin{array}{ccc|c}
+$$T = \left(\begin{array}{ccc|c}
 1 & 0 & 0 & t_{x}\\
 0 & 1 & 0 & t_{y}\\
 0 & 0 & 1 & t_{z}\\
@@ -506,7 +603,7 @@ $$\left(\begin{array}{ccc|c}
 
 The 3D Transform vector $t$ is placed in the 4th dimension, with it's 4th entry as 1 (because 1 is neutral to multiplication). The bottom row that is added has zeroes in the $x,y,z$ entries, in order to avoid interfering with other operations. Check out what happens when a vector is multiplied by this matrix: 
 
-$$\left(\begin{array}{ccc|c}
+$$T\cdot v = \left(\begin{array}{ccc|c}
 1 & 0 & 0 & t_{x}\\
 0 & 1 & 0 & t_{y}\\
 0 & 0 & 1 & t_{z}\\
@@ -548,17 +645,10 @@ If you recall, we can multiply all of these matrices to get one matrix represent
 
 We call this matrix $M$, because it places objects we give it in their place in the _Model_. Whenever you call `ofTranslate()`, `ofRotate()`, `ofScale()` (or equivalent) on an object, that operation is applied to the **currently active _Model_ matrix**. Whenever you execute `ofPushMatrix()`, a copy of that matrix is saved in _the matrix stack_, so that you can go back to it when neccessary. And when necessary, you will then use `ofPopMatrix()`, which will cause the current matrix $M$ to be deleted and replace it with a matrix from the top of the matrix stack. That is the entire mystery about matrices. That's it. 
 
-Later you'll learn about two similar matrices: 
+In the 'Advanced Graphics' chapter you'll learn about two similar matrices: 
 * The _View_ matrix tramsforms the result of the _Model_ matrix to simulate where our camera is supposed to be at.
 * The _Projection_ matrix applies the optical properties of the camera we defined and turns the result of the _View_ matrix from a 3D space to a 2D image. The Projection matrix is built slightly different than the _Model-View_ matrix, but if you've made it this far, you won't have trouble reading about it in a special Graphics topic.
 
-* Example: a pack of sharks swimming
 
-### Really using normals
-#### The cross product
-#### Normals for lighting
-* Example: Lambert and Phong shading
-
-
-#### Normals for directions
-                
+###### Thanks
+Thanks to Prof. Ken Perlin and Prof. Bo'az Klartag for ideas on teaching mathematics.

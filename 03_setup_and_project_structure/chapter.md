@@ -5,14 +5,66 @@ So, after you read a bit about C++ on chapter 2, let's get into openFrameworks, 
 
 I have found very useful to explain OF making analogies to cooking. Coding and cooking have a lot of things in common, and as almost everyone has experienced cooking it makes a lot of sense to me to use a cooking analogies/naming style.
 
-##Welcome to your new kitchen##
 
-###First things first###
+##First things first##
 You need to download the OF version and the IDE (acronym for Integrated Development Environment) that suit your platform. The IDE is a piece of software that will let you write, compile, run and debug the code you write. It is "Integrated" because this software uses other pieces of software to do each of the mentioned tasks, which you can also use in a separate way without using the IDE, but the IDE will make your programming life so much easier.
 
-Go to [www.openframeworks.cc/downloads](www.openframeworks.cc/downloads "Download openFrameworks!") and download the version that you need. By the side of each available version you will find a link to the where to download the needed IDE and how to make it run.
-So once you've done this and tested that installation went fine, by opening any example, compiling and running it without problems we are ready to continue.
+Go to [www.openframeworks.cc/downloads](www.openframeworks.cc/downloads "Download openFrameworks!") and download the version that you need. By the side of each available version you will find a link to the where to download the needed IDE and how to install it. 
 
+##Welcome to your new kitchen##           
+
+###IDE:###
+- The main goal here would be to establish the similarities between all IDEs and explain where are the fundamental options needed to compile and solve common errors (missing include paths, linker errors).
+- Adding files to the IDE, in particular adding addons (should we mention, as a sidenote Adam's xCode OF plugin?). How it must be done in each IDE.
+
+As said before, the Integrated Development Environment, IDE, is the application you will be using to build your openFrameworks projects. It will let you write code, compile (bake it), test it and debug it (find out what is giving you problems, if there is any, and fix it).
+There are several different IDEs, at least 1 for each platform you might be developing for.
+The IDE is your new kitchen, where you'll find all the tools to cook incredible stuff. Yet there are a lot of different kitchen brands, just like IDEs. All do the same but things might be laid out and named in a slightly different way, but if you know how to use one you can use any other, you only need to get used to each one. This said, I will go through each IDE showing where you will find the most used commands, controls and settings. Only read for the IDE yo are going to use.    
+All IDE's have a very similar interface, all of which will have the following, but perhaps arranged in a slightly different way.
+[abstract IDE diagram]
+
+
+
+- Toolbar and Run Button: In the tool bar you'll find several often used buttons, such as open, save, save all, et cetera. The one that is very important for us right now is the run button. Usually it is labeled with a triangle pointing to the right, like the "play" button. When you press it it will compile your code and if it went with no problem it will automatically run your code. Hence this is a very often used button.
+- File selector and project navigator: in this area you will see your project and the files associated to it, Usually it is displayed like a hierarchically ordered list of files. Here you'll find all the OF library files, as well as the files that are particular to your object.
+- Editing area: When you open a file in the project navigation area, usually by double clicking it, it should open in the editing area. This looks just like any regular text editing software, and behaves quite much the same.
+- Console: This is where your app, when running, outputs messages. This messages are really useful for debugging, You can print text messages to the console using the ````cout```` comand  or ````ofLog(...)```` function.
+
+
+
+####Apple xCode####     
+
+xCode is Apple's IDE. Used both for iOS apps and desktop apps.
+Even though there are other IDEs for MacOSX, xCode is a a pretty mature one, with lots of nice and useful features, specially for dealing with iOS apps.
+The latest xCode version is 5.0.2 yet the OF projects can be opened in version 3 onwards. **[Cofirm this]**
+**[add xCode screenshot]**
+####Microsoft Visual Studio 2012 Express####
+This is Microsoft's IDE, it is aimed for Windows development. Even though this is the express version it comes packed with lot's of really nice stuff.
+**[add VS screenshot]**
+
+#### Code::Blocks####
+Code::Blocks is a free IDE. It runs on several platforms(several Linux distros, Windows and MacOSX). It is quite nice.
+**[add C::B QUICK START GUIDE]**
+
+####Eclipse####   
+Eclipse is the IDE of choice for Linux, yet it also runs on Mac and Windows machines. For Android development you'll need to use Eclipse, regardless of your platform.
+**[add Eclipse screenshot]**
+
+
+####The NO-IDE IDE.####
+Using the terminal and makefiles. 
+OF has implemented makefiles across it complete ecosystem. Makefiles are some text files that describe how to compile something. These are used by a program called Make, which is really nice as it makes compiling and configuring large projects in a really simple way.
+When using this option your main interface will be the Terminal or Cmd window. It is a text based interface, just like that old-school DOS, but it is super powerful. 
+Any experienced programer should feel very comfortable with this option, as it will work for any platform, and in some cases it can speed up development.
+If you are developing for the Raspberry Pi you'll have to make use of the Makefiles. These also come handy when compiling via SSH.
+
+- Possible scenarios where this is useful (rPI, remote compiling via SSH)
+- How to deal with it. Installing the needed stuff to make it work (make, etc)
+- How to use OF's make files. 
+- Using addons
+                                 
+So once you've done this and tested that installation went fine, by opening any example, compiling and running it without problems we are ready to continue.
+  
 ###OF structure###
 
 If you go into the uncompressed OF version that you downloaded you will find several folders, with several others inside, so let's take a look at what these are and how to use them.
@@ -79,36 +131,6 @@ Here you'll find the OF project generator app. This is a super usefull app that 
 Just a few bash scipts usefull for compiling, cleaning and testing all the examples.
 **[Should I add here how to use these bash scripts?]**
 
-###IDE:###
-- The main goal here would be to establish the similarities between all IDEs and explain where are the fundamental options needed to compile and solve common errors (missing include paths, linker errors).
-- Adding files to the IDE, in particular adding addons (should we mention, as a sidenote Adam's xCode OF plugin?). How it must be done in each IDE.
-
-As said before, the Integrated Development Environment, IDE, is the application you will be using to build your openFrameworks projects. It will let you write code, compile (bake it), test it and debug it (find out what is giving you problems, if there is any, and fix it).
-There are several different IDEs, at least 1 for each platform you might be developing for.
-The IDE is your new kitchen, where you'll find all the tools to cook incredible stuff. Yet there are a lot of different kitchen brands, just like IDEs. All do the same but things might be layed out and named in a slightly different way, but if you know how to use one you can use any other, you only need to get used to each one. This said, I will go through each IDE showing where you will find the most used commands, controls and settings. Only read for the IDE yo are going to use.
-
-####Apple xCode####
-xCode is Apple's IDE. Used both for iOS apps and desktop apps.
-Even though there are other IDEs for MacOSX, xCode is a a pretty mature one, with lots of nice and useful features, specially for dealing with iOS apps.
-The latest xCode version is 5.0.2 yet the OF projects can be opened in version 3 onwards. **[Cofirm this]**
-
-####Microsoft Visual Studio####
-**[add VS QUICK START GUIDE]**
-
-#### Code::Blocks####
-**[add C::B QUICK START GUIDE]**
-
-####Eclipse####
-**[add Eclipse QUICK START GUIDE]**
-
-
-####The NO-IDE IDE.####
-Using the terminal and makefiles.
-
-- Possible scenarios where this is useful (rPI, remote compiling via SSH)
-- How to deal with it. Installing the needed stuff to make it work (make, etc)
-- How to use OF's make files. 
-- Using addons
 
 ###The OF Pantry:###
 Your default new kitchen will only have tools for coding, but the OF kitchen comes with a super nice pantry, filled up with really nice, cool and usefull stuff. 
