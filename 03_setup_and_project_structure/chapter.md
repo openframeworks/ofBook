@@ -11,7 +11,7 @@ You need to download the OF version and the IDE (acronym for Integrated Developm
 
 Go to [www.openframeworks.cc/downloads](www.openframeworks.cc/downloads "Download openFrameworks!") and download the version that you need. By the side of each available version you will find a link to the where to download the needed IDE and how to install it. 
 
-##Welcome to your new kitchen##           
+##Welcome to your new kitchen##
 
 ###IDE:###
 - The main goal here would be to establish the similarities between all IDEs and explain where are the fundamental options needed to compile and solve common errors (missing include paths, linker errors).
@@ -60,7 +60,7 @@ If you are developing for the Raspberry Pi you'll have to make use of the Makefi
                                  
 So once you've done this and tested that installation went fine, by opening any example, compiling and running it without problems we are ready to continue.
  
-###Running examples###    
+###Running examples###
 Find the uncompressed OF version that you downloaded. From now on we will refer to this folder as the OF root folder.
 You can place the OF root folder anywhere you like. Open it. Inside of it you will find several folder. For now, open the one named "examples". (further down this chapter we will see what are all the other folder for). Inside of it you will see a lot of folders, choose anyone you want (these are named according to the topic covered by the example). Open it, once again there will be more folders, these are for each example. Open anyone you like. Inside of it you will find the project file for the example. It depends on the version of OF you downloaded which project files you'll find.
 Look at the image below and open, by double-clicking, the project file. 
@@ -194,9 +194,10 @@ In case you are trying to understand someone else's code it is so much easier to
 Any OF app will have a predefined structure for coding it. 
 Go to the examples and open the emptyExample. On your IDE's project navigator select the ofApp.h file and it should be displayed in the editing area.
 it should look something like this
-````#pragma once
-	
-	#include "ofMain.h"
+
+    #pragma once
+    
+    #include "ofMain.h"
 	
 	class ofApp : public ofBaseApp{
 	public:
@@ -214,16 +215,15 @@ it should look something like this
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 	};
-````
 Now line by line:  
-```` #pragma once ```` Any line that starts with a # character is a precompiler directive. Before compiling happens all the needed files are "sticked together". This directives say how this "sticking" must go on. In the case of this line it is saying that this file must be included only once otherwise you could have the same class defined more than once which would lead into a compiler error. Usually, any .h file should have this at it's very beginning.  
+````#pragma once```` Any line that starts with a # character is a precompiler directive. Before compiling happens all the needed files are "sticked together". This directives say how this "sticking" must go on. In the case of this line it is saying that this file must be included only once otherwise you could have the same class defined more than once which would lead into a compiler error. Usually, any .h file should have this at it's very beginning.  
 ````#include "ofMain.h"```` this is another precompiler directive. It is saying to include the file ofMain.h, by which you'll have all the OF things available in your app. 
 ````class ofApp : public ofBaseApp{```` This is declaring a new class named ofApp (notice that usually classes are declared each on a separate file, with the filename the same as the class name. It is not a rule, it is just for tidiness). Then there is a colon (:) which is saying that this new class will inherit from another class, in this case the public methods and properties of ofBaseApp (the next chapter, about object oriented programming will explain this idea of inheritance).  
 ````public:```` This line is saying that the following declarations are public. This means that this can be accessed from outside of this class. There also are private, that only can be accessed by the class itself, and protected that can be accessed by the class itself or by a class that inherits from it,  
-````
+
 		void setup();
 		void update();
-		void draw();  ````
+		void draw();
 This are OF's main loop methods (you should know what void means as you already read the previous chapter). 
 ````setup()```` is called only once when the app begins. This is where you usually set the initial parameters and initialize any object that your app is using that needs initialization. 
 ````update()```` is called constantly, once it finishes it's execution it gets called again. How fast this happens depends on the framerate of your app, that you can set using ````ofSetFramerate(int )````, and how intensive are the tasks being done inside update(). These task usually have to do with processing data and updating variables, but not drawing.
@@ -231,7 +231,8 @@ This are OF's main loop methods (you should know what void means as you already 
 By default the ````update()```` and ````draw()```` methods are synced, meaning that ````update()```` gets called first and then ````draw()````. You can set this with the function ````ofSetVerticalSync(bool bSync)````.
 
 The next lines in the ofApp.h file are
-```` 		void keyPressed(int key);
+
+		void keyPressed(int key);
 		void keyReleased(int key);
 		void mouseMoved(int x, int y);
 		void mouseDragged(int x, int y, int button);
@@ -239,13 +240,21 @@ The next lines in the ofApp.h file are
 		void mouseReleased(int x, int y, int button);
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
-		void gotMessage(ofMessage msg);```` 
+		void gotMessage(ofMessage msg);
+
 All this methods are event driven. This means that these get called when a particular event happens. The key and mouse methods are very self explaining. 
 ````windowResized(int w, int h)```` gets called when the window is resized, and it's parameters are the new window size.   
 ````dragEvent(ofDragInfo dragInfo)```` is called whenever you drag and drop files over your OF app window. In it's parameter there's a list of the files being dragged and dropped as well as the position over the window at which these were dropped.  
 ````gotMessage(ofMessage msg)```` this gets called when a message is received. OF has a simple messaging system that allows to send messages from one object to another one.
-                                                                                                                                                
+
+###Project Generator###
+
+###Using addons in your project###
+
 ###Peeking at others or OF's files in search for some help.###
 
+###Some basic OOP###
+related to the idea of making a lot of the same recipe, how to deal with it. Link to the other chapters where OOP is covered.
 
-- Some basic OOP, related to the idea of making a lot of the same recipe, how to deal with it. Link to the other chapters where OOP is covered.
+
+
