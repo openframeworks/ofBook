@@ -3,24 +3,24 @@
 **NOTE: This chapter is formatted with MD and LaTeX. Github won't render it properly. Try [stackedit.io](http://stackedit.io) instead**
 
 ## How Artists Approach Math
-Math is a curious thing in arts. Many artists reference it directly as inspiration for their work, from Leonardo Da Vinci's _Vitruvian Man_, through Escher's different views of fields of numbers, to the tedious namedrop of "The Golden Ratio" for every concept product made in a design school since the iPhone (if you think that's a neat idea, please read this chapter more than twice).
+Math is a curious thing in arts. Many artists reference it directly as inspiration for their work, from Leonardo Da Vinci's _Vitruvian Man_, through Escher's different views of fields of numbers, to the tedious namedrop of "The Golden Ratio" for every concept product made in a design school since the iPhone (if you think that's a neat idea, please read this chapter more than twice).  **[mh: while this is humorous, it's also unfriendly]**
 
 Computers allowed simulation to happen, which means people could draw more than (and faster than) they could think. When Benoît Mandelbrot worked for IBM, his attempt at printing the density map of a self-repeating sequence of complex numbers – something that would have taken forever for a human hand and head – resulted in a scientific measurement being reappropriated for its aesthetic value, in what we now call [Fractal Art](https://en.wikipedia.org/wiki/Fractal_art), a family that also grew to include tree-like structures generated from [L-System](http://en.wikipedia.org/wiki/L-system) grammars and three-dimensional extensions with lovely names such as "Mandelbulb". It's acceptable to call these things _Art_, because the thought that mathematicians had done this deliberately in their work would simply confuse the audience.
 
 Thing is, we know better than all of that. Math is everywhere in Art, just like Art is everywhere in Math. 
-When using a brush or pen or chisel, we're taking advantage of the hard work that nature is doings, calculating physics, rendering things perfectly for us, all in real time. Our brains apply direct aesthetic knowledge to a work, and we're done. WYSIWYG. In the computer world, none of that is true. Things like L-Systems had to be created for us to use, because our hands can't reach into the computer. If you're doing any bit of digital art, the math is happening somewhere, whether you control it or not. This chapter will try to explain some of the basics of the black arts of graphics programming. I wish I could make this chapter 5 times as long and include the really neat stuff, but that would make this book too heavy to put in a rucksack.
+When using a brush or pen or chisel, we're taking advantage of the hard work that nature is doing, calculating physics, rendering things perfectly for us, all in real time. ~~Our brains apply direct aesthetic knowledge to a work, and we're done. WYSIWYG.~~ **[mh: these two sentences could be omitted - first one is a bit indirect for saying "we manipulate visuals by hand," and the second, not everyone will know wysiwyg]** In the computer world, none of that is true. Things like L-Systems had to be created for us to use, because our hands can't reach into the computer. If you're doing any bit of digital art, the math is happening somewhere, whether you control it or not. This chapter will try to explain some of the basics of the black arts of graphics programming. I wish I could make this chapter 5 times as long and include the really neat stuff, but that would make this book too heavy to put in a rucksack.
 
 ## About this Chapter
-A Math chapter for a book about graphics will always miss out on many ideas. In fact, there are entire books covering "math for graphics", mostly consisting of references to other books, focusing on a specific topic (like Linear Algebra, Multivariable Calculus, Differential Geometry, and many other words mysteriously connected to other words). This chapter must therefore be very concise about ideas. All topics here are explained in a friendly way, but please - never fear googling a thing you need better examples for.
+A Math chapter for a book about graphics will always miss out on many ideas. In fact, there are entire books covering "math for graphics", mostly consisting of references to other books, focusing on a specific topic (like Linear Algebra, Multivariable Calculus, Differential Geometry, and many other words mysteriously connected to other words). This chapter must therefore be very concise about ideas. All topics here are explained in a friendly way, but please - never fear googling a thing for which you need better examples.
 
-This chapter will be divided into _'numbers of D's'_ : we'll start from one dimension, and slowly explore the possibilities of using scale and change in different dimensions. Depending on how you choose to read it, this section contains hundreds of Mathematicians' lifetime research, or in other words, several classes of college math, so it's worth bookmarking.
+This chapter will be divided into _'numbers of D's'_ : we'll start from one dimension, and slowly explore the possibilities of using scale and change in different dimensions. **[mh: this sentence might be a little unclear for newbies, as in why do I care about scale and change.]** Depending on how you choose to read it, this section contains hundreds of Mathematicians' lifetime research, or in other words, several classes of college math, so it's worth bookmarking.
 
 When bringing math to innocent readers, most programming books will try to explain the idea, not necessarily the exact implementation. This book is no different. This chapter contains detailed breakdowns of concepts, but if you want to find out what's going on under the hood, there's no alternative to reading the source code - in fact, since all the math here is only a few lines long - it's actually _encouraged_ to have a look at the source.
 
 ## One Dimension: Using Change
 
-Let's start our journey by looking at the number line. It's a stretch of numbers going to inifinity in both the positive and negative direction. Supppose we were ants or microbes, so that we could stand on exactly one value here, and travel to any other value by walking in that direction.
-That's pretty much the definition of a _dimension_. It's an infinite collection of values that are all accessible, and any value of it can be describted with one number. As you're about to see, these properties are going to enable quite a lot of options.
+Let's start our journey by looking at the number line. It's a stretch of numbers going to infinity in both the positive and negative direction. Suppose we were ants or microbes, so that we could stand on exactly one value here, and travel to any other value by walking in that direction.
+That's pretty much the definition of a _dimension_. It's an infinite collection of values that are all accessible, and any value of it can be described with one number. As you're about to see, these properties are going to enable quite a lot of options.
 
 **//TODO: Draw the number line **
 
@@ -57,10 +57,12 @@ float ofMap(float value, float inputMin, float inputMax, float outputMin, float 
 
 
 In the last discussion, we saw how by using `lerp`, any value between two points can be _linearly_ addressed as a value between 0 and 1. That's very convenient, and therefore the reason we build most of our arbitrary numerical ranges (`ofFloatColor`, for example) in the domain of 0 and 1. 
-However, when dealing with real world problems, programmers run into domains of values that they wish to map to other ranges of values, neither of which are confined to 0 and 1. For example, someone trying to convert the temperature in Celsius to Fahrenheit won't be able to use  Surely, the way of doing that must involve a `lerp`, but it needs a little help:
+However, when dealing with real world problems, programmers run into domains **[mh: if you are going to be specific about the words domain and range, it would be worth an explanation.  it might not hurt to have a sentence or two about what a function is from a mathematical standpoint.  it could be useful for when you talk about more specific functions - like linear and affine mappings.]** of values that they wish to map to other ranges of values, neither of which are confined to 0 and 1. For example, someone trying to convert the temperature in Celsius to Fahrenheit won't be able to use **[mh: missing part of a sentence]** Surely, the way of doing that must involve a `lerp`, but it needs a little help:
 
 If we want to use the `lerp` function, we're aiming to get it to the range between 0 and 1. We can do that by knocking `inputMin` off the input `value` so that it starts at 0, then dividing by the size of the domain: $$x=\frac{\text{value}-\text{inputMin}}{\text{inputMax}-\text{inputMin}}$$
 Now that we've tamed the input domain to be between 0 and 1, we do the exact opposite to the output: `ofMap(value, inputMin, inputMax, outputMin, outputMax)` $=\frac{\text{value}-\text{inputMin}}{\text{inputMax}-\text{inputMin}}\cdot\left(\text{outputMax}-\text{outputMin}\right)+\text{outputMin}$
+
+**[mh: I'd suggest walking through this some numbers to convert from F to C or vice versa]**
 
 #### Range Utilities
 ##### Clamping
@@ -88,7 +90,9 @@ float ofSign(float n);
 
 Returns the sign of a number, as `-1.0` or `1.0`. Simple, eh?
 
-### Beyond Linear: Changing Change
+### Beyond Linear: Changing Change 
+
+**[mh: I recognize that you are trying to be general here by talking about change, but at least throwing the word motion around as a type of change would give readers something upon which to anchor the concept.]**
 
 So far we've discussed change that is bound to a line. But in Real Life™ there's more than just straight lines. 
 
@@ -120,7 +124,7 @@ $$
 = 4t^{2}+5
 $$
 
-Something interesting happened here. Without noticing, we introduced a second order of complexity, a _quadratic_ one. If you don't find this relationship remarkable, please give this book to someone who does.
+Something interesting happened here. Without noticing, we introduced a second order of complexity, a _quadratic_ one. ~~If you don't find this relationship remarkable, please give this book to someone who does.~~ **[mh: a bit too harsh for an intro to math chapter]**
 
 
 The same manipulation can be applied for a third order:
@@ -138,32 +142,34 @@ float cubic (float t){
 	}
 ```
 
+**[mh: maybe change the variable names here, so that they don't give the impression of lining up with the polynomial eq]**
 We'll skip the entire solution, and just reveal that the result will appear in the form of $$ax^{3} + bx^{2} + cx + d$$
-See the pattern here? The highest exponent is the number of successive `ofLerp`s we applied, i.e. the number of successive times we changed using our parameter $t$.
+See the pattern here? The highest exponent is the number of successive `ofLerp`s we applied, i.e. the number of ~~successive~~**[mh:nested?]** times we ~~changed~~**[mh:mapped?]** using our parameter $t$.
 
 ##### …And So On
-The general notion in Uni level Calculus is that _you can do anything if you have enough of something_. So fittingly, there's a curious little idea in Mathematics which allows us, with enough of these nested control points, to approximate any curve segment we can imagine. In the original formulation of that idea (called a _Taylor Series_), we only reach a good approximation if the amount of degrees (successive `lerp`s we applied) is close to infinity.
+The general notion in Uni level Calculus is that _you can do anything if you have enough of something_. So fittingly, there's a curious little idea in Mathematics which allows us, with enough of these nested control points, to approximate any curve segment we can imagine. In the original formulation of that idea (called a _Taylor Series_), we only reach a good approximation if the amount of degrees (successive `lerp`s we applied) is close to infinity.  **[mh: important concept, but feels out of place here.  I'd either add an example of taylor expansion or ax the section.  coming from optics where we used the small angle approx constantly, my favorite ones are the trig functions]**
 
 In Computer Graphics, as you're about to see - 3 is close enough.
 
 ### Splines
-What we've done in the previous chapter is really quite remarkable. We have built a rig fo control points, on top of which we built a rig for controlling these points in pairs, and we continued to do so until we ended up with one parameter, $t$, to control them all. For reasons you're about to see, Mathematicians will often shy away from the description of polynomials as a physical metaphor, so not many math books will describe this process to you this way. But anyone who's done even the slightest bit of design will benefit from that idea immensely. 
+**[mh: readers might find this opening a bit sudden, esp. if they don't know what a control point is yet]**
+What we've done in the previous chapter is really quite remarkable. We have built a rig for control points, on top of which we built a rig for controlling these points in pairs, and we continued to do so until we ended up with one parameter, $t$, to control them all. For reasons you're about to see, Mathematicians will often shy away from the description of polynomials as a physical metaphor, so not many math books will describe this process to you this way. But anyone who's done even the slightest bit of design will benefit from that idea immensely. 
 
-The reason to avoid describing polynomials to a physical being is what happens to them soon after they step away from their control points. Every polynomial will eventually go to infinity - which is a broad term, but for us designers it means that slightly off it's range, we'll need a lot more paper, or computer screen real estate, or yarn, or cockroaches (true story) in order to draw it. 
+The reason to avoid describing polynomials to a physical being is what happens to them soon after they step away from their control points. Every polynomial will eventually go to infinity - which is a broad term, but for us designers it means that slightly off it's range, we'll need a lot more paper, or computer screen real estate, or yarn, or cockroaches (true story **[mh: can't just drop something like this in and then walk away from it...I need to know]**) in order to draw it. 
 
 **//TODO: Draw a polynomial going to infinity **
 
-So instead of using polynomials the way they are, some mathematicians thought of a clever thing to do: use only the good range, wait for the polynomial to do something we don't like (like turn from positive to negative), **then mix it with another polynomial**. That acutally works pretty well:
+So instead of using polynomials the way they are, some mathematicians thought of a clever thing to do: use only the good range, wait for the polynomial to do something we don't like (like turn from positive to negative), **then mix it with another polynomial**. That actually works pretty well:
 
 **//TODO: Drawing of a spline with 4 basis curves **
 
-In the illustration, we've taken a few parts of the same cubic (3rd dgree) polynomial, moved it around and scaled it to taste, and added all of them together at each point (let's call it 'mixing'). 
+In the illustration, we've taken a few parts of the same cubic (3rd degree) polynomial, moved it around and scaled it to taste, and added all of them together at each point (let's call it 'mixing'). 
 
-The resulting curve is seamless and easy to deal with. It also carries some sweet properties: using it, one can use the absolute minimum of direction changes to draw any cubic polynomial between any two points. In other words, _it's smooth_.
+The resulting curve is seamless and easy to deal with. It also carries some sweet properties: using it, one can use the absolute minimum of direction changes to draw any cubic polynomial between any two points. **[mh: maybe add another sentence here to unpack this]** In other words, _it's smooth_.
 
-These propeties make this way of creating curves pretty popular in computer graphics, and you may find its variants under different names, like _Beziér Curves_ or Spline Curves. The code for implementing this is a little long and tedious in C++, so this chapter won't go into it - but in case you were wondering, it's just the same code for making polynomials we discussed above, only with a lot of `if` statements to check if `t` is in the correct range.
+These properties make this way of creating curves pretty popular in computer graphics, and you may find its variants under different names, like _Beziér Curves_ or Spline Curves. The code for implementing this is a little long and tedious in C++, so this chapter won't go into it - but in case you were wondering, it's just the same code for making polynomials we discussed above, only with a lot of `if` statements to check if `t` is in the correct range.
 
-Using the curve functions in openFrameworks is pretty straightforward: All you have to do is start from a point, and then add a destination, along with the control points to reach it:
+Using the curve functions in openFrameworks is pretty straightforward: All you have to do is start from a point, and then add a destination, along with the control points **[mh: worth defining a control point somewhere in here]** to reach it:
 ```cpp
 //The beginning point
 line.addVertex(ofPoint(200, 400)); 
@@ -179,7 +185,7 @@ This is just one example of use though. All of the different combinations are do
 
 ### Tweening
 
-So far we've learned how to use a bunch of control points to create an intersting curve in space. We've used our parameter $t$ to simulate the time it takes to draw each point on the curve. We also implicitly assumed that time runs only in the period that we let it run in, in the case of our examples, between 0 and 1. But we never really tested what it looks like to run all of that in real time. 
+So far we've learned how to use a bunch of control points to create an interesting curve in space. We've used our parameter $t$ to simulate the time it takes to draw each point on the curve. We also implicitly assumed that time runs only in the period that we let it run in, in the case of our examples, between 0 and 1. But we never really tested what it looks like to run all of that in real time. 
 
 **//TODO: Drawing of a smoothstep curve **
 
@@ -196,13 +202,13 @@ Until now, we explored several ideas on how to change what's going on the number
 In this part you're going to learn many concepts in how to store and manipulate multidimensional information. You'll later be able to use that information to control realtime 3d graphics using OpenGL, and impress the opposite (or same) sex with your mastery of geometry.
 
 ### The Vector
-You may have heard of vectors before when discussing directions or position, and after understanding that they can represent both, may have gotten a little confused. Here's The Truth About Vectors™: 
+You may have heard of vectors before when discussing directions or position, and after understanding that they can represent both, may have gotten a little confused. Here's the truth about Vectors™: 
 	
 	A vector is just an array that stores multiple pieces of the same type information. 
 
 Seriously, that's all it is. Quit hiding.
 
-This simplicity is also their great power. Just like The number 5 can be used to describe five Kilometres, the result of subtracting 12 and 7, or the number of cookies in a jar - the same works with vectors.
+This simplicity is also their great power. Just like the number 5 can be used to describe five Kilometres, the result of subtracting 12 and 7, or the number of cookies in a jar - the same works with vectors.
 
 It's up to the user of that mathematical object to choose what it is used as. The vector $v=\left(5,-3,1\right)$ can represent a point in space, a direction of a moving object, a force applied to your game character, or just three numbers. And just like with numbers, algebraic operations such as addition and multiplication may be applied to vectors. 
 
@@ -261,6 +267,8 @@ cout << ofToString( a + b ) << endl;
 
 Vector addition serves many simple roles. In this example, we're trying to track our friend Gary as he makes his way home from a pub. Trouble is, Gary's a little drunk. He knows he lives south of the pub, so he ventures south; But since he can't walk straight, he might end up somewhere else.
 
+**[mh: does the example here need class structure?  I think it would be equally (or more) readable without it.  Then your chapter wouldn't really require the reader to understand writing custom classes.]**
+
 ```cpp
 /* in Gary.h: */
 class Gary {
@@ -297,7 +305,10 @@ void testApp::draw(){ gary.draw(); }
 ###### Example: `ofVec2f` as velocity
 
 ##### Note: C++ Operator Overloading
-Just like we had to define the meaning of a product of a scalar quantity and a vector, programming languages - working with abstract representations of mathematical objects, also need to have definitions of such an operation built in. C++ takes special care of these cases, using a feature called _Operator Overloading_: defining the `*` operation to accept a scalar quantity and a vector as left-had side and right-hand side arguments:
+
+**[mh: this proke the flor a bit for me, so I'd recommend pushing it later]**
+
+Just like we had to define the meaning of a product of a scalar quantity and a vector, programming languages - working with abstract representations of mathematical objects, also need to have definitions of such an operation built in. C++ takes special care of these cases, using a feature called _Operator Overloading_: defining the `*` operation to accept a scalar quantity and a vector as left-hand side and right-hand side arguments:
 
 ```cpp
 ofVec3f operator*( float f, const ofVec3f& vec ) {
@@ -330,6 +341,7 @@ float ofVec3f::length() const
 float ofDist(float x1, float y1, float x2, float y2);
 float ofDistSquared(float x1, float y1, float x2, float y2);
 ```
+**[mh: might be nice to note an optimization problem where you'd choose to use square distances over distance]**
 
 Let's start by a definition. You may remember the _Pythagorean Theorem_, stating that the length of a line between point $a$ and $b$ is:
 $$\text{Distance}\left(\left(\begin{array}{c}
@@ -391,7 +403,10 @@ For reasons you'll learn soon, it's a rather surprising coincidence.
 ##### Example: Dot product for playing billiards in 2D
 
 ### The Matrix™ 
-In the computer world, a program needs the two things to function: Algorithms and Data Structures (it also needs I/O, but we're talking Turings, not Perlins). In the 3D Maths world it's exactly the same: we call our data structures 'vectors' and our algorithms are operations. 
+
+**[mh: matrices could use a little motivation for the uninitiated reader, i.e. why they are convient+powerful and why we use them in graphics]**
+
+In the computer world, a program needs the two things to function: Algorithms and Data Structures (it also needs I/O, but we're talking Turings, not Perlins **[mh: huh?]**). In the 3D Maths world it's exactly the same: we call our data structures 'vectors' and our algorithms are operations. 
 
 At the core of the heavy machinery built to control 3d space, a matrix is just a data structure, like a vector. However, the 'algorithms' applied to this data structure (operations, in Mathland) make it an extremely powerful one. All of the _affine_ operations we care about in 3D can be described in the form of a matrix: translation, rotation, scaling, inversion, squeezing, shearing, projection and more and more.
 
@@ -402,6 +417,8 @@ As a convention, we'll be marking vectors with lowercase letters and matrices wi
 The easiest way to look at a matrix is to look at it as a bunch of vectors. Depending on what we care about, we can either look at the columns or rows as vectors. 
 
 **//TODO: Draw 2x2 example**
+
+**[mh: you show left vs right multiplying below with identity matrices, so presumably you will explain that order matters in the example above?]**
 
 ##### Identity
 Let's start from the simplest case. Just like with numbers, it is a very important property of any algebraic structure to have a _neutral_ member for each operation. For example, in Numberland, multiplication of any $x$ by 1 returns $x$, same goes for addition to 0.
@@ -473,11 +490,14 @@ M_{2,1}\cdot v_{x} + M_{2,2}\cdot v_{y} + M_{2,3}\cdot v_{z}\\
 M_{3,1}\cdot v_{x} + M_{3,2}\cdot v_{y} + M_{3,3}\cdot v_{z}
 \end{array}\end{array}\right)
 $$
-Making the $x$ component of the resulting vector to be just $a\cdot v_{x}$, as promised.
+Making the $x$ component of the resulting vector be $a\cdot v_{x}$, just as promised.
 
 Scalar multiplication of any matrix $M$ becomes really easy, then: it's essentially right multiplication by a diagonal matrix full of $a$'s: $$a\cdot M = a \cdot I \cdot M$$
 
 ##### Skew matrices
+
+**[mh: this could use an image]** 
+
 Odd operations like skewing are where things need to get a little less intuitive and more logical. When we think of _skewing_ we normally imagine adding to a certain dimension, suppose $x$, a proportion of a quantity from another dimension, let's say $y$. Suppose that proportion is some $0 < a \leq 1$, as if to say, 'I want to nudge it a little, the more it leaves the ground'. The matrix for doing that in 2 dimensions would look like this: 
 $$S = \left(\begin{array}{cc} 
 1 & a\\
@@ -557,9 +577,9 @@ The trick works the exact same way with 3d matrices: In order to rotate around o
 This chapter introduced a different kind of math from what you were used to. But while introducing _a new thing to do things with_ we opened up a lot of unexplored dangers. Notice that we always multiplied vectors by matrices in a certain order: It's always the vector _after_ the matrix, the vector is always transposed, and any new operation applied to an existing situation always happens with a matrix to the left of our result. There's a reason for all of that: Commutativity.
 
 ##### Commmumamitativiwha?
-In high school Algebra, we used to think that $a\cdot b=b\cdot a$. No reason not to think that: The amount of uranium rods that you have times the amount of specially trained monkeys that I have equals the same amount of casualties, no matter the order of multiplication. That's because quantities are _commutative_, the order in which they apply operations to each other doesn't matter.
+In high school Algebra, we used to think that $a\cdot b=b\cdot a$. No reason not to think that: The amount of uranium rods that you have times the amount of specially trained monkeys that I have equals the same amount of casualties, no matter the order of multiplication. That's because quantities are _commutative_, the order in which they apply operations to each other doesn't matter.  **[mh: these two sentences say the same thing]**
 
-But, in matrixland we're not talking about things we counted - instead, we're talking about operations, and _operations are generally not commutative_. because there's a difference between scaling a square by x and then rotating it by 90 degrees and doing it the other way around:
+But, in matrixland we're not talking about things we counted - instead, we're talking about operations, and _operations are generally not commutative_. There's a difference between scaling a square by x and then rotating it by 90 degrees and doing it the other way around:
 
 **//TODO: Draw this**
 
@@ -573,7 +593,7 @@ Now grab a pack of ice, place it on your head for 15 minutes and go on reading t
 
 ### "The Full Stack"
 
-Now that we know how to construct its major components, let's have a look at all the math that constructs graphics in openFrameworks before sending it to the screen. For that, we'l have to – once again – increase our number of D's.
+Now that we know how to construct its major components, let's have a look at all the math that constructs graphics in openFrameworks before sending it to the screen. For that, we'll have to – once again – increase our number of D's.
 
 #### Translation matrices
 
@@ -627,8 +647,8 @@ Notice that because we placed a 1 at the $w$ (4th) dimension, all of the multipl
 #### SRT (Scale-Rotate-Translate) operations
 Now we've defined the operations we like the most to describe (sort-of) real world objects moved around in space. Let's spend a few paragraphs talking about how to combine all of the operations together.
 
-If you recall, geometric operations are _non-commutative_, which means that if we defined them in a specific order, there's no guarantee that changing the order will provide us with similar results. That means that when building a graphics system we need to exercise systematic vigilance when executing human stuff like "Turn that spindle around so I
-may see its refractions of the sun" without accidentally turning the sun around its' axis, incinerating the good people of Uranus.
+If you recall, geometric operations are _non-commutative_, which means that if we defined them in a specific order, there's no guarantee that changing the order will provide us with similar results. ~~That means that when building a graphics system we need to exercise systematic vigilance when executing human stuff like "Turn that spindle around so I
+may see its refractions of the sun" without accidentally turning the sun around its' axis, incinerating the good people of Uranus.~~ **[mh: this felt distracting]**
 
 The way we execute that vigilance is by a predefined order for handling objects. If you grab a pen and paper it won't take too long to figure that order out:
 1. Modify the scale (if need be).
@@ -643,7 +663,7 @@ Where the first operation occuring is the one most adjacent to the vector $v$.
 
 If you recall, we can multiply all of these matrices to get one matrix representing all the entire operation:  $$M = T⋅R⋅S$$
 
-We call this matrix $M$, because it places objects we give it in their place in the _Model_. Whenever you call `ofTranslate()`, `ofRotate()`, `ofScale()` (or equivalent) on an object, that operation is applied to the **currently active _Model_ matrix**. Whenever you execute `ofPushMatrix()`, a copy of that matrix is saved in _the matrix stack_, so that you can go back to it when neccessary. And when necessary, you will then use `ofPopMatrix()`, which will cause the current matrix $M$ to be deleted and replace it with a matrix from the top of the matrix stack. That is the entire mystery about matrices. That's it. 
+We call this matrix $M$, because it places objects we give it in their place in the _Model_. Whenever you call `ofTranslate()`, `ofRotate()`, `ofScale()` (or equivalent) on an object, that operation is applied to the **currently active _Model_ matrix**. Whenever you execute `ofPushMatrix()`, a copy of that matrix is saved in _the matrix stack_, so that you can go back to it when necessary. And when necessary, you will then use `ofPopMatrix()`, which will cause the current matrix $M$ to be deleted and replace it with a matrix from the top of the matrix stack. That is the entire mystery about matrices. That's it. 
 
 In the 'Advanced Graphics' chapter you'll learn about two similar matrices: 
 * The _View_ matrix tramsforms the result of the _Model_ matrix to simulate where our camera is supposed to be at.
