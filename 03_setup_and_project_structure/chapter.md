@@ -11,7 +11,7 @@ You need to download the OF version and the IDE (acronym for Integrated Developm
 
 Go to [www.openframeworks.cc/downloads](www.openframeworks.cc/downloads "Download openFrameworks!") and download the version that you need. By the side of each available version you will find a link to the where to download the needed IDE and how to install it. 
 
-##Welcome to your new kitchen##           
+##Welcome to your new kitchen##
 
 ###IDE:###
 - The main goal here would be to establish the similarities between all IDEs and explain where are the fundamental options needed to compile and solve common errors (missing include paths, linker errors).
@@ -36,7 +36,7 @@ The latest xCode version is 5.0.2 yet the OF projects can be opened in version 3
 
 ####Microsoft Visual Studio 2012 Express####
 This is Microsoft's IDE, it is aimed for Windows development. Even though this is the express version it comes packed with lot's of really nice stuff.
-![VS screenshot](images/VS_ScreenShot.jpg"VS screenshot")
+![VS screenshot](images/VS_ScreenShot.jpg "VS screenshot")
 
 #### Code::Blocks####
 Code::Blocks is a free IDE. It runs on several platforms(several Linux distros, Windows and MacOSX). It is quite nice.
@@ -60,7 +60,7 @@ If you are developing for the Raspberry Pi you'll have to make use of the Makefi
                                  
 So once you've done this and tested that installation went fine, by opening any example, compiling and running it without problems we are ready to continue.
  
-###Running examples###    
+###Running examples###
 Find the uncompressed OF version that you downloaded. From now on we will refer to this folder as the OF root folder.
 You can place the OF root folder anywhere you like. Open it. Inside of it you will find several folder. For now, open the one named "examples". (further down this chapter we will see what are all the other folder for). Inside of it you will see a lot of folders, choose anyone you want (these are named according to the topic covered by the example). Open it, once again there will be more folders, these are for each example. Open anyone you like. Inside of it you will find the project file for the example. It depends on the version of OF you downloaded which project files you'll find.
 Look at the image below and open, by double-clicking, the project file. 
@@ -119,38 +119,39 @@ So, what happens when you have your pantry filled with OFs stuff? You will be ab
 ####What is inside the OF pantry####
 Here you will find a lot of different things, from ingredients to tools, all ordered according to its use.
 
-*- 3d
+- **3d**
     - Tools for drawing basic 3d polygonal objects, such as spheres, cubes, pyramids, etc.
     - 3D cameras. For navigating and viewing your 3D scene. Either interactively or not.
     - 3D node. the base type for any 3d object, which allows it to be moved, rotated, scaled, parented
 **[should I say "nested" instead]** and drawn.
     - 3D mesh. A collection of points in 3D space that allow you to draw them in several different ways,  such as points, lines, lines strips, triangles, triangles strips, and to attach textures (images) to these. All this done very efficiently using your computer's GPU. 
     - Load and save 3D objects.
-- app
+- **app**
     - Tools for setting and getting properties of your app such as window size, position, different drawing modes, framerate, et cetera.
-- communication
+- **communication**
     - Arduino communication via Firmata
     - Common serial port communication
-- events
+- **events**
     - OF base events, event manager.
     - Listen to the base events, such as setup, draw, update, mouse, keys and window events.
     - You can also create your own custom events and listen to them, in a fast and straight forwards way, yet very reliable.
-- gl 
+- **gl** 
     - OpenGL is the library for using the computer's GPU. 
-    - OF comes wit several openGL related stuff already implemented for multi-platform use, such as VBOs (Vertex Buffer Object), FBOs (Frame Buffer Object), Renderers, Lights, Materials, Shaders, Textures, and several other Gl utilities.
-- graphics
+    - OF comes wit several openGL related stuff already implemented for multi-platform use, such as VBOs (Vertex Buffer Object), FBOs (Frame Buffer Object), Renderers, Lights, Materials, Shaders, Textures, and several other GL utilities.
+- **graphics**
     - Here's a lot of things. Loading and saving images of almost any kind. Several different methods for drawing on 2D. colors and styles. Most of the drawing tools rely on OpenGl so these are usually very fast. Render as PDF. Typography with several kinds of rendering options and utilities.
-- math
+- **math**
     - Vectors, Matrices, Quaternions and some really useful math helpers.
-- sound
+- **sound**
     - Sound player and sound grabber, with behind-the-scenes implementations for all the supported platforms.
     - Base sound object that allows to chain different sound objects, creating sound processing chains.
-- types
+- **base types**
     - A lot of different base types used extensively within OF.
-- utils
+- **utils**
     -  File I/O utilities. Logging.Threading. System dialogs (open, save, alert). URL file loader. XML read and save (super useful for storing and reading your app's settings).
-- video
+- **video**
     - Video Grabbers and players.
+ **[add image/drawing of the pantry]**
 
 ####Addons####
 As mentioned before, addons extend OF core functionalities, and in each OF distribution there are several included addons, usually referred to as "core addons". This are the following:
@@ -180,8 +181,80 @@ Used to write out EPS vector graphics files. It the same drawing syntax as OF's 
 This is OF's old XML implementation. It is still here because a lot of addons and rely on it. The current XML implementation is called ofXml. The first uses the tinyxml library to parse the xml files, the latter uses Poco library to do such, which happens to be more powerful than tinyxml.  
 
 ###The recipes; .h and .cpp files:###
-- Make a straight analogy between these files and recipes, the bill of materials, needed tools and instructions-steps.
-- Why 2 files instead of just one.
-- How these files are structured (in OF) -> setup, updat, draw, key, mouse and window events
-- Peeking at others files, OF's files in search for some help.
-- Some basic OOP, related to the idea of making a lot of the same recipe, how to deal with it. Link to the other chapters where OOP is covered.
+Inside any OF project folder you will find a folder named "src" (short for source). Inside of it are the source code files used for each particular project. In the project navigator of your IDE you'll see this folder and it's content listed. For any example or new project you'll see listed, at least, the following:
+- main.cpp
+- ofApp.h (testApp.h on older versions of OF)
+- ofApp.cpp (testApp.cpp on older versions of OF) 
+
+For now don't mind the "main.cpp" file as it only initializes the OF engine and starts your app, the one in the ofApp.h and ofApp.cpp files. So we will focus on these two files. These are your app's recipe. 
+Most cooking recipes have a bill of materials, the needed tools and the instructions and steps. Your OF app also has these. The .h file is the bill of materials and needed tools while the .cpp are the actual instructions and steps needed to compile and run (cook and eat) your app. In the most basic case we will just have one recipe, but you can have several other recipes used to create the main one. 
+Why not having everything just in one big file? Actually you can. But it usually tends to be more messier, and a lot harder to read for anyone else.
+In case you are trying to understand someone else's code it is so much easier to do so when you have the .h and .cpp files. Or if, for example you want to use a certain addon, and you want to know which functions and methods are available you can simply go and read the .h file where you'll clearly see these listed, instead of going through a massive amount of text trying to figure out which are the available methods and functions. **[Should I go deeper into this subject and explain it from a more technical point of view?]**  
+
+Any OF app will have a predefined structure for coding it. 
+Go to the examples and open the emptyExample. On your IDE's project navigator select the ofApp.h file and it should be displayed in the editing area.
+it should look something like this
+
+    #pragma once
+    
+    #include "ofMain.h"
+	
+	class ofApp : public ofBaseApp{
+	public:
+		void setup();
+		void update();
+		void draw();
+		
+		void keyPressed(int key);
+		void keyReleased(int key);
+		void mouseMoved(int x, int y);
+		void mouseDragged(int x, int y, int button);
+		void mousePressed(int x, int y, int button);
+		void mouseReleased(int x, int y, int button);
+		void windowResized(int w, int h);
+		void dragEvent(ofDragInfo dragInfo);
+		void gotMessage(ofMessage msg);
+	};
+Now line by line:  
+````#pragma once```` Any line that starts with a # character is a precompiler directive. Before compiling happens all the needed files are "sticked together". This directives say how this "sticking" must go on. In the case of this line it is saying that this file must be included only once otherwise you could have the same class defined more than once which would lead into a compiler error. Usually, any .h file should have this at it's very beginning.  
+````#include "ofMain.h"```` this is another precompiler directive. It is saying to include the file ofMain.h, by which you'll have all the OF things available in your app. 
+````class ofApp : public ofBaseApp{```` This is declaring a new class named ofApp (notice that usually classes are declared each on a separate file, with the filename the same as the class name. It is not a rule, it is just for tidiness). Then there is a colon (:) which is saying that this new class will inherit from another class, in this case the public methods and properties of ofBaseApp (the next chapter, about object oriented programming will explain this idea of inheritance).  
+````public:```` This line is saying that the following declarations are public. This means that this can be accessed from outside of this class. There also are private, that only can be accessed by the class itself, and protected that can be accessed by the class itself or by a class that inherits from it,  
+
+		void setup();
+		void update();
+		void draw();
+This are OF's main loop methods (you should know what void means as you already read the previous chapter). 
+````setup()```` is called only once when the app begins. This is where you usually set the initial parameters and initialize any object that your app is using that needs initialization. 
+````update()```` is called constantly, once it finishes it's execution it gets called again. How fast this happens depends on the framerate of your app, that you can set using ````ofSetFramerate(int )````, and how intensive are the tasks being done inside update(). These task usually have to do with processing data and updating variables, but not drawing.
+````draw()```` is called every time the display refreshes, usually at 60Hz or 60 times per second. This speed depend on your computer settings. Inside of this method is where you say how things should be drawn into the screen. There are several chapters further on where you will be explained how to draw in OF.    
+By default the ````update()```` and ````draw()```` methods are synced, meaning that ````update()```` gets called first and then ````draw()````. You can set this with the function ````ofSetVerticalSync(bool bSync)````.
+
+The next lines in the ofApp.h file are
+
+		void keyPressed(int key);
+		void keyReleased(int key);
+		void mouseMoved(int x, int y);
+		void mouseDragged(int x, int y, int button);
+		void mousePressed(int x, int y, int button);
+		void mouseReleased(int x, int y, int button);
+		void windowResized(int w, int h);
+		void dragEvent(ofDragInfo dragInfo);
+		void gotMessage(ofMessage msg);
+
+All this methods are event driven. This means that these get called when a particular event happens. The key and mouse methods are very self explaining. 
+````windowResized(int w, int h)```` gets called when the window is resized, and it's parameters are the new window size.   
+````dragEvent(ofDragInfo dragInfo)```` is called whenever you drag and drop files over your OF app window. In it's parameter there's a list of the files being dragged and dropped as well as the position over the window at which these were dropped.  
+````gotMessage(ofMessage msg)```` this gets called when a message is received. OF has a simple messaging system that allows to send messages from one object to another one.
+
+###Project Generator###
+
+###Using addons in your project###
+
+###Peeking at others or OF's files in search for some help.###
+
+###Some basic OOP###
+related to the idea of making a lot of the same recipe, how to deal with it. Link to the other chapters where OOP is covered.
+
+
+
