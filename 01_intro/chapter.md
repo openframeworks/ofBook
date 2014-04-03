@@ -64,6 +64,8 @@ Because OF can go anywhere on your hard drive, all the internal links are relati
 
 OF now ships with a simple project generator which is really useful for making new projects.  One of the larger challenges has always been making a new project and this tool takes a template and modifies it, chaning the name to a new name that you choose and even allowing you to add addons, additional libraries that come with OF or that you can download.  It allows you to pick where you want the project to go, and while we've structured all the examples to be a certain distance away from the root, you can change the height using this tool.  It's designed to make it easy / trivial to start sketching in code, without worrying too much about making a new project.  In the past we've always recommend that you copy an old project and rename it, but this is a more civilized approach to making projects. 
 
+**[NOTE: I think below here belongs in Roy's chapter.... this chapter is more historical and conceptual, these are more practical]**
+
 ## .h and .cpp
 
 In OF (which is C++) you'll see .cpp and .h files (they are sometimes labeled as cxx or hpp files, respectively).  The h files are the header files and cpp files are the implementation files.  Header files are definitions -- they show what's going to be in the code and implementation files are the actual steps.  One anology is like a book, the header file is like the the table of contents of the book and describes the layout of the book and the implementation files are like the chapters, where the book is written.  Another analogy is a recipe, where you have the list of ingedients (header files) and the actual steps (implementation files).   It's useful to know about this split as a lot of modern languages don't have this split.  
@@ -87,6 +89,38 @@ Folks coming from processing, where there is just setup() and draw() often times
 * Drawing in opengl is asynchronous, meaing after you fire off a bunch of commands to draw, they can be running in the background and return control back to your app.  If you seperate out your drawing code from your non drawing code there's a potential your code will be faster.
 * it's useful for debugging.  If you want to know why your code is running slow, now you can comment out the drawing and see if the visual representation that's slow or the updating. 
 
-## first project a circle moving in the screen
-## scary things in OF code (#ifdefs pragma once...)
 ## preprocessor/compiler/linker
+
+When you write code, your end goal is a compiled application - an .exe or .app that you can click on an run.  The job of the compiler is to make that executable for you, to turn text into compiled binary files. It's a 3 step process, and it's useful to know what's happening, especially since you can have errors at different steps along the way. 
+
+### preprocess
+
+The first step is that a preprocessor modifies the text files themselves.  When you see the # symbol, that's a preprocessor operation.  The most common preprocessor statement you'll see is: 
+
+`#include "xxxxx.h"`
+
+which actually means, take the content of this file and put it right here.  **[NOTE: more on "" vs <> ]**  You'll also see things like: 
+
+`#define PI 3.1428`
+
+This means, when you see the word PI in the code, change it to this variable.  This isn't a variable, this is literally modifying text. 
+
+Another common preprocessor step is asking a question. you can say things like: 
+
+	#ifdef windows
+		#include "windows.h"
+	#else
+	 	#include "nonWindows.h"
+	#endif
+
+As you can imagine this is increadibly useful for cross platform compilcation.  If you want to see preprocessor craziness, look at ofConstants.h. 
+
+One common error you'll have in the preprocess phase is a file not found error, if you include a file like
+
+	#include "opencv.h"
+	
+and it can't find the file, you will get an error at the preprocessing stage. The way to fix this is to add header search paths (places the IDE goes to look for a file).  This is a common error when using a new library.
+
+### compile
+
+### link
