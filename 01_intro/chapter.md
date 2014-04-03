@@ -66,11 +66,27 @@ OF now ships with a simple project generator which is really useful for making n
 
 ## .h and .cpp
 
-In OF (which is C++) you'll see 
+In OF (which is C++) you'll see .cpp and .h files (they are sometimes labeled as cxx or hpp files, respectively).  The h files are the header files and cpp files are the implementation files.  Header files are definitions -- they show what's going to be in the code and implementation files are the actual steps.  One anology is like a book, the header file is like the the table of contents of the book and describes the layout of the book and the implementation files are like the chapters, where the book is written.  Another analogy is a recipe, where you have the list of ingedients (header files) and the actual steps (implementation files).   It's useful to know about this split as a lot of modern languages don't have this split.  
 
-
+**MORE**
 
 ## setup/update/draw
+
+OF runs in a kind of game loop model - where we get you a context to draw into and try to run as fast as we can and repetedly draw.  There are 3 main functions that you'll see a majority of the code in (as well as the even functions like mousePressed, keyPressed, etc) 
+
+* setup()
+* update()
+* draw()
+
+Setup gets called once, at the first moment we have a window context and it's a good place for initializing variables and loading in files.   Update and draw get called repeatedly.  Update is for doing non visual changes, such as altering variables or performing analysis, draw is where we do any drawing.   The order they get called in is: 
+
+setup->update->draw->update->draw->.....
+
+Folks coming from processing, where there is just setup() and draw() often times wonder why we have two functions that repeat instead of one.  There's a couple of reasons: 
+
+* Drawing in opengl is asynchronous, meaing after you fire off a bunch of commands to draw, they can be running in the background and return control back to your app.  If you seperate out your drawing code from your non drawing code there's a potential your code will be faster.
+* it's useful for debugging.  If you want to know why your code is running slow, now you can comment out the drawing and see if the visual representation that's slow or the updating. 
+
 ## first project a circle moving in the screen
 ## scary things in OF code (#ifdefs pragma once...)
 ## preprocessor/compiler/linker

@@ -290,9 +290,7 @@ Finally, if we alter the angles we pass in to x and y for this formula in differ
 ### Noise
 
 
-
-
-
+** TODO ** 
 
 
 ## Simulation
@@ -334,6 +332,8 @@ The amazing thing is that we've just described a system that can use acceleratio
 In shorthand, `F = M x A`.  This means force and acceleration are linearly related.  If we assume that an object has a mass of one, then force equals acceleration.  This means we can use force to control velocity and velocity to control position.  
 
 The cool, amazing, beautiful thing is that are plenty of forces we can apply to an object, such as spring forces, repulsion forces, alignment forces, etc. 
+
+I have several particle examples that use this approach, and while I won't go deeply into them, I'll try to explain some interesting ideas you might find 
 
 
 ## where to go further
