@@ -55,8 +55,21 @@ We try to organize and support the community developing addons through the http:
 The driving philosophy behind openFrameworks is "do it with others" (DIWO). We love do it yourself (DIY) culture, which has been heavily promoted and facilitated by the rise of tutorial website like Instructables or Make. But we're also excited about the idea of "making socially" ("with others"). We practice DIWO through workshops, developer conferences, hackathons/labs, knitting circles and meetups in person, and online in the form of mailing lists, forum posts, and so on. We even have a gang sign. Because if you have a gang, you have to have a gang sign. The most important thing we want to stress is that you are not alone, that there's a great group of people out there learning, teaching, hacking, making and exploring the creative side of code.
 
 ## OF structure
+
+The most important thing to understand about OF is that is that it has been designed to be a self contained structure.  You download OF from the website, and that version of OF can go anywhere on your hard drive.   You shouldn't mix different versions of OF and while older project might work in newer versions of OF, that's not always a gaurentee, especially if there's been a major release. 
+
+Because OF can go anywhere on your hard drive, all the internal links are relative.  A project file, for example, looks to `../../../libs` rather then a fixed path like `C:Documents and Settings\OF` (on windows) or `/Users/name/Desktop/OF` (on linux / osx).  This means that you have to be extra special extremely careful about the depth that a project is away from the root of the OF folder.  This is one of the most common mistakes beginners make, they have a project that they either move to shallow or too deeply, or they find other peoples code but don't put it in the right spot.  I simply can't stress this point enough: project files have relative paths.  It's sweet, because it means you can share projects easily (it doesn't have a fixed path with your name on it, for example) and you can move the whole OF folder around, but it still trips many beginners up.  
+
 ## project generator
+
+OF now ships with a simple project generator which is really useful for making new projects.  One of the larger challenges has always been making a new project and this tool takes a template and modifies it, chaning the name to a new name that you choose and even allowing you to add addons, additional libraries that come with OF or that you can download.  It allows you to pick where you want the project to go, and while we've structured all the examples to be a certain distance away from the root, you can change the height using this tool.  It's designed to make it easy / trivial to start sketching in code, without worrying too much about making a new project.  In the past we've always recommend that you copy an old project and rename it, but this is a more civilized approach to making projects. 
+
 ## .h and .cpp
+
+In OF (which is C++) you'll see 
+
+
+
 ## setup/update/draw
 ## first project a circle moving in the screen
 ## scary things in OF code (#ifdefs pragma once...)
