@@ -335,6 +335,69 @@ The cool, amazing, beautiful thing is that are plenty of forces we can apply to 
 
 I have several particle examples that use this approach, and while I won't go deeply into them, I'll try to explain some interesting ideas you might find 
 
+### particle class
+
+The particle class in all of the examples is very straight forward. 
+
+	class particle{
+		
+	    public:
+	
+	        ofPoint pos;
+	        ofPoint vel;
+	        ofPoint frc;  
+	        float damping;
+	        				
+	        particle();
+	        void setInitialCondition(float px, float py, float vx, float vy);
+	       	
+	        void resetForce();
+	        void addForce(float x, float y);
+	        void addDampingForce();
+	        
+	        void update();
+	        void draw();	
+	};
+
+For variables, it has ofPoint objects for position, velocity and force (abbreviated as pos, vel and frc).  It also has a variable for damping, which represents how much this object slows down over time.  A damping of 0 would mean not slowing down at all, and as damping gets higher, it's like adding more friction - imagine rolling a ball on ice, conrete or sand, it would slow down at different rates. 
+
+In terms of functions, it has a contructor which sets some internal variables like damping and a setInitialCondition() that allows you to set the position and velocity of the particle.  Think about this as setting up its initial state, and from here you let the particle play out.   The next three functions are about forces (we'll see more) -- the first one, `resetForce()`, clears all the internal force variable frc.  Forces are not cummualtive across frames, so at the start of every frame we clear it.  `addForce()` adds a force in a given direction, useful for constant forces, like gravity.  `addDampingForce()` adds a force opposite velocity (damping is a force felt opposite the direction of travel).   Finally, update takes forces and adds it to velocity, and takes velocity and adds it to position.  Draw just draws a dot where position is. 
+
+The particle class is really simple, and throughout these examples, we add complexity to it.  In general though formula you will see in all the examples is: 
+
+	for (int i = 0; i < particles.size(); i++){
+		particles[i].resetForce();
+	}
+
+	// <------ magic happens here --------->
+	
+	for (int i = 0; i < particles.size(); i++){
+		particles[i].update();
+	}
+	
+where the magic is happening between the reset force and update.   Although these examples increase in complexity, they do so simply by adding new functions to the particle class, and adding more things between reset and update. 
+
+**[note: add screenshot of simple particle examples]**
+
+### simple forces, repulsion and attraction
+
+In the next few examples, I added a few functions to the particle: 
+
+	void addRepulsionForce( float px, float py, float radius, float strength);
+	void addAttractionForce( float px, float py, float radius, float strength);
+	void addClockwiseForce( float px, float py, float radius, float strength);
+	void addCounterClockwiseForce( float px, float py, float radius, float strength);
+
+They essentially adds forces based on a circle.  
+
+**[note: circle force graph here]**
+
+### particle particle interaciton
+
+### local interactions lead to global behavior
+
+I want to take a moment and focus on this example. 
+
 
 ## where to go further
 

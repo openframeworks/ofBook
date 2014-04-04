@@ -13,7 +13,6 @@ class particle{
         ofVec2f frc;   // frc is also know as acceleration (newton says "f=ma")
 			
         particle();
-		virtual ~particle(){};
 
         void resetForce();
         void addForce(float x, float y);
@@ -24,8 +23,6 @@ class particle{
 	
 		float damping;
 
-    protected:
-    private:
 };
 
 #endif // PARTICLE_H
