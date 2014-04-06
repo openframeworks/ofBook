@@ -1,4 +1,4 @@
-#hardware
+ #hardware
 
 ## introduction
 
@@ -16,11 +16,6 @@ Additionally, following along with the examples in this chapter requires you to 
 
 ## getting started with serial communication
 
-
-
-**SETTING UP YOUR ARDUINO**
-
-Connecting to the computer (how in-depth to go here?)
 
 **SERIAL: ONE AFTER THE OTHER**
 
@@ -40,35 +35,49 @@ The speed at which data is transmitted between the Arduino and your software is 
 
 ## digital and analog communication
 
-*basic notes - flesh this section out more*
-
-Digital read / write - will also be binary (1 or 0) -- use a pushbutton
-
-Analog read - ADC analog-digital converter chip on pins A0-A5; requires small delay because of electrical noise / jitter from the Atmega analog pin
-
-use a photoresistor / light sensor - this will convert the resistance coming in to a value between 0 and 1KB, or 0 and 1023
-
 **USING SERIAL MONITOR WITH ARDUINO**
 
-*basic notes - flesh this section out more*
+The Arduino IDE has a built-in Serial monitor, which enables you to "tune in" to the data coming across a serial port at a specified baud rate.  You can find the Serial Monitor either under Tools - Serial Monitor in the Arduino menu bar, or in the "magnifying glass" icon at the top of the IDE.
 
-The Arduino IDE has a built-in Serial monitor, which enables you to "tune in" to the data coming across a serial port at a specified baud rate. 
+In the Arduino sketch, set up Serial communication and print a basic "Hello world!" phrase to the Serial monitor in the setup() function:
 
-Serial.println("Hello world!");
+	Serial.begin(9600);
+    Serial.println("Hello world!");
+    
+Open the Serial monitor and make sure that your monitor is set to the same baud rate as your sketch (the variable that you set in Serial.begin() ). Note that the TX/RX lights on your Arduino flash once on setup - you can press the reset button on your Arduino (on most devices) to run setup again to see this more clearly.  The Arduino itself is sending the printed text over Serial and the Serial Monitor is picking up that text and printing it for us to read.
 
-Serial.println(incoming value)
+Of course, you can also use the Serial monitor to reflect more interesting data coming from devices that are connected to your Arduino.  You can print both digital and analog input data to Serial.
 
-Convert incoming value to an outgoing value
+Digital inputs like pushbuttons, or a switch that only has open and closed positions, will send a binary value as their status.  You can walk through an example of connecting a pushbutton to your Arduino in the excellent Arduino tutorial found here:
 
-PWM (pulse width modulation) - on pwm pins
+http://arduino.cc/en/tutorial/button
 
-map()
+To print the value of the pushbutton to Serial, store the returned value from digitalRead in a variable and print that variable to Serial, just as done previously with the "hello world!" example.  Here, though, print in the loop() function rather than setup() so that the value updates continuously rather than only once on reset.
+
+    buttonState = digitalRead(buttonPin);
+    Serial.println( buttonState );
+
+If you're feeling limited by the binary nature of the pushbutton, you can also read from an analog input, using a component like a potentiometer, photoresistor, or any of the wide variety of sensors that provide non-binary input.
+
+Analog inputs can only be connected on pins A0-A5 on a standard Arduino.  These analog-specific pins have an ADC (analog-digital converter) chip which enables them to convert the amount of voltage returning from the circuit into a digital-readable number between 0 and 1023.
+
+There are a number of examples and tutorials for working with analog input; a basic one using a potentiometer can be found here:
+
+http://arduino.cc/en/Tutorial/AnalogInput
+
+Printing the incoming variables to the Serial monitor is the same as with a digital input, except that you'll be using the Arduino function for analogRead() rather than digitalRead():
+
+    sensorValue = analogRead(sensorPin);
+    Serial.println( sensorValue );
+
+
 
 ## using serial for communication between arduino and openframeworks
 
 In the same way that Arduino uses Serial communication for communication between hardware and the Serial monitor, it can also use Serial communication to communicate between the Arduino board and any other running application, including openFrameworks.  This can be done quite simply using the ofSerial class, native to openFrameworks.  This class sets up a Serial listener at a specified baud rate and Serial port, giving it access to the same streaming data as the Serial library in the native Arduino IDE.  
 
-// code missing: ofSerial example
+There's a good, heavily commented demonstration of this in the communications folder of examples that comes bundled with openFrameworks.  The basic components needed to get this working are a Serial object, a toggle for knowing whether a message has been sent or not, and an array for storing the data that we receive.
+
 
 **USING FIRMATA AS A SERIAL PROTOCOL**
 
@@ -172,14 +181,6 @@ Because I'm controlling activity with keyboard keys, I'm going to use the `void 
 	}
 	
 When all the parts are together, run the app and toggle your UP and DOWN arrow keys to turn the on-board LED on your Arduino on and off!  You can also put in a 3mm or 5mm LED on pin 13 to make the effect more obvious.  Remember that pin 13 is the only Arduino pin with a built-in resistor, so if you want to add LEDs or other components on other pins, you'll need to build a full circuit with resistors to avoid burning out your parts.
-
-**still to come**
-
-*checking for pin activity*
-
-*analog input, example with receiving input and mapping it into a program graphic (potentiometer game)*
-
-*servo control with mouse*
 
  
 ## Lights On - controlling hardware via DMX

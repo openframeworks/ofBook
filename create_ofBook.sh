@@ -1,14 +1,22 @@
 #!/usr/bin/env bash
 
 # Shell script for creating the OF book!
-# Usage: ./create_ofBook.sh html
-#        ./create_ofBook.sh pdf
-#        ./create_ofBook.sh tex
-# List detected files:
-#        ./create_ofBook.sh debug
-#
 # requires Pandoc 1.12
 # Pandoc options here: http://johnmacfarlane.net/pandoc/README.html#synopsis
+
+USAGE="Usage:
+./create_ofBook.sh html
+./create_ofBook.sh pdf
+./create_ofBook.sh tex
+List detected files:
+./create_ofBook.sh debug"
+
+if [ -z "$1" ]
+then
+    echo "No argument supplied!"
+    echo "$USAGE"
+    exit 1
+fi
 
 # general options:
 GENERAL_OPTS="-N --smart --toc --toc-depth=4 -s -p"
@@ -31,18 +39,19 @@ FILES=$(find $(pwd) -type f -name "chapter.md" | sort | tr "\n" " ")
 #cp ./*/images/*.* ./images/
 
 # option string construction
-if [ $1 = "html" ] ; then
+if [ "$1" = "html" ] ; then
     OPTS="$GENERAL_OPTS $HTML_OPTS"
-elif [ $1 = "tex" ] ; then
+elif [ "$1" = "tex" ] ; then
     OPTS="$GENERAL_OPTS $LATEX_OPTS"
-elif [ $1 = "pdf" ] ; then
+elif [ "$1" = "pdf" ] ; then
     OPTS="$GENERAL_OPTS $LATEX_OPTS"
-elif [ $1 = "debug" ] ; then
+elif [ "$1" = "debug" ] ; then
     echo "List of discovered files:"
     echo $FILES
     exit 0
 else
     echo "Invalid argument $1!"
+    echo "$USAGE"
     exit 1
 fi
 
