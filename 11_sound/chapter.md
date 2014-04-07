@@ -8,7 +8,7 @@ Here's a quick overview of the classes you can use to work with sound in openFra
 
 `ofSoundStream` gives you access to the computer's sound hardware, allowing you to generate your own sound as well as react to sound coming into your computer from something like a microphone or line-in jack.
 
-*[ possibly separate the below from above? (since they're not actually in OF yet) ]*
+*[ possibly separate the below from above? (since they're not actually in OF yet) ]*  **[mh: will they be in oF in the next few months?]**
 
 `ofSoundBuffer` is used to store a sequence of `float` values, and perform audio-related things on said values (like resampling)
 
@@ -32,15 +32,13 @@ Playing a sound file is only a couple lines of code in openFrameworks. Just poin
 
 This is fine for adding some background music or ambiance to your app, but ofSoundPlayer comes with a few extra features that are particularly handy for handling sound effects.
 
-"Multiplay" allows you to have a file playing several times simultaneously. This is great for any sound effect which might end up getting triggered rapidly, so you don't get stuck with an unnatural cutoff as the player's playhead abruptly jumps back to the beginning of the file. With multiplay enabled, you can get natural sound effect behaviour with dead-simple trigger logic like this:
+"Multiplay" allows you to have a file playing several times simultaneously. This is great for any sound effect which might end up getting triggered rapidly, so you don't get stuck with an unnatural cutoff as the player's playhead abruptly jumps back to the beginning of the file. Multiplay isn't on by default. Use `soundPlayer.setMultiPlay(true)` to enable it. Then you can get natural sound effect behaviour with dead-simple trigger logic like this:
 
     if ( thingHappened )
       soundPlayer.play();
     }
 
-Multiplay isn't on by default. Use `soundPlayer.setMultiPlay(true)` to enable it.
-
-Another feature built-in to ofSoundPlayer is speed control. If you set the speed faster than normal, the sound's pitch will rise accordingly, and vice-versa (just like a vinyl record). Playback speed is defined relative to "1", so "0.5" is half-speed and "2" is double speed.
+Another feature built-in to ofSoundPlayer is speed control. If you set the speed faster than normal, the sound's pitch will rise accordingly, and vice-versa (just like a vinyl record). Playback speed is defined relative to "1", so "0.5" is half-speed and "2" is double speed.  **[mh: nice tie-in to life example.  it might be nice to have a comment about why this is sound-wise: i.e. 1000Hz signal sampled at 2x speed yields a 500Hz signal.]**
 
 Speed control and multiplay are made for each other. Making use of both simultaneously can really extend the life of a single sound effect file. Every time you change a sound player's playback speed with multiplay enabled, previously triggered sound effects continue on unaffected. So, by extending the above trigger logic to something like...
 
@@ -61,7 +59,7 @@ Ultimately, ofSoundPlayer is a tradeoff between ease-of-use and control. You get
 
 ofSoundStream is the gateway to the audio hardware on your computer, such as the microphone and the speakers. If you want to have your app react to live audio input or generate sound on the fly, this is the section for you!
 
-You may never have to use the ofSoundStream directly, but it's the object that manages the resources needed to trigger audioOut() and audioIn() on your app. Here's the basic structure for a sound-producing openFrameworks app:
+You may never have to use the ofSoundStream directly, but it's the object that manages the resources needed to trigger `audioOut()` and `audioIn()` **[mh: for a first time reader, I stumbled for a second here since I didn't realize ofBaseApp inherited audioOut() and audioIn().  could be useful to point that out to the reader and to make a quick statement about how oF calls these methods behind the scenes]** on your app. Here's the basic structure for a sound-producing openFrameworks app:
 
     class ofApp : public ofBaseApp {
       ...
@@ -83,7 +81,7 @@ You may never have to use the ofSoundStream directly, but it's the object that m
       }
     }
 
-When producing or receiving audio, the format is floating point numbers between -1 and 1 (the reason for this is coming a little later in this chapter). The sound will arrive in your app in the form of *buffers*, which you can treat much like arrays.
+When producing or receiving audio, the format is floating point numbers between -1 and 1 (the reason for this is coming a little later in this chapter). The sound will arrive in your app in the form of *buffers*, which you can treat much like arrays.  **[mh: having never really worked with sound, your descriptions of buffers was clear, but I would have liked a sentence pointing out why the sound card uses buffers.  presumably it is because transferring values to the sound card is the speed bottleneck?]**
 
 The buffer size is adjustable, but it's usually a good idea to leave it at the default. The default isn't any number in particular, but will usually be whatever the hardware on your computer prefers. In practice, this is probably about 512 samples per buffer (256 and 1024 are other common buffer sizes).
 
@@ -91,17 +89,17 @@ Buffers are *interleaved* meaning that the samples for each channel are right ne
 
     [Left] [Right] [Left] [Right] ...
 
-This means you access individual sound channels in much the same way as accessing different colours in an ofPixels object (i.e. buffer[i] for the left channel, buffer[i + 1] for the right channel). The total size of the buffer you get in audioIn() / audioOut() can be calculated with bufferSize * nChannels.
+This means you access individual sound channels in much the same way as accessing different colours in an ofPixels object (i.e. `buffer[i]` for the left channel, `buffer[i + 1]` for the right channel). The total size of the buffer you get in `audioIn()` / `audioOut()` can be calculated with `bufferSize * nChannels`.
 
 ##Why -1 to 1?
 
 In order to understand *why* openFrameworks chooses to represent sound as a continuous stream of `float` values ranging from -1 to 1, it'll be helpful to know how sound is created on a physical level.
 
-*[ a minimal picture showing the mechanics of a speaker ]*
+*[ a minimal picture showing the mechanics of a speaker ]* **[mh: this would be great]**
 
 At the most basic level, a speaker consists of a cone and an electromagnet. The electromagnet pushes and pulls the cone to create vibrations in air pressure. These vibrations make their way to your ears, where they are interpreted as sound. When the electromagnet is off, the cone is simply "at rest", neither pulled in or pushed out.
 
-[footnote] A basic microphone works much the same way: allowing air pressure to vibrate an object held in place by a magnet, thereby creating an electrical signal.
+[footnote] A basic microphone works much the same way: allowing air pressure to vibrate an object held in place by a magnet, thereby creating an electrical signal.  **[mh: this would also be great]**
 
 From the perspective of an openFrameworks app, it's not important what the sound hardware's specific voltages are. All that really matters is that the speaker cone is being driven between its "fully pushed out" and "fully pulled in" positions, which are represented as 1 and -1. [note: would be good to relate this to zach's bit about numbers between 0 and 1 in the animation chapter].
 
@@ -114,6 +112,8 @@ A major way that sound differs from visual content is that there isn't really a 
 This is because what you actually hear is the *changes* in values over time. Any individual sample in a buffer doesn't really have a sound on its own. What you hear is the *difference* between the sample and the one before it. For instance, a sound's "loudness" isn't necessarily related to how "big" the individual numbers in a buffer are. A sine wave which oscillates between 0.9 and 1.0 is going to be much much quieter than one that oscillates between -0.5 and 0.5.
 
 ##Time Domain vs Frequency Domain
+
+**[mh: this section would be super important for anyone just starting in sound to understand.  maybe add some links to additional places to learn about FFT.  at least for me, when I first encountered FFT it took me a while to get it (granted, I was working with FFT for visuals which is a bit less natural than FFT for sound).]**
 
 When representing sound as a continuous stream of values between -1 and 1, you're working with sound in what's known as the "Time Domain". This means that each value you're dealing with is referring to a specific moment in time. There is another way of representing sound which can be very helpful when you're using sound to drive something other aspect of your app. That representation is known as the "Frequency Domain".
 
@@ -134,17 +134,17 @@ The frequency domain is useful for many things, but one of the most straightforw
 ###RMS
 One of the simplest ways to add audio-reactivity to your app is to calculate the RMS of incoming buffer of audio data. RMS stands for "root mean square" and is a pretty straightforward calculation that serves as a good approximation of "loudness" (much better than something like averaging the buffer or picking the maximum value). You can see RMS being calculated in the "audioInputExample".
 
-*[ code snippet here ]*
+*[ code snippet here ]*  **[mh: point out in the paragraph above or in the comments for the code that the "S" part of RMS allows you to consider the magnitude rather than the sign?]**
 
 ###Onset Detection
 Onset detection algorithms attempt to locate moments in an audio stream where an "onset" occurs, which is usually something like an instrument playing a note or the impulse of a drum hit. There are many onset detection algorithms available at various levels of complexity and accuracy, some fine-tuned for speech as opposed to music, some working in the frequency domain instead of the time domain, some made for offline processing as opposed to realtime, etc.
 
 A simple realtime onset detection algorithm can be built on top of the RMS calculation above.
 
-*[ naive RMS threshold-based code sample here ]*
+*[ naive RMS threshold-based code sample here ]*  **[mh: would a more advanced version (i.e. one that could handle multiple concurrent instruments) of this be to apply RMS to individual bands of FFT? if so, maybe point that out.  if not, point out other algorithms or places to look for algorithms for onset detection.  it seems like an important thing for anyone attempting live audiovisual stuff.]**
 
 ###FFT
-Running an FFT on your input audio will give you back a buffer of values representing the input's frequency content. A straight up FFT *won't* tell you which notes are present in a piece of music, but you will be able to use the data to take the input's sonic "texture" into account. For instance, the FFT data will let you know how much "bass" / "mid" / "treble" there is in the input at a pretty fine granularity (a typical FFT used for realtime audio-reactive work will give you something like 512 to 4096 individual frequency bins to play with).
+Running an FFT on your input audio will give you back a buffer of values representing the input's frequency content. A straight up FFT *won't* tell you which notes are present in a piece of music, but you will be able to use the data to take the input's sonic "texture" into account. For instance, the FFT data will let you know how much "bass" / "mid" / "treble" there is in the input at a pretty fine granularity (a typical FFT used for realtime audio-reactive work will give you something like 512 to 4096 individual frequency bins to play with).  **[mh: are there some standards for frequency range that defines bass vs mid vs treble?  might be useful to include.]**
 
 When using the FFT to analyze music, you should keep in mind that the FFT's bins increment on a *linear* scale, whereas humans interpret frequency on a *logarithmic* scale. So, if you were to use an FFT to split an input signal into 512 bins, the lowest bins (probably bin 0 through bin 30 or so) will contain the bulk of the data, and the remaining bins will mostly just be high frequency content. If you were to isolate the sound on a bin-to-bin basis, you'd be able to easily tell the difference between the sound of bins 3 and 4, but bins 500 and 501 would probably sound exactly the same. Unless you had robot ears.
 
@@ -154,7 +154,12 @@ When using the FFT to analyze music, you should keep in mind that the FFT's bins
 - Working with external sound applications
 - Overview of simple synthesis techniques (very high-level)
 
+**[mh: since most of the chapter feels fairly conceptual, I'd be very curious to see what these look like and whether they give the reader more of a hands-on feel.]**
+
 ##Gotchas
+
+**[mh: these were all nice]**
+
 ### "Popping"
 When starting or ending playback of synthesized audio, you should try to quickly fade in / out the buffer, instead of starting or stopping abruptly. If you start playing back a buffer that begins like `[1.0, 0.9, 0.8...]`, the first thing the speaker will do is jump from the "at rest" position of 0 immediately to 1.0. This is a *huge* jump, and will probably result in a "pop" that's quite a bit louder than you were expecting (based on your computer's current volume).
 
