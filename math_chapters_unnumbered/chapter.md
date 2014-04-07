@@ -38,16 +38,16 @@ With the `lerp` function, you can take any two quantities, in our case `start` a
  $$\text{lerp}\left(a,b,t\right) = t\cdot b+\left(1-t\right)\cdot a$$ 
 
 ##### Note: What does _linear_ really mean?
-Engineers, Programmers and English Speakers like to think of _linear_ as _anything you can put on a line_. Mathematicians, having to deal with all the conceptual mess the former group of people creates, define it _anything you can put on a line **that begins at (0,0)**_. There's  good reasoning behind that, which we will see in the discussion about Linear Algebra. In the meantime, think of it this way: if our transformation is taking a line that has a value 0 at the point 0 and returning a line with the same property, (thus in the form $f\left(x\right)=ax$), It's _linear_. If it returns a value different from 0 at $x=0$ (in the form $f\left(x\right)=ax + b$), it's _affine_. 
+Engineers, Programmers and English Speakers like to think of _linear_ as _anything you can put on a line_. Mathematicians, having to deal with all the conceptual mess the former group of people creates, define it _anything you can put on a line **that begins at (0,0) *_. There's  good reasoning behind that, which we will see in the discussion about Linear Algebra. In the meantime, think of it this way: if our transformation is taking a line that has a value 0 at the point 0 and returning a line with the same property, (thus in the form $f\left(x\right)=ax$), It's _linear_. If it returns a value different from 0 at $x=0$ (in the form $f\left(x\right)=ax + b$), it's _affine_. __[BD: Perhaps explain _affine_]__
 
 ##### Exercise: Save NASA's Mars Lander 
-In 1999, an masterpiece of engineering was making its final approach to Mars. All instruments were showing that the approach distance matched the speed, and that it's just about to get there and do some science. But instead, it did something rather rude: it crashed into the red planet. An investigation made later by NASA revealed that while designing the lander, one team worked with their test equipment set to _centimetres_, while the other had theirs set to _inches_. **By the way, this is all true.**
+In 1999, a masterpiece of engineering was making its final approach to Mars. All instruments were showing that the approach distance matched the speed, and that it's just about to get there and do some science __[BD: This senctence is a bit awkward]__. But instead, it did something rather rude: it crashed into the red planet. An investigation made later by NASA revealed that while designing the lander, one team worked with their test equipment set to _centimetres_, while the other had theirs set to _inches_. **By the way, this is all true.**
 
 Help the NASA teams work together: write a function that converts centimetres to inches. For reference, $1_{\text{in}} = 2.54_{\text{cm}}$. Test your result against three different real-world values.
 
 **Think:**
 
-1. Why can we use `lerp` outside the range of 0 and 1?
+1. How can we use `lerp` outside the range of 0 and 1?
 2. What would it take to write a function that converts inches into centimetres?
 
 #### Affine Mapping: The `ofMap`
@@ -57,22 +57,24 @@ float ofMap(float value, float inputMin, float inputMax, float outputMin, float 
 
 
 In the last discussion, we saw how by using `lerp`, any value between two points can be _linearly_ addressed as a value between 0 and 1. That's very convenient, and therefore the reason we build most of our arbitrary numerical ranges (`ofFloatColor`, for example) in the domain of 0 and 1. 
-However, when dealing with real world problems, programmers run into domains **[mh: if you are going to be specific about the words domain and range, it would be worth an explanation.  it might not hurt to have a sentence or two about what a function is from a mathematical standpoint.  it could be useful for when you talk about more specific functions - like linear and affine mappings.]** of values that they wish to map to other ranges of values, neither of which are confined to 0 and 1. For example, someone trying to convert the temperature in Celsius to Fahrenheit won't be able to use **[mh: missing part of a sentence]** Surely, the way of doing that must involve a `lerp`, but it needs a little help:
+However, when dealing with real world problems, programmers run into domains **[mh: if you are going to be specific about the words domain and range, it would be worth an explanation.  it might not hurt to have a sentence or two about what a function is from a mathematical standpoint.  it could be useful for when you talk about more specific functions - like linear and affine mappings.]** of values that they wish to map to other ranges of values, neither of which are confined to 0 and 1. For example, someone trying to convert the temperature in Celsius to Fahrenheit won't be able to use **[mh: missing part of a sentence]** Surely, the way of doing that must involve a `lerp`, but it needs a ~~little help~~ __[BD: "bit more"? Just trying to be a little less abstract.]__:
 
-If we want to use the `lerp` function, we're aiming to get it to the range between 0 and 1. We can do that by knocking `inputMin` off the input `value` so that it starts at 0, then dividing by the size of the domain: $$x=\frac{\text{value}-\text{inputMin}}{\text{inputMax}-\text{inputMin}}$$
+If we want to use the `lerp` function, we're aiming to get it __[BD: Get what?]__ to the range between 0 and 1. We can do that by knocking `inputMin` off the input `value` so that it starts at 0, then dividing by the size of the domain __[BD: Be specific about what "domain" means]__: $$x=\frac{\text{value}-\text{inputMin}}{\text{inputMax}-\text{inputMin}}$$
 Now that we've tamed the input domain to be between 0 and 1, we do the exact opposite to the output: `ofMap(value, inputMin, inputMax, outputMin, outputMax)` $=\frac{\text{value}-\text{inputMin}}{\text{inputMax}-\text{inputMin}}\cdot\left(\text{outputMax}-\text{outputMin}\right)+\text{outputMin}$
 
 **[mh: I'd suggest walking through this some numbers to convert from F to C or vice versa]**
 
 #### Range Utilities
 ##### Clamping
-You'll notice that the previous explanation is missing the `clamp` parameter. This may not matter to us if we're using the `ofMap` function in the range that we defined, but suppose we select a `value` smaller than `inputMin`: would it be ok if the result was also smaller than `outputMin`? If our program is telling an elevator which floor to go to, that might be a problem. That's why we add `true` to the tail of this function whenever we need to be careful.
+You'll notice that the previous explanation is missing the `clamp` parameter. This may not matter to us if we're using the `ofMap` function in the range that we defined, but suppose we select a `value` smaller than `inputMin`: would it be ok if the result was also smaller than `outputMin`? If our program is telling an elevator which floor to go to, that might be a problem. __[BD: This is a nice. Can you elaborate on why this would actually be a problem (using the elevator example)?]__ That's why we add `true` to the tail of this function whenever we need to be careful.
 
 Just in case, oF offers another specific clamp function: 
 
 ```cpp
 float ofClamp(float value, float min, float max)
 ```
+
+`ofClamp` returns a float `value` that is confined to `min` and `max`.
 
 ##### Range Checking
 
@@ -88,7 +90,7 @@ Tells you whether a number `t` is between `min` and `max`.
 float ofSign(float n);
 ```
 
-Returns the sign of a number, as `-1.0` or `1.0`. Simple, eh?
+Returns the sign of a number, as either `-1` or `1` __[BD: according to the `ofSign()` [documentation](http://openframeworks.cc/documentation/math/ofMath.html#show_ofSign), it returns an int. I changed `1.0` to `1` inline. Please correct me if I am wrong. ]__. Simple, eh?
 
 ### Beyond Linear: Changing Change 
 
@@ -110,7 +112,7 @@ float quadratic (float t){
 	}
 ```
 
-This function used a defined range and a parameter to create `a1`, then used another defined range with the _same_ parameter to create `a2`. Their result looks surprising:
+This function used a defined range and a parameter to create `a1`, then used another defined range with the _same_ parameter to create `a2`. The result looks surprising:
 
 **//TODO: Draw quadratic eqn**
 
@@ -124,7 +126,7 @@ $$
 = 4t^{2}+5
 $$
 
-Something interesting happened here. Without noticing, we introduced a second order of complexity, a _quadratic_ one. ~~If you don't find this relationship remarkable, please give this book to someone who does.~~ **[mh: a bit too harsh for an intro to math chapter]**
+Something interesting happened here. Without noticing, we introduced a second order of complexity, a _quadratic_ one. ~~If you don't find this relationship remarkable, please give this book to someone who does.~~ **[mh: a bit too harsh for an intro to math chapter][BD: I second this. Also, how about explaining what a _quadratic_ is?]**
 
 
 The same manipulation can be applied for a third order:
@@ -139,7 +141,7 @@ float cubic (float t){
 	float b2 = ofLerp(t, a3, a4);
 	float c = ofLerp(t, b1, b2);
 	return c;
-	}
+}
 ```
 
 **[mh: maybe change the variable names here, so that they don't give the impression of lining up with the polynomial eq]**
@@ -147,13 +149,11 @@ We'll skip the entire solution, and just reveal that the result will appear in t
 See the pattern here? The highest exponent is the number of successive `ofLerp`s we applied, i.e. the number of ~~successive~~**[mh:nested?]** times we ~~changed~~**[mh:mapped?]** using our parameter $t$.
 
 ##### …And So On
-The general notion in Uni level Calculus is that _you can do anything if you have enough of something_. So fittingly, there's a curious little idea in Mathematics which allows us, with enough of these nested control points, to approximate any curve segment we can imagine. In the original formulation of that idea (called a _Taylor Series_), we only reach a good approximation if the amount of degrees (successive `lerp`s we applied) is close to infinity.  **[mh: important concept, but feels out of place here.  I'd either add an example of taylor expansion or ax the section.  coming from optics where we used the small angle approx constantly, my favorite ones are the trig functions]**
-
-In Computer Graphics, as you're about to see - 3 is close enough.
+The general notion in Uni level Calculus is that _you can do anything if you have enough of something_. So fittingly, there's a curious little idea in Mathematics which allows us, with enough of these nested control points, to approximate any curve segment we can imagine. In the original formulation of that idea (called a _Taylor Series_), we only reach a good approximation if the amount of degrees (successive `lerp`s we applied) is close to infinity.  **[mh: important concept, but feels out of place here.  I'd either add an example of taylor expansion or ax the section.  coming from optics where we used the small angle approx constantly, my favorite ones are the trig functions]** In Computer Graphics, as you're about to see - 3 is close enough.
 
 ### Splines
 **[mh: readers might find this opening a bit sudden, esp. if they don't know what a control point is yet]**
-What we've done in the previous chapter is really quite remarkable. We have built a rig for control points, on top of which we built a rig for controlling these points in pairs, and we continued to do so until we ended up with one parameter, $t$, to control them all. For reasons you're about to see, Mathematicians will often shy away from the description of polynomials as a physical metaphor, so not many math books will describe this process to you this way. But anyone who's done even the slightest bit of design will benefit from that idea immensely. 
+What we've done in the previous ~~chapter~~ __[BD: section?]__ is really quite remarkable. We have built a rig for control points, on top of which we built a rig for controlling these points in pairs, and we continued to do so until we ended up with one parameter, $t$, to control them all. For reasons you're about to see, Mathematicians will often shy away from the description of polynomials as a physical metaphor, so not many math books will describe this process to you this way. But anyone who's done even the slightest bit of design will benefit from that idea immensely. 
 
 The reason to avoid describing polynomials to a physical being is what happens to them soon after they step away from their control points. Every polynomial will eventually go to infinity - which is a broad term, but for us designers it means that slightly off it's range, we'll need a lot more paper, or computer screen real estate, or yarn, or cockroaches (true story **[mh: can't just drop something like this in and then walk away from it...I need to know]**) in order to draw it. 
 
@@ -171,13 +171,14 @@ These properties make this way of creating curves pretty popular in computer gra
 
 Using the curve functions in openFrameworks is pretty straightforward: All you have to do is start from a point, and then add a destination, along with the control points **[mh: worth defining a control point somewhere in here]** to reach it:
 ```cpp
-//The beginning point
+// The beginning point
 line.addVertex(ofPoint(200, 400)); 
-//A sequence of two control points and a destination: 
-//control 1's x and y, control 2's x and y, and the destination
+// A sequence of two control points and a destination: 
+// The first control point's x and y, the second control point's x and y, 
+// and the destination
 line.bezierTo(100, 100, 800, 100, 700, 400); 
 ```
-This generates this image:
+That code generates this image:
 ![Beziér](http://openframeworks.cc/documentation/graphics/bezier.png)
 
 This is just one example of use though. All of the different combinations are documented extensively in the _Advanced Graphics_ chapter. 
@@ -185,7 +186,7 @@ This is just one example of use though. All of the different combinations are do
 
 ### Tweening
 
-So far we've learned how to use a bunch of control points to create an interesting curve in space. We've used our parameter $t$ to simulate the time it takes to draw each point on the curve. We also implicitly assumed that time runs only in the period that we let it run in, in the case of our examples, between 0 and 1. But we never really tested what it looks like to run all of that in real time. 
+So far we've learned how to use a bunch of control points to create an interesting curve in space. We've used our parameter $t$ to simulate the time it takes to draw each point on the curve __[BD: Is this the first time that you directly mention that $t$ represents time? I know that it might seem implied, but perhaps mention this explicitly the first time you use $t$]__. We also implicitly assumed that time runs only in the period that we let it run in, in the case of our examples, between 0 and 1. But we never really tested what it looks like to run all of that in real time. 
 
 **//TODO: Drawing of a smoothstep curve **
 
@@ -199,7 +200,7 @@ Tweening is not yet a standard part of the openFrameworks library. In the meanti
 ## More Dimensions: Some Linear Algebra
 Until now, we explored several ideas on how to change what's going on the number line. That's cool, but we want to know how to do graphics, and graphics has more than one dimension. Our ancient Mathematician ancestors (Just kidding, most important Mathematicians die before 30. Not kidding) also faced this problem when trying to address the space of shapes and structures, and invented some complex machinery to do so. The fancy name for this machinery is _Linear Algebra_, which is exactly what it sounds like: using algebraic operations (add and multiply, mostly), in order to control many lines. 
 
-In this part you're going to learn many concepts in how to store and manipulate multidimensional information. You'll later be able to use that information to control realtime 3d graphics using OpenGL, and impress the opposite (or same) sex with your mastery of geometry.
+In this section you're going to learn many concepts in how to store and manipulate multidimensional information. You'll later be able to use that information to control realtime 3d graphics using OpenGL, and impress the opposite (or same) sex with your mastery of geometry.
 
 ### The Vector
 You may have heard of vectors before when discussing directions or position, and after understanding that they can represent both, may have gotten a little confused. Here's the truth about Vectors™: 
@@ -306,7 +307,7 @@ void testApp::draw(){ gary.draw(); }
 
 ##### Note: C++ Operator Overloading
 
-**[mh: this proke the flor a bit for me, so I'd recommend pushing it later]**
+**[mh: this proke the flor a bit for me, so I'd recommend pushing it later][BD: Agreed.]**
 
 Just like we had to define the meaning of a product of a scalar quantity and a vector, programming languages - working with abstract representations of mathematical objects, also need to have definitions of such an operation built in. C++ takes special care of these cases, using a feature called _Operator Overloading_: defining the `*` operation to accept a scalar quantity and a vector as left-hand side and right-hand side arguments:
 
@@ -330,7 +331,7 @@ The basic arithmetic operations, `+`, `-`, `*`, `/`,`+=`, `-=`, `*=`, `/=`, exis
 
 Some excellent examples of operator overloading done right exist in the source files for the `ofVec` types. It's encouraged to check them out.
 
-**Warning: Overloading operators will make you go blind.** Programmers use operators without checking what they do, so bugs resulting from bad overloads take a long time to catch. If the expression `a + b` returns a reference instead of a copy, a `null` instead of a value, or modifies one of the input values – someone will use it one day, and that someone will cry for many days. Unless the operator can do one arithmetic thing and that alone, do not overload it with a different meaning. openFrameworks may or may not have a feature that tweets for you whenever you've written a silly operator overload. [No one knows](https://code.google.com/p/keytweeter/).
+**Warning: Overloading operators will make you go blind.** Programmers use operators without checking what they do, so bugs resulting from bad overloads take a long time to catch. If the expression `a + b` unexpectedly returns a reference instead of a copy, a `null` instead of a value, or modifies one of the input values – someone may use it one day, and then that someone may cry for many days. Unless the operator can do one arithmetic thing and that alone, do not overload it with a different meaning. OpenFrameworks may or may not have a feature that tweets for you whenever you've written a silly operator overload. [No one knows](https://code.google.com/p/keytweeter/).
 
 ##### Distance Between Points
 
@@ -397,6 +398,8 @@ The dot product of two vectors has a definition that's not too clear at first. O
 
 For reasons you'll learn soon, it's a rather surprising coincidence.
 
+__[BD: Perhaps an english definition of dot product would be helpful]__
+
 **//TODO: Finish this**
 
 
@@ -408,11 +411,11 @@ For reasons you'll learn soon, it's a rather surprising coincidence.
 
 In the computer world, a program needs the two things to function: Algorithms and Data Structures (it also needs I/O, but we're talking Turings, not Perlins **[mh: huh?]**). In the 3D Maths world it's exactly the same: we call our data structures 'vectors' and our algorithms are operations. 
 
-At the core of the heavy machinery built to control 3d space, a matrix is just a data structure, like a vector. However, the 'algorithms' applied to this data structure (operations, in Mathland) make it an extremely powerful one. All of the _affine_ operations we care about in 3D can be described in the form of a matrix: translation, rotation, scaling, inversion, squeezing, shearing, projection and more and more.
+At the core of the heavy machinery built to control ~~3d~~ 3D __[BD: I'd stay consistent with 3D vs 3d throughout the chapter]__ space, a matrix is just a data structure, like a vector. However, the 'algorithms' applied to this data structure (operations, in Mathland) make it an extremely powerful one. All of the _affine_ operations we care about in 3D can be described in the form of a matrix: translation, rotation, scaling, inversion, squeezing, shearing, projection and more and more.
 
 As a convention, we'll be marking vectors with lowercase letters and matrices with uppercase letters.
 
- 
+COME BACK 
 #### Matrix Multiplication as a dot product
 The easiest way to look at a matrix is to look at it as a bunch of vectors. Depending on what we care about, we can either look at the columns or rows as vectors. 
 
