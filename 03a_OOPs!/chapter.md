@@ -400,7 +400,32 @@ To learn more about stl::vector check xxx chapter or this online shory tutorial 
 
 ##• 8 - quick intro to polymorphism (inheritance)
 You're now discovering the power of OOP, making a class and creating as many objects from that in an instant, adding and deleting by your application needs. Now, for a second let's go back to our cooking metaphor (yummi!) and imagine that your cookies, even sharing the same cookie cutter and dough using some different sprinkles on each won't hurt and add some desired variation to our cookie jar selection!
-This is also the power of OOP and inheritance: by allowing to use a base class and add some specific behaviours overwrite some of the behaviours of a class
-Quick intro to polymorphism by example.
-Show how the same class base can be made flexible to create variety of objects based on the same principles of behaviors.
-Example - particles behave the same way but different drawing methods (e.g. triangle and square) 
+This is also the power of OOP and inheritance: by allowing to use a base class and add some specific behaviours overwrite some of the behaviours of a class, creating a subset of instances / objects with slightly different behaviors.
+The great thing about this is it's repurposability, we're using the 'mother' class as a starting point, using all its capabilities but we overwrite one of its methods to give it more flexibility.
+Going back to our oFBall class we'll build some 'daughter' classes based on its main characterisitcs, motion behaviors and shape but we'll have a different color of each type of inherited class.
+here we go! Create a new Class set of files and name them 'ofBallBlue'. Feel free to copy the code below and
+it's '.h' shoudl look like this:
+
+	#pragma once				// another and more modern way to prevent the compiler from including thiis file more than once
+
+	#include "ofMain.h"
+	#include "ofBall.h"			// we need to include the 'mother' class, the compiler will include the mother/base class so we have access to all the methods inherited
+	
+	class ofBallBlue : public ofBall { 	// we set the class to inherit from 'ofBall'
+	
+	public: 
+	
+		void draw(); 			// this is the only methid we actually want to be different from the 'mother class'
+	
+	};
+
+
+On the '.cpp' file we'll need to them specify what we want the new 'draw()' method to do uniquely.
+
+	#include "ofBallBlue.h"
+	
+	
+	void ofBallBlue::draw(){
+		float size = 4;
+		ofRect(pos.x - size/2, pos.y - size/2, size, size);
+	}
