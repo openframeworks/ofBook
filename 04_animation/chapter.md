@@ -420,12 +420,78 @@ You'll notice that all the code is relatively similar, but with different additi
 			frc.x += diff.x * pct * strength;
 			frc.y += diff.y * pct * strength;
 
-We just move in the oppisite direction.
+We just move in the oppisite direction.  For the clockwise and counter clockwise forces we add the perpindicular of the diff line.  The perpindicular of a 2d vector is just simply switching x and y and making one of them negative.
 
+**[more: show example]**
 
 ### particle particle interaciton
 
+Now that we have particles interacting with forces, the next step is to give them more understanding of each other.  For example, if you have a broad attraciton force, they will all converge on the same point without any respect for their neighbors.  The trick is to add a function that allows the particle to feel a force based on their neighbor. 
 
+We've added new functions to the particle object (looking in the h file):
+
+	void addRepulsionForce(particle &p, float radius, float scale);
+	void addAttractionForce(particle &p, float radius, float scale);
+
+This looks really similar to the code before, except here we pass in a particle instead of an x and y position. You'll notice that we pass by reference (using &) as opposed to passing by copy.  This is because internally we'll alter both the particle who has this function called as well as particle p -- ie, if you calculate A vs B, you don't need to calculate B vs A.
+	
+	void particle::addRepulsionForce(particle &p, float radius, float scale){
+		
+		// ----------- (1) make a vector of where this particle p is: 
+		ofVec2f posOfForce;
+		posOfForce.set(p.pos.x,p.pos.y);
+		
+		// ----------- (2) calculate the difference & length 
+		
+		ofVec2f diff	= pos - posOfForce;
+		float length	= diff.length();
+		
+		// ----------- (3) check close enough
+		
+		bool bAmCloseEnough = true;
+	    if (radius > 0){
+	        if (length > radius){
+	            bAmCloseEnough = false;
+	        }
+	    }
+		
+		// ----------- (4) if so, update force
+	    
+		if (bAmCloseEnough == true){
+			float pct = 1 - (length / radius);  // stronger on the inside
+			diff.normalize();
+			frc.x = frc.x + diff.x * scale * pct;
+	        frc.y = frc.y + diff.y * scale * pct;
+			p.frc.x = p.frc.x - diff.x * scale * pct;
+	        p.frc.y = p.frc.y - diff.y * scale * pct;
+	    }
+	}
+
+The code should look very similar to before, except with these added lines: 
+
+	frc.x = frc.x + diff.x * scale * pct;
+	frc.y = frc.y + diff.y * scale * pct;
+	p.frc.x = p.frc.x - diff.x * scale * pct;
+	p.frc.y = p.frc.y - diff.y * scale * pct;
+	
+This is modifying both the particle you are calling this on and the particle that is passed in.  
+
+This means we can cut down on the number of particle particle interactions we need to calculate: 
+
+
+	for (int i = 0; i < particles.size(); i++){
+        for (int j = 0; j < i; j++){
+            particles[i].addRepulsionForce(particles[j], 10, 0.4);
+        }
+	}
+
+you'll notice that this 2d for loop, the inner loop counts up to the outer loop, so when i is 0, we don't even do the inner loop.  When i is 1, we compare it to 0 (1 vs 0).  When i is 2, we compare it to 0 and 1 (2 vs 0, 2 vs 1).  This way we never compare a particle with itself, as that would make no sense (although we might know some poeple in our lives that have a strong self attraction or repulsion). 
+
+**[note: maybe a diagram to clarify]**
+
+One thing to note is that even through we've cut down the number of calculations, it's still quite a lot!  This is a problem that doen't scale linearly.  In computer science, you talk about a problem using "O" notation, ie big O notation.  This is a bite more like O^2 / 2 -- the complexity is like 1/2 of a square.  If you have 100 particles, you are doing almost 5000 calculations (100 * 100 / 2).  If you have 1000 particles, it's almost half a million.  Needless to say, lots of particles can get slow. 
+
+We don't have time to get into it in this chapter, but there's different approaches to avoiding that many calculations.  Many of them have to deal with spatial hashing, ways of quickly identifying which particles are far away enough to not even consider (thus avoiding a distance calculation).
 
 ### local interactions lead to global behavior
 
