@@ -19,7 +19,7 @@
 
 • 7 - make and delete as you wish  - vectors
 
-• 8 - quick intro to polymorphism
+• 8 - quick intro to polymorphism (inheritance)
 
 ##• 1 - Overview
 This tutorial is an quick and practical introduction to Object Oriented Programming in openFrameworks and a how-to guide to build and use your own classes.
@@ -77,7 +77,7 @@ Folllow the code below and type into your own ofBall.h file, please note the com
 	#endif 
 
 
-We have declared the Ball class header file (the list of ingredients) and now lets get to the cooking part **[KL: I wouldn't use an arrow symbol within this text.]** to see what these ingredients can do!
+We have declared the Ball class header file (the list of ingredients) and now lets get to the cooking part **[KL: I wouldn't use an arrow symbol within this text.]** **[RX: don;t understand what you mean?]** to see what these ingredients can do!
 Please notice the '#include' tag, this is a way to tell the compiler which file to include for each implementation file. When the program is compiled these '#include' tags will be replaced by the original file they're referring to. 
 The 'if statement' (#ifndef) is a way to prevent the repetition of header files which could easily occur, by using this expression it helps the compiler to only include the file once and avoid repetition. Don't worry about this now, we'll talk about it later on!
 
@@ -398,7 +398,9 @@ On the testApp::MousePressed Call we will loop though our vector and check the d
 To learn more about stl::vector check xxx chapter or this online shory tutorial : http://www.openframeworks.cc/tutorials/c++%20concepts/001_stl_vectors_basic.html
 
 
-##• 8 - quick intro to polymorphism
+##• 8 - quick intro to polymorphism (inheritance)
+You're now discovering the power of OOP, making a class and creating as many objects from that in an instant, adding and deleting by your application needs. Now, for a second let's go back to our cooking metaphor (yummi!) and imagine that your cookies, even sharing the same cookie cutter and dough using some different sprinkles on each won't hurt and add some desired variation to our cookie jar selection!
+This is also the power of OOP and inheritance: by allowing to use a base class and add some specific behaviours overwrite some of the behaviours of a class
 Quick intro to polymorphism by example.
 Show how the same class base can be made flexible to create variety of objects based on the same principles of behaviors.
 Example - particles behave the same way but different drawing methods (e.g. triangle and square) 
