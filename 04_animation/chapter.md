@@ -495,7 +495,7 @@ We don't have time to get into it in this chapter, but there's different approac
 
 ### local interactions lead to global behavior
 
-I want to take a moment and focus on this example. 
+![sin](images/multiForces.png)
 
 
 ## where to go further
