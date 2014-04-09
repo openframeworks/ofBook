@@ -6,9 +6,6 @@ The word animation is a medieval term stemming from the Latin animare, which mea
 
 As a side note, I studied fine arts, painting and printmaking, and it was accidental that I started using computers. The moment that I saw how you could write code to move something across the screen, even as simple as silly rectangle, I was hooked. I began during the first dot-com era working with flash / actionscript and lingo / director and have never looked back.
 
-**[KL: This bit of background information is a nice way of easing into the chapter and giving you more credibility for people who also come from, say, fine arts backgrounds. Also, it's just the right length. The introduction paragraph beforehand is successful, too.]** 
-
-
 This chapter will first explain some basic principles that are useful to understanding animation in OF, then attempt to show a few entrypoints to interesting approaches. 
 
 ## Animation in OF / useful concepts: 
@@ -23,7 +20,7 @@ The first point to make about animation is that it's based on successive still f
 - draw()
 - ....
 
-Setup gets called once and update / draw get called repeatedly. **[KL: Setup also gets called if update/draw are called once, though. I'd reword this.]**  Sometimes people ask why two functions get called repeatedly, especially if they are used to Processing, which has only a setup and a draw command. There are a few reasons. The first is that drawing in openGL is asynchronous, meaning there's a chance, when you send drawing code to the computer, that it can return execution back to your program so that it can perform other operations while it draws. The second is that it's generally very practical to have your drawing code separated from your non-drawing code. If you need to quickly debug something–say, for example, your code is running slow–you can comment out the draw function and just leave the update running. It's separating out the update of the world from the presentation and it can often help clean up and organize your code. Think about it like a stop frame animator working with an overhead camera that might reposition objects while the camera is not taking a picture then snap a photograph the moment things are ready. **[KL: Fantastic analogy.]** In the update function you would be moving things around and in the draw function you draw things exactly as they are at that moment. 
+Setup gets called once, right at the start of an OF apps lifecycle and update / draw get called repeatedly. Sometimes people ask why two functions get called repeatedly, especially if they are used to Processing, which has only a setup and a draw command. There are a few reasons. The first is that drawing in openGL is asynchronous, meaning there's a chance, when you send drawing code to the computer, that it can return execution back to your program so that it can perform other operations while it draws. The second is that it's generally very practical to have your drawing code separated from your non-drawing code. If you need to quickly debug something–say, for example, your code is running slow–you can comment out the draw function and just leave the update running. It's separating out the update of the world from the presentation and it can often help clean up and organize your code. Think about it like a stop frame animator working with an overhead camera that might reposition objects while the camera is not taking a picture then snap a photograph the moment things are ready.  In the update function you would be moving things around and in the draw function you draw things exactly as they are at that moment. 
 
 ### Variables
 
@@ -48,8 +45,27 @@ We have a function in OF for controlling this. Some graphics card drivers (see f
 
 By default, OF enables vertical sync and sets a frame rate of 60FPS. You can adjust the VSYCN and frame rate settings if you want to animate faster, but please note that by default OF wants to run as fast as possible. It's not uncommon if you are drawing a simple scene to see frame rates of 800 FPS if you don't have VSYNC enabled (and the frame rate cap set really high or disabled).
 
-**[note: discuss frame rate independence?]**
-**[KL: Yes, I'd definitely cover this in more detail.]**
+Another imporant point which is a bit hard to cover deeply in this chapter is frame rate independence. If you animate using a simple model -- say for example, you create a variable called xPos, increase it by a certain amount every frame and draw it. 
+
+	void testApp::setup(){
+		xPos = 100;
+	}
+	
+	void testApp::update(){
+		xPos += 0.5;
+	}
+	
+	void testApp::draw(){
+		ofRect(xPos, 100, 10, 10);
+	}
+
+this kind of animation works fine, but it assumes that your frame rate is constant.  If you app runs faster, say by jumping from 30fps to 60fps, the object will appear to go twice as fast, since there will be 2x the number of update and draw functions called per second.   Typically more complex animation will be written to take this into account, either by using functions like time (explained below) or mixing the frame rate or elapsed time into your update.  For example, a solution might be something like: 
+
+	void testApp::update(){
+		xPos += 0.5 * (30.0 / ofGetFrameRate());
+	}
+	
+if ofGetFrameRate() returns 30, we multiply 0.5 by 1, if ofGetFrameRate() returns 60, we multiply it by 1/2, so although we are animating twice as fast, we take half sized steps, therefore effectively moving at the same speed regardless of framerate.  Framerate indepence is fairly important to think about once you get the hang of things, since as observers of animation, we really do feel objects speeding up or slowwing down even slightly, but in this chapter I will skip it for the sake of simplicity in the code. 
 
 ### Time functions
 
@@ -111,11 +127,18 @@ Let's look at a plot of pct raised to the second power:
 **[note: better explanation of how to read the chart]**
 Think about the x value of the plot as the input and y value as the output. If put in 0, we get out a y value of 0, if we put in 0.1, we get out a y value of 0.01, all the way to putting in a value of 1 and getting out a value of 1.   
 
-Things in the world don't move linearly. They don't take even steps. Roll a ball on the floor, it slows down. It's accelerating in a negative direction. Sometimes things speed up, like a baseball bat going from resting to swinging. Curving pct leads to interesting behavior. The objects still take the same amount of time to get there, but they do it in more lifelike, non-linear ways.
+As side note, it's important to note that things in the world often don't move linearly. They don't take "even" steps. Roll a ball on the floor, it slows down. It's accelerating in a negative direction. Sometimes things speed up, like a baseball bat going from resting to swinging. Curving pct leads to interesting behavior. The objects still take the same amount of time to get there, but they do it in more lifelike, non-linear ways.
 
-If you raise it **[KL: re-word what "it" is.]** to a larger power it looks more extreme. Interestingly, if you raise this value between 0 and 1 to a fractional (rational) power (i.e., a power that's less than 1 and greater than 0), it curves in the other direction.  
+![nonlinear](images/atob_nonlinear.png)
+
+If you raise the incoming number between 0 and 1 to a larger power it looks more extreme. Interestingly, if you raise this value between 0 and 1 to a fractional (rational) power (i.e., a power that's less than 1 and greater than 0), it curves in the other direction.  
 
 The second example shows an animation that uses pct again to get from A to B, but in this case, pct is raised to a power: 
+
+
+In the 4th example (**4_rectangleInterpolatePowfMultiple**), you can see a variety of these rectangles, all moving with different shaping functions.  They take the same amount of time to get from A to B, but do it in very different ways. I usually ask my students to guess which one is moving linearly -- see if you can figure it out without looking at the code: 
+
+![xeno diagram](images/multiCurved.png)
 
 http://en.wikipedia.org/wiki/12_basic_principles_of_animation#Slow_in_and_slow_out
 
@@ -128,10 +151,11 @@ Raising percent to a power is one of a whole host of functions that are called "
 
 ### Zeno
 
-A small twist on the linear interpolation is a technique that I call "Zeno" based on Zeno the greek philosopher's Dichotomy paradox. If you are running a race and run 1/2 of the remaining distance (getting to 1/2 of the goal), and then 1/2 of that remaining distance (3/4), and finally 1/2 of that remaining distance (7/8ths)...  **[note: better write up]** 
-**[KL: I second this.]**
+A small twist on the linear interpolation is a technique that I call "Zeno" based on Zeno the greek philosopher's *dichotomy paradox*: 
 
-If we take the linear interpolation code but always alter our own position instead (e.g., take 50% of our current position + 50% of our target position), we can animate our way from one value to another. This algorithm is similar to standing up and moving: 
+> Imagine there is a runner running a race and the runner runs 1/2 of the distance in a certain amount of time, and then they run 1/2 of the remaining distance in the same amount of time, and run 1/2 of the remaining the distance the distance, etc. Do they finish the race?  There is always some portion of the distance remaining left to run one half of.  The idea is that you can always keep splitting the distance.
+
+If we take the linear interpolation code but always alter our own position instead (e.g., take 50% of our current position + 50% of our target position), we can animate our way from one value to another. I usually explain the algorithm in class by asking someone to do this: 
 
 1. Start at one position in your room.
 2. Pick a point to move to.
@@ -139,7 +163,7 @@ If we take the linear interpolation code but always alter our own position inste
 4. Move 50% closer.
 5. Go to (3).
 
-**[note: diagram for zeno]**
+![xeno diagram](images/xeno.png)
 
 In code, that's basically the same as saying 
 
@@ -155,10 +179,18 @@ If you expand the expression, you can write the same thing this way:
     
 This is a form of smoothing: you take some percentage of your current value and another percentage of the target and add them together. Those percentages have to add up to 100%, so if you take 95% of the current position, you need to take 5% of the target (e.g., currentValue * 0.95 + target * 0.05).
 
-In Zeno's paradox, you never actually get to the target, since there's always some remaining distance to go. On the computer, since we are dealing with pixel positions on the screen and floating point numbers at a specific range, the object appears to stop. 
+In Zeno's paradox, you never actually get to the target, since there's always some remaining distance to go. On the computer, since we are dealing with pixel positions on the screen and floating point numbers at a specific range, the object appears to stop.  
 
-**[note: code walk through]**
+In the 5th example **(5_rectangleXeno)**, we add a function to the rectangle that uses xeno to catch up to a point: 
 
+	void rectangle::xenoToPoint(float catchX, float catchY){
+		pos.x = catchUpSpeed * catchX + (1-catchUpSpeed) * pos.x; 
+		pos.y = catchUpSpeed * catchY + (1-catchUpSpeed) * pos.y; 
+	}
+
+Here, we have a value, `catchUpSpeed`,  that represents how fast we catch up to the object we are trying to get to.   It's set to 0.01 (1%) in this example code, which means take 99% of my own postion, 1% of the target position and move to their sum.  If you alter this number you'll see the rectangle catch up to the mouse faster or slower.  0.001 means it will run 10 times slower, 0.1 means ten times faster. 
+
+This technique is very useful if you are working with noisy data -- a sensor for example.  You can create a variable that catched up to it using xeno and smoothes out the result.  I use this quite often when I'm working with hardware sensors / physical computing, or when I have noisy data.  The nice thing is that the catch up speed becomes a knob that you can adjust between more real-time (and more noisey data) and less real-time (and more smooth) data.  Having that kind of control comes in handy!
 
 ## Function based movement
 
@@ -168,17 +200,17 @@ In this section of the book we'll look at a few examples that show function base
 
 Another interesting and simple system to experiment with motion in openframeworks is using sin and cos.
 
-**[KL: I deleted the end of this sentence because it repeats itself in the following paragraph.]** 
-
 Sin and cos (sine and cosine) are trigonometric functions, which means they are based on angles. They are the x and y position of a point moving in a constant rate around a circle. The circle is a unit circle with a radius of 1, which means the diameter is `2*r*PI` or `2*PI`.  In OF you'll see this constant as `TWO_PI`, which is 6.28318... 
-
-**[KL: I think sine and cosine is the more accepted form...I'd never heard sinus and cosinus. If it is truly meant to be those, by all means keep them.]**  
 
 *As a side note, sometimes it can be confusing that some functions in OF take degress where others take radians. Sin and cos are part of the math library, so they take radians, whereas most openGL rotation takes degrees. We have some helper constants such as `DEG_TO_RAD` and `RAD_TO_DEG`, which can help you convert one to the other.*
 
 #### Everything about sin and cos in one graph
 
-So here's a simple drawing
+So here's a simple drawing that helps explain sin and cos. 
+
+![sin](images/atob_circle.png)
+
+All you have to is imagine a unit circle, which has a radius of 1 and a center position of 0,0.  Now, imagine a point moving counter clockwise around that point as a constant speed.  If you look at the height of that point, it goes from 0 at the far right (3 o'clock position), up to 1 at the top (12 o'clock), back at 0 at the left (9 o'clock) and down to -1 at the bottom (6 o'clock).  So it's a smooth, curving line that moves between -1 and 1.  That's it.  Sin is the height of this dot and cos is the horizontal position of this dot.  At the far right, where the height of this dot is 0, the horizontal position is 1.  When sin is 1, cos is 0, etc.   They are in sync, but shifted. 
 
 #### Simple examples
 
@@ -193,13 +225,30 @@ Here, we'll take the sin of the elapsed time `sin(ofGetElpasedTimef())`. This re
 	
 This draws a rectangle which move sinusoidally across the screen, back and forth every 6.28 seconds. 
 
-You can do simple things with offseting the phase (how shifted over the sin wave is):
+You can do simple things with offseting the phase (how shifted over the sin wave is).  In example 7 **(7_sinExample_phase)**, we calculate the sin of time twice, but the second time, we add PI: `ofGetElapsedTimef() + PI`.  This means to the two values will be offset from each other by 180 degrees on the circle (imaginging our dot, when one is far right, the other will be far left.  When one is up, the other is down).  Here we set the background color and the color of a rectangle using these offset values.  It's useful if you start playing with sin and cos to start to manipulate phase. 
 
-	void ofApp::draw(){
+	//--------------------------------------------------------------
+	void testApp::draw(){
+		
+		
+		float sinOfTime				= sin( ofGetElapsedTimef() );
+		float sinOfTimeMapped		= ofMap( sinOfTime, -1, 1, 0, 255);
+		
+		
+		ofBackground(sinOfTimeMapped, sinOfTimeMapped, sinOfTimeMapped);
+	
+		
+		float sinOfTime2			= sin( ofGetElapsedTimef() + PI);
+		float sinOfTimeMapped2		= ofMap( sinOfTime2, -1, 1, 0, 255);
+		
+		ofSetColor(sinOfTimeMapped2, sinOfTimeMapped2, sinOfTimeMapped2);
+		ofRect(100,100,ofGetWidth()-200, ofGetHeight()-200);
+		
+		
 	
 	}
 
-*As a nerdy detail, floating point numbers are not linearly precise, e.g., there's a different number of floating point numbers between 0.0 and 1.0 than 100.0 and 101.0. You actually lose precision the larger a floating point number gets, so taking sin of elapsed time can start looking crunch after some time. For long running installations I will sometimes write code that looks like `sin((ofGetElapsedTimeMillis() % 6283) / 6283.0)` or something similar, to account for this. Even though ofGetElapsedTime() **[KL: I'd clarify the difference between ofGetElapsedTime() and ofGetElapsedTimef(), which I'm assuming is returning a float value?]** gets larger over time, it's a worse and worse input to sin() as it grows*
+*As a nerdy detail, floating point numbers are not linearly precise, e.g., there's a different number of floating point numbers between 0.0 and 1.0 than 100.0 and 101.0. You actually lose precision the larger a floating point number gets, so taking sin of elapsed time can start looking crunch after some time. For long running installations I will sometimes write code that looks like `sin((ofGetElapsedTimeMillis() % 6283) / 6283.0)` or something similar, to account for this. Even though ofGetElapsedTimef() gets larger over time, it's a worse and worse input to sin() as it grows.  ofGetElapsedTimeMillis() doesn't suffer from this problem since it's an integer number and the number of integers between 0 and 10 is the same as between 1000 and 1010.*
 
 #### Circular movement
 
@@ -214,20 +263,34 @@ The formula is fairly simple:
 	xPos = xOrig + radius * cos(angle);
 	yPos = yOrig + radius * sin(angle);
 
-This allows us to create something moving in a circular way. For these examples, I start to add a "trail" to the object by using the ofPolyline object. I keep adding points, and once I have a certain number I delete the oldest one. This helps us better see the motion of the object. 
+This allows us to create something moving in a circular way.  In the circle example, I will animate using this approach.  
 
-If we do things like change the radius of the circle, we can make spirals. 
+	float xorig = 500;
+	float yorig = 300;
+	float angle = ofGetElapsedTimef()*3.5;
+	float x = xorig + radius * cos(angle);
+	float y = yorig + radius * sin(angle);
+
+*Note: In OF, the top left corner is 0,0 (y axis is increasing as you go down) so you'll notive that the point travels clockwise instead of counter-clockwise.  If this bugs you (since above, I asked you imagine it moving counter clockwise) you can modify this line `float y = yorig + radius * sin(angle)` to `float y = yorig + radius * -sin(angle)` and see the circle go in the counter clockwise direction.*
+
+For these examples, I start to add a "trail" to the object by using the ofPolyline object. I keep adding points, and once I have a certain number I delete the oldest one. This helps us better see the motion of the object. 
+
+If we increase the radius, for example by doing: 
+
+	void testApp::update(){
+		radius = radius + 0.1;
+	}
+
+we get spirals. 
 
 #### Lisajous figures
 
-Finally, if we alter the angles we pass in to x and y for this formula in different rates, we can get interesting figures, called "Lissajous" figures, named after the French mathematician, Jules Antoine Lissajous. These formulas look cool. **[note: more]**
+Finally, if we alter the angles we pass in to x and y for this formula in different rates, we can get interesting figures, called "Lissajous" figures, named after the French mathematician, Jules Antoine Lissajous. These formulas look cool.   Often times I joke with my students in algo class about how this is really a course to make cool screen savers. 
 
 ### Noise
 
 
-
-
-
+** TODO ** 
 
 
 ## Simulation
@@ -251,7 +314,7 @@ or
     
 The key expression–position = position + velocity–in shorthand would be `p=p+v`.
 
-*Note, the elapsed time part is important, but when we animate we'll be doing p=p+v quite regularly and you may see us drop this to simplify things (assume every frame has an elapsed time of one). This isn't entirely accurate but it keeps things simple.* 
+*Note, the elapsed time part is important, but when we animate we'll be doing p=p+v quite regularly and you may see us drop this to simplify things (assume every frame has an elapsed time of one). This isn't entirely accurate but it keeps things simple. See the previous section on frame rate (and frame rate independence) for more details* 
 
 In addition, if you are traveling at 50 miles per hour (apologies to everyone who thinks in km!) and you accelerate by 5 miles per hour, how fast are you driving in 1 hr? The answer is 55 mph. In 2 hrs, you'd be traveling 60 mph.  In these examples, you are doing the following: 
 
@@ -269,6 +332,71 @@ The amazing thing is that we've just described a system that can use acceleratio
 In shorthand, `F = M x A`.  This means force and acceleration are linearly related.  If we assume that an object has a mass of one, then force equals acceleration.  This means we can use force to control velocity and velocity to control position.  
 
 The cool, amazing, beautiful thing is that are plenty of forces we can apply to an object, such as spring forces, repulsion forces, alignment forces, etc. 
+
+I have several particle examples that use this approach, and while I won't go deeply into them, I'll try to explain some interesting ideas you might find 
+
+### particle class
+
+The particle class in all of the examples is very straight forward. 
+
+	class particle{
+		
+	    public:
+	
+	        ofPoint pos;
+	        ofPoint vel;
+	        ofPoint frc;  
+	        float damping;
+	        				
+	        particle();
+	        void setInitialCondition(float px, float py, float vx, float vy);
+	       	
+	        void resetForce();
+	        void addForce(float x, float y);
+	        void addDampingForce();
+	        
+	        void update();
+	        void draw();	
+	};
+
+For variables, it has ofPoint objects for position, velocity and force (abbreviated as pos, vel and frc).  It also has a variable for damping, which represents how much this object slows down over time.  A damping of 0 would mean not slowing down at all, and as damping gets higher, it's like adding more friction - imagine rolling a ball on ice, conrete or sand, it would slow down at different rates. 
+
+In terms of functions, it has a contructor which sets some internal variables like damping and a setInitialCondition() that allows you to set the position and velocity of the particle.  Think about this as setting up its initial state, and from here you let the particle play out.   The next three functions are about forces (we'll see more) -- the first one, `resetForce()`, clears all the internal force variable frc.  Forces are not cummualtive across frames, so at the start of every frame we clear it.  `addForce()` adds a force in a given direction, useful for constant forces, like gravity.  `addDampingForce()` adds a force opposite velocity (damping is a force felt opposite the direction of travel).   Finally, update takes forces and adds it to velocity, and takes velocity and adds it to position.  Draw just draws a dot where position is. 
+
+The particle class is really simple, and throughout these examples, we add complexity to it.  In general though formula you will see in all the examples is: 
+
+	for (int i = 0; i < particles.size(); i++){
+		particles[i].resetForce();
+	}
+
+	// <------ magic happens here --------->
+	
+	for (int i = 0; i < particles.size(); i++){
+		particles[i].update();
+	}
+	
+where the magic is happening between the reset force and update.   Although these examples increase in complexity, they do so simply by adding new functions to the particle class, and adding more things between reset and update. 
+
+**[note: add screenshot of simple particle examples]**
+
+### simple forces, repulsion and attraction
+
+In the next few examples, I added a few functions to the particle: 
+
+	void addRepulsionForce( float px, float py, float radius, float strength);
+	void addAttractionForce( float px, float py, float radius, float strength);
+	void addClockwiseForce( float px, float py, float radius, float strength);
+	void addCounterClockwiseForce( float px, float py, float radius, float strength);
+
+They essentially adds forces based on a circle.  
+
+**[note: circle force graph here]**
+
+### particle particle interaciton
+
+### local interactions lead to global behavior
+
+I want to take a moment and focus on this example. 
 
 
 ## where to go further
