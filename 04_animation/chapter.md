@@ -337,7 +337,7 @@ I have several particle examples that use this approach, and while I won't go de
 
 ### particle class
 
-The particle class in all of the examples is very straight forward. 
+The particle class in all of the examples is designed to be pretty straight forward.  Let's take a look at the H file: 
 
 	class particle{
 		
@@ -381,18 +381,51 @@ where the magic is happening between the reset force and update.   Although thes
 
 ### simple forces, repulsion and attraction
 
-In the next few examples, I added a few functions to the particle: 
+In the next few examples, I added a few functions to the particle object: 
 
 	void addRepulsionForce( float px, float py, float radius, float strength);
 	void addAttractionForce( float px, float py, float radius, float strength);
 	void addClockwiseForce( float px, float py, float radius, float strength);
 	void addCounterClockwiseForce( float px, float py, float radius, float strength);
 
-They essentially adds forces based on a circle.  
+They essentially adds forces the move towards or away from a point that you pass in, or in the case of clockwise forces, around a point.
 
-**[note: circle force graph here]**
+![sin](images/particle.png)
+
+The calculation of these forces is fairly straight forward - first, we figure out how far away from a point is from the center of the force.  If it's outside of the radius of interaction, we disregard it.  If it's inside, we figure out its percentage , ie, the distance between the force and the particle devided by the radius of interaction.  This gives us a number that's close to 1 when we towards the far edge of the circle and 0 as we get towards the center.  If we invert this, by taking 1 - percent, we get a number that's small on the outside, and larger as we get closer to the center. 
+
+This is useful because often times forces are proportional to disctance.  For example, a magnetic force will have a radius at which it works, and the closer you get to the magnet the stronger the force. 
+
+Here's a quick look at one of the functions for adding force: 
+
+
+	void particle::addAttractionForce( float px, float py, float radius, float strength){
+
+		ofVec2f posOfForce;
+		posOfForce.set(px, py);
+		ofVec2f diff = pos - posOfForce;
+		
+		if (diff.length() < radius){ 
+			float pct = 1 - (diff.length() / radius);
+			diff.normalize();
+			frc.x -= diff.x * pct * strength;
+			frc.y -= diff.y * pct * strength;
+		}
+	} 
+	
+`diff` is a line between the particle and the position of the force.  If the length of diff is less then the radius, we calculate the pct as a number that goes between 0 and 1 (0 on the outside of the radius of interaction, 1 as we get to the center of the force).  We take the line `diff` and normalize it to get a "directional" vector, its magnitude (distance) is one, but the angle is still there.  We then multiply that by pct * strength to get a line that tells us how to move.  This gets added to our force. 
+
+You'll notice that all the code is relatively similar, but with different additions to force.  For example, repulsion is just the opposite of attraction: 
+
+			frc.x += diff.x * pct * strength;
+			frc.y += diff.y * pct * strength;
+
+We just move in the oppisite direction.
+
 
 ### particle particle interaciton
+
+
 
 ### local interactions lead to global behavior
 
