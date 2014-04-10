@@ -479,6 +479,7 @@ On the '.cpp' file we'll need to them specify what we want the new 'draw()' meth
 	
 Now, on your own, create two new classes: ofBallRed and ofBallGreen based on ofBall class like ofBlue is.
 Back to your testApp.h, include the newly made classes and create one instance of each and in your testApp.cpp file initialize them and call their update() and draw() methods. A quick trick! right before you call the draw method, make this call:
+	
 	ofEnableBlendMode(OF_BLENDMODE_ADD);
 
 This will make your application drawing methods have an Additive Blending Mode. For more on this check Chapter??.
