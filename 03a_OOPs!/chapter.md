@@ -403,7 +403,7 @@ You're now discovering the power of OOP, making a class and creating as many obj
 This is also the power of OOP and inheritance: by allowing to use a base class and add some specific behaviours overwrite some of the behaviours of a class, creating a subset of instances / objects with slightly different behaviors.
 The great thing about this is it's repurposability, we're using the 'mother' class as a starting point, using all its capabilities but we overwrite one of its methods to give it more flexibility.
 Going back to our oFBall class intial version (step 1) we'll build some 'daughter' classes based on its main characteristics ( motion behaviors and shape) but we'll distinct each inherited subClass by using a different color on its drawing method.
-Your ofBall class should look like this:
+Your ofBall header file should look like this:
 
 	#ifndef _OF_BALL // if this class hasn't been defined, the program can define it
 	#define _OF_BALL // by using this if statement you prevent the class to be called more than once which would 		confuse the compiler
@@ -433,7 +433,24 @@ Your ofBall class should look like this:
 	};
 	#endif
 
-here we go! Create a new Class set of files and name them 'ofBallBlue'. Feel free to copy the code below and
+And let's make some slight changes on the implementation file:
+lets; chage the min and maximum values of the random size to larger values and set the position to the center of the screen.Make it look like this: 
+#include "ofBall.h"
+
+	ofBall::ofBall(){
+		x = ofGetWidth()*.5;
+		y = ofGetHeight()*.5;
+		dim = ofRandom(200,250);
+		
+		speedX = ofRandom(-1, 1);
+		speedY = ofRandom(-1, 1);
+		
+		color.set(ofRandom(255), ofRandom(255), ofRandom(255));
+	}
+
+We can leave the update() and draw() functions as they were.
+Now,let's start making 'daughter' versions of this 'mother' class.
+Create a new Class set of files and name them 'ofBallBlue'. Feel free to copy the code below and
 it's '.h' shoudl look like this:
 
 	#pragma once				// another and more modern way to prevent the compiler from including this file more than once
@@ -460,6 +477,14 @@ On the '.cpp' file we'll need to them specify what we want the new 'draw()' meth
 		ofCircle(x, y, dim);	
 	}
 	
-Now on your own, create two new classes: ofBallRed and ofBallGreen based on ofBall class like ofBlue is.
+Now, on your own, create two new classes: ofBallRed and ofBallGreen based on ofBall class like ofBlue is.
 Back to your testApp.h, include the newly made classes and create one instance of each and in your testApp.cpp file initialize them and call their update() and draw() methods. A quick trick! right before you call the draw method, make this call:
+	ofEnableBlendMode(OF_BLENDMODE_ADD);
+
+This will make your application drawing methods have an Additive Blending Mode. For more on this check Chapter??.
+
+Hope you enjoyed this short tutorial!
+have fun!
+
+
 	
