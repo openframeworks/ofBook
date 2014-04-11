@@ -337,7 +337,7 @@ I have several particle examples that use this approach, and while I won't go de
 
 ### particle class
 
-The particle class in all of the examples is very straight forward. 
+The particle class in all of the examples is designed to be pretty straight forward.  Let's take a look at the H file: 
 
 	class particle{
 		
@@ -381,22 +381,121 @@ where the magic is happening between the reset force and update.   Although thes
 
 ### simple forces, repulsion and attraction
 
-In the next few examples, I added a few functions to the particle: 
+In the next few examples, I added a few functions to the particle object: 
 
 	void addRepulsionForce( float px, float py, float radius, float strength);
 	void addAttractionForce( float px, float py, float radius, float strength);
 	void addClockwiseForce( float px, float py, float radius, float strength);
 	void addCounterClockwiseForce( float px, float py, float radius, float strength);
 
-They essentially adds forces based on a circle.  
+They essentially adds forces the move towards or away from a point that you pass in, or in the case of clockwise forces, around a point.
 
-**[note: circle force graph here]**
+![sin](images/particle.png)
+
+The calculation of these forces is fairly straight forward - first, we figure out how far away from a point is from the center of the force.  If it's outside of the radius of interaction, we disregard it.  If it's inside, we figure out its percentage , ie, the distance between the force and the particle devided by the radius of interaction.  This gives us a number that's close to 1 when we towards the far edge of the circle and 0 as we get towards the center.  If we invert this, by taking 1 - percent, we get a number that's small on the outside, and larger as we get closer to the center. 
+
+This is useful because often times forces are proportional to disctance.  For example, a magnetic force will have a radius at which it works, and the closer you get to the magnet the stronger the force. 
+
+Here's a quick look at one of the functions for adding force: 
+
+
+	void particle::addAttractionForce( float px, float py, float radius, float strength){
+
+		ofVec2f posOfForce;
+		posOfForce.set(px, py);
+		ofVec2f diff = pos - posOfForce;
+		
+		if (diff.length() < radius){ 
+			float pct = 1 - (diff.length() / radius);
+			diff.normalize();
+			frc.x -= diff.x * pct * strength;
+			frc.y -= diff.y * pct * strength;
+		}
+	} 
+	
+`diff` is a line between the particle and the position of the force.  If the length of diff is less then the radius, we calculate the pct as a number that goes between 0 and 1 (0 on the outside of the radius of interaction, 1 as we get to the center of the force).  We take the line `diff` and normalize it to get a "directional" vector, its magnitude (distance) is one, but the angle is still there.  We then multiply that by pct * strength to get a line that tells us how to move.  This gets added to our force. 
+
+You'll notice that all the code is relatively similar, but with different additions to force.  For example, repulsion is just the opposite of attraction: 
+
+			frc.x += diff.x * pct * strength;
+			frc.y += diff.y * pct * strength;
+
+We just move in the oppisite direction.  For the clockwise and counter clockwise forces we add the perpindicular of the diff line.  The perpindicular of a 2d vector is just simply switching x and y and making one of them negative.
+
+**[more: show example]**
 
 ### particle particle interaciton
 
+Now that we have particles interacting with forces, the next step is to give them more understanding of each other.  For example, if you have a broad attraciton force, they will all converge on the same point without any respect for their neighbors.  The trick is to add a function that allows the particle to feel a force based on their neighbor. 
+
+We've added new functions to the particle object (looking in the h file):
+
+	void addRepulsionForce(particle &p, float radius, float scale);
+	void addAttractionForce(particle &p, float radius, float scale);
+
+This looks really similar to the code before, except here we pass in a particle instead of an x and y position. You'll notice that we pass by reference (using &) as opposed to passing by copy.  This is because internally we'll alter both the particle who has this function called as well as particle p -- ie, if you calculate A vs B, you don't need to calculate B vs A.
+	
+	void particle::addRepulsionForce(particle &p, float radius, float scale){
+		
+		// ----------- (1) make a vector of where this particle p is: 
+		ofVec2f posOfForce;
+		posOfForce.set(p.pos.x,p.pos.y);
+		
+		// ----------- (2) calculate the difference & length 
+		
+		ofVec2f diff	= pos - posOfForce;
+		float length	= diff.length();
+		
+		// ----------- (3) check close enough
+		
+		bool bAmCloseEnough = true;
+	    if (radius > 0){
+	        if (length > radius){
+	            bAmCloseEnough = false;
+	        }
+	    }
+		
+		// ----------- (4) if so, update force
+	    
+		if (bAmCloseEnough == true){
+			float pct = 1 - (length / radius);  // stronger on the inside
+			diff.normalize();
+			frc.x = frc.x + diff.x * scale * pct;
+	        frc.y = frc.y + diff.y * scale * pct;
+			p.frc.x = p.frc.x - diff.x * scale * pct;
+	        p.frc.y = p.frc.y - diff.y * scale * pct;
+	    }
+	}
+
+The code should look very similar to before, except with these added lines: 
+
+	frc.x = frc.x + diff.x * scale * pct;
+	frc.y = frc.y + diff.y * scale * pct;
+	p.frc.x = p.frc.x - diff.x * scale * pct;
+	p.frc.y = p.frc.y - diff.y * scale * pct;
+	
+This is modifying both the particle you are calling this on and the particle that is passed in.  
+
+This means we can cut down on the number of particle particle interactions we need to calculate: 
+
+
+	for (int i = 0; i < particles.size(); i++){
+        for (int j = 0; j < i; j++){
+            particles[i].addRepulsionForce(particles[j], 10, 0.4);
+        }
+	}
+
+you'll notice that this 2d for loop, the inner loop counts up to the outer loop, so when i is 0, we don't even do the inner loop.  When i is 1, we compare it to 0 (1 vs 0).  When i is 2, we compare it to 0 and 1 (2 vs 0, 2 vs 1).  This way we never compare a particle with itself, as that would make no sense (although we might know some poeple in our lives that have a strong self attraction or repulsion). 
+
+**[note: maybe a diagram to clarify]**
+
+One thing to note is that even through we've cut down the number of calculations, it's still quite a lot!  This is a problem that doen't scale linearly.  In computer science, you talk about a problem using "O" notation, ie big O notation.  This is a bite more like O^2 / 2 -- the complexity is like 1/2 of a square.  If you have 100 particles, you are doing almost 5000 calculations (100 * 100 / 2).  If you have 1000 particles, it's almost half a million.  Needless to say, lots of particles can get slow. 
+
+We don't have time to get into it in this chapter, but there's different approaches to avoiding that many calculations.  Many of them have to deal with spatial hashing, ways of quickly identifying which particles are far away enough to not even consider (thus avoiding a distance calculation).
+
 ### local interactions lead to global behavior
 
-I want to take a moment and focus on this example. 
+![sin](images/multiForces.png)
 
 
 ## where to go further
