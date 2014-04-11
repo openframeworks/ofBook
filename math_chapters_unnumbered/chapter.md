@@ -528,15 +528,15 @@ Pretty neat, right? Try to remember this trick, as we're going to use it quite a
 ##### Rotation matrices
 We now see that any operation in Matrixland can really be expressed in a collection of vectors. We also know that dot products of vectors express the angle between two vectors times their magnitude. A slightly surprising fact is that those two properties are enough to describe any rotation.
 
-In order to grok this last statement, let's first explain how rotating one vector works. Let's suppose for now our vector has length 1 (it's generally a good thing to start from, as it is then neutral to scaling), and that we would like to rotate the vector by an angle $\theta$, starting from a point on the x axis. The rotated vector would be $$v_{\theta}=\left(\begin{array}{c}
+In order to grok **[BD: grok might be a bit confusing here, especially when tossing around actual math jargon.]** this last statement, let's first explain how rotating one vector works. Let's suppose for now our vector has length 1 (it's generally a good thing to start from, as it is then neutral to scaling), and that we would like to rotate the vector by an angle $\theta$, starting from a point on the x axis. The rotated vector would be $$v_{\theta}=\left(\begin{array}{c}
 \cos\theta\\
 \sin\theta
 \end{array}\right)$$
-
+ 
 Let's look at that for a moment. 
 **//TODO: write what the cosine and sine is**
 Now we found a target for the $x$ axis to go to. In order to find a new home for the old $y$ axis, we only need to know the angle between them. Luckily, we all know that it's 90 degrees, or in radians: $\frac{\pi}{2}$. The new home will then have to be at angle $\theta + \frac{\pi}{2}$ from the x axis (angle 0):
-
+ 
 $$
 y_{\theta}=\left(\begin{array}{c}
 \cos\left(\theta+\frac{\pi}{2}\right)\\
@@ -546,7 +546,7 @@ y_{\theta}=\left(\begin{array}{c}
 \cos\theta
 \end{array}\right)
 $$
-
+ 
 That last equality is due to trigonometric equalities. 
 ###### 2D Rotation Matrices
 We now have all of the information we need to build a matrix that moves the vectors $\left\{ \left(\begin{array}{c}
@@ -562,70 +562,71 @@ We now have all of the information we need to build a matrix that moves the vect
 -\sin\theta\\
 \cos\theta
 \end{array}\right)\right\}$ :
-
+ 
 **//TODO: Write a 2D rotation matrix**
-
+ 
 Now, hold on. Check out what we did here: we placed the targets for the source vectors as _columns_ in the matrix, and then we took the resulting _rows_ of the matrix to do the rotation. Why did we do that? 
-
+ 
 Recall that a matrix is just a stack of dot products. How did we construct these dot products?  We just aligned all of the entries that should be affecting the _resulting_ entry in one row of the matrix. That means that when considering the resulting $y$ entry, our vectors defined _the mixture of $y$ components_ from the target vectors that we would like to see in the resulting operation. This makes sense: Think of the vectors that compose the matrix as a new coordinate system, and what we're calculating is how the 'natural' coordinate system is projected onto them.
-
+ 
 ###### 3D Rotation Matrices
-
+ 
 The trick works the exact same way with 3d matrices: In order to rotate around on 
 **//TODO: OH GOD WRITE THIS**
-
+ 
 * Example: Vibrating a brick-phone in 3D.
-	
+    
 #### Matrix Algebra
 This chapter introduced a different kind of math from what you were used to. But while introducing _a new thing to do things with_ we opened up a lot of unexplored dangers. Notice that we always multiplied vectors by matrices in a certain order: It's always the vector _after_ the matrix, the vector is always transposed, and any new operation applied to an existing situation always happens with a matrix to the left of our result. There's a reason for all of that: Commutativity.
-
+ 
 ##### Commmumamitativiwha?
-In high school Algebra, we used to think that $a\cdot b=b\cdot a$. No reason not to think that: The amount of uranium rods that you have times the amount of specially trained monkeys that I have equals the same amount of casualties, no matter the order of multiplication. That's because quantities are _commutative_, the order in which they apply operations to each other doesn't matter.  **[mh: these two sentences say the same thing]**
-
+In high school Algebra, we used to think that $a\cdot b=b\cdot a$. No reason not to think that: The amount of uranium rods that you have times the amount of specially trained monkeys that I have equals the same amount of casualties, no matter the order of multiplication. That's because quantities are _commutative_, the order in which they apply operations to each other doesn't matter.  **[mh: these two sentences say the same thing][BD: I think this repeat is actually helpful. I would leave it.]**
+ 
 But, in matrixland we're not talking about things we counted - instead, we're talking about operations, and _operations are generally not commutative_. There's a difference between scaling a square by x and then rotating it by 90 degrees and doing it the other way around:
-
+ 
 **//TODO: Draw this**
+ 
+**[BD: ~~It might be worth _really_ stressing the above point. The order of operations with vector's can lead to some confusing bugs if you aren't careful.~~ Just read that you do that in the SRT Operations section. Perhaps it would be nice to mention that "more on order of operations below" or something.]**
 
 What's more, doing it the other way around is not always defined. Matrices and vectors with unequal sizes have very special conditions in which they could be multiplied. We're not dealing with them now, so I'll let you read about it in Wikipedia, but it's important to know that whenever using matrices for manipulating a space, order of operands is really important.
-
+ 
 ##### What else is weird?
 **Nothing.** We can still multiply the matrices and vectors in any order that we want to: $$M_{1}⋅M_{2}⋅v = \left(M_{1}⋅M_{2}\right)⋅v = M_{1}⋅\left(M_{2}⋅v\right)$$ as long as we don't change the order in which they appear. That property is called _Associativity_, and it's one of the defining properties of algebraic structures that describe geometric operations, structures which mathematicians call _Groups_. _Commutativity_ is an optional property for groups, it just happens to be a given when dealing with operations between numbers, which is why you've never been told that you need it. There's a lesson here: simulations take a lot of properties for granted. It's sometimes good to ask why.
-
+ 
 Now grab a pack of ice, place it on your head for 15 minutes and go on reading the next part.
-
-
+ 
+ 
 ### "The Full Stack"
-
+ 
 Now that we know how to construct its major components, let's have a look at all the math that constructs graphics in openFrameworks before sending it to the screen. For that, we'll have to – once again – increase our number of D's.
-
+ 
 #### Translation matrices
-
-If you recall the comment in the beginning of this chapter, mathematicians are very careful when calling things linear. In 2D, a linear operation can basically do 2 things: Rotation and Scaling (including negative scaling - "mirroring"). 
-The reason for this is that these are all operations that can be done in n dimensions to any n-dimensional shape (replace n with 3 for our example).
-
+ 
+If you recall the comment in the beginning of this chapter, mathematicians are very careful when calling things linear. In 2D, a linear operation can basically do 2 things: Rotation and Scaling (including negative scaling - "mirroring"). The reason for this is that these are all operations that can be done in n dimensions to any n-dimensional shape (replace n with 3 for our example).
+ 
 If the entire shape lifts itself magically and moves away from the origin - it can't be done with a matrix, therefore it's not linear. This presents a problem to people who want to use matrices as an algebraic system for controlling 3d: in real life we need to move some stuff around.
-
+ 
 ##### Homogenous coordinates: Hacking 3d in 4d
 This problem has caused hundreds of years of agony to the openFrameworks community, until in 1827 a hacker called Möbius pushed an update to the ofMäth SVN repo: use the matrix in 4 dimensions to control a 3 dimensional shape. Here's the shtick: a 3d operation can be described as a 4d operation which doesn't do anything to the 4th dimension. Written as a matrix, we can describe it like this:
-
+ 
 $$ A _{4\times 4} = \left(\begin{array}{ccc|c}
 a_{1,1} & a_{1,2} & a_{1,3} & 0\\
 a_{2,1} & a_{2,2} & a_{2,3} & 0\\
 a_{3,1} & a_{3,2} & a_{3,3} & 0\\
 \hline 0 & 0 & 0 & 1
 \end{array}\right)$$
-
-Now we already know that a 1D Skew can move all lines in that axis in a certain direction without affecting the other dimensions, and that a 2D skew will do that for all things on a certain plane, so it's easy to imagine that a 3D skew will do that to 3D spaces embedded in a space with more dimension. Möbius figured that feature is useful, and he proposed on the bianual openFrämeworks meeting in Tübingen that all operations will be conducted in 4D space, and then projected back into 3D space, like this:
-
+ 
+Now we already know that a 1D Skew can move all lines in that axis in a certain direction without affecting the other dimensions, and that a 2D skew will do that for all things on a certain plane, so it's easy to imagine that a 3D skew will do that to 3D spaces embedded in a space with more dimension. Möbius figured that feature is useful. On the biannual openFrämeworks meeting in Tübingen, he proposed that all operations should be conducted in 4D space, and then projected back into 3D space, like this:
+ 
 $$T = \left(\begin{array}{ccc|c}
 1 & 0 & 0 & t_{x}\\
 0 & 1 & 0 & t_{y}\\
 0 & 0 & 1 & t_{z}\\
 \hline 0 & 0 & 0 & 1
 \end{array}\right)$$
-
+ 
 The 3D Transform vector $t$ is placed in the 4th dimension, with it's 4th entry as 1 (because 1 is neutral to multiplication). The bottom row that is added has zeroes in the $x,y,z$ entries, in order to avoid interfering with other operations. Check out what happens when a vector is multiplied by this matrix: 
-
+ 
 $$T\cdot v = \left(\begin{array}{ccc|c}
 1 & 0 & 0 & t_{x}\\
 0 & 1 & 0 & t_{y}\\
@@ -642,36 +643,37 @@ y+t_{y}\\
 z+t_{z}\\
 \hline 1
 \end{array}\right)$$
-
+ 
 Now all we need to do is discard the 4th dimension to get our translated point. Quite cool, innit?
-
+ 
 Notice that because we placed a 1 at the $w$ (4th) dimension, all of the multiplication operations went through that component transparently. This trick became the standard of most computer geometry systems. Möbius actually has a lot more going in this theory: if we change that 1 into something else, we're able to simulate a projection into a camera pinhole. This chapter won't cover that fascinating part of math, but when you get to building cameras in OpenGL, keep this amazing hack in mind.
-
+ 
 #### SRT (Scale-Rotate-Translate) operations
 Now we've defined the operations we like the most to describe (sort-of) real world objects moved around in space. Let's spend a few paragraphs talking about how to combine all of the operations together.
-
+ 
 If you recall, geometric operations are _non-commutative_, which means that if we defined them in a specific order, there's no guarantee that changing the order will provide us with similar results. ~~That means that when building a graphics system we need to exercise systematic vigilance when executing human stuff like "Turn that spindle around so I
 may see its refractions of the sun" without accidentally turning the sun around its' axis, incinerating the good people of Uranus.~~ **[mh: this felt distracting]**
-
+ 
 The way we execute that vigilance is by a predefined order for handling objects. If you grab a pen and paper it won't take too long to figure that order out:
+
 1. Modify the scale (if need be).
 2. Modify the orientation (if need be).
 3. Modify the position (if need be).
 4. Rejoice.
-
+ 
 Any other order will cause weird effects, like things growing and spinning off their axes (anchor point / pivot, if animation is your jam). This may seem like common sense, but Ken Perlin notes that it was only the late 80s when that system became a standard for 3d. 
-
+ 
 This set of operations is called _SRT_, or _Scale-Rotate-Translate_, because it can be described by the following sequence of matrices: $$T⋅R⋅S⋅v$$
 Where the first operation occuring is the one most adjacent to the vector $v$.
-
+ 
 If you recall, we can multiply all of these matrices to get one matrix representing all the entire operation:  $$M = T⋅R⋅S$$
-
-We call this matrix $M$, because it places objects we give it in their place in the _Model_. Whenever you call `ofTranslate()`, `ofRotate()`, `ofScale()` (or equivalent) on an object, that operation is applied to the **currently active _Model_ matrix**. Whenever you execute `ofPushMatrix()`, a copy of that matrix is saved in _the matrix stack_, so that you can go back to it when necessary. And when necessary, you will then use `ofPopMatrix()`, which will cause the current matrix $M$ to be deleted and replace it with a matrix from the top of the matrix stack. That is the entire mystery about matrices. That's it. 
-
+ 
+We call this matrix $M$, because it places objects we give it in their place in the _Model_. Whenever you call `ofTranslate()`, `ofRotate()`, `ofScale()` (or equivalent) on an object, that operation is applied to the **currently active _Model_ matrix**. Whenever you execute `ofPushMatrix()`, a copy of that matrix is saved in _the matrix stack_, so that you can go back to it when necessary. And when necessary, you will then use `ofPopMatrix()`, which will cause the current matrix $M$ to be deleted and replaced with a matrix from the top of the matrix stack. That is the entire mystery about matrices. ~~That's it.~~ **[BD: I don't think you need that.]**
+ 
 In the 'Advanced Graphics' chapter you'll learn about two similar matrices: 
 * The _View_ matrix tramsforms the result of the _Model_ matrix to simulate where our camera is supposed to be at.
 * The _Projection_ matrix applies the optical properties of the camera we defined and turns the result of the _View_ matrix from a 3D space to a 2D image. The Projection matrix is built slightly different than the _Model-View_ matrix, but if you've made it this far, you won't have trouble reading about it in a special Graphics topic.
-
-
-###### Thanks
-Thanks to Prof. Ken Perlin and Prof. Bo'az Klartag for ideas on teaching mathematics.
+ 
+ 
+##### Thanks
+Thanks to Prof. Ken Perlin and Prof. Bo'az Klartag for your ideas on teaching mathematics.
