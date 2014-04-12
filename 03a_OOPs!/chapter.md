@@ -398,15 +398,62 @@ On the testApp::MousePressed Call we will loop though our vector and check the d
 To learn more about stl::vector check xxx chapter or this online shory tutorial : http://www.openframeworks.cc/tutorials/c++%20concepts/001_stl_vectors_basic.html
 
 
-##• 8 - quick intro to polymorphism (inheritance)
+##• 8 - Quick intro to polymorphism (inheritance)
 You're now discovering the power of OOP, making a class and creating as many objects from that in an instant, adding and deleting by your application needs. Now, for a second let's go back to our cooking metaphor (yummi!) and imagine that your cookies, even sharing the same cookie cutter and dough using some different sprinkles on each won't hurt and add some desired variation to our cookie jar selection!
 This is also the power of OOP and inheritance: by allowing to use a base class and add some specific behaviours overwrite some of the behaviours of a class, creating a subset of instances / objects with slightly different behaviors.
 The great thing about this is it's repurposability, we're using the 'mother' class as a starting point, using all its capabilities but we overwrite one of its methods to give it more flexibility.
-Going back to our oFBall class we'll build some 'daughter' classes based on its main characterisitcs, motion behaviors and shape but we'll have a different color of each type of inherited class.
-here we go! Create a new Class set of files and name them 'ofBallBlue'. Feel free to copy the code below and
+Going back to our oFBall class intial version (step 1) we'll build some 'daughter' classes based on its main characteristics ( motion behaviors and shape) but we'll distinct each inherited subClass by using a different color on its drawing method.
+Your ofBall header file should look like this:
+
+	#ifndef _OF_BALL // if this class hasn't been defined, the program can define it
+	#define _OF_BALL // by using this if statement you prevent the class to be called more than once which would 		confuse the compiler
+	#include "ofMain.h"
+	
+	
+	class ofBall {
+	    
+	public: // place public functions or variables declarations here
+	        
+	void update();
+	void draw(); 
+	
+	// variables
+	float x;      
+	float y;
+	float speedY; 
+	float speedX;
+	int dim;      
+	
+	ofColor color;
+		
+	ofBall();
+	
+	private: 
+	
+	};
+	#endif
+
+And let's make some slight changes on the implementation file:
+lets; chage the min and maximum values of the random size to larger values and set the position to the center of the screen.Make it look like this: 
+#include "ofBall.h"
+
+	ofBall::ofBall(){
+		x = ofGetWidth()*.5;
+		y = ofGetHeight()*.5;
+		dim = ofRandom(200,250);
+		
+		speedX = ofRandom(-1, 1);
+		speedY = ofRandom(-1, 1);
+		
+		color.set(ofRandom(255), ofRandom(255), ofRandom(255));
+	}
+
+We can leave the update() and draw() functions as they were.
+Now,let's start making 'daughter' versions of this 'mother' class.
+Create a new Class set of files and name them 'ofBallBlue'. Feel free to copy the code below and
 it's '.h' shoudl look like this:
 
-	#pragma once				// another and more modern way to prevent the compiler from including thiis file more than once
+	#pragma once				// another and more modern way to prevent the compiler from including this file more than once
 
 	#include "ofMain.h"
 	#include "ofBall.h"			// we need to include the 'mother' class, the compiler will include the mother/base class so we have access to all the methods inherited
@@ -430,6 +477,15 @@ On the '.cpp' file we'll need to them specify what we want the new 'draw()' meth
 		ofCircle(x, y, dim);	
 	}
 	
-Now on your own, create two new classes: ofBallRed and ofBallGreen based on ofBall class like ofBlue is.
+Now, on your own, create two new classes: ofBallRed and ofBallGreen based on ofBall class like ofBlue is.
 Back to your testApp.h, include the newly made classes and create one instance of each and in your testApp.cpp file initialize them and call their update() and draw() methods. A quick trick! right before you call the draw method, make this call:
+	
+	ofEnableBlendMode(OF_BLENDMODE_ADD);
+
+This will make your application drawing methods have an Additive Blending Mode. For more on this check Chapter??.
+
+Hope you enjoyed this short tutorial!
+have fun!
+
+
 	
