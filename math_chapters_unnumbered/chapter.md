@@ -419,7 +419,7 @@ Hold it. That's not the end of the story. As you can see, the $\left\Vert v_{a}\
 That's why dot products are such an amazing coincidence: If you know the lengths of $v_{a}$ and $v_{b}$, you're given $\cdot\cos\theta$ for free. If you know the plane on which $v_{a}$ and $v_{b}$ lie, one vector and the angle to the other, you get the other one for cheap, and so on. In typical use, if we were to take two vectors that each have length 1 (_normalized_ vectors, in Mathspeak), the dot product $a⋅b$ would basically a cosine of the angle between them. That relationship, described by $\cos\theta$, is easy to think of as a projection: Imagine shining a light from the top of one axis, and observing the shadow on another axis. How long it is, and which direction it's going, is exactly consistent with the dot product (in fact, most lighting models use dot products for just about everything).
 
 ##### Example: Dot product for calculating shadows
-Suppose we have a scene with a single source of light, and a single column blocking the light. Let's also assume that we live in 2d, and that the only way you can tell a pineapple apart from a Frank Gehry building is by trying to bite into it.
+Suppose we have a scene with a single source of light, and a single column blocking the light. Let's also assume that we live in 2D, and that the only way you can tell a pineapple apart from a Frank Gehry building is by trying to bite into it.
 
 Remember, we're not doing this just for exercise: if we only have two vectors, they can at most span two dimensions, even if they're 3-dimensional or n-dimensonal. In other words,
 
@@ -553,7 +553,7 @@ Pretty neat, right? Try to remember this trick, as we're going to use it quite a
 ##### Rotation matrices
 We now see that any operation in Matrixland can really be expressed in a collection of vectors. We also know that dot products of vectors express the angle between two vectors times their magnitude. A slightly surprising fact is that those two properties are enough to describe any rotation.
 
-In order to grok this last statement, let's first explain how rotating one vector works. Let's suppose for now our vector has length 1 (it's generally a good thing to start from, as it is then neutral to scaling), and that we would like to rotate the vector by an angle $\theta$, starting from a point on the x axis. The rotated vector would be $$v_{\theta}=\left(\begin{array}{c}
+In order to comprehend this last statement, let's first explain how rotating one vector works. Let's suppose for now our vector has length 1 (it's generally a good thing to start from, as it is then neutral to scaling), and that we would like to rotate the vector by an angle $\theta$, starting from a point on the x axis. The rotated vector would be $$v_{\theta}=\left(\begin{array}{c}
 \cos\theta\\
 \sin\theta
 \end{array}\right)$$
@@ -572,7 +572,8 @@ y_{\theta}=\left(\begin{array}{c}
 \end{array}\right)
 $$
 
-That last equality is due to trigonometric equalities. 
+That last equality is due to trigonometric equalities.
+
 ###### 2D Rotation Matrices
 We now have all of the information we need to build a matrix that moves the vectors $\left\{ \left(\begin{array}{c}
 1\\
@@ -594,9 +595,17 @@ Now, hold on. Check out what we did here: we placed the targets for the source v
 
 Recall that a matrix is just a stack of dot products. How did we construct these dot products?  We just aligned all of the entries that should be affecting the _resulting_ entry in one row of the matrix. That means that when considering the resulting $y$ entry, our vectors defined _the mixture of $y$ components_ from the target vectors that we would like to see in the resulting operation. This makes sense: Think of the vectors that compose the matrix as a new coordinate system, and what we're calculating is how the 'natural' coordinate system is projected onto them.
 
-###### 3D Rotation Matrices
+##### 3D Rotation Matrices
 
-The trick for rotating about one axis in 3D-land works the exact same way it does in 2d land: In order to rotate around one axis, all we need to do is to use a 2d rotation matrix (think about it: a rotation about one axis doesn't depend on the others just yet), and add a neutral dimension to it. Here's what it looks like when we use one dimension each time:
+In _Flatland_, Edwin A. Abbott describes a land in which two-dimensional beings live obliviously and happily, until one of them encounters a three-dimensional thing. His mind is boggled – he quickly understands the implications; When he tries to explain it to the other squares living in his world, they are apalled and he is cast away as a heretic. 
+
+Rotation in three dimensions is more complex to understand than rotations in two dimensions. There are much more cases, and in order to understand nontrivial rotations, one has to actually look at things in four dimensions. This seems to anger many people who don't normally think in 4 dimensions. After all we've been through, please stick around for this one too.
+
+###### Euler Angles
+
+The easiest way to think about rotations in 3D is to just think about them as a series of 2D-rotations. Let's called that _nesting a dimension_.
+
+The trick for rotating about one axis in 3D-land works the exact same way it does in 2d land: In order to rotate around one axis, all we need to do is to use a 2d rotation matrix (think about it: a rotation about one axis doesn't depend on the others just yet), and add a neutral dimension to it. Here's what rotation matrices in 3d look like when we use one axis of rotation each time:
 $$
 R_x(\theta) &= \begin{bmatrix}
 1 & 0 & 0 \\
@@ -615,9 +624,28 @@ R_z(\theta) &= \begin{bmatrix}
 \end{bmatrix}
 $$
 
-And this is indeed a useful way for rotating about one axis. Leonhard Euler a mathematician working on these types of rotations, noted early on that while good for rotating about one axis, this method (called _Euler Angles_) does not fare well in multiaxial rotations. To understand that, it's easiest ot grab a Rubik's cube and twist it about it's x dimension, and then about it's y dimension. Now make a note of where the unique tiles have moved, revert the changes, and try it again with first y and then x. Your results will be different!
+And this is indeed a useful way for rotating about one axis. Leonhard Euler, a famous Mathematician working on these types of rotations, noted early on that while good for rotating about one axis, this method (later named after him) was not trivial to state for multiaxial rotations. To understand that, it's easiest to grab a Rubik's cube and twist it about its $x$ dimension, and then about it's $y$ dimension. Now make a note of where the unique tiles have moved, revert the changes, and try it again with first $y$ and then $x$. Your results will be different!
 
-The reason for the difference will be explained in the following section. Meanwhile, just remember that when rotating things in more than 2 dimensions, you need to know not only the angles of the rotations, but the order in which to apply them. This problem does not exist in some other types of rotation (liek _Quaternions_, whcih are significantly more difficult)l
+Noting that, we know that when rotating things in more than 2 dimensions, we need to know not only the angles of the rotations, but the order in which to apply them. The rotation matrices  $R_{zx}\left(\theta\right) = R_{z}\left(\theta\right)⋅R_{x}\left(\theta\right)$ and $R_{xz}\left(\theta\right) = R_{x}\left(\theta\right)⋅R_{z}\left(\theta\right)$ are not the same. That's why in openfFrameworks, we have the ability to specify a rotation matrix this way:
+
+```cpp
+void ofMatrix4x4::makeRotationMatrix( float angle1, const ofVec3f& axis1,
+									   float angle2, const ofVec3f& axis2,
+									   float angle3, const ofVec3f& axis3)
+```
+
+The reason for the difference will be explained in the following section. 
+
+###### Other Methods of Rotation: Axis-Angles and Quaternions
+We can only end this one-page section with a defeating note: rotations in 3D are a big subject. Even though one matrix can only mean one thing, there are multiple ways of getting to it. Euler Angles demonstrated above are one common and easy-to-comprehend way; A slightly more general way is given by defining an arbitrary axis and rotating around it, called _Axis-Angle Rotation_, which you can get by:
+
+```cpp
+void ofMatrix4x4::makeRotationMatrix( float angle, const ofVec3f& axis )
+```
+
+Constructing the matrix for that kind of rotation is slightly hairy, which is why programmers often prefer not to use matrices for describing those rotations, but more compact Algebraic objects called _Quaternions_. Those exist in openFrameworks under `ofQuaternion`, and can mostly be used without actually investigating the underlying math.
+
+As far as usage goes, it's important to note that Quaternions are sometimes more efficient (and actually easier to think with) than Matrices, but their Mathematical underpinnings are far beyond the scope of a basic math chapter.
 
 	
 #### Matrix Algebra
@@ -712,10 +740,68 @@ If you recall, we can multiply all of these matrices to get one matrix represent
 
 We call this matrix $M$, because it places objects we give it in their place in the _Model_. Whenever you call `ofTranslate()`, `ofRotate()`, `ofScale()` (or equivalent) on an object, that operation is applied to the **currently active _Model_ matrix**. Whenever you execute `ofPushMatrix()`, a copy of that matrix is saved in _the matrix stack_, so that you can go back to it when necessary. And when necessary, you will then use `ofPopMatrix()`, which will cause the current matrix $M$ to be deleted and replace it with a matrix from the top of the matrix stack. That is the entire mystery about matrices. That's it. 
 
+#### Using Matrices in openFrameworks
+While this chapter was supposed to show the underlying representation of grpahics operations, it did intentionally avoid showing matrix examples in code. Now that you know how matrices look on the inside, it'll be a lot easier for you to figure out how to debug your 3d code, but most of the time using matrices in raw form won't be necessary.
+
+While you could construct a matrix via code, using:
+
+```cpp
+ofMatrix4x4( const ofQuaternion& quat ) {
+	makeRotationMatrix(quat);
+}
+
+ofMatrix4x4(	float a00, float a01, float a02, float a03,
+              float a10, float a11, float a12, float a13,
+              float a20, float a21, float a22, float a23,
+              float a30, float a31, float a32, float a33);
+```
+You'll mostly find that what matters to you is the Algebra of the Operation, not the actual numbers, so you'll be much better off using these:
+
+```cpp
+void ofMatrix4x4::makeScaleMatrix( const ofVec3f& );
+void ofMatrix4x4::makeScaleMatrix( float, float, float );
+
+void ofMatrix4x4::makeTranslationMatrix( const ofVec3f& );
+void ofMatrix4x4::makeTranslationMatrix( float, float, float );
+
+void ofMatrix4x4::makeRotationMatrix( const ofVec3f& from, const ofVec3f& to );
+void ofMatrix4x4::makeRotationMatrix( float angle, const ofVec3f& axis );
+void ofMatrix4x4::makeRotationMatrix( float angle, float x, float y, float z );
+void ofMatrix4x4::makeRotationMatrix( const ofQuaternion& );
+void ofMatrix4x4::makeRotationMatrix( float angle1, const ofVec3f& axis1,
+                 float angle2, const ofVec3f& axis2,
+                 float angle3, const ofVec3f& axis3);
+```
+
+All these things do is form Operations you can later multiply your `ofVec4f` objects with.
+
+Here's the same example for Quaternions:
+
+```cpp
+/* Axis-Angle Rotations*/
+void ofQuaternion::makeRotate(float angle, float x, float y, float z);
+void ofQuaternion::makeRotate(float angle, const ofVec3f& vec);
+void ofQuaternion::makeRotate(float angle1, const ofVec3f& axis1, float angle2, const ofVec3f& axis2, float angle3, const ofVec3f& axis3);
+
+/* From-To Rotations */
+void ofQuaternion::makeRotate(const ofVec3f& vec1, const ofVec3f& vec2);
+```
+
+Just like with Matrices, any of these objects create a _rotation operation_ that can later be applied to a vector:
+```cpp
+//TODO: Check this code
+ofVec3f myUnrotatedVector(1,0,0);
+ofQuaternion quat;
+quat.makeRotate(ofVec3f(1,0,0), ofVec3f(0,1,0));
+ofVec3f myRotatedVector = quat * myUnrotatedVector;
+cout << ofToString(myRotatedVector) << endl;
+//prints out (0,1,0)
+```
+
+###### Ok, what now?
 In the 'Advanced Graphics' chapter you'll learn about two similar matrices: 
 * The _View_ matrix tramsforms the result of the _Model_ matrix to simulate where our camera is supposed to be at.
 * The _Projection_ matrix applies the optical properties of the camera we defined and turns the result of the _View_ matrix from a 3D space to a 2D image. The Projection matrix is built slightly different than the _Model-View_ matrix, but if you've made it this far, you won't have trouble reading about it in a special Graphics topic.
 
 
-###### Thanks
 Thanks to Prof. Ken Perlin and Prof. Bo'az Klartag for ideas on teaching mathematics. 
