@@ -113,28 +113,54 @@ This is because what you actually hear is the *changes* in values over time. Any
 
 ##Time Domain vs Frequency Domain
 
-**[mh: this section would be super important for anyone just starting in sound to understand.  maybe add some links to additional places to learn about FFT.  at least for me, when I first encountered FFT it took me a while to get it (granted, I was working with FFT for visuals which is a bit less natural than FFT for sound).]**
-
 When representing sound as a continuous stream of values between -1 and 1, you're working with sound in what's known as the "Time Domain". This means that each value you're dealing with is referring to a specific moment in time. There is another way of representing sound which can be very helpful when you're using sound to drive something other aspect of your app. That representation is known as the "Frequency Domain".
 
 *[ image of a waveform vs an FFT bar graph ]*
 
-In the frequency domain, you'll be able to see how much of your input signal lies in various frequencies, split into various "bins" (see above image).
+In the frequency domain, you'll be able to see how much of your input signal lies in various frequencies, split into separate "bins" (see above image).
 
-You can transform a signal in the time domain into the frequency domain by a ubiquitous algorithm called the Fast Fourier Transform. You can get an openFrameworks-ready implementation of the FFT (along with examples!) in either the ofxFFT or ofxFft addons (by Lukasz Karluk and Kyle McDonald respectively).
+You can transform a signal from the time domain to the frequency domain by a ubiquitous algorithm called the Fast Fourier Transform. You can get an openFrameworks-ready implementation of the FFT (along with examples!) in either the ofxFFT or ofxFft addons (by Lukasz Karluk and Kyle McDonald respectively).
 
 *[footnote explaining FFT vs DFT to avoid cluttering the previous paragraph up]*
+
+In an FFT sample, bins in the higher indexes will represent higher pitched frequencies (i.e. treble) and the lower ones will represent bassy frequencies. Exactly *which* frequency is represented by each bin depends on the number of time-domain samples that went into the transform. You can calculate this as follows:
+
+    frequency = (binIndex * sampleRate) / totalSampleCount
+    
+So, if you were to run an FFT on a buffer of 1024 time domain samples at 44100Hz, bin 3 would represent 129.2Hz ( `(3 * 44100) / 1024 ≈ 129.2` ). This calculation demonstrates a property of the FFT that is very useful to keep in mind: the more time domain samples you use to calculate the FFT, the better frequency resolution you'll get (as in, each subsequent FFT bin will represent frequencies that are closer together). The tradeoff for increasing the frequency resolution this way is that you'll start losing track of time, since your FFT will be representing a bigger portion of the signal.
+
+Note: A raw FFT sample will typically represent its output as [Complex numbers](http://en.wikipedia.org/wiki/Complex_number), though this probably isn't what you're after if you're attempting to do something like audio visualization. A more intuitive representation is the *magnitude* of each complex number, which is calculated as:
+
+    magnitude = sqrt( pow(complex.real, 2) + pow(complex.imaginary, 2) )
+    
+If you're working with an FFT implementation that gives you a simple array of float values, it's most likely already done this calculation for you.
 
 You can also transform a signal from the frequency domain back to the time domain, using an Inverse Fast Fourier Transform (aka IFFT). This is less common, but there is an entire genre of audio synthesis called Additive Synthesis which is built around this principle (generating values in the frequency domain then running an IFFT on them to create synthesized sound).
 
 The frequency domain is useful for many things, but one of the most straightforward is isolating particular elements of a sound by frequency range, such as instruments in a song. Another common use is analyzing the character or timbre of a sound, in order to drive complex audio-reactive visuals.
 
+The Fourier transform is a bit of a tricky beast to understand, but it is fairly straightforward once you get the concept. I felt that [this explanation of the Fourier Transform](http://betterexplained.com/articles/an-interactive-guide-to-the-fourier-transform/) does a great job of demonstrating the underlying math, along with some interactive visual examples. 
+
 ##Reacting to Live Audio
 
 ###RMS
-One of the simplest ways to add audio-reactivity to your app is to calculate the RMS of incoming buffer of audio data. RMS stands for "root mean square" and is a pretty straightforward calculation that serves as a good approximation of "loudness" (much better than something like averaging the buffer or picking the maximum value). You can see RMS being calculated in the "audioInputExample".
+One of the simplest ways to add audio-reactivity to your app is to calculate the RMS of incoming buffers of audio data. RMS stands for "root mean square" and is a pretty straightforward calculation that serves as a good approximation of "loudness" (much better than something like averaging the buffer or picking the maximum value). The "square" step of the algorithim will ensure that the output will always be a positive value. This means you can ignore the fact that the original audio may have had "negative" samples (since they'd sound just as loud as their positive equivalent, anyway). You can see RMS being calculated in the *audioInputExample*.
 
-*[ code snippet here ]*  **[mh: point out in the paragraph above or in the comments for the code that the "S" part of RMS allows you to consider the magnitude rather than the sign?]**
+    // from audioInputExample
+    float curVol = 0.0;
+	int numCounted = 0;	
+		
+	for (int i = 0; i < bufferSize; i++){
+	    left[i] = input[i * 2] * 0.5;
+	    right[i] = input[i * 2 + 1] * 0.5;
+
+	    curVol += left[i] * left[i];
+	    curVol += right[i] * right[i];
+	    numCounted+=2;
+	}
+
+	curVol /= (float)numCounted;
+	curVol = sqrt( curVol );
 
 ###Onset Detection
 Onset detection algorithms attempt to locate moments in an audio stream where an "onset" occurs, which is usually something like an instrument playing a note or the impulse of a drum hit. There are many onset detection algorithms available at various levels of complexity and accuracy, some fine-tuned for speech as opposed to music, some working in the frequency domain instead of the time domain, some made for offline processing as opposed to realtime, etc.
@@ -146,7 +172,7 @@ A simple realtime onset detection algorithm can be built on top of the RMS calcu
 ###FFT
 Running an FFT on your input audio will give you back a buffer of values representing the input's frequency content. A straight up FFT *won't* tell you which notes are present in a piece of music, but you will be able to use the data to take the input's sonic "texture" into account. For instance, the FFT data will let you know how much "bass" / "mid" / "treble" there is in the input at a pretty fine granularity (a typical FFT used for realtime audio-reactive work will give you something like 512 to 4096 individual frequency bins to play with).  **[mh: are there some standards for frequency range that defines bass vs mid vs treble?  might be useful to include.]**
 
-When using the FFT to analyze music, you should keep in mind that the FFT's bins increment on a *linear* scale, whereas humans interpret frequency on a *logarithmic* scale. So, if you were to use an FFT to split an input signal into 512 bins, the lowest bins (probably bin 0 through bin 30 or so) will contain the bulk of the data, and the remaining bins will mostly just be high frequency content. If you were to isolate the sound on a bin-to-bin basis, you'd be able to easily tell the difference between the sound of bins 3 and 4, but bins 500 and 501 would probably sound exactly the same. Unless you had robot ears.
+When using the FFT to analyze music, you should keep in mind that the FFT's bins increment on a *linear* scale, whereas humans interpret frequency on a *logarithmic* scale. So, if you were to use an FFT to split an input signal into 512 bins, the lowest bins (bin 0 through bin 30 or so) will probably contain the bulk of the data, and the remaining bins will mostly just be high frequency content. If you were to isolate the sound on a bin-to-bin basis, you'd be able to easily tell the difference between the sound of bins 3 and 4, but bins 500 and 501 would probably sound exactly the same. Unless you had robot ears.
 
 ##Synthesizing Audio
 - MIDI / OSC
@@ -157,8 +183,6 @@ When using the FFT to analyze music, you should keep in mind that the FFT's bins
 **[mh: since most of the chapter feels fairly conceptual, I'd be very curious to see what these look like and whether they give the reader more of a hands-on feel.]**
 
 ##Gotchas
-
-**[mh: these were all nice]**
 
 ### "Popping"
 When starting or ending playback of synthesized audio, you should try to quickly fade in / out the buffer, instead of starting or stopping abruptly. If you start playing back a buffer that begins like `[1.0, 0.9, 0.8...]`, the first thing the speaker will do is jump from the "at rest" position of 0 immediately to 1.0. This is a *huge* jump, and will probably result in a "pop" that's quite a bit louder than you were expecting (based on your computer's current volume).
