@@ -38,7 +38,9 @@ With the `lerp` function, you can take any two quantities, in our case `start` a
  $$\text{lerp}\left(a,b,t\right) = t\cdot b+\left(1-t\right)\cdot a$$ 
 
 ##### Note: What does _linear_ really mean?
-Engineers, Programmers and English Speakers like to think of _linear_ as _anything you can put on a line_. Mathematicians, having to deal with all the conceptual mess the former group of people creates, define it _anything you can put on a line **that begins at (0,0)**_. There's  good reasoning behind that, which we will see in the discussion about Linear Algebra. In the meantime, think of it this way: if our transformation is taking a line that has a value 0 at the point 0 and returning a line with the same property, (thus in the form $f\left(x\right)=ax$), It's _linear_. If it returns a value different from 0 at $x=0$ (in the form $f\left(x\right)=ax + b$), it's _affine_. 
+Engineers, Programmers and English Speakers like to think of _linear_ as _anything you can put on a line_. Mathematicians, having to deal with all the conceptual mess the former group of people creates, define it _anything you can put on a line **that begins at (0,0)**_. There's  good reasoning behind that, which we will see in the discussion about Linear Algebra. In the meantime, think of it this way: 
+
+>If our transformation is taking a line that has a value 0 at the point 0 and returning a line with the same property ($f\left(x\right)=ax$), It's _linear_. If it returns a value different from 0 at $x=0$ ($f\left(x\right)=ax + b$), it's _affine_. 
 
 ##### Exercise: Save NASA's Mars Lander 
 In 1999, an masterpiece of engineering was making its final approach to Mars. All instruments were showing that the approach distance matched the speed, and that it's just about to get there and do some science. But instead, it did something rather rude: it crashed into the red planet. An investigation made later by NASA revealed that while designing the lander, one team worked with their test equipment set to _centimetres_, while the other had theirs set to _inches_. **By the way, this is all true.**
@@ -55,14 +57,18 @@ Help the NASA teams work together: write a function that converts centimetres to
 float ofMap(float value, float inputMin, float inputMax, float outputMin, float outputMax, bool clamp = false)
 ```
 
-
 In the last discussion, we saw how by using `lerp`, any value between two points can be _linearly_ addressed as a value between 0 and 1. That's very convenient, and therefore the reason we build most of our arbitrary numerical ranges (`ofFloatColor`, for example) in the domain of 0 and 1. 
-However, when dealing with real world problems, programmers run into domains **[mh: if you are going to be specific about the words domain and range, it would be worth an explanation.  it might not hurt to have a sentence or two about what a function is from a mathematical standpoint.  it could be useful for when you talk about more specific functions - like linear and affine mappings.]** of values that they wish to map to other ranges of values, neither of which are confined to 0 and 1. For example, someone trying to convert the temperature in Celsius to Fahrenheit won't be able to use **[mh: missing part of a sentence]** Surely, the way of doing that must involve a `lerp`, but it needs a little help:
+
+However, when dealing with real world problems, programmers run into domains of values that they wish to map to other ranges of values, neither of which are confined to 0 and 1. For example, someone trying to convert the temperature in Celsius to Fahrenheit won't be able to use a ```lerp``` by itself - the domain we care about isn't between 0 and 1. Surely, the way of doing that must involve a `lerp`, but it needs a little help.
+
+
 
 If we want to use the `lerp` function, we're aiming to get it to the range between 0 and 1. We can do that by knocking `inputMin` off the input `value` so that it starts at 0, then dividing by the size of the domain: $$x=\frac{\text{value}-\text{inputMin}}{\text{inputMax}-\text{inputMin}}$$
 Now that we've tamed the input domain to be between 0 and 1, we do the exact opposite to the output: `ofMap(value, inputMin, inputMax, outputMin, outputMax)` $=\frac{\text{value}-\text{inputMin}}{\text{inputMax}-\text{inputMin}}\cdot\left(\text{outputMax}-\text{outputMin}\right)+\text{outputMin}$
 
-**[mh: I'd suggest walking through this some numbers to convert from F to C or vice versa]**
+**//TODO: Example about converting f to c**
+
+**THIS SHOULD BE A FOOTNOTE Note on Mathspeak: ** In Mathematics, most of the problem solving is done by taking a bag of of inputs (sometimes called _the range_) and a bag of desired outcomes (called _the domain_), and connecting between them in some kind of way. Those connections are called _functions_. That's pretty much how you know functions: the function $f\left( x \right)=x^{2}$ takes the domain of every real number and maps it to the range of non-negative reals, in a way you know. 
 
 #### Range Utilities
 ##### Clamping
@@ -95,6 +101,18 @@ Returns the sign of a number, as `-1.0` or `1.0`. Simple, eh?
 **[mh: I recognize that you are trying to be general here by talking about change, but at least throwing the word motion around as a type of change would give readers something upon which to anchor the concept.]**
 
 So far we've discussed change that is bound to a line. But in Real Life™ there's more than just straight lines. 
+
+The concept of change has many different applications in graphics and animation. For example, if we have a car moving at a steady pace along a straight road, we can describe its position using a `lerp` between the beginning and the end of the road. we also describe the car's speed that way, by saying it moves this (some number) much in that (some vector) direction:
+
+```cpp
+Vector3 beginningOfRoad;
+Vector3 endOfRoad;
+float amountOfTravel;
+//...
+ofLerp(beginningOfRoad, endOfRoad, amountOfTravel);
+```
+**//TODO: finish this**
+
 
 In this discussion, we're about to see how we can describe higher orders of complexity, via a cunning use of `lerp`s. Keep in mind that some of the code here is conceptual, not necessarily efficient.
 
@@ -142,12 +160,11 @@ float cubic (float t){
 	}
 ```
 
-**[mh: maybe change the variable names here, so that they don't give the impression of lining up with the polynomial eq]**
-We'll skip the entire solution, and just reveal that the result will appear in the form of $$ax^{3} + bx^{2} + cx + d$$
-See the pattern here? The highest exponent is the number of successive `ofLerp`s we applied, i.e. the number of ~~successive~~**[mh:nested?]** times we ~~changed~~**[mh:mapped?]** using our parameter $t$.
+We'll skip the entire solution, and just reveal that the result will appear in the form of $$at^{3} + bt^{2} + ct + d$$
+See the pattern here? The highest exponent is the number of successive `ofLerp`s we applied, i.e. the number of times we nested the `lerp` function in itself.
 
 ##### …And So On
-The general notion in Uni level Calculus is that _you can do anything if you have enough of something_. So fittingly, there's a curious little idea in Mathematics which allows us, with enough of these nested control points, to approximate any curve segment we can imagine. In the original formulation of that idea (called a _Taylor Series_), we only reach a good approximation if the amount of degrees (successive `lerp`s we applied) is close to infinity.  **[mh: important concept, but feels out of place here.  I'd either add an example of taylor expansion or ax the section.  coming from optics where we used the small angle approx constantly, my favorite ones are the trig functions]**
+The general notion in Uni level Calculus is that _you can do anything if you have enough of something_. So fittingly, there's a curious little idea in Mathematics which allows us, with enough of these nested control points, to approximate any curve segment we can imagine. In the original formulation of that idea (called a _Taylor Series_), we only reach a good approximation if the amount of degrees (successive `lerp`s we applied) is close to infinity.
 
 In Computer Graphics, as you're about to see - 3 is close enough.
 
@@ -155,7 +172,7 @@ In Computer Graphics, as you're about to see - 3 is close enough.
 **[mh: readers might find this opening a bit sudden, esp. if they don't know what a control point is yet]**
 What we've done in the previous chapter is really quite remarkable. We have built a rig for control points, on top of which we built a rig for controlling these points in pairs, and we continued to do so until we ended up with one parameter, $t$, to control them all. For reasons you're about to see, Mathematicians will often shy away from the description of polynomials as a physical metaphor, so not many math books will describe this process to you this way. But anyone who's done even the slightest bit of design will benefit from that idea immensely. 
 
-The reason to avoid describing polynomials to a physical being is what happens to them soon after they step away from their control points. Every polynomial will eventually go to infinity - which is a broad term, but for us designers it means that slightly off it's range, we'll need a lot more paper, or computer screen real estate, or yarn, or cockroaches (true story **[mh: can't just drop something like this in and then walk away from it...I need to know]**) in order to draw it. 
+The reason to avoid describing polynomials to a physical being is what happens to them soon after they step away from their control points. Every polynomial will eventually go to infinity - which is a broad term, but for us designers it means that slightly off it's range, we'll need a lot more paper, or computer screen real estate, or yarn, or cockroaches ([true story](http://www.andrewcerrito.com/itpblog/itp-winter-show-nyc-food-crawl/)) in order to draw it. 
 
 **//TODO: Draw a polynomial going to infinity **
 
@@ -204,7 +221,7 @@ In this part you're going to learn many concepts in how to store and manipulate 
 ### The Vector
 You may have heard of vectors before when discussing directions or position, and after understanding that they can represent both, may have gotten a little confused. Here's the truth about Vectors™: 
 	
-	A vector is just an array that stores multiple pieces of the same type information. 
+> A vector is just an array that stores multiple pieces of the same type of information. 
 
 Seriously, that's all it is. Quit hiding.
 
@@ -343,7 +360,7 @@ float ofDistSquared(float x1, float y1, float x2, float y2);
 ```
 **[mh: might be nice to note an optimization problem where you'd choose to use square distances over distance]**
 
-Let's start by a definition. You may remember the _Pythagorean Theorem_, stating that the length of a line between point $a$ and $b$ is:
+Let's start by a definition. You may remember the _Pythagorean Theorem_, stating what the length of a line between point $a$ and $b$ is:
 $$\text{Distance}\left(\left(\begin{array}{c}
 x_{a}\\
 y_{a}
@@ -393,25 +410,36 @@ In the next section we describe something more helpful.
 float ofVec3f::dot( const ofVec3f& vec )
 ```
 
-The dot product of two vectors has a definition that's not too clear at first. On the one hand, the operation can be defined as $v_{a}\bullet v_{b}=x_{a}\cdot x_{b}+y_{a}\cdot y_{b}+z_{a}\cdot z_{b}$, which is really easy to implement, on the other hand, it can also bet defined as $v_{a}\bullet v_{b}=\left\Vert v_{a}\right\Vert \cdot\left\Vert v_{b}\right\Vert \cdot\cos\theta$, where $\theta$ is the angle between the two vectors.
+The dot product of two vectors has a definition that's not too clear at first. On the one hand, the operation can be defined as $v_{a}\bullet v_{b}=x_{a}\cdot x_{b}+y_{a}\cdot y_{b}+z_{a}\cdot z_{b}$, which is really easy to implement, on the other hand, it can also bet defined as $v_{a}\bullet v_{b}=\left\Vert v_{a}\right\Vert \cdot\left\Vert v_{b}\right\Vert \cdot\cos\theta$, where $\theta$ is the angle between the two vectors. Soon you'll see that this is a rather lucky coincidence. In the meantime, here's how you _shoud_ remember dot products:
 
-For reasons you'll learn soon, it's a rather surprising coincidence.
+> A dot product of $a$ and $b$ reflects how one vector projects in the other vector's direction.
 
-**//TODO: Finish this**
+Hold it. That's not the end of the story. As you can see, the $\left\Vert v_{a}\right\Vert \cdot\left\Vert v_{b}\right\Vert$ part of $\left\Vert v_{a}\right\Vert \cdot\left\Vert v_{b}\right\Vert \cdot\cos\theta$ should tell you that both vectors' lengths have equal parts in determining the final size of the thing, but in most practical cases, you'll be using dot products to determine either vector length or angles between vectors.
 
+That's why dot products are such an amazing coincidence: If you know the lengths of $v_{a}$ and $v_{b}$, you're given $\cdot\cos\theta$ for free. If you know the plane on which $v_{a}$ and $v_{b}$ lie, one vector and the angle to the other, you get the other one for cheap, and so on. In typical use, if we were to take two vectors that each have length 1 (_normalized_ vectors, in Mathspeak), the dot product $a⋅b$ would basically a cosine of the angle between them. That relationship, described by $\cos\theta$, is easy to think of as a projection: Imagine shining a light from the top of one axis, and observing the shadow on another axis. How long it is, and which direction it's going, is exactly consistent with the dot product (in fact, most lighting models use dot products for just about everything).
 
-##### Example: Dot product for playing billiards in 2D
+##### Example: Dot product for calculating shadows
+Suppose we have a scene with a single source of light, and a single column blocking the light. Let's also assume that we live in 2d, and that the only way you can tell a pineapple apart from a Frank Gehry building is by trying to bite into it.
+
+Remember, we're not doing this just for exercise: if we only have two vectors, they can at most span two dimensions, even if they're 3-dimensional or n-dimensonal. In other words,
+
+> two distinct $n$-dimensional vectors can only span a plane.
+
+So it's Kosher. Anyway – scene, single source of light, single column blocking light. Let's assume that the column is starts at some $v_{1}$ and climbs up in $y$ by 20 Centimeters; Let's also assume that the light is at some point $v_{2}$, where the $x$ component of $v_{2}$ is to the left of the $x$ component of $v_{1}$ ($x_{1}≤x_{2}$). Our goal is to figure out how far away from $v_{1}$ on the ground line the shadow stops and light begins.
+
+//TODO: Finish this
+
 
 ### The Matrix™ 
 
-**[mh: matrices could use a little motivation for the uninitiated reader, i.e. why they are convient+powerful and why we use them in graphics]**
+In the computer world, a program needs the two things to function: Algorithms and Data Structures (it also needs I/O, but we're talking about computation, not engineering). In the 3D Maths world it's exactly the same: we call our data structures 'vectors' and our algorithms are operations. 
 
-In the computer world, a program needs the two things to function: Algorithms and Data Structures (it also needs I/O, but we're talking Turings, not Perlins **[mh: huh?]**). In the 3D Maths world it's exactly the same: we call our data structures 'vectors' and our algorithms are operations. 
+At the core of the heavy machinery built to control 3d space, a matrix is just a data structure, like a vector. However, the 'algorithms' applied to this data structure (operations, in Mathland) make it an extremely powerful one. All of the _affine_ operations we care about in 3D can be described in the form of a matrix: translation, rotation, scaling, inversion, squeezing, shearing, projection and more and more. Here's a simple way to remember this:
 
-At the core of the heavy machinery built to control 3d space, a matrix is just a data structure, like a vector. However, the 'algorithms' applied to this data structure (operations, in Mathland) make it an extremely powerful one. All of the _affine_ operations we care about in 3D can be described in the form of a matrix: translation, rotation, scaling, inversion, squeezing, shearing, projection and more and more.
+> A Matrix is a mathematical object that stores a geometric transformation of points.
 
-As a convention, we'll be marking vectors with lowercase letters and matrices with uppercase letters.
 
+**Notation Convention:** When dealing with matrices, most authors usually mark vectors with lowercase letters and matrices with uppercase letters.
  
 #### Matrix Multiplication as a dot product
 The easiest way to look at a matrix is to look at it as a bunch of vectors. Depending on what we care about, we can either look at the columns or rows as vectors. 
@@ -568,13 +596,32 @@ Recall that a matrix is just a stack of dot products. How did we construct these
 
 ###### 3D Rotation Matrices
 
-The trick works the exact same way with 3d matrices: In order to rotate around on 
-**//TODO: OH GOD WRITE THIS**
+The trick for rotating about one axis in 3D-land works the exact same way it does in 2d land: In order to rotate around one axis, all we need to do is to use a 2d rotation matrix (think about it: a rotation about one axis doesn't depend on the others just yet), and add a neutral dimension to it. Here's what it looks like when we use one dimension each time:
+$$
+R_x(\theta) &= \begin{bmatrix}
+1 & 0 & 0 \\
+0 & \cos \theta &  -\sin \theta \\
+0 & \sin \theta  &  \cos \theta \\
+\end{bmatrix} \\
+R_y(\theta) &= \begin{bmatrix}
+\cos \theta & 0 & \sin \theta \\
+0 & 1 & 0 \\[3pt]
+-\sin \theta & 0 & \cos \theta \\
+\end{bmatrix} \\
+R_z(\theta) &= \begin{bmatrix}
+\cos \theta &  -\sin \theta & 0 \\
+\sin \theta & \cos \theta & 0\\
+0 & 0 & 1\\
+\end{bmatrix}
+$$
 
-* Example: Vibrating a brick-phone in 3D.
+And this is indeed a useful way for rotating about one axis. Leonhard Euler a mathematician working on these types of rotations, noted early on that while good for rotating about one axis, this method (called _Euler Angles_) does not fare well in multiaxial rotations. To understand that, it's easiest ot grab a Rubik's cube and twist it about it's x dimension, and then about it's y dimension. Now make a note of where the unique tiles have moved, revert the changes, and try it again with first y and then x. Your results will be different!
+
+The reason for the difference will be explained in the following section. Meanwhile, just remember that when rotating things in more than 2 dimensions, you need to know not only the angles of the rotations, but the order in which to apply them. This problem does not exist in some other types of rotation (liek _Quaternions_, whcih are significantly more difficult)l
+
 	
 #### Matrix Algebra
-This chapter introduced a different kind of math from what you were used to. But while introducing _a new thing to do things with_ we opened up a lot of unexplored dangers. Notice that we always multiplied vectors by matrices in a certain order: It's always the vector _after_ the matrix, the vector is always transposed, and any new operation applied to an existing situation always happens with a matrix to the left of our result. There's a reason for all of that: Commutativity.
+This chapter introduced a different kind of math from what you were used to. But while introducing _a new thing to do things with_ we opened up a lot of unexplored dangers. Notice that we always multiplied vectors by matrices in a certain order: It's always the vector _after_ the matrix, the vector is always transposed, and any new operation applied to an existing situation always happens with a matrix to the left of our result. There's a reason for all of that: _Commutativity_.
 
 ##### Commmumamitativiwha?
 In high school Algebra, we used to think that $a\cdot b=b\cdot a$. No reason not to think that: The amount of uranium rods that you have times the amount of specially trained monkeys that I have equals the same amount of casualties, no matter the order of multiplication. That's because quantities are _commutative_, the order in which they apply operations to each other doesn't matter.  **[mh: these two sentences say the same thing]**
@@ -671,4 +718,4 @@ In the 'Advanced Graphics' chapter you'll learn about two similar matrices:
 
 
 ###### Thanks
-Thanks to Prof. Ken Perlin and Prof. Bo'az Klartag for ideas on teaching mathematics.
+Thanks to Prof. Ken Perlin and Prof. Bo'az Klartag for ideas on teaching mathematics. 
