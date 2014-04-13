@@ -153,11 +153,13 @@ This function used a defined range and a parameter to create `a1`, then used ano
 We've done something remarkable here. We used the way one parameter changes on two fixed lines to control a third, totally mobile line, and draw one point on it at each point in time between 0 and 1. In Mathspeak, it looks like this:
  
 $$
-\text{lerp}\left(t,\text{lerp}\left(t,5,8\right),\text{lerp}\left(t,2,9\right)\right)\\
-= \text{lerp}\left(t,8\cdot t+5\cdot\left(1-t\right),9\cdot t+2\cdot\left(1-t\right)\right)\\
-= \left(9\cdot t+2\cdot\left(1-t\right)\right)\cdot t+\left(8\cdot t+5\cdot\left(1-t\right)\right)\cdot\left(1-t\right)\\
-= \left(9t^{2}+2t-2t^{2}\right)+\left(8t+5-5t\right)-\left(8t^{2}+5t-5t^{2}\right)\\
-= 4t^{2}+5
+\begin{align}
+\text{lerp}&\left(t,\text{lerp}\left(t,5,8\right),\,\text{lerp}\left(t,2,9\right)\right) =\\
+\text{lerp}&\left(t,8\cdot t+5\cdot\left(1-t\right),9\cdot t+2\cdot\left(1-t\right)\right)\\
+= &\left(9\cdot t+2\cdot\left(1-t\right)\right)\cdot t+\left(8\cdot t+5\cdot\left(1-t\right)\right)\cdot\left(1-t\right)\\
+= &\left(9t^{2}+2t-2t^{2}\right)+\left(8t+5-5t\right)-\left(8t^{2}+5t-5t^{2}\right)\\
+= &4t^{2}+5
+\end{align}
 $$
 
 Something interesting happened here. Without noticing, we introduced a second order of complexity, a _quadratic_ one. Seriously, give it a second look, draw the entire process on paper. It's remarkable.
@@ -255,15 +257,15 @@ Generally speaking, when dealing with Algebra of numerical structures that aren'
 ##### Scalar Multiplication
 The product between a vector and a scalar is defined as: 
 
-$$a\left(\begin{array}{c}
+$$a\left[\begin{array}{c}
 x\\
 y\\
 z
-\end{array}\right)=\left(\begin{array}{c}
+\end{array}\right]=\left[\begin{array}{c}
 ax\\
 ay\\
 az
-\end{array}\right)$$
+\end{array}\right]$$
 
 That falls into the category of _per-vector_ operations, because the entire vector undergoes the same operation. Note that this operation is just a scaling.  
 
@@ -276,19 +278,19 @@ cout << ofToString( a * 2 ) << endl;
 ##### Vector Addition
 Adding vectors is pretty straightforward: it's a _per-component_ operation:
 
-$$\left(\begin{array}{c}
+$$\left[\begin{array}{c}
 x_{1}\\
 y_{1}\\
 z_{1}
-\end{array}\right)+\left(\begin{array}{c}
+\end{array}\right]+\left[\begin{array}{c}
 x_{2}\\
 y_{2}\\
 z_{2}
-\end{array}\right)=\left(\begin{array}{c}
+\end{array}\right]=\left[\begin{array}{c}
 x_{1}+x_{2}\\
 y_{1}+y_{2}\\
 z_{1}+z_{2}
-\end{array}\right)$$ 
+\end{array}\right]$$ 
 
 
 ```cpp
@@ -369,32 +371,32 @@ float ofDistSquared(float x1, float y1, float x2, float y2);
 ```
 
 Let's start by a definition. You may remember the _Pythagorean Theorem_, stating what the length of a line between point $a$ and $b$ is:
-$$\text{Distance}\left(\left(\begin{array}{c}
+$$\text{Distance}\left(\left[\begin{array}{c}
 x_{a}\\
 y_{a}
-\end{array}\right),\left(\begin{array}{c}
+\end{array}\right],\left[\begin{array}{c}
 x_{b}\\
 y_{b}
-\end{array}\right)\right)=\sqrt{\left(x_{b}-x_{a}\right)^{2}+\left(y_{b}-y_{a}\right)^{2}}$$
+\end{array}\right]\right)=\sqrt{\left(x_{b}-x_{a}\right)^{2}+\left(y_{b}-y_{a}\right)^{2}}$$
 
 Here's the good news: It's the exact same definition in three dimensions! just add the $z$ term.
-$$\text{Distance}\left(\left(\begin{array}{c}
+$$\text{Distance}\left(\left[\begin{array}{c}
 x_{a}\\
 y_{a}\\
 z_{a}
-\end{array}\right),\left(\begin{array}{c}
+\end{array}\right],\left[\begin{array}{c}
 x_{b}\\
 y_{b}\\
 z_{b}
-\end{array}\right)\right)=\sqrt{\left(x_{b}-x_{a}\right)^{2}+\left(y_{b}-y_{a}\right)^{2}+\left(z_{b}-z_{a}\right)^{2}}$$
+\end{array}\right]\right)=\sqrt{\left(x_{b}-x_{a}\right)^{2}+\left(y_{b}-y_{a}\right)^{2}+\left(z_{b}-z_{a}\right)^{2}}$$
 
 
 Vector Length, then, can be naturally defined as the distance between the vector and the point $\left(0,0,0\right)$:
-$$\text{Length}\left(\begin{array}{c}
+$$\text{Length}\left(\left[\begin{array}{c}
 x\\
 y\\
 z
-\end{array}\right)=\sqrt{x^{2} + y^{2} + z^{2}}$$
+\end{array}\right]\right)=\sqrt{x^{2} + y^{2} + z^{2}}$$
 
 And that's exactly what using `.length()` as a property of any `ofVec` will give you.
 
@@ -418,13 +420,14 @@ In the next section we describe something more helpful.
 float ofVec3f::dot( const ofVec3f& vec )
 ```
 
-The dot product of two vectors has a definition that's not too clear at first. On the one hand, the operation can be defined as $v_{a}\bullet v_{b}=x_{a}\cdot x_{b}+y_{a}\cdot y_{b}+z_{a}\cdot z_{b}$, which is really easy to implement, on the other hand, it can also bet defined as $v_{a}\bullet v_{b}=\left\Vert v_{a}\right\Vert \cdot\left\Vert v_{b}\right\Vert \cdot\cos\theta$, where $\theta$ is the angle between the two vectors. Soon you'll see that this is a rather lucky coincidence. In the meantime, here's how you _shoud_ remember dot products:
+The dot product of two vectors has a definition that's not too clear at first. On one hand, the operation can be defined as $$v_{a}\bullet v_{b}=x_{a}\cdot x_{b}+y_{a}\cdot y_{b}+z_{a}\cdot z_{b}$$ which is really easy to implement (in fact, graphics cards have special circuitry for doing just that!). On the other hand, it can also bet defined as $$v_{a}\bullet v_{b}=\left\Vert v_{a}\right\Vert \cdot\left\Vert v_{b}\right\Vert \cdot\cos\theta$$ where $\theta$ is the angle between the two vectors. Soon you'll see that this is a rather lucky coincidence. In the meantime, here's how you _shoud_ remember dot products:
 
 > A dot product of $a$ and $b$ reflects how one vector projects in the other vector's direction.
 
 Hold it. That's not the end of the story. As you can see, the $\left\Vert v_{a}\right\Vert \cdot\left\Vert v_{b}\right\Vert$ part of $\left\Vert v_{a}\right\Vert \cdot\left\Vert v_{b}\right\Vert \cdot\cos\theta$ should tell you that both vectors' lengths have equal parts in determining the final size of the thing, but in most practical cases, you'll be using dot products to determine either vector length or angles between vectors.
 
-That's why dot products are such an amazing coincidence: If you know the lengths of $v_{a}$ and $v_{b}$, you're given $\cdot\cos\theta$ for free. If you know the plane on which $v_{a}$ and $v_{b}$ lie, one vector and the angle to the other, you get the other one for cheap, and so on. In typical use, if we were to take two vectors that each have length 1 (_normalized_ vectors, in Mathspeak), the dot product $a⋅b$ would basically a cosine of the angle between them. That relationship, described by $\cos\theta$, is easy to think of as a projection: Imagine shining a light from the top of one axis, and observing the shadow on another axis. How long it is, and which direction it's going, is exactly consistent with the dot product (in fact, most lighting models use dot products for just about everything).
+That's why dot products are such an amazing coincidence: If you know the lengths of $v_{a}$ and $v_{b}$, you're given $\cos\theta$ for free. If you know the plane on which $v_{a}$ and $v_{b}$ lie, one vector and the angle to the other, you get the other one for cheap, and so on. In typical use, if we were to take two vectors that each have length 1 (_normalized_ vectors, in Mathspeak), the dot product $a⋅b$ would basically a cosine of the angle between them. 
+That relationship, described by $\cos\theta$, is easy to think of as a projection: Imagine shining a light from the top of one axis, and observing the shadow on another axis. How long it is, and which direction it's going, is exactly consistent with the dot product (in fact, most lighting models use dot products for just about everything).
 
 ##### Example: Finding out if a point is above or below a plane
 
@@ -434,13 +437,19 @@ There are many equivalent ways to describe a plane. The most elegant one in this
 
 Now the math:
 
-**If the point $p$ is on the plane.** We know that every line on the plane is perpendicular to (has a 90-degree angle with) the normal. Specifically, every line connecting some point on a plane to the point where we put our normal (which is the same on the plane) so if we extract the direction vector from the line and call it $v$, we can say: $$n∙v = \left|n\right|⋅\left|v\right|⋅\cos90 = \left|n\right|⋅\left|v\right|⋅0 = 0$$.
+**If the point $p$ is on the plane.** We know that every line on the plane is perpendicular to (has a 90-degree angle with) the normal. Specifically, every line connecting some point on a plane to the point where we put our normal (which is the same on the plane) so if we extract the direction vector from the line and call it $v$, we can say: $$n∙v = \left\Vert n\right\Vert ⋅\left\Vert v\right\Vert ⋅\cos90 = \left\Vert n\right\Vert ⋅\left\Vert v\right\Vert ⋅0 = 0$$.
 
-**If the point $p$ isn't on a plane.** If that's the case, we know that it definitely doesn't have a 90-degree angle with the plane's normal, therefore the dot product won't be zero. So all we need to know is: does it project on the normal's positive direction, or it's negative direction?
-In order to do that, we first find a point on the plane. That's easy, we defined our plane such that we can follow the normal $n$ from the origin for a length $d$ and we'll get there. So the point $q = d⋅n$ is mos def on the plane.
+**If the point $p$ isn't on a plane.** In that case we know that it definitely doesn't have a 90-degree angle with the plane's normal $n$, therefore the dot product $n\bullet v$ won't be zero. So all we need to know is: does it project on the normal's positive direction, or it's negative direction?
+In order to do that, we first find a point on the plane. That's easy, we defined our plane such that we can follow the normal $n$ from the origin $\left(0,0,0\right)$ for a length $d$ and we'll get there. 
+
+Therefore the point $q = d⋅n$ is most definitely on the plane.
+
 Now, let's make up a vector from the point $p$ to that point: $v = q - p$. This equation holds because when subtracting two points, we get the difference between them, hence the direction from $p$ to $q$. Now we calculate: $$v∙n = v_{x}⋅n_{x}+v_{y}⋅n_{y}+v_{z}⋅n_{z}$$
 
-Now it's pretty obvious: if the dot product is positive, the normal and the line to a point on the plane are both pointing in the same direction, that means that the point $p$ is _below_ the plane. If the dot product is negative, the line from the point to the plane has to go back, therefore the point is above the plane. Here's the code:
+* *If the dot product is positive*, the normal and the line to a point on the plane are both pointing in the same direction, that means that the point $p$ is _below_ the plane. 
+* *If the dot product is negative*, the line from the point to the plane has to go back, therefore the point is above the plane. 
+
+Here's the code:
 
 ```cpp
 //we define a margin for numerical error
@@ -483,51 +492,51 @@ The easiest way to look at a matrix is to look at it as a bunch of vectors. Depe
 Let's start from the simplest case. Just like with numbers, it is a very important property of any algebraic structure to have a _neutral_ member for each operation. For example, in Numberland, multiplication of any $x$ by 1 returns $x$, same goes for addition to 0.
 In Matrixland, that identity element is a matrix with 1s along the diagonal zeroes elsewhere. For example, the identity matrix for 3 dimensions is:
 
-$$I_{3} = \left(\begin{array}{ccc}
+$$I_{3} = \left[\begin{array}{ccc}
 1 & 0 & 0\\
 0 & 1 & 0\\
 0 & 0 & 1
-\end{array}\right)$$
+\end{array}\right]$$
 
-So for any matrix $M$, $MI = IM = M$.
+So for any matrix $M$, $$MI = IM = M$$.
 
 **Note:** You may have noticed that we're very careful right now with the order of multiplications, like when we took extra care to describe that $MI = IM$. There's a good reason for that, and you'll discover it in a few pages.
 
 ##### Scale
 You might remember that when scaling a vector (i.e point in space and/or velocity and/or force and/or brightness value for a colour, etc), we may choose to scale it uniformly by scalar multiplication **/\* TODO:Example \*/** or, because of a weird language design choice, most graphics applications will allow you to scale non-uniformly on a per-component basis: **/\* TODO:Example \*/**
 
-To put an end to this insanity, scaling in matrix multiplication is well-defined (_sidenote_: well defined means blah blah) in openFrameworks (also in math!). It goes like this: The matrix $S$ that scales $\left(x,y,z\right)^{T}$ to $\left(ax,by,cz\right)^{T}$ is: $$S\cdot \left(\begin{array}{c}
+To put an end to this insanity, scaling in matrix multiplication is well-defined (_sidenote_: well defined means blah blah) in openFrameworks (also in math!). It goes like this: The matrix $S$ that scales $\left(x,y,z\right)^{T}$ to $\left(ax,by,cz\right)^{T}$ is: $$S\cdot \left[\begin{array}{c}
 x\\
 y\\
 z
-\end{array}\right)=\left(\begin{array}{ccc}
+\end{array}\right]=\left[\begin{array}{ccc}
 a & 0 & 0\\
 0 & b & 0\\
 0 & 0 & c
-\end{array}\right)
-\cdot \left(\begin{array}{c}
+\end{array}\right]
+\cdot \left[\begin{array}{c}
 x\\
 y\\
 z
-\end{array}\right) = 
-\left(\begin{array}{c}
+\end{array}\right] = 
+\left[\begin{array}{c}
 ax\\
 by\\
 cz
-\end{array}\right)$$
+\end{array}\right]$$
 
 There's logic behind this. Recall that a vector multiplied by a matrix, $M\cdot v$ is just a collection of dot products: 
 $$
-M\cdot v=\left(\begin{array}{c}
+M\cdot v=\left[\begin{array}{c}
 M_{1}\\
 M_{2}\\
 M_{3}
-\end{array}\right)\cdot v=\left(\begin{array}{c}
+\end{array}\right]\cdot v=\left[\begin{array}{c}
 \begin{array}{c}
 M_{1}\cdot v\\
 M_{2}\cdot v\\
 M_{3}\cdot v
-\end{array}\end{array}\right)
+\end{array}\end{array}\right]
 $$
 
 **//TODO: Improve this**
@@ -535,21 +544,21 @@ $$
 So, in order to get a multiplication through that only affects $x$, we tune the vector (upper row of the matrix) $M_{1}$ to be zero anywhere but the interface with $x$: $$M_{1} = \left(a,0,0\right)$$ so the entire calculation would be:
 
 $$
-M\cdot v=\left(\begin{array}{c}
+M\cdot v=\left[\begin{array}{c}
 M_{1}\\
 M_{2}\\
 M_{3}
-\end{array}\right)\cdot v=
-\left(\begin{array}{ccc}
+\end{array}\right]\cdot v=
+\left[\begin{array}{ccc}
 a & 0 & 0\\
 M_{2,1} & M_{2,2} & M_{2,3}\\
 M_{3,1} & M_{3,2} & M_{3,3}
-\end{array}\right)\cdot v=\left(\begin{array}{c}
+\end{array}\right]\cdot v=\left[\begin{array}{c}
 \begin{array}{c}
 a\cdot v_{x} + 0\cdot v_{y} + 0\cdot v_{z}\\
 M_{2,1}\cdot v_{x} + M_{2,2}\cdot v_{y} + M_{2,3}\cdot v_{z}\\
 M_{3,1}\cdot v_{x} + M_{3,2}\cdot v_{y} + M_{3,3}\cdot v_{z}
-\end{array}\end{array}\right)
+\end{array}\end{array}\right]
 $$
 Making the $x$ component of the resulting vector be $a\cdot v_{x}$, just as promised.
 
@@ -560,25 +569,25 @@ Scalar multiplication of any matrix $M$ becomes really easy, then: it's essentia
 **[mh: this could use an image]** 
 
 Odd operations like skewing are where things need to get a little less intuitive and more logical. When we think of _skewing_ we normally imagine adding to a certain dimension, suppose $x$, a proportion of a quantity from another dimension, let's say $y$. Suppose that proportion is some $0 < a \leq 1$, as if to say, 'I want to nudge it a little, the more it leaves the ground'. The matrix for doing that in 2 dimensions would look like this: 
-$$S = \left(\begin{array}{cc} 
+$$S = \left[\begin{array}{cc} 
 1 & a\\
 0 & 1 
-\end{array}\right)$$
+\end{array}\right]$$
 See what we did there? We made the resulting $x$ value depend on the input $x$ value (being multiplied by 1), but also slightly depend on the input $y$, exactly how slightly being determined by the magnitude of $a$:
 
-$$S\cdot v = \left(\begin{array}{cc} 
+$$S\cdot v = \left[\begin{array}{cc} 
 1 & a\\
 0 & 1 
-\end{array}\right)
-\left(\begin{array}{c}
+\end{array}\right]
+\left[\begin{array}{c}
 x\\
-y\end{array}\right) = 
-\left(\begin{array}{c}
+y\end{array}\right] = 
+\left[\begin{array}{c}
 1\cdot x + a\cdot y\\
-0\cdot x + 1 \cdot y\end{array}\right) = 
-\left(\begin{array}{c}
+0\cdot x + 1 \cdot y\end{array}\right] = 
+\left[\begin{array}{c}
 x + ay\\
-y\end{array}\right)$$
+y\end{array}\right]$$
 
 Pretty neat, right? Try to remember this trick, as we're going to use it quite a lot when we move stuff around in the fourth dimension. I'm not even joking.
 
@@ -586,39 +595,39 @@ Pretty neat, right? Try to remember this trick, as we're going to use it quite a
 ##### Rotation matrices
 We now see that any operation in Matrixland can really be expressed in a collection of vectors. We also know that dot products of vectors express the angle between two vectors times their magnitude. A slightly surprising fact is that those two properties are enough to describe any rotation.
 
-In order to comprehend this last statement, let's first explain how rotating one vector works. Let's suppose for now our vector has length 1 (it's generally a good thing to start from, as it is then neutral to scaling), and that we would like to rotate the vector by an angle $\theta$, starting from a point on the x axis. The rotated vector would be $$v_{\theta}=\left(\begin{array}{c}
+In order to comprehend this last statement, let's first explain how rotating one vector works. Let's suppose for now our vector has length 1 (it's generally a good thing to start from, as it is then neutral to scaling), and that we would like to rotate the vector by an angle $\theta$, starting from a point on the x axis. The rotated vector would be $$v_{\theta}=\left[\begin{array}{c}
 \cos\theta\\
 \sin\theta
-\end{array}\right)$$
+\end{array}\right]$$
 
 Now we found a target for the $x$ axis to go to. In order to find a new home for the old $y$ axis, we only need to know the angle between them. Luckily, we all know that it's 90 degrees, or in radians: $\frac{\pi}{2}$. The new home will then have to be at angle $\theta + \frac{\pi}{2}$ from the x axis (angle 0):
 
 $$
-y_{\theta}=\left(\begin{array}{c}
+y_{\theta}=\left[\begin{array}{c}
 \cos\left(\theta+\frac{\pi}{2}\right)\\
 \sin\left(\theta+\frac{\pi}{2}\right)
-\end{array}\right) = \left(\begin{array}{c}
+\end{array}\right] = \left[\begin{array}{c}
 -\sin\theta\\
 \cos\theta
-\end{array}\right)
+\end{array}\right]
 $$
 
 That last equality is due to trigonometric equalities.
 
 ###### 2D Rotation Matrices
-We now have all of the information we need to build a matrix that moves the vectors $\left\{ \left(\begin{array}{c}
+We now have all of the information we need to build a matrix that moves the vectors $\left\{ \left[\begin{array}{c}
 1\\
 0
-\end{array}\right),\left(\begin{array}{c}
+\end{array}\right],\left[\begin{array}{c}
 0\\
 1
-\end{array}\right)\right\}$ to $\left\{ \left(\begin{array}{c}
+\end{array}\right]\right\}$ to $\left\{ \left[\begin{array}{c}
 \cos\theta\\
 \sin\theta
-\end{array}\right),\left(\begin{array}{c}
+\end{array}\right],\left[\begin{array}{c}
 -\sin\theta\\
 \cos\theta
-\end{array}\right)\right\}$ :
+\end{array}\right]\right\}$ :
 
 **//TODO: Write a 2D rotation matrix**
 
@@ -637,22 +646,24 @@ Rotation in three dimensions is more complex to understand than rotations in two
 The easiest way to think about rotations in 3D is to just think about them as a series of 2D-rotations. Let's called that _nesting a dimension_.
 
 The trick for rotating about one axis in 3D-land works the exact same way it does in 2d land: In order to rotate around one axis, all we need to do is to use a 2d rotation matrix (think about it: a rotation about one axis doesn't depend on the others just yet), and add a neutral dimension to it. Here's what rotation matrices in 3d look like when we use one axis of rotation each time:
-$$
-R_x(\theta) &= \begin{bmatrix}
+
+$$\begin{align}
+R_{x}(\theta) &= \begin{bmatrix}
 1 & 0 & 0 \\
 0 & \cos \theta &  -\sin \theta \\
 0 & \sin \theta  &  \cos \theta \\
-\end{bmatrix} \\
-R_y(\theta) &= \begin{bmatrix}
+\end{bmatrix}\\ 
+R_{y}(\theta) &= \begin{bmatrix}
 \cos \theta & 0 & \sin \theta \\
 0 & 1 & 0 \\[3pt]
 -\sin \theta & 0 & \cos \theta \\
 \end{bmatrix} \\
-R_z(\theta) &= \begin{bmatrix}
+R_{z}(\theta) &= \begin{bmatrix}
 \cos \theta &  -\sin \theta & 0 \\
 \sin \theta & \cos \theta & 0\\
 0 & 0 & 1\\
 \end{bmatrix}
+\end{align}
 $$
 
 And this is indeed a useful way for rotating about one axis. Leonhard Euler, a famous Mathematician working on these types of rotations, noted early on that while good for rotating about one axis, this method (later named after him) was not trivial to state for multiaxial rotations. To understand that, it's easiest to grab a Rubik's cube and twist it about its $x$ dimension, and then about it's $y$ dimension. Now make a note of where the unique tiles have moved, revert the changes, and try it again with first $y$ and then $x$. Your results will be different!
@@ -704,40 +715,40 @@ If the entire shape lifts itself magically and moves away from the origin - it c
 ##### Homogenous coordinates: Hacking 3d in 4d
 This problem has caused hundreds of years of agony to the openFrameworks community, until in 1827 a hacker called Möbius pushed an update to the ofMäth SVN repo: use the matrix in 4 dimensions to control a 3 dimensional shape. Here's the shtick: a 3d operation can be described as a 4d operation which doesn't do anything to the 4th dimension. Written as a matrix, we can describe it like this:
 
-$$ A _{4\times 4} = \left(\begin{array}{ccc|c}
+$$ A _{4\times 4} = \left[\begin{array}{ccc|c}
 a_{1,1} & a_{1,2} & a_{1,3} & 0\\
 a_{2,1} & a_{2,2} & a_{2,3} & 0\\
 a_{3,1} & a_{3,2} & a_{3,3} & 0\\
 \hline 0 & 0 & 0 & 1
-\end{array}\right)$$
+\end{array}\right]$$
 
 Now we already know that a 1D Skew can move all lines in that axis in a certain direction without affecting the other dimensions, and that a 2D skew will do that for all things on a certain plane, so it's easy to imagine that a 3D skew will do that to 3D spaces embedded in a space with more dimension. Möbius figured that feature is useful, and he proposed on the bianual openFrämeworks meeting in Tübingen that all operations will be conducted in 4D space, and then projected back into 3D space, like this:
 
-$$T = \left(\begin{array}{ccc|c}
+$$T = \left[\begin{array}{ccc|c}
 1 & 0 & 0 & t_{x}\\
 0 & 1 & 0 & t_{y}\\
 0 & 0 & 1 & t_{z}\\
 \hline 0 & 0 & 0 & 1
-\end{array}\right)$$
+\end{array}\right]$$
 
 The 3D Transform vector $t$ is placed in the 4th dimension, with it's 4th entry as 1 (because 1 is neutral to multiplication). The bottom row that is added has zeroes in the $x,y,z$ entries, in order to avoid interfering with other operations. Check out what happens when a vector is multiplied by this matrix: 
 
-$$T\cdot v = \left(\begin{array}{ccc|c}
+$$T\cdot v = \left[\begin{array}{ccc|c}
 1 & 0 & 0 & t_{x}\\
 0 & 1 & 0 & t_{y}\\
 0 & 0 & 1 & t_{z}\\
 \hline 0 & 0 & 0 & 1
-\end{array}\right)\cdot\left(\begin{array}{c}
+\end{array}\right]\cdot\left[\begin{array}{c}
 x\\
 y\\
 z\\
 \hline 1
-\end{array}\right)=\left(\begin{array}{c}
+\end{array}\right]=\left[\begin{array}{c}
 x+t_{x}\\
 y+t_{y}\\
 z+t_{z}\\
 \hline 1
-\end{array}\right)$$
+\end{array}\right]$$
 
 Now all we need to do is discard the 4th dimension to get our translated point. Quite cool, innit?
 
