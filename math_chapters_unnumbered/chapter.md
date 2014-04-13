@@ -247,7 +247,7 @@ Seriously, that's all it is. Quit hiding.
 
 This simplicity is also their great power. Just like the number 5 can be used to describe five Kilometres, the result of subtracting 12 and 7, or the number of cookies in a jar - the same works with vectors.
 
-It's up to the user of that mathematical object to choose what it is used as. The vector $v=\left(5,-3,1\right)$ can represent a point in space, a direction of a moving object, a force applied to your game character, or just three numbers. And just like with numbers, algebraic operations such as addition and multiplication may be applied to vectors. 
+It's up to the user of that mathematical object to choose what it is used as. The vector $$v=\left[\begin{array}{c}5\\-3\\1\end{array}\right]$$ can represent a point in space, a direction of a moving object, a force applied to your game character, or just three numbers. And just like with numbers, algebraic operations such as addition and multiplication may be applied to vectors. 
 
 Oh, but there's a catch. You see, everyone was taught what $a + b$ means. In order to go on with vectors, we need to define that.
 
@@ -437,7 +437,7 @@ There are many equivalent ways to describe a plane. The most elegant one in this
 
 Now the math:
 
-**If the point $p$ is on the plane.** We know that every line on the plane is perpendicular to (has a 90-degree angle with) the normal. Specifically, every line connecting some point on a plane to the point where we put our normal (which is the same on the plane) so if we extract the direction vector from the line and call it $v$, we can say: $$n∙v = \left\Vert n\right\Vert ⋅\left\Vert v\right\Vert ⋅\cos90 = \left\Vert n\right\Vert ⋅\left\Vert v\right\Vert ⋅0 = 0$$.
+**If the point $p$ is on the plane.** We know that every line on the plane is perpendicular to (has a 90-degree angle with) the normal. Specifically, every line connecting some point on a plane to the point where we put our normal (which is the same on the plane) so if we extract the direction vector from the line and call it $v$, we can say: $$n∙v = \left\Vert n\right\Vert ⋅\left\Vert v\right\Vert ⋅\cos90^{\circ} = \left\Vert n\right\Vert ⋅\left\Vert v\right\Vert ⋅0 = 0$$.
 
 **If the point $p$ isn't on a plane.** In that case we know that it definitely doesn't have a 90-degree angle with the plane's normal $n$, therefore the dot product $n\bullet v$ won't be zero. So all we need to know is: does it project on the normal's positive direction, or it's negative direction?
 In order to do that, we first find a point on the plane. That's easy, we defined our plane such that we can follow the normal $n$ from the origin $\left(0,0,0\right)$ for a length $d$ and we'll get there. 
@@ -839,5 +839,5 @@ In the 'Advanced Graphics' chapter you'll learn about two similar matrices:
 * The _View_ matrix tramsforms the result of the _Model_ matrix to simulate where our camera is supposed to be at.
 * The _Projection_ matrix applies the optical properties of the camera we defined and turns the result of the _View_ matrix from a 3D space to a 2D image. The Projection matrix is built slightly different than the _Model-View_ matrix, but if you've made it this far, you won't have trouble reading about it in a special Graphics topic.
 
-
+###### Also, Thanks
 Learning Math is hard. Teaching Math is therefore excruciating: having so many ideas you want to put in someone else's head, and the slow and sticky nature of it all. I'd like to thank Prof. Bo'az Klartag and Prof. Ken Perlin and for giving me ideas on how to teach mathematics intuitively.
