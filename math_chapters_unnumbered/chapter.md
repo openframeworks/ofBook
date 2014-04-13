@@ -300,34 +300,33 @@ cout << ofToString( a + b ) << endl;
 
 ###### Example: `ofVec2f` as position
 
-Vector addition serves many simple roles. In this example, we're trying to track our friend Gary as he makes his way home from a pub. Trouble is, Gary's a little drunk. He knows he lives south of the pub, so he ventures south; But since he can't walk straight, he might end up somewhere else.
+Vector addition serves many simple roles. In this example, we're trying to track our friend Lars as he makes his way home from a pub. Trouble is, Lars is a little drunk. He knows he lives south of the pub, so he ventures south; But since he can't walk straight, he might end up somewhere else.
 
 ```cpp
 /* in testApp.h: */
-ofVec2f garyPosition;
-void geryStep(ofVec2f direction);
+ofVec2f larsPosition;
+void larsStep(ofVec2f direction);
 
 /* in testApp.cpp: */
 void testApp::setup(){
-	ofVec2f garysStartingPoint( ofGetWidth() / 2., ofGetHeight() / 3. );
-	gary.setPosition( garysStartingPoint );
+	larsPosition = ofVec2f( ofGetWidth() / 2., ofGetHeight() / 3. );
 }
 
 void testApp::update(){
-	if (garyPosition.y < ofGetHeight * 2. / 3.){
-		//As Gary attempts to take one step south,
+	if (larsPosition.y < ofGetHeight * 2. / 3.){
+		//As Lars attempts to take one step south,
 		//He also deviates a little to the right, 
 		//or a little to the left. 
 		ofVec2f nextStep(ofRandom(-1.,1.),1.); 
-		garyStep(nextStep);
+		larsStep(nextStep);
 	}
 
-void ofApp::garyStep(ofVec2f direction){ 
+void ofApp::larsStep(ofVec2f direction){ 
 	position += direction; 
 }
 
 void testApp::draw(){ 
-	//Draw gary any way you want. No one's judging you.
+	//Draw Lars any way you want. No one's judging you.
 }
 ```
 
@@ -592,8 +591,6 @@ In order to comprehend this last statement, let's first explain how rotating one
 \sin\theta
 \end{array}\right)$$
 
-Let's look at that for a moment. 
-**//TODO: write what the cosine and sine is**
 Now we found a target for the $x$ axis to go to. In order to find a new home for the old $y$ axis, we only need to know the angle between them. Luckily, we all know that it's 90 degrees, or in radians: $\frac{\pi}{2}$. The new home will then have to be at angle $\theta + \frac{\pi}{2}$ from the x axis (angle 0):
 
 $$
@@ -816,7 +813,6 @@ void ofQuaternion::makeRotate(const ofVec3f& vec1, const ofVec3f& vec2);
 
 Just like with Matrices, any of these objects create a _rotation operation_ that can later be applied to a vector:
 ```cpp
-//TODO: Check this code
 ofVec3f myUnrotatedVector(1,0,0);
 ofQuaternion quat;
 quat.makeRotate(ofVec3f(1,0,0), ofVec3f(0,1,0));
