@@ -427,17 +427,42 @@ Hold it. That's not the end of the story. As you can see, the $\left\Vert v_{a}\
 
 That's why dot products are such an amazing coincidence: If you know the lengths of $v_{a}$ and $v_{b}$, you're given $\cdot\cos\theta$ for free. If you know the plane on which $v_{a}$ and $v_{b}$ lie, one vector and the angle to the other, you get the other one for cheap, and so on. In typical use, if we were to take two vectors that each have length 1 (_normalized_ vectors, in Mathspeak), the dot product $a⋅b$ would basically a cosine of the angle between them. That relationship, described by $\cos\theta$, is easy to think of as a projection: Imagine shining a light from the top of one axis, and observing the shadow on another axis. How long it is, and which direction it's going, is exactly consistent with the dot product (in fact, most lighting models use dot products for just about everything).
 
-##### Example: Dot product for calculating shadows
-Suppose we have a scene with a single source of light, and a single column blocking the light. Let's also assume that we live in 2D, and that the only way you can tell a pineapple apart from a Frank Gehry building is by trying to bite into it.
+##### Example: Finding out if a point is above or below a plane
 
-Remember, we're not doing this just for exercise: if we only have two vectors, they can at most span two dimensions, even if they're 3-dimensional or n-dimensonal. In other words,
+This is a problem we'll often run into in 3D graphics: given a point $p$ and a plane, we need to figure out which side of the plane the point is on. This may be really useful if you're trying to decide what _not_ to render in a scene, in order to save processing time.
 
-> two distinct $n$-dimensional vectors can only span a plane.
+There are many equivalent ways to describe a plane. The most elegant one in this case is by using the plane's normal (the direction perpendicular to both axis of the plane) which is a vector we'll mark as $n$, and the distance from the origin, $d$ (note that because the plane can pass below the origin, this distance can be negative). This is a valid definition: a plane can be defined as all of the points in the world that form a perpendicular vector to the normal.
 
-So it's Kosher. Anyway – scene, single source of light, single column blocking light. Let's assume that the column is starts at some $v_{1}$ and climbs up in $y$ by 20 Centimeters; Let's also assume that the light is at some point $v_{2}$, where the $x$ component of $v_{2}$ is to the left of the $x$ component of $v_{1}$ ($x_{1}≤x_{2}$). Our goal is to figure out how far away from $v_{1}$ on the ground line the shadow stops and light begins.
+Now the math:
 
-//TODO: Finish this
+**If the point $p$ is on the plane.** We know that every line on the plane is perpendicular to (has a 90-degree angle with) the normal. Specifically, every line connecting some point on a plane to the point where we put our normal (which is the same on the plane) so if we extract the direction vector from the line and call it $v$, we can say: $$n∙v = \left|n\right|⋅\left|v\right|⋅\cos90 = \left|n\right|⋅\left|v\right|⋅0 = 0$$.
 
+**If the point $p$ isn't on a plane.** If that's the case, we know that it definitely doesn't have a 90-degree angle with the plane's normal, therefore the dot product won't be zero. So all we need to know is: does it project on the normal's positive direction, or it's negative direction?
+In order to do that, we first find a point on the plane. That's easy, we defined our plane such that we can follow the normal $n$ from the origin for a length $d$ and we'll get there. So the point $q = d⋅n$ is mos def on the plane.
+Now, let's make up a vector from the point $p$ to that point: $v = q - p$. This equation holds because when subtracting two points, we get the difference between them, hence the direction from $p$ to $q$. Now we calculate: $$v∙n = v_{x}⋅n_{x}+v_{y}⋅n_{y}+v_{z}⋅n_{z}$$
+
+Now it's pretty obvious: if the dot product is positive, the normal and the line to a point on the plane are both pointing in the same direction, that means that the point $p$ is _below_ the plane. If the dot product is negative, the line from the point to the plane has to go back, therefore the point is above the plane. Here's the code:
+
+```cpp
+//we define a margin for numerical error
+float const EPSILON = 0.00001;
+
+// a function that returns -1 if a point is below a plane,
+// 1 if it's above a plane and 0 if it's on a plane
+int whichSide(ofVec3f planeNormal, float planeDistance, ofVec3f testPoint){
+	ofVec3f directionToPlane = planeDistance * planeNormal - testPoint;
+	float dot = directionToPlane.dot(planeNormal);
+	if (abs(dot) < EPSILON){ //Check if the dot product is very near zero 
+		return 0;
+	} else { // else return the opposite of its sign!
+	return (dot < 0 ? 1 : -1);
+	}
+}
+
+```
+Note that in the code we had to take care of numerical inaccuracy of the computer, and give it a margin for deciding that a vector is sometimes perpendicular to that normal. An alternative would be to ignore those cases, and chose that anything with `dot > 0` is below the plane. I like it better this way.
+
+As you can see from the example, the dot product is magical: just from knowing the coordinates, we get an insight about the angle between vectors for free.
 
 ### The Matrix™ 
 
