@@ -2455,40 +2455,36 @@ Mode draw:
 
 ```
 
-### Running procedure
-
-**[Testimony from kieran and bafic]**
-
-### Live issues
-
-**[Testimony from kieran and bafic]**
-
 ## Post Event
 
-**[PR]**
+The biggest PR boost to the project while it was live was a [review](http://www.glastonburyfestivals.co.uk/news/greenpeace-at-glastonbury-2013) from Timeout:
+
+"A highlight of the Greenpeace field was undoubtedly the Arctic Dome, voted by Time Out as the second best non-musical thing to do at the Festival and previewed by NME. It offered people the opportunity to disappear through a crack in the ice and take a magical 15-minute trip to the North Pole, where ice towered and the Northern Lights danced."
 
 ### Open Source discussions with Client
 
-**[Contacting open source people within Greenpeace, decision to delay release because of film issues]**
+Greenpeace were happy for us to Open Source, as we do with all our projects. Greenpeace does not have a GitHub of it's own, but we were able to suggest that that should be part of their future strategy. The problem was the film that formed the backdrop for the interaction - while musicians were happy to license music for a live only experience, getting those rights in perpetutity has been challenging. Negotiations continue.
 
 ### Re-running remotely in Australia and New Zealand
 
-**[Challenges of getting old code running again]**
+The project has been re-exhibited twice in the Southern Hemisphere - in Australia and New Zealand. Getting the code up and running wasn't a problem - but training someone to use the two layers of mouse GUI and on layer of Keyboard GUI was  a challenge, espescially over a painfully slow Skype connection.
 
-### Conclusion, future development
+### Future development
 
-**[Wanting to get access to the latest features mid development, github, ending up with multiple guis]**
-
-#### Broadcast
-
-The potential for broadcasting this interaction are clear.
-
-**[Refernce Nike and Coke projects]**
+Paul Valery said 'Poems are never finished - just abandoned'. This is sadly true for all artistic endevours. Below are three areas for future development.
 
 #### Social interaction
 
-**[Hello Cube style interaction]**
+The [Hello Wall](http://www.hellicarandlewis.com/the-hello-wall/) and [Hello Cube](http://www.hellicarandlewis.com/tate-modern/) projects showed clearly how making feedback loops between users and installations via social networks is not only fun, but helps spread awareness of the installation beyond the physical bounds of the project.
 
-#### Raspberry pi
+#### Broadcast
 
-**[Cheap, available portable robust platform]**
+The potential for broadcasting this interaction are clear. Post and Previous Hellicar&Lewis projects for [Nike](http://www.hellicarandlewis.com/nikefeeltv/) and [Coca-Cola](http://www.hellicarandlewis.com/coke/) show how broadcasting an interaction with the addition of social interaction can dramatically increase engagement.
+
+#### Raspberry Pi
+
+With the advent of a [Raspberry Pi](http://www.openframeworks.cc/setup/raspberrypi/) port of openFrameworks, a port of the project to the platform would allow for the deployment of the project to events that have even smaller budgets than this iteration. This would also entail a port of the Kinect code to 2D computer vision, but I'm confident this would be a spur for other interactions and visual effects.
+
+###Conclusion
+
+All in all, for a low budget project, using openFrameworks was the differentiator that enabled me to collaborate with the rest of the team at Hellicar&Lewis to make the installation come to life. The key factors were being able to draw upon so many external addons, previous projects and the community as a whole.
