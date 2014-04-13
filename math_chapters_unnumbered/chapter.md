@@ -23,7 +23,7 @@ When bringing math to innocent readers, most programming books will try to expla
 Let's start our journey by looking at the number line. It's a stretch of numbers going to infinity in both the positive and negative direction. Suppose we were ants or microbes, so that we could stand on exactly one value here, and travel to any other value by walking in that direction.
 That's pretty much the definition of a _dimension_. It's an infinite collection of values that are all accessible, and any value of it can be described with one number. As you're about to see, these properties are going to enable quite a lot of options.
 
-**//TODO: Draw the number line **
+**[GRAPHICS: The Number Line. Reference added]**
 
 ### Interpolation
 #### Linear Interpolation: The `ofLerp`
@@ -31,7 +31,7 @@ That's pretty much the definition of a _dimension_. It's an infinite collection 
 float ofLerp(float start, float stop, float amt)
 ```
 
-As xkcd once put it, if you've seen a number larger than 7, you're not doing real math.
+As Randall Munroe (the author of xkcd) once put it, if you see a number larger than 7 in your page, you're not doing real math. To prove ourselves worthy, this part will only involve numbers between 0 and 1.
 
 Those of you that have already done a little time-based or space-based work have probably noticed that you can often describe elements of your work as sitting on a line between two known points. A frame on a timeline is at a known location between 00:00:00 and the runtime of the film, a scrollbar is pointing to a known location between the beginning and the end of a page. That's exactly what `lerp` does.
 
@@ -148,7 +148,7 @@ float quadratic (float t){
 
 This function used a defined range and a parameter to create `a1`, then used another defined range with the _same_ parameter to create `a2`. Their result looks surprising:
 
-**//TODO: Draw quadratic eqn**
+**[GRAPHIC: QuadraticSpline.pdf to be processed]**
 
 We've done something remarkable here. We used the way one parameter changes on two fixed lines to control a third, totally mobile line, and draw one point on it at each point in time between 0 and 1. In Mathspeak, it looks like this:
  
@@ -192,11 +192,11 @@ What we've done in the previous chapter is really quite remarkable. We have buil
 
 The reason is what happens to polynomials soon after they step away from their engineered control points. Outside the range of control, every polynomial will eventually go to infinity - which is a broad term, but for us designers it means that slightly off it's range, we'll need a lot more paper, or computer screen real estate, or yarn, or cockroaches ([true story](http://www.andrewcerrito.com/itpblog/itp-winter-show-nyc-food-crawl/)) in order to draw it. 
 
-**//TODO: Draw a polynomial going to infinity **
+**[GRAPHICS: PolynomialToInfinity.pdf, to be processed]**
 
 So instead of using polynomials the way they are, some mathematicians thought of a clever thing to do: use only the good range (one that's between the control points), wait for the polynomial to do something we don't like (like turn from positive to negative), **then mix it with another polynomial**. That actually works pretty well:
 
-**//TODO: Drawing of a spline with 4 basis curves **
+**[GRAPHICS: Spline.ai - Please talk to me before processing this]**
 
 In the illustration, we've taken a few parts of the same cubic (3rd degree) polynomial, moved it around and scaled it to taste, and added all of them together at each point (let's call it 'mixing'). 
 
@@ -223,7 +223,9 @@ This is just one example of use though. All of the different combinations are do
 
 So far we've learned how to use a bunch of control points to create an interesting curve in space. We've used our parameter $t$ to simulate the time it takes to draw each point on the curve. We also implicitly assumed that time runs only in the period that we let it run in, in the case of our examples, between 0 and 1. But we never really tested what it looks like to run all of that in real time. 
 
-**//TODO: Drawing of a smoothstep curve **
+**[GRAPHICS: Smoothstep.ai to be processed]**
+	The smoothstep function, $f\left(x\right)=3x^{2} - 2x^{3}$, used to create a smooth transition between 0 and 1
+
 
 Apparently, it's not that different from running it through space. By looking at the $x$ dimension of this graph as time and the $y$ dimension of this graph as a value for our creation, we can see some patterns of animation forming. The trick is simple: think of all of the values that need to change in your animation, and control them using functions. 
 
@@ -313,7 +315,10 @@ void testApp::setup(){
 
 void testApp::update(){
 	if (garyPosition.y < ofGetHeight * 2. / 3.){
-		ofVec2f nextStep(ofRandom(-1.,1.),1.); //Take one step south, Gary
+		//As Gary attempts to take one step south,
+		//He also deviates a little to the right, 
+		//or a little to the left. 
+		ofVec2f nextStep(ofRandom(-1.,1.),1.); 
 		garyStep(nextStep);
 	}
 
