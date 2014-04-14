@@ -89,6 +89,8 @@ Sound buffers in openFrameworks are *interleaved* meaning that the samples for e
 
 This means you access individual sound channels in much the same way as accessing different colours in an ofPixels object (i.e. `buffer[i]` for the left channel, `buffer[i + 1]` for the right channel). The total size of the buffer you get in `audioIn()` / `audioOut()` can be calculated with `bufferSize * nChannels`.
 
+An important caveat to keep in mind when dealing with ofSoundStream is that audio callbacks like `audioIn()` and `audioOut()` will be called on a seperate *thread* from the standard `setup()`, `update()`, `draw()` functions. This means that if you'd like to share any data between (for example) `update()` and `audioOut()`, you need to make use of an `ofMutex` to keep both threads from getting in each others' way. You can see this in action a little later in this chapter, or check out the threads chapter for a more in-depth explanation.
+
 ## Why -1 to 1?
 
 In order to understand *why* openFrameworks chooses to represent sound as a continuous stream of `float` values ranging from -1 to 1, it'll be helpful to know how sound is created on a physical level.
@@ -204,10 +206,10 @@ Here's a starting point for a synthesizer app that we'll keep expanding upon dur
 		ofPolyline outLine;
 	};
 
-	void ofApp::setup(){
+	void ofApp::setup() {
 		phase = 0;
-		updateWaveform(32, 440);
-		ofSoundStreamSetup(1, 0);
+		updateWaveform(32);
+		ofSoundStreamSetup(1, 0); // mono output
 	}
 	
 	void ofApp::update() {
@@ -283,9 +285,12 @@ We can create a simple (but effective) envelope with `ofLerp(...)` by adding the
     
     void ofApp::update() {
         ...
-        float volumeTarget = ofGetKeyPressed() ? 1 : 0;
-	    float volumeLerpRate = ofGetKeyPressed() ? 0.8 : 0.1;
-        volume = ofLerp(volume, volumeTarget, volumeLerpRate);
+        
+        if(ofGetKeyPressed()) {
+    		volume = ofLerp(volume, 1, 0.8); // jump quickly to 1
+	    } else {
+		    volume = ofLerp(volume, 0, 0.1); // fade slowly to 0
+    	}    
     }
     
     void ofApp::audioOut(float * output, int bufferSize, int nChannels) {
@@ -349,7 +354,9 @@ Now we've got a basic, useable instrument! A few things to try, if you'd like to
 - Instead of using `keyPressed(...)` to determine the oscillator's frequency, use ofxMidi to respond to external MIDI messages
 - Try filling the waveform table with data from an image, or from a live camera (`ofMap(...)` will be handy to keep your data in the -1 to 1 range)
 - Implement a *polyphonic* synthesizer. This is one which uses multiple oscillators to let you play more than one note at a time.
-- Keep several copies of the `phase` index, and use `ofSignedNoise(...)` to slightly modify the frequency they represent. Add each of the waveforms together in `output`, but average the result by the number of phases you're tracking. For example:
+- Keep several copies of the `phase` index, and use `ofSignedNoise(...)` to slightly modify the frequency they represent. Add each of the waveforms together in `output`, but average the result by the number of phases you're tracking.
+
+For example:
 
     void ofApp::audioOut(float * output, int bufferSize, int nChannels) {
         ofScopedLock waveformLock(waveformMutex);
