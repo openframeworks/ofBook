@@ -1,4 +1,4 @@
-#Sound
+# Sound
 
 This chapter will demonstrate how to use the sound features that you'll find in openFrameworks, as well as some techniques you can use to generate and process sound.
 
@@ -8,15 +8,13 @@ Here's a quick overview of the classes you can use to work with sound in openFra
 
 `ofSoundStream` gives you access to the computer's sound hardware, allowing you to generate your own sound as well as react to sound coming into your computer from something like a microphone or line-in jack.
 
-*[ possibly separate the below from above? (since they're not actually in OF yet) ]*  **[mh: will they be in oF in the next few months?]**
-
 `ofSoundBuffer` is used to store a sequence of `float` values, and perform audio-related things on said values (like resampling)
 
 `ofSoundFile` allows you to extract uncompressed ofSoundBuffers from files.
 
 `ofSoundObject` is an interface for chaining bits of sound code together, similar to how a guitarist might use guitar pedals. This is mostly relevant for addon authors or people looking to share their audio processing code.
 
-##Getting Started With Sound Files
+## Getting Started With Sound Files
 
 Playing a sound file is only a couple lines of code in openFrameworks. Just point an `ofSoundPlayer` at a file stored in your app's data folder and tell it to play.
 
@@ -38,7 +36,7 @@ This is fine for adding some background music or ambiance to your app, but ofSou
       soundPlayer.play();
     }
 
-Another feature built-in to ofSoundPlayer is speed control. If you set the speed faster than normal, the sound's pitch will rise accordingly, and vice-versa (just like a vinyl record). Playback speed is defined relative to "1", so "0.5" is half-speed and "2" is double speed.  **[mh: nice tie-in to life example.  it might be nice to have a comment about why this is sound-wise: i.e. 1000Hz signal sampled at 2x speed yields a 500Hz signal.]**
+Another feature built-in to ofSoundPlayer is speed control. If you set the speed faster than normal, the sound's pitch will rise accordingly, and vice-versa (just like a vinyl record). Playback speed is defined relative to "1", so "0.5" is half speed and "2" is double speed.
 
 Speed control and multiplay are made for each other. Making use of both simultaneously can really extend the life of a single sound effect file. Every time you change a sound player's playback speed with multiplay enabled, previously triggered sound effects continue on unaffected. So, by extending the above trigger logic to something like...
 
@@ -49,17 +47,17 @@ Speed control and multiplay are made for each other. Making use of both simultan
 
 ...you'll introduce a bit of unique character to each instance of the sound.
 
-One other big feature of ofSoundPlayer is easy spectrum access. On the desktop platforms, you can make use of ofSoundGetSpectrum() to get the *frequency domain* representation of the sound coming from all of the currently active ofSoundPlayers in your app. An explanation of the frequency domain is coming a little later in this chapter, but running the openFrameworks soundPlayerFFTExample will give you the gist.
+One other big feature of ofSoundPlayer is easy spectrum access. On the desktop platforms, you can make use of ofSoundGetSpectrum() to get the *frequency domain* representation of the sound coming from all of the currently active ofSoundPlayers in your app. An explanation of the frequency domain is coming a little later in this chapter, but running the openFrameworks *soundPlayerFFTExample* will give you the gist.
 
 *[ screencap of the soundPlayerFFTExample ]*
 
-Ultimately, ofSoundPlayer is a tradeoff between ease-of-use and control. You get access to easy multiplay and pitch-shifted playback but you don't get extremely precise control or access to the individual samples in the sound file. For this level of control, ofSoundStream is the tool for the job.
+Ultimately, ofSoundPlayer is a tradeoff between ease-of-use and control. You get access to multiplay and pitch-shifted playback but you don't get extremely precise control or access to the individual samples in the sound file. For this level of control, ofSoundStream is the tool for the job.
 
-##Getting Started With the Sound Stream
+## Getting Started With the Sound Stream
 
 ofSoundStream is the gateway to the audio hardware on your computer, such as the microphone and the speakers. If you want to have your app react to live audio input or generate sound on the fly, this is the section for you!
 
-You may never have to use the ofSoundStream directly, but it's the object that manages the resources needed to trigger `audioOut()` and `audioIn()` **[mh: for a first time reader, I stumbled for a second here since I didn't realize ofBaseApp inherited audioOut() and audioIn().  could be useful to point that out to the reader and to make a quick statement about how oF calls these methods behind the scenes]** on your app. Here's the basic structure for a sound-producing openFrameworks app:
+You may never have to use the ofSoundStream directly, but it's the object that manages the resources needed to trigger `audioOut()` and `audioIn()` on your app. These two functions are optional members of your ofApp, like `keyPressed()`, `windowResized()` and `mouseMoved()`. They will start being called once you implement them and initiate the sound stream. Here's the basic structure for a sound-producing openFrameworks app:
 
     class ofApp : public ofBaseApp {
       ...
@@ -67,7 +65,7 @@ You may never have to use the ofSoundStream directly, but it's the object that m
       double phase;
     }
 
-    void ofApp::setup(){
+    void ofApp::setup() {
       phase = 0;
       ofSoundStreamSetup(2, 0); // 2 output channels (stereo), 0 input channels
     }
@@ -81,17 +79,17 @@ You may never have to use the ofSoundStream directly, but it's the object that m
       }
     }
 
-When producing or receiving audio, the format is floating point numbers between -1 and 1 (the reason for this is coming a little later in this chapter). The sound will arrive in your app in the form of *buffers*, which you can treat much like arrays.  **[mh: having never really worked with sound, your descriptions of buffers was clear, but I would have liked a sentence pointing out why the sound card uses buffers.  presumably it is because transferring values to the sound card is the speed bottleneck?]**
+When producing or receiving audio, the format is floating point numbers between -1 and 1 (the reason for this is coming a little later in this chapter). The sound will arrive in your app in the form of *buffers*. Buffers are just arrays, but the term "buffer" implies that each time you get a new one, it represents the chunk of time after the previous buffer. The reason openFrameworks asks you for buffers (instead of individual samples) is due to the overhead involved in shuttling data from your program to the audio hardware, and is a little outside the scope of this book.
 
 The buffer size is adjustable, but it's usually a good idea to leave it at the default. The default isn't any number in particular, but will usually be whatever the hardware on your computer prefers. In practice, this is probably about 512 samples per buffer (256 and 1024 are other common buffer sizes).
 
-Buffers are *interleaved* meaning that the samples for each channel are right next to each other, like:
+Sound buffers in openFrameworks are *interleaved* meaning that the samples for each channel are right next to each other, like:
 
     [Left] [Right] [Left] [Right] ...
 
 This means you access individual sound channels in much the same way as accessing different colours in an ofPixels object (i.e. `buffer[i]` for the left channel, `buffer[i + 1]` for the right channel). The total size of the buffer you get in `audioIn()` / `audioOut()` can be calculated with `bufferSize * nChannels`.
 
-##Why -1 to 1?
+## Why -1 to 1?
 
 In order to understand *why* openFrameworks chooses to represent sound as a continuous stream of `float` values ranging from -1 to 1, it'll be helpful to know how sound is created on a physical level.
 
@@ -101,7 +99,7 @@ At the most basic level, a speaker consists of a cone and an electromagnet. The 
 
 [footnote] A basic microphone works much the same way: allowing air pressure to vibrate an object held in place by a magnet, thereby creating an electrical signal.  **[mh: this would also be great]**
 
-From the perspective of an openFrameworks app, it's not important what the sound hardware's specific voltages are. All that really matters is that the speaker cone is being driven between its "fully pushed out" and "fully pulled in" positions, which are represented as 1 and -1. [note: would be good to relate this to zach's bit about numbers between 0 and 1 in the animation chapter].
+From the perspective of an openFrameworks app, it's not important what the sound hardware's specific voltages are. All that really matters is that the speaker cone is being driven between its "fully pushed out" and "fully pulled in" positions, which are represented as 1 and -1. This is similar to the notion of "1" as a representation of 100% as described in the animation chapter, though sound introduces the concept of -100%.
 
 [footnote] Some other systems use an integer-based representation, moving between something like -65535 and +65535 with 0 still being the representation of "at rest". The Web Audio API provides an unsigned 8-bit representation, which ranges between 0 and 255 with 127 being "at rest".
 
@@ -111,7 +109,7 @@ A major way that sound differs from visual content is that there isn't really a 
 
 This is because what you actually hear is the *changes* in values over time. Any individual sample in a buffer doesn't really have a sound on its own. What you hear is the *difference* between the sample and the one before it. For instance, a sound's "loudness" isn't necessarily related to how "big" the individual numbers in a buffer are. A sine wave which oscillates between 0.9 and 1.0 is going to be much much quieter than one that oscillates between -0.5 and 0.5.
 
-##Time Domain vs Frequency Domain
+## Time Domain vs Frequency Domain
 
 When representing sound as a continuous stream of values between -1 and 1, you're working with sound in what's known as the "Time Domain". This means that each value you're dealing with is referring to a specific moment in time. There is another way of representing sound which can be very helpful when you're using sound to drive something other aspect of your app. That representation is known as the "Frequency Domain".
 
@@ -135,15 +133,15 @@ Note: A raw FFT sample will typically represent its output as [Complex numbers](
     
 If you're working with an FFT implementation that gives you a simple array of float values, it's most likely already done this calculation for you.
 
-You can also transform a signal from the frequency domain back to the time domain, using an Inverse Fast Fourier Transform (aka IFFT). This is less common, but there is an entire genre of audio synthesis called Additive Synthesis which is built around this principle (generating values in the frequency domain then running an IFFT on them to create synthesized sound).
+You can also transform a signal from the frequency domain *back* to the time domain, using an Inverse Fast Fourier Transform (aka IFFT). This is less common, but there is an entire genre of audio synthesis called Additive Synthesis which is built around this principle (generating values in the frequency domain then running an IFFT on them to create synthesized sound).
 
 The frequency domain is useful for many things, but one of the most straightforward is isolating particular elements of a sound by frequency range, such as instruments in a song. Another common use is analyzing the character or timbre of a sound, in order to drive complex audio-reactive visuals.
 
 The Fourier transform is a bit of a tricky beast to understand, but it is fairly straightforward once you get the concept. I felt that [this explanation of the Fourier Transform](http://betterexplained.com/articles/an-interactive-guide-to-the-fourier-transform/) does a great job of demonstrating the underlying math, along with some interactive visual examples. 
 
-##Reacting to Live Audio
+## Reacting to Live Audio
 
-###RMS
+### RMS
 One of the simplest ways to add audio-reactivity to your app is to calculate the RMS of incoming buffers of audio data. RMS stands for "root mean square" and is a pretty straightforward calculation that serves as a good approximation of "loudness" (much better than something like averaging the buffer or picking the maximum value). The "square" step of the algorithim will ensure that the output will always be a positive value. This means you can ignore the fact that the original audio may have had "negative" samples (since they'd sound just as loud as their positive equivalent, anyway). You can see RMS being calculated in the *audioInputExample*.
 
     // from audioInputExample
@@ -162,27 +160,224 @@ One of the simplest ways to add audio-reactivity to your app is to calculate the
 	curVol /= (float)numCounted;
 	curVol = sqrt( curVol );
 
-###Onset Detection
+### Onset Detection
 Onset detection algorithms attempt to locate moments in an audio stream where an "onset" occurs, which is usually something like an instrument playing a note or the impulse of a drum hit. There are many onset detection algorithms available at various levels of complexity and accuracy, some fine-tuned for speech as opposed to music, some working in the frequency domain instead of the time domain, some made for offline processing as opposed to realtime, etc.
 
 A simple realtime onset detection algorithm can be built on top of the RMS calculation above.
 
 *[ naive RMS threshold-based code sample here ]*  **[mh: would a more advanced version (i.e. one that could handle multiple concurrent instruments) of this be to apply RMS to individual bands of FFT? if so, maybe point that out.  if not, point out other algorithms or places to look for algorithms for onset detection.  it seems like an important thing for anyone attempting live audiovisual stuff.]**
 
-###FFT
+### FFT
 Running an FFT on your input audio will give you back a buffer of values representing the input's frequency content. A straight up FFT *won't* tell you which notes are present in a piece of music, but you will be able to use the data to take the input's sonic "texture" into account. For instance, the FFT data will let you know how much "bass" / "mid" / "treble" there is in the input at a pretty fine granularity (a typical FFT used for realtime audio-reactive work will give you something like 512 to 4096 individual frequency bins to play with).  **[mh: are there some standards for frequency range that defines bass vs mid vs treble?  might be useful to include.]**
 
-When using the FFT to analyze music, you should keep in mind that the FFT's bins increment on a *linear* scale, whereas humans interpret frequency on a *logarithmic* scale. So, if you were to use an FFT to split an input signal into 512 bins, the lowest bins (bin 0 through bin 30 or so) will probably contain the bulk of the data, and the remaining bins will mostly just be high frequency content. If you were to isolate the sound on a bin-to-bin basis, you'd be able to easily tell the difference between the sound of bins 3 and 4, but bins 500 and 501 would probably sound exactly the same. Unless you had robot ears.
+When using the FFT to analyze music, you should keep in mind that the FFT's bins increment on a *linear* scale, whereas humans interpret frequency on a *logarithmic* scale. So, if you were to use an FFT to split a musical signal into 512 bins, the lowest bins (bin 0 through bin 40 or so) will probably contain the bulk of the data, and the remaining bins will mostly just be high frequency content. If you were to isolate the sound on a bin-to-bin basis, you'd be able to easily tell the difference between the sound of bins 3 and 4, but bins 500 and 501 would probably sound exactly the same. Unless you had robot ears.
 
-##Synthesizing Audio
-- MIDI / OSC
-- Attack Decay Sustain Release
-- Working with external sound applications
-- Overview of simple synthesis techniques (very high-level)
+## Synthesizing Audio
 
-**[mh: since most of the chapter feels fairly conceptual, I'd be very curious to see what these look like and whether they give the reader more of a hands-on feel.]**
+This section will walk you through the creation of a basic musical synthesizer. A full blown instrument is outside the scope of this book, but here you'll be introduced to the basic building blocks of synthesized sound.
 
-##Gotchas
+A simple synthesizer can be implemented as a *waveform* modulated by an *envelope*, forming a single *oscillator*. A typical "real" synthesizer will have several oscillators and will also introduce *filters*, but many synthesizers at their root are variations on the theme of a waveform + envelope combo.
+
+### Waveforms
+
+Your synthesizer's waveform will define the oscillator's "timbre". The closer the waveform is to a sine wave, the more "pure" the resulting tone will be. A waveform can be made of just about anything, and there are entire [genres of synthesis](http://en.wikipedia.org/wiki/Category:Sound_synthesis_types) that revolve around techniques for generating and manipulating waveforms.
+
+A common technique for implementing a waveform is to create a *Lookup Table* containing the full waveform at a certain resolution. A *phase* index is used to scan through the table, and the speed that the phase index is incremented determines the pitch of the oscillator.
+
+Here's a starting point for a synthesizer app that we'll keep expanding upon during this section. It demonstrates the lookup table technique for storing a waveform, and also visualizes the waveform and resulting audio output. You can use the mouse to change the resolution of the lookup table as well as the rendered frequency.
+
+    class ofApp : public ofBaseApp {
+    public:
+		void setup();
+		void update();
+		void draw();
+		
+		void updateWaveform(int waveformResolution);
+		void audioOut(float * output, int bufferSize, int nChannels);
+		
+		std::vector<float> waveform; // this is the lookup table
+		double phase;
+		float frequency;
+	
+		ofMutex waveformMutex;
+		ofPolyline waveLine;
+		ofPolyline outLine;
+	};
+
+	void ofApp::setup(){
+		phase = 0;
+		updateWaveform(32, 440);
+		ofSoundStreamSetup(1, 0);
+	}
+	
+	void ofApp::update() {
+		ofScopedLock waveformLock(waveformMutex);
+		updateWaveform(ofMap(ofGetMouseX(), 0, ofGetWidth(), 3, 64, true));
+		frequency = ofMap(ofGetMouseY(), 0, ofGetHeight(), 60, 700, true);
+	}
+
+	void ofApp::draw() {
+		ofBackground(ofColor::black);
+		ofSetLineWidth(5);
+		ofSetColor(ofColor::lightGreen);
+		outLine.draw();
+		ofSetColor(ofColor::cyan);
+		waveLine.draw();
+	}
+
+	void ofApp::updateWaveform(int waveformResolution) {
+		waveform.resize(waveformResolution);
+		waveLine.clear();
+		
+		// "waveformStep" maps a full oscillation of sin() to the size 
+		// of the waveform lookup table
+		float waveformStep = (M_PI * 2.) / (float) waveform.size();
+		
+		for(int i = 0; i < waveform.size(); i++) {
+			waveform[i] = sin(i * waveformStep);
+			
+			waveLine.addVertex(ofMap(i, 0, waveform.size() - 1, 0, ofGetWidth()),
+			                   ofMap(waveform[i], -1, 1, 0, ofGetHeight()));
+		}
+	}
+	
+	void ofApp::audioOut(float * output, int bufferSize, int nChannels) {
+		ofScopedLock waveformLock(waveformMutex);
+		
+		float sampleRate = 44100;
+		float phaseStep = frequency / sampleRate;
+		
+		outLine.clear();
+		
+		for(int i = 0; i < bufferSize * nChannels; i += nChannels) {
+			phase += phaseStep;
+			int waveformIndex = (int)(phase * waveform.size()) % waveform.size();
+			output[i] = waveform[waveformIndex];
+			
+			outLine.addVertex(ofMap(i, 0, bufferSize - 1, 0, ofGetWidth()),
+			                  ofMap(output[i], -1, 1, 0, ofGetHeight()));
+		}
+	}
+
+Once you've got this running, try experimenting with different ways of filling up the waveform table (the line with `sin(...)` in it inside `updateWaveform(...)`). For instance, a fun one is to replace that line with:
+
+    waveform[i] = ofSignedNoise(i * waveformStep, ofGetElapsedTimef());
+
+This will get you a waveform that naturally evolves over time. Be careful to keep your waveform samples in the range -1 to 1, though, lest you explode your speakers and / or brain.
+
+### Envelopes
+
+We've got a drone generator happening now, but adding some volume modulation into the mix will really bring the sound to life. This will let the waveform be played like an instrument, or otherwise let it sound like it's a living being that reacts to events.
+
+We can create a simple (but effective) envelope with `ofLerp(...)` by adding the following to our app:
+
+    class ofApp : public ofBaseApp {
+        ...
+    	float volume;
+    };
+    
+    void ofApp::setup() {
+        ...
+        volume = 0;
+    }
+    
+    void ofApp::update() {
+        ...
+        float volumeTarget = ofGetKeyPressed() ? 1 : 0;
+	    float volumeLerpRate = ofGetKeyPressed() ? 0.8 : 0.1;
+        volume = ofLerp(volume, volumeTarget, volumeLerpRate);
+    }
+    
+    void ofApp::audioOut(float * output, int bufferSize, int nChannels) {
+        ...
+        output[i] = waveform[waveformIndex] * volume;
+        ...
+    }
+
+Now, whenever you press a key the oscillator will spring to life, fading out gradually after the key is released.
+
+The standard way of controlling an envelope is with a relatively simple state machine called an ADSR, for "Attack, Decay, Sustain, Release". 
+
+- **Attack** is how fast the volume reaches its peak after a note is triggered 
+- **Decay** is how long it takes the volume to fall from the peak
+- **Sustain** is the resting volume of the envelope, which stays constant until the note is released
+- **Release** is how long it takes the volume to drop back to 0 after the note is released
+
+A full ADSR implementation is left as an exercise for the reader, though [this example from earlevel.com](http://www.earlevel.com/main/2013/06/03/envelope-generators-adsr-code/) is a nice reference.
+
+## Frequency Control
+
+You can probably tell where we're going, here. Now that the app is responding to key presses, we can use those key presses to determine the oscillator's frequency. We'll introduce a bit more `ofLerp(...)` here too to get a nice *legato* effect.
+
+    class ofApp : public ofBaseApp {
+        ...
+        void keyPressed(int key);
+        float frequencyTarget;
+    }
+    
+    void ofApp::setup() {
+        ...
+        frequency = 0;
+        frequencyTarget = frequency;
+    }
+    
+    void ofApp::update() {
+        ...
+        frequency = ofLerp(frequency, frequencyTarget, 0.4);
+    }
+    
+    void ofApp::keyPressed(int key) {
+        if(key == 'z') {
+            frequencyTarget = 261.63; // C
+        } else if(key == 'x') {
+            frequencyTarget = 293.67; // D
+        } else if(key == 'c') {
+            frequencyTarget = 329.63; // E
+        } else if(key == 'v') {
+            frequencyTarget = 349.23; // F
+        } else if(key == 'b') {
+            frequencyTarget = 392.00; // G
+        } else if(key == 'n') {
+            frequencyTarget = 440.00; // A
+        } else if(key == 'm') {
+            frequencyTarget = 493.88; // B
+        }
+    }
+
+Now we've got a basic, useable instrument! A few things to try, if you'd like to explore further:
+
+- Instead of using `keyPressed(...)` to determine the oscillator's frequency, use ofxMidi to respond to external MIDI messages
+- Try filling the waveform table with data from an image, or from a live camera (`ofMap(...)` will be handy to keep your data in the -1 to 1 range)
+- Implement a *polyphonic* synthesizer. This is one which uses multiple oscillators to let you play more than one note at a time.
+- Keep several copies of the `phase` index, and use `ofSignedNoise(...)` to slightly modify the frequency they represent. Add each of the waveforms together in `output`, but average the result by the number of phases you're tracking. For example:
+
+    void ofApp::audioOut(float * output, int bufferSize, int nChannels) {
+        ofScopedLock waveformLock(waveformMutex);
+    
+        float sampleRate = 44100;
+        float t = ofGetElapsedTimef();
+        float detune = 5;
+	
+        for(int phaseIndex = 0; phaseIndex < phases.size(); phaseIndex++) {
+            float phaseFreq = frequency + ofSignedNoise(phaseIndex, t) * detune;
+            float phaseStep = phaseFreq / sampleRate;
+
+            for(int i = 0; i < bufferSize * nChannels; i += nChannels) {
+                phases[phaseIndex] += phaseStep;
+                int waveformIndex = (int)(phases[phaseIndex] * waveform.size()) % waveform.size();
+                output[i] += waveform[waveformIndex] * volume;
+            }
+        }
+        
+        outLine.clear();
+        for(int i = 0; i < bufferSize * nChannels; i+= nChannels) {
+            output[i] /= phases.size();
+            outLine.addVertex(ofMap(i, 0, bufferSize - 1, 0, ofGetWidth()),
+                              ofMap(output[i], -1, 1, 0, ofGetHeight()));
+	    }
+    }
+
+## Audio Gotchas
 
 ### "Popping"
 When starting or ending playback of synthesized audio, you should try to quickly fade in / out the buffer, instead of starting or stopping abruptly. If you start playing back a buffer that begins like `[1.0, 0.9, 0.8...]`, the first thing the speaker will do is jump from the "at rest" position of 0 immediately to 1.0. This is a *huge* jump, and will probably result in a "pop" that's quite a bit louder than you were expecting (based on your computer's current volume).
@@ -200,8 +395,8 @@ Assuming this isn't your intent, you can generally blame clipping on a misbehavi
 
 If you *want* distortion, it's much more common to use a waveshaping algorithm instead of trying to find a way to make clipping sound good [todo: link].
 
-###Latency
+### Latency
 
-No matter what, sound you produce in your app will arrive at the speakers sometime after the event that triggered the sound. The total time of this round trip, from event -> your app -> speakers is referred to as *latency*.
+No matter what, sound you produce in your app will arrive at the speakers sometime after the event that triggered the sound. The total time of this round trip, from the event to your app to the speakers is referred to as *latency*.
 
 In practice, this usually isn't a big deal unless you're working on something like a musical instrument with very tight reaction time requirements (a drum instrument, for instance). If you're finding that your app's sound isn't responsive enough, you can try lowering the buffer size of your ofSoundStream. Be careful, though! The default buffer size is typically the default because it's determined to be the best tradeoff between latency and reliability. If you use a smaller buffer size, you might experience "popping" (as explained above) if your app can't keep up with the extra-strict audio deadlines.
