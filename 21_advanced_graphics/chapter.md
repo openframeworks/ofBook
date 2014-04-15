@@ -231,19 +231,19 @@ The most important idea of this section is that when working with complex transf
 
 ### ofCamera
 
-When using openGL we always have a perspective matrix that affects how 3D objects are projected into the 2d surface that is the screen to give appearance of 3D. There's several ways to setup that matrix, but usually we need to know the FOV: field of view, which is the angle of view of the virtual camera through which we are looking through. The near and far clip planes which is the planes that define at what distance things begin and end to be drawn and the with and height of the viewport. All those parameters define a frustrum which is a 6 sides polyhedra that defines the bounding box of things that will appear in the screen and how they'll be projected from 3D into 2D. You can find more information about this in the math chapter.
+When using openGL, we always have a perspective matrix that affects how 3D objects are projected into the 2d surface, that is the screen, to give appearance of 3D. There's several ways to setup that matrix, but usually we need to know the FOV. The FOV, or field of view, is the angle of the virtual camera that we are looking through. We also need the near and far clip planes. These define the distance at which things begin and end to be drawn. Finally, we need the width and height of the viewport. All of those parameters define a frustrum **[BD: frustum?]**, a 6 sides polyhedra that defines the bounding box of things that will appear in the screen as well as how they'll be projected from 3D into 2D. You can find more information about this in the math chapter. **[BD: Nothing on frustums or 3D-2D projection in math chapter yet.]**
 
-We also have a second matrix, called the model view, which somehow defines where is the virtual camera through which we are looking through. The modelview matrix is actually the inverse of the matrix that defines the position of the camera, so when we alter it we actually transform the position, rotation and scale of things being drawn, it's the matrix that gets modifed when we use ofTranslate, ofRotate and ofScale. Again there's more information about this in the maths chapter
+We also have a second matrix, called the model view, which defines the location of the virtual camera through which we view. The modelview**[BD: Is it one word or two?]** matrix is actually the inverse of the matrix that defines the position of the camera, so when we alter it we actually transform the position, rotation and scale of things being drawn. It's this matrix that gets modified when we use ofTranslate, ofRotate and ofScale. Again there's more information about this in the maths chapter.
 
-By default openFrameworks sets a projection matrix with a FOV of 60, width and height of the screen and clip planes automatically calculated from the other parameters. Then it calculates a model view that "moves the virtual camera" back from 0,0 to a position where the top left of the screen matches with 0,0 and the bottom right with width,height.
+By default, openFrameworks sets a projection matrix with a FOV of 60, width and height of the screen, and clip planes automatically calculated from the other parameters. It then calculates a model view that "moves the virtual camera" back from 0,0 to a position where the top left of the screen matches with 0,0 and the bottom right with width,height.
 
-In openGL though by default those matrices are set to the identity matrix which makes the center of the screen (0,0), the top,left corner (1,-1) and the bottom right corner (-1,1). As you might have noticed in openGL by default the y coordinate grows upward while in openFrameworks by default it grows downwards. This is done like that in openFrameworks to make it easier to work with images which coordinates also grow downwards or the mouse which again also grows downwards. Other libraries we use also follow that convention. Since 0.8.0 you can change that by calling: `ofSetOrientation(OF_ORIENTATION_DEFAULT,false)` being false a false vertical flip.
+In openGL however, by default, those matrices are set to the identity matrix which makes the center of the screen (0,0), the top left corner (1,-1) and the bottom right corner (-1,1). You might have noticed that, in openGL, the y coordinate grows upward while in openFrameworks, it grows downwards. This is to avoid confusion and make it easier to work with images or mouse coordinates in openFrameworks, as they also grow downwards. Other libraries we use also follow that convention. Since 0.8.0 you can change that by calling: `ofSetOrientation(OF_ORIENTATION_DEFAULT,false)` being false a false vertical flip.
 
-So most of the time, mostly when working with 2D this perspective settings are enough, we can draw things and the coordinates will match nicely with the size of the screen in pixels. When working with 3D though we might need something more complex, like moving the camera along a scene or changing the field of view... That's what ofCamera allows.
+So most of the time, especially when working with 2D, these perspective settings are enough. We can draw things and the coordinates will match nicely with the size of the screen in pixels. When working with 3D though, we might need something more complex, like moving the camera along a scene or changing the field of view... That's what ofCamera allows.
 
-ofCamera is actually an ofNode so you can do with it anything that you might do with an ofNode, set it to look to another object, add it in a hierarchy of nodes so when it parent moves it moves relatively to it's parent position... that mostly defines where the camera is and where it's looking at, the view matrix.
+ofCamera is actually an ofNode, so you can do with it anything that you might do with an ofNode. For instance, you can set it to look to another object, or you could add it in a hierarchy of nodes so that when its parent moves it moves relatively to its parent position... that mostly defines where the camera is and where it's looking at, the view matrix. **[BD: This last sentence doesn't really make since]**
 
-On top of that ofCamera allows to set a perspective matrix, that's the matrix that defines how things will be projected to the 2D screen. To use it usually we set it up like:
+On top of that, ofCamera allows you to set a perspective matrix. That's the matrix that defines how things will be projected to the 2D screen. To use it, usually we set it up like so:
 
 ```cpp
 //ofApp.h
@@ -252,7 +252,7 @@ ofCamera camera;
 // ofApp.cpp
 
 void ofApp::setup(){
-    camera.setFov(60);  // this will actually do nothing since 60 is the default fov
+    camera.setFov(60);  // this will actually do nothing since 60 is the default
 }
 
 void ofApp::draw(){
@@ -262,16 +262,16 @@ void ofApp::draw(){
 }
 ```
 
-When using an ofCamera, 0,0 will be at the center of the screen, and y will grow upwards, with the default settings, the top,left of the screen will be (-w/2,h/2) and the bottom,right (w/2,-h/2).
+When using an ofCamera, 0,0 will be at the center of the screen, and y will grow upwards. With the default settings, the top,left of the screen will be (-w/2,h/2) and the bottom,right (w/2,-h/2).
 
-As we see in the example to draw things as if they were looked from the camera we call `camera.begin()` draw them and then call `camera.end()` to stop using that camera and go back to the default perspective or whatever we had setup before.
+As we see in the example to draw things as if they were looked at from the camera we call `camera.begin()` draw them and then call `camera.end()` to stop using that camera and go back to the default perspective, or whatever we had setup before. **[BD: What is meant by the "default perspective".]**
 
-While our application runs, usually in update, we can change the camera parameters to move it or even change the fov, which will be equivalent to change the "zoom" in a real camera.
+While our application runs, we can tweak the camera parameters in update to move it, or even change the fov. We could easily simulate changing the "zoom" of a real camera in this way.
 
 
 ### ofMesh
 
-ofMesh allows to represent a 3D model, internally it's just a bunch of vectors, one for each mesh attribute. Those attributes are: vertices, colors, texture coordinates and normals, and a mesh should usually have the same number of each of those attributes unless it's not using one of them in which case it'll be empty.
+In openFrameworks, the ofMesh class allows us to represent a 3D model. Internally, it's just a bunch of vectors. Each vector represents one mesh attribute. Those attributes are: vertices, colors, texture coordinates and normals. Each mesh should usually have the same number of each of those attributes unless it's not using one of them in which case it'll be empty.
 
 For example to define a mesh that draws a red square we can do:
 
@@ -299,7 +299,7 @@ void ofApp::draw(){
 }
 ```
 
-Every color we add is applied to the vertex in the same position, that way we can do things like define gradients:
+Every color we add is applied to the vertex in the same position **[BD: the vertex that was last added?]**, that way we can do things like define gradients:
 
 
 ```cpp
@@ -356,15 +356,17 @@ void ofApp::draw(){
 }
 ```
 
+**[BD: Perhaps briefly touch on the ofImage.bind() method here]**
+
 we could even combine color and texture tinting the texture with the color we apply to each vertex.
 
-There's more information about how ofMesh works in the openGL chapter and in this [tutorial](http://openframeworks.cc/tutorials/graphics/opengl.html)
+There's more information about how ofMesh works in the ~~openGL chapter~~**[BD: Is this chapter happening?]** and in this [tutorial](http://openframeworks.cc/tutorials/graphics/opengl.html).
 
 ### ofVboMesh
 
-ofVboMesh is a simple class that encapsulates a vbo an inherits from ofMesh, that means that we can use it exactly the same as an ofMesh, but when it's drawn instead of uploading all the vertices every time to the graphics card, it uploads them once and only uploads them again if they change. Usually when working with openGL is adviced to use ofVboMesh instead of ofMesh.
+ofVboMesh is a simple class that encapsulates a vbo and inherits from ofMesh. That means that we can use it exactly the same as an ofMesh, but when it's drawn, instead of uploading all the vertices every time **[BD: every time we what? draw()?]** to the graphics card, it uploads them once and only uploads them again if they change. Usually when working with openGL it is advised to use ofVboMesh instead of ofMesh.
 
-There's a case where using an ofVboMesh might be slower and that's if we want to draw an ofVboMesh and then in the same frame modify it and draw it again. The problem here is that openGL doens't really draw things as soon as we tell it to draw. Instead it stores all the drawing commands and then when it considers is better draws all of them at once and in parallel with the execution of our program. When we try to draw a vbo, modify it's contents and then draw it again in the same frame, openGL needs to really draw the vbo at that exact moment, which means drawing everything else to that point, slowing things down a lot. If you need to do something like this make a copy of the vbo and modify the copy instead of the original. In general don't draw, modify and redraw a vbo in the same frame:
+There's a case where using an ofVboMesh might be slower, and that's if we want to draw an ofVboMesh and then modify and draw it in the same frame again. The problem here is that openGL doesn't really draw things as soon as we tell it to draw. Instead, it stores all the drawing commands and then draws all of them at once and in parallel with the execution of our program. When we try to draw a vbo, modify it's contents and then draw it again in the same frame, openGL would need to really draw the vbo at that exact moment, which means drawing everything else to that point. That would slow things down a lot. If you need to do something like this, make a copy of the vbo and modify the copy instead of the original. In general don't draw, modify and redraw a vbo in the same frame:
 
 ```cpp
 // ofApp.h
@@ -419,14 +421,14 @@ void ofApp::draw(){
 }
 ```
 
-You can find more information about advanced uses of ofVboMesh and vbo's in the openGL chapter
+You can find more information about advanced uses of ofVboMesh and vbo's in the openGL chapter**[BD: Again, I'm not sure that there is an openGL chapter anymore :( ]**.
 
 
 ### of3dPrimitive
 
-As we've mentioned before of3DPrimitive is a helper class that encapsulates an ofVboMesh and inherits from ofNode. You can call any method you would call on an ofNode, add it to a node hierarchy... And when you call `draw` on it it'll draw the mesh it contains applying the transformation defined by it's node.
+As we've mentioned before, of3DPrimitive is a helper class that encapsulates an ofVboMesh and inherits from ofNode. You can call any method you would call on an ofNode, add it to a node hierarchy... And when you call `draw` on it **[BD: the primitive?]** it'll draw the mesh it contains as its applying the transformation defined by it's node.
 
-There's several predefined 3D primitives, like `ofPlanePrimitive`, `ofSpherePrimitive`, `ofIcoSpherePrimitive` or `ofCylinderPrimitive` which know about the particulars of the geometry of the mesh they contain making it easy to apply textures to it, change the resolution of the mesh...
+There's several predefined 3D primitives, like `ofPlanePrimitive`, `ofSpherePrimitive`, `ofIcoSpherePrimitive` or `ofCylinderPrimitive` which know about the particulars of the geometry of the mesh they contain. This makes it easy to apply textures to it or change the resolution of the mesh...
 
 Or you can create your own using `of3DPrimitive` directly:
 
@@ -454,7 +456,9 @@ void ofApp::draw(){
 }
 ```
 
->Note: Don't use of3DPrimitive for simple primitives like the one above, calculating the transformations of an ofNode is kind of expensive in terms of cpu usage, for primitives with lots of vertices it's usually ok but for something like the previous example is usually just faster to recalculate all the points in their new position using an ofVboMesh
+>Note: Don't use of3DPrimitive for simple primitives like the one above. Calculating the transformations of an ofNode is kind of expensive in terms of cpu usage. For primitives with lots of vertices it's usually ok, but for something like the previous example it is usually just faster to recalculate all the points in their new position using an ofVboMesh
+
+**[BD: Because the above example isn't actually that practical, how about you use an example where it actually makes more since to use a of3DPrimitive]**
 
 
 <em style="font-size:0.8em; text-align:center; display:block;">This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.en_US">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.</em>
