@@ -3,7 +3,7 @@
 *by [Arturo Castro](http://arturocastro.net)*
 *corrections by Brandon Dorsey*
 
-Correctly using memory is one of the trickiest parts of working with c++. The main difference with other languages like Java, Python and in general any language that are "garbage collected" is that in c++ we can explicitly reserve and destroy objects while in those an element called garbage collector does the work for us.
+Correctly using memory is one of the trickiest parts of working with c++. The main difference with other languages like Java, Python and in general any languages that are "garbage collected" is that in c++ we can explicitly reserve and free memory while in those an element called garbage collector does the work for us.
 
 There's also an important difference, in c++ we have two different memory areas, the heap and the stack, if you are used to work with processing, Java or Python among others you'll be used to only have heap memory.
 
