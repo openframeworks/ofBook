@@ -45,7 +45,7 @@ Code::Blocks is a free IDE. It runs on several platforms(several Linux distros, 
 
 ####Eclipse####
 Eclipse is the IDE of choice for Linux, yet it also runs on Mac and Windows machines. For Android development you'll need to use Eclipse, regardless of your platform.
-**[add Eclipse screenshot]**
+![Eclipse Screenshot](images/eclipseScreenshot.png, "Eclipse Screenshot")
 
 ####The NO-IDE IDE.####
 Using the terminal and makefiles. 
@@ -75,7 +75,7 @@ Locate the "Run Button" and click on it. The example should compile and run, whi
 - Xcode: make sure that the popdown menu just at the right of the run button has selected the item with the name of your example and not the one named "openFrameworks." There might be more than one item with the name of the example you are trying to run. Select anyone as long as it is not the one named "openFrameworks". This popdown menu selects the target you want to compile. If "openFrameworks" is selected you will just compile the openFrameworks core and not the example code. When you select the other items xcode will compile both the OF core and the code for your example and when done it will run the example. 
 - **[add VS notes]**
 - **[add C::B notes]**
-- **[add Eclipse notes]** 
+- Eclipse: You might need to select the project in the project navigator, then press the hammer button in the tool bar, that will compile the project. Once compilation is done press the play button to run the application.
 - **[add makefile notes]**
                            
 Spend some time going through the examples and running them. It should be fun! 
@@ -94,7 +94,8 @@ You can also go to [ofxAddons](http://ofxaddons.com/ "ofxaddons, a collection of
 This is the folder where you put your project files.
 Your current OF download contains the folder named "myApps" inside of "apps," which just has an empty example project folder.
 IMPORTANT: you have to respect the folder structure within the apps folder, otherwise your projects won't compile. This should be like this:
-**[add image depicting a correct and incorrect apps folder structure usage]**
+![Apps Folder structure](images/appsFolderStructure.png, "Apps Folder Structure").
+
 
 ####Examples####
 Quite obvious. A folder with examples, sorted out by topic. There are a big bunch of examples that cover almost all of OF's aspects. Each example is made with the idea of keeping it simple and focused to the particular aspect it tries to address, thus making it easily understandable and a good starting point when you want to do something similar in your project.
