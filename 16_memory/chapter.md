@@ -1,12 +1,11 @@
 #Memory in c++#
 
 *by [Arturo Castro](http://arturocastro.net)*
-
 *corrections by Brandon Dorsey*
 
 Correctly using memory is one of the trickiest parts of working with c++. The main difference with other languages like Java, Python and in general any languages that are "garbage collected" is that in c++ we can explicitly reserve and free memory while in those an element called garbage collector does the work for us.
 
-There's also another important difference, in C++ we have two different memory areas, the heap and the stack, if you are used to work with processing, Java or Python among others you'll be used to only have heap memory.
+There's also an important difference, in c++ we have two different memory areas, the heap and the stack, if you are used to work with processing, Java or Python among others you'll be used to only have heap memory.
 
 We'll see later what the main differences are, but first let's see what's memory and what happens when we create variables in our program.
 
@@ -14,15 +13,15 @@ We'll see later what the main differences are, but first let's see what's memory
 
 It's helpful to understand at least at a high level how computer memory works.
 
-A computer has different types of memory, in this section we are going to be talking about RAM (Random Access Memory). The kind of memory where the computer stores the instructions for the programs that are executing at every moment and the data those programs are using.
+A computer has different types of memory, in this section we are going to be talking about RAM (Random Access Memory) memory. The kind of memory where the computer stores the instructions for the programs that are executing at every moment and the data those programs are using.
 
-Your computer probably has something like 4Gb of RAM, in C++ we can access most of that memory, and to access it what we do is create variables. Memory is divided in bytes, which are the minimum memory size that we can usually use in a C++ application. Each data type like char, int, float... has a different size all measured in bytes. Those sizes can be different for different platforms but the most usual is something like:
+Your computer probably has something like 4Gb of RAM, in c++ we can access most of that memory, and to access it what we do is create variables. Memory is divided in bytes, which are the minimum memory size that we can usually use in a c++ application. Each data type like char, int, float... has a different size all measured in bytes. Those sizes can be different for different platforms but the most usual is something like:
 
-char:  1 byte
-short: 2 bytes
-int:   4 bytes
-float  4 bytes
-double 8 bytes
+- char:  1 byte
+- short: 2 bytes
+- int:   4 bytes
+- float  4 bytes
+- double 8 bytes
 
 Other types might have variable sizes depending on their contents like for example an array or a string.
 
@@ -32,7 +31,7 @@ For example when we create a variable like:
 int i;
 ```
 
-what we are doing is reserving 4 bytes of those 4Gb to store an int, it doesn't really matter if we are storing ints or other types of data, the sizes will be different for an int, a char, a float or a string but the type of memory is always the same.
+what we are doing is reserving 4 bytes of those 4Gb to store an int, it doesn't really matter if we are storing ints or other types of data, the sizes will be different for and int a char, a float or a string but the type of memory is always the same.
 
 Internally the computer doens't really now about that memory area as `i` but as a memory address. A memory address is just a number that points to a specific byte in the 4Gb of memory.
 
@@ -40,7 +39,7 @@ When we create a variable like `int i` we are telling our program to reserve 4 b
 
 <img src="images/int_i.svg" height="300"/>
 
-Usually memory addresses are represented in [hexadecimal](http://en.wikipedia.org/wiki/Hexadecimal). In C++ you can get the memory address of a variable by using the `&` operator, like:
+Usually memory addresses are represented in [hexadecimal](http://en.wikipedia.org/wiki/Hexadecimal). In c++ you can get the memory address of a variable by using the `&` operator, like:
 
 ```cpp
 cout << &i << endl;
