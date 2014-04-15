@@ -1,6 +1,7 @@
 # Advanced graphics
 
 *by [Arturo Castro](http://arturocastro.net)*
+
 *corrections by Brandon Dorsey*
 
 ## 2D, immediate mode vs ofPolyline/ofPath

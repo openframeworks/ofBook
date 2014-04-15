@@ -1,6 +1,7 @@
 #Memory in c++#
 
 *by [Arturo Castro](http://arturocastro.net)*
+
 *corrections by Brandon Dorsey*
 
 Correctly using memory is one of the trickiest parts of working with c++. The main difference with other languages like Java, Python and in general any languages that are "garbage collected" is that in c++ we can explicitly reserve and free memory while in those an element called garbage collector does the work for us.

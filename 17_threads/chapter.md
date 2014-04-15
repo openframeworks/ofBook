@@ -1,6 +1,7 @@
 # Threads
 
 *by [Arturo Castro](http://arturocastro.net)*
+
 *corrections by Brandon Dorsey*
 
 ## What's a thread and when to use it
