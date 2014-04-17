@@ -123,8 +123,6 @@ In the frequency domain, you'll be able to see how much of your input signal lie
 
 You can transform a signal from the time domain to the frequency domain by a ubiquitous algorithm called the Fast Fourier Transform. You can get an openFrameworks-ready implementation of the FFT (along with examples!) in either the ofxFFT or ofxFft addons (by Lukasz Karluk and Kyle McDonald respectively).
 
-*[footnote explaining FFT vs DFT to avoid cluttering the previous paragraph up]*
-
 In an FFT sample, bins in the higher indexes will represent higher pitched frequencies (i.e. treble) and the lower ones will represent bassy frequencies. Exactly *which* frequency is represented by each bin depends on the number of time-domain samples that went into the transform. You can calculate this as follows:
 
     frequency = (binIndex * sampleRate) / totalSampleCount
@@ -141,7 +139,7 @@ You can also transform a signal from the frequency domain *back* to the time dom
 
 The frequency domain is useful for many things, but one of the most straightforward is isolating particular elements of a sound by frequency range, such as instruments in a song. Another common use is analyzing the character or timbre of a sound, in order to drive complex audio-reactive visuals.
 
-The Fourier transform is a bit of a tricky beast to understand, but it is fairly straightforward once you get the concept. I felt that [this explanation of the Fourier Transform](http://betterexplained.com/articles/an-interactive-guide-to-the-fourier-transform/) does a great job of demonstrating the underlying math, along with some interactive visual examples. 
+The math behind the Fourier transform is a bit tricky, but it is fairly straightforward once you get the concept. I felt that [this explanation of the Fourier Transform](http://betterexplained.com/articles/an-interactive-guide-to-the-fourier-transform/) does a great job of demonstrating the underlying math, along with some interactive visual examples. 
 
 ## Reacting to Live Audio
 
@@ -203,7 +201,7 @@ Running an FFT on your input audio will give you back a buffer of values represe
 
 When using the FFT to analyze music, you should keep in mind that the FFT's bins increment on a *linear* scale, whereas humans interpret frequency on a *logarithmic* scale. So, if you were to use an FFT to split a musical signal into 512 bins, the lowest bins (bin 0 through bin 40 or so) will probably contain the bulk of the data, and the remaining bins will mostly just be high frequency content. If you were to isolate the sound on a bin-to-bin basis, you'd be able to easily tell the difference between the sound of bins 3 and 4, but bins 500 and 501 would probably sound exactly the same. Unless you had robot ears.
 
-[footnote] There's another transform called the *Constant Q Transform* (aka CQT) that is similar in concept to the FFT, but spaces its bins out in a logarithimic way which is much more intuitive when dealing with music. As of this writing I'm not aware of any openFrameworks-ready addons for the CQT, but it's worth keeping in mind if you feel like pursuing other audio visualization options beyond the FFT.
+[footnote] There's another transform called the *Constant Q Transform* (aka CQT) that is similar in concept to the FFT, but spaces its bins out logarithmically which is much more intuitive when dealing with music. As of this writing I'm not aware of any openFrameworks-ready addons for the CQT, but it's worth keeping in mind if you feel like pursuing other audio visualization options beyond the FFT.
 
 ## Synthesizing Audio
 
@@ -381,7 +379,7 @@ You can probably tell where we're going, here. Now that the app is responding to
 
 Now we've got a basic, useable instrument! A few things to try, if you'd like to explore further:
 
-- Instead of using `keyPressed(...)` to determine the oscillator's frequency, use ofxMidi to respond to external MIDI messages
+- Instead of using `keyPressed(...)` to determine the oscillator's frequency, use ofxMidi to respond to external MIDI messages. If you want to get fancy, try implementing pitch bend or use MIDI CC messages to control the frequency lerp rate.
 - Try filling the waveform table with data from an image, or from a live camera (`ofMap(...)` will be handy to keep your data in the -1 to 1 range)
 - Implement a *polyphonic* synthesizer. This is one which uses multiple oscillators to let you play more than one note at a time.
 - Keep several copies of the `phase` index, and use `ofSignedNoise(...)` to slightly modify the frequency they represent. Add each of the waveforms together in `output`, but average the result by the number of phases you're tracking.
@@ -430,7 +428,7 @@ If your samples begin to exceed the range of -1 to 1, you'll likely start to hea
 
 Assuming this isn't your intent, you can generally blame clipping on a misbehaving addition or subtraction in your code. A multiplication of any two numbers between -1 and 1 will always result in another number between -1 and 1.
 
-If you *want* distortion, it's much more common to use a waveshaping algorithm instead of trying to find a way to make clipping sound good [todo: link].
+If you *want* distortion, it's much more common to use a [waveshaping algorithm](http://music.columbia.edu/cmc/musicandcomputers/chapter4/04_06.php) instead of trying to find a way to make clipping sound good.
 
 ### Latency
 
