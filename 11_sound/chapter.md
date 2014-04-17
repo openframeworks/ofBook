@@ -8,6 +8,8 @@ Here's a quick overview of the classes you can use to work with sound in openFra
 
 `ofSoundStream` gives you access to the computer's sound hardware, allowing you to generate your own sound as well as react to sound coming into your computer from something like a microphone or line-in jack.
 
+As of this writing, these classes are slated to be introduced in the next minor OF version (0.9.0):
+
 `ofSoundBuffer` is used to store a sequence of `float` values, and perform audio-related things on said values (like resampling)
 
 `ofSoundFile` allows you to extract uncompressed ofSoundBuffers from files.
@@ -146,28 +148,55 @@ The Fourier transform is a bit of a tricky beast to understand, but it is fairly
 ### RMS
 One of the simplest ways to add audio-reactivity to your app is to calculate the RMS of incoming buffers of audio data. RMS stands for "root mean square" and is a pretty straightforward calculation that serves as a good approximation of "loudness" (much better than something like averaging the buffer or picking the maximum value). The "square" step of the algorithim will ensure that the output will always be a positive value. This means you can ignore the fact that the original audio may have had "negative" samples (since they'd sound just as loud as their positive equivalent, anyway). You can see RMS being calculated in the *audioInputExample*.
 
-    // from audioInputExample
-    float curVol = 0.0;
-	int numCounted = 0;	
-		
+    // modified from audioInputExample
+    float rms = 0.0;
+	int numCounted = 0;
+	
 	for (int i = 0; i < bufferSize; i++){
-	    left[i] = input[i * 2] * 0.5;
-	    right[i] = input[i * 2 + 1] * 0.5;
-
-	    curVol += left[i] * left[i];
-	    curVol += right[i] * right[i];
-	    numCounted+=2;
+	    float leftSample = input[i * 2] * 0.5;
+	    float rightSample = input[i * 2 + 1] * 0.5;
+		
+	    rms += leftSample * leftSample;
+	    rms += rightSample * rightSample;
+	    numCounted += 2;
 	}
+	
+	rms /= (float)numCounted;
+	rms = sqrt(rms);
+	// rms is now calculated
 
-	curVol /= (float)numCounted;
-	curVol = sqrt( curVol );
-
-### Onset Detection
-Onset detection algorithms attempt to locate moments in an audio stream where an "onset" occurs, which is usually something like an instrument playing a note or the impulse of a drum hit. There are many onset detection algorithms available at various levels of complexity and accuracy, some fine-tuned for speech as opposed to music, some working in the frequency domain instead of the time domain, some made for offline processing as opposed to realtime, etc.
+### Onset Detection (aka Beat Detection)
+Onset detection algorithms attempt to locate moments in an audio stream where an *onset* occurs, which is usually something like an instrument playing a note or the impulse of a drum hit. There are many onset detection algorithms available at various levels of complexity and accuracy, some fine-tuned for speech as opposed to music, some working in the frequency domain instead of the time domain, some made for offline processing as opposed to realtime, etc.
 
 A simple realtime onset detection algorithm can be built on top of the RMS calculation above.
 
-*[ naive RMS threshold-based code sample here ]*  **[mh: would a more advanced version (i.e. one that could handle multiple concurrent instruments) of this be to apply RMS to individual bands of FFT? if so, maybe point that out.  if not, point out other algorithms or places to look for algorithms for onset detection.  it seems like an important thing for anyone attempting live audiovisual stuff.]**
+    class class ofApp : public ofBaseApp {
+        ...
+        float threshold;
+        float minimumThreshold;
+        float decayRate;
+    }
+    
+    void ofApp::setup() {
+        ...
+        decayRate = 0.05;
+        minimumThreshold = 0.1;
+        threshold = minimumThreshold;
+    }
+    
+    void ofApp::audioIn(float * input, int bufferSize, int nChannels) {
+        ...
+        threshold = ofLerp(threshold, minimumThreshold, decayRate);
+	
+        if(rms > threshold) {
+            // onset detected!
+            threshold = rms;
+        }
+	}
+
+This will probably work fine on an isolated drum track, sparse music or for something like detecting whether or not someone's speaking into a microphone. However, in practice you'll likely find that this won't really cut it for reliable audio visualization or more intricate audio work. 
+
+You could of course grab an external onset detection algorithm (there's quite a few addons available for it), but if you'd like to experiment, try incorporating the FFT into your algorithm. For instance, try swapping the RMS for the average amplitude of a range of FFT bins.
 
 ### FFT
 Running an FFT on your input audio will give you back a buffer of values representing the input's frequency content. A straight up FFT *won't* tell you which notes are present in a piece of music, but you will be able to use the data to take the input's sonic "texture" into account. For instance, the FFT data will let you know how much "bass" / "mid" / "treble" there is in the input at a pretty fine granularity (a typical FFT used for realtime audio-reactive work will give you something like 512 to 4096 individual frequency bins to play with).  **[mh: are there some standards for frequency range that defines bass vs mid vs treble?  might be useful to include.]**
@@ -182,7 +211,7 @@ A simple synthesizer can be implemented as a *waveform* modulated by an *envelop
 
 ### Waveforms
 
-Your synthesizer's waveform will define the oscillator's "timbre". The closer the waveform is to a sine wave, the more "pure" the resulting tone will be. A waveform can be made of just about anything, and there are entire [genres of synthesis](http://en.wikipedia.org/wiki/Category:Sound_synthesis_types) that revolve around techniques for generating and manipulating waveforms.
+Your synthesizer's waveform will define the oscillator's "timbre". The closer the waveform is to a sine wave, the more "pure" the resulting tone will be. A waveform can be made of just about anything, and many [genres of synthesis](http://en.wikipedia.org/wiki/Category:Sound_synthesis_types) revolve around techniques for generating and manipulating waveforms.
 
 A common technique for implementing a waveform is to create a *Lookup Table* containing the full waveform at a certain resolution. A *phase* index is used to scan through the table, and the speed that the phase index is incremented determines the pitch of the oscillator.
 
@@ -285,7 +314,6 @@ We can create a simple (but effective) envelope with `ofLerp(...)` by adding the
     
     void ofApp::update() {
         ...
-        
         if(ofGetKeyPressed()) {
     		volume = ofLerp(volume, 1, 0.8); // jump quickly to 1
 	    } else {
