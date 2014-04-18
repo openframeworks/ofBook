@@ -51,8 +51,6 @@ Speed control and multiplay are made for each other. Making use of both simultan
 
 One other big feature of ofSoundPlayer is easy spectrum access. On the desktop platforms, you can make use of ofSoundGetSpectrum() to get the *frequency domain* representation of the sound coming from all of the currently active ofSoundPlayers in your app. An explanation of the frequency domain is coming a little later in this chapter, but running the openFrameworks *soundPlayerFFTExample* will give you the gist.
 
-*[ screencap of the soundPlayerFFTExample ]*
-
 Ultimately, ofSoundPlayer is a tradeoff between ease-of-use and control. You get access to multiplay and pitch-shifted playback but you don't get extremely precise control or access to the individual samples in the sound file. For this level of control, ofSoundStream is the tool for the job.
 
 ## Getting Started With the Sound Stream
@@ -97,11 +95,11 @@ An important caveat to keep in mind when dealing with ofSoundStream is that audi
 
 In order to understand *why* openFrameworks chooses to represent sound as a continuous stream of `float` values ranging from -1 to 1, it'll be helpful to know how sound is created on a physical level.
 
-*[ a minimal picture showing the mechanics of a speaker ]* **[mh: this would be great]**
+*[ a minimal picture showing the mechanics of a speaker, reference: http://wiki.backyardbrains.com/images/5/54/Exp5_fig7.jpg ]*
 
 At the most basic level, a speaker consists of a cone and an electromagnet. The electromagnet pushes and pulls the cone to create vibrations in air pressure. These vibrations make their way to your ears, where they are interpreted as sound. When the electromagnet is off, the cone is simply "at rest", neither pulled in or pushed out.
 
-[footnote] A basic microphone works much the same way: allowing air pressure to vibrate an object held in place by a magnet, thereby creating an electrical signal.  **[mh: this would also be great]**
+[footnote] A basic microphone works much the same way: allowing air pressure to vibrate an object held in place by a magnet, thereby creating an electrical signal.
 
 From the perspective of an openFrameworks app, it's not important what the sound hardware's specific voltages are. All that really matters is that the speaker cone is being driven between its "fully pushed out" and "fully pulled in" positions, which are represented as 1 and -1. This is similar to the notion of "1" as a representation of 100% as described in the animation chapter, though sound introduces the concept of -100%.
 
@@ -117,7 +115,7 @@ This is because what you actually hear is the *changes* in values over time. Any
 
 When representing sound as a continuous stream of values between -1 and 1, you're working with sound in what's known as the "Time Domain". This means that each value you're dealing with is referring to a specific moment in time. There is another way of representing sound which can be very helpful when you're using sound to drive something other aspect of your app. That representation is known as the "Frequency Domain".
 
-*[ image of a waveform vs an FFT bar graph ]*
+*[ image of a waveform vs an FFT bar graph, reference http://upload.wikimedia.org/wikipedia/commons/8/8c/Time_domain_to_frequency_domain.jpg ]*
 
 In the frequency domain, you'll be able to see how much of your input signal lies in various frequencies, split into separate "bins" (see above image).
 
@@ -356,6 +354,7 @@ You can probably tell where we're going, here. Now that the app is responding to
     
     void ofApp::update() {
         ...
+        // replace the "frequency = " line from earlier with this
         frequency = ofLerp(frequency, frequencyTarget, 0.4);
     }
     
@@ -377,7 +376,11 @@ You can probably tell where we're going, here. Now that the app is responding to
         }
     }
 
-Now we've got a basic, useable instrument! A few things to try, if you'd like to explore further:
+Now we've got a basic, useable instrument!
+
+![Synthesis](images/synthesis-example.png "screenshot of the synthesizer built in this section, clearly showing the aliasing effect of a low-resolution waveform")
+
+A few things to try, if you'd like to explore further:
 
 - Instead of using `keyPressed(...)` to determine the oscillator's frequency, use ofxMidi to respond to external MIDI messages. If you want to get fancy, try implementing pitch bend or use MIDI CC messages to control the frequency lerp rate.
 - Try filling the waveform table with data from an image, or from a live camera (`ofMap(...)` will be handy to keep your data in the -1 to 1 range)
@@ -424,7 +427,7 @@ If you're getting pops in the middle of your playback, you can diagnose it by tr
 ### "Clipping" / Distortion
 If your samples begin to exceed the range of -1 to 1, you'll likely start to hear what's known as "clipping", which generally sounds like a grating, unpleasant distortion. Some audio hardware will handle this gracefully by allowing you a bit of leeway outside of the -1 to 1 range, but others will "clip" your buffers.
 
-*[ clipped waveform image ]*
+*[ clipped waveform image, reference http://www.st-andrews.ac.uk/~www_pa/Scots_Guide/audio/clipping/fig1.gif ]*
 
 Assuming this isn't your intent, you can generally blame clipping on a misbehaving addition or subtraction in your code. A multiplication of any two numbers between -1 and 1 will always result in another number between -1 and 1.
 
