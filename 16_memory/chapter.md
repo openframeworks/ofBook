@@ -656,7 +656,7 @@ That's called pointer arithmetic. Its really weird and most of the time you won'
 
 **[BD: It is worth explicitly mentioning, or if you showed the example cout output like I mentioned above, that each cout statement prints the same pair of values]**
 
-Note that when we add `5` to the adress of the array, it's not bytes we are adding, but the size in bytes of the type it contains. In this case `+5` actually means `+20` bytes. We can check it by doing:
+Note that when we add `5` to the address of the array, it's not bytes we are adding, but the size in bytes of the type it contains. In this case `+5` actually means `+20` bytes. We can check it by doing:
 
 ```cpp
 int arr[10]
@@ -665,7 +665,6 @@ cout << "arr: " << arr << "arr+5: " << arr+5 << endl
 ```
 
 and subtracting the hexadecimal values in a calculator. If you try to subtract them in your program like:
-
 
 ```cpp
 int arr[10]
@@ -676,9 +675,9 @@ cout << "(arr+5) - arr: " << (arr+5) - arr << endl
 
 You will end up with `5` again because as we've said pointer arithmetic works with the type size not bytes.
 
-The syntax of pointer arithmetics is kind of complicated, and the idea of this part wasn't really to show pointer arithmetics itself but how arrays are just a bunch of values one after another in memory, so don't worry if you haven't understood fully the syntax, is probably something you won't need to use. It is also important to remember that an array variable acts as a pointer so when we refer to it without using the `[]` operator we end up with a memory address not with the values it contains.
+The syntax of pointer arithmetics is kind of complicated, and the idea of this part wasn't really to show pointer arithmetics itself but how arrays are just a bunch of values one after another in memory. Don't worry if you haven't fully understood the syntax, it is probably something you won't need to use. However, it is important to remember that an array variable acts as a pointer so when we refer to it without using the `[]` operator we end up with a memory address instead of the values it contains.
 
-The arrays we've created till now are created in the stack so be careful when using big arrays like this cause it might be problematic.
+The arrays we've created until now were created in the stack. Be careful when using big arrays like this because it might be problematic.
 
 Arrays in the heap are created like anything else in the heap, by using `new`:
 
@@ -689,12 +688,12 @@ int arr[] = new int[10];
 or
 
 ```cpp
-int * arr = new int[10]
+int * arr = new int[10];
 ```
 
-As you can see this confirms what we've said before, an array variable is just a pointer, when we call `new int[10]` it allocates memory to store 10 integers and returns the memory address of the first byte of the first integer in the array, we can keep it in a pointer like in the second example or using `int arr[]` which declares an array of unkown size.
+As you can see this confirms what we've said before, an array variable is just a pointer. When we call `new int[10]` it allocates memory to store 10 integers and returns the memory address of the first byte of the first integer in the array. We then keep that address in a pointer like in the second example or use `int arr[]` which declares an array of unknown size.
 
-The same as other variables created in the heap we'll need to delete this manually so when we are done with it we need to use `delete` to deallocate that memory, in the case of arrays in the heap the syntax is slightly special:
+Like other variables created in the heap, we'll need to delete this array manually when we are done with it. We use the `delete` key word to deallocate that memory, in the case of arrays in the heap the syntax is slightly special:
 
 ```cpp
 int arr[] = new int[10];
@@ -702,7 +701,7 @@ int arr[] = new int[10];
 delete[] arr;
 ```
 
-if you fail to use the `[]` when deleting it, it'll only deallocate the first value and you'll end up with a memory leak.
+If we fail to use the `[]` when deleting it, only the first value will be deallocated and we'll end up with a memory leak.
 
 There's also some problems with the syntax of arrays, for example this:
 
@@ -722,9 +721,9 @@ int arrB[] = new int[10];
 arrB = arr;
 ```
 
-will actually compile but as with other variables we are not copying the values that arr points to into arrB but instead the memory address. In this case will end up with 2 pointers pointing to the same memory location, the one that we created when creating arr and loose the memory that we allocated when initializing arrB. Again we have a memory leak, the memory allocated when doing `int arrB[] = new int[10];` is not referenced by any variable anymore so we can't delete it anymore. To copy arrays there's some **c** (not c++) functions liek memcpy but their syntax is kind of complex, that's why when working with c++ is recomended to use vectors.
+will actually compile, but as with other variables, we are not copying the values that arr points to into arrB, but instead its memory address. In this case, we'll end up with 2 pointers pointing to the same memory location: the one that we created when creating arr and loose memory that we allocated when initializing arrB **[BD: This sentence is confusing]**. Again, we have a memory leak as the memory allocated when doing `int arrB[] = new int[10];` is no longer referenced by any variable so we can't delete it. There are some **C** (not C++) functions for copying arrays like `memcpy` but their syntax is kind of complex. For the above reasons it is recomended to use vectors when working in C++.
 
-C++ vectors are very similar to arrays, indeed their layout in memory is the same as an array, they contain a bunch of values contiguous in memory and always allocated in the heap. The main difference is that we get a nicer syntax and *stack semantics*. To allocate a vector to contain 10 ints we can do:
+C++ vectors are very similar to arrays, indeed their layout in memory is the same as an array. They contain a bunch of values contiguous in memory and always allocated in the heap. The main difference is that we get a nicer syntax and [*stack semantics*](http://msdn.microsoft.com/en-us/library/ms177191.aspx). To allocate a vector to contain 10 ints we can do:
 
 ```cpp
 vector<int> vec(10);
@@ -736,14 +735,14 @@ We can even give an initial value to those 10 ints in the initialization like:
 vector<int> vec(10,0);
 ```
 
-And for example copying a vector into another, works as expected:
+Copying a vector into another works as expected:
 
 ```cpp
 vector<int> vec(10,0);
 vector<int> vecB = vec;
 ```
 
-Will create a copy of the contents of vec in vecB. Also even if the memory that the vector uses is in the heap, when a vector goes out of scope, when the block in which it was declared ends, the vector is destroyed cause the vector itself is created in the stack, so going out of scope, triggers it's destructor that takes care of deleting the memory that it has created in the heap:
+This will create a copy of the contents of vec in vecB. Also, even if the memory that the vector uses is in the heap, when a vector goes out of scope (when the block in which it was declared ends), the vector is destroyed because the vector itself is created in the stack. Going out of scope, triggers it's destructor that takes care of deleting the memory that it has created in the heap:
 
 ```cpp
 void ofApp::update(){
@@ -752,28 +751,32 @@ void ofApp::update(){
 }
 ```
 
-That makes vectors easier to use than arrays since we don't need to care about deleting them, end up with dangling pointers, memory leaks... and their syntax is easier.
+That makes vectors easier to use than arrays since they have easier syntax and we don't need to worry about deleting them, ending up with dangling pointers, or memory leaks...
 
-Vectors have some more features and using them properly might be tricky mostly if we want to optimize for performance or use them in multithreaded applications, but that's not the scope of this chapter, you can find some tutorials about vectors, this is an introductory one in the openFrameworks site: [vectors basics](http://openframeworks.cc/tutorials/c++%20concepts/001_stl_vectors_basic.html) and this one explains more advanced concepts [std::vector](http://arturocastro.net/blog/2011/10/28/stl::vector/)
+Vectors have some more features but using them properly might be tricky mostly if we want to optimize for performance or use them in multithreaded applications, but that's beyond the scope of this chapter. You can find some tutorials about vectors on the openFrameworks site:
+- [Vectors Basics](http://openframeworks.cc/tutorials/c++%20concepts/001_stl_vectors_basic.html)
+- [std::vector](http://arturocastro.net/blog/2011/10/28/stl::vector/) (advanced concepts)
 
 
 ## Other memory structures, lists and maps ##
 
-Having objects in memory one after another is most of the time what we want, the access is really fast no matter if we want to access sequentially to each of them or randomly to anyone, since a vector is just an array internally, accesing let's say position 20 in it, just means that internally it just needs to get the memory address of the first position and add 20 to it. In soime cases though, vectors are not the most optimal memory structure. For example, if we want to frequnetly add  or remove elements in the middle of the vector, and you imagine the vector as a memory strip, that means that we need to move the rest of the vector till the end one position to the right and then insert the new element in the free location. In memory there's no such thing as move, moving contiguous memory means copying it and as we've said before, copying memory is a relatively slow operation.
+Having objects in memory ordered one after another is what we want most of the time. The access is really fast no matter if we access each element sequentially or one randomly. Since a vector is just an array, accessing position 20 just means that internally it needs to get the memory address of the first position and add 20 to it. In some cases though, vectors are not the most optimal memory structure. For example, if we frequently want to add or remove elements in the middle of the vector, and we imagine the vector as a memory strip, that means that we need to move the rest of the vector over one position to the right and then insert the new element in the free location. In memory there's no such thing as move, moving contiguous memory means copying it and as we've said before, copying memory is a relatively slow operation.
 
 <img src="images/vector_inserting.svg" height="300"/>
 
 Sometimes, if there's not enough memory to move/copy the elements, one position to the right, the vector will need to copy the whole thing to a new memory location. If we are working with thousands of elements and doing this very frequently, like for example every frame, this can really slow things down a lot.
 
-To solve that, there's other memory structures like for example lists. In a list, memory, is not contiguous but instead each element has a pointer to the next and previous element so inserting one element just means changing those pointers to point to the newly added element. In a list we never need to move elements around but it's main disadvantage is that not being the elements contiguous in memory it's access can be slightly slower than a vector, also that we can't use it in certain cases like for example to upload data to the graphics card which always wants contiguos memory.
+Other memory structures exist to solve that problems like this. For example, in a list, memory is not contiguous. Instead, each element has a pointer to the next and previous element, so inserting one element just means changing those pointers to point to the newly added element. In a list, we never need to move elements around. It's main disadvantage is that, because its elements are not contiguous in memory, it's access can be slightly slower than that of a vector. This is somewhat limiting, for example, to upload data to the graphics card we need contiguous memory.
 
 <img src="images/list.svg" height="300"/>
 
-Another problem of lists is that trying to access an element in the middle of the list (what is called random access) is slow since we always have to go through all the list till we arrive to the desired element. Lists are used then, when we seldom need to access randomly to a position of it and we need to add or remove elements in the middle frequently. For the specifics of the syntax of a list you can check the [c++ documentation on lists](http://www.cplusplus.com/reference/list/list/)
+Another problem of lists comes in trying to access an element in the middle of the list (what is called random access). This is slow since we always have to go through the entire list until we arrive to the desired element. Lists are used then, when we seldom need to randomly access a position of it and we need to add or remove elements in the middle frequently. For the specifics of the syntax of a list you can check the [C++ documentation on lists](http://www.cplusplus.com/reference/list/list/).
 
-There's several memory structures in the c++ standard library or other c++ libraries, apart from vectors and lists we are only going to see briefly maps.
+There's several memory structures in the C++ standard library or other C++ libraries, apart from vectors and lists we are only going to breifly see maps.
 
-Sometimes, we don't want to access things by their position or have an ordered list of elements but instead have something like an index or dictionary of elements that we can access by some key, that's what a map is. In a map we can store pairs of (key,value) and look for a value by it's key. For example let's say we have a collection of objects which have a name, if that name is unique for all the objects, we can store them in a map to be able to look for them by their name:
+Sometimes we don't want to access things by their position or have an ordered list of elements, but instead have something like an index or dictionary of elements that we can access by some key. That's what a map is. In a map we can store key => value pairs and lookup a value by it's key. For example, let's say we have a collection of objects which have a name. If that name is unique for all the objects, we can store them in a map to be able to look for them by their name:
+
+**[BD: It may be helpful to also mention that this is a hash map, hash table, or hash, for those who know it by another name]**
 
 ```cpp
 map<string, NamedObject> objectsMap;
@@ -797,18 +800,18 @@ if(objectsMap.find("object1")!=objectsMap.end()){
 }
 ```
 
-You can find the complete reference on maps in the [c++ documentation for maps](http://www.cplusplus.com/reference/map/map/)
+You can find the complete reference in the [C++ documentation for maps](http://www.cplusplus.com/reference/map/map/).
 
 
-## smart pointers ##
+## Smart pointers ##
 
-As we've said before, traditional c pointers also called now *raw pointers* are sometimes problematic, the most frequent problems are dangling pointers: pointers that probably were once vañlid but now point to an invalid memory location, trying to dereference a NULL pointer, posible memory leaks if we fail to deallocate memory before loosing the reference to that memory address...
+As we've said before, traditional C pointers, also now called *raw pointers*, are sometimes problematic. The most frequent problems are dangling pointers (pointers that were once probably valid but now point to an invalid memory location), trying to dereference a `NULL` pointer, and possible memory leaks if we fail to deallocate memory before loosing the reference to that memory address.
 
-Smart pointers try to solve that by adding what we've been calling stack semantics to memory allocation, the correct term for this is RAII: [Resource Acquisition Is Initialization](http://en.wikipedia.org/wiki/Resource_Acquisition_Is_Initialization) And means that the creation of an object in the stack, allocates the resources that it'll use later. When it's destructor is called because the variable goes out of scope, the destructor of the object is triggered which takes care of deallocating all the used resources. There's some more implications to RAII but for this chapter this is what matters to us more.
+Smart pointers try to solve that by adding what we've been calling stack semantics to memory allocation. The correct term for this is RAII: [Resource Acquisition Is Initialization](http://en.wikipedia.org/wiki/Resource_Acquisition_Is_Initialization), and it means that the creation of an object in the stack allocates the resources that it'll use later. When it's destructor is called because the variable goes out of scope, the destructor of the object is triggered which takes care of deallocating all of the used resources. There's some more implications to RAII, but for this chapter, this is what matters to us most.
 
-Smart pointers use this technique to avoid all the problems that we've seen in raw pointers. They do this by also defining better who is the owner of some allocated memory or object. Till now we've seen how things allocated in the stack belong to the function or block that creates them we can return a copy of them (or in c++11 or later, move them) out of a function as a return value but their ownership is always clear.
+Smart pointers use this technique to avoid all of the problems that we've seen with raw pointers. They do this by defining better who is the owner of some allocated memory or object. Until now, we've seen how things allocated in the stack belong to the function or block that creates them. We can return a copy of them (or in c++11 or later, move them) out of a function as a return value but their ownership is always clear.
 
-With heap memory though, ownership becomes way more fuzzy, someone might create a variable in the heap like:
+With heap memory though, ownership becomes way more fuzzy, something might create a variable in the heap like:
 
 ```cpp
 int * createFive(){
@@ -818,7 +821,7 @@ int * createFive(){
 }
 ```
 
-Now, when someone calls that function, who is the owner of the `new int`? Things can get even more complicated, what if we pass a pointer to that memory to another function or even an object?
+Now, when someone calls that function, what owns `new int`?  Things can get even more complicated. What if we pass a pointer to that memory to another function or even an object?
 
 
 ```cpp
@@ -833,7 +836,9 @@ void ofApp::setup(){
 }
 ```
 
-who is now the owner of that memory? ofApp? object? The ownership defines among other things who is responsible for deleting that memory when it's not used anymore, now both ofApp and object have a reference to it, if ofApp deletes it before object is done with it, object might try to access it and crash the application, or the other way around. In this case it seems logical that ofApp takes care of deleting it since it knows about both object and the pointer to int a, but what if we change the example to :
+**[BD: Maybe it would be more wise to say "what owns" rather than "who owns". I left everything as "who" but I think it could be a bit confusing for the reader.]**
+
+Who is now the owner of that memory? ofApp? object? The ownership defines. among other things, who is responsible for deleting that memory when it's not used anymore. Now both ofApp and object have a reference to it, if ofApp deletes it before object is done with it, object might try to access it and crash the application, or the other way around. In this case it seems logical that ofApp takes care of deleting it since it knows about both object and the pointer to int a, but what if we change the example to:
 
 
 ```cpp
@@ -862,16 +867,15 @@ void ofApp::setup(){
 ```
 
 
-now ofApp doesn't know anymore about the allocated memory but both cases are possible so we actually need to know details of the implementation of object to know if we need to keep a reference of that variable to destroy it later or not. That, among other things breaks encapsulation, that you might now from chapter 1. We shouldn't need to know how object works internally to be able to use it. This makes the logic of our code really complicated and error prone.
+now ofApp doesn't know about the allocated memory, but both cases are possible, so we actually need to know details of the implementation of object to know if we need to keep a reference of that variable to destroy it later or not. That, among other things, breaks encapsulation (you might know from chapter 1). We shouldn't need to know how an object works internally to be able to use it. This makes the logic of our code really complicated and error prone.
 
+Smart pointers solve this by clearly defining who owns and object and by automatically deleting the allocated memory when the owner is destroyed **[BD: What does this mean?]**. Sometimes we need to share an object among several owners. For those cases we have a special type of smart pointers called shared pointers that defined a shared ownership and free the allocated memory only when all the owners cease to use the variable.
 
-Smart pointers solve this by clearly defining who owns and object and by automatically deleting the allocated memory when the owner is destroyed. Sometimes, we need to share an object among several owners. For that cases we have a special type of smart pointers called shared pointers that defined a shader ownership and free the allocated memory only when all the owners cease to use the variable.
-
-We are only going to see this briefly, there's lots of examples in the web about how to use smart pointers and reference to their syntax, the most important is to understand how they work by defining the ownership clearly compared to raw pointers and the problems they solve.
+We are only going to see this briefly as there's lots of examples on the web about how to use smart pointers and reference to their syntax. The most important thing is to understand the problems they solve and that they work by defining a pointer's ownership clearly compared to raw pointers.
 
 ### unique_ptr
 
-A unique_ptr, as it's name suggests, is a pointer that defines a unique ownership for an object, we can move it around and the object or function that has it at some point is the owner of it, no more than one reference at the same time is valid and when it goes out of scope it automatically deletes any memory that we might have allocated.
+A unique_ptr, as it's name suggests, is a pointer that defines a unique ownership for an object. We can move it around and the object or function that has it at any given point is the owner of it. No more than one reference at the same time is valid and when it goes out of scope it automatically deletes any memory that we might have allocated.
 
 To allocate memory using a unique_ptr we do:
 
@@ -882,7 +886,7 @@ void ofApp::setup(){
 }
 ```
 
-As you can see, once it's created it's syntax is the same as a raw pointer, we can use the `*` operator to dereference it and access or modiify it's value, if we are working with objects like:
+As you can see, once it's created it's syntax is the same as a raw pointer. We can use the `*` operator to dereference it, access or modify it's value. If we are working with objects like:
 
 ```cpp
 void ofApp::setup(){
@@ -891,9 +895,9 @@ void ofApp::setup(){
 }
 ```
 
-We can also use the `->` to access it's member variables and functions.
+we can also use the `->` to access it's member variables and functions.
 
-When the function goes out of scope, being unique_ptr an object, it's destructor will get called, which internally will call `delete` on the allocated memory so we don't need to call delete on unique_ptr at all.
+When the function goes out of scope, being a unique_ptr an object, it's destructor will get called, which internally will call `delete` on the allocated memory so we don't need to call delete on unique_ptr at all.
 
 Now let's say we want to move a unique_ptr into a vector:
 
@@ -902,19 +906,19 @@ void ofApp::setup(){
 	unique_ptr<int> a(new int);
 	*a = 5;
 
-	vector<unique_ptr<int> > v;
+	vector<unique_ptr<int>> v;
 	v.push_back(a);  // error
 }
 ```
 
-That will generate a long error, depending on the compiler, really hard to understand. What's going on, is that `a` is still owned by ofApp::setup so we can't put it in the vector, what we can do is move it into the vector by explicitly saying that we want to move the ownership of that unique_ptr into the vector:
+That will generate a long error, depending on the compiler, that is really hard to understand. What's going on is that `a` is still owned by ofApp::setup so we can't put it in the vector. What we can do is move it into the vector by explicitly saying that we want to move the ownership of that unique_ptr into the vector:
 
 ```cpp
 void ofApp::setup(){
 	unique_ptr<int> a(new int);
 	*a = 5;
 
-	vector<unique_ptr<int> > v;
+	vector<unique_ptr<int>> v;
 	v.push_back(move(a));
 }
 ```
@@ -927,26 +931,26 @@ void ofApp::setup(){
 	unique_ptr<int> a(new int);
 	*a = 5;
 
-	vector<unique_ptr<int> > v;
+	vector<unique_ptr<int>> v;
 	v.push_back(move(a));
 
 	cout << *a << endl;
 }
 ```
 
-The compiler won't fail there but if we try to execute the application it'll crash since `a` is not owned by ofApp::setup anymore, having to explicitly use `move` tries to solve that problem by making the syntax clearer. After using move, we can't use that variable anymore except through the vector. More modern langauages like [Rust](http://www.rust-lang.org/) completely solve this by making the compiler detect this kind of uses of moved variables and producing a compiler error. This will probably be solved at some point in c++ but by now you need to be careful to not use a moved variable.
+The compiler won't fail there but if we try to execute the application it'll crash since `a` is no longer owned by ofApp::setup. Having to explicitly use `move` tries to solve that problem by making the syntax clearer, however after using move, we can't use that variable anymore except through the vector. More modern langauages like [Rust](http://www.rust-lang.org/) completely solve this by making the compiler detect these kind of uses of moved variables and producing a compiler error. This will probably be solved at some point in C++, but for now you need to be careful to not use a moved variable.
 
 
-###shared_ptr
+### shared_ptr
 
-As we've seen before, sometimes having unique ownership is not enough, sometimes we need to share an object among several owners, in c++11 or later, this is solved through `shared_ptr`. The usage is pretty similar to `unique_ptr`, we create it like:
+As we've seen before, sometimes having unique ownership is not enough and we need to share a pointer among several owners. In C++11 or later, this is solved through `shared_ptr`. The usage is pretty similar to `unique_ptr`, we create it like:
 
 ```cpp
 void ofApp::setup(){
 	shared_ptr<int> a(new int);
 	*a = 5;
 
-	vector<shared_ptr<int> > v;
+	vector<shared_ptr<int>> v;
 	v.push_back(a);
 }
 ```
@@ -966,10 +970,9 @@ void ofApp::setup(){
 }
 ```
 
-Is perfectly ok. The way a shared_ptr works is by keeping a count of how many references there are to it, whenever we make a copy of it, it increases that counter by one, whenever a reference is destroyed it decreases that reference by one. When the reference cound arrives to 0 it frees the allocated memory. That reference counting is done atomically, which means that we can share a shared_ptr across threads without having problems with the count. That doesn't mean that we can access the contained data safely in a multithreaded application, just that the reference count won't get wrong if we pass a shared_ptr accross different threads.
+Is perfectly ok. The way a shared_ptr works is by keeping a count of how many references there are to it. Whenever we make a copy of it, it increases that counter by one, whenever a reference is destroyed it decreases that reference by one. When the reference count arrives to 0 it frees the allocated memory. That reference counting is done atomically, which means that we can share a shared_ptr across threads without having problems with the count. That doesn't mean that we can access the contained data safely in a multithreaded application, just that the reference count won't get messed up if we pass a shared_ptr across different threads.
 
-
-
+**[BD: This chapter covers a lot of material (in a very nice way :]), however it ends in a very specialized way (talking about shared_ptrs with threads). A small paragraph would be helpful.]**
 
 <em style="font-size:0.8em; text-align:center; display:block;">This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.en_US">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.</em>
 
