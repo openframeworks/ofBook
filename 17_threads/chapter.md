@@ -2,7 +2,7 @@
 
 *by [Arturo Castro](http://arturocastro.net)*
 
-*corrections by Brandon Dorsey*
+*corrections by [Brannon Dorsey](http://brannondorsey.com)*
 
 ## What's a thread and when to use it
 
@@ -298,9 +298,9 @@ A very specific case is sound, sound APIs in openFrameworks, in particular ofSou
 
 ## ofMutex
 
-Before we started the openGL and threads section we were talking about how accessing the same memory area from 2 different threads can cause problems. This mostly occurs if we write from one of the threads causing the data structure to move in memory or make a location invalid. 
+Before we started the openGL and threads section we were talking about how accessing the same memory area from 2 different threads can cause problems. This mostly occurs if we write from one of the threads causing the data structure to move in memory or make a location invalid.
 
-To avoid that we need something that allows to access that data to only one thread simultaneously. For that we use something called mutex. When one thread want's to access the shared data, it locks the mutex and when a mutex is locked any other thread trying to lock it will get blocked there until the mutex is unlocked again. You can think of this as some kind of token that each thread needs to have to be able to access the shared memory. 
+To avoid that we need something that allows to access that data to only one thread simultaneously. For that we use something called mutex. When one thread want's to access the shared data, it locks the mutex and when a mutex is locked any other thread trying to lock it will get blocked there until the mutex is unlocked again. You can think of this as some kind of token that each thread needs to have to be able to access the shared memory.
 
 Imagine you are with a group of people building a tower of cards, if more than one at the same time tries to put cards on it it's very possible that it'll collapse so to avoid that, anyone who wants to put a card on the tower, needs to have a small stone, that stone gives them permission to add cards to the tower and there's only one, so if someone wants to add cards they need to get the stone but if someone else has the stone then they have to wait till the stone is freed. If more than one wants to add cards and the stone is not free they queue, the first one in the queue gets the stone when it's finally freed.
 

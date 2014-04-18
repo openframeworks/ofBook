@@ -1,6 +1,7 @@
 #Memory in C++#
 
 *by [Arturo Castro](http://arturocastro.net)*
+
 *corrections by [Brannon Dorsey](http://brannondorsey.com)*
 
 Using memory correctly is one of the trickest parts of working with C++. C++ memory management differs greatly from languages like Java, Python or anything else that works with a virtual machine. In C++, we can explicitly reserve and destroy objects while in other languages, an element called garbage collector does the work for us.
