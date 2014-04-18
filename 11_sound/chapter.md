@@ -8,6 +8,8 @@ Here's a quick overview of the classes you can use to work with sound in openFra
 
 `ofSoundStream` gives you access to the computer's sound hardware, allowing you to generate your own sound as well as react to sound coming into your computer from something like a microphone or line-in jack.
 
+As of this writing, these classes are slated to be introduced in the next minor OF version (0.9.0):
+
 `ofSoundBuffer` is used to store a sequence of `float` values, and perform audio-related things on said values (like resampling)
 
 `ofSoundFile` allows you to extract uncompressed ofSoundBuffers from files.
@@ -48,8 +50,6 @@ Speed control and multiplay are made for each other. Making use of both simultan
 ...you'll introduce a bit of unique character to each instance of the sound.
 
 One other big feature of ofSoundPlayer is easy spectrum access. On the desktop platforms, you can make use of ofSoundGetSpectrum() to get the *frequency domain* representation of the sound coming from all of the currently active ofSoundPlayers in your app. An explanation of the frequency domain is coming a little later in this chapter, but running the openFrameworks *soundPlayerFFTExample* will give you the gist.
-
-*[ screencap of the soundPlayerFFTExample ]*
 
 Ultimately, ofSoundPlayer is a tradeoff between ease-of-use and control. You get access to multiplay and pitch-shifted playback but you don't get extremely precise control or access to the individual samples in the sound file. For this level of control, ofSoundStream is the tool for the job.
 
@@ -95,11 +95,11 @@ An important caveat to keep in mind when dealing with ofSoundStream is that audi
 
 In order to understand *why* openFrameworks chooses to represent sound as a continuous stream of `float` values ranging from -1 to 1, it'll be helpful to know how sound is created on a physical level.
 
-*[ a minimal picture showing the mechanics of a speaker ]* **[mh: this would be great]**
+*[ a minimal picture showing the mechanics of a speaker, reference: http://wiki.backyardbrains.com/images/5/54/Exp5_fig7.jpg ]*
 
 At the most basic level, a speaker consists of a cone and an electromagnet. The electromagnet pushes and pulls the cone to create vibrations in air pressure. These vibrations make their way to your ears, where they are interpreted as sound. When the electromagnet is off, the cone is simply "at rest", neither pulled in or pushed out.
 
-[footnote] A basic microphone works much the same way: allowing air pressure to vibrate an object held in place by a magnet, thereby creating an electrical signal.  **[mh: this would also be great]**
+[footnote] A basic microphone works much the same way: allowing air pressure to vibrate an object held in place by a magnet, thereby creating an electrical signal.
 
 From the perspective of an openFrameworks app, it's not important what the sound hardware's specific voltages are. All that really matters is that the speaker cone is being driven between its "fully pushed out" and "fully pulled in" positions, which are represented as 1 and -1. This is similar to the notion of "1" as a representation of 100% as described in the animation chapter, though sound introduces the concept of -100%.
 
@@ -115,13 +115,11 @@ This is because what you actually hear is the *changes* in values over time. Any
 
 When representing sound as a continuous stream of values between -1 and 1, you're working with sound in what's known as the "Time Domain". This means that each value you're dealing with is referring to a specific moment in time. There is another way of representing sound which can be very helpful when you're using sound to drive something other aspect of your app. That representation is known as the "Frequency Domain".
 
-*[ image of a waveform vs an FFT bar graph ]*
+*[ image of a waveform vs an FFT bar graph, reference http://upload.wikimedia.org/wikipedia/commons/8/8c/Time_domain_to_frequency_domain.jpg ]*
 
 In the frequency domain, you'll be able to see how much of your input signal lies in various frequencies, split into separate "bins" (see above image).
 
 You can transform a signal from the time domain to the frequency domain by a ubiquitous algorithm called the Fast Fourier Transform. You can get an openFrameworks-ready implementation of the FFT (along with examples!) in either the ofxFFT or ofxFft addons (by Lukasz Karluk and Kyle McDonald respectively).
-
-*[footnote explaining FFT vs DFT to avoid cluttering the previous paragraph up]*
 
 In an FFT sample, bins in the higher indexes will represent higher pitched frequencies (i.e. treble) and the lower ones will represent bassy frequencies. Exactly *which* frequency is represented by each bin depends on the number of time-domain samples that went into the transform. You can calculate this as follows:
 
@@ -139,40 +137,69 @@ You can also transform a signal from the frequency domain *back* to the time dom
 
 The frequency domain is useful for many things, but one of the most straightforward is isolating particular elements of a sound by frequency range, such as instruments in a song. Another common use is analyzing the character or timbre of a sound, in order to drive complex audio-reactive visuals.
 
-The Fourier transform is a bit of a tricky beast to understand, but it is fairly straightforward once you get the concept. I felt that [this explanation of the Fourier Transform](http://betterexplained.com/articles/an-interactive-guide-to-the-fourier-transform/) does a great job of demonstrating the underlying math, along with some interactive visual examples. 
+The math behind the Fourier transform is a bit tricky, but it is fairly straightforward once you get the concept. I felt that [this explanation of the Fourier Transform](http://betterexplained.com/articles/an-interactive-guide-to-the-fourier-transform/) does a great job of demonstrating the underlying math, along with some interactive visual examples. 
 
 ## Reacting to Live Audio
 
 ### RMS
 One of the simplest ways to add audio-reactivity to your app is to calculate the RMS of incoming buffers of audio data. RMS stands for "root mean square" and is a pretty straightforward calculation that serves as a good approximation of "loudness" (much better than something like averaging the buffer or picking the maximum value). The "square" step of the algorithim will ensure that the output will always be a positive value. This means you can ignore the fact that the original audio may have had "negative" samples (since they'd sound just as loud as their positive equivalent, anyway). You can see RMS being calculated in the *audioInputExample*.
 
-    // from audioInputExample
-    float curVol = 0.0;
-	int numCounted = 0;	
-		
+    // modified from audioInputExample
+    float rms = 0.0;
+	int numCounted = 0;
+	
 	for (int i = 0; i < bufferSize; i++){
-	    left[i] = input[i * 2] * 0.5;
-	    right[i] = input[i * 2 + 1] * 0.5;
-
-	    curVol += left[i] * left[i];
-	    curVol += right[i] * right[i];
-	    numCounted+=2;
+	    float leftSample = input[i * 2] * 0.5;
+	    float rightSample = input[i * 2 + 1] * 0.5;
+		
+	    rms += leftSample * leftSample;
+	    rms += rightSample * rightSample;
+	    numCounted += 2;
 	}
+	
+	rms /= (float)numCounted;
+	rms = sqrt(rms);
+	// rms is now calculated
 
-	curVol /= (float)numCounted;
-	curVol = sqrt( curVol );
-
-### Onset Detection
-Onset detection algorithms attempt to locate moments in an audio stream where an "onset" occurs, which is usually something like an instrument playing a note or the impulse of a drum hit. There are many onset detection algorithms available at various levels of complexity and accuracy, some fine-tuned for speech as opposed to music, some working in the frequency domain instead of the time domain, some made for offline processing as opposed to realtime, etc.
+### Onset Detection (aka Beat Detection)
+Onset detection algorithms attempt to locate moments in an audio stream where an *onset* occurs, which is usually something like an instrument playing a note or the impulse of a drum hit. There are many onset detection algorithms available at various levels of complexity and accuracy, some fine-tuned for speech as opposed to music, some working in the frequency domain instead of the time domain, some made for offline processing as opposed to realtime, etc.
 
 A simple realtime onset detection algorithm can be built on top of the RMS calculation above.
 
-*[ naive RMS threshold-based code sample here ]*  **[mh: would a more advanced version (i.e. one that could handle multiple concurrent instruments) of this be to apply RMS to individual bands of FFT? if so, maybe point that out.  if not, point out other algorithms or places to look for algorithms for onset detection.  it seems like an important thing for anyone attempting live audiovisual stuff.]**
+    class class ofApp : public ofBaseApp {
+        ...
+        float threshold;
+        float minimumThreshold;
+        float decayRate;
+    }
+    
+    void ofApp::setup() {
+        ...
+        decayRate = 0.05;
+        minimumThreshold = 0.1;
+        threshold = minimumThreshold;
+    }
+    
+    void ofApp::audioIn(float * input, int bufferSize, int nChannels) {
+        ...
+        threshold = ofLerp(threshold, minimumThreshold, decayRate);
+	
+        if(rms > threshold) {
+            // onset detected!
+            threshold = rms;
+        }
+	}
+
+This will probably work fine on an isolated drum track, sparse music or for something like detecting whether or not someone's speaking into a microphone. However, in practice you'll likely find that this won't really cut it for reliable audio visualization or more intricate audio work. 
+
+You could of course grab an external onset detection algorithm (there's quite a few addons available for it), but if you'd like to experiment, try incorporating the FFT into your algorithm. For instance, try swapping the RMS for the average amplitude of a range of FFT bins.
 
 ### FFT
-Running an FFT on your input audio will give you back a buffer of values representing the input's frequency content. A straight up FFT *won't* tell you which notes are present in a piece of music, but you will be able to use the data to take the input's sonic "texture" into account. For instance, the FFT data will let you know how much "bass" / "mid" / "treble" there is in the input at a pretty fine granularity (a typical FFT used for realtime audio-reactive work will give you something like 512 to 4096 individual frequency bins to play with).  **[mh: are there some standards for frequency range that defines bass vs mid vs treble?  might be useful to include.]**
+Running an FFT on your input audio will give you back a buffer of values representing the input's frequency content. A straight up FFT *won't* tell you which notes are present in a piece of music, but you will be able to use the data to take the input's sonic "texture" into account. For instance, the FFT data will let you know how much "bass" / "mid" / "treble" there is in the input at a pretty fine granularity (a typical FFT used for realtime audio-reactive work will give you something like 512 to 4096 individual frequency bins to play with). 
 
 When using the FFT to analyze music, you should keep in mind that the FFT's bins increment on a *linear* scale, whereas humans interpret frequency on a *logarithmic* scale. So, if you were to use an FFT to split a musical signal into 512 bins, the lowest bins (bin 0 through bin 40 or so) will probably contain the bulk of the data, and the remaining bins will mostly just be high frequency content. If you were to isolate the sound on a bin-to-bin basis, you'd be able to easily tell the difference between the sound of bins 3 and 4, but bins 500 and 501 would probably sound exactly the same. Unless you had robot ears.
+
+[footnote] There's another transform called the *Constant Q Transform* (aka CQT) that is similar in concept to the FFT, but spaces its bins out logarithmically which is much more intuitive when dealing with music. As of this writing I'm not aware of any openFrameworks-ready addons for the CQT, but it's worth keeping in mind if you feel like pursuing other audio visualization options beyond the FFT.
 
 ## Synthesizing Audio
 
@@ -182,7 +209,7 @@ A simple synthesizer can be implemented as a *waveform* modulated by an *envelop
 
 ### Waveforms
 
-Your synthesizer's waveform will define the oscillator's "timbre". The closer the waveform is to a sine wave, the more "pure" the resulting tone will be. A waveform can be made of just about anything, and there are entire [genres of synthesis](http://en.wikipedia.org/wiki/Category:Sound_synthesis_types) that revolve around techniques for generating and manipulating waveforms.
+Your synthesizer's waveform will define the oscillator's "timbre". The closer the waveform is to a sine wave, the more "pure" the resulting tone will be. A waveform can be made of just about anything, and many [genres of synthesis](http://en.wikipedia.org/wiki/Category:Sound_synthesis_types) revolve around techniques for generating and manipulating waveforms.
 
 A common technique for implementing a waveform is to create a *Lookup Table* containing the full waveform at a certain resolution. A *phase* index is used to scan through the table, and the speed that the phase index is incremented determines the pitch of the oscillator.
 
@@ -285,7 +312,6 @@ We can create a simple (but effective) envelope with `ofLerp(...)` by adding the
     
     void ofApp::update() {
         ...
-        
         if(ofGetKeyPressed()) {
     		volume = ofLerp(volume, 1, 0.8); // jump quickly to 1
 	    } else {
@@ -328,6 +354,7 @@ You can probably tell where we're going, here. Now that the app is responding to
     
     void ofApp::update() {
         ...
+        // replace the "frequency = " line from earlier with this
         frequency = ofLerp(frequency, frequencyTarget, 0.4);
     }
     
@@ -349,9 +376,13 @@ You can probably tell where we're going, here. Now that the app is responding to
         }
     }
 
-Now we've got a basic, useable instrument! A few things to try, if you'd like to explore further:
+Now we've got a basic, useable instrument!
 
-- Instead of using `keyPressed(...)` to determine the oscillator's frequency, use ofxMidi to respond to external MIDI messages
+![Synthesis](images/synthesis-example.png "screenshot of the synthesizer built in this section, clearly showing the aliasing effect of a low-resolution waveform")
+
+A few things to try, if you'd like to explore further:
+
+- Instead of using `keyPressed(...)` to determine the oscillator's frequency, use ofxMidi to respond to external MIDI messages. If you want to get fancy, try implementing pitch bend or use MIDI CC messages to control the frequency lerp rate.
 - Try filling the waveform table with data from an image, or from a live camera (`ofMap(...)` will be handy to keep your data in the -1 to 1 range)
 - Implement a *polyphonic* synthesizer. This is one which uses multiple oscillators to let you play more than one note at a time.
 - Keep several copies of the `phase` index, and use `ofSignedNoise(...)` to slightly modify the frequency they represent. Add each of the waveforms together in `output`, but average the result by the number of phases you're tracking.
@@ -396,11 +427,11 @@ If you're getting pops in the middle of your playback, you can diagnose it by tr
 ### "Clipping" / Distortion
 If your samples begin to exceed the range of -1 to 1, you'll likely start to hear what's known as "clipping", which generally sounds like a grating, unpleasant distortion. Some audio hardware will handle this gracefully by allowing you a bit of leeway outside of the -1 to 1 range, but others will "clip" your buffers.
 
-*[ clipped waveform image ]*
+*[ clipped waveform image, reference http://www.st-andrews.ac.uk/~www_pa/Scots_Guide/audio/clipping/fig1.gif ]*
 
 Assuming this isn't your intent, you can generally blame clipping on a misbehaving addition or subtraction in your code. A multiplication of any two numbers between -1 and 1 will always result in another number between -1 and 1.
 
-If you *want* distortion, it's much more common to use a waveshaping algorithm instead of trying to find a way to make clipping sound good [todo: link].
+If you *want* distortion, it's much more common to use a [waveshaping algorithm](http://music.columbia.edu/cmc/musicandcomputers/chapter4/04_06.php) instead of trying to find a way to make clipping sound good.
 
 ### Latency
 
