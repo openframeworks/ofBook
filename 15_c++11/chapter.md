@@ -224,13 +224,9 @@ public:
 
 This tells the compiler that I'm intending to override a `virtual` function. In this case, the compiler will tell me that no `virtual` function called `mapTheGreekColums` exists, and that therefore my `override` is faulty. So following the compiler's complaint I can go in and fix the spelling mistake. Then I can get on with making my Projection Mappening on the town library facade.
 
-<<<<<<< HEAD
-## Summary
-* Use the keyword `override` at the end of function definitions in a derived class' h file to mark where you are intending to override a `virtual` function in the base `class`
-=======
+
 ### Summary
 * Use the keyword `override` at the end of function definitions in a derived class' h file when you are intending to override a `virtual` function in the base `class`
->>>>>>> d1e1ffd3fa276d0e34be751f3a1924c18183db07
 * The compiler will warn you if your `override` is invalid, which might just save you a lot of time hunting for errors
 
 ## Lambda functions
