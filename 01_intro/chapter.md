@@ -96,9 +96,9 @@ Folks coming from processing, where there is just setup() and draw() often times
 
 ## preprocessor/compiler/linker
 
-When you write code, your end goal is a compiled application - an .exe or .app that you can click on an run.  The job of the compiler is to make that executable for you, to turn text into compiled binary files. It's a 3 step process, and it's useful to know what's happening, especially since you can have errors at different steps along the way.  Most IDEs output out a very length file of the compiling, and this can be really useful if you are posting to the forums, for example.  Once you understand the process of how projects come to be, it can be easier to isolate errors.  Nothing is as frustrating or daunting as looking at 500+ errors in a project when you go to compile, but when you notice that there's a missing include, it's clear why and usually one thing will fix many of the problems. 
+When you write code, your end goal is a compiled application - an .exe or .app that you can click on an run.  The job of the compiler is to make that executable for you, to turn text into compiled binary files. It's a 3 step process, and it's useful to know what's happening, especially since you can have errors at different steps along the way.  Most IDEs will output a very lengthy log of a compilation, and this can be really useful if you are posting to the forums, for example.  Once you understand the process of how projects come to be, it can be easier to isolate errors.  Nothing is as frustrating or daunting as looking at 500+ errors in a project when you go to compile, but when you notice that there's a missing include, the errors will become trivial and usually the inserting the correct include statement will fix many of the problems. 
 
-### preprocess
+### Preprocessing
 
 The first step is that a preprocessor modifies the text files themselves.  When you see the # symbol, that's a preprocessor operation.  The most common preprocessor statement you'll see is: 
 
@@ -108,9 +108,9 @@ which actually means, take the content of this file and put it right here.  **[N
 
 `#define PI 3.1428`
 
-This means, when you see the word PI in the code, change it to this variable.  This isn't a variable, this is literally modifying text. 
+This means, when you see the word PI in the code, change it to this value.  The value itself is not considered a variable in its own right, as the statement simply tells the preprocessor to perform a substitution.
 
-Another common preprocessor step is asking a question. you can say things like: 
+Another common preprocessor step is asking a question.  There are different kinds of conditional statements, such as: 
 
 	#ifdef windows
 		#include "windows.h"
@@ -120,17 +120,17 @@ Another common preprocessor step is asking a question. you can say things like:
 
 As you can imagine this is increadibly useful for cross platform compilcation.  If you want to see preprocessor craziness, look at ofConstants.h. 
 
-One common error you'll have in the preprocess phase is a file not found error, if you include a file like
+One common error you'll have in the preprocessing phase is a file not found error.  If you include a file like
 
 	#include "opencv.h"
 	
-and it can't find the file, you will get an error at the preprocessing stage. The way to fix this is to add header search paths, basically the places (folders) the IDE goes to look for a file.  This is a common error when using a new library and one of the things the project generator is deisgned to help with when adding an addon. 
+and the preprocessor can't find the file, you will get an error at the preprocessing stage. The way to fix this is to add header search paths, which indicate to the preprocessor the places (folders) it should look for a file.  This is a common error when using a new library and one of the things the project generator is deisgned to help with when adding an addon. 
 
 **[more on ofMain.h]**
 
-### compile
+### Compiling
 
-Once the text has been modified, the job of the compiler is simply to take .cpp files and turn them into object code.  It's taking the text and turning it into machine language instructions (also referred to as assembly).  It doesn't touch the h files at all, it only thinks about .cpp files.  In the previous phase the .cpp file has all the h files it uses added to it recursively. 
+Once the text has been modified, the job of the compiler is simply to take .cpp files and turn them into object code.  It takes the text and turns it into machine language instructions (also referred to as assembly).  It doesn't touch the .h files at all, it only thinks about .cpp files.  In the previous phase the .cpp file has all the h files it uses added to it recursively. 
 
 This recursive h inclusion  is one reason while you will see include guards on the top of h files.  They will either look like:
 	
@@ -143,26 +143,26 @@ or the more modern
 
 	#pragma once
 
-This is because if a file is included twice into a .cpp file the compiler could be confused.  If it's sees the same definition twice, like: 
+This is because if a file is included twice in an application, the compiler may become confused about the repeated definitions of variables and functions.  If it's sees the same definition twice, like: 
 
 	float position;
 	float position;
 
-it will not know which one is which.  The include guard prevents the file from being included twice. 
+it will not know which one is which.  These include guards prevent the file from being included twice. 
 
-there are plenty of errors that can happen at compile time -- using a variable that you haven't defined for example.  The compiler will stop when it hits an error and the IDEs are designed to make it easy for you to see where the errors are and fix them.  
+There are plenty of errors that can happen at compile time – using a variable that you haven't defined for example.  The compiler will stop when it hits an error and the IDEs are designed to make it easy for you to see where the errors are and fix them.  
 
-The compilers job in life is to take the .cpp files and turn them into .o files.  These are individual object files that it will compbine in the next phase, linking. 
+The compiler's job in life is to take the .cpp files and turn them into .o files.  These are individual object files that it will compbine in the next phase, linking. 
 
-### link
+### Linking
 
-Finally, after we have a bunch of object files, our job is to link them into one thing -- in our case an application (alternatively, compilers can compile code into a library, for example).  This is what the linker does.  As you can imagine, there are jumps from one thing to another.  For example, in ofApp you could call a graphics call from ofGraphics: 
+Finally, after we have a bunch of object files, our job is to link them into one thing -- in our case an application (alternatively, compilers can compile code into a library, for example).  This is what the linker does.  As you can imagine, code in one object frequently will reference code defined in another object.  For example, in ofApp you could call a graphics call from ofGraphics: 
 
 	void ofApp::draw(){
 		ofCircle(100,100,20);
 	}
 	
-This code is calling a function in another object.  The linker figures out the links from object to object (in this case between ofApp.o and ofGraphics.o) and links them together into one file. 
+This code calls a function in another object.  The linker figures out the links from object to object (in this case between ofApp.o and ofGraphics.o) and links them together into one file. 
 
-In addition to header search paths, there are also setting in the IDE for dealing with linker paths and libraries to link against.  A common error you might see is a link error, where the code in your project compiles fine, but it's having trouble linking because some object is missing.  For example, if you forget to include a .cpp file from the source code, the other code will comiple fine, but when the linker goes to make that jump, it can't find where to jump to.  Linker errors are described as "undefined reference" errors and occur at the end of the compile process. 
+In addition to header search paths, there are also setting in the IDE for dealing with linker paths and libraries to link against.  A common error you might see is a link error, where the code in your project compiles fine, but it's having trouble linking because an object is missing.  For example, if you forget to include a .cpp file in the source code, the other code will compile fine, but when the linker goes to make that jump, it can't find where to jump to.  Linker errors are described as "undefined reference" errors and occur at the end of the compile process. 
 
