@@ -45,7 +45,7 @@ Code::Blocks is a free IDE. It runs on several platforms(several Linux distros, 
 
 ####Eclipse####
 Eclipse is the IDE of choice for Linux, yet it also runs on Mac and Windows machines. For Android development you'll need to use Eclipse, regardless of your platform.
-![Eclipse Screenshot](images/eclipseScreenshot.png, "Eclipse Screenshot")
+![Eclipse Screenshot](images/eclipseScreenshot.png "Eclipse Screenshot")
 
 ####The NO-IDE IDE.####
 Using the terminal and makefiles. 
@@ -94,7 +94,7 @@ You can also go to [ofxAddons](http://ofxaddons.com/ "ofxaddons, a collection of
 This is the folder where you put your project files.
 Your current OF download contains the folder named "myApps" inside of "apps," which just has an empty example project folder.
 IMPORTANT: you have to respect the folder structure within the apps folder, otherwise your projects won't compile. This should be like this:
-![Apps Folder structure](images/appsFolderStructure.png, "Apps Folder Structure").
+![Apps Folder structure](images/appsFolderStructure.png "Apps Folder Structure").
 
 
 ####Examples####

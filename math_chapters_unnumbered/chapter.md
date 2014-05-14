@@ -216,7 +216,7 @@ line.addVertex(ofPoint(200, 400));
 line.bezierTo(100, 100, 800, 100, 700, 400); 
 ```
 This generates this image:
-![Beziér](http://openframeworks.cc/documentation/graphics/bezier.png)
+![Beziér](images/bezier.png)
 
 This is just one example of use though. All of the different combinations are documented extensively in the _Advanced Graphics_ chapter. 
 
