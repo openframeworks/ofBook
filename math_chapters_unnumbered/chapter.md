@@ -153,13 +153,13 @@ This function used a defined range and a parameter to create `a1`, then used ano
 We've done something remarkable here. We used the way one parameter changes on two fixed lines to control a third, totally mobile line, and draw one point on it at each point in time between 0 and 1. In Mathspeak, it looks like this:
  
 $$
-\begin{align}
+\begin{aligned}
 \text{lerp}&\left(t,\text{lerp}\left(t,5,8\right),\,\text{lerp}\left(t,2,9\right)\right) =\\
 \text{lerp}&\left(t,8\cdot t+5\cdot\left(1-t\right),9\cdot t+2\cdot\left(1-t\right)\right)\\
 = &\left(9\cdot t+2\cdot\left(1-t\right)\right)\cdot t+\left(8\cdot t+5\cdot\left(1-t\right)\right)\cdot\left(1-t\right)\\
 = &\left(9t^{2}+2t-2t^{2}\right)+\left(8t+5-5t\right)-\left(8t^{2}+5t-5t^{2}\right)\\
 = &4t^{2}+5
-\end{align}
+\end{aligned}
 $$
 
 Something interesting happened here. Without noticing, we introduced a second order of complexity, a _quadratic_ one. Seriously, give it a second look, draw the entire process on paper. It's remarkable.
@@ -647,7 +647,7 @@ The easiest way to think about rotations in 3D is to just think about them as a 
 
 The trick for rotating about one axis in 3D-land works the exact same way it does in 2d land: In order to rotate around one axis, all we need to do is to use a 2d rotation matrix (think about it: a rotation about one axis doesn't depend on the others just yet), and add a neutral dimension to it. Here's what rotation matrices in 3d look like when we use one axis of rotation each time:
 
-$$\begin{align}
+$$\begin{aligned}
 R_{x}(\theta) &= \begin{bmatrix}
 1 & 0 & 0 \\
 0 & \cos \theta &  -\sin \theta \\
@@ -663,7 +663,7 @@ R_{z}(\theta) &= \begin{bmatrix}
 \sin \theta & \cos \theta & 0\\
 0 & 0 & 1\\
 \end{bmatrix}
-\end{align}
+\end{aligned}
 $$
 
 And this is indeed a useful way for rotating about one axis. Leonhard Euler, a famous Mathematician working on these types of rotations, noted early on that while good for rotating about one axis, this method (later named after him) was not trivial to state for multiaxial rotations. To understand that, it's easiest to grab a Rubik's cube and twist it about its $x$ dimension, and then about it's $y$ dimension. Now make a note of where the unique tiles have moved, revert the changes, and try it again with first $y$ and then $x$. Your results will be different!
