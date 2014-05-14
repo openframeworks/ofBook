@@ -825,6 +825,7 @@ Probably the most important thing left now is to point out where you can learn m
     - The free [ProGit book](http://git-scm.com/book), readable online. Awesome to get in-depth information about all things Git.
     - The [Git reference](http://git-scm.com/docs), which has the documentation about all Git commands, their options and usage.
     - [Try Git](http://try.github.io/levels/1/challenges/1) is an excellent interactive tutorial.
+    - Github offers a [Hello World](https://guides.github.com/activities/hello-world/) introduction to Git and Github.
     - There are some websites available which visualize/animate the workings of Git, see [here](http://www.wei-wang.com/ExplainGitWithD3/), [here](http://pcottle.github.io/learnGitBranching/) or [here](http://ndpsoftware.com/git-cheatsheet.html).
 * Get help:
     - [Google](https://www.google.com/) the errors you get!
