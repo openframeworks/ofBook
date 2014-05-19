@@ -64,9 +64,11 @@ The first presentation of Line Segments Space was at Seoul Art Space Gumcheon be
 * 1 week installation time
 * 4 week run time
 * Temporary room built by gallery
-* No other external production assistance (e.g. tech team)
-* Limited production budget from gallery, other costs to be covered by ourselves
+* No other external production assistance from gallery (e.g. tech team, volunteers)
+* Limited production budget from gallery, other costs covered by artists
 
 ###System overview
 
-==insert system diagram==
+==insert system diagram image==
+
+![System Diagram](images/system_diagram.key/preview.jpg)
