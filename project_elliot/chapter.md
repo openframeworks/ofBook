@@ -64,11 +64,43 @@ The first presentation of Line Segments Space was at Seoul Art Space Gumcheon be
 * 1 week installation time
 * 4 week run time
 * Temporary room built by gallery
-* No other external production assistance from gallery (e.g. tech team, volunteers)
-* Limited production budget from gallery, other costs covered by artists
+* Limited production budget from gallery for material and equipment costs, other costs covered by artists
 
 ###System overview
 
-==insert system diagram image==
-
 ![System Diagram](images/system_diagram.key/preview.jpg)
+
+==please redraw==
+
+#### Software frameworks
+
+Generally I split processes into 2 categories:
+
+__Online__ :
+* The task is performed with the installation hardware
+* Other people are likely to be involved in the process
+* It's best if software edits can be made quickly and freely
+* Edits are made whilst continuously observing the output (like a pilot manouvering a plane)
+
+An example of an online process might be the final runtime of the installation.
+
+__Offline__ : 
+* The task can be performed away from the installation hardware.
+* Some offline tasks may require intense computing time
+* Often theses tasks require more concentration
+* Edits are made and the results are viewed asynchronously (like a chef tasting the soup)
+
+An example of an offline process would be processing the scan data.
+
+My personal preference is often to use openFrameworks for developing offline tasks, and to use another toolkit called VVVV for developing online processes.
+
+#### Hardware
+
+| Component | Reasoning |
+| ----| ----|
+|PC, Windows | PC's are selected for flexible graphics options and for VVVV compatability |
+|GeForce GTX 680 | Heavy shader pipeline, 4 graphic outs |
+|TripleHead2Go | Keeping all output in a single context (i.e, 1 'Display' in Windows) reduces rendering overhead and increases framerate. GeForce cards do not have an option for teaming exactly 2 outputs together into 1 context. The TripHead2Go was used to split 1 output (1 context) to 2 projectors. Alternatively, I would recommend to use Quadro Mosaic or ATI EyeFinity to team the 2 outputs|
+| 2 portrait monitors | Extra screenspace makes working environments more productive, and a significant portion of development is performed on site with the final piece. I often use portrait for a few reasons, but in this case largely because it's easier to look around the screens at the installation.|
+|Mac Mini, OSX | Second PC is for sound design, which generally requires Firewire. Ableton runs well on OSX |
+
