@@ -946,11 +946,38 @@ In the above code we simply set up our network address, incoming and out going p
 
 Let’s move on to the next major function we want to write. We need to run an update function in this class to update every frame so we can make sure that if we move a slider on our ipad that change becomes reflected within the game. Also, we might want to send that value back out once we receive it so we can get some visual feedback on our tablet to let us know what our current settings are. 
 
-Each time we make a change on our device, it will send over the changes to our code via Touch OSC. We want to make sure we get all of the incoming messages that are being sent so we will create a simple while loop. For this we will be using `ofxOscMessage m`. Every incoming message will come in with its address tag and also the arguments we are setting. You can get access to the Address via the dot syntax. `m.getAddress() == "/game/max_enemy_amplitude"` for example will test to see if the message address is /game/max_enemy_amplitude. If it is, set it equal to that same value in your game's codebase and viola, they are linked together. Every swipe of the knob will translate to direct changes in your game. We do this for every single value we want to set. 
+Each time we make a change on our device, it will send over the updates to our code via Touch OSC. We want to make sure we get all of the incoming messages that are being sent so we will create a simple while loop. We will loop through the whole list of messages that came into our game that frame and match it to the corresponding variable in our game via if statements. 
 
-At the same time, we are also going to send those exact same values back out to our device so we can see the values that the settings in our game are currently at. This is handy for two reasons. One, you get visual feedback of the current values on your device. Two, if you happen to land on values that feel right in your game, you can screen cap the settings on your device and go back and change them to match in your code once you close the running game.  
+```
+  while (receiver.hasWaitingMessages()) {        
+        //get the next message
+        ofxOscMessage m;
+        receiver.getNextMessage(&m);
 
-We are going to pack up all of the values in our current running game and send them back to the device using `ofxOscMessage sendBack`. When we have a string match for the address in the `ofxOscMessage m` variable, we just add our arguments to `sendBack` via the right function (in this case usually `addFloatArg`), set the address using the address pattern that's similar to a URL structure using the `setAddress` function. Finally, we use the build in `sendMessage` function to send it out over OSC. All of these functions are built into the osc addon we are using. Here's the code to add to your LiveTesting.cpp file 
+```
+       
+Every incoming message will come with its own unique address tag and new arguments. You can get access to a message's address via the getAddress function. For example,`if(m.getAddress() == "/game/max_enemy_amplitude")`, will test to see if the message address is /game/max_enemy_amplitude. If it is, set the variable equal to that value in your game's codebase and they are linked together. Every swipe of the knob will translate to direct changes in your game. We do this for every single value we want to set.  
+
+```      
+	if(m.getAddress() == "/game/max_enemy_amplitude")
+        {
+            max_enemy_amplitude = m.getArgAsFloat(0);
+            
+            //these values send back to OSC to display the current settings for visual feedback
+            sendBack.addFloatArg(max_enemy_amplitude);
+            sendBack.setAddress("/updatedVals/max_enemy_amplitude");
+            sender.sendMessage(sendBack);
+            
+            cout << max_enemy_amplitude << endl;
+        }
+
+```
+
+At the same time, we are also going to send those exact same values back out to our device so we can see the numbers that the settings in our game are currently at. This is handy for two reasons. One, you get visual feedback of the current variables values' on your device. Two, if you happen to land on settings that feel right in your game, you can take a screen cap on your device. After stopping the game, go back and change the variables to match in your code and the next time you run your program, it will start with those parameters. 
+
+To pack up all of the values in our current running game and send them back to the device every frame we will create a variable of type `ofxOscMessage` called `sendBack`. When we have a string match for the address in the `ofxOscMessage m`, we just copy the arguments over to `sendBack` via the right function (in this case usually `addFloatArg`) and set the address pattern using the `setAddress` function. Finally, we use the built in `sendMessage` function to send the message out over OSC. 
+
+Here's the complete code to add to your LiveTesting.cpp file 
 
 ```
 void LiveTesting::update()
@@ -1022,7 +1049,7 @@ void LiveTesting::update()
     }
 ```
 
-You have reached the end of the code you need to do a real testing session. Have fun running this game. Have a friend play it while you change the values. Once you have values you like, quit the game and add those values into the code to make them permanent changes. 
+You have reached the end of the tutorial. Now do a real testing session. Run the game and have a friend play it while you change the knobs. Once you have settings you like, quit the game and add those values into the code to make them permanent updates. 
 
 For a bonus challenge, find a few settings you like, and create a difficulty ramp for game using those values of time.  
 
@@ -1032,8 +1059,8 @@ We've reached the end of the chapter but not the end of the journey. A few great
 [Kill Screen](http://killscreendaily.com/)  
 [Indiecade](http://www.indiecade.com)  
 [Babycastles](http://www.babycastles.com)  
-[Polygon](http://www.polygon.com/)
-[IDGA](http://www.igda.org/)
+[Polygon](http://www.polygon.com/)  
+[IDGA](http://www.igda.org/)  
 [Game Dev Net](http://www.gamedev.net/page/index.html)  
 [Game Dev Stack Exchange](http://gamedev.stackexchange.com/)  
 [Gamasutra](http://gamasutra.com/)  
