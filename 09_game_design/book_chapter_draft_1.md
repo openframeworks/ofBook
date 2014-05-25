@@ -1027,11 +1027,21 @@ You have reached the end of the code you need to do a real testing session. Have
 For a bonus challenge, find a few settings you like, and create a difficulty ramp for game using those values of time.  
 
 ###Resouces 
-We've reached the end of the chapter but not the end of the journey. A few great resources for independent games are listed here:   
+We've reached the end of the chapter but not the end of the journey. A few great resources for independent games scene are listed here:   
+[Come Out And Play](http://www.comeoutandplay.org/)  
+[Kill Screen](http://killscreendaily.com/)  
 [Indiecade](http://www.indiecade.com)  
-MORE!!! 
+[Babycastles](http://www.babycastles.com)  
+[Polygon](http://www.polygon.com/)
+[IDGA](http://www.igda.org/)
+[Game Dev Net](http://www.gamedev.net/page/index.html)  
+[Game Dev Stack Exchange](http://gamedev.stackexchange.com/)  
+[Gamasutra](http://gamasutra.com/)  
+[Digra](http://www.digra.org/)  
+[Different Games](http://www.differentgames.org/)
 
-This chapter was written by founding members of the [Code Liberation Foundation](http://www.codeliberation.org), an organization that teaches women to program games for free. 
-
+###About us
+This chapter was written by founding members of the [Code Liberation Foundation](http://www.codeliberation.org), an organization that teaches women to program games for free. We also build community, create a safe spaces for women who want to learn to program in a non-male dominated setting and generally rock.    
+![](clfTwitter.png)
 
  
