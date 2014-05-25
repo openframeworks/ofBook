@@ -68,20 +68,20 @@ We’ll then divide up `testApp`’s `update()` and `draw()` loops between those
 ```
 //--------------------------------------------------------------
 void testApp::update(){
-   if (game_state == "start") {
+   if (game_state == "start") {
  
-   } else if (game_state == "game") {
-   } else if (game_state == “end”) {
+   } else if (game_state == "game") {
+   } else if (game_state == “end”) {
  
-   }
+   }
 }
 //--------------------------------------------------------------
 void testApp::draw(){
-   if (game_state == "start") {
-   } else if (game_state == "game") {
-   } else if (game_state == “end”) {
+   if (game_state == "start") {
+   } else if (game_state == "game") {
+   } else if (game_state == “end”) {
  
-   }
+   }
 }
 ```
 
@@ -90,8 +90,8 @@ Let’s set the initial value of `game_state` to `“start”` right when the ap
 ```
 //--------------------------------------------------------------
 void testApp::setup(){
-   game_state = "start";
-  score = 0;
+   game_state = "start";
+  score = 0;
 }
 ```
 
@@ -100,12 +100,12 @@ Finally, let’s make sure that we can move forward from the start screen. In th
 ```
 //--------------------------------------------------------------
 void testApp::keyReleased(int key){
-   
-   if (game_state == "start") {
-       game_state = "game";
-   } else if (game_state == "game") {
-      // blank for now
-   }
+   
+   if (game_state == "start") {
+       game_state = "game";
+   } else if (game_state == "game") {
+      // blank for now
+   }
 }
 ```
 
@@ -116,23 +116,23 @@ Great! Let’s move onto our player. Our player’s class looks like this:
 ```
 class Player {
 public:
-   ofPoint pos;
-   float width, height, speed;
-   int lives;
-   
-   bool is_left_pressed, is_right_pressed, is_down_pressed, is_up_pressed;
-   
-   void setup(ofImage * _img);
-   void update();
-   void draw();
-   void shoot();
-   
-   void calculate_movement();
-   
-   bool check_can_shoot();
-   
-   ofImage * img;
-   
+   ofPoint pos;
+   float width, height, speed;
+   int lives;
+   
+   bool is_left_pressed, is_right_pressed, is_down_pressed, is_up_pressed;
+   
+   void setup(ofImage * _img);
+   void update();
+   void draw();
+   void shoot();
+   
+   void calculate_movement();
+   
+   bool check_can_shoot();
+   
+   ofImage * img;
+   
 };
 ```
 
@@ -155,46 +155,46 @@ Here’s what our new `keyPressed()` and `keyReleased()` functions look like:
 ```
 //--------------------------------------------------------------
 void testApp::keyPressed(int key){
-   if (game_state == "game") {
-       if (key == OF_KEY_LEFT) {
-           player_1.is_left_pressed = true;
-       }
-       
-       if (key == OF_KEY_RIGHT) {
-           player_1.is_right_pressed = true;
-       }
-       
-       if (key == OF_KEY_UP) {
-           player_1.is_up_pressed = true;
-       }
-       
-       if (key == OF_KEY_DOWN) {
-           player_1.is_down_pressed = true;
-       }
-   }
+   if (game_state == "game") {
+       if (key == OF_KEY_LEFT) {
+           player_1.is_left_pressed = true;
+       }
+       
+       if (key == OF_KEY_RIGHT) {
+           player_1.is_right_pressed = true;
+       }
+       
+       if (key == OF_KEY_UP) {
+           player_1.is_up_pressed = true;
+       }
+       
+       if (key == OF_KEY_DOWN) {
+           player_1.is_down_pressed = true;
+       }
+   }
  
 }
 //--------------------------------------------------------------
 void testApp::keyReleased(int key){
-   if (game_state == "start") {
-       game_state = "game";
-   } else if (game_state == "game") {
-       if (key == OF_KEY_LEFT) {
-           player_1.is_left_pressed = false;
-       }
-       
-       if (key == OF_KEY_RIGHT) {
-           player_1.is_right_pressed = false;
-       }
-       
-       if (key == OF_KEY_UP) {
-           player_1.is_up_pressed = false;
-       }
-       
-       if (key == OF_KEY_DOWN) {
-           player_1.is_down_pressed = false;
-       }
-   }
+   if (game_state == "start") {
+       game_state = "game";
+   } else if (game_state == "game") {
+       if (key == OF_KEY_LEFT) {
+           player_1.is_left_pressed = false;
+       }
+       
+       if (key == OF_KEY_RIGHT) {
+           player_1.is_right_pressed = false;
+       }
+       
+       if (key == OF_KEY_UP) {
+           player_1.is_up_pressed = false;
+       }
+       
+       if (key == OF_KEY_DOWN) {
+           player_1.is_down_pressed = false;
+       }
+   }
 }
 ```
 
@@ -203,10 +203,10 @@ Add `ofImage player_image` to `testApp.h`, then load the player’s image and in
 
 ```
 void testApp::setup(){
-   game_state = "start";
-   player_image.loadImage("player.png");
-   
-   player_1.setup(&player_image);
+   game_state = "start";
+   player_image.loadImage("player.png");
+   
+   player_1.setup(&player_image);
 }
 ```
 
@@ -215,22 +215,22 @@ Finally, update and draw your player in the appropriate part of `testApp::update
 ```
 //--------------------------------------------------------------
 void testApp::update(){
-   if (game_state == "start") {
-      
-   } else if (game_state == "game") {
-       player_1.update();
-   }
+   if (game_state == "start") {
+      
+   } else if (game_state == "game") {
+       player_1.update();
+   }
 }
  
 //--------------------------------------------------------------
 void testApp::draw(){
-   if (game_state == "start") {
+   if (game_state == "start") {
  
-   } else if (game_state == "game") {
-       player_1.draw();
-   } else if (game_state == "end") {
+   } else if (game_state == "game") {
+       player_1.draw();
+   } else if (game_state == "end") {
  
-   }  
+   }  
 }
 ```
 
@@ -244,16 +244,16 @@ Our bullet class will look a lot like the player class, having a position, speed
 ```
 class Bullet {
 public:
-   ofPoint pos;
-   float speed;
-   float width;
-   bool from_player;
-   
-   void setup(bool f_p, ofPoint p, float s, ofImage * bullet_image);
-   void update();
-   void draw();
-   
-   ofImage * img;
+   ofPoint pos;
+   float speed;
+   float width;
+   bool from_player;
+   
+   void setup(bool f_p, ofPoint p, float s, ofImage * bullet_image);
+   void update();
+   void draw();
+   
+   ofImage * img;
 };
 ```
 
@@ -261,23 +261,23 @@ Our `Bullet.cpp` will look like this:
 
 ```
 void Bullet::setup(bool f_p, ofPoint p, float s, ofImage * bullet_image) {
-   from_player = f_p;
-   pos = p;
-   speed = s + 3;
-   img = bullet_image;
-   width = img->width;
-   
+   from_player = f_p;
+   pos = p;
+   speed = s + 3;
+   img = bullet_image;
+   width = img->width;
+   
 }
 void Bullet::update() {
-   if (from_player) {
-       pos.y -= speed;
-   } else {
-       pos.y += speed;
-   }
+   if (from_player) {
+       pos.y -= speed;
+   } else {
+       pos.y += speed;
+   }
 }
 void Bullet::draw() {
-   img->draw(pos.x - width/2, pos.y - width/2);
-   
+   img->draw(pos.x - width/2, pos.y - width/2);
+   
 }
 ```
 
@@ -293,13 +293,13 @@ For now, our `update_bullets()` function will call the `update()` function in ea
 ```
 //--------------------------------------------------------------
 void testApp::update_bullets() {
-   for (int i = 0; i < bullets.size(); i++) {
-       bullets[i].update();
-       if (bullets[i].pos.y - bullets[i].width/2 < 0 || bullets[i].pos.y + bullets[i].width/2 > ofGetHeight()) {
-           bullets.erase(bullets.begin()+i);
-       }
-   }
-   // we’ll call a collision check function here shortly
+   for (int i = 0; i < bullets.size(); i++) {
+       bullets[i].update();
+       if (bullets[i].pos.y - bullets[i].width/2 < 0 || bullets[i].pos.y + bullets[i].width/2 > ofGetHeight()) {
+           bullets.erase(bullets.begin()+i);
+       }
+   }
+   // we’ll call a collision check function here shortly
 }
 ```
 
@@ -308,27 +308,27 @@ Our `testApp::update()` and `testApp::draw()` will now look like this:
 ```
 //--------------------------------------------------------------
 void testApp::update(){
-   if (game_state == "start") {
+   if (game_state == "start") {
  
-   } else if (game_state == "game") {
-       player_1.update();
-       update_bullets();
-   }
+   } else if (game_state == "game") {
+       player_1.update();
+       update_bullets();
+   }
 }
 //--------------------------------------------------------------
 void testApp::draw(){
-   if (game_state == "start") {
+   if (game_state == "start") {
  
-   } else if (game_state == "game") {
-       ofBackground(0,0,0);
-       player_1.draw();
-       
-       for (int i = 0; i < bullets.size(); i++) {
-           bullets[i].draw();
-       }
-   } else if (game_state == "end") {
+   } else if (game_state == "game") {
+       ofBackground(0,0,0);
+       player_1.draw();
+       
+       for (int i = 0; i < bullets.size(); i++) {
+           bullets[i].draw();
+       }
+   } else if (game_state == "end") {
  
-   }
+   }
 }
 ```
 
@@ -337,29 +337,29 @@ Finally, let’s add an if-statement to our `keyPressed()` so that when we press
 ```
 //--------------------------------------------------------------
 void testApp::keyPressed(int key){
-   if (game_state == "game") {
-       if (key == OF_KEY_LEFT) {
-           player_1.is_left_pressed = true;
-       }
-       
-       if (key == OF_KEY_RIGHT) {
-           player_1.is_right_pressed = true;
-       }
-       
-       if (key == OF_KEY_UP) {
-           player_1.is_up_pressed = true;
-       }
-       
-       if (key == OF_KEY_DOWN) {
-           player_1.is_down_pressed = true;
-       }
-       
-       if (key == ' ') {
-           Bullet b;
-           b.setup(true, player_1.pos, player_1.speed, &player_bullet_image);
-           bullets.push_back(b);
-       }   
-   }
+   if (game_state == "game") {
+       if (key == OF_KEY_LEFT) {
+           player_1.is_left_pressed = true;
+       }
+       
+       if (key == OF_KEY_RIGHT) {
+           player_1.is_right_pressed = true;
+       }
+       
+       if (key == OF_KEY_UP) {
+           player_1.is_up_pressed = true;
+       }
+       
+       if (key == OF_KEY_DOWN) {
+           player_1.is_down_pressed = true;
+       }
+       
+       if (key == ' ') {
+           Bullet b;
+           b.setup(true, player_1.pos, player_1.speed, &player_bullet_image);
+           bullets.push_back(b);
+       }   
+   }
 }
 ```
 
@@ -373,20 +373,20 @@ Let’s move on to our enemy. This process should be familiar by now. Add an `of
 ```
 class Enemy {
 public:
-   ofPoint pos;
-   float speed;
-   float amplitude;
-   float width;
-   
-   float start_shoot;
-   float shoot_interval;
-   
-   void setup(float max_enemy_amplitude, float max_enemy_shoot_interval, ofImage * enemy_image);
-   void update();
-   void draw();
-   bool time_to_shoot();
-   
-   ofImage * img;
+   ofPoint pos;
+   float speed;
+   float amplitude;
+   float width;
+   
+   float start_shoot;
+   float shoot_interval;
+   
+   void setup(float max_enemy_amplitude, float max_enemy_shoot_interval, ofImage * enemy_image);
+   void update();
+   void draw();
+   bool time_to_shoot();
+   
+   ofImage * img;
 };
 ```
 
@@ -395,28 +395,28 @@ Our enemy’s horizontal movement will be shaped by the values fed to a sine wav
 
 ```
 void Enemy::setup(float max_enemy_amplitude, float max_enemy_shoot_interval, ofImage * enemy_image) {
-   pos.x = ofRandom(ofGetWidth());
-   pos.y = 0;
-   img = enemy_image;
-   width = img->width;
-   speed = ofRandom(2, 7);
-   amplitude = ofRandom(max_enemy_amplitude);
-   shoot_interval = ofRandom(0.5, max_enemy_shoot_interval);
-   start_shoot = ofGetElapsedTimef();
+   pos.x = ofRandom(ofGetWidth());
+   pos.y = 0;
+   img = enemy_image;
+   width = img->width;
+   speed = ofRandom(2, 7);
+   amplitude = ofRandom(max_enemy_amplitude);
+   shoot_interval = ofRandom(0.5, max_enemy_shoot_interval);
+   start_shoot = ofGetElapsedTimef();
 }
 void Enemy::update() {
-   pos.y += speed;
-   pos.x += amplitude * sin(ofGetElapsedTimef());
+   pos.y += speed;
+   pos.x += amplitude * sin(ofGetElapsedTimef());
 }
 void Enemy::draw() {
-   img->draw(pos.x - width/2, pos.y - width/2);
+   img->draw(pos.x - width/2, pos.y - width/2);
 }
 bool Enemy::time_to_shoot() {
-   if (ofGetElapsedTimef() - start_shoot > shoot_interval) {
-       start_shoot = ofGetElapsedTimef();
-       return true;
-   }
-   return false;
+   if (ofGetElapsedTimef() - start_shoot > shoot_interval) {
+       start_shoot = ofGetElapsedTimef();
+       return true;
+   }
+   return false;
 }
 ```
 
@@ -428,51 +428,51 @@ In `time_to_shoot()`, we check to see whether the difference between the current
 ```
 //--------------------------------------------------------------
 void testApp::setup(){
-   game_state = "start";
-   
-   max_enemy_amplitude = 3.0;
-   max_enemy_shoot_interval = 1.5;
-   
-   enemy_image.loadImage("enemy0.png");
-   player_image.loadImage("player.png");
-   enemy_bullet_image.loadImage("enemy_bullet.png");
-   player_bullet_image.loadImage("player_bullet.png");
-   
-   player_1.setup(&player_image);
+   game_state = "start";
+   
+   max_enemy_amplitude = 3.0;
+   max_enemy_shoot_interval = 1.5;
+   
+   enemy_image.loadImage("enemy0.png");
+   player_image.loadImage("player.png");
+   enemy_bullet_image.loadImage("enemy_bullet.png");
+   player_bullet_image.loadImage("player_bullet.png");
+   
+   player_1.setup(&player_image);
 }
 //--------------------------------------------------------------
 void testApp::update(){
-   if (game_state == "start") {
-       
-   } else if (game_state == "game") {
-       player_1.update();
-       update_bullets();
-       
-       for (int i = 0; i < enemies.size(); i++) {
-           enemies[i].update();
-           if (enemies[i].time_to_shoot()) {
-               Bullet b;
-               b.setup(false, enemies[i].pos, enemies[i].speed, &enemy_bullet_image);
-               bullets.push_back(b);
-           }
-       }
-   } else if (game_state =="draw") {
-   }
+   if (game_state == "start") {
+       
+   } else if (game_state == "game") {
+       player_1.update();
+       update_bullets();
+       
+       for (int i = 0; i < enemies.size(); i++) {
+           enemies[i].update();
+           if (enemies[i].time_to_shoot()) {
+               Bullet b;
+               b.setup(false, enemies[i].pos, enemies[i].speed, &enemy_bullet_image);
+               bullets.push_back(b);
+           }
+       }
+   } else if (game_state =="draw") {
+   }
 }
 //--------------------------------------------------------------
 void testApp::draw(){
-   if (game_state == "start") {
-   } else if (game_state == "game") {
-       ofBackground(0,0,0);
-       player_1.draw();
-       for (int i = 0; i < enemies.size(); i++) {
-           enemies[i].draw();
-       }
-       for (int i = 0; i < bullets.size(); i++) {
-           bullets[i].draw();
-       }
-   } else if (game_state == "end") {
-   }
+   if (game_state == "start") {
+   } else if (game_state == "game") {
+       ofBackground(0,0,0);
+       player_1.draw();
+       for (int i = 0; i < enemies.size(); i++) {
+           enemies[i].draw();
+       }
+       for (int i = 0; i < bullets.size(); i++) {
+           bullets[i].draw();
+       }
+   } else if (game_state == "end") {
+   }
 }
 ```
 
@@ -483,26 +483,26 @@ Let’s implement our bullet collision checks. Add a void `check_bullet_collisio
 ```
 //--------------------------------------------------------------
 void testApp::check_bullet_collisions() {
-   for (int i = 0; i < bullets.size(); i++) {
-       if (bullets[i].from_player) {
-           for (int e = enemies.size()-1; e >= 0; e--) {
-               if (ofDist(bullets[i].pos.x, bullets[i].pos.y, enemies[e].pos.x, enemies[e].pos.y) < (enemies[e].width + bullets[i].width)/2) {
-                   enemies.erase(enemies.begin()+e);
-                   bullets.erase(bullets.begin()+i);
-                   score+=10;
-               }
-           }
-       } else {
-           if (ofDist(bullets[i].pos.x, bullets[i].pos.y, player_1.pos.x, player_1.pos.y) < (bullets[i].width+player_1.width)/2) {
-               bullets.erase(bullets.begin()+i);
-               player_1.lives--;
-               
-               if (player_1.lives <= 0) {
-                   game_state = "end";
-               }
-           }
-       }
-   }
+   for (int i = 0; i < bullets.size(); i++) {
+       if (bullets[i].from_player) {
+           for (int e = enemies.size()-1; e >= 0; e--) {
+               if (ofDist(bullets[i].pos.x, bullets[i].pos.y, enemies[e].pos.x, enemies[e].pos.y) < (enemies[e].width + bullets[i].width)/2) {
+                   enemies.erase(enemies.begin()+e);
+                   bullets.erase(bullets.begin()+i);
+                   score+=10;
+               }
+           }
+       } else {
+           if (ofDist(bullets[i].pos.x, bullets[i].pos.y, player_1.pos.x, player_1.pos.y) < (bullets[i].width+player_1.width)/2) {
+               bullets.erase(bullets.begin()+i);
+               player_1.lives--;
+               
+               if (player_1.lives <= 0) {
+                   game_state = "end";
+               }
+           }
+       }
+   }
 }
 ```
 
@@ -514,13 +514,13 @@ Don’t forget to call `check_bullet_collisions()` as part of `update_bullets()`
 ```
 //--------------------------------------------------------------
 void testApp::update_bullets() {
-   for (int i = 0; i < bullets.size(); i++) {
-       bullets[i].update();
-       if (bullets[i].pos.y - bullets[i].width/2 < 0 || bullets[i].pos.y + bullets[i].width/2 > ofGetHeight()) {
-           bullets.erase(bullets.begin()+i);
-       }
-   }
-   check_bullet_collisions();
+   for (int i = 0; i < bullets.size(); i++) {
+       bullets[i].update();
+       if (bullets[i].pos.y - bullets[i].width/2 < 0 || bullets[i].pos.y + bullets[i].width/2 > ofGetHeight()) {
+           bullets.erase(bullets.begin()+i);
+       }
+   }
+   check_bullet_collisions();
 }
 ```
 
@@ -532,11 +532,11 @@ Great! Except… we don’t have any enemies yet! Definitely an oversight. This 
 ```
 class LevelController {
 public:
-   float start_time;
-   float interval_time;
-   
-   void setup(float e);
-   bool should_spawn();
+   float start_time;
+   float interval_time;
+   
+   void setup(float e);
+   bool should_spawn();
 };
 ```
 
@@ -546,15 +546,15 @@ Inside our `LevelController.cpp`:
 
 ```
 void LevelController::setup(float s) {
-   start_time = s;
-   interval_time = 500;
+   start_time = s;
+   interval_time = 500;
 }
 bool LevelController::should_spawn() {
-   if (ofGetElapsedTimeMillis() - start_time > interval_time) {
-       start_time = ofGetElapsedTimeMillis();
-       return true;
-   }
-   return false;
+   if (ofGetElapsedTimeMillis() - start_time > interval_time) {
+       start_time = ofGetElapsedTimeMillis();
+       return true;
+   }
+   return false;
 }
 ```
 
@@ -564,12 +564,12 @@ We’ll wait to set up our level controller until the game actually starts--name
 
 ```
 void testApp::keyReleased(int key){
-   if (game_state == "start") {
-       game_state = "game";
-       level_controller.setup(ofGetElapsedTimeMillis());
-   }
+   if (game_state == "start") {
+       game_state = "game";
+       level_controller.setup(ofGetElapsedTimeMillis());
+   }
  
-  ...
+  ...
 }
 ```
 
@@ -578,27 +578,27 @@ Next we’ll integrate it into our `testApp::update()`:
 ```
 //--------------------------------------------------------------
 void testApp::update(){
-   if (game_state == "start") {
-       
-   } else if (game_state == "game") {
-       player_1.update();
-       update_bullets();
-       
-       for (int i = 0; i < enemies.size(); i++) {
-           enemies[i].update();
-           if (enemies[i].time_to_shoot()) {
-               Bullet b;
-               b.setup(false, enemies[i].pos, enemies[i].speed, &enemy_bullet_image);
-               bullets.push_back(b);
-           }
-       }
-       
-       if (level_controller.should_spawn() == true) {
-           Enemy e;
-           e.setup(max_enemy_amplitude, max_enemy_shoot_interval, &enemy_image);
-           enemies.push_back(e);
-       }
-   }
+   if (game_state == "start") {
+       
+   } else if (game_state == "game") {
+       player_1.update();
+       update_bullets();
+       
+       for (int i = 0; i < enemies.size(); i++) {
+           enemies[i].update();
+           if (enemies[i].time_to_shoot()) {
+               Bullet b;
+               b.setup(false, enemies[i].pos, enemies[i].speed, &enemy_bullet_image);
+               bullets.push_back(b);
+           }
+       }
+       
+       if (level_controller.should_spawn() == true) {
+           Enemy e;
+           e.setup(max_enemy_amplitude, max_enemy_shoot_interval, &enemy_image);
+           enemies.push_back(e);
+       }
+   }
 }
 ```
 
@@ -613,15 +613,15 @@ Before we finish, let’s add in our last OSC feature: the ability to throw in b
 ```
 class Life {
 public:
-   ofPoint pos;
-   float speed;
-   float width;
-   
-   ofImage * img;
-   
-   void setup(ofImage * _img);
-   void update();
-   void draw();
+   ofPoint pos;
+   float speed;
+   float width;
+   
+   ofImage * img;
+   
+   void setup(ofImage * _img);
+   void update();
+   void draw();
 };
 ```
 
@@ -629,17 +629,17 @@ And it’ll function like this--a lot like the bullet:
 
 ```
 void Life::setup(ofImage * _img) {
-   img = _img;
-   width = img->width;
-   speed = 5;
-   pos.x = ofRandom(ofGetWidth());
-   pos.y = -img->width/2;
+   img = _img;
+   width = img->width;
+   speed = 5;
+   pos.x = ofRandom(ofGetWidth());
+   pos.y = -img->width/2;
 }
 void Life::update() {
-   pos.y += speed;
+   pos.y += speed;
 }
 void Life::draw() {
-   img->draw(pos.x - img->width/2, pos.y - img->width/2);
+   img->draw(pos.x - img->width/2, pos.y - img->width/2);
 }
 ```
 
@@ -648,17 +648,17 @@ Our `update_bonuses()` function works a lot like the bullet collision function:
 ```
 //--------------------------------------------------------------
 void testApp::update_bonuses() {
-   for (int i = bonuses.size()-1; i > 0; i--) {
-       bonuses[i].update();
-       if (ofDist(player_1.pos.x, player_1.pos.y, bonuses[i].pos.x, bonuses[i].pos.y) < (player_1.width + bonuses[i].width)/2) {
-           player_1.lives++;
-           bonuses.erase(bonuses.begin() + i);
-       }
-       
-       if (bonuses[i].pos.y + bonuses[i].width/2 > ofGetHeight()) {
-           bonuses.erase(bonuses.begin() + i);
-       }
-   }
+   for (int i = bonuses.size()-1; i > 0; i--) {
+       bonuses[i].update();
+       if (ofDist(player_1.pos.x, player_1.pos.y, bonuses[i].pos.x, bonuses[i].pos.y) < (player_1.width + bonuses[i].width)/2) {
+           player_1.lives++;
+           bonuses.erase(bonuses.begin() + i);
+       }
+       
+       if (bonuses[i].pos.y + bonuses[i].width/2 > ofGetHeight()) {
+           bonuses.erase(bonuses.begin() + i);
+       }
+   }
 }
 ```
 
@@ -667,52 +667,52 @@ All that’s left for our lives functionality is to alter `testApp::update()` an
 ```
 //--------------------------------------------------------------
 void testApp::update(){
-   if (game_state == "start") {
-       
-   } else if (game_state == "game") {
-       player_1.update();
-       update_bullets();
-       update_bonuses();
-       
-       for (int i = 0; i < enemies.size(); i++) {
-           enemies[i].update();
-           if (enemies[i].time_to_shoot()) {
-               Bullet b;
-               b.setup(false, enemies[i].pos, enemies[i].speed, &enemy_bullet_image);
-               bullets.push_back(b);
-           }
-       }
-       
-       if (level_controller.should_spawn() == true) {
-           Enemy e;
-           e.setup(max_enemy_amplitude, max_enemy_shoot_interval, &enemy_image);
-           enemies.push_back(e);
-       }
-   }
+   if (game_state == "start") {
+       
+   } else if (game_state == "game") {
+       player_1.update();
+       update_bullets();
+       update_bonuses();
+       
+       for (int i = 0; i < enemies.size(); i++) {
+           enemies[i].update();
+           if (enemies[i].time_to_shoot()) {
+               Bullet b;
+               b.setup(false, enemies[i].pos, enemies[i].speed, &enemy_bullet_image);
+               bullets.push_back(b);
+           }
+       }
+       
+       if (level_controller.should_spawn() == true) {
+           Enemy e;
+           e.setup(max_enemy_amplitude, max_enemy_shoot_interval, &enemy_image);
+           enemies.push_back(e);
+       }
+   }
 }
 //--------------------------------------------------------------
 void testApp::draw(){
-   if (game_state == "start") {
-       start_screen.draw(0,0);
-   } else if (game_state == "game") {
-       ofBackground(0,0,0);
-       player_1.draw();
-       draw_lives();
-       
-       for (int i = 0; i < enemies.size(); i++) {
-           enemies[i].draw();
-       }
-       
-       for (int i = 0; i < bullets.size(); i++) {
-           bullets[i].draw();
-       }
-       
-       for (int i = 0; i < bonuses.size(); i++) {
-           bonuses[i].draw();
-       }
-   } else if (game_state == "end") {
+   if (game_state == "start") {
+       start_screen.draw(0,0);
+   } else if (game_state == "game") {
+       ofBackground(0,0,0);
+       player_1.draw();
+       draw_lives();
+       
+       for (int i = 0; i < enemies.size(); i++) {
+           enemies[i].draw();
+       }
+       
+       for (int i = 0; i < bullets.size(); i++) {
+           bullets[i].draw();
+       }
+       
+       for (int i = 0; i < bonuses.size(); i++) {
+           bonuses[i].draw();
+       }
+   } else if (game_state == "end") {
  
-   }    
+   }    
 }
 ```
 
@@ -727,10 +727,10 @@ Change `testApp::setup()` to load in those assets:
 //--------------------------------------------------------------
 void testApp::setup(){
     ...
-   player_1.setup(&player_image);
-   start_screen.loadImage("start_screen.png");
-   end_screen.loadImage("end_screen.png");
-   score_font.loadFont("Gota_Light.otf", 48);
+   player_1.setup(&player_image);
+   start_screen.loadImage("start_screen.png");
+   end_screen.loadImage("end_screen.png");
+   score_font.loadFont("Gota_Light.otf", 48);
 }
 ```
 
@@ -741,19 +741,19 @@ Add in the last two functions:
 ```
 //--------------------------------------------------------------
 void testApp::draw_lives() {
-   for (int i = 0; i < player_1.lives; i++) {
-       player_image.draw(ofGetWidth() - (i * player_image.width) - 100, 30);
-   }
-   
+   for (int i = 0; i < player_1.lives; i++) {
+       player_image.draw(ofGetWidth() - (i * player_image.width) - 100, 30);
+   }
+   
 }
 //--------------------------------------------------------------
 void testApp::draw_score() {
-   if (game_state == "game") {
-       score_font.drawString(ofToString(score), 30, 72);
-   } else if (game_state == "end") {
-       float w = score_font.stringWidth(ofToString(score));
-       score_font.drawString(ofToString(score), ofGetWidth()/2 - w/2, ofGetHeight()/2 + 100);
-   }
+   if (game_state == "game") {
+       score_font.drawString(ofToString(score), 30, 72);
+   } else if (game_state == "end") {
+       float w = score_font.stringWidth(ofToString(score));
+       score_font.drawString(ofToString(score), ofGetWidth()/2 - w/2, ofGetHeight()/2 + 100);
+   }
 }
 ```
 
@@ -1021,4 +1021,3 @@ void LiveTesting::update()
 
 
  //Left to do – explain touch OSC and the last function 
-
