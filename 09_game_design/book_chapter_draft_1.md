@@ -852,7 +852,7 @@ Moving on, select the knob. This one will require more set up because it will ac
 
 The last thing to set up will be the bottom label to display what our interval variable is currently set to in our running game.  Select it. We will change the settings and the address tag to reflect that it is not game data being sent to our game but rather data being sent out of our game. Select the label on screen to pull up the parameters for it on the right. In the darkened OSC box change the parameters to those below: 
 
-![](updatedVals_interval.png)
+![](updatedValsinterval.png)
 
 This is the pattern we are going to use for all of our knobs and labels. Essentially, the pattern is 
 
