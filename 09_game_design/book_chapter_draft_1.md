@@ -946,7 +946,11 @@ In the above code we simply set up our network address, incoming and out going p
 
 Let’s move on to the next major function we want to write. We need to run an update function in this class to update every frame so we can make sure that if we move a slider on our ipad that change becomes reflected within the game. Also, we might want to send that value back out once we receive it so we can get some visual feedback on our tablet to let us know what our current settings are. 
 
-Each time we make a change on our device, it will send over the changes to our code via Touch OSC. We want to make sure we get all of the incoming messages that are being sent so we will create a simple while loop. Every incoming message will come in with its address tag and also the arguments we are setting. You can test for the address tag string to match up the incoming argument with the matching variables in your game. 
+Each time we make a change on our device, it will send over the changes to our code via Touch OSC. We want to make sure we get all of the incoming messages that are being sent so we will create a simple while loop. For this we will be using `ofxOscMessage m`. Every incoming message will come in with its address tag and also the arguments we are setting. You can get access to the Address via the dot syntax. `m.getAddress() == "/game/max_enemy_amplitude"` for example will test to see if the message address is /game/max_enemy_amplitude. If it is, set it equal to that same value in your game's codebase and viola, they are linked together. Every swipe of the knob will translate to direct changes in your game. We do this for every single value we want to set. 
+
+At the same time, we are also going to send those exact same values back out to our device so we can see the values that the settings in our game are currently at. This is handy for two reasons. One, you get visual feedback of the current values on your device. Two, if you happen to land on values that feel right in your game, you can screen cap the settings on your device and go back and change them to match in your code once you close the running game.  
+
+We are going to pack up all of the values in our current running game and send them back to the device using `ofxOscMessage sendBack`. When we have a string match for the address in the `ofxOscMessage m` variable, we just add our arguments to `sendBack` via the right function (in this case usually `addFloatArg`), set the address using the address pattern that's similar to a URL structure using the `setAddress` function. Finally, we use the build in `sendMessage` function to send it out over OSC. All of these functions are built into the osc addon we are using. Here's the code to add to your LiveTesting.cpp file 
 
 ```
 void LiveTesting::update()
@@ -1018,6 +1022,16 @@ void LiveTesting::update()
     }
 ```
 
+You have reached the end of the code you need to do a real testing session. Have fun running this game. Have a friend play it while you change the values. Once you have values you like, quit the game and add those values into the code to make them permanent changes. 
+
+For a bonus challenge, find a few settings you like, and create a difficulty ramp for game using those values of time.  
+
+###Resouces 
+We've reached the end of the chapter but not the end of the journey. A few great resources for independent games are listed here:   
+[Indiecade](http://www.indiecade.com)  
+MORE!!! 
+
+This chapter was written by founding members of the [Code Liberation Foundation](http://www.codeliberation.org), an organization that teaches women to program games for free. 
 
 
- //Left to do – explain touch OSC and the last function 
+ 
