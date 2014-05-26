@@ -27,6 +27,8 @@ This iterative process can be done digitally or physically. Paper prototyping is
 
 We're going to use openFrameworks to play with the final step of this process. In the game we're making, we're not going to settle on one set of parameters that stay static from game to game. We're going to use openFrameworks' OSC library to allow us to communicate wirelessly from another device (e.g. a smartphone or table) so we can tune those parameters live, giving our players experiences tailored just for them.
 
+
+
 ## So what is OSC, anyway?
 
 OSC, or Open Sound Control, came about as an advancement to MIDI, so let's talk about MIDI first. MIDI is a data protocol that sends and receives information between devices, typically electronic musical instruments. MIDI is what allowed things like keyboards and drum machines to fire in sync. If you've heard pop music, you've heard MIDI in action.
@@ -55,6 +57,7 @@ Here's what our game will have:
 * A level controller, which has an interval to keep track of when an enemy should be spawned next
 * Bullets (for the player and the enemies), which have an on-screen position, images to represent them, a way to keep track of where they come from (player or enemy), and a speed
 * Bonus lives, which have an on-screen position, an image to represent them, and a speed
+![](game.png)  
 
 With all that written out, let’s use OSC to affect the following:
 
@@ -777,9 +780,11 @@ All that’s left after that is to call `draw_score();` and `draw_lives();` duri
 Congrats--you made a game!
 
 ###Linking oF and OSC
-
-Now let’s add in the OSC functionality. We are going to set our application up to receive messages from our iPad and then make changes in real-time while our game is running to test some possible player scenarios. As mentioned before, this can trump going into your application and making manual changes because you skip the need to recompile your game and playtest live. 
-
+Now let’s add in the OSC functionality. We are going to set our application up to receive messages from our iPad and then make changes in real-time while our game is running to test some possible player scenarios. As mentioned before, this can trump going into your application and making manual changes because you skip the need to recompile your game and playtest live. In fact, you can use Touch OSC to even open up new ways to interact with your players. 
+![](touchGame.png)  
+***Nightgame developer interface by Phoenix Perry***  
+*Touch OSC is used to switch game levels on the fly and to run challenges.* 
+   
 To accomplish this we are going to create a new class that will contain our OSC functionality. Create a .cpp and .h file for this class now and name it LiveTesting. Open `LiveTesting.h`
 And let’s add the line to import the OSC at the top of your file after your preprocessor directives and also a line for using iostream for testing purposes. As we add the code we will explain in inline in the code comments. 
 
