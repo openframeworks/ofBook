@@ -599,7 +599,7 @@ https://github.com/openframeworks/ofBook/tree/master/02_cplusplus_basics/unabrid
 
 ##PS.
 
-Stopping the chapter here is by no means intended to seperate what is important to
+Stopping the chapter here is by no means intended to separate what is important to
 learn about C++ from what is not important. We have simply run out of paper. In lieu of
 how important the rest of this intro to C++ is, and based on ofZach's teaching experience,
 here is more of what you'll find in the unabridged version:
