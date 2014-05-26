@@ -783,6 +783,7 @@ Congrats--you made a game!
 
 ###Linking oF and OSC
 Now let’s add in the OSC functionality. We are going to set our application up to receive messages from our iPad and then make changes in real-time while our game is running to test some possible player scenarios. As mentioned before, this can trump going into your application and making manual changes because you skip the need to recompile your game and playtest live. In fact, you can use Touch OSC to even open up new ways to interact with your players. 
+
 ![](touchGame.png)  
 ***Nightgame developer interface by Phoenix Perry***  
 *Touch OSC is used to switch game levels on the fly and to run challenges.* 
