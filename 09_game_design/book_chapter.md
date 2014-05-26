@@ -2,6 +2,19 @@
 
 Game developers are, in greater and greater numbers, turning to openFrameworks' creative coding toolkit to develop their games. Unlike platforms like Unity, GameMaker, and Construct2, oF was not specifically developed for game makers. However, oF's ability to port to mobile, manipulate video, utilize camera input, support generative graphics, and hook in with devices like Arduino and Kinect (among other features) makes it a very attractive option for developers who want to be able to rapidly produce compelling, unique games.
 
+###Popular games in open frameworks 
+![](RushModeSm.png)  
+**Spell Tower by Zach Gage** 
+
+![](particleMace.png)  
+**Particle Mace by Andy Wallace**    
+
+![](eliss012.jpg)  
+**Eliss by Steph Thirion**    
+
+![](screamup.png)  
+**Scream Em Up by Jane Friedhoff**  
+
 In this chapter, we'll learn about game development in openFrameworks. We'll cover what goes into making a game, as well as how to code a simple space shooter. Finally, we'll put an experimental oF twist on our game by implementing OSC functionality, which will allow you to alter the difficulty of the game live—while a player is playing it. 
 
 Ready? Let's go!
