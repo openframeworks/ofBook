@@ -810,7 +810,9 @@ public:
     void update(); //for updating 
 	
     ofxOscSender sender;
-    //you can set up a sender! We are going to use this network connection to give us some visual feedback of our current game values.  
+    //you can set up a sender! 
+    //We are going to use this network connection to give us 
+    //some visual feedback of our current game values.  
 
     ofxOscReceiver receiver;
     //this is the magic! This is the port on which your game gets incoming data. 
@@ -950,16 +952,23 @@ Finally, TouchOSC is set up. Let’s link it to our game and run our very first 
 #include "LiveTesting.h"
 
 LiveTesting::LiveTesting(){
+
     sender.setup("192.168.0.11", 8000);
     //this is the ip address of your ipad/android and the port it should be
     //set to receive on
     
 	receiver.setup(8001);
-    /*this is the port you're game will receive data on. For us this is the important one! Set your mobile device to send on this port.&*/
+    /*this is the port you're game will receive data on. 
+    For us this is the important one! Set your mobile device to send on this port.*/
     
     m.setAddress("/game");
-    /*this is OSC's URL like naming convention. You can use a root url address like structure and then everything under that address will be accessible by that message. It's very similar to a folder path on your hard drive. You can think of the game folder as your root directory and all the bits that are /game/someOtherName are inside of it.
-*/
+    
+    /*This is OSC's URL like naming convention. You can use a root url address like 
+     structure and then everything under that address will be accessible by that message. 
+    
+   	 It's very similar to a folder path on your hard drive. You can think of the 
+     game folder as your root directory and all the bits that are 
+     /game/someOtherName are inside of it.*/   
 }
 ```
 
@@ -984,7 +993,8 @@ Every incoming message will come with its own unique address tag and new argumen
         {
             max_enemy_amplitude = m.getArgAsFloat(0);
             
-            //these values send back to OSC to display the current settings for visual feedback
+            //these values send back to OSC to display the
+            //current settings for visual feedback
             sendBack.addFloatArg(max_enemy_amplitude);
             sendBack.setAddress("/updatedVals/max_enemy_amplitude");
             sender.sendMessage(sendBack);
@@ -1006,26 +1016,41 @@ void LiveTesting::update()
     //our simple while loop to make sure we get all of our messages
     while (receiver.hasWaitingMessages()) {
         
-        //get the message, which will hold all of our arguements inside of it. It's a collection of data!
+        //get the message, which will hold all of our arguments inside of it. 
+        //It's a collection of data!
+        
         ofxOscMessage m;
-        //pass a reference to that message to the reciever we set up above using the getNextMessage function in the OSC add on.
+        //pass a reference to that message to the receiver 
+        //we set up above using the getNextMessage function in the OSC add on.
+        
         receiver.getNextMessage(&m);
        
-        //this will be the message we send back from our game to our device letting it know what value we received
-        //from it and displaying that back to us so we know what our current game setting are at
+        //this will be the message we send back from our game 
+        //to our device letting it know what value we received
+        //from it and displaying that back to us so we know what our 
+        //current game setting are at
+        
         ofxOscMessage sendBack;
         
-        //remember or address tags are unique. we set up the /game tag as our root address and each / denotes a sub tag
-        //if theses strings are a match, we know the message that came in is our amplitude
+        //remember or address tags are unique. 
+        //we set up the /game tag as our root address and each / denotes a sub tag
+        //if theses strings are a match, we know the message that came in is our 		//amplitude
+        
         if(m.getAddress() == "/game/max_enemy_amplitude")
         {
         
-            //this is critical. Each type must match if you want to be able to run your code.
-            //We know the first argument in our array of messages will be a float if the above if statement evaluates to true
+            //this is critical. 
+            //Each type must match if you want to be able to run your code.
+            //We know the first argument in our array of messages 
+            //will be a float if the above if statement evaluates to true
+            
             max_enemy_amplitude = m.getArgAsFloat(0);
             
-            //now we are going to pack up a collection of data to send back to our device. sendBack is also a collection of data we
-            //add arguments to. add the vaule we set our amplitude to the message and move on. 
+            //now we are going to pack up a collection of data to send back to 
+            //our device. sendBack is also a collection of data we
+            //add arguments to. 
+            //Add the value we set our amplitude to the message and move on.
+             
             sendBack.addFloatArg(max_enemy_amplitude);
             sendBack.setAddress("/updatedVals/max_enemy_amplitude");
             sender.sendMessage(sendBack);
@@ -1035,11 +1060,16 @@ void LiveTesting::update()
         
         else if (m.getAddress() == "/game/interval_time")
         {
-            //this is exactly the same as above. We just simply are testing to see if the address tag is this value and if so doing the exact
-            //process of setting our ingame value to match the value of the incoming argument and sending back our interval_time to our device.
+            //this is exactly the same as above. 
+            //We just simply are testing to see if the address 
+            //tag is this value and if so doing the exact
+            //process of setting our ingame value to match the value of the 
+   			//incoming argument and sending back our interval_time to our device.
+   			
             interval_time = m.getArgAsInt32(0);
             
             //send visual feedback
+            
             sendBack.addIntArg(interval_time);
             sendBack.setAddress("/updatedVals/interval");
             sender.sendMessage(sendBack);
