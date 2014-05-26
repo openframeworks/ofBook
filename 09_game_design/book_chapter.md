@@ -57,7 +57,9 @@ Here's what our game will have:
 * A level controller, which has an interval to keep track of when an enemy should be spawned next
 * Bullets (for the player and the enemies), which have an on-screen position, images to represent them, a way to keep track of where they come from (player or enemy), and a speed
 * Bonus lives, which have an on-screen position, an image to represent them, and a speed
+
 ![](game.png)  
+***Space Game in action!***  
 
 With all that written out, let’s use OSC to affect the following:
 
