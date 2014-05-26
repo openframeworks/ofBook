@@ -1069,8 +1069,7 @@ void LiveTesting::update()
    			
             interval_time = m.getArgAsInt32(0);
             
-            //send visual feedback
-            
+            //send visual feedback  
             sendBack.addIntArg(interval_time);
             sendBack.setAddress("/updatedVals/interval");
             sender.sendMessage(sendBack);
