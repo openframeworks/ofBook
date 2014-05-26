@@ -1034,7 +1034,8 @@ void LiveTesting::update()
         
         //remember or address tags are unique. 
         //we set up the /game tag as our root address and each / denotes a sub tag
-        //if theses strings are a match, we know the message that came in is our 		//amplitude
+        //if theses strings are a match, we know the message that came in is our 
+        //amplitude
         
         if(m.getAddress() == "/game/max_enemy_amplitude")
         {
