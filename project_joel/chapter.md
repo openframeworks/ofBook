@@ -12,6 +12,10 @@ To see the finished project as part of a wider video all about the Greenpeace Fi
 
 http://youtu.be/LwokmKqT0og?t=1m12s
 
+Or an exceprt from inside the dome here:
+
+https://vimeo.com/97113402
+
 ## The Project
 
 ### Initial Brief from Client
