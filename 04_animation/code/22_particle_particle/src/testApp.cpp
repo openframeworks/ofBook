@@ -41,7 +41,7 @@ void testApp::update(){
 		
         for (int j = 0; j < i; j++){
             particles[i].addRepulsionForce(particles[j], 10, 0.4);
-    particles[i].addAttractionForce(particles[j], 500, 0.005);
+            particles[i].addAttractionForce(particles[j], 500, 0.005);
         }
 
 	}

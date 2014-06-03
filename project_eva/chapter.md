@@ -4,7 +4,7 @@ Permanent interactive outdoor installation developed by [Daily tous les jours](h
 
 Chapter by Eva Schindling (with help from Pierre Thirion)
 
-## Project Overview 
+## Project Overview time
 
 [Choreographies for Humans and Stars](http://www.dailytouslesjours.com/project/choregraphies-pour-des-humains-et-des-etoiles/) is a permanent outdoor installation hosted at Montreal's Rio Tinto Alcan Planetarium. The interactive projection on the building's facade invites passers-by to a series of collective dance performances inspired by the different mechanics of planets and stars.
 
@@ -36,25 +36,7 @@ From first brainstorms to final hand-over the mammoth project took an impressive
 
 Our more pragmatic goal was to get it all done by November 2013, with the main intention of avoiding all the snow and coldness that comes along with Montreal's winter season. Naturally we slipped right past that goal, and had our big opening amidst lots of snow mid January, with temperatures ranging between -15 to -25. 
 
-**[collecting timeline dates here, but should eventually be presented in visual form]**
-
-- 2011 Sept: official call
-- 2011 Fall-Winter: preliminary concept, ideation
-- 2012 Spring: final concept
-- 2012 June: official commission
-- 2012 Fall: ideation revision
-- 2013 May : interaction scenario
-- 2013 May-Sept : prototyping
-- 2013 June : projection tests
-- 2013 July: content animation workshop 1
-- 2013 July-Aug: tech sourcing and purchase
-- 2013 Aug-Jan: software development
-- 2013 Sept: camera installation, calibration
-- 2013 Dec: content animation workshop 2
-- 2014 Dec/Jan: on site tests and finetuning
-- 2014 Jan 17-21: install stones
-- 2014 Jan 23rd: opening
-- 2014 Feb: maintenance
+![Project timeline](images/plane_timeline-01.png "The 3+ year long project timeline")
 
 ### Everyone involved
 

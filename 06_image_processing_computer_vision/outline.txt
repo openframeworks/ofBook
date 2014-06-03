@@ -1,3 +1,7 @@
+SEE https://github.com/golanlevin/ofBookChapter/blob/master/chapter.md 
+for LATEST
+
+
 1. Introduction 
 
 [This outline is based on workshops Golan taught with Kyle.]
