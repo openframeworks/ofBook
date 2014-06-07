@@ -265,7 +265,7 @@ This will return something like:
 
     adm dialout cdrom sudo dip video plugdev lpadmin sambashare
     
-The only thing of note here is to make sure that the group assigned to the serial port (in this case "dialout") is in your groups list. if it isn't, just run the following command to add it, appending your user login name at the end:
+The only thing of note here is to make sure that the group assigned to the serial port (in this case "dialout") is in your groups list. Typically the default "pi" user wil be a member of this group. If it isn't, just run the following command to add it, appending your user login name at the end:
 
     usermod -a -G dialout yourusername
     
@@ -273,17 +273,94 @@ Now you should be able to connect to other serial devices using your cable.
 
 
 **Raspberry Pi and GPIO**
-The RPi has a hardware serial port as well. 
 
- *TODO*
+The RPi has a hardware serial port as well, literally two of the GPIO (General Purpose Input Output) pins on the board are dedicated(?) to serial transmit and receive. They are listed as pins 14 and 15 in the documentation. You might be inclined to use these if you've already used up the Pi's USB ports, or you might want to use them to interface directly with electronics. A word of caution however to anyone connecting any voltages directly to the GPIO pins - there's no protection here against wrong or incorrect voltages. It's nothing to be alarmed about, you're just going to be interfacing directly with the board and the advantages this opens up also exposes you to potentially damaging the board if you do something wrong. Always check your connections and voltages before hooking things up, its a good habit to get into and will avoid frying things. Although truth be told, the only real way to learn is to make mistakes, and there's nothing that'll imprint your memory more effectively than the smell of burning silicon, but I digress...
 
-**Running the Rasperry PI headless**
+Another thing to keep in mind when using the hardware serial port is that all of the GPIO pins operate at around 3 volts. This means that a logic "high" will be approximately 3 volts, which differs from the more typical 5 volts used by most (but not all) Arduino devices. There are quite a few sensors and other electronics that operate at 3 volts, and a quick web search will point you in the right direction. This lower than normal voltage is quite useful in low power electronic setups, where the slightly lower voltage will save you a bit of energy, useful when running off batteries. However again be careful when hooking up 3 volt based sensors directly to the Pi as it may be safer to include a bit of protection between the electronics and the Pi to avoid damaging the board. 
 
-*TODO*
+In order to compensate for the difference in voltage between a regular 5V Arduino and the Pi, you'll need a logic level converter between the two. A quick web search should turn up a converter that'll suit your needs, all you need to then do is hook the two devices up to the converter, with the Pi connecting to the 3V side of the converter and the Arduino hooked up to the 5V side. Remember to always make sure that the serial transmit (or TX for short) from one board is connected to the serial receive (or RX for short) on the other. You'll need power and ground supplied from both sides too. Once this is done, you're ready to start communicating between the two. All the openFrameworks procedures of communicating between an Arduino and OF, detailed above, now apply. As a fail-safe test of whether the serial port is set up correctly, you can always do a test on the Pi side by using the venerable minicom command-line application. It's a text only interface to the serial port, useful for quick low-level serial debugging. It might feel a little archaic initially, but it does its job and it's very lightweight. 
+
+To install minicom, just open a terminal window and type the following:
+
+    sudo apt-get install minicom
+
+You can then send characters to the Arduino via Minicom, and view them using the serial monitor on the Arduino. Make sure both devices have the same baud rate. Launch minicom using the following command (if operating at 9600 baud):
+
+    minicom -b 9600 -o -D /dev/ttyAMA0
+    
+where the number 9600 represents the baud rate and /dev/ttyAMA0 is the address of our GPIO serial port.
+What you type into the minicom terminal screen should appear on the Arduino serial monitor and vice versa.
+
 
 **Case Study: Raspberry PI as a master DMX controller**
 
 One of the nifty uses of a Raspberry Pi is to use it as a master DMX controller. It takes up little space and sending serial data doesn't require much processing power so it's a perfect candidate. Add to that the ability to control your OF app running on the PI remotely via OSC, for example using an Android or IOS tablet, and you have a fully fledged custom DMX set up which would otherwise require expensive commercial software to replicate.
+
+**Headless Apps**
+
+Given that the Raspberry Pi can be viewed as a Swiss-army knife in the installation world and has less processing power than a desktop computer, you may often find yourself using it for a specific task and that task may not require any graphical output (like churning out DMX commands for example). In this case, you can disable the graphical capabilities of openFrameworks in order to streamline your application for the task at hand. Using an application in this fashion is know as running the application "headless". In order to build a headless application (which works for all target platforms, not just the RPi), all you'll need to do is open up your project's main.cpp and change it to the following:
+
+    //ofSetupOpenGL(1024,768, OF_WINDOW);			// <-------- comment out the setup of the GL context
+
+	// this kicks off the running of my headless app:
+	ofRunApp( new ofAppNoWindow());
+	
+Voila! Your application will now run without opening a graphical window. This can be particularly useful when launch it from a script or the command-line, as well see shortly.
+
+
+**Running your app on start-up**
+
+So, you've created an OF app that does some amazing stuff, and chances are you've turned to this little over-achieving box because of it's size and now you want to incorporate it into an installation. Ideally, technical installations, whether interactive or not, should be super easy to set up and turn on, in order to place little demands on gallery or event staff that might be minding the piece, and to reduce the chances of something going wrong. Ideally, you'll turn the power of the Pi on, and once it has booted up your app will run. Additionally, if your app doesn't make use of any graphics or visual output, you might want to run it in what's called "headless" mode, where the graphical capabilities of OF are turned off. This will save power and reduce processor demand on the Pi.
+
+Running an application on start up can be done in many different ways on a Linux based system such as the Pi. However here are a couple of methods that you could use depending on your needs.
+Firstly, there's a file called "rc.local" in amongst the Pi's system files where you can list applications that'll be run on start up. In order to make use of this you'll need to have the Pi booting into the command line. If the Pi is running the GUI, this won't work. To configure your Pi to start up in command-line mode, run the So to make use of this method, open up a terminal and do the following:
+
+    sudo nano /etc/rc.local
+    
+This will open up this file using the command-line text editor "nano" and because it is a system file you'll need to use the "sudo" (short for Super User Do ....i.e. do something as if you were the super user, a user with permission to modify system files) command to give you access to an otherwise protected file. Once you've opened this file, after the initial comments (lines beginning with '#') add the following lines (replacing "myProject" with the name of your app):
+
+    # Auto run our application
+    /home/pi/openFrameworks/apps/myApps/myProject/bin/myProject &
+
+Add these lines and then hit CTRL-X to save (hit 'Y to confirm that you want to overwrite the current file). The ampersand indicates thatThen if all has gone well, next time you reboot your application will launch. You won't have any window decorations (such as a border and buttons for minimise and close), but if you run the application full-screen that won't matter anyway, and you have the advantage of not running a GUI environment which eats up resources on the otherwise busy Pi.
+
+
+The other way to run applications is to use the "cron" system.  Cron, if enabled (which it normally will be by default on a Pi), is a daemon (or persistent application that runs in the background) is a piece of software whose only purpose is to carry out actions at particular times of the day. Essentially it's a scheduler, much like a calendar reminder system except instead of reminders you'll be scheduling various tasks. All you need to do then will be to tell Cron to run your app whenever the system boots up. All cron actions are stored in special files which exist on the Pi in the /var/spool/cron/contab/ directory. You aren't allowed to edit these files directly, you need to run a special application called *crontab* which you can then use to create and modify those files.
+
+In the case of starting our app on boot, all we need to do then is type the following in a terminal (replace 'pi' with your username if not logged in with the default account)
+:
+    sudo crontab -e -u pi
+    
+Then a file will open up and you can edit it in the same way as you would using nano (if fact *crontab* is making use of *nano* in this process). Just add the following line to the file:
+
+    @reboot  /home/pi/openFrameworks/apps/myApps/myExampleApp &
+
+Substitute the right app and and the right folder names depending on where your OF app is located. You'll need to get the full path right, so make sure it's correct before hitting CTRL-X to save the file.
+Once saved, again all you'll need to do is reboot to witness your app being kicked off on start-up. Presto!
+
+In either case above, if you wanted to make sure that your app restarted upon crashing, you could wrap the application in a shell script running a while loop, such as this:
+
+    #!/bin/bash
+    cd /home/pi/openFrameworks/app/myApps/myExampleApp/bin
+    while true; do
+    	./myExampleApp
+    done
+
+All you would need to do would be to copy the above code into a file and save it as something like "myApp.sh". Then make it executable by changing the file's permissions:
+
+    chmod a+x myApp.sh
+
+To test the shell script, just try running it in a terminal window by typing "./myApp.sh" in the same directory as the script. If it launches successfully, you can then replace any direct references to the app in the above auto-start examples with this script. Keep in mind, the only way to fully kill the app will be to kill the process running this shell script with a command such as
+
+    kill -9 1234
+    
+where you need to replace '1234' with the process id (PID) of your script. The PID can be found by typing 
+
+    ps -A
+   
+in a terminal. This will list all running processes on the system. Anyhow, that's enough system administration for the moment, time to get creative instead.
+
+
 
 
 

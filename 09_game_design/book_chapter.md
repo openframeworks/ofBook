@@ -2,6 +2,19 @@
 
 Game developers are, in greater and greater numbers, turning to openFrameworks' creative coding toolkit to develop their games. Unlike platforms like Unity, GameMaker, and Construct2, oF was not specifically developed for game makers. However, oF's ability to port to mobile, manipulate video, utilize camera input, support generative graphics, and hook in with devices like Arduino and Kinect (among other features) makes it a very attractive option for developers who want to be able to rapidly produce compelling, unique games.
 
+###Popular games in open frameworks 
+![](RushModeSm.png)  
+**Spell Tower by Zach Gage** 
+
+![](particleMace.png)  
+**Particle Mace by Andy Wallace**    
+
+![](eliss012.jpg)  
+**Eliss by Steph Thirion**    
+
+![](screamup.png)  
+**Scream Em Up by Jane Friedhoff**  
+
 In this chapter, we'll learn about game development in openFrameworks. We'll cover what goes into making a game, as well as how to code a simple space shooter. Finally, we'll put an experimental oF twist on our game by implementing OSC functionality, which will allow you to alter the difficulty of the game live—while a player is playing it. 
 
 Ready? Let's go!
@@ -13,6 +26,8 @@ There are as many ways to make games as there are game developers. However, many
 This iterative process can be done digitally or physically. Paper prototyping is the process of testing mechanics and interactions with paper models and analogs. Although these paper prototypes don't necessarily look like the final game, they can be mocked up quickly and thrown away cheaply, allowing developers to experiment with core mechanics more rapidly than they could with code. For example, a puzzle game's board and pieces can likely be mocked up with paper and dice more quickly than it can be implemented in even a basic mobile app. When a developer makes a digital prototype, or one made with code, they will similarly typically start by refining game mechanics, keeping assets rough until they get closer to the end. Finally, developers enter the long process of tuning their game, tweaking various parameters about the game until it feels just right.
 
 We're going to use openFrameworks to play with the final step of this process. In the game we're making, we're not going to settle on one set of parameters that stay static from game to game. We're going to use openFrameworks' OSC library to allow us to communicate wirelessly from another device (e.g. a smartphone or table) so we can tune those parameters live, giving our players experiences tailored just for them.
+
+
 
 ## So what is OSC, anyway?
 
@@ -43,6 +58,9 @@ Here's what our game will have:
 * Bullets (for the player and the enemies), which have an on-screen position, images to represent them, a way to keep track of where they come from (player or enemy), and a speed
 * Bonus lives, which have an on-screen position, an image to represent them, and a speed
 
+![](game.png)  
+***Space Game in action!***  
+
 With all that written out, let’s use OSC to affect the following:
 
 * The horizontal movement of our enemies--whether they move in a more exaggerated sin wave, or whether they move in more of a straight line
@@ -68,20 +86,20 @@ We’ll then divide up `testApp`’s `update()` and `draw()` loops between those
 ```
 //--------------------------------------------------------------
 void testApp::update(){
-   if (game_state == "start") {
+   if (game_state == "start") {
  
-   } else if (game_state == "game") {
-   } else if (game_state == “end”) {
+   } else if (game_state == "game") {
+   } else if (game_state == “end”) {
  
-   }
+   }
 }
 //--------------------------------------------------------------
 void testApp::draw(){
-   if (game_state == "start") {
-   } else if (game_state == "game") {
-   } else if (game_state == “end”) {
+   if (game_state == "start") {
+   } else if (game_state == "game") {
+   } else if (game_state == “end”) {
  
-   }
+   }
 }
 ```
 
@@ -90,8 +108,8 @@ Let’s set the initial value of `game_state` to `“start”` right when the ap
 ```
 //--------------------------------------------------------------
 void testApp::setup(){
-   game_state = "start";
-  score = 0;
+   game_state = "start";
+  score = 0;
 }
 ```
 
@@ -100,12 +118,12 @@ Finally, let’s make sure that we can move forward from the start screen. In th
 ```
 //--------------------------------------------------------------
 void testApp::keyReleased(int key){
-   
-   if (game_state == "start") {
-       game_state = "game";
-   } else if (game_state == "game") {
-      // blank for now
-   }
+   
+   if (game_state == "start") {
+       game_state = "game";
+   } else if (game_state == "game") {
+      // blank for now
+   }
 }
 ```
 
@@ -116,23 +134,23 @@ Great! Let’s move onto our player. Our player’s class looks like this:
 ```
 class Player {
 public:
-   ofPoint pos;
-   float width, height, speed;
-   int lives;
-   
-   bool is_left_pressed, is_right_pressed, is_down_pressed, is_up_pressed;
-   
-   void setup(ofImage * _img);
-   void update();
-   void draw();
-   void shoot();
-   
-   void calculate_movement();
-   
-   bool check_can_shoot();
-   
-   ofImage * img;
-   
+   ofPoint pos;
+   float width, height, speed;
+   int lives;
+   
+   bool is_left_pressed, is_right_pressed, is_down_pressed, is_up_pressed;
+   
+   void setup(ofImage * _img);
+   void update();
+   void draw();
+   void shoot();
+   
+   void calculate_movement();
+   
+   bool check_can_shoot();
+   
+   ofImage * img;
+   
 };
 ```
 
@@ -155,46 +173,46 @@ Here’s what our new `keyPressed()` and `keyReleased()` functions look like:
 ```
 //--------------------------------------------------------------
 void testApp::keyPressed(int key){
-   if (game_state == "game") {
-       if (key == OF_KEY_LEFT) {
-           player_1.is_left_pressed = true;
-       }
-       
-       if (key == OF_KEY_RIGHT) {
-           player_1.is_right_pressed = true;
-       }
-       
-       if (key == OF_KEY_UP) {
-           player_1.is_up_pressed = true;
-       }
-       
-       if (key == OF_KEY_DOWN) {
-           player_1.is_down_pressed = true;
-       }
-   }
+   if (game_state == "game") {
+       if (key == OF_KEY_LEFT) {
+           player_1.is_left_pressed = true;
+       }
+       
+       if (key == OF_KEY_RIGHT) {
+           player_1.is_right_pressed = true;
+       }
+       
+       if (key == OF_KEY_UP) {
+           player_1.is_up_pressed = true;
+       }
+       
+       if (key == OF_KEY_DOWN) {
+           player_1.is_down_pressed = true;
+       }
+   }
  
 }
 //--------------------------------------------------------------
 void testApp::keyReleased(int key){
-   if (game_state == "start") {
-       game_state = "game";
-   } else if (game_state == "game") {
-       if (key == OF_KEY_LEFT) {
-           player_1.is_left_pressed = false;
-       }
-       
-       if (key == OF_KEY_RIGHT) {
-           player_1.is_right_pressed = false;
-       }
-       
-       if (key == OF_KEY_UP) {
-           player_1.is_up_pressed = false;
-       }
-       
-       if (key == OF_KEY_DOWN) {
-           player_1.is_down_pressed = false;
-       }
-   }
+   if (game_state == "start") {
+       game_state = "game";
+   } else if (game_state == "game") {
+       if (key == OF_KEY_LEFT) {
+           player_1.is_left_pressed = false;
+       }
+       
+       if (key == OF_KEY_RIGHT) {
+           player_1.is_right_pressed = false;
+       }
+       
+       if (key == OF_KEY_UP) {
+           player_1.is_up_pressed = false;
+       }
+       
+       if (key == OF_KEY_DOWN) {
+           player_1.is_down_pressed = false;
+       }
+   }
 }
 ```
 
@@ -203,10 +221,10 @@ Add `ofImage player_image` to `testApp.h`, then load the player’s image and in
 
 ```
 void testApp::setup(){
-   game_state = "start";
-   player_image.loadImage("player.png");
-   
-   player_1.setup(&player_image);
+   game_state = "start";
+   player_image.loadImage("player.png");
+   
+   player_1.setup(&player_image);
 }
 ```
 
@@ -215,22 +233,22 @@ Finally, update and draw your player in the appropriate part of `testApp::update
 ```
 //--------------------------------------------------------------
 void testApp::update(){
-   if (game_state == "start") {
-      
-   } else if (game_state == "game") {
-       player_1.update();
-   }
+   if (game_state == "start") {
+      
+   } else if (game_state == "game") {
+       player_1.update();
+   }
 }
  
 //--------------------------------------------------------------
 void testApp::draw(){
-   if (game_state == "start") {
+   if (game_state == "start") {
  
-   } else if (game_state == "game") {
-       player_1.draw();
-   } else if (game_state == "end") {
+   } else if (game_state == "game") {
+       player_1.draw();
+   } else if (game_state == "end") {
  
-   }  
+   }  
 }
 ```
 
@@ -244,16 +262,16 @@ Our bullet class will look a lot like the player class, having a position, speed
 ```
 class Bullet {
 public:
-   ofPoint pos;
-   float speed;
-   float width;
-   bool from_player;
-   
-   void setup(bool f_p, ofPoint p, float s, ofImage * bullet_image);
-   void update();
-   void draw();
-   
-   ofImage * img;
+   ofPoint pos;
+   float speed;
+   float width;
+   bool from_player;
+   
+   void setup(bool f_p, ofPoint p, float s, ofImage * bullet_image);
+   void update();
+   void draw();
+   
+   ofImage * img;
 };
 ```
 
@@ -261,23 +279,23 @@ Our `Bullet.cpp` will look like this:
 
 ```
 void Bullet::setup(bool f_p, ofPoint p, float s, ofImage * bullet_image) {
-   from_player = f_p;
-   pos = p;
-   speed = s + 3;
-   img = bullet_image;
-   width = img->width;
-   
+   from_player = f_p;
+   pos = p;
+   speed = s + 3;
+   img = bullet_image;
+   width = img->width;
+   
 }
 void Bullet::update() {
-   if (from_player) {
-       pos.y -= speed;
-   } else {
-       pos.y += speed;
-   }
+   if (from_player) {
+       pos.y -= speed;
+   } else {
+       pos.y += speed;
+   }
 }
 void Bullet::draw() {
-   img->draw(pos.x - width/2, pos.y - width/2);
-   
+   img->draw(pos.x - width/2, pos.y - width/2);
+   
 }
 ```
 
@@ -293,13 +311,13 @@ For now, our `update_bullets()` function will call the `update()` function in ea
 ```
 //--------------------------------------------------------------
 void testApp::update_bullets() {
-   for (int i = 0; i < bullets.size(); i++) {
-       bullets[i].update();
-       if (bullets[i].pos.y - bullets[i].width/2 < 0 || bullets[i].pos.y + bullets[i].width/2 > ofGetHeight()) {
-           bullets.erase(bullets.begin()+i);
-       }
-   }
-   // we’ll call a collision check function here shortly
+   for (int i = 0; i < bullets.size(); i++) {
+       bullets[i].update();
+       if (bullets[i].pos.y - bullets[i].width/2 < 0 || bullets[i].pos.y + bullets[i].width/2 > ofGetHeight()) {
+           bullets.erase(bullets.begin()+i);
+       }
+   }
+   // we’ll call a collision check function here shortly
 }
 ```
 
@@ -308,27 +326,27 @@ Our `testApp::update()` and `testApp::draw()` will now look like this:
 ```
 //--------------------------------------------------------------
 void testApp::update(){
-   if (game_state == "start") {
+   if (game_state == "start") {
  
-   } else if (game_state == "game") {
-       player_1.update();
-       update_bullets();
-   }
+   } else if (game_state == "game") {
+       player_1.update();
+       update_bullets();
+   }
 }
 //--------------------------------------------------------------
 void testApp::draw(){
-   if (game_state == "start") {
+   if (game_state == "start") {
  
-   } else if (game_state == "game") {
-       ofBackground(0,0,0);
-       player_1.draw();
-       
-       for (int i = 0; i < bullets.size(); i++) {
-           bullets[i].draw();
-       }
-   } else if (game_state == "end") {
+   } else if (game_state == "game") {
+       ofBackground(0,0,0);
+       player_1.draw();
+       
+       for (int i = 0; i < bullets.size(); i++) {
+           bullets[i].draw();
+       }
+   } else if (game_state == "end") {
  
-   }
+   }
 }
 ```
 
@@ -337,29 +355,29 @@ Finally, let’s add an if-statement to our `keyPressed()` so that when we press
 ```
 //--------------------------------------------------------------
 void testApp::keyPressed(int key){
-   if (game_state == "game") {
-       if (key == OF_KEY_LEFT) {
-           player_1.is_left_pressed = true;
-       }
-       
-       if (key == OF_KEY_RIGHT) {
-           player_1.is_right_pressed = true;
-       }
-       
-       if (key == OF_KEY_UP) {
-           player_1.is_up_pressed = true;
-       }
-       
-       if (key == OF_KEY_DOWN) {
-           player_1.is_down_pressed = true;
-       }
-       
-       if (key == ' ') {
-           Bullet b;
-           b.setup(true, player_1.pos, player_1.speed, &player_bullet_image);
-           bullets.push_back(b);
-       }   
-   }
+   if (game_state == "game") {
+       if (key == OF_KEY_LEFT) {
+           player_1.is_left_pressed = true;
+       }
+       
+       if (key == OF_KEY_RIGHT) {
+           player_1.is_right_pressed = true;
+       }
+       
+       if (key == OF_KEY_UP) {
+           player_1.is_up_pressed = true;
+       }
+       
+       if (key == OF_KEY_DOWN) {
+           player_1.is_down_pressed = true;
+       }
+       
+       if (key == ' ') {
+           Bullet b;
+           b.setup(true, player_1.pos, player_1.speed, &player_bullet_image);
+           bullets.push_back(b);
+       }   
+   }
 }
 ```
 
@@ -373,20 +391,20 @@ Let’s move on to our enemy. This process should be familiar by now. Add an `of
 ```
 class Enemy {
 public:
-   ofPoint pos;
-   float speed;
-   float amplitude;
-   float width;
-   
-   float start_shoot;
-   float shoot_interval;
-   
-   void setup(float max_enemy_amplitude, float max_enemy_shoot_interval, ofImage * enemy_image);
-   void update();
-   void draw();
-   bool time_to_shoot();
-   
-   ofImage * img;
+   ofPoint pos;
+   float speed;
+   float amplitude;
+   float width;
+   
+   float start_shoot;
+   float shoot_interval;
+   
+   void setup(float max_enemy_amplitude, float max_enemy_shoot_interval, ofImage * enemy_image);
+   void update();
+   void draw();
+   bool time_to_shoot();
+   
+   ofImage * img;
 };
 ```
 
@@ -395,28 +413,28 @@ Our enemy’s horizontal movement will be shaped by the values fed to a sine wav
 
 ```
 void Enemy::setup(float max_enemy_amplitude, float max_enemy_shoot_interval, ofImage * enemy_image) {
-   pos.x = ofRandom(ofGetWidth());
-   pos.y = 0;
-   img = enemy_image;
-   width = img->width;
-   speed = ofRandom(2, 7);
-   amplitude = ofRandom(max_enemy_amplitude);
-   shoot_interval = ofRandom(0.5, max_enemy_shoot_interval);
-   start_shoot = ofGetElapsedTimef();
+   pos.x = ofRandom(ofGetWidth());
+   pos.y = 0;
+   img = enemy_image;
+   width = img->width;
+   speed = ofRandom(2, 7);
+   amplitude = ofRandom(max_enemy_amplitude);
+   shoot_interval = ofRandom(0.5, max_enemy_shoot_interval);
+   start_shoot = ofGetElapsedTimef();
 }
 void Enemy::update() {
-   pos.y += speed;
-   pos.x += amplitude * sin(ofGetElapsedTimef());
+   pos.y += speed;
+   pos.x += amplitude * sin(ofGetElapsedTimef());
 }
 void Enemy::draw() {
-   img->draw(pos.x - width/2, pos.y - width/2);
+   img->draw(pos.x - width/2, pos.y - width/2);
 }
 bool Enemy::time_to_shoot() {
-   if (ofGetElapsedTimef() - start_shoot > shoot_interval) {
-       start_shoot = ofGetElapsedTimef();
-       return true;
-   }
-   return false;
+   if (ofGetElapsedTimef() - start_shoot > shoot_interval) {
+       start_shoot = ofGetElapsedTimef();
+       return true;
+   }
+   return false;
 }
 ```
 
@@ -428,51 +446,51 @@ In `time_to_shoot()`, we check to see whether the difference between the current
 ```
 //--------------------------------------------------------------
 void testApp::setup(){
-   game_state = "start";
-   
-   max_enemy_amplitude = 3.0;
-   max_enemy_shoot_interval = 1.5;
-   
-   enemy_image.loadImage("enemy0.png");
-   player_image.loadImage("player.png");
-   enemy_bullet_image.loadImage("enemy_bullet.png");
-   player_bullet_image.loadImage("player_bullet.png");
-   
-   player_1.setup(&player_image);
+   game_state = "start";
+   
+   max_enemy_amplitude = 3.0;
+   max_enemy_shoot_interval = 1.5;
+   
+   enemy_image.loadImage("enemy0.png");
+   player_image.loadImage("player.png");
+   enemy_bullet_image.loadImage("enemy_bullet.png");
+   player_bullet_image.loadImage("player_bullet.png");
+   
+   player_1.setup(&player_image);
 }
 //--------------------------------------------------------------
 void testApp::update(){
-   if (game_state == "start") {
-       
-   } else if (game_state == "game") {
-       player_1.update();
-       update_bullets();
-       
-       for (int i = 0; i < enemies.size(); i++) {
-           enemies[i].update();
-           if (enemies[i].time_to_shoot()) {
-               Bullet b;
-               b.setup(false, enemies[i].pos, enemies[i].speed, &enemy_bullet_image);
-               bullets.push_back(b);
-           }
-       }
-   } else if (game_state =="draw") {
-   }
+   if (game_state == "start") {
+       
+   } else if (game_state == "game") {
+       player_1.update();
+       update_bullets();
+       
+       for (int i = 0; i < enemies.size(); i++) {
+           enemies[i].update();
+           if (enemies[i].time_to_shoot()) {
+               Bullet b;
+               b.setup(false, enemies[i].pos, enemies[i].speed, &enemy_bullet_image);
+               bullets.push_back(b);
+           }
+       }
+   } else if (game_state =="draw") {
+   }
 }
 //--------------------------------------------------------------
 void testApp::draw(){
-   if (game_state == "start") {
-   } else if (game_state == "game") {
-       ofBackground(0,0,0);
-       player_1.draw();
-       for (int i = 0; i < enemies.size(); i++) {
-           enemies[i].draw();
-       }
-       for (int i = 0; i < bullets.size(); i++) {
-           bullets[i].draw();
-       }
-   } else if (game_state == "end") {
-   }
+   if (game_state == "start") {
+   } else if (game_state == "game") {
+       ofBackground(0,0,0);
+       player_1.draw();
+       for (int i = 0; i < enemies.size(); i++) {
+           enemies[i].draw();
+       }
+       for (int i = 0; i < bullets.size(); i++) {
+           bullets[i].draw();
+       }
+   } else if (game_state == "end") {
+   }
 }
 ```
 
@@ -483,26 +501,26 @@ Let’s implement our bullet collision checks. Add a void `check_bullet_collisio
 ```
 //--------------------------------------------------------------
 void testApp::check_bullet_collisions() {
-   for (int i = 0; i < bullets.size(); i++) {
-       if (bullets[i].from_player) {
-           for (int e = enemies.size()-1; e >= 0; e--) {
-               if (ofDist(bullets[i].pos.x, bullets[i].pos.y, enemies[e].pos.x, enemies[e].pos.y) < (enemies[e].width + bullets[i].width)/2) {
-                   enemies.erase(enemies.begin()+e);
-                   bullets.erase(bullets.begin()+i);
-                   score+=10;
-               }
-           }
-       } else {
-           if (ofDist(bullets[i].pos.x, bullets[i].pos.y, player_1.pos.x, player_1.pos.y) < (bullets[i].width+player_1.width)/2) {
-               bullets.erase(bullets.begin()+i);
-               player_1.lives--;
-               
-               if (player_1.lives <= 0) {
-                   game_state = "end";
-               }
-           }
-       }
-   }
+   for (int i = 0; i < bullets.size(); i++) {
+       if (bullets[i].from_player) {
+           for (int e = enemies.size()-1; e >= 0; e--) {
+               if (ofDist(bullets[i].pos.x, bullets[i].pos.y, enemies[e].pos.x, enemies[e].pos.y) < (enemies[e].width + bullets[i].width)/2) {
+                   enemies.erase(enemies.begin()+e);
+                   bullets.erase(bullets.begin()+i);
+                   score+=10;
+               }
+           }
+       } else {
+           if (ofDist(bullets[i].pos.x, bullets[i].pos.y, player_1.pos.x, player_1.pos.y) < (bullets[i].width+player_1.width)/2) {
+               bullets.erase(bullets.begin()+i);
+               player_1.lives--;
+               
+               if (player_1.lives <= 0) {
+                   game_state = "end";
+               }
+           }
+       }
+   }
 }
 ```
 
@@ -514,13 +532,13 @@ Don’t forget to call `check_bullet_collisions()` as part of `update_bullets()`
 ```
 //--------------------------------------------------------------
 void testApp::update_bullets() {
-   for (int i = 0; i < bullets.size(); i++) {
-       bullets[i].update();
-       if (bullets[i].pos.y - bullets[i].width/2 < 0 || bullets[i].pos.y + bullets[i].width/2 > ofGetHeight()) {
-           bullets.erase(bullets.begin()+i);
-       }
-   }
-   check_bullet_collisions();
+   for (int i = 0; i < bullets.size(); i++) {
+       bullets[i].update();
+       if (bullets[i].pos.y - bullets[i].width/2 < 0 || bullets[i].pos.y + bullets[i].width/2 > ofGetHeight()) {
+           bullets.erase(bullets.begin()+i);
+       }
+   }
+   check_bullet_collisions();
 }
 ```
 
@@ -532,11 +550,11 @@ Great! Except… we don’t have any enemies yet! Definitely an oversight. This 
 ```
 class LevelController {
 public:
-   float start_time;
-   float interval_time;
-   
-   void setup(float e);
-   bool should_spawn();
+   float start_time;
+   float interval_time;
+   
+   void setup(float e);
+   bool should_spawn();
 };
 ```
 
@@ -546,15 +564,15 @@ Inside our `LevelController.cpp`:
 
 ```
 void LevelController::setup(float s) {
-   start_time = s;
-   interval_time = 500;
+   start_time = s;
+   interval_time = 500;
 }
 bool LevelController::should_spawn() {
-   if (ofGetElapsedTimeMillis() - start_time > interval_time) {
-       start_time = ofGetElapsedTimeMillis();
-       return true;
-   }
-   return false;
+   if (ofGetElapsedTimeMillis() - start_time > interval_time) {
+       start_time = ofGetElapsedTimeMillis();
+       return true;
+   }
+   return false;
 }
 ```
 
@@ -564,12 +582,12 @@ We’ll wait to set up our level controller until the game actually starts--name
 
 ```
 void testApp::keyReleased(int key){
-   if (game_state == "start") {
-       game_state = "game";
-       level_controller.setup(ofGetElapsedTimeMillis());
-   }
+   if (game_state == "start") {
+       game_state = "game";
+       level_controller.setup(ofGetElapsedTimeMillis());
+   }
  
-  ...
+  ...
 }
 ```
 
@@ -578,27 +596,27 @@ Next we’ll integrate it into our `testApp::update()`:
 ```
 //--------------------------------------------------------------
 void testApp::update(){
-   if (game_state == "start") {
-       
-   } else if (game_state == "game") {
-       player_1.update();
-       update_bullets();
-       
-       for (int i = 0; i < enemies.size(); i++) {
-           enemies[i].update();
-           if (enemies[i].time_to_shoot()) {
-               Bullet b;
-               b.setup(false, enemies[i].pos, enemies[i].speed, &enemy_bullet_image);
-               bullets.push_back(b);
-           }
-       }
-       
-       if (level_controller.should_spawn() == true) {
-           Enemy e;
-           e.setup(max_enemy_amplitude, max_enemy_shoot_interval, &enemy_image);
-           enemies.push_back(e);
-       }
-   }
+   if (game_state == "start") {
+       
+   } else if (game_state == "game") {
+       player_1.update();
+       update_bullets();
+       
+       for (int i = 0; i < enemies.size(); i++) {
+           enemies[i].update();
+           if (enemies[i].time_to_shoot()) {
+               Bullet b;
+               b.setup(false, enemies[i].pos, enemies[i].speed, &enemy_bullet_image);
+               bullets.push_back(b);
+           }
+       }
+       
+       if (level_controller.should_spawn() == true) {
+           Enemy e;
+           e.setup(max_enemy_amplitude, max_enemy_shoot_interval, &enemy_image);
+           enemies.push_back(e);
+       }
+   }
 }
 ```
 
@@ -613,15 +631,15 @@ Before we finish, let’s add in our last OSC feature: the ability to throw in b
 ```
 class Life {
 public:
-   ofPoint pos;
-   float speed;
-   float width;
-   
-   ofImage * img;
-   
-   void setup(ofImage * _img);
-   void update();
-   void draw();
+   ofPoint pos;
+   float speed;
+   float width;
+   
+   ofImage * img;
+   
+   void setup(ofImage * _img);
+   void update();
+   void draw();
 };
 ```
 
@@ -629,17 +647,17 @@ And it’ll function like this--a lot like the bullet:
 
 ```
 void Life::setup(ofImage * _img) {
-   img = _img;
-   width = img->width;
-   speed = 5;
-   pos.x = ofRandom(ofGetWidth());
-   pos.y = -img->width/2;
+   img = _img;
+   width = img->width;
+   speed = 5;
+   pos.x = ofRandom(ofGetWidth());
+   pos.y = -img->width/2;
 }
 void Life::update() {
-   pos.y += speed;
+   pos.y += speed;
 }
 void Life::draw() {
-   img->draw(pos.x - img->width/2, pos.y - img->width/2);
+   img->draw(pos.x - img->width/2, pos.y - img->width/2);
 }
 ```
 
@@ -648,17 +666,17 @@ Our `update_bonuses()` function works a lot like the bullet collision function:
 ```
 //--------------------------------------------------------------
 void testApp::update_bonuses() {
-   for (int i = bonuses.size()-1; i > 0; i--) {
-       bonuses[i].update();
-       if (ofDist(player_1.pos.x, player_1.pos.y, bonuses[i].pos.x, bonuses[i].pos.y) < (player_1.width + bonuses[i].width)/2) {
-           player_1.lives++;
-           bonuses.erase(bonuses.begin() + i);
-       }
-       
-       if (bonuses[i].pos.y + bonuses[i].width/2 > ofGetHeight()) {
-           bonuses.erase(bonuses.begin() + i);
-       }
-   }
+   for (int i = bonuses.size()-1; i > 0; i--) {
+       bonuses[i].update();
+       if (ofDist(player_1.pos.x, player_1.pos.y, bonuses[i].pos.x, bonuses[i].pos.y) < (player_1.width + bonuses[i].width)/2) {
+           player_1.lives++;
+           bonuses.erase(bonuses.begin() + i);
+       }
+       
+       if (bonuses[i].pos.y + bonuses[i].width/2 > ofGetHeight()) {
+           bonuses.erase(bonuses.begin() + i);
+       }
+   }
 }
 ```
 
@@ -667,52 +685,52 @@ All that’s left for our lives functionality is to alter `testApp::update()` an
 ```
 //--------------------------------------------------------------
 void testApp::update(){
-   if (game_state == "start") {
-       
-   } else if (game_state == "game") {
-       player_1.update();
-       update_bullets();
-       update_bonuses();
-       
-       for (int i = 0; i < enemies.size(); i++) {
-           enemies[i].update();
-           if (enemies[i].time_to_shoot()) {
-               Bullet b;
-               b.setup(false, enemies[i].pos, enemies[i].speed, &enemy_bullet_image);
-               bullets.push_back(b);
-           }
-       }
-       
-       if (level_controller.should_spawn() == true) {
-           Enemy e;
-           e.setup(max_enemy_amplitude, max_enemy_shoot_interval, &enemy_image);
-           enemies.push_back(e);
-       }
-   }
+   if (game_state == "start") {
+       
+   } else if (game_state == "game") {
+       player_1.update();
+       update_bullets();
+       update_bonuses();
+       
+       for (int i = 0; i < enemies.size(); i++) {
+           enemies[i].update();
+           if (enemies[i].time_to_shoot()) {
+               Bullet b;
+               b.setup(false, enemies[i].pos, enemies[i].speed, &enemy_bullet_image);
+               bullets.push_back(b);
+           }
+       }
+       
+       if (level_controller.should_spawn() == true) {
+           Enemy e;
+           e.setup(max_enemy_amplitude, max_enemy_shoot_interval, &enemy_image);
+           enemies.push_back(e);
+       }
+   }
 }
 //--------------------------------------------------------------
 void testApp::draw(){
-   if (game_state == "start") {
-       start_screen.draw(0,0);
-   } else if (game_state == "game") {
-       ofBackground(0,0,0);
-       player_1.draw();
-       draw_lives();
-       
-       for (int i = 0; i < enemies.size(); i++) {
-           enemies[i].draw();
-       }
-       
-       for (int i = 0; i < bullets.size(); i++) {
-           bullets[i].draw();
-       }
-       
-       for (int i = 0; i < bonuses.size(); i++) {
-           bonuses[i].draw();
-       }
-   } else if (game_state == "end") {
+   if (game_state == "start") {
+       start_screen.draw(0,0);
+   } else if (game_state == "game") {
+       ofBackground(0,0,0);
+       player_1.draw();
+       draw_lives();
+       
+       for (int i = 0; i < enemies.size(); i++) {
+           enemies[i].draw();
+       }
+       
+       for (int i = 0; i < bullets.size(); i++) {
+           bullets[i].draw();
+       }
+       
+       for (int i = 0; i < bonuses.size(); i++) {
+           bonuses[i].draw();
+       }
+   } else if (game_state == "end") {
  
-   }    
+   }    
 }
 ```
 
@@ -727,10 +745,10 @@ Change `testApp::setup()` to load in those assets:
 //--------------------------------------------------------------
 void testApp::setup(){
     ...
-   player_1.setup(&player_image);
-   start_screen.loadImage("start_screen.png");
-   end_screen.loadImage("end_screen.png");
-   score_font.loadFont("Gota_Light.otf", 48);
+   player_1.setup(&player_image);
+   start_screen.loadImage("start_screen.png");
+   end_screen.loadImage("end_screen.png");
+   score_font.loadFont("Gota_Light.otf", 48);
 }
 ```
 
@@ -741,19 +759,19 @@ Add in the last two functions:
 ```
 //--------------------------------------------------------------
 void testApp::draw_lives() {
-   for (int i = 0; i < player_1.lives; i++) {
-       player_image.draw(ofGetWidth() - (i * player_image.width) - 100, 30);
-   }
-   
+   for (int i = 0; i < player_1.lives; i++) {
+       player_image.draw(ofGetWidth() - (i * player_image.width) - 100, 30);
+   }
+   
 }
 //--------------------------------------------------------------
 void testApp::draw_score() {
-   if (game_state == "game") {
-       score_font.drawString(ofToString(score), 30, 72);
-   } else if (game_state == "end") {
-       float w = score_font.stringWidth(ofToString(score));
-       score_font.drawString(ofToString(score), ofGetWidth()/2 - w/2, ofGetHeight()/2 + 100);
-   }
+   if (game_state == "game") {
+       score_font.drawString(ofToString(score), 30, 72);
+   } else if (game_state == "end") {
+       float w = score_font.stringWidth(ofToString(score));
+       score_font.drawString(ofToString(score), ofGetWidth()/2 - w/2, ofGetHeight()/2 + 100);
+   }
 }
 ```
 
@@ -764,9 +782,12 @@ All that’s left after that is to call `draw_score();` and `draw_lives();` duri
 Congrats--you made a game!
 
 ###Linking oF and OSC
+Now let’s add in the OSC functionality. We are going to set our application up to receive messages from our iPad and then make changes in real-time while our game is running to test some possible player scenarios. As mentioned before, this can trump going into your application and making manual changes because you skip the need to recompile your game and playtest live. In fact, you can use Touch OSC to even open up new ways to interact with your players. 
 
-Now let’s add in the OSC functionality. We are going to set our application up to receive messages from our iPad and then make changes in real-time while our game is running to test some possible player scenarios. As mentioned before, this can trump going into your application and making manual changes because you skip the need to recompile your game and playtest live. 
-
+![](touchGame.png)  
+***Nightgame developer interface by Phoenix Perry***  
+*Touch OSC is used to switch game levels on the fly and to run challenges.* 
+   
 To accomplish this we are going to create a new class that will contain our OSC functionality. Create a .cpp and .h file for this class now and name it LiveTesting. Open `LiveTesting.h`
 And let’s add the line to import the OSC at the top of your file after your preprocessor directives and also a line for using iostream for testing purposes. As we add the code we will explain in inline in the code comments. 
 
@@ -789,7 +810,9 @@ public:
     void update(); //for updating 
 	
     ofxOscSender sender;
-    //you can set up a sender! We are going to use this network connection to give us some visual feedback of our current game values.  
+    //you can set up a sender! 
+    //We are going to use this network connection to give us 
+    //some visual feedback of our current game values.  
 
     ofxOscReceiver receiver;
     //this is the magic! This is the port on which your game gets incoming data. 
@@ -852,7 +875,7 @@ Moving on, select the knob. This one will require more set up because it will ac
 
 The last thing to set up will be the bottom label to display what our interval variable is currently set to in our running game.  Select it. We will change the settings and the address tag to reflect that it is not game data being sent to our game but rather data being sent out of our game. Select the label on screen to pull up the parameters for it on the right. In the darkened OSC box change the parameters to those below: 
 
-![](updatedVals_interval.png)
+![](updatedValsinterval.png)
 
 This is the pattern we are going to use for all of our knobs and labels. Essentially, the pattern is 
 
@@ -929,16 +952,23 @@ Finally, TouchOSC is set up. Let’s link it to our game and run our very first 
 #include "LiveTesting.h"
 
 LiveTesting::LiveTesting(){
+
     sender.setup("192.168.0.11", 8000);
     //this is the ip address of your ipad/android and the port it should be
     //set to receive on
     
 	receiver.setup(8001);
-    /*this is the port you're game will receive data on. For us this is the important one! Set your mobile device to send on this port.&*/
+    /*this is the port you're game will receive data on. 
+    For us this is the important one! Set your mobile device to send on this port.*/
     
     m.setAddress("/game");
-    /*this is OSC's URL like naming convention. You can use a root url address like structure and then everything under that address will be accessible by that message. It's very similar to a folder path on your hard drive. You can think of the game folder as your root directory and all the bits that are /game/someOtherName are inside of it.
-*/
+    
+    /*This is OSC's URL like naming convention. You can use a root url address like 
+     structure and then everything under that address will be accessible by that message. 
+    
+   	 It's very similar to a folder path on your hard drive. You can think of the 
+     game folder as your root directory and all the bits that are 
+     /game/someOtherName are inside of it.*/   
 }
 ```
 
@@ -946,7 +976,39 @@ In the above code we simply set up our network address, incoming and out going p
 
 Let’s move on to the next major function we want to write. We need to run an update function in this class to update every frame so we can make sure that if we move a slider on our ipad that change becomes reflected within the game. Also, we might want to send that value back out once we receive it so we can get some visual feedback on our tablet to let us know what our current settings are. 
 
-Each time we make a change on our device, it will send over the changes to our code via Touch OSC. We want to make sure we get all of the incoming messages that are being sent so we will create a simple while loop. Every incoming message will come in with its address tag and also the arguments we are setting. You can test for the address tag string to match up the incoming argument with the matching variables in your game. 
+Each time we make a change on our device, it will send over the updates to our code via Touch OSC. We want to make sure we get all of the incoming messages that are being sent so we will create a simple while loop. We will loop through the whole list of messages that came into our game that frame and match it to the corresponding variable in our game via if statements. 
+
+```
+  while (receiver.hasWaitingMessages()) {        
+        //get the next message
+        ofxOscMessage m;
+        receiver.getNextMessage(&m);
+
+```
+       
+Every incoming message will come with its own unique address tag and new arguments. You can get access to a message's address via the getAddress function. For example,`if(m.getAddress() == "/game/max_enemy_amplitude")`, will test to see if the message address is /game/max_enemy_amplitude. If it is, set the variable equal to that value in your game's codebase and they are linked together. Every swipe of the knob will translate to direct changes in your game. We do this for every single value we want to set.  
+
+```      
+	if(m.getAddress() == "/game/max_enemy_amplitude")
+        {
+            max_enemy_amplitude = m.getArgAsFloat(0);
+            
+            //these values send back to OSC to display the
+            //current settings for visual feedback
+            sendBack.addFloatArg(max_enemy_amplitude);
+            sendBack.setAddress("/updatedVals/max_enemy_amplitude");
+            sender.sendMessage(sendBack);
+            
+            cout << max_enemy_amplitude << endl;
+        }
+
+```
+
+At the same time, we are also going to send those exact same values back out to our device so we can see the numbers that the settings in our game are currently at. This is handy for two reasons. One, you get visual feedback of the current variables values' on your device. Two, if you happen to land on settings that feel right in your game, you can take a screen cap on your device. After stopping the game, go back and change the variables to match in your code and the next time you run your program, it will start with those parameters. 
+
+To pack up all of the values in our current running game and send them back to the device every frame we will create a variable of type `ofxOscMessage` called `sendBack`. When we have a string match for the address in the `ofxOscMessage m`, we just copy the arguments over to `sendBack` via the right function (in this case usually `addFloatArg`) and set the address pattern using the `setAddress` function. Finally, we use the built in `sendMessage` function to send the message out over OSC. 
+
+Here's the complete code to add to your LiveTesting.cpp file 
 
 ```
 void LiveTesting::update()
@@ -954,26 +1016,42 @@ void LiveTesting::update()
     //our simple while loop to make sure we get all of our messages
     while (receiver.hasWaitingMessages()) {
         
-        //get the message, which will hold all of our arguements inside of it. It's a collection of data!
+        //get the message, which will hold all of our arguments inside of it. 
+        //It's a collection of data!
+        
         ofxOscMessage m;
-        //pass a reference to that message to the reciever we set up above using the getNextMessage function in the OSC add on.
+        //pass a reference to that message to the receiver 
+        //we set up above using the getNextMessage function in the OSC add on.
+        
         receiver.getNextMessage(&m);
        
-        //this will be the message we send back from our game to our device letting it know what value we received
-        //from it and displaying that back to us so we know what our current game setting are at
+        //this will be the message we send back from our game 
+        //to our device letting it know what value we received
+        //from it and displaying that back to us so we know what our 
+        //current game setting are at
+        
         ofxOscMessage sendBack;
         
-        //remember or address tags are unique. we set up the /game tag as our root address and each / denotes a sub tag
-        //if theses strings are a match, we know the message that came in is our amplitude
+        //remember or address tags are unique. 
+        //we set up the /game tag as our root address and each / denotes a sub tag
+        //if theses strings are a match, we know the message that came in is our 
+        //amplitude
+        
         if(m.getAddress() == "/game/max_enemy_amplitude")
         {
         
-            //this is critical. Each type must match if you want to be able to run your code.
-            //We know the first argument in our array of messages will be a float if the above if statement evaluates to true
+            //this is critical. 
+            //Each type must match if you want to be able to run your code.
+            //We know the first argument in our array of messages 
+            //will be a float if the above if statement evaluates to true
+            
             max_enemy_amplitude = m.getArgAsFloat(0);
             
-            //now we are going to pack up a collection of data to send back to our device. sendBack is also a collection of data we
-            //add arguments to. add the vaule we set our amplitude to the message and move on. 
+            //now we are going to pack up a collection of data to send back to 
+            //our device. sendBack is also a collection of data we
+            //add arguments to. 
+            //Add the value we set our amplitude to the message and move on.
+             
             sendBack.addFloatArg(max_enemy_amplitude);
             sendBack.setAddress("/updatedVals/max_enemy_amplitude");
             sender.sendMessage(sendBack);
@@ -983,11 +1061,15 @@ void LiveTesting::update()
         
         else if (m.getAddress() == "/game/interval_time")
         {
-            //this is exactly the same as above. We just simply are testing to see if the address tag is this value and if so doing the exact
-            //process of setting our ingame value to match the value of the incoming argument and sending back our interval_time to our device.
+            //this is exactly the same as above. 
+            //We just simply are testing to see if the address 
+            //tag is this value and if so doing the exact
+            //process of setting our ingame value to match the value of the 
+   			//incoming argument and sending back our interval_time to our device.
+   			
             interval_time = m.getArgAsInt32(0);
             
-            //send visual feedback
+            //send visual feedback  
             sendBack.addIntArg(interval_time);
             sendBack.setAddress("/updatedVals/interval");
             sender.sendMessage(sendBack);
@@ -1018,7 +1100,27 @@ void LiveTesting::update()
     }
 ```
 
+You have reached the end of the tutorial. Now do a real testing session. Run the game and have a friend play it while you change the knobs. Once you have settings you like, quit the game and add those values into the code to make them permanent updates. 
 
+For a bonus challenge, find a few settings you like, and create a difficulty ramp for game using those values of time.  
 
- //Left to do – explain touch OSC and the last function 
+###Resouces 
+We've reached the end of the chapter but not the end of the journey. A few great resources for independent games scene are listed here:   
+[Come Out And Play](http://www.comeoutandplay.org/)  
+[Kill Screen](http://killscreendaily.com/)  
+[Indiecade](http://www.indiecade.com)  
+[Babycastles](http://www.babycastles.com)  
+[Polygon](http://www.polygon.com/)  
+[IDGA](http://www.igda.org/)  
+[Game Dev Net](http://www.gamedev.net/page/index.html)  
+[Game Dev Stack Exchange](http://gamedev.stackexchange.com/)  
+[Gamasutra](http://gamasutra.com/)  
+[Digra](http://www.digra.org/)  
+[Different Games](http://www.differentgames.org/)
 
+###About us
+This chapter was written by founding members of the [Code Liberation Foundation](http://www.codeliberation.org), an organization that teaches women to program games for free. Featuring game art by Loren Bednar. We build community, create a safe spaces for women who want to learn to program in a non-male dominated setting and generally rock. 
+ 
+![](clfTwitter.png)
+
+ 

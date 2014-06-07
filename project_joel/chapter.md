@@ -12,11 +12,15 @@ To see the finished project as part of a wider video all about the Greenpeace Fi
 
 http://youtu.be/LwokmKqT0og?t=1m12s
 
+Or an exceprt from inside the dome here:
+
+https://vimeo.com/97113402
+
 ## The Project
 
 ### Initial Brief from Client
 
-On 9th April 2013 we were approached by Paul Earnshaw of Greenpeace about a potential installation as part of Greenpeace's Field at Glastonbury 2013, a large music festival in the south west of England. Another studio had previously been in place to create a five day experience due to go live for the public duration of the festival on the 25th of June, but a scheduling conflict had emerged that had meant that they had to reluctantly withdraw.
+On 9th April 2013 we were approached by Paul Earnshaw of Greenpeace about an installation as part of Greenpeace's Field at Glastonbury 2013, a large music festival in the South West of England. Another interaction design studio had previously been in place to create a five day experience due to go live for the public duration of the festival on the 25th of June, but a scheduling conflict had emerged that had meant that they had to reluctantly withdraw.
 
 Paul already had a budget and a unique space picked out for the installation, a large geodesic dome:
 
@@ -59,15 +63,17 @@ On April 30th, we recieved an email from Paul:
 
 We had the project! Now it was time to get real about the budget, and see if we could get some interesting musical collaborators...
 
-During May, we concentrated on discovering what film footage was available, and finalising the production design and kit list. Pete spent many hours working on the edit of the film, aiming to complete it while other negotiations continued.
+During May, we concentrated on discovering what film footage was available, and finalising the production design and kit list. My business partner Pete Hellicar spent many hours working on the edit of the film, aiming to complete it while other negotiations continued.
 
 ### Audio negotiations
 
-On May 10th, Pete Hellicar reached out to our friends at Warp, to see if any of their artists would be interested in donating their music to the project, and by the nick of project time we had permission from several artists to use their sounds.
+On May 10th, Pete reached out to our friends at Warp Records to see if any of their artists would be interested in donating their music to the project, and by the nick of project time we had permission from several artists to use their sounds.
 
-### Supplier change and final budget negotiations and beginning to write the software
+### Supplier change, Final Budget Negotiations and Interaction Plan
 
-By the end of May, we had changed suppliers to ones already working with Greenpeace on their field, and had found replacement kit for our production. We'd also reached a final budget, and I was ready to start coding. Please see below for more details of the actual coding.
+By the end of May, we had changed hardware suppliers to ones already working with Greenpeace on their field, and had found replacement kit for our production. After experimenting with a circular projection screen, we'd arrived at a traditional projector set-up within the dome - a large rectangular projection screen about halfway up the dome wall with seating arranged in front of it. We'd also reached a final budget, and I was ready to start coding.
+
+Pete and I had arrived at a final interactive concept after some discussions with Paul, who stated that a "show time" of about 15 minutes was desirable - enough time to get a detailed message across, but not so long as to bore a casual visitor. Pete took his film edit to 15 minutes and had it approved by the Greenpeace team for pacing and content. We decided to use the Microsoft Kinect to allow the openFrameworks application to distort or effect the film footage in real time - based on viewers movements in front of the projection screen. To make the dome a bit more comfortable Paul arranged the donation of several jumbo size bean bags - meaning that visitors could lie comfortably and wave their hands in the air to interact with the film - we angled the Kinect to hopefully pick up unintended user interaction first, surprising users and gently guiding them to stand in front of the bean bags and use their whole bodies to interact. We knew we had to strike a balance between a pre-scripted show and a completely spontaneous one - so we decided on developing several visual looks which could be placed onto a time line for easy repetition, editing and playback. The aim was to get to a system with the reliability of a static linear film and the responsivity of a live "VJ" system - albeit one that used the viewers silhouette rather than pre-rendered matts to affect the edited Greenpeace film.
 
 At the beginning of June 2014 we received the following image from Paul:
 
@@ -75,7 +81,7 @@ At the beginning of June 2014 we received the following image from Paul:
 
 The site awaited us.
 
-### Interactive Background to Delay Maps, and the question of generating the delay map from the Kinect
+### Interactive Background to Delay Maps, and the possibility of generating a Delay Map from the Kinect Depth Image
 
 ![We are the time. We are the famous. Created at Fabrica.](images/FabricaWeAreTheTimeWeAreTheFamous.jpg "We are the time. We are the famous. Created at Fabrica.")
 We are the time. We are the famous. Created at Fabrica.
@@ -84,9 +90,13 @@ Hereafter by United Visual Artists.
 ![Feedback by Hellicar&Lewis.](images/HellicarAndLewisFeedback.jpg "Feedback by Hellicar&Lewis.")
 Feedback by Hellicar&Lewis.
 
-Pete started the project by doing some sketches in Photoshop of how two dimensional angular shapes could "shatter" video footage - I realised that we could make similar effects in realtime by using a delay map. This brought me back to previous projects around varying video delay across a whole image - starting with ["We are the time. We are the famous"](http://www.benettongroup.com/40years-press/fabrica_yeux_ouverts.html) at [Fabrica](http://fabrica.it/), continuing with [Hereafter](http://uva.co.uk/work/hereafter) at [UnitedVisualArtists](http://uva.co.uk/) and finally [Feedback](http://www.hellicarandlewis.com/the-roundhouse/) at [Hellicar&Lewis](http://hellicarandlewis.com). Many people have been interested in this area for some time, [Golan Levin](http://www.flong.com/) has compiled a [list of related works](http://www.flong.com/texts/lists/slit_scan/).
+Pete started the project by doing some sketches in Photoshop of how two dimensional angular shapes could "shatter" video footage - I realised that we could make similar effects in real time by using a delay map. This brought me back to previous projects around varying video delay across a whole image - starting with ["We are the time. We are the famous"](http://www.benettongroup.com/40years-press/fabrica_yeux_ouverts.html) at [Fabrica](http://fabrica.it/), continuing with [Hereafter](http://uva.co.uk/work/hereafter) at [UnitedVisualArtists](http://uva.co.uk/) and finally [Feedback](http://www.hellicarandlewis.com/the-roundhouse/) at [Hellicar&Lewis](http://hellicarandlewis.com). Many people have been interested in this area for some time, [Golan Levin](http://www.flong.com/) has compiled a [list of related works](http://www.flong.com/texts/lists/slit_scan/).
 
-The breakthrough after this initial thinking was to try to think of what other greyscale maps I had seen - the depth maps of the Kinect! The addition of James Georges [ofxSlitScan](https://github.com/obviousjim/ofxSlitScan) made swapping in and out static greyscale maps very simple, all I had to do was combine the depth map with the existing code.
+A delay map is simply grey-scale image that is used in combination with a digital video file to decide how much the video file should be delayed on a per-pixel basis. In this projects case a white pixel in a certain position in the delay map meant that there would be zero delay on the corresponding pixel of the video file currently being played back. Conversely, a black pixel in the delay map image would mean the maximum frame delay on the corresponding pixel of the video file. I.e. a completely white delay map image would combine with a video file to play back with zero delay, whilst a black image would give a uniform maximum delay - a linear horizontal grey-scale gradient would give a gradated delay from 0 on the white side to maximum on the black side - with all divisions smoothly displayed in between.
+
+Delay maps are a great way of allowing an art director to quickly "paint" several grey-scale images in Photoshop or some similar image editing program and see the effects of that map on any video file - abstracting away the technical details of the underlying video delay code. This approach of using imagery to control underlying code is a particularly effective technique - making new tools for Art Directors to interface with code using visual techniques rather than syntax and text heavy traditional software engineering techniques.
+
+The breakthrough after this initial thinking was to try to think of what other grey-scale maps I had seen - the live depth image of the Kinect! This would allow peoples 3D silhouettes to create per pixel delay maps that would change in real-time as they moved in front of the 3D sensors of the Microsoft device. The addition of James Georges [ofxSlitScan](https://github.com/obviousjim/ofxSlitScan) made swapping in and out static grey scale maps very simple, all I had to do was combine the depth map with his existing code on a frame by frame basis.
 
 ### Actual Timeline
 
@@ -163,7 +173,7 @@ This kind of separation demonstrates encapsulation or the information hiding qua
 http://en.wikipedia.org/wiki/Encapsulation_(object-oriented_programming)
 http://en.wikipedia.org/wiki/Information_hiding
 
-#### ofxSlitScan, using PNG's and moving to generating realtime maps, making a Aurora
+#### ofxSlitScan, using PNG's and moving to generating realtime delay maps, making a Aurora
 
 Starting is often the hardest thing to do with programming. To combat this, I try to do the stupidest, most obvious thing first and then build from there. In this project, I started by prototyping various looks using static PNGs - feeding new data into the examples provided with ofxSlitScan. The provided an easy sketching ability - combined with a paint program to quickly produce many input variations.
 
@@ -197,9 +207,9 @@ During development and testing, I realised a furry look could serve well for mak
 
 Tim Scaffidi's version immediately stood out to Pete, so I developed two simple colourings for Aurora and Polar Bear modes, merely tweaking Tim's excellent demo code.
 
-### Naming
+### XML Issues around the Naming of Scenes
 
-Mid development, I found that saving the XML wasn't functioning as expected, it turned out to be the fault of non alpha numeric characters in scene names - I find it's always good to avoid punctuation and spaces altogether and use [CamelCase](http://en.wikipedia.org/wiki/CamelCase).
+Mid development, I found that saving the XML wasn't functioning as expected - it turned out to be the fault of non alpha numeric characters in scene names. I learnt the hard way that it's always good to avoid punctuation and spaces altogether and use [CamelCase](http://en.wikipedia.org/wiki/CamelCase).
 
 ### Video Performance, using the HighPerformanceExample
 
@@ -278,7 +288,7 @@ Kieran and Bafic were the people who ran the show for the general public, below 
 
 *Did you have a routine before show time?*
 
-Before the first show of the day we’d double check the connection between the laptop and the kinect and test with the skeleton tracking that everything was working correctly. Before show time we’d dim the lights, make sure the sound was turned on, switch to the point cloud setting so people could see themselves as they walked in and then we’d turn the beanbags upright so as to ’set the scene’. Then, as people started to walk in we’d raise the lights as though they were walking on stage. And then before we pressed play we’d dim the lights to black.
+Before the first show of the day we’d double check the connection between the laptop and the Kinect and test with the skeleton tracking that everything was working correctly. Before show time we’d dim the lights, make sure the sound was turned on, switch to the point cloud setting so people could see themselves as they walked in and then we’d turn the beanbags upright so as to ’set the scene’. Then, as people started to walk in we’d raise the lights as though they were walking on stage. And then before we pressed play we’d dim the lights to black.
 
 *Any problems during shows? Crashes? Funny stories?*
 
@@ -316,11 +326,11 @@ Paul Valery said 'Poems are never finished - just abandoned'. This is sadly true
 
 #### Social interaction
 
-The [Hello Wall](http://www.hellicarandlewis.com/the-hello-wall/) and [Hello Cube](http://www.hellicarandlewis.com/tate-modern/) projects showed clearly how making feedback loops between users and installations via social networks is not only fun, but helps spread awareness of the installation beyond the physical bounds of the project.
+The [Hello Wall](http://www.hellicarandlewis.com/the-hello-wall/) and [Hello Cube](http://www.hellicarandlewis.com/tate-modern/) projects showed how making feedback loops between users and installations via social networks is not only fun, but helps spread awareness of the installation beyond the physical bounds of the project. Imagine allowing users to post comments to the projection as it happening via Twitter and receiving bespoke screen grabs showing evidence of their interaction in return - or even choosing which of the interactive effects is active at a certain time. The meta data of these interactions could be used to come up with the most enaging timeline, or to deliver messages to users in the days, weeks and months following the installation - particularly useful for an organisation such as Greenpeace that relies on public support to lobby Governments and Corporations.
 
 #### Broadcast
 
-The potential for broadcasting this interaction are clear. Post and Previous Hellicar&Lewis projects for [Nike](http://www.hellicarandlewis.com/nikefeeltv/) and [Coca-Cola](http://www.hellicarandlewis.com/coke/) show how broadcasting an interaction with the addition of social interaction can dramatically increase engagement.
+Pete and I discussed how we could transform the installation into one that broadcast itself to a wider audience when we were in the planning stage. Unfortunately, securing a reliable Internet connection at the Glastonbury Music festival proved impossible. Post and Previous Hellicar&Lewis projects for [Nike](http://www.hellicarandlewis.com/nikefeeltv/) and [Coca-Cola](http://www.hellicarandlewis.com/coke/) show how broadcasting an installation with the addition of social network interaction can dramatically increase engagement. We hope to be able to make such a socially activated broadcast interaction with Greenpeace in the near future - imagine several locations around the world witnessing the same film simultaneously with body movement from each location feeding back into the others - live video portals of depth maps crossing continents and time zones to produce a truly global event.
 
 #### Raspberry Pi
 
