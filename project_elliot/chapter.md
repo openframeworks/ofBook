@@ -92,15 +92,98 @@ __Offline__ :
 
 An example of an offline process would be processing the scan data.
 
-My personal preference is often to use openFrameworks for developing offline tasks, and to use another toolkit called VVVV for developing online processes.
+My personal preference is to use openFrameworks for developing offline tasks, and to use another toolkit called VVVV for developing online processes. VVVV is a node based visual programming environment which allows for simultanous running and editing of a program, and has support for very efficient modern graphics pipelines.
 
 #### Hardware
 
 | Component | Reasoning |
 | ----| ----|
 |PC, Windows | PC's are selected for flexible graphics options and for VVVV compatability |
-|GeForce GTX 680 | Heavy shader pipeline, 4 graphic outs |
+|GeForce GTX 680 | Moderately strong, so good at geavy shader pipelines such as used in this project<br />It has 4 video outs |
 |TripleHead2Go | Keeping all output in a single context (i.e, 1 'Display' in Windows) reduces rendering overhead and increases framerate. GeForce cards do not have an option for teaming exactly 2 outputs together into 1 context. The TripHead2Go was used to split 1 output (1 context) to 2 projectors. Alternatively, I would recommend to use Quadro Mosaic or ATI EyeFinity to team the 2 outputs|
 | 2 portrait monitors | Extra screenspace makes working environments more productive, and a significant portion of development is performed on site with the final piece. I often use portrait for a few reasons, but in this case largely because it's easier to look around the screens at the installation.|
-|Mac Mini, OSX | Second PC is for sound design, which generally requires Firewire. Ableton runs well on OSX |
+|Mac Mini, OSX | The second computer is for sound design and uses an audio interface which requires Firewire. Since Ableton runs equally well on OSX and on Windows and we have a spare Mac Mini in the studio, we  |
+
+##Design time applications
+
+During the early development stages of the project, we create some applications which are not intended to feed directly into the final work, but exist to facilitate the sketching process of developing the concept and design of the work. These help us to identify possibile unexpected directions we may go in, to understand how much effort may be required to realise the work both physically and technically, and to understand the material requirements (e.g. how much rope do we need to buy).
+
+Some examples of these 'design time applications' are:
+* A simple Digital Emulsion scanning app which worked with 2 projectors, a DSLR and After Effects. This was used to develop the tone and manner of the artwork by enabling semi-functional prototypes to be built in the studio.
+* Several prototypes for calibrating the camera and projectors
+* A bespoke CAD app for designing the physical web of strings
+
+### addLinesToRoom
+
+Let's tak about the CAD app a little more by discussing some of its features and how they are implemented. The full source of this app is up at ==URL for source== and you can download an osx version at ==URL for build==. This app was written on a long flight, then tweaked as and when it was used to add further features.
+
+#### Laying down lines
+ ofxGrabCam
+
+#### Shadows
+Editing a 3D scene through a computer monitor is often confusing, especially when we're editing thin lines. We can't naturally see the depth in the scene without constantly moving the camera. Ideally we could see the scene from 2 views simultanaously, enabling us to judge depth.
+
+One simple way of seeing the scene from 2 'views' is to draw shadows into the scene, enabling us to judge depth in the scene much more easily.
+
+![Without shadows](images/shadows_without.png)
+Without shadows
+
+![With shadows](images/shadows_with.png)
+With shadows
+
+ ==suggest arranging these 2 images side by side==
+
+There are a number of standard ways to render shadows in computer graphics, but I chose a super-naive method due to the very simple nature of the scene. Essentially every line is drawn twice, once as a normal 3D line, then again but with the y value clamped to the floor of the room, and the colour set to a dark grey colour.
+
+```cpp
+//---------
+void Thread::draw(float edgeThickness, ofColor center, ofColor border) const {
+	const ofVec3f start = this->s;
+	const ofVec3f end = this->s + this->t;
+	
+	ofPushStyle();
+	
+	ofSetLineWidth(edgeThickness);
+	ofSetColor(border);
+	ofLine(start, end);
+	
+	ofSetLineWidth(1.0f);
+	ofSetColor(center.r, center.g, center.b);
+	ofLine(start, end);
+	
+	ofPopStyle();
+}
+
+//---------
+void Thread::drawShadow(float floorHeight) const {
+	ofVec3f start = this->s;
+	ofVec3f end = this->t + start;
+	
+	//clamp the y value to the floor y value, so that the line sticks to the floor
+	start.y = floorHeight;
+	end.y = floorHeight;
+	
+	ofPushStyle();
+	
+	ofSetColor(20, 20, 20, 100);
+	ofLine(start, end);
+	ofPopStyle();
+}
+```
+
+#### Shift to zoom
+Often it's necessary in an application to perform an action more accurately than can be easily done with the normal mouse/trackpad and screen. In these scenarios, I generally add a "hold [SHIFT] to zoom" mode, which performs an appropriate action to assist the task at hand.
+
+In this case, the [SHIFT] key makes the line wider, and simultanaously the renderer presents a zoomed view in the corner of the screen.
+
+#### Layers feature
+Rebuilding gui objects
+ 
+#### Final notes
+The drawing tool tries to mirror the actual physical workflow
+
+Unexpected outcomes (things we had been imagining differently from each other. some layouts turned out to be nearly impossible to make
+
+
+Apps you write should make you happy whenever you look at it, so make them a touch pretty and use a little subtle colour.
 
