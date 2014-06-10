@@ -683,7 +683,7 @@ Before knowing about `ofRotate(...)`, we couldn't have drawn a rotated rectangle
 		
 		// Rotated rectangle in red
 		ofRotate(45);
-		ofSetColor(255 , 0, 0);
+		ofSetColor(255, 0, 0);
 		ofRect(500, 200, 200, 200);
 	ofPopMatrix();
 
