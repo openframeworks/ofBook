@@ -1,8 +1,7 @@
 // =============================================================================
 //
-// Source code for section 1.ii.b. Bursting Rectangle Brush from the
-// Introduction to Graphics chapter of ofBook
-// (https://github.com/openframeworks/ofBook).
+// Source code for section 2.ii.a. Polyline Pen from the Introduction
+// to Graphics chapter of ofBook (https://github.com/openframeworks/ofBook).
 //
 // Copyright (c) 2014 Michael Hadley, mikewesthad.com
 //
@@ -30,53 +29,36 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    ofSetFrameRate(60);
-    isLeftMousePressed = false;
-    ofSetBackgroundAuto(false);
-    // We still want to draw on a black background, so we need to draw
-    // the background before we do anything with the brush
-    ofBackground(0);
+    minDistance = 10.0;
+    leftMouseButtonPressed = false;
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::draw(){
-    if (isLeftMousePressed) {
-        ofSetRectMode(OF_RECTMODE_CENTER);
-        int numRects = 10;
-        for (int r=0; r<numRects; r++) {
-            ofSetColor(ofRandom(50, 255));
-            float width = ofRandom(5, 20);
-            float height = ofRandom(5, 20);
-            float angle = ofRandom(2.0*PI); // Angle in radians because sin(...) and cos(...) use radians
-            float distance = ofRandom(35);
-
-            // Formula for converting from polar to Cartesian coordinates:
-            //  x = cos(polar angle) * (polar distance)
-            //  y = sin(polar angle) * (polar distance)
-
-            float xOffset = cos(angle) * distance;
-            float yOffset = sin(angle) * distance;
-            ofRect(mouseX+xOffset, mouseY+yOffset, width, height);
+    if (leftMouseButtonPressed) {
+        ofVec2f mousePos(mouseX, mouseY);
+        if (lastPoint.distance(mousePos) >= minDistance) {
+            currentPolyline.curveTo(mousePos);  // You can also call curveTo with an ofVec2f
+            lastPoint = mousePos;
         }
     }
 }
 
 //--------------------------------------------------------------
-void ofApp::keyPressed(int key){
-    // From section 1.ii.f, allowing you to save a screenshot by pressing the 's' key:
-    if (key == 's') {
-        // HACK: only needed on windows, when using ofSetAutoBackground(false)
-        glReadBuffer(GL_FRONT);
-
-        // We use the timestamp here so that you can save multiple images without
-        // overriding previous screenshots (i.e. each file has a unique name)
-        ofSaveScreen("savedScreenshot_"+ofGetTimestampString()+".png");
+void ofApp::draw(){
+    ofBackground(0);
+    ofSetColor(255);  // White color for saved polylines
+    for (int i=0; i<polylines.size(); i++) {
+        ofPolyline polyline = polylines[i];
+        polyline.draw();
     }
+    ofSetColor(255,100,0);  // Orange color for active polyline
+    currentPolyline.draw();
+}
+
+//--------------------------------------------------------------
+void ofApp::keyPressed(int key){
+
 }
 
 //--------------------------------------------------------------
@@ -96,12 +78,22 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-    if (button == OF_MOUSE_BUTTON_LEFT) isLeftMousePressed = true;
+    if (button == OF_MOUSE_BUTTON_LEFT) {
+        leftMouseButtonPressed = true;
+        currentPolyline.curveTo(x, y);  // Remember that x and y are the location of the mouse
+        currentPolyline.curveTo(x, y);  // Necessary duplicate for first control point
+        lastPoint.set(x, y);  // Set the x and y of a ofVec2f in a single line
+    }
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
-    if (button == OF_MOUSE_BUTTON_LEFT) isLeftMousePressed = false;
+    if (button == OF_MOUSE_BUTTON_LEFT) {
+        leftMouseButtonPressed = false;
+        currentPolyline.curveTo(x, y);   // Necessary duplicate for last control point
+        polylines.push_back(currentPolyline);
+        currentPolyline.clear();  // Erase the vertices, allows us to start a new brush stroke
+    }
 }
 
 //--------------------------------------------------------------

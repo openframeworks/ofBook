@@ -1,7 +1,7 @@
 // =============================================================================
 //
-// Source code to accompany 1.ii.d. Basic Shapes from the Introduction to
-// Graphics chapter of ofBook.
+// Source code for section 1.ii.d. Star Line Brush from the Introduction
+// to Graphics chapter of ofBook (https://github.com/openframeworks/ofBook).
 //
 // Copyright (c) 2014 Michael Hadley, mikewesthad.com
 //

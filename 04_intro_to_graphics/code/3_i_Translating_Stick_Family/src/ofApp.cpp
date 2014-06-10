@@ -1,8 +1,7 @@
 // =============================================================================
 //
-// Source code for section 1.ii.b. Bursting Rectangle Brush from the
-// Introduction to Graphics chapter of ofBook
-// (https://github.com/openframeworks/ofBook).
+// Source code for section 3.i Translating Stick Family from the Introduction
+// to Graphics chapter of ofBook (https://github.com/openframeworks/ofBook).
 //
 // Copyright (c) 2014 Michael Hadley, mikewesthad.com
 //
@@ -30,12 +29,7 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    ofSetFrameRate(60);
-    isLeftMousePressed = false;
-    ofSetBackgroundAuto(false);
-    // We still want to draw on a black background, so we need to draw
-    // the background before we do anything with the brush
-    ofBackground(0);
+
 }
 
 //--------------------------------------------------------------
@@ -45,38 +39,48 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    if (isLeftMousePressed) {
-        ofSetRectMode(OF_RECTMODE_CENTER);
-        int numRects = 10;
-        for (int r=0; r<numRects; r++) {
-            ofSetColor(ofRandom(50, 255));
-            float width = ofRandom(5, 20);
-            float height = ofRandom(5, 20);
-            float angle = ofRandom(2.0*PI); // Angle in radians because sin(...) and cos(...) use radians
-            float distance = ofRandom(35);
 
-            // Formula for converting from polar to Cartesian coordinates:
-            //  x = cos(polar angle) * (polar distance)
-            //  y = sin(polar angle) * (polar distance)
+    ofBackground(255);
 
-            float xOffset = cos(angle) * distance;
-            float yOffset = sin(angle) * distance;
-            ofRect(mouseX+xOffset, mouseY+yOffset, width, height);
-        }
+    // Set some colors for us to use.  They are slighty transparent,
+    // so that we can see shapes even if they overlap
+    ofColor blueColor(50, 187, 250, 200);
+    ofColor purpleColor(231, 49, 247, 200);
+
+    // Loop to draw a grid
+    for (int rows=0; rows<4; rows++) {
+
+        ofPushMatrix(); // Save the coordinate system before we shift it horizontally
+            // It is often helpful to indent any code in-between push and pop matrix for readability
+
+            // Loop and draw a row within the grid
+            for (int cols=0; cols<7; cols++) {
+
+                // Draw the stick figure family
+                ofSetColor(blueColor);
+                ofCircle(30, 30, 30);
+                ofRect(5, 70, 50, 100);
+                ofSetColor(blueColor);
+                ofCircle(95, 30, 30);
+                ofRect(70, 70, 50, 100);
+                ofSetColor(purpleColor);
+                ofCircle(45, 90, 15);
+                ofRect(30, 110, 30, 60);
+                ofSetColor(purpleColor);
+                ofCircle(80, 90, 15);
+                ofRect(65, 110, 30, 60);
+
+                ofTranslate(150, 0); // Shift horizontally
+            }
+
+        ofPopMatrix(); // Return to the coordinate system before we shifted it horizontally
+        ofTranslate(0, 200); // Shift vertically
     }
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-    // From section 1.ii.f, allowing you to save a screenshot by pressing the 's' key:
-    if (key == 's') {
-        // HACK: only needed on windows, when using ofSetAutoBackground(false)
-        glReadBuffer(GL_FRONT);
 
-        // We use the timestamp here so that you can save multiple images without
-        // overriding previous screenshots (i.e. each file has a unique name)
-        ofSaveScreen("savedScreenshot_"+ofGetTimestampString()+".png");
-    }
 }
 
 //--------------------------------------------------------------
@@ -96,12 +100,12 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-    if (button == OF_MOUSE_BUTTON_LEFT) isLeftMousePressed = true;
+
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
-    if (button == OF_MOUSE_BUTTON_LEFT) isLeftMousePressed = false;
+
 }
 
 //--------------------------------------------------------------

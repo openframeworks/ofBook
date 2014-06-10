@@ -1,6 +1,6 @@
 // =============================================================================
 //
-// Source code for section 1.ii.c. Glowing Circle Brush from the Introduction
+// Source code for section 2.ii.a. Polyline Pen from the Introduction
 // to Graphics chapter of ofBook (https://github.com/openframeworks/ofBook).
 //
 // Copyright (c) 2014 Michael Hadley, mikewesthad.com
@@ -46,6 +46,10 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 
-		bool isLeftMousePressed;
+		ofPolyline currentPolyline;
+		bool leftMouseButtonPressed;
+		ofVec2f lastPoint;
+		float minDistance;
+		vector <ofPolyline> polylines;
 
 };

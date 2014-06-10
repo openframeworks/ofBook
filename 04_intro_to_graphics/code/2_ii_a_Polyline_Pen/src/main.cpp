@@ -1,6 +1,6 @@
 // =============================================================================
 //
-// Source code for section 1.ii.c. Glowing Circle Brush from the Introduction
+// Source code for section 2.ii.a. Polyline Pen from the Introduction
 // to Graphics chapter of ofBook (https://github.com/openframeworks/ofBook).
 //
 // Copyright (c) 2014 Michael Hadley, mikewesthad.com
@@ -25,27 +25,16 @@
 //
 // =============================================================================
 
-#pragma once
-
 #include "ofMain.h"
+#include "ofApp.h"
 
-class ofApp : public ofBaseApp{
+//========================================================================
+int main( ){
+	ofSetupOpenGL(1024,768,OF_WINDOW);			// <-------- setup the GL context
 
-	public:
-		void setup();
-		void update();
-		void draw();
+	// this kicks off the running of my app
+	// can be OF_WINDOW or OF_FULLSCREEN
+	// pass in width and height too:
+	ofRunApp(new ofApp());
 
-		void keyPressed(int key);
-		void keyReleased(int key);
-		void mouseMoved(int x, int y );
-		void mouseDragged(int x, int y, int button);
-		void mousePressed(int x, int y, int button);
-		void mouseReleased(int x, int y, int button);
-		void windowResized(int w, int h);
-		void dragEvent(ofDragInfo dragInfo);
-		void gotMessage(ofMessage msg);
-
-		bool isLeftMousePressed;
-
-};
+}

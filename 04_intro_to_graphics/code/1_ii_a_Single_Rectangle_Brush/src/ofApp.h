@@ -1,7 +1,7 @@
 // =============================================================================
 //
-// Source code to accompany 1.ii.a. Basic Shapes from the Introduction to
-// Graphics chapter of ofBook.
+// Source code for section 1.ii.a. Single Rectangle Brush from the Introduction
+// to Graphics chapter of ofBook (https://github.com/openframeworks/ofBook).
 //
 // Copyright (c) 2014 Michael Hadley, mikewesthad.com
 //

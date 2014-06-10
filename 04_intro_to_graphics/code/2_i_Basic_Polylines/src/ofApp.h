@@ -1,6 +1,6 @@
 // =============================================================================
 //
-// Source code for section 1.ii.c. Glowing Circle Brush from the Introduction
+// Source code for section 2.i Basic Polylines from the Introduction
 // to Graphics chapter of ofBook (https://github.com/openframeworks/ofBook).
 //
 // Copyright (c) 2014 Michael Hadley, mikewesthad.com
@@ -46,6 +46,8 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 
-		bool isLeftMousePressed;
+		ofPolyline straightSegmentPolyline;
+		ofPolyline curvedSegmentPolyline;
+		ofPolyline closedShapePolyline;
 
 };

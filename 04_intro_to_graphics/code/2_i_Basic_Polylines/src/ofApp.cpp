@@ -1,8 +1,7 @@
 // =============================================================================
 //
-// Source code for section 1.ii.b. Bursting Rectangle Brush from the
-// Introduction to Graphics chapter of ofBook
-// (https://github.com/openframeworks/ofBook).
+// Source code for section 2.i Basic Polylines from the Introduction
+// to Graphics chapter of ofBook (https://github.com/openframeworks/ofBook).
 //
 // Copyright (c) 2014 Michael Hadley, mikewesthad.com
 //
@@ -30,12 +29,27 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    ofSetFrameRate(60);
-    isLeftMousePressed = false;
-    ofSetBackgroundAuto(false);
-    // We still want to draw on a black background, so we need to draw
-    // the background before we do anything with the brush
-    ofBackground(0);
+
+    straightSegmentPolyline.addVertex(100, 100);  // Add a new point: (100, 100)
+    straightSegmentPolyline.addVertex(150, 150);  // Add a new point: (150, 150)
+    straightSegmentPolyline.addVertex(200, 100);  // etc...
+    straightSegmentPolyline.addVertex(250, 150);
+    straightSegmentPolyline.addVertex(300, 100);
+
+    curvedSegmentPolyline.curveTo(350, 100);  // These curves are Catmull-Rom splines
+    curvedSegmentPolyline.curveTo(350, 100);  // Necessary Duplicate for Control Point
+    curvedSegmentPolyline.curveTo(400, 150);
+    curvedSegmentPolyline.curveTo(450, 100);
+    curvedSegmentPolyline.curveTo(500, 150);
+    curvedSegmentPolyline.curveTo(550, 100);
+    curvedSegmentPolyline.curveTo(550, 100);  // Necessary Duplicate for Control Point
+
+    closedShapePolyline.addVertex(600, 125);
+    closedShapePolyline.addVertex(700, 100);
+    closedShapePolyline.addVertex(800, 125);
+    closedShapePolyline.addVertex(700, 150);
+    closedShapePolyline.close();  // Connect first and last vertices
+
 }
 
 //--------------------------------------------------------------
@@ -45,38 +59,19 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    if (isLeftMousePressed) {
-        ofSetRectMode(OF_RECTMODE_CENTER);
-        int numRects = 10;
-        for (int r=0; r<numRects; r++) {
-            ofSetColor(ofRandom(50, 255));
-            float width = ofRandom(5, 20);
-            float height = ofRandom(5, 20);
-            float angle = ofRandom(2.0*PI); // Angle in radians because sin(...) and cos(...) use radians
-            float distance = ofRandom(35);
 
-            // Formula for converting from polar to Cartesian coordinates:
-            //  x = cos(polar angle) * (polar distance)
-            //  y = sin(polar angle) * (polar distance)
+    ofBackground(0);
+    ofSetLineWidth(2.0);  // Line width will apply to polylines
+    ofSetColor(255,100,0);
+    straightSegmentPolyline.draw();  // This is how we draw polylines
+    curvedSegmentPolyline.draw();  // Nice and easy, right?
+    closedShapePolyline.draw();
 
-            float xOffset = cos(angle) * distance;
-            float yOffset = sin(angle) * distance;
-            ofRect(mouseX+xOffset, mouseY+yOffset, width, height);
-        }
-    }
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-    // From section 1.ii.f, allowing you to save a screenshot by pressing the 's' key:
-    if (key == 's') {
-        // HACK: only needed on windows, when using ofSetAutoBackground(false)
-        glReadBuffer(GL_FRONT);
 
-        // We use the timestamp here so that you can save multiple images without
-        // overriding previous screenshots (i.e. each file has a unique name)
-        ofSaveScreen("savedScreenshot_"+ofGetTimestampString()+".png");
-    }
 }
 
 //--------------------------------------------------------------
@@ -96,12 +91,12 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-    if (button == OF_MOUSE_BUTTON_LEFT) isLeftMousePressed = true;
+
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
-    if (button == OF_MOUSE_BUTTON_LEFT) isLeftMousePressed = false;
+
 }
 
 //--------------------------------------------------------------
