@@ -16,6 +16,10 @@ Or an exceprt from inside the dome here:
 
 https://vimeo.com/97113402
 
+All source code can be found here:
+
+https://github.com/HellicarAndLewis/Anthropocene
+
 ## The Project
 
 ### Initial Brief from Client
