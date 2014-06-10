@@ -502,20 +502,7 @@ And we have a simple pen-like brush that tracks the mouse, and we can draw a dop
 
 1. Add color!
 1. Explore [`ofBeginSaveScreenAsPDF(...)`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#!show_ofBeginSaveScreenAsPDF "ofBeginSaveScreenAsPDF Documentation Page") and [`ofEndSaveScreenAsPDF(...)`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#!show_ofEndSaveScreenAsPDF "ofEndSaveScreenAsPDF Documentation Page") to save your work into a vector file format.
-1. Try using the `keyPressed(...)` function in your source file to add an undo feature that dele
-2. 
-3. 
-4. 
-5. 
-6. 
-7. 
-8. 
-9. 
-10. 
-11. 
-12. 
-13. 
-14. tes the most recent brush stroke.
+1. Try using the `keyPressed(...)` function in your source file to add an undo feature that deletes the most recent brush stroke.
 1. Try restructuring the code to allow for a redo feature as well.
 
 #### Polyline Brushes: Points, Normals and Tangents ####
@@ -696,7 +683,7 @@ Before knowing about `ofRotate(...)`, we couldn't have drawn a rotated rectangle
 		
 		// Rotated rectangle in red
 		ofRotate(45);
-		ofSetColor(0, 0, 255);
+		ofSetColor(255, 0, 0);
 		ofRect(500, 200, 200, 200);
 	ofPopMatrix();
 
