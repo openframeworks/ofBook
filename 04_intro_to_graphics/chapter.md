@@ -683,15 +683,15 @@ Before knowing about `ofRotate(...)`, we couldn't have drawn a rotated rectangle
 		
 		// Rotated rectangle in red
 		ofRotate(45);
-		ofSetColor(255, 0, 0);
+		ofSetColor(255 , 0, 0);
 		ofRect(500, 200, 200, 200);
 	ofPopMatrix();
 
 Hmm, not quite right (figure 20, left).  `ofRotate(...)` rotates around the current origin, the top left corner of the screen.  To rotate in place, we need `ofTranslate(...)` to move the origin to our rectangle *before* we rotate.  Add `ofTranslate(500, 200)` before rotating (figure 20, second from left).  Now we are rotating around the upper left corner of the rectangle.  The easiest way to rotate the rectangle around its center is to use `ofSetRectMode(OF_RECTMODE_CENTER)` draw the center at (500, 200).  Do that, and we finally get figure 20, third from left. 
 
-![Rectangle Rotations](images/Figure20_CoordSystemManipulations.png "Figure 20: Steps along the way to rotating a rectangle in place")
+![Rectangle Rotations](images/Figure20_CoordSystemManipulations.png "Figure 20: Steps along the way to rotating and scaling a rectangle in place")
 
-**_Figure 20: Steps along the way to rotating a rectangle in place_**
+**_Figure 20: Steps along the way to rotating and scaling a rectangle in place_**
 
 Push, pop, rotate, translate - no problem.  Only thing left is [`ofScale(...)`](http://www.openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofScale "ofScale Documentation Page").  It takes two arguments: the desired scaling in x and y directions (and an optional z scaling).  Applying scaling to our rectangles:
 
