@@ -1,182 +1,897 @@
 <html>
-<head>
-<meta charset="utf-8">
-<link rel="stylesheet" type="text/css" href="../../style/style.css" />
-    <link href='http://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic|Merriweather:400,300,300italic,400italic,700,900,700italic,900italic' rel='stylesheet' type='text/css'>
-
-</head>
-<body>
-<div id="chapter">
-<h1 id="c-11">C++ 11</h1>
-<p>the following needs readability improvements (flow of text)... i'll take another pass at it soon</p>
-<h2 id="blah-blah">Blah blah</h2>
-<p>C++ is a pretty old language, it's been around since XXX, and perhaps because of that (but certainly for many other reasons), it is often seen as archaic, obtuse, or perhaps just plain rubbish by today's standards. Contrary to that, many people believe that it is still offers the best balance of performance and clarity on the coding high street, and (in part thanks to the success of Unix and its mates) has an incredibly strong ecosystem of 3rd party libraries, device support and general acceptance, even up to the point where current shader languages and CUDA use C++ as their language of choice.</p>
-<p>Some more modern languages (such as JavaScript and C#) make programs which run in a very different way to C/C++. They have a 'virtual machine', which is a very different type of computer than the one which crunches electronic signals on a circuit board. The virtual machine receives and processes program instructions like a real machine, but allows for all sorts of ideas which don't directly translate to silicon electronics, such as dynamic typing and reflection. The virtual machine abstracts the constraints of the processor away from the thinking of the programmer.</p>
-<p>C/C++ does not have a virtual machine, which (for the time being) often gives it a performance edge over these newer languages. It is quite strict in that ultimately the C code itself (somewhere down the chain) translates 1:1 with processor instructions, the design of the language is inflexible in this way, but clinging to this is the achievement of C++, that code can be both understood naturally by a human, and clearly translate to machine code.</p>
-<p>In this chapter we'll look at some of the new patterns in the C++ language introduced in C++11, which retain this promise whilst offering new ways of writing code.</p>
-<h2 id="auto"><code>auto</code></h2>
-<p>Perhaps the most used, and simplest new pattern in C++11 is <code>auto</code>. You'll love it. And probably won't remember life without it after a day or 2. Consider the following...</p>
-<pre class="sourceCode cpp"><code class="sourceCode cpp">ofRectangle myRectangle = ofGetCurrentViewport();
+ <head>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" type="text/css" href="../../style/style.css" />
+  <link href="http://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic|Merriweather:400,300,300italic,400italic,700,900,700italic,900italic" rel="stylesheet" type="text/css" />
+ </head>
+ <body>
+  <div id="chapter">
+   <h1 id="c-11">
+    C++ 11
+   </h1>
+   <p>
+    the following needs readability improvements (flow of text)... i'll take another pass at it soon
+   </p>
+   <h2 id="blah-blah">
+    Blah blah
+   </h2>
+   <p>
+    C++ is a pretty old language, it's been around since XXX, and perhaps because of that (but certainly for many other reasons), it is often seen as archaic, obtuse, or perhaps just plain rubbish by today's standards. Contrary to that, many people believe that it is still offers the best balance of performance and clarity on the coding high street, and (in part thanks to the success of Unix and its mates) has an incredibly strong ecosystem of 3rd party libraries, device support and general acceptance, even up to the point where current shader languages and CUDA use C++ as their language of choice.
+   </p>
+   <p>
+    Some more modern languages (such as JavaScript and C#) make programs which run in a very different way to C/C++. They have a 'virtual machine', which is a very different type of computer than the one which crunches electronic signals on a circuit board. The virtual machine receives and processes program instructions like a real machine, but allows for all sorts of ideas which don't directly translate to silicon electronics, such as dynamic typing and reflection. The virtual machine abstracts the constraints of the processor away from the thinking of the programmer.
+   </p>
+   <p>
+    C/C++ does not have a virtual machine, which (for the time being) often gives it a performance edge over these newer languages. It is quite strict in that ultimately the C code itself (somewhere down the chain) translates 1:1 with processor instructions, the design of the language is inflexible in this way, but clinging to this is the achievement of C++, that code can be both understood naturally by a human, and clearly translate to machine code.
+   </p>
+   <p>
+    In this chapter we'll look at some of the new patterns in the C++ language introduced in C++11, which retain this promise whilst offering new ways of writing code.
+   </p>
+   <h2 id="auto">
+    <code>
+     auto
+    </code>
+   </h2>
+   <p>
+    Perhaps the most used, and simplest new pattern in C++11 is
+    <code>
+     auto
+    </code>
+    . You'll love it. And probably won't remember life without it after a day or 2. Consider the following...
+   </p>
+   <pre class="sourceCode cpp">
+    <code class="sourceCode cpp">
+     ofRectangle myRectangle = ofGetCurrentViewport();
 ofVec2f rectangleCenter = myRectangle.getCenter();
-<span class="dt">float</span> rectangleCenterX = rectangleCenter.x;</code></pre>
-<p>In this code block, we are declaring 3 variables: * <code>myRectangle</code> * <code>rectangleCenter</code> * <code>rectangleCenterX</code></p>
-<p>On each line of code we are:</p>
-<ol style="list-style-type: decimal">
-<li>Getting a variable on the right hand side. which is of a certain type (<code>ofRectangle</code>, <code>ofVec2f</code>, <code>float</code> respectively)</li>
-<li>Declaring a new variable which is explicitly typed to match the value on the right</li>
-<li>Assigning the value to the variable</li>
-</ol>
-<p>What we may notice, is that the type of data on the right and left side of the <code>=</code> is the same. Since C++ is strictly typed (e.g. a function which returns a <code>float</code> will always return a <code>float</code> no matter what), it is impossible for the value on the right hand side to ever be anything different. The compiler <strong>knows</strong> what type of value the right hand will give, e.g. it knows that on line 1 that on the right hand side of the <code>=</code> is an <code>ofRectangle</code>. So perhaps if we were to write something like:</p>
-<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="dt">auto</span> myRectangle = ofGetCurrentViewport();
-<span class="dt">auto</span> rectangleCenter = myRectangle.getCenter();
-<span class="dt">auto</span> rectangleCenterX = rectangleCenter.x;</code></pre>
-<p>Then the compiler can do some of the coding for us. In fact, thanks to <code>auto</code>, we can do this now. This code block compiles to exactly the same result as the first code block did. The compiler notices what's on the right hand side and substitutes in the correct type wherever it sees <code>auto</code>.</p>
-<h4 id="how-this-helps">How this helps</h4>
-<p>Well obviously auto's going to save you keystrokes. Imagine the following:</p>
-<pre class="sourceCode cpp"><code class="sourceCode cpp">[.h]
+     <span class="dt">
+      float
+     </span>
+     rectangleCenterX = rectangleCenter.x;
+    </code>
+   </pre>
+   <p>
+    In this code block, we are declaring 3 variables: *
+    <code>
+     myRectangle
+    </code>
+    *
+    <code>
+     rectangleCenter
+    </code>
+    *
+    <code>
+     rectangleCenterX
+    </code>
+   </p>
+   <p>
+    On each line of code we are:
+   </p>
+   <ol style="list-style-type: decimal">
+    <li>
+     Getting a variable on the right hand side. which is of a certain type (
+     <code>
+      ofRectangle
+     </code>
+     ,
+     <code>
+      ofVec2f
+     </code>
+     ,
+     <code>
+      float
+     </code>
+     respectively)
+    </li>
+    <li>
+     Declaring a new variable which is explicitly typed to match the value on the right
+    </li>
+    <li>
+     Assigning the value to the variable
+    </li>
+   </ol>
+   <p>
+    What we may notice, is that the type of data on the right and left side of the
+    <code>
+     =
+    </code>
+    is the same. Since C++ is strictly typed (e.g. a function which returns a
+    <code>
+     float
+    </code>
+    will always return a
+    <code>
+     float
+    </code>
+    no matter what), it is impossible for the value on the right hand side to ever be anything different. The compiler
+    <strong>
+     knows
+    </strong>
+    what type of value the right hand will give, e.g. it knows that on line 1 that on the right hand side of the
+    <code>
+     =
+    </code>
+    is an
+    <code>
+     ofRectangle
+    </code>
+    . So perhaps if we were to write something like:
+   </p>
+   <pre class="sourceCode cpp">
+    <code class="sourceCode cpp">
+     <span class="dt">
+      auto
+     </span>
+     myRectangle = ofGetCurrentViewport();
+     <span class="dt">
+      auto
+     </span>
+     rectangleCenter = myRectangle.getCenter();
+     <span class="dt">
+      auto
+     </span>
+     rectangleCenterX = rectangleCenter.x;
+    </code>
+   </pre>
+   <p>
+    Then the compiler can do some of the coding for us. In fact, thanks to
+    <code>
+     auto
+    </code>
+    , we can do this now. This code block compiles to exactly the same result as the first code block did. The compiler notices what's on the right hand side and substitutes in the correct type wherever it sees
+    <code>
+     auto
+    </code>
+    .
+   </p>
+   <h4 id="how-this-helps">
+    How this helps
+   </h4>
+   <p>
+    Well obviously auto's going to save you keystrokes. Imagine the following:
+   </p>
+   <pre class="sourceCode cpp">
+    <code class="sourceCode cpp">
+     [.h]
 
-vector&lt;shared_ptr&lt;ofThread&gt; &gt; myVectorOfThreads;</code></pre>
-<pre class="sourceCode cpp"><code class="sourceCode cpp">[.cpp]
-
-<span class="co">// the old way</span>
-vector&lt;shared_ptr&lt;ofThread&gt;&gt;::iterator firstThreadIterator = <span class="kw">this</span>-&gt;myVectorOfThreads.begin();
-
-<span class="co">// the new way</span>
-<span class="dt">auto</span> firstThreadIterator = <span class="kw">this</span>-&gt;myVectorOfThreads.begin();</code></pre>
-<p>Now this makes the code more readable (by decent humans), but also you could take advantage of <code>auto</code> in other ways, for example you could make changes things in the h file, and the cpp file code would automatically correct itself. For example in the h you might change the <code>vector</code> to a <code>list</code>, or change <code>shared_ptr&lt;ofThread&gt;</code> to <code>ofThread *</code>. These changes would perpetuate automatically to wherever an <code>auto</code> is listening out in the code. Nifty huh?</p>
-<h3 id="watch-out-for-this">Watch out for this</h3>
-<h4 id="auto-is-not-a-new-type"><code>auto</code> is not a new type</h4>
-<p>Note that the following doesn't work:</p>
-<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="dt">auto</span> myRectangle = ofGetCurrentViewport();
-myRectangle = <span class="st">&quot;look mum! i&#39;m a string!!&quot;</span>; <span class="co">// compiler error!</span></code></pre>
-<p>Remember that <code>auto</code> isn't a type itself, it's not a magic container that can take any kind of thing (such as <code>var</code> in C# or another dynamic typed language), it is simply a keyword which gets substituted at compile time, you can imagine that the compiler just writes in for you whatever makes sense on that line where it is. In this case, the first line makes sure that <code>myRectangle</code> is an <code>ofRectangle</code>, and you can't assign a <code>string</code> to an <code>ofRectangle</code>.</p>
-<h4 id="you-cant-use-auto-in-function-arguments">You can't use <code>auto</code> in function arguments</h4>
-<p>Since the <code>auto</code> must be implicitly defined by the line of code where it is used, and that this decision is made at compile time, it can not be a function argument, let's see what that means..</p>
-<p>Imagine that the following was valid: (<strong>NOTE</strong> : it isn't!)</p>
-<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="dt">float</span> multiplyBy2(<span class="dt">auto</span> number) {
-    <span class="kw">return</span> number * <span class="dv">2</span>;
+vector&lt;shared_ptr&lt;ofThread&gt; &gt; myVectorOfThreads;
+    </code>
+   </pre>
+   <pre class="sourceCode cpp">
+    <code class="sourceCode cpp">
+     [.cpp]
+     <span class="co">
+      // the old way
+     </span>
+     vector&lt;shared_ptr&lt;ofThread&gt;&gt;::iterator firstThreadIterator =
+     <span class="kw">
+      this
+     </span>
+     -&gt;myVectorOfThreads.begin();
+     <span class="co">
+      // the new way
+     </span>
+     <span class="dt">
+      auto
+     </span>
+     firstThreadIterator =
+     <span class="kw">
+      this
+     </span>
+     -&gt;myVectorOfThreads.begin();
+    </code>
+   </pre>
+   <p>
+    Now this makes the code more readable (by decent humans), but also you could take advantage of
+    <code>
+     auto
+    </code>
+    in other ways, for example you could make changes things in the h file, and the cpp file code would automatically correct itself. For example in the h you might change the
+    <code>
+     vector
+    </code>
+    to a
+    <code>
+     list
+    </code>
+    , or change
+    <code>
+     shared_ptr&lt;ofThread&gt;
+    </code>
+    to
+    <code>
+     ofThread *
+    </code>
+    . These changes would perpetuate automatically to wherever an
+    <code>
+     auto
+    </code>
+    is listening out in the code. Nifty huh?
+   </p>
+   <h3 id="watch-out-for-this">
+    Watch out for this
+   </h3>
+   <h4 id="auto-is-not-a-new-type">
+    <code>
+     auto
+    </code>
+    is not a new type
+   </h4>
+   <p>
+    Note that the following doesn't work:
+   </p>
+   <pre class="sourceCode cpp">
+    <code class="sourceCode cpp">
+     <span class="dt">
+      auto
+     </span>
+     myRectangle = ofGetCurrentViewport();
+myRectangle =
+     <span class="st">
+      &quot;look mum! i&#39;m a string!!&quot;
+     </span>
+     ;
+     <span class="co">
+      // compiler error!
+     </span>
+    </code>
+   </pre>
+   <p>
+    Remember that
+    <code>
+     auto
+    </code>
+    isn't a type itself, it's not a magic container that can take any kind of thing (such as
+    <code>
+     var
+    </code>
+    in C# or another dynamic typed language), it is simply a keyword which gets substituted at compile time, you can imagine that the compiler just writes in for you whatever makes sense on that line where it is. In this case, the first line makes sure that
+    <code>
+     myRectangle
+    </code>
+    is an
+    <code>
+     ofRectangle
+    </code>
+    , and you can't assign a
+    <code>
+     string
+    </code>
+    to an
+    <code>
+     ofRectangle
+    </code>
+    .
+   </p>
+   <h4 id="you-cant-use-auto-in-function-arguments">
+    You can't use
+    <code>
+     auto
+    </code>
+    in function arguments
+   </h4>
+   <p>
+    Since the
+    <code>
+     auto
+    </code>
+    must be implicitly defined by the line of code where it is used, and that this decision is made at compile time, it can not be a function argument, let's see what that means..
+   </p>
+   <p>
+    Imagine that the following was valid: (
+    <strong>
+     NOTE
+    </strong>
+    : it isn't!)
+   </p>
+   <pre class="sourceCode cpp">
+    <code class="sourceCode cpp">
+     <span class="dt">
+      float
+     </span>
+     multiplyBy2(
+     <span class="dt">
+      auto
+     </span>
+     number) {
+     <span class="kw">
+      return
+     </span>
+     number *
+     <span class="dv">
+      2
+     </span>
+     ;
 }
-
-<span class="dt">int</span> firstNumber = <span class="dv">1</span>;
-<span class="dt">float</span> secondNumber = <span class="fl">2.</span>0f;
+     <span class="dt">
+      int
+     </span>
+     firstNumber =
+     <span class="dv">
+      1
+     </span>
+     ;
+     <span class="dt">
+      float
+     </span>
+     secondNumber =
+     <span class="fl">
+      2.
+     </span>
+     0f;
 
 cout &lt;&lt; multiplyBy2(firstNumber) &lt;&lt; endl;
-cout &lt;&lt; multiplyBy2(secondNumber) &lt;&lt; endl;</code></pre>
-<p>Now if this code were valid, then the first time the function is called, the <code>auto</code> would mean <code>int</code>, and the second time it would mean <code>float</code>. Therefore saying that the text <code>auto</code> is simply substituted with an explicit type where it is written doesn't make sense. So basically <strong>you can't use <code>auto</code> in function arguments</strong> (you might want to look into <code>template</code> instead, which would automatically generate 2 pieces of code for the 2 different types).</p>
-<h4 id="you-cant-use-auto-as-a-function-return-type">You can't use <code>auto</code> as a function return type</h4>
-<p>I'm not sure why, you just can't. It kinda makes sense that you should be able to, but you just can't, move along :).</p>
-<h3 id="const-and-references"><code>const</code> and references</h3>
-<p>Let's do a <code>const auto</code>:</p>
-<pre class="sourceCode cpp"><code class="sourceCode cpp">ofRectangle rectangle = ofGetCurrentViewport();
-<span class="co">//is the same as</span>
-<span class="dt">auto</span> rectangle = ofGetCurrentViewport();
-
-<span class="co">//and</span>
-
-<span class="dt">const</span> ofRectangle rectangle = ofGetCurrentViewport();
-<span class="co">//is the same as</span>
-<span class="dt">const</span> <span class="dt">auto</span> rectangle = ofGetCurrentViewport();</code></pre>
-<p>Next look at <code>auto &amp;</code> for when we want reference types.</p>
-<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="dt">float</span> x = rectangle.x;
-<span class="co">//is the same as</span>
-<span class="dt">auto</span> x = rectangle.x;
-
-<span class="co">//and</span>
-
-<span class="dt">float</span> &amp; x = rectangle.x;
-<span class="co">//is the same as</span>
-<span class="dt">auto</span> &amp; x = rectangle.x;</code></pre>
-<h3 id="summary">Summary</h3>
-<ul>
-<li>Save keystrokes by using <code>auto</code> in variable declarations</li>
-<li><code>auto</code> takes the type of the right hand side of the <code>=</code> assignment, and replaces the text <code>auto</code> with that type at compile time.</li>
-<li><code>auto</code> is not a magic container which can carry any type of data, it simply gets replaced at compile time by whatever is implied in the code</li>
-<li>You can't use <code>auto</code> in function arguments, return types and a few other places.</li>
-<li>Use <code>const auto</code> for a const type, and <code>auto &amp;</code> for a reference type</li>
-</ul>
-<h2 id="for-thing-things">for (thing : things)</h2>
-<p>Consider the following common pattern:</p>
-<pre class="sourceCode cpp"><code class="sourceCode cpp">vector&lt;ofPixels&gt; mySelfies;
-<span class="co">/*</span>
-<span class="co">take some sexy snaps</span>
-<span class="co">*/</span>
-
-<span class="co">//oh dear, my photos are all in portrait</span>
-<span class="kw">for</span>(<span class="dt">int</span> i=<span class="dv">0</span>; i&lt;mySelfies.size(); i++) { 
-    <span class="co">//rotate them from landscape to portrait</span>
-    mySelfies[i].rotate90(<span class="dv">1</span>); 
+cout &lt;&lt; multiplyBy2(secondNumber) &lt;&lt; endl;
+    </code>
+   </pre>
+   <p>
+    Now if this code were valid, then the first time the function is called, the
+    <code>
+     auto
+    </code>
+    would mean
+    <code>
+     int
+    </code>
+    , and the second time it would mean
+    <code>
+     float
+    </code>
+    . Therefore saying that the text
+    <code>
+     auto
+    </code>
+    is simply substituted with an explicit type where it is written doesn't make sense. So basically
+    <strong>
+     you can't use
+     <code>
+      auto
+     </code>
+     in function arguments
+    </strong>
+    (you might want to look into
+    <code>
+     template
+    </code>
+    instead, which would automatically generate 2 pieces of code for the 2 different types).
+   </p>
+   <h4 id="you-cant-use-auto-as-a-function-return-type">
+    You can't use
+    <code>
+     auto
+    </code>
+    as a function return type
+   </h4>
+   <p>
+    I'm not sure why, you just can't. It kinda makes sense that you should be able to, but you just can't, move along :).
+   </p>
+   <h3 id="const-and-references">
+    <code>
+     const
+    </code>
+    and references
+   </h3>
+   <p>
+    Let's do a
+    <code>
+     const auto
+    </code>
+    :
+   </p>
+   <pre class="sourceCode cpp">
+    <code class="sourceCode cpp">
+     ofRectangle rectangle = ofGetCurrentViewport();
+     <span class="co">
+      //is the same as
+     </span>
+     <span class="dt">
+      auto
+     </span>
+     rectangle = ofGetCurrentViewport();
+     <span class="co">
+      //and
+     </span>
+     <span class="dt">
+      const
+     </span>
+     ofRectangle rectangle = ofGetCurrentViewport();
+     <span class="co">
+      //is the same as
+     </span>
+     <span class="dt">
+      const
+     </span>
+     <span class="dt">
+      auto
+     </span>
+     rectangle = ofGetCurrentViewport();
+    </code>
+   </pre>
+   <p>
+    Next look at
+    <code>
+     auto &amp;
+    </code>
+    for when we want reference types.
+   </p>
+   <pre class="sourceCode cpp">
+    <code class="sourceCode cpp">
+     <span class="dt">
+      float
+     </span>
+     x = rectangle.x;
+     <span class="co">
+      //is the same as
+     </span>
+     <span class="dt">
+      auto
+     </span>
+     x = rectangle.x;
+     <span class="co">
+      //and
+     </span>
+     <span class="dt">
+      float
+     </span>
+     &amp; x = rectangle.x;
+     <span class="co">
+      //is the same as
+     </span>
+     <span class="dt">
+      auto
+     </span>
+     &amp; x = rectangle.x;
+    </code>
+   </pre>
+   <h3 id="summary">
+    Summary
+   </h3>
+   <ul>
+    <li>
+     Save keystrokes by using
+     <code>
+      auto
+     </code>
+     in variable declarations
+    </li>
+    <li>
+     <code>
+      auto
+     </code>
+     takes the type of the right hand side of the
+     <code>
+      =
+     </code>
+     assignment, and replaces the text
+     <code>
+      auto
+     </code>
+     with that type at compile time.
+    </li>
+    <li>
+     <code>
+      auto
+     </code>
+     is not a magic container which can carry any type of data, it simply gets replaced at compile time by whatever is implied in the code
+    </li>
+    <li>
+     You can't use
+     <code>
+      auto
+     </code>
+     in function arguments, return types and a few other places.
+    </li>
+    <li>
+     Use
+     <code>
+      const auto
+     </code>
+     for a const type, and
+     <code>
+      auto &amp;
+     </code>
+     for a reference type
+    </li>
+   </ul>
+   <h2 id="for-thing-things">
+    for (thing : things)
+   </h2>
+   <p>
+    Consider the following common pattern:
+   </p>
+   <pre class="sourceCode cpp">
+    <code class="sourceCode cpp">
+     vector&lt;ofPixels&gt; mySelfies;
+     <span class="co">
+      /*
+     </span>
+     <span class="co">
+      take some sexy snaps
+     </span>
+     <span class="co">
+      */
+     </span>
+     <span class="co">
+      //oh dear, my photos are all in portrait
+     </span>
+     <span class="kw">
+      for
+     </span>
+     (
+     <span class="dt">
+      int
+     </span>
+     i=
+     <span class="dv">
+      0
+     </span>
+     ; i&lt;mySelfies.size(); i++) {
+     <span class="co">
+      //rotate them from landscape to portrait
+     </span>
+     mySelfies[i].rotate90(
+     <span class="dv">
+      1
+     </span>
+     ); 
 }
 
 vector&lt;ofxSnapChat::Friend&gt; myFriends = snapChatClient.getFriends();
-
-<span class="co">//now let&#39;s send them to all my friends</span>
-<span class="kw">for</span>(<span class="dt">int</span> i=<span class="dv">0</span>; i&lt;myFriends.size(); i++) {
-    <span class="kw">if</span> (myFriends[i].isHot()) {
-        <span class="kw">for</span>(<span class="dt">int</span> i=<span class="dv">0</span>; i&lt;mySelfies.size(); i++) { 
+     <span class="co">
+      //now let&#39;s send them to all my friends
+     </span>
+     <span class="kw">
+      for
+     </span>
+     (
+     <span class="dt">
+      int
+     </span>
+     i=
+     <span class="dv">
+      0
+     </span>
+     ; i&lt;myFriends.size(); i++) {
+     <span class="kw">
+      if
+     </span>
+     (myFriends[i].isHot()) {
+     <span class="kw">
+      for
+     </span>
+     (
+     <span class="dt">
+      int
+     </span>
+     i=
+     <span class="dv">
+      0
+     </span>
+     ; i&lt;mySelfies.size(); i++) { 
             myFriends[i].sendImage(mySelfies[i]);
         }
     }
-}</code></pre>
-<p>Well we're forever doing things like <code>for(int i=0; i&lt;mySelfies.size(); i++) {</code>, so let's see if we can find a neater way of doing this with <code>for thing in things</code> which in C++11 we can write as <code>for (thing : things)</code>...</p>
-<pre class="sourceCode cpp"><code class="sourceCode cpp">vector&lt;ofPixels&gt; mySelfies;
-<span class="co">/*</span>
-<span class="co">take some sexy snaps</span>
-<span class="co">*/</span>
-
-<span class="co">//oh dear, my photos are all in portrait</span>
-<span class="kw">for</span>(<span class="dt">auto</span> &amp; mySelfie : mySelfies) { 
-    <span class="co">//rotate them from landscape to portrait</span>
-    mySelfie.rotate90(<span class="dv">1</span>); <span class="co">// (1)</span>
 }
-
-<span class="dt">auto</span> myFriends = snapChatClient.getFriends();
-
-<span class="co">//now let&#39;s send them to all my friends</span>
-<span class="kw">for</span>(<span class="dt">auto</span> &amp; myFriend : myFriend) { 
-    <span class="kw">if</span> (myFriend.isHot()) {
-        <span class="kw">for</span>(<span class="dt">auto</span> &amp; mySelfie : mySelfies) {
-            myFriend.sendImage(mySelfie); <span class="co">// (2)</span>
-        }
+    </code>
+   </pre>
+   <p>
+    Well we're forever doing things like
+    <code>
+     for(int i=0; i&lt;mySelfies.size(); i++) {
+    </code>
+    , so let's see if we can find a neater way of doing this with
+    <code>
+     for thing in things
+    </code>
+    which in C++11 we can write as
+    <code>
+     for (thing : things)
+    </code>
+    ...
+   </p>
+   <pre class="sourceCode cpp">
+    <code class="sourceCode cpp">
+     vector&lt;ofPixels&gt; mySelfies;
+     <span class="co">
+      /*
+     </span>
+     <span class="co">
+      take some sexy snaps
+     </span>
+     <span class="co">
+      */
+     </span>
+     <span class="co">
+      //oh dear, my photos are all in portrait
+     </span>
+     <span class="kw">
+      for
+     </span>
+     (
+     <span class="dt">
+      auto
+     </span>
+     &amp; mySelfie : mySelfies) {
+     <span class="co">
+      //rotate them from landscape to portrait
+     </span>
+     mySelfie.rotate90(
+     <span class="dv">
+      1
+     </span>
+     );
+     <span class="co">
+      // (1)
+     </span>
+     }
+     <span class="dt">
+      auto
+     </span>
+     myFriends = snapChatClient.getFriends();
+     <span class="co">
+      //now let&#39;s send them to all my friends
+     </span>
+     <span class="kw">
+      for
+     </span>
+     (
+     <span class="dt">
+      auto
+     </span>
+     &amp; myFriend : myFriend) {
+     <span class="kw">
+      if
+     </span>
+     (myFriend.isHot()) {
+     <span class="kw">
+      for
+     </span>
+     (
+     <span class="dt">
+      auto
+     </span>
+     &amp; mySelfie : mySelfies) {
+            myFriend.sendImage(mySelfie);
+     <span class="co">
+      // (2)
+     </span>
+     }
     }
-}</code></pre>
-<p>Notice that <code>for(thing : things)</code> gels so well with <code>auto</code>. Also notice that I'm using <code>auto &amp;</code> since:</p>
-<ul>
-<li>At <code>(1)</code> I want to be able to change the contents of the vector, so I need a reference to the vector item rather than a copy of it.</li>
-<li>At <code>(2)</code>, it makes more sense to use a reference rather than a copy because it's computationally cheaper, and means I don't have to allocate new instances of <code>ofxSnapChat::Friend</code> (which I presume is quite a complex object, since it can do things like send images over the internet, and understand societal dispositions of what it means to be attractive).</li>
-</ul>
-<h3 id="summary-1">Summary</h3>
-<ul>
-<li>Use <code>for(auto thing : vectorOfThings)</code></li>
-<li>This works with all the STL containers (<code>vector</code>, <code>map</code>, <code>list</code>, <code>deque</code>, <code>set</code>, etc) and in some more purpose built containers (e.g. <code>ofxGrayCode::DataSet</code>)</li>
-<li>Often you'll want to do <code>for(auto &amp; thing : vectorOfThings)</code> to use a reference rather than a copy</li>
-</ul>
-<h2 id="override">override</h2>
-<p><code>override</code> saves you time not by reducing the amount of typing you do, but by reducing the amount of head-scratching you might do when dealing with <code>virtual</code> functions. Imagine the following:</p>
-<pre class="sourceCode cpp"><code class="sourceCode cpp">[.h]
-
-<span class="kw">class</span> BuildingProjectionMapper {
-<span class="kw">public</span>:
-<span class="co">//...</span>
-    <span class="kw">virtual</span> <span class="dt">void</span> mapTheGreekColumns();
-<span class="co">//...</span>
+}
+    </code>
+   </pre>
+   <p>
+    Notice that
+    <code>
+     for(thing : things)
+    </code>
+    gels so well with
+    <code>
+     auto
+    </code>
+    . Also notice that I'm using
+    <code>
+     auto &amp;
+    </code>
+    since:
+   </p>
+   <ul>
+    <li>
+     At
+     <code>
+      (1)
+     </code>
+     I want to be able to change the contents of the vector, so I need a reference to the vector item rather than a copy of it.
+    </li>
+    <li>
+     At
+     <code>
+      (2)
+     </code>
+     , it makes more sense to use a reference rather than a copy because it's computationally cheaper, and means I don't have to allocate new instances of
+     <code>
+      ofxSnapChat::Friend
+     </code>
+     (which I presume is quite a complex object, since it can do things like send images over the internet, and understand societal dispositions of what it means to be attractive).
+    </li>
+   </ul>
+   <h3 id="summary-1">
+    Summary
+   </h3>
+   <ul>
+    <li>
+     Use
+     <code>
+      for(auto thing : vectorOfThings)
+     </code>
+    </li>
+    <li>
+     This works with all the STL containers (
+     <code>
+      vector
+     </code>
+     ,
+     <code>
+      map
+     </code>
+     ,
+     <code>
+      list
+     </code>
+     ,
+     <code>
+      deque
+     </code>
+     ,
+     <code>
+      set
+     </code>
+     , etc) and in some more purpose built containers (e.g.
+     <code>
+      ofxGrayCode::DataSet
+     </code>
+     )
+    </li>
+    <li>
+     Often you'll want to do
+     <code>
+      for(auto &amp; thing : vectorOfThings)
+     </code>
+     to use a reference rather than a copy
+    </li>
+   </ul>
+   <h2 id="override">
+    override
+   </h2>
+   <p>
+    <code>
+     override
+    </code>
+    saves you time not by reducing the amount of typing you do, but by reducing the amount of head-scratching you might do when dealing with
+    <code>
+     virtual
+    </code>
+    functions. Imagine the following:
+   </p>
+   <pre class="sourceCode cpp">
+    <code class="sourceCode cpp">
+     [.h]
+     <span class="kw">
+      class
+     </span>
+     BuildingProjectionMapper {
+     <span class="kw">
+      public
+     </span>
+     :
+     <span class="co">
+      //...
+     </span>
+     <span class="kw">
+      virtual
+     </span>
+     <span class="dt">
+      void
+     </span>
+     mapTheGreekColumns();
+     <span class="co">
+      //...
+     </span>
+     };
+     <span class="kw">
+      class
+     </span>
+     AutoBuildingProjectionMapper :
+     <span class="kw">
+      public
+     </span>
+     BuildingProjectionMapper {
+     <span class="kw">
+      public
+     </span>
+     :
+     <span class="dt">
+      void
+     </span>
+     mapTheGreekColums();
+     <span class="co">
+      // woops, I spelt column incorrectly
+     </span>
+     };
+    </code>
+   </pre>
+   <p>
+    Now if I implement
+    <code>
+     AutoBuildingProjectionMapper::mapTheGreekColums
+    </code>
+    , it may never get called, and I may be wondering why my function calls are all being handled by the base class. The problem is that the compiler never told me that the function that I was trying to override didn't exist. Here comes
+    <code>
+     override
+    </code>
+    to the rescue.
+   </p>
+   <pre class="sourceCode cpp">
+    <code class="sourceCode cpp">
+     <span class="kw">
+      class
+     </span>
+     AutoBuildingProjectionMapper :
+     <span class="kw">
+      public
+     </span>
+     BuildingProjectionMapper {
+     <span class="kw">
+      public
+     </span>
+     :
+     <span class="dt">
+      void
+     </span>
+     mapTheGreekColums()
+     <span class="kw">
+      override
+     </span>
+     ;
 };
-
-<span class="kw">class</span> AutoBuildingProjectionMapper : <span class="kw">public</span> BuildingProjectionMapper {
-<span class="kw">public</span>:
-    <span class="dt">void</span> mapTheGreekColums(); <span class="co">// woops, I spelt column incorrectly</span>
-};</code></pre>
-<p>Now if I implement <code>AutoBuildingProjectionMapper::mapTheGreekColums</code>, it may never get called, and I may be wondering why my function calls are all being handled by the base class. The problem is that the compiler never told me that the function that I was trying to override didn't exist. Here comes <code>override</code> to the rescue.</p>
-<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="kw">class</span> AutoBuildingProjectionMapper : <span class="kw">public</span> BuildingProjectionMapper {
-<span class="kw">public</span>:
-    <span class="dt">void</span> mapTheGreekColums() <span class="kw">override</span>;
-};</code></pre>
-<p>This tells the compiler that I'm intending to override a <code>virtual</code> function. In this case, the compiler will tell me that no <code>virtual</code> function called <code>mapTheGreekColums</code> exists, and that therefore my <code>override</code> is faulty. So following the compiler's complaint I can go in and fix the spelling mistake. Then I can get on with making my Projection Mappening on the town library facade.</p>
-<h3 id="summary-2">Summary</h3>
-<ul>
-<li>Use the keyword <code>override</code> at the end of function definitions in a derived class' h file when you are intending to override a <code>virtual</code> function in the base <code>class</code></li>
-<li>The compiler will warn you if your <code>override</code> is invalid, which might just save you a lot of time hunting for errors</li>
-</ul>
-<h2 id="lambda-functions">Lambda functions</h2>
-<h3 id="worker-threads">Worker threads</h3>
-<h3 id="callbacks">Callbacks</h3>
-<h3 id="summary-3">Summary</h3>
+    </code>
+   </pre>
+   <p>
+    This tells the compiler that I'm intending to override a
+    <code>
+     virtual
+    </code>
+    function. In this case, the compiler will tell me that no
+    <code>
+     virtual
+    </code>
+    function called
+    <code>
+     mapTheGreekColums
+    </code>
+    exists, and that therefore my
+    <code>
+     override
+    </code>
+    is faulty. So following the compiler's complaint I can go in and fix the spelling mistake. Then I can get on with making my Projection Mappening on the town library facade.
+   </p>
+   <h3 id="summary-2">
+    Summary
+   </h3>
+   <ul>
+    <li>
+     Use the keyword
+     <code>
+      override
+     </code>
+     at the end of function definitions in a derived class' h file when you are intending to override a
+     <code>
+      virtual
+     </code>
+     function in the base
+     <code>
+      class
+     </code>
+    </li>
+    <li>
+     The compiler will warn you if your
+     <code>
+      override
+     </code>
+     is invalid, which might just save you a lot of time hunting for errors
+    </li>
+   </ul>
+   <h2 id="lambda-functions">
+    Lambda functions
+   </h2>
+   <h3 id="worker-threads">
+    Worker threads
+   </h3>
+   <h3 id="callbacks">
+    Callbacks
+   </h3>
+   <h3 id="summary-3">
+    Summary
+   </h3>
+  </div>
+ </body>
+</html>

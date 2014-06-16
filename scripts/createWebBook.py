@@ -2,6 +2,14 @@ import os
 import subprocess
 import shutil
 
+#we will pase out HTML and change some tags, so we use beutiful soup: 
+#sudo pip install https://github.com/syabro/soupselect/archive/master.zip
+
+
+from BeautifulSoup import BeautifulSoup as Soup
+from soupselect import select
+
+
 #todo: all the path stuff here is linux / osx friendly.  deal with windows....
 
 def copytree(src, dst, symlinks=False, ignore=None):
@@ -58,9 +66,21 @@ for chapter in chapters:
 	if os.path.exists(imagesSource):
 		copytree(imagesSource, imagesDest)
 	
-	#sanity check
-	#command = "pandoc -o " + dest + " " + source
-	#print command
+	#now, let's parse the index.html and change some things: 
 
+	if os.path.exists(dest):
+		soup = Soup(open(dest).read())
+		h1s = select(soup, 'h2')
+		pCaption = select(soup, "p.caption")
+		for tag in pCaption:
+			tag.name = "span"
+			#print tag
+			#print tag.name
+		html = soup.prettify("utf-8")
+		with open(dest, "wb") as file:
+			file.write(html)
+	#print(soup.prettify())
 
+	#h1s will be super helpful for sidebar and building up a map of content :)
+	
 
