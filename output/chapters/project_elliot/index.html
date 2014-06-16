@@ -1,0 +1,159 @@
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" type="text/css" href="../../style/style.css" />
+    <link href='http://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic|Merriweather:400,300,300italic,400italic,700,900,700italic,900italic' rel='stylesheet' type='text/css'>
+
+</head>
+<body>
+<div id="chapter">
+<h1 id="case-study-line-segments-space">Case Study : Line Segments Space</h1>
+<div class="figure">
+<img src="images/title.jpg" alt="Line Segments Space" /><p class="caption">Line Segments Space</p>
+</div>
+<p>==please format this==</p>
+<ul>
+<li>Kimchi and Chips</li>
+<li>Mimi Son, Elliot Woods</li>
+<li>Installation</li>
+<li>Seoul, 2013</li>
+<li>4x3x7 meters (WxHxD)</li>
+<li>Digital Emulsion, Nylon String</li>
+</ul>
+<h2 id="foreward">Foreward</h2>
+<p><em>Line Segments Space</em> is an artwork created by studio <a href="http://kimchiandchips.com">Kimchi and Chips</a> (Mimi Son, Elliot Woods), and is the third installation within a series of works titled 'Digital Emulsion', preceded by Lit Tree (2011) and Assembly (2012). The pricipal technician for this project is me, Elliot, the voice of this chapter.</p>
+<p>This chapter will discuss some of the technical details of the project to varying levels of detail. Before continuing, I hope that you will first take a little time to view the work in a non-technical context and watch the video on our website at <a href="http://kimchiandchips.com/#LSS">http://kimchiandchips.com/#LSS</a>.</p>
+<p>The work contains a number of technical solutions, the principal one being an implementation of the Digital Emulsion technique. Others include a custom CAD application, generative 'brushes' for volumetric content, optical layout of the room and equipment, sound control and spatialisation, and calibration by a team of client computers. This chapter touches on a few of these challenges.</p>
+<p>==perhaps this should be a list of what is actually in the chapter== <strong>[BD: The chapter is short enough that I don't think that this is needed]</strong></p>
+<h2 id="artist-statement">Artist statement</h2>
+<p>An architectural web of threads spans a gallery space. It hangs abstract and undefined, a set of thin positive elements segmenting the dark negative space between. Dynamic imaginary forms are articulated into physical volume by the material of this thread, and the semi-material of the light. The visual gravity of the filaments occupying the space between.</p>
+<p>A 2D canvas is reduced from a surface piece into a line segment, but then constructed into another dimension, a volume. Light creates contrast and order on the lines to articulate digital matter. Digital forms inhabit the interconnected boundaries of space, moulding visual mass,</p>
+<p>The artists reference Picasso’s light painting, and Reticuláreas of Gego who’s work offers a contemplation of the material and immaterial, time and space, origin and encounter and art and technology.</p>
+<p>Kimchi and Chips create technology which paints into different dimensions, bringing new canvases and expanding the possibilities for artists to articulate form. These technologies become a corpus of code, offered without restriction on the internet. Their code is adopted by other artists and corporations, spreading values and ideas implicit with the artists’ work into shared cultural idea space. <em>Line Segments Space</em> lives both as a dynamic gallery object, and as an encapsulation of the techniques as new computer code and tools on the internet.</p>
+<p><strong>[BD: This artist statement may be better at the top. It feels a bit weird to go from talking about the work in the forward, to a brief technical overview, and then an artist statement.]</strong></p>
+<h2 id="digital-emulsion">Digital Emulsion</h2>
+<p>Digital Emulsion (or Re-projection Scanning) is a technique which combines 3D scanning with projection mapping in order to create new canvases for visual expression. <em>Line Segments Space</em> employs Digital Emulsion to accurately aim light from projectors onto individual threads, whilst also determining the 3D geometry of the web.</p>
+<p>The technique combines the use of a video projector and an imaging camera (e.g. DSLR or machine vision camera) to augment a physical object. The steps for this are generally:</p>
+<ol style="list-style-type: decimal">
+<li>Calibrate the camera and projector (e.g. using OpenCV)</li>
+<li>Perform a Structured Light scan of a scene (e.g. using <a href="https://github.com/elliotwoods/ofxGraycode">ofxGraycode</a>)</li>
+<li>Triangulate the 3D location of every projector pixel in the scene (e.g. using <a href="https://github.com/elliotwoods/ofxTriangulate">ofxTriangulate</a>)</li>
+<li>Render a graphical response to the scene using the triangulation data</li>
+<li>Project this response back onto the scene using the structured light data to perform a pixel-precise mapping between the projector and the scene.</li>
+</ol>
+<h3 id="structured-light">Structured Light</h3>
+<p>Structured Light refers to a set of techniques which couple projectors with sensors to take visual and spatial readings of the physical world.</p>
+<p>A very simple structured light technique is to project a thin white line onto a scene and to take a photo of it. Within the photo, we can see that the line kinks and bends within the cameras image as it passes over 3D features. Using some trigonometry we could perhaps calculate something about the 3D shape of the object based on the displacement of this line.</p>
+<p>(insert photo of line projected onto object e.g. http://www.david-3d.com/gfx/slides/4.jpg) <strong>[BD: This photo illustrates Structered Light well! I would use it.]</strong></p>
+<p>If we took many images (e.g. a video) whilst moving the line across the whole scene, then we could recover a lot of 3D information about the scene, and make a mesh (e.g. ofMesh).</p>
+<p>Generally for Digital Emulsion, we use a structured light technique called Graycode Structured Light. If you're interested in learning more, I suggest checking out either <a href="http://github.com/elliotwoods/ofxGraycode">ofxGraycode</a> or <a href="http://www.david-3d.com/">David laser scanner</a> (a free to download standalone scanning app which employs structured light).</p>
+<p>The specific advantage of using Graycode (rather than 3-phase) structured light for Digital Emulsion projects, is that it gives you accurate information of the location of the <strong>projector's pixels</strong> rather than of the <strong>camera's pixels</strong>. Folowing the Graycode scan, we can now consider that our projector's pixels are sensing the scene but are still also controllable as visible pixels, that they in fact sensor-pixels, also known as 'sexels'.</p>
+<h2 id="technical-solution">Technical solution</h2>
+<h3 id="constraints">Constraints</h3>
+<p>The first presentation of <em>Line Segments Space</em> was at Seoul Art Space Gumcheon between September and October 2013, the exhibition had the following constraints:</p>
+<ul>
+<li>1 week installation time</li>
+<li>4 week run time</li>
+<li>Temporary room built by gallery</li>
+<li>Limited production budget from gallery for material and equipment costs, other costs covered by artists</li>
+</ul>
+<h3 id="system-overview">System overview</h3>
+<div class="figure">
+<img src="images/system_diagram.key/preview.jpg" alt="System Diagram" /><p class="caption">System Diagram</p>
+</div>
+<p>==please redraw==</p>
+<h4 id="software-frameworks">Software frameworks</h4>
+<p>Generally I split processes into 2 categories:</p>
+<p><strong>[BD: Here, the difference between online + offline tasks is slightly muddled. Perhaps it is because of the associations with those words. Online + offline is slightly confusing. Perhaps outlining your definition for them here in more depth would be helpful.]</strong></p>
+<p><strong>Online</strong> : * The task is performed with the installation hardware * Other people are likely to be involved in the process * It's best if software edits can be made quickly and freely * Edits are made whilst continuously observing the output (like a pilot manouvering a plane)</p>
+<p>An example of an online process might be the final runtime of the installation.</p>
+<p><strong>Offline</strong> : * The task can be performed away from the installation hardware. * Some offline tasks may require intense computing time * Often these tasks require more concentration * Edits are made and the results are viewed asynchronously (like a chef tasting the soup)</p>
+<p>An example of an offline process would be processing the scan data.</p>
+<p>My personal preference is often to use openFrameworks for developing offline tasks, and to use another toolkit called <a href="http://vvvv.org/">VVVV</a> for developing online processes.</p>
+<h4 id="hardware">Hardware</h4>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Component</th>
+<th align="left">Reasoning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">PC, Windows</td>
+<td align="left">PC's are selected for flexible graphics options and for VVVV compatability</td>
+</tr>
+<tr class="even">
+<td align="left">GeForce GTX 680</td>
+<td align="left">Moderately strong, so good at geavy shader pipelines such as used in this project<br />It has 4 video outs</td>
+</tr>
+<tr class="odd">
+<td align="left">TripleHead2Go</td>
+<td align="left">Keeping all output in a single context (i.e, 1 'Display' in Windows) reduces rendering overhead and increases framerate. GeForce cards do not have an option for teaming exactly 2 outputs together into 1 context. The TripHead2Go was used to split 1 output (1 context) to 2 projectors. Alternatively, I would recommend to use Quadro Mosaic or ATI EyeFinity to team the 2 outputs</td>
+</tr>
+<tr class="even">
+<td align="left">2 portrait monitors</td>
+<td align="left">Extra screenspace makes working environments more productive, and a significant portion of development is performed on site with the final piece. I often use portrait for a few reasons, but in this case largely because it's easier to look around the screens at the installation.</td>
+</tr>
+<tr class="odd">
+<td align="left">Mac Mini, OSX</td>
+<td align="left">The second computer is for sound design and uses an audio interface which requires Firewire and Ableton runs equally well on OSX and Windows for our purposes.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="design-time-applications">Design time applications</h2>
+<p>During the early development stages of the project, we create some applications which are not intended to feed directly into the final work, but exist to facilitate the sketching process of developing the concept and design of the work. These help us to identify possible unexpected directions we may go in, to understand how much effort may be required to realise the work both physically and technically, and to understand the material requirements (e.g. how much rope do we need to buy).</p>
+<p>Some examples of these 'design time applications' are: * A simple Digital Emulsion scanning app which worked with 2 projectors, a DSLR and After Effects. This was used to develop the tone and manner of the artwork by enabling semi-functional prototypes to be built in the studio. * Several prototypes for calibrating the camera and projectors * A bespoke CAD app for designing the physical web of strings</p>
+<h3 id="addlinestoroom">addLinesToRoom</h3>
+<p>Let's talk about the CAD app a little more by discussing some of its features and how they are implemented. The full source of this app is up at ==URL for source== and you can download an OSX version at ==URL for build==. This app was written on a long flight, then tweaked as and when it was used to add further features.</p>
+<h4 id="laying-down-lines">Laying down lines</h4>
+<p>ofxGrabCam</p>
+<h4 id="shadows">Shadows</h4>
+<p>Editing a 3D scene through a computer monitor is often confusing, especially when we're editing thin lines. We can't naturally see the depth in the scene without constantly moving the camera. Ideally we could see the scene from 2 views simultanaously, enabling us to judge depth.</p>
+<p>One simple way of seeing the scene from 2 'views' is to draw shadows into the scene, enabling us to judge depth in the scene much more easily.</p>
+<p><img src="images/shadows_without.png" alt="Without shadows" /> Without shadows</p>
+<p><img src="images/shadows_with.png" alt="With shadows" /> With shadows</p>
+<p>==suggest arranging these 2 images side by side==</p>
+<p>There are a number of standard ways to render shadows in computer graphics, but I chose a super-naive method due to the very simple nature of the scene. Essentially every line is drawn twice, once as a normal 3D line, then again but with the y value clamped to the floor of the room, and the colour set to a dark grey colour.</p>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="co">//---------</span>
+<span class="dt">void</span> Thread::draw(<span class="dt">float</span> edgeThickness, ofColor center, ofColor border) <span class="dt">const</span> {
+    <span class="dt">const</span> ofVec3f start = <span class="kw">this</span>-&gt;s;
+    <span class="dt">const</span> ofVec3f end = <span class="kw">this</span>-&gt;s + <span class="kw">this</span>-&gt;t;
+    
+    ofPushStyle();
+    
+    ofSetLineWidth(edgeThickness);
+    ofSetColor(border);
+    ofLine(start, end);
+    
+    ofSetLineWidth(<span class="fl">1.</span>0f);
+    ofSetColor(center.r, center.g, center.b);
+    ofLine(start, end);
+    
+    ofPopStyle();
+}
+
+<span class="co">//---------</span>
+<span class="dt">void</span> Thread::drawShadow(<span class="dt">float</span> floorHeight) <span class="dt">const</span> {
+    ofVec3f start = <span class="kw">this</span>-&gt;s;
+    ofVec3f end = <span class="kw">this</span>-&gt;t + start;
+    
+    <span class="co">//clamp the y value to the floor y value, so that the line sticks to the floor</span>
+    start.y = floorHeight;
+    end.y = floorHeight;
+    
+    ofPushStyle();
+    
+    ofSetColor(<span class="dv">20</span>, <span class="dv">20</span>, <span class="dv">20</span>, <span class="dv">100</span>);
+    ofLine(start, end);
+    ofPopStyle();
+}</code></pre>
+<h4 id="shift-to-zoom">Shift to zoom</h4>
+<p>Often it's necessary in an application to perform an action more accurately than can be easily done with the normal mouse/trackpad and screen. In these scenarios, I generally add a &quot;hold [SHIFT] to zoom&quot; mode, which performs an appropriate action to assist the task at hand.</p>
+<p>In this case, the [SHIFT] key makes the line wider, and simultaneously the renderer presents a zoomed view in the corner of the screen.</p>
+<h4 id="layers-feature">Layers feature</h4>
+<p>Rebuilding gui objects</p>
+<h4 id="final-notes"> Final notes</h4>
+<p>The drawing tool tries to mirror the actual physical workflow</p>
+<p>Unexpected outcomes (things we had been imagining differently from each other. some layouts turned out to be nearly impossible to make</p>
+<p>Apps you write should make you happy whenever you look at it, so make them a touch pretty and use a little subtle colour.</p>

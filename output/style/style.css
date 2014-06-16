@@ -1,0 +1,219 @@
+
+
+@font-face {font-family: firaMono; src: url(fonts/FiraMono-Regular.ttf);}
+@font-face {font-family: firaMono; src: url(fonts/FiraMono-Bold.ttf); font-weight: bold;}
+@font-face {font-family: fira; src: url(fonts/FiraSans-Light.ttf);}
+@font-face {font-family: fira; src: url(fonts/FiraSans-LightItalic.ttf); font-style: italic;}
+@font-face {font-family: fira; src: url(fonts/FiraSans-Bold.ttf); font-weight: bold;}
+@font-face {font-family: fira; src: url(fonts/FiraSans-BoldItalic.ttf); font-style: italic; font-weight: bold;}
+@font-face {font-family: firaRegular; src: url(fonts/FiraSans-Regular.ttf);}
+@font-face {font-family: firaRegular; src: url(fonts/FiraSans-RegularItalic.ttf); font-style: italic;}
+@font-face {font-family: firaMedium; src: url(fonts/FiraSans-Medium.ttf);}
+@font-face {font-family: firaMedium; src: url(fonts/FiraSans-MediumItalic.ttf); font-style: italic;}
+
+p, li {
+    font-family: 'fira'; 
+    font-style: normal; 
+    font-size: 16px; 
+    text-rendering: optimizeLegibility; 
+    letter-spacing:0.02em;
+    line-height: 1.6em;}
+
+strong {font-style: normal;}
+
+body {
+    margin-right: auto;
+    margin-left: auto;
+    margin-top:30px;
+    width:800px;;
+}
+
+#chapter{
+    width: 650px;
+}
+
+.chapterTitle {
+    font-family: 'fira'; 
+    font-style: normal; 
+    font-size: 55px; 
+    line-height: 0.8em;
+    text-rendering: optimizeLegibility;
+    margin-top:1.4em;
+    letter-spacing:-0.015em;
+    border:0px;
+    border-bottom:3px;
+    border-style: solid; 
+    border-color: #cccccc;}
+
+.author {
+    font-family: 'firaRegular'; 
+    font-style: italic; 
+    font-size: 25px; 
+    line-height: 0.8em;
+    text-rendering: optimizeLegibility;
+    margin-bottom:2.8em;}
+
+h1 {
+    font-family: 'fira'; 
+    font-style: normal; 
+    font-size: 50px; 
+    text-rendering: optimizeLegibility;
+    margin-top:2.8em;
+    margin-bottom:1.4em;
+    font-weight: 300;}
+
+h2 {
+    font-family: 'firaRegular'; 
+    font-weight: normal; 
+    font-style: italic;
+    font-size: 32px; 
+    text-rendering: optimizeLegibility;
+    margin-top:2.8em;
+    margin-bottom:1.4em;
+    border:0px;
+    border-bottom:3px;
+    border-style: solid; 
+    /*border-width: 1;*/ 
+    border-color: #cccccc;}
+
+h3 {
+    font-family: 'firaMedium'; 
+    font-weight: normal; 
+    font-size: 20px; 
+    text-rendering: optimizeLegibility; 
+    margin-top:2.8em;
+    margin-bottom:1.4em;
+    letter-spacing: 0.025em;}
+
+h4 {
+    font-family: 'fira'; 
+    font-style: italic; 
+    font-weight: normal; 
+    font-size: 20px;
+    text-rendering: optimizeLegibility; 
+    margin-top:2.8em;
+    margin-bottom:1.4em;}
+
+code, pre {
+    font-family: 'firaMono'; 
+    font-style: normal; 
+    font-size: 14px; 
+    line-height: 1.6em;
+    /*border-style: solid; 
+    border-width: 1; 
+    border-color: #aaaaaa; */
+    padding-left:0.5em;
+    padding-right:0.5em;
+    padding-top: 1px;
+    background-color: #eeeeee;
+    border-radius:3px;
+    text-rendering: normal;}
+
+a:link {color:#aaaaaa; text-decoration:none;}
+a:visited {color:#333333; text-decoration:none;}
+a:hover {color:#cccccc; text-decoration:none;}
+a:active {color:#aaaaaa; text-decoration:none;}
+
+.codeBox {
+    font-family: 'firaMono'; 
+    font-style: normal; 
+    font-size: 15px;
+    padding-left:10px;
+    padding-right: 15px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    /*border-style: solid; 
+    /*border-width: 1; 
+    border-color: #aaaaaa;*/
+    background-color: #eeeeee;
+    border-radius:3px}
+    
+
+.quoteBox {
+    margin-top: 1.4em;
+    margin-bottom: 1.4em;
+    margin-left:40px;
+    margin-right:40px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 40px;
+    padding-right: 40px;
+    border-style: solid; 
+    border-width: 1; 
+    border-color: #cccccc;
+    border-radius:3px}
+
+
+
+.note {
+    width: 300;
+    font-family: 'firaRegular'; 
+    font-size: 12px;
+    line-height: 1.3em;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: #C5C5C5;
+    float: right;
+    text-align:right;
+    border-top: 1px solid #C5C5C5;}
+    
+.figure {
+    width: 100%;
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 50px;
+    position: relative;
+}
+
+.figure img {
+  
+  max-width: 400px;
+  width: 100%;
+  height: auto;
+}
+
+.caption {
+  font-family: "firaRegular";
+  color: #333333;
+  font-size: 12px;
+  line-height: 1.5em;
+  position: absolute;
+  bottom: 1px;
+  /*margin-top: -115px;*/
+  margin-left: 60px;
+  text-align: left;
+  width: 200px;
+  padding: 5px;
+  padding-left:10px;
+  border:0px;
+  border-left:3px;
+  border-style: solid; 
+  border-color: #cccccc;
+  }
+  
+.note a{
+  text-decoration:none;
+  color: #939393;
+}
+
+.output {
+  width: 100%;
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 50px;
+
+    position: relative;
+
+}
+
+.output img{
+
+    /* this is for images without caption, full width 
+    like screenshots of OF sketches*/
+  
+  max-width: 650px;
+  height: auto;
+}
+
