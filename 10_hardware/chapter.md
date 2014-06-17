@@ -32,6 +32,79 @@ However, if you're connecting to an Arduino, it already appears to the computer 
 
 The speed at which data is transmitted between the Arduino and your software is measured in bits per second, or bps, a fairly self-explanatory unit of measurement.  The rate of bits per second is commonly referred to as the baud rate, and will vary based on your application.  For example, the standard baud rate of 9600bps will transfer data more slowly than a rate of 115200, but the faster baud rate may have more issues with byte scrambling.
 
+-- editor joshuajnoble I think adding some explanation of what rs232 is (a picture of an oscilloscope would be good) the flow of using:
+
+enumerateDevices()
+setup()
+available()
+close()
+
+So you can find all serial devices, open the device, check if it has data, close the port and release the file handle.
+
+Might be nice to have the Arduino serial example mirror the DMX example, like:
+
+
+-- editor joshuajnoble
+
+here's some Arduino code to kick this off
+
+int redPin   = 9;   // Red LED
+int greenPin = 10;  // Green LED
+int bluePin  = 11;  // Blue LED
+
+int color[4];
+long int inByte; 
+int wait = 10; //10ms
+
+void setup()
+{
+  pinMode(redPin,   OUTPUT);   // sets the pins as output
+  pinMode(greenPin, OUTPUT);   
+  pinMode(bluePin,  OUTPUT);
+  
+  Serial.begin(9600); 
+}
+
+void outputColour(int red, int green, int blue) {
+  analogWrite(redPin, red);
+  analogWrite(bluePin, blue);
+  analogWrite(greenPin, green);    
+}
+
+void setColor() {
+  int i = 0;
+  
+  //wait and be patient
+  while (i < 4)
+  {
+    if (Serial.available() > 0) {
+        color[i] = Serial.read();
+        i++;
+    }
+  }
+}
+
+// Main program
+void loop()
+{
+  if (Serial.available() > 0) {
+    // get incoming byte:
+    inByte = Serial.read();
+    
+     if (inByte == 'C') {
+      getColour();
+      analogWrite(redPin, color[1]);
+      analogWrite(bluePin, color[2]);
+      analogWrite(greenPin, color[3]); 
+    } 
+  }
+  delay(wait);
+}
+
+--
+
+-- end editor
+
 
 ## digital and analog communication
 
@@ -227,7 +300,10 @@ The only concern then becomes what colour you'll be setting your lights and how 
 
 **Using a colour picker to set up your lights**
 
+
 *TODO*
+
+-- editor joshuajnoble I really feel like we should have rpi in its own chapter. It's so tricky to get setup. I do think that talking about something like wiringPi in the context of hardware is a really good idea though, for sure.
 
 ##Raspberry Pi - getting your OF app into small spaces##
 The Raspberry Pi is a popular small sized computer (also known as a single board computer) running on hardware not entirely dissimilar to that which powers today's smartphones. The processor at least, is part of the same ARM family of chips. Originally the Raspberry Pi (abbreviated as RPi) was originally developed as an educational platform to be able to teach the basics of computing hardware in a simple and affordable package. The Raspberry Pi is part of a much larger ecosystem of ARM devices, and the Model B Pi, the most popular version available shortly after launch, is technically classified as an ARM6 device. OpenFrameworks currently supports ARM6 and ARM7 devices, of which the latter are typically more recent and faster hardware designs. While there are plenty of small form-factor alternatives to the Pi, it's a good choice as a computing platform  due to the community that's formed around it and the various hardware and software extensions that have been developed for it.  The Raspberry Pi is also completely open source, including the source code for the Broadcom graphics stack that it contains, which is quite unusual in the hardware world. The advantages of this are again that it enables enthusiasts and professionals from within the RPi community to extend this device to its fullest potential. Having a platform that is well tested and can be used in many different applications is also of benefit, particularly for installations that need to run for extensive periods of time. However, as with any technology, there are advantages and there are caveats, which we'll cover here, along with some practical scenarios which might be useful to anyone interested in taking this mini-computer into the wilds.
