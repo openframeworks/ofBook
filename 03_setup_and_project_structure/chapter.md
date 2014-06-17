@@ -47,12 +47,10 @@ Code::Blocks is a free IDE. It runs on several platforms(several Linux distros, 
 Eclipse is the IDE of choice for Linux, yet it also runs on Mac and Windows machines. For Android development you'll need to use Eclipse, regardless of your platform.
 ![Eclipse Screenshot](images/eclipseScreenshot.png "Eclipse Screenshot")
 
-####The NO-IDE IDE.####
-Using the terminal and makefiles. 
-OF has implemented makefiles across it complete ecosystem. Makefiles are some text files that describe how to compile something. These are used by a program called GNU Make, which is really nice as it allows to compile and configure large projects in a really simple way.  
-When using this option your main interface will be the Terminal or Cmd app. It is a text-based interface, just like that old school DOS, but it is super powerful. 
-Any experienced programmer should feel very comfortable with this option, as it will work for any platform, and in some cases it can speed up development.
-If you are developing for the Raspberry Pi you'll have to make use of the Makefiles. These also come handy when compiling via SSH. If you want to develop an OF app for the Raspberry Pi you must use the Makefiles as another way, like using an IDE, has not been implemented in OF yet.
+####The NO-IDE IDE. Makefiles####
+Using the terminal and Makefiles. 
+OF has implemented makefiles across it complete ecosystem. Makefiles are some text files that describe how to compile something. These are used by a program called GNU Make, which is really nice as it allows to compile and configure large projects in a really simple way.When using this option your main interface will be the Terminal or Cmd app. It is a text-based interface, just like that old school DOS, but it is super powerful. 
+Any experienced programmer should feel very comfortable with this option, as it will work for any platform, and in some cases it can speed up development. If you are developing for the Raspberry Pi you'll have to make use of the Makefiles because another IDE option for it has not been implemented in OF yet. 
 Sometimes you might need to compile your code in a remote machine. An easy way is to log into the remote machine using SSH and compile via command line using the Makefiles.
 If you are really picky and you don't like any of the IDEs that OF has been implemented for, using the Makefiles will make it really easy to start using another IDE.
 To use the Makefiles you need to have GNU Make installed. 
@@ -61,9 +59,6 @@ To install Make you must do the following:
 - On Windows, if you installed Visual Studio then you have Make already installed, yet the command used to run make will be ````nmake```` instead of ````make````. If not go download it and install from [http://gnuwin32.sourceforge.net/packages/make.htm](http://gnuwin32.sourceforge.net/packages/make.htm "Download Make!") 
 - On Linux, it comes installed by default **[Please someone confirm this!]**
 
-- How to use OF's make files.
-- Using addons
-                                 
 
 ###Running examples###
 Find the uncompressed OF version that you downloaded. From now on we will refer to this folder as the OF root folder.
@@ -76,8 +71,11 @@ Locate the "Run Button" and click on it. The example should compile and run, whi
 - **[add VS notes]**
 - **[add C::B notes]**
 - Eclipse: You might need to select the project in the project navigator, then press the hammer button in the tool bar, that will compile the project. Once compilation is done press the play button to run the application.
-- **[add makefile notes]**
-                           
+- Makefiles: Using Makefiles is very simple. Just open the Terminal(Mac: /Applications/Utilities/Terminal.app Linux:**[???]**) or Cmd app (Win: search for cmd **[any better idea??]**)
+Once open type the following
+````cd /Path/to/an/OF/Example/folder```` mind the space after cd. Press enter. 
+````make```` and press enter. your OF app should compile if there are no errors in your code. Once compiled type ````make run```` to run your app. That's all!
+
 Spend some time going through the examples and running them. It should be fun! 
 Once done continue reading.
 
@@ -303,12 +301,20 @@ As an exercise, open any example, preferably a simple one (with not to much line
 
 
 ###Using addons in your project###
-
+First go through the addon examples to understand how to use it. Any decent addon should have at least one example.
+Then, the easiest way to add addons to your project is using the project generator. Simply select the addon from the list and update your project. On the other hand you can manually add the addon files to your project, usually by dragging the addon folder into your IDE's project navigator. But be aware that you have to remove the addon examples, if it had any, from the project navigator otherwise your app will not compile. Additionally many addons rely on 3rd party libraries or code and the library search paths and/or include paths must be added manually also. To avoid all this hassle just use the project navigator :D
 
 ##Peeking at others or OF's files in search for some help.##
+A very good way to learn how to code, and to use OF, is to read and try to understand other's code.
+There are a lot of amazing projects out there that are opensourced that you can download and run in your computer.
+You can start by looking at the github repositiories of the people that do addons.
+At first, you might find that a project is very intimidating because it might have a lot of lines of code or the code itself might look intricate, but don't panic, disecting other's code shouldn't be to hard and it can be quite fun indeed.
+Start by locating where the app begins it's execution and then follow the code from there. On any OF app you should start looking at the ofApp.h file (or testApp.h for older projects). Here, check which class instances are declared, this will be the app's objects. Also keep in mind any extra method declared.
+Then, open the ofApp.cpp file and go to the setup() method. Here usually you'll find declared the initial values for the ofApp properties and any code that should be run just once when the app starts. Also here you might find calls to the app's objects initing methods. Some might be quite obvious but sometimes this won't or changing the parameters passed can give very different results, so you should dig a bit deeper and read what's going inside this method. In some cases you might go recursively doing this. Once you have understood what's going on in the setup() move to the update() and draw() methods. Remember how the execution flow happens, if both methods are in sync or not (by default this are in sync, so be aware of any call to ofSetVerticalSync(...)) and which properties they modify or depend on. Writting/drawing a flowchart can be very useful. Just as you did within the setup() method, look at what's being done, line by line, and if you find any call to an object method, go into it so to check what is being done. This time you have to keep in mind the looping nature of the update() and draw() methods. At first try to understand what's going on in just one loop. Once you are done try to imagine what happens when the loop happens more than once. Remember which variables and properties are modified and saved in each pass and how these affect the behaviour of the next pass. This can be a bit tricky so writing down notes either on the code or on a piece of paper will be quite helpful. Compare what you understood from reading the code with what you actually see that happens in the app. If you've done it correctly you should see the same that you imagined. Next take a look if there's any user interaction that affects the apps behaviour. Take a look at the mouse and keyboard callbacks, if there's any and imagine once again what happens when the mouse is pressed or dragged or a keystroke happens. You must keep in mind the idea behind this, that is to understand what other programmer did, so you can extract anything that can be useful for you. So always try to dig deeper into methods and functions as this usually give very important information about what's going on. And remember don't panic and a pen and piece of paper is always useful.
 
 ##Some basic OOP##
-related to the idea of making a lot of the same recipe, how to deal with it. Link to the other chapters where OOP is covered.
+The next chapter is about object oriented programming or OOP. Before jumping into it let's recall the cooking recipe idea introduced in this chapter. OOP can be understood easily using the cooking analogy. Say you have a recipe for doing cookies. You can use the same recipe for doing one or a million cookies. The recipe won't change, just the amount of it that you want to do. OOP is essentially that. You write a piece of code, that is a class (a single recipe) and then you just declare as much instances of this class (objects) as you need. Just as for real objects, the OOP objects use space, and for each object you have to use a different space, thus it will be placed on a different location. In the same way each new object will have properties of its own. Like cookies, even they were made from the same recipe, each one will have a different amount and positioning of chocolate chips. OOP objects instanced from the same class will have the same variables, but depending on how it is written each object might have a different value for the same property, thus making each object unique, as unique as each cookie made from the same recipe.
+
 
 ##Into the oven (aka. compiling)
 
