@@ -6,7 +6,7 @@ import shutil
 #sudo pip install https://github.com/syabro/soupselect/archive/master.zip
 
 
-from BeautifulSoup import BeautifulSoup as Soup
+from bs4 import BeautifulSoup as Soup
 from soupselect import select
 
 
@@ -51,15 +51,11 @@ for chapter in chapters:
 		os.makedirs(path)
 	source = "../chapters/" + chapter + "/chapter.md";
 	dest = path + "/index.html"
-	subprocess.call(["pandoc", "-o", dest, source])
 
-	if os.path.exists(dest):
-		with open ("createWebBookTemplate/header.html", "r") as myfile:
-			data=myfile.readlines()
-			prepender(dest, data)
-    	with open ("createWebBookTemplate/footer.html", "r") as myfile:
-			data=myfile.readlines()
-			appender(dest, data)
+	subprocess.call(["pandoc", "-o", dest, source, "-s", 
+					"--include-in-header=createWebBookTemplate/IncludeInHeader.html",
+					"--include-before-body=createWebBookTemplate/IncludeBeforeBody.html",
+					"--include-after-body=createWebBookTemplate/IncludeAfterBody.html"])
 
 	imagesSource = source = "../chapters/" + chapter + "/images";
 	imagesDest = path + "/images"
@@ -76,7 +72,7 @@ for chapter in chapters:
 			tag.name = "span"
 			#print tag
 			#print tag.name
-		html = soup.prettify("utf-8")
+		html = soup.encode("utf-8")
 		with open(dest, "wb") as file:
 			file.write(html)
 	#print(soup.prettify())
