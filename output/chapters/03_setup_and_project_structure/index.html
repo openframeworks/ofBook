@@ -1,661 +1,227 @@
-<html>
- <head>
-  <meta charset="utf-8" />
-  <link rel="stylesheet" type="text/css" href="../../style/style.css" />
-  <link href="http://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic|Merriweather:400,300,300italic,400italic,700,900,700italic,900italic" rel="stylesheet" type="text/css" />
- </head>
- <body>
-  <div id="chapter">
-   <h1 id="openframeworks-project-structure-and-setup">
-    openFrameworks project structure and setup
-   </h1>
-   <p>
-    Now that you've learned the basics of C++ in Chapter 2, let's get into openFrameworks–OF from now on. Chapter 1 talks about OF in very abstract and conceptual manner, which is really useful for understanding the design of the OF environment. It's really important to read Chapter 1 if you haven't yet.
-   </p>
-   <p>
-    I have found that it is very useful to explain OF by making analogies to cooking. Coding and cooking have a lot of things in common, and most people are familiar with the act of cooking. In this chapter, I'll be drawing connections between processes and terminology in cooking and openFrameworks.
-   </p>
-   <h2 id="first-things-first">
-    First things first
-   </h2>
-   <p>
-    You need to download the OF version and the IDE (Integrated Development Environment) that suit your platform. The IDE is a piece of software that will let you write, compile, run and debug the code you write. It is &quot;integrated&quot; because it uses other pieces of software to do each of the mentioned tasks. You can run your code without using the IDE, but the IDE will make your programming life much easier.
-   </p>
-   <p>
-    Go to
-    <a href="www.openframeworks.cc/downloads" title="Download openFrameworks!">
-     www.openframeworks.cc/downloads
-    </a>
-    and download the version that you need. By the side of each available version you will find a link to the where to download the needed IDE and how to install it.
-   </p>
-   <h2 id="welcome-to-your-new-kitchen">
-    Welcome to your new kitchen
-   </h2>
-   <h3 id="ide">
-    IDE:
-   </h3>
-   <ul>
-    <li>
-     The main goal here would be to establish the similarities between all IDEs and explain where are the fundamental options needed to compile and solve common errors (missing include paths, linker errors).
-    </li>
-    <li>
-     Adding files to the IDE, in particular adding addons (should we mention, as a sidenote Adam's Xcode OF plugin?). How it must be done in each IDE.
-    </li>
-   </ul>
-   <p>
-    As said before, the Integrated Development Environment, IDE, is the application you will be using to build your openFrameworks projects. It will let you write code, compile (bake it), test it and debug it (find out what is giving you problems, if there is any, and fix it). There are several different IDEs, at least one for each platform you might be utilizing. The IDE is your new kitchen, where you'll find all the tools to cook incredible stuff. Yet there are a lot of different kitchen brands, just like IDEs. All do the same but things might be laid out and named in a slightly different way. If you know how to use one, you can use any other. For clarification, I will go through each IDE and show where you will find the most used commands, controls and settings. Only read for the IDE you are going to use.
-    <br />
-    All IDEs have a very similar interface:
-    <img src="images/IDE_Interfase.jpg" title="Abstract IDE interface" alt="Abstract IDE interface" />
-    - Toolbar and Run Button: In the tool bar you'll find several useful buttons, such as open, save, save all, et cetera. The &quot;run&quot; button is very important. Usually it is labeled with a triangle pointing to the right, like the &quot;play&quot; button. When you press it, it will compile your code and if it went with no problem it will automatically run your code. Hence this is a frequently used button. - File selector and project navigator area: Here you will see your project and the files associated with it. Usually it is displayed like a hierarchically ordered list of files. Here you'll find all the OF library files, as well as the files that are particular to your project. - Editing area: When you open a file in the project navigation area, usually by double clicking it, it should open in the editing area. This looks just like any regular text-editing software, and behaves quite much the same. - Console: This is where your app, when running, outputs messages. These messages are really useful for debugging, You can print text messages to the console using the
-    <code>
-     cout
-    </code>
-    comand or
-    <code>
-     ofLog(...)
-    </code>
-    function.
-   </p>
-   <h4 id="apple-xcode">
-    Apple Xcode
-   </h4>
-   <p>
-    Xcode is Apple's IDE. Used both for iOS apps and desktop apps. Even though there are other IDEs for MacOSX, Xcode is a a pretty mature one, with lots of nice and useful features, specially for dealing with iOS apps. The latest Xcode version is 5.0.2 yet the OF projects can be opened in version 3 onwards.
-    <strong>
-     [Cofirm this]
-    </strong>
-    <img src="images/XcodeScreenShot.jpg" title="Xcode screenshot" alt="Xcode screenshot" />
-    <strong>
-     [this screenshot is from Xcode 4. I think Xcode5's layout is slightly different. Can anyone confirm this please? If so, should we change this screenshot to Xcode5?]
-    </strong>
-   </p>
-   <h4 id="microsoft-visual-studio-2012-express">
-    Microsoft Visual Studio 2012 Express
-   </h4>
-   <p>
-    This is Microsoft's IDE, it is aimed for Windows development. Even though this is the express version it comes packed with a lot of really nice stuff.
-    <img src="images/VS_ScreenShot.jpg" title="VS screenshot" alt="VS screenshot" />
-    <strong>
-     [This screenshot was taken on Windows 8. Does it look different on Windows7? If so which one should we use?]
-    </strong>
-   </p>
-   <h4 id="codeblocks">
-    Code::Blocks
-   </h4>
-   <p>
-    Code::Blocks is a free IDE. It runs on several platforms(several Linux distros, Windows and MacOSX). It is quite nice.
-    <strong>
-     [add C::B screenshot]
-    </strong>
-   </p>
-   <h4 id="eclipse">
-    Eclipse
-   </h4>
-   <p>
-    Eclipse is the IDE of choice for Linux, yet it also runs on Mac and Windows machines. For Android development you'll need to use Eclipse, regardless of your platform.
-    <img src="images/eclipseScreenshot.png" title="Eclipse Screenshot" alt="Eclipse Screenshot" />
-   </p>
-   <h4 id="the-no-ide-ide.">
-    The NO-IDE IDE.
-   </h4>
-   <p>
-    Using the terminal and makefiles. OF has implemented makefiles across it complete ecosystem. Makefiles are some text files that describe how to compile something. These are used by a program called GNU Make, which is really nice as it allows to compile and configure large projects in a really simple way.
-    <br />
-    When using this option your main interface will be the Terminal or Cmd app. It is a text-based interface, just like that old school DOS, but it is super powerful. Any experienced programmer should feel very comfortable with this option, as it will work for any platform, and in some cases it can speed up development. If you are developing for the Raspberry Pi you'll have to make use of the Makefiles. These also come handy when compiling via SSH. If you want to develop an OF app for the Raspberry Pi you must use the Makefiles as another way, like using an IDE, has not been implemented in OF yet. Sometimes you might need to compile your code in a remote machine. An easy way is to log into the remote machine using SSH and compile via command line using the Makefiles. If you are really picky and you don't like any of the IDEs that OF has been implemented for, using the Makefiles will make it really easy to start using another IDE. To use the Makefiles you need to have GNU Make installed. To install Make you must do the following: - On MacOSX, if you already have Xcode installed, go to Preferences in Xcode, choose &quot;Downloads&quot; and install &quot;Command Line Tools&quot;. Otherwise download the Command Line tools from
-    <a href="https://developer.apple.com/downloads/index.action" title="Download Command Line Tools!">
-     https://developer.apple.com/downloads/index.action
-    </a>
-    - On Windows, if you installed Visual Studio then you have Make already installed, yet the command used to run make will be
-    <code>
-     nmake
-    </code>
-    instead of
-    <code>
-     make
-    </code>
-    . If not go download it and install from
-    <a href="http://gnuwin32.sourceforge.net/packages/make.htm" title="Download Make!">
-     http://gnuwin32.sourceforge.net/packages/make.htm
-    </a>
-    - On Linux, it comes installed by default
-    <strong>
-     [Please someone confirm this!]
-    </strong>
-   </p>
-   <ul>
-    <li>
-     How to use OF's make files.
-    </li>
-    <li>
-     Using addons
-    </li>
-   </ul>
-   <h3 id="running-examples">
-    Running examples
-   </h3>
-   <p>
-    Find the uncompressed OF version that you downloaded. From now on we will refer to this folder as the OF root folder. You can place the OF root folder anywhere you like. Open it. Inside of it you will find several folders. For now, open the one named &quot;examples&quot; (further on in this chapter we will see how the other folders are used). Inside of it you will see a lot of folders, choose any one you want (these are named according to the topic covered by the example). Open it, once again there will be more folders, these are for each example. Open any one you like. Inside of it you will find the project file for the example. The project files you find depend on the version of OF you downloaded.
-    <strong>
-     [KL: maybe instead of letting a user choose any example, it would cut down this paragraph to just guide them to a specific one.]
-    </strong>
-    Look at the image below and open, by double-clicking, the project file.
-    <strong>
-     [add project files icons]
-    </strong>
-    Now your IDE should open and load the OF example you chose. It should look like the IDE screenshots above. Locate the &quot;Run Button&quot; and click on it. The example should compile and run, which might take a few seconds. If everything went well, a new window will pop up and display the example you just compiled. If this happened, congrats! You just have installed and compiled openFrameworks successfully and you are ready to go on. If this didn't happen check the notes below for each IDE. - Xcode: make sure that the popdown menu just at the right of the run button has selected the item with the name of your example and not the one named &quot;openFrameworks.&quot; There might be more than one item with the name of the example you are trying to run. Select anyone as long as it is not the one named &quot;openFrameworks&quot;. This popdown menu selects the target you want to compile. If &quot;openFrameworks&quot; is selected you will just compile the openFrameworks core and not the example code. When you select the other items xcode will compile both the OF core and the code for your example and when done it will run the example. -
-    <strong>
-     [add VS notes]
-    </strong>
-    -
-    <strong>
-     [add C::B notes]
-    </strong>
-    - Eclipse: You might need to select the project in the project navigator, then press the hammer button in the tool bar, that will compile the project. Once compilation is done press the play button to run the application. -
-    <strong>
-     [add makefile notes]
-    </strong>
-   </p>
-   <p>
-    Spend some time going through the examples and running them. It should be fun! Once done continue reading.
-   </p>
-   <h3 id="of-folder-structure">
-    OF folder structure
-   </h3>
-   <p>
-    Inside the OF root folder you will find several other folders, at least, the following:
-   </p>
-   <h4 id="addons">
-    Addons
-   </h4>
-   <p>
-    The &quot;addons&quot; folder will contain the included &quot;core&quot; addons. Addons are extra pieces of code that extend OF's functionalities, allowing you to do almost anything with OF. Addons are usually written by third parties that have shared these. The &quot;core&quot; addons, the ones already included in your OF download, are addons that are used so frequently that it has been decided to include them as part of the official OF download. These are coded and maintained by OF's core developers.
-    <br />
-    Check the examples/addons folder in your OF root folder where you will find at least one example about how to use each of these addons. You can also go to
-    <a href="http://ofxaddons.com/" title="ofxaddons, a collection of OF addons">
-     ofxAddons
-    </a>
-    where you'll find almost every other addon ever made.
-   </p>
-   <h4 id="apps">
-    Apps
-   </h4>
-   <p>
-    This is the folder where you put your project files. Your current OF download contains the folder named &quot;myApps&quot; inside of &quot;apps,&quot; which just has an empty example project folder. IMPORTANT: you have to respect the folder structure within the apps folder, otherwise your projects won't compile. This should be like this:
-    <img src="images/appsFolderStructure.png" title="Apps Folder Structure" alt="Apps Folder structure" />
-    .
-   </p>
-   <h4 id="examples">
-    Examples
-   </h4>
-   <p>
-    Quite obvious. A folder with examples, sorted out by topic. There are a big bunch of examples that cover almost all of OF's aspects. Each example is made with the idea of keeping it simple and focused to the particular aspect it tries to address, thus making it easily understandable and a good starting point when you want to do something similar in your project.
-   </p>
-   <h4 id="libs">
-    libs
-   </h4>
-   <p>
-    If you don't know what you are doing,
-    <strong>
-     keep your hands out from this folder
-    </strong>
-    . Anything you change in here will affect your OF projects and probably you will not be able to compile.
-   </p>
-   <h4 id="other">
-    other
-   </h4>
-   <p>
-    Here you'll find an Arduino sketch for using with the serial example located at examples/communication/. This is handy to check that your serial communication with Arduino is set up correctly and working.
-   </p>
-   <h4 id="projectgenerator_">
-    projectGenerator_
-   </h4>
-   <p>
-    OF now ships with a simple project generator which is really useful for making new projects. One of the larger challenges has always been making a new project and this tool takes a template and modifies it, chaning the name to a new name that you choose and even allowing you to add addons. It allows you to place the project anywhere you want, and while we've structured all the examples to be a certain distance away from the root, you can change the height using this tool. It's designed to make it easy / trivial to start sketching in code, without worrying too much about making a new project. In the past we've always recommend that you copy an old project and rename it, but this is a more civilized approach to making projects. Check the readme file inside where the usage of this app is described. Further down there are some instructions on how to use the project generator
-    <strong>
-     [Should I add these instructions or is it enough by pointing the reader to the readme file?]
-    </strong>
-   </p>
-   <h4 id="scripts">
-    scripts
-   </h4>
-   <p>
-    <strong>
-     [should I call these bash or shell scripts. I understand the difference between these two, but as I don't want to go in depth into it I don't know what is the most correct naming.]
-    </strong>
-    Just a few bash scripts useful for compiling, cleaning and testing all the examples. Bash scripts are a way to program command line instructions. The command line instructions are the ones you usually type into the Terminal or Cmd app and run. Using bash scripts you can save, run (and share!) several instructions to be performed. This scripts can get very complex by using loops and conditionals, even you can run these on different platforms and let the script to know on which it is running and proceed accordingly. To run a one of these open the Terminal or Cmd app. - On windows search for &quot;cmd&quot; the first match shown should be the cmd app. Open It. - On MacOSX go to Applications/Utilities and open Terminal.app. - On Linux....
-    <strong>
-     [How do you open the terminal in Linux? Does drag and drop work on it?]
-    </strong>
-    Once opened you'll see a new window in which you can type text. It should display the working directory among other things as the username. Drag and drop into it any script file and press enter. The script should now run and perform the instructions in it. It depends totally on what's written in the script what's going to happen. If the script was able to run with no errors an new line will show up, similar to the one that appeared when you opened the Terminal or Cmd app. If there were any errors a description of these will show up.
-   </p>
-   <h3 id="the-of-pantry">
-    The OF Pantry:
-   </h3>
-   <p>
-    Your default new kitchen will only have tools for coding, but the OF kitchen comes with a super nice pantry, filled up with really nice, cool and useful stuff. Imagine that you want to cook something but your kitchen has no pantry or if it has it is completely empty. In such conditions, cooking anything would be quite difficult, as you'll have to go out and buy the things you need and you probably won't find everything in one outing. This is not a nice scenario, especially if you want to get creative and make awesome things.
-   </p>
-   <p>
-    So, what happens when you have your pantry filled with OF's components? You will be able to cook whatever you want because some really good ingredients are already there. Additionally, there are some really nice tools in there. This will let you complete recipes in a short amount of time, leaving you more time to get creative and try out new and more delicious recipes.
-   </p>
-   <h4 id="what-is-inside-the-of-pantry">
-    What is inside the OF pantry
-   </h4>
-   <p>
-    Here you will find a lot of different things, from ingredients to tools, all ordered according to use.
-   </p>
-   <ul>
-    <li>
-     <strong>
-      3D
-     </strong>
-     <ul>
-      <li>
-       Tools for drawing basic 3D polygonal objects, such as spheres, cubes, pyramids, etc.
-      </li>
-      <li>
-       3D cameras. for navigating and viewing your 3D scene, either interactively or not.
-      </li>
-      <li>
-       3D node. the base type for any 3d object, which allows it to be moved, rotated, scaled, nested and drawn.
-      </li>
-      <li>
-       3D mesh. A collection of points in 3D space that allow you to draw them in several different ways such as points, lines, lines strips, triangles, triangles strips, and attach textures (images) to these. All of this is done very efficiently using your computer's GPU.
-      </li>
-      <li>
-       Load and save 3D objects.
-      </li>
-     </ul>
-    </li>
-    <li>
-     <strong>
-      app
-     </strong>
-     <ul>
-      <li>
-       Tools for setting and getting properties of your app such as window size, position, different drawing modes, framerate, et cetera.
-      </li>
-     </ul>
-    </li>
-    <li>
-     <strong>
-      communication
-     </strong>
-     <ul>
-      <li>
-       Arduino communication via Firmata
-      </li>
-      <li>
-       Common serial port communication
-      </li>
-     </ul>
-    </li>
-    <li>
-     <strong>
-      events
-     </strong>
-     <ul>
-      <li>
-       OF base events, event manager.
-      </li>
-      <li>
-       Listen to the base events, such as setup, draw, update, mouse, keys and window events.
-      </li>
-      <li>
-       You can also create your own custom events and listen to them, in a fast and straight forwards way, yet very reliable.
-      </li>
-     </ul>
-    </li>
-    <li>
-     <strong>
-      gl
-     </strong>
-     <ul>
-      <li>
-       OpenGL is the library for using the computer's GPU.
-      </li>
-      <li>
-       OF comes with several openGL related stuff already implemented for multi-platform use, such as VBOs (Vertex Buffer Object), FBOs (Frame Buffer Object), Renderers, Lights, Materials, Shaders, Textures, and several other GL utilities.
-      </li>
-      <li>
-       OF implements different rendering pipelines, Fixed and Programable rendering pipelines as well as OpenGL ES (used on less powerful devices such as smartphones and the Raspberry Pi). You can choose to use the fixed or programable ones and OF takes care of handling everything needed for each rendering pipeline.
-      </li>
-     </ul>
-    </li>
-    <li>
-     <strong>
-      graphics
-     </strong>
-     <ul>
-      <li>
-       There are a lot of capabilities here, such as loading and saving images of almost any kind, implementing several different methods for drawing in 2D, and exhibiting colors and styles. Most of the drawing tools rely on OpenGL so these are usually very fast. Graphics also allows you to render as PDF, and it features typography with several kinds of rendering options and utilities.
-      </li>
-     </ul>
-    </li>
-    <li>
-     <strong>
-      math
-     </strong>
-     <ul>
-      <li>
-       Vectors, Matrices, Quaternions and some really useful math helpers.
-      </li>
-     </ul>
-    </li>
-    <li>
-     <strong>
-      sound
-     </strong>
-     <ul>
-      <li>
-       Sound player and sound grabber, with behind-the-scenes implementations for all the supported platforms.
-      </li>
-      <li>
-       Base sound object that allows to chain different sound objects, creating sound processing chains.
-      </li>
-     </ul>
-    </li>
-    <li>
-     <strong>
-      base types
-     </strong>
-     <ul>
-      <li>
-       A lot of different base types used extensively within OF.
-      </li>
-     </ul>
-    </li>
-    <li>
-     <strong>
-      utils
-     </strong>
-     <ul>
-      <li>
-       Utilities for file input and output, logging, threading, system dialogs (open, save, alert), URL file loader, reading and saving XML files (super useful for storing and reading your app's settings).
-      </li>
-     </ul>
-    </li>
-    <li>
-     <strong>
-      video
-     </strong>
-     <ul>
-      <li>
-       Video Grabbers and players, with behind-the-scenes implementations for all the supported platforms. Get video from cameras attached to your computer or playback movies stored in it.s
-       <strong>
-        [add image/drawing of the pantry]
-       </strong>
-      </li>
-     </ul>
-    </li>
-   </ul>
-   <p>
-    <strong>
-     [KL: It would help to go through and unify this list structure. Do full sentences come after each point on the list? If they're fragmented, how will you structure the list? Just be consistent in whatever method you choose so readers can follow along better. The same goes for lists below.]
-    </strong>
-   </p>
-   <h4 id="addons-1">
-    Addons
-   </h4>
-   <p>
-    As mentioned before, addons extend OF core functionalities, and in each OF distribution there are several included addons, usually referred to as &quot;core addons&quot;:
-   </p>
-   <ul>
-    <li>
-     <strong>
-      ofx3DModelLoader
-     </strong>
-     Used for loading 3D models into your OF project. It only works with .3ds files.
-    </li>
-    <li>
-     <strong>
-      ofxAssimpModelLoader
-     </strong>
-     Also loads 3D models into your OF project, but it is done using the
-     <a href="http://assimp.sourceforge.net/">
-      assimp
-     </a>
-     library, which supports a wide variety of 3D file formats, even animated 3D objects.
-    </li>
-    <li>
-     <strong>
-      ofxGui
-     </strong>
-     This is the default GUI (Graphical User Interface) for OF. It lets you add sliders and buttons so you can easily modify parameters while your project is running. It relies heavilly on ofParameters and ofParameterGroup. It allows you to save and load the values for the parameters that you've adjusted.
-    </li>
-    <li>
-     <strong>
-      ofxKinect
-     </strong>
-     Recently added as a core addon. As you probably infer, it's for using a Microsoft XBox Kinect 3D sensor with your OF project. This addon relies on
-     <a href="http://openkinect.org/wiki/Main_Page">
-      libfreenect
-     </a>
-     , so you can only access the depth and rgb images that the kinect reads and adjust some of its parameters, like tilt and light. It includes some handy functions that allow you to convert Kinect's data between several different kinds. Please note that ofxKinect doesn't perform skeleton tracking. For such thing you need to use ofxOpenNI.
-    </li>
-    <li>
-     <strong>
-      ofxNetwork
-     </strong>
-     Lets you deal with network protocols such as UDP and TCP. You can use it to communicate with other computers over the network. Check out chapter
-     <strong>
-      [add correct chapter number]
-     </strong>
-     about networking.
-    </li>
-    <li>
-     <strong>
-      ofxOpenCv
-     </strong>
-     This is OF's implementation of the best and most used Computer Vision code library, openCV. Computer Vision is a complete world by itself, and being able to use openCV right out-of-the-box is a super important and useful OF feature. Check chapter
-     <strong>
-      [add correct chapter number]
-     </strong>
-     that goes through several Computer Vision features and uses.
-    </li>
-    <li>
-     <strong>
-      ofxOsc
-     </strong>
-     OSC (Open Sound Control) implementation for OF. OSC easily comunicates with other devices or applications within the same network. OSC is used to send messages and parameters from one app to another one. Check out chapter
-     <strong>
-      [add correct chapter number]
-     </strong>
-     which goes in-depth with OSC and how to use it in the real word and chapter
-     <strong>
-      [add correct chapter number]
-     </strong>
-     that provides a more technical view of it.
-    </li>
-    <li>
-     <strong>
-      ofxSvg
-     </strong>
-     Loads and displays SGV files. These are vector graphics files, usually exported from vector drawing programs such as Adobe Illustrator.
-    </li>
-    <li>
-     <strong>
-      ofxThreadedImageLoader
-     </strong>
-     Loads images on a different thread, so your main thread (the one that draws to your screen) doesn't get stuck while loading images. Really useful when loading online images.
-    </li>
-    <li>
-     <strong>
-      ofxVectorGraphics
-     </strong>
-     Used to write out EPS vector graphics files. It the same drawing syntax as OF's regular drawing syntax, so it is really easy to use. Check chapter
-     <strong>
-      [add correct chapter numbre]
-     </strong>
-     for more info about OF's drawing capabilities.
-    </li>
-    <li>
-     <strong>
-      ofxXmlSettings
-     </strong>
-     This is OF's old XML implementation. It is still here because a lot of addons rely on it. The current XML implementation is called ofXML. The first uses the TinyXML library to parse the XML files, the latter uses Poco library to do such, which happens to be more powerful than TinyXML.
-    </li>
-   </ul>
-   <h3 id="the-recipes-of-.h-and-.cpp-files">
-    The recipes of .h and .cpp files:
-   </h3>
-   <p>
-    Inside any OF project folder you will find a folder named &quot;src&quot; (short for source). Inside of it are the source code files used for each particular project. In the project navigator of your IDE you'll see this folder and its content listed. For any example or new project, at the most basic level, you'll see the following: - main.cpp - ofApp.h (testApp.h on older versions of OF) - ofApp.cpp (testApp.cpp on older versions of OF)
-   </p>
-   <p>
-    For now don't mind the &quot;main.cpp&quot; file as it only initializes the OF engine and starts your app, the one in the ofApp.h and ofApp.cpp files. We will focus on these two files. These are your app's recipes. Most cooking recipes have a list of materials, the needed tools, and the instructions. Your OF app also has these. The .h file is the list of materials and needed tools while the .cpp are the actual instructions and steps needed to compile and run (cook and eat) your app. In the most basic case we will just have one recipe, but you can have several other recipes used to create the main one. Why not have everything just in one big file? Actually you can, but it tends to be messier and a lot harder to read for anyone else. If you are trying to understand someone else's code, it is much easier to do so when you have the .h and .cpp files. Or if, for example you want to use a certain addon, and you want to know which functions and methods are available you can simply go and read the .h file where you'll clearly see these listed, instead of going through a massive amount of text trying to figure out which are the available methods and functions.
-   </p>
-   <p>
-    Any OF app will have a predefined structure for coding it. Go to the examples and open the emptyExample. On your IDE's project navigator select the ofApp.h file and it should be displayed in the editing area. It will look something like this
-   </p>
-   <pre>
-    <code>
-     #pragma once
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-#include &quot;ofMain.h&quot;
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<meta content="text/css" http-equiv="Content-Style-Type"/>
+<meta content="pandoc" name="generator"/>
+<title></title>
+<style type="text/css">code{white-space: pre;}</style>
+<link href="../../style/style.css" rel="stylesheet" type="text/css"/>
+<link href="http://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic|Merriweather:400,300,300italic,400italic,700,900,700italic,900italic" rel="stylesheet" type="text/css">
+</link></head>
+<body>
+<div id="chapter">
+<div id="TOC">
+<ul>
+<li><a href="#openframeworks-project-structure-and-setup">openFrameworks project structure and setup</a><ul>
+<li><a href="#first-things-first">First things first</a></li>
+<li><a href="#welcome-to-your-new-kitchen">Welcome to your new kitchen</a><ul>
+<li><a href="#ide">IDE:</a><ul>
+<li><a href="#apple-xcode">Apple Xcode</a></li>
+<li><a href="#microsoft-visual-studio-2012-express">Microsoft Visual Studio 2012 Express</a></li>
+<li><a href="#codeblocks">Code::Blocks</a></li>
+<li><a href="#eclipse">Eclipse</a></li>
+<li><a href="#the-no-ide-ide.">The NO-IDE IDE.</a></li>
+</ul></li>
+<li><a href="#running-examples">Running examples</a></li>
+<li><a href="#of-folder-structure">OF folder structure</a><ul>
+<li><a href="#addons">Addons</a></li>
+<li><a href="#apps">Apps</a></li>
+<li><a href="#examples">Examples</a></li>
+<li><a href="#libs">libs</a></li>
+<li><a href="#other">other</a></li>
+<li><a href="#projectgenerator_">projectGenerator_</a></li>
+<li><a href="#scripts">scripts</a></li>
+</ul></li>
+<li><a href="#the-of-pantry">The OF Pantry:</a><ul>
+<li><a href="#what-is-inside-the-of-pantry">What is inside the OF pantry</a></li>
+<li><a href="#addons-1">Addons</a></li>
+</ul></li>
+<li><a href="#the-recipes-of-.h-and-.cpp-files">The recipes of .h and .cpp files:</a></li>
+<li><a href="#project-generator">Project Generator</a></li>
+<li><a href="#using-addons-in-your-project">Using addons in your project</a></li>
+</ul></li>
+<li><a href="#peeking-at-others-or-ofs-files-in-search-for-some-help.">Peeking at others or OF's files in search for some help.</a></li>
+<li><a href="#some-basic-oop">Some basic OOP</a></li>
+<li><a href="#into-the-oven-aka.-compiling">Into the oven (aka. compiling)</a><ul>
+<li><a href="#preprocess">preprocess</a></li>
+<li><a href="#compile">compile</a></li>
+<li><a href="#link">link</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+<h1 id="openframeworks-project-structure-and-setup">openFrameworks project structure and setup</h1>
+<p>Now that you've learned the basics of C++ in Chapter 2, let's get into openFrameworks–OF from now on. Chapter 1 talks about OF in very abstract and conceptual manner, which is really useful for understanding the design of the OF environment. It's really important to read Chapter 1 if you haven't yet.</p>
+<p>I have found that it is very useful to explain OF by making analogies to cooking. Coding and cooking have a lot of things in common, and most people are familiar with the act of cooking. In this chapter, I'll be drawing connections between processes and terminology in cooking and openFrameworks.</p>
+<h2 id="first-things-first">First things first</h2>
+<p>You need to download the OF version and the IDE (Integrated Development Environment) that suit your platform. The IDE is a piece of software that will let you write, compile, run and debug the code you write. It is "integrated" because it uses other pieces of software to do each of the mentioned tasks. You can run your code without using the IDE, but the IDE will make your programming life much easier.</p>
+<p>Go to <a href="www.openframeworks.cc/downloads" title="Download openFrameworks!">www.openframeworks.cc/downloads</a> and download the version that you need. By the side of each available version you will find a link to the where to download the needed IDE and how to install it.</p>
+<h2 id="welcome-to-your-new-kitchen">Welcome to your new kitchen</h2>
+<h3 id="ide">IDE:</h3>
+<ul>
+<li>The main goal here would be to establish the similarities between all IDEs and explain where are the fundamental options needed to compile and solve common errors (missing include paths, linker errors).</li>
+<li>Adding files to the IDE, in particular adding addons (should we mention, as a sidenote Adam's Xcode OF plugin?). How it must be done in each IDE.</li>
+</ul>
+<p>As said before, the Integrated Development Environment, IDE, is the application you will be using to build your openFrameworks projects. It will let you write code, compile (bake it), test it and debug it (find out what is giving you problems, if there is any, and fix it). There are several different IDEs, at least one for each platform you might be utilizing. The IDE is your new kitchen, where you'll find all the tools to cook incredible stuff. Yet there are a lot of different kitchen brands, just like IDEs. All do the same but things might be laid out and named in a slightly different way. If you know how to use one, you can use any other. For clarification, I will go through each IDE and show where you will find the most used commands, controls and settings. Only read for the IDE you are going to use.<br/>All IDEs have a very similar interface: <img alt="Abstract IDE interface" src="images/IDE_Interfase.jpg" title="Abstract IDE interface"/> - Toolbar and Run Button: In the tool bar you'll find several useful buttons, such as open, save, save all, et cetera. The "run" button is very important. Usually it is labeled with a triangle pointing to the right, like the "play" button. When you press it, it will compile your code and if it went with no problem it will automatically run your code. Hence this is a frequently used button. - File selector and project navigator area: Here you will see your project and the files associated with it. Usually it is displayed like a hierarchically ordered list of files. Here you'll find all the OF library files, as well as the files that are particular to your project. - Editing area: When you open a file in the project navigation area, usually by double clicking it, it should open in the editing area. This looks just like any regular text-editing software, and behaves quite much the same. - Console: This is where your app, when running, outputs messages. These messages are really useful for debugging, You can print text messages to the console using the <code>cout</code> comand or <code>ofLog(...)</code> function.</p>
+<h4 id="apple-xcode">Apple Xcode</h4>
+<p>Xcode is Apple's IDE. Used both for iOS apps and desktop apps. Even though there are other IDEs for MacOSX, Xcode is a a pretty mature one, with lots of nice and useful features, specially for dealing with iOS apps. The latest Xcode version is 5.0.2 yet the OF projects can be opened in version 3 onwards. <strong>[Cofirm this]</strong> <img alt="Xcode screenshot" src="images/XcodeScreenShot.jpg" title="Xcode screenshot"/> <strong>[this screenshot is from Xcode 4. I think Xcode5's layout is slightly different. Can anyone confirm this please? If so, should we change this screenshot to Xcode5?]</strong></p>
+<h4 id="microsoft-visual-studio-2012-express">Microsoft Visual Studio 2012 Express</h4>
+<p>This is Microsoft's IDE, it is aimed for Windows development. Even though this is the express version it comes packed with a lot of really nice stuff. <img alt="VS screenshot" src="images/VS_ScreenShot.jpg" title="VS screenshot"/> <strong>[This screenshot was taken on Windows 8. Does it look different on Windows7? If so which one should we use?]</strong></p>
+<h4 id="codeblocks">Code::Blocks</h4>
+<p>Code::Blocks is a free IDE. It runs on several platforms(several Linux distros, Windows and MacOSX). It is quite nice. <strong>[add C::B screenshot]</strong></p>
+<h4 id="eclipse">Eclipse</h4>
+<p>Eclipse is the IDE of choice for Linux, yet it also runs on Mac and Windows machines. For Android development you'll need to use Eclipse, regardless of your platform. <img alt="Eclipse Screenshot" src="images/eclipseScreenshot.png" title="Eclipse Screenshot"/></p>
+<h4 id="the-no-ide-ide.">The NO-IDE IDE.</h4>
+<p>Using the terminal and makefiles. OF has implemented makefiles across it complete ecosystem. Makefiles are some text files that describe how to compile something. These are used by a program called GNU Make, which is really nice as it allows to compile and configure large projects in a really simple way.<br/>When using this option your main interface will be the Terminal or Cmd app. It is a text-based interface, just like that old school DOS, but it is super powerful. Any experienced programmer should feel very comfortable with this option, as it will work for any platform, and in some cases it can speed up development. If you are developing for the Raspberry Pi you'll have to make use of the Makefiles. These also come handy when compiling via SSH. If you want to develop an OF app for the Raspberry Pi you must use the Makefiles as another way, like using an IDE, has not been implemented in OF yet. Sometimes you might need to compile your code in a remote machine. An easy way is to log into the remote machine using SSH and compile via command line using the Makefiles. If you are really picky and you don't like any of the IDEs that OF has been implemented for, using the Makefiles will make it really easy to start using another IDE. To use the Makefiles you need to have GNU Make installed. To install Make you must do the following: - On MacOSX, if you already have Xcode installed, go to Preferences in Xcode, choose "Downloads" and install "Command Line Tools". Otherwise download the Command Line tools from <a href="https://developer.apple.com/downloads/index.action" title="Download Command Line Tools!">https://developer.apple.com/downloads/index.action</a> - On Windows, if you installed Visual Studio then you have Make already installed, yet the command used to run make will be <code>nmake</code> instead of <code>make</code>. If not go download it and install from <a href="http://gnuwin32.sourceforge.net/packages/make.htm" title="Download Make!">http://gnuwin32.sourceforge.net/packages/make.htm</a> - On Linux, it comes installed by default <strong>[Please someone confirm this!]</strong></p>
+<ul>
+<li>How to use OF's make files.</li>
+<li>Using addons</li>
+</ul>
+<h3 id="running-examples">Running examples</h3>
+<p>Find the uncompressed OF version that you downloaded. From now on we will refer to this folder as the OF root folder. You can place the OF root folder anywhere you like. Open it. Inside of it you will find several folders. For now, open the one named "examples" (further on in this chapter we will see how the other folders are used). Inside of it you will see a lot of folders, choose any one you want (these are named according to the topic covered by the example). Open it, once again there will be more folders, these are for each example. Open any one you like. Inside of it you will find the project file for the example. The project files you find depend on the version of OF you downloaded. <strong>[KL: maybe instead of letting a user choose any example, it would cut down this paragraph to just guide them to a specific one.]</strong> Look at the image below and open, by double-clicking, the project file. <strong>[add project files icons]</strong> Now your IDE should open and load the OF example you chose. It should look like the IDE screenshots above. Locate the "Run Button" and click on it. The example should compile and run, which might take a few seconds. If everything went well, a new window will pop up and display the example you just compiled. If this happened, congrats! You just have installed and compiled openFrameworks successfully and you are ready to go on. If this didn't happen check the notes below for each IDE. - Xcode: make sure that the popdown menu just at the right of the run button has selected the item with the name of your example and not the one named "openFrameworks." There might be more than one item with the name of the example you are trying to run. Select anyone as long as it is not the one named "openFrameworks". This popdown menu selects the target you want to compile. If "openFrameworks" is selected you will just compile the openFrameworks core and not the example code. When you select the other items xcode will compile both the OF core and the code for your example and when done it will run the example. - <strong>[add VS notes]</strong> - <strong>[add C::B notes]</strong> - Eclipse: You might need to select the project in the project navigator, then press the hammer button in the tool bar, that will compile the project. Once compilation is done press the play button to run the application. - <strong>[add makefile notes]</strong></p>
+<p>Spend some time going through the examples and running them. It should be fun! Once done continue reading.</p>
+<h3 id="of-folder-structure">OF folder structure</h3>
+<p>Inside the OF root folder you will find several other folders, at least, the following:</p>
+<h4 id="addons">Addons</h4>
+<p>The "addons" folder will contain the included "core" addons. Addons are extra pieces of code that extend OF's functionalities, allowing you to do almost anything with OF. Addons are usually written by third parties that have shared these. The "core" addons, the ones already included in your OF download, are addons that are used so frequently that it has been decided to include them as part of the official OF download. These are coded and maintained by OF's core developers.<br/>Check the examples/addons folder in your OF root folder where you will find at least one example about how to use each of these addons. You can also go to <a href="http://ofxaddons.com/" title="ofxaddons, a collection of OF addons">ofxAddons</a> where you'll find almost every other addon ever made.</p>
+<h4 id="apps">Apps</h4>
+<p>This is the folder where you put your project files. Your current OF download contains the folder named "myApps" inside of "apps," which just has an empty example project folder. IMPORTANT: you have to respect the folder structure within the apps folder, otherwise your projects won't compile. This should be like this: <img alt="Apps Folder structure" src="images/appsFolderStructure.png" title="Apps Folder Structure"/>.</p>
+<h4 id="examples">Examples</h4>
+<p>Quite obvious. A folder with examples, sorted out by topic. There are a big bunch of examples that cover almost all of OF's aspects. Each example is made with the idea of keeping it simple and focused to the particular aspect it tries to address, thus making it easily understandable and a good starting point when you want to do something similar in your project.</p>
+<h4 id="libs">libs</h4>
+<p>If you don't know what you are doing, <strong>keep your hands out from this folder</strong>. Anything you change in here will affect your OF projects and probably you will not be able to compile.</p>
+<h4 id="other">other</h4>
+<p>Here you'll find an Arduino sketch for using with the serial example located at examples/communication/. This is handy to check that your serial communication with Arduino is set up correctly and working.</p>
+<h4 id="projectgenerator_">projectGenerator_</h4>
+<p>OF now ships with a simple project generator which is really useful for making new projects. One of the larger challenges has always been making a new project and this tool takes a template and modifies it, chaning the name to a new name that you choose and even allowing you to add addons. It allows you to place the project anywhere you want, and while we've structured all the examples to be a certain distance away from the root, you can change the height using this tool. It's designed to make it easy / trivial to start sketching in code, without worrying too much about making a new project. In the past we've always recommend that you copy an old project and rename it, but this is a more civilized approach to making projects. Check the readme file inside where the usage of this app is described. Further down there are some instructions on how to use the project generator <strong>[Should I add these instructions or is it enough by pointing the reader to the readme file?]</strong></p>
+<h4 id="scripts">scripts</h4>
+<p><strong>[should I call these bash or shell scripts. I understand the difference between these two, but as I don't want to go in depth into it I don't know what is the most correct naming.]</strong> Just a few bash scripts useful for compiling, cleaning and testing all the examples. Bash scripts are a way to program command line instructions. The command line instructions are the ones you usually type into the Terminal or Cmd app and run. Using bash scripts you can save, run (and share!) several instructions to be performed. This scripts can get very complex by using loops and conditionals, even you can run these on different platforms and let the script to know on which it is running and proceed accordingly. To run a one of these open the Terminal or Cmd app. - On windows search for "cmd" the first match shown should be the cmd app. Open It. - On MacOSX go to Applications/Utilities and open Terminal.app. - On Linux.... <strong>[How do you open the terminal in Linux? Does drag and drop work on it?]</strong> Once opened you'll see a new window in which you can type text. It should display the working directory among other things as the username. Drag and drop into it any script file and press enter. The script should now run and perform the instructions in it. It depends totally on what's written in the script what's going to happen. If the script was able to run with no errors an new line will show up, similar to the one that appeared when you opened the Terminal or Cmd app. If there were any errors a description of these will show up.</p>
+<h3 id="the-of-pantry">The OF Pantry:</h3>
+<p>Your default new kitchen will only have tools for coding, but the OF kitchen comes with a super nice pantry, filled up with really nice, cool and useful stuff. Imagine that you want to cook something but your kitchen has no pantry or if it has it is completely empty. In such conditions, cooking anything would be quite difficult, as you'll have to go out and buy the things you need and you probably won't find everything in one outing. This is not a nice scenario, especially if you want to get creative and make awesome things.</p>
+<p>So, what happens when you have your pantry filled with OF's components? You will be able to cook whatever you want because some really good ingredients are already there. Additionally, there are some really nice tools in there. This will let you complete recipes in a short amount of time, leaving you more time to get creative and try out new and more delicious recipes.</p>
+<h4 id="what-is-inside-the-of-pantry">What is inside the OF pantry</h4>
+<p>Here you will find a lot of different things, from ingredients to tools, all ordered according to use.</p>
+<ul>
+<li><strong>3D</strong>
+<ul>
+<li>Tools for drawing basic 3D polygonal objects, such as spheres, cubes, pyramids, etc.</li>
+<li>3D cameras. for navigating and viewing your 3D scene, either interactively or not.</li>
+<li>3D node. the base type for any 3d object, which allows it to be moved, rotated, scaled, nested and drawn.</li>
+<li>3D mesh. A collection of points in 3D space that allow you to draw them in several different ways such as points, lines, lines strips, triangles, triangles strips, and attach textures (images) to these. All of this is done very efficiently using your computer's GPU.</li>
+<li>Load and save 3D objects.</li>
+</ul></li>
+<li><strong>app</strong>
+<ul>
+<li>Tools for setting and getting properties of your app such as window size, position, different drawing modes, framerate, et cetera.</li>
+</ul></li>
+<li><strong>communication</strong>
+<ul>
+<li>Arduino communication via Firmata</li>
+<li>Common serial port communication</li>
+</ul></li>
+<li><strong>events</strong>
+<ul>
+<li>OF base events, event manager.</li>
+<li>Listen to the base events, such as setup, draw, update, mouse, keys and window events.</li>
+<li>You can also create your own custom events and listen to them, in a fast and straight forwards way, yet very reliable.</li>
+</ul></li>
+<li><strong>gl</strong>
+<ul>
+<li>OpenGL is the library for using the computer's GPU.</li>
+<li>OF comes with several openGL related stuff already implemented for multi-platform use, such as VBOs (Vertex Buffer Object), FBOs (Frame Buffer Object), Renderers, Lights, Materials, Shaders, Textures, and several other GL utilities.</li>
+<li>OF implements different rendering pipelines, Fixed and Programable rendering pipelines as well as OpenGL ES (used on less powerful devices such as smartphones and the Raspberry Pi). You can choose to use the fixed or programable ones and OF takes care of handling everything needed for each rendering pipeline.</li>
+</ul></li>
+<li><strong>graphics</strong>
+<ul>
+<li>There are a lot of capabilities here, such as loading and saving images of almost any kind, implementing several different methods for drawing in 2D, and exhibiting colors and styles. Most of the drawing tools rely on OpenGL so these are usually very fast. Graphics also allows you to render as PDF, and it features typography with several kinds of rendering options and utilities.</li>
+</ul></li>
+<li><strong>math</strong>
+<ul>
+<li>Vectors, Matrices, Quaternions and some really useful math helpers.</li>
+</ul></li>
+<li><strong>sound</strong>
+<ul>
+<li>Sound player and sound grabber, with behind-the-scenes implementations for all the supported platforms.</li>
+<li>Base sound object that allows to chain different sound objects, creating sound processing chains.</li>
+</ul></li>
+<li><strong>base types</strong>
+<ul>
+<li>A lot of different base types used extensively within OF.</li>
+</ul></li>
+<li><strong>utils</strong>
+<ul>
+<li>Utilities for file input and output, logging, threading, system dialogs (open, save, alert), URL file loader, reading and saving XML files (super useful for storing and reading your app's settings).</li>
+</ul></li>
+<li><strong>video</strong>
+<ul>
+<li>Video Grabbers and players, with behind-the-scenes implementations for all the supported platforms. Get video from cameras attached to your computer or playback movies stored in it.s <strong>[add image/drawing of the pantry]</strong></li>
+</ul></li>
+</ul>
+<p><strong>[KL: It would help to go through and unify this list structure. Do full sentences come after each point on the list? If they're fragmented, how will you structure the list? Just be consistent in whatever method you choose so readers can follow along better. The same goes for lists below.]</strong></p>
+<h4 id="addons-1">Addons</h4>
+<p>As mentioned before, addons extend OF core functionalities, and in each OF distribution there are several included addons, usually referred to as "core addons":</p>
+<ul>
+<li><strong>ofx3DModelLoader</strong> Used for loading 3D models into your OF project. It only works with .3ds files.</li>
+<li><strong>ofxAssimpModelLoader</strong> Also loads 3D models into your OF project, but it is done using the <a href="http://assimp.sourceforge.net/">assimp</a> library, which supports a wide variety of 3D file formats, even animated 3D objects.</li>
+<li><strong>ofxGui</strong> This is the default GUI (Graphical User Interface) for OF. It lets you add sliders and buttons so you can easily modify parameters while your project is running. It relies heavilly on ofParameters and ofParameterGroup. It allows you to save and load the values for the parameters that you've adjusted.</li>
+<li><strong>ofxKinect</strong> Recently added as a core addon. As you probably infer, it's for using a Microsoft XBox Kinect 3D sensor with your OF project. This addon relies on <a href="http://openkinect.org/wiki/Main_Page">libfreenect</a>, so you can only access the depth and rgb images that the kinect reads and adjust some of its parameters, like tilt and light. It includes some handy functions that allow you to convert Kinect's data between several different kinds. Please note that ofxKinect doesn't perform skeleton tracking. For such thing you need to use ofxOpenNI.</li>
+<li><strong>ofxNetwork</strong> Lets you deal with network protocols such as UDP and TCP. You can use it to communicate with other computers over the network. Check out chapter <strong>[add correct chapter number]</strong> about networking.</li>
+<li><strong>ofxOpenCv</strong> This is OF's implementation of the best and most used Computer Vision code library, openCV. Computer Vision is a complete world by itself, and being able to use openCV right out-of-the-box is a super important and useful OF feature. Check chapter <strong>[add correct chapter number]</strong> that goes through several Computer Vision features and uses.</li>
+<li><strong>ofxOsc</strong> OSC (Open Sound Control) implementation for OF. OSC easily comunicates with other devices or applications within the same network. OSC is used to send messages and parameters from one app to another one. Check out chapter <strong>[add correct chapter number]</strong> which goes in-depth with OSC and how to use it in the real word and chapter <strong>[add correct chapter number]</strong> that provides a more technical view of it.</li>
+<li><strong>ofxSvg</strong> Loads and displays SGV files. These are vector graphics files, usually exported from vector drawing programs such as Adobe Illustrator.</li>
+<li><strong>ofxThreadedImageLoader</strong> Loads images on a different thread, so your main thread (the one that draws to your screen) doesn't get stuck while loading images. Really useful when loading online images.</li>
+<li><strong>ofxVectorGraphics</strong> Used to write out EPS vector graphics files. It the same drawing syntax as OF's regular drawing syntax, so it is really easy to use. Check chapter <strong>[add correct chapter numbre]</strong> for more info about OF's drawing capabilities.</li>
+<li><strong>ofxXmlSettings</strong> This is OF's old XML implementation. It is still here because a lot of addons rely on it. The current XML implementation is called ofXML. The first uses the TinyXML library to parse the XML files, the latter uses Poco library to do such, which happens to be more powerful than TinyXML.</li>
+</ul>
+<h3 id="the-recipes-of-.h-and-.cpp-files">The recipes of .h and .cpp files:</h3>
+<p>Inside any OF project folder you will find a folder named "src" (short for source). Inside of it are the source code files used for each particular project. In the project navigator of your IDE you'll see this folder and its content listed. For any example or new project, at the most basic level, you'll see the following: - main.cpp - ofApp.h (testApp.h on older versions of OF) - ofApp.cpp (testApp.cpp on older versions of OF)</p>
+<p>For now don't mind the "main.cpp" file as it only initializes the OF engine and starts your app, the one in the ofApp.h and ofApp.cpp files. We will focus on these two files. These are your app's recipes. Most cooking recipes have a list of materials, the needed tools, and the instructions. Your OF app also has these. The .h file is the list of materials and needed tools while the .cpp are the actual instructions and steps needed to compile and run (cook and eat) your app. In the most basic case we will just have one recipe, but you can have several other recipes used to create the main one. Why not have everything just in one big file? Actually you can, but it tends to be messier and a lot harder to read for anyone else. If you are trying to understand someone else's code, it is much easier to do so when you have the .h and .cpp files. Or if, for example you want to use a certain addon, and you want to know which functions and methods are available you can simply go and read the .h file where you'll clearly see these listed, instead of going through a massive amount of text trying to figure out which are the available methods and functions.</p>
+<p>Any OF app will have a predefined structure for coding it. Go to the examples and open the emptyExample. On your IDE's project navigator select the ofApp.h file and it should be displayed in the editing area. It will look something like this</p>
+<pre><code>#pragma once
+
+#include "ofMain.h"
 
 class ofApp : public ofBaseApp{
 public:
-    void setup();
-    void update();
-    void draw();
-    
-    void keyPressed(int key);
-    void keyReleased(int key);
-    void mouseMoved(int x, int y);
-    void mouseDragged(int x, int y, int button);
-    void mousePressed(int x, int y, int button);
-    void mouseReleased(int x, int y, int button);
-    void windowResized(int w, int h);
-    void dragEvent(ofDragInfo dragInfo);
-    void gotMessage(ofMessage msg);
-};
-    </code>
-   </pre>
-   <p>
-    Here is an explanation of whats going on line by line:
-    <br />
-    <code>
-     #pragma once
-    </code>
-    Any line that starts with a # character is a preprocess directive. Before compiling happens all the needed files are stuck together. This directive says how this sticking together will commence. In the case of this line it is saying that this file must be included only once, otherwise you could have the same class defined more than once, which would lead into a compiler error. Usually, any .h file should have this at its very beginning.
-    <br />
-    <code>
-     #include &quot;ofMain.h&quot;
-    </code>
-    This is another preprocess directive. It is saying to include the file ofMain.h, by which you'll have all the OF things available in your app.
-    <code>
-     class ofApp : public ofBaseApp{
-    </code>
-    This is declaring a new class named ofApp (notice that usually classes are declared each on a separate file, with the filename the same as the class name. It is not a rule, it is just for tidiness). Then there is a colon that says this new class will inherit from another class, in this case the public methods and properties of ofBaseApp (the next chapter about object oriented programming (OOP) will explain this idea of inheritance).
-    <br />
-    <code>
-     public:
-    </code>
-    This line is saying that the following declarations are public. This means that the declarations can be accessed from outside of this class. There also are &quot;private&quot;, that only can be accessed by the class itself, and &quot;protected&quot; that can be accessed by the class itself or by a class that inherits from it.
-   </p>
-   <pre>
-    <code>
-     void setup();
-    void update();
-    void draw();
-    </code>
-   </pre>
-   <p>
-    These are OF's main loop methods (you should know what void means if you read the previous chapter).
-    <code>
-     setup()
-    </code>
-    is called only once when the app begins. This is where you set the initial parameters and initialize any object that your app is using that needs initialization.
-    <code>
-     update()
-    </code>
-    is called constantly, once it finishes its execution it gets called again. How fast this happens depends on the framerate of your app, which you can set using
-    <code>
-     ofSetFramerate(int )
-    </code>
-    , and the intensity of the tasks being done inside update(). These tasks usually have to do with processing data and updating variables, but not drawing.
-    <code>
-     draw()
-    </code>
-    is called every time the display refreshes, usually at 60Hz or 60 times per second. This speed depends on your computer settings. Inside of this method, you can say how things should be drawn into the screen. There are several chapters further on where you will learn how to draw in OF.
-    <br />
-    By default the
-    <code>
-     update()
-    </code>
-    and
-    <code>
-     draw()
-    </code>
-    methods are synced, meaning that
-    <code>
-     update()
-    </code>
-    gets called first and then
-    <code>
-     draw()
-    </code>
-    . Like this:
-    <br />
-    setup-&gt;update-&gt;draw-&gt;update-&gt;draw-&gt;.....
-    <br />
-    You can set this with the function
-    <code>
-     ofSetVerticalSync(bool bSync)
-    </code>
-    .
-   </p>
-   <p>
-    Folks coming from processing, where there is just setup() and draw() often times wonder why we have two functions that repeat instead of one. There's a couple of reasons:
-   </p>
-   <ul>
-    <li>
-     Drawing in opengl is asynchronous, meaing after you fire off a bunch of commands to draw, they can be running in the background and return control back to your app. If you separate out your drawing code from your non drawing code there's a potential your code will be faster.
-    </li>
-    <li>
-     it's useful for debugging. If you want to know why your code is running slow, now you can comment out the drawing and see if the visual representation that's slow or the updating.
-    </li>
-   </ul>
-   <p>
-    The next lines in the ofApp.h file are
-   </p>
-   <pre>
-    <code>
-     void keyPressed(int key);
-    void keyReleased(int key);
-    void mouseMoved(int x, int y);
-    void mouseDragged(int x, int y, int button);
-    void mousePressed(int x, int y, int button);
-    void mouseReleased(int x, int y, int button);
-    void windowResized(int w, int h);
-    void dragEvent(ofDragInfo dragInfo);
-    void gotMessage(ofMessage msg);
-    </code>
-   </pre>
-   <p>
-    All of these methods are event-driven, which means they get called when a particular event happens. The key and mouse methods are very self-explanatory.
-    <code>
-     windowResized(int w, int h)
-    </code>
-    gets called when the window is resized, and its parameters are the new window size.
-    <br />
-    <code>
-     dragEvent(ofDragInfo dragInfo)
-    </code>
-    is called whenever you drag and drop files over your OF app window. In its parameter there's a list of the files being dragged and dropped as well as the position over the window at which these were dropped.
-    <br />
-    <code>
-     gotMessage(ofMessage msg)
-    </code>
-    this gets called when a message is received. OF has a simple messaging system that allows to send messages from one object to another.
-   </p>
-   <p>
-    Now if you look at your ofApp.cpp file you'll se the following: (I removed the separator comments and the empty lines, just to make it shorter and clearer here).
-   </p>
-   <pre>
-    <code>
-     #include &quot;ofApp.h&quot;
+	void setup();
+	void update();
+	void draw();
+	
+	void keyPressed(int key);
+	void keyReleased(int key);
+	void mouseMoved(int x, int y);
+	void mouseDragged(int x, int y, int button);
+	void mousePressed(int x, int y, int button);
+	void mouseReleased(int x, int y, int button);
+	void windowResized(int w, int h);
+	void dragEvent(ofDragInfo dragInfo);
+	void gotMessage(ofMessage msg);
+};</code></pre>
+<p>Here is an explanation of whats going on line by line:<br/><code>#pragma once</code> Any line that starts with a # character is a preprocess directive. Before compiling happens all the needed files are stuck together. This directive says how this sticking together will commence. In the case of this line it is saying that this file must be included only once, otherwise you could have the same class defined more than once, which would lead into a compiler error. Usually, any .h file should have this at its very beginning.<br/><code>#include "ofMain.h"</code> This is another preprocess directive. It is saying to include the file ofMain.h, by which you'll have all the OF things available in your app. <code>class ofApp : public ofBaseApp{</code> This is declaring a new class named ofApp (notice that usually classes are declared each on a separate file, with the filename the same as the class name. It is not a rule, it is just for tidiness). Then there is a colon that says this new class will inherit from another class, in this case the public methods and properties of ofBaseApp (the next chapter about object oriented programming (OOP) will explain this idea of inheritance).<br/><code>public:</code> This line is saying that the following declarations are public. This means that the declarations can be accessed from outside of this class. There also are "private", that only can be accessed by the class itself, and "protected" that can be accessed by the class itself or by a class that inherits from it.</p>
+<pre><code>	void setup();
+	void update();
+	void draw();</code></pre>
+<p>These are OF's main loop methods (you should know what void means if you read the previous chapter). <code>setup()</code> is called only once when the app begins. This is where you set the initial parameters and initialize any object that your app is using that needs initialization. <code>update()</code> is called constantly, once it finishes its execution it gets called again. How fast this happens depends on the framerate of your app, which you can set using <code>ofSetFramerate(int )</code>, and the intensity of the tasks being done inside update(). These tasks usually have to do with processing data and updating variables, but not drawing. <code>draw()</code> is called every time the display refreshes, usually at 60Hz or 60 times per second. This speed depends on your computer settings. Inside of this method, you can say how things should be drawn into the screen. There are several chapters further on where you will learn how to draw in OF.<br/>By default the <code>update()</code> and <code>draw()</code> methods are synced, meaning that <code>update()</code> gets called first and then <code>draw()</code>. Like this:<br/>setup-&gt;update-&gt;draw-&gt;update-&gt;draw-&gt;.....<br/>You can set this with the function <code>ofSetVerticalSync(bool bSync)</code>.</p>
+<p>Folks coming from processing, where there is just setup() and draw() often times wonder why we have two functions that repeat instead of one. There's a couple of reasons:</p>
+<ul>
+<li>Drawing in opengl is asynchronous, meaing after you fire off a bunch of commands to draw, they can be running in the background and return control back to your app. If you separate out your drawing code from your non drawing code there's a potential your code will be faster.</li>
+<li>it's useful for debugging. If you want to know why your code is running slow, now you can comment out the drawing and see if the visual representation that's slow or the updating.</li>
+</ul>
+<p>The next lines in the ofApp.h file are</p>
+<pre><code>	void keyPressed(int key);
+	void keyReleased(int key);
+	void mouseMoved(int x, int y);
+	void mouseDragged(int x, int y, int button);
+	void mousePressed(int x, int y, int button);
+	void mouseReleased(int x, int y, int button);
+	void windowResized(int w, int h);
+	void dragEvent(ofDragInfo dragInfo);
+	void gotMessage(ofMessage msg);</code></pre>
+<p>All of these methods are event-driven, which means they get called when a particular event happens. The key and mouse methods are very self-explanatory. <code>windowResized(int w, int h)</code> gets called when the window is resized, and its parameters are the new window size.<br/><code>dragEvent(ofDragInfo dragInfo)</code> is called whenever you drag and drop files over your OF app window. In its parameter there's a list of the files being dragged and dropped as well as the position over the window at which these were dropped.<br/><code>gotMessage(ofMessage msg)</code> this gets called when a message is received. OF has a simple messaging system that allows to send messages from one object to another.</p>
+<p>Now if you look at your ofApp.cpp file you'll se the following: (I removed the separator comments and the empty lines, just to make it shorter and clearer here).</p>
+<pre><code>#include "ofApp.h"
 
 void ofApp::setup(){ }
 void ofApp::update(){ }
@@ -668,171 +234,57 @@ void ofApp::mousePressed(int x, int y, int button){ }
 void ofApp::mouseReleased(int x, int y, int button){ }
 void ofApp::windowResized(int w, int h){ }
 void ofApp::gotMessage(ofMessage msg){ }
-void ofApp::dragEvent(ofDragInfo dragInfo){ }
-    </code>
-   </pre>
-   <p>
-    Here once again we find at the very beginning of the file a preprocess directive.
-    <code>
-     #include &quot;ofApp.h&quot;
-    </code>
-    . This declaration is what actually sticks your .h and .cpp files. So it is very important to have it there.
-   </p>
-   <p>
-    All the following lines are the implementation of the methods defined in the .h file, hence this are the actual instructions or steps needed to follow. What´s important here is what goes in between { and }. In this case as we are looking at the empty example there's nothing but in any other example you'll find instructions. Now that you know when and how each of these methods are called you can imagine what an OF app does just by reading the code.
-   </p>
-   <p>
-    As an exercise, open any example, preferably a simple one (with not to much lines of code), and try to imagine what is going to happen just by reading the code. Once done, run the code. Did it happen the same as what you imagined? If not try to figure out what was that you imagined wrong. It should be useful to comment lines (by placing
-    <code>
-     //
-    </code>
-    at the beginning of the line) and see what happens, thus you can figure out what each instruction is doing. I think this a very useful way to strengthen your OF skills as well as your abstract thinking (which you'll need a lot if you pretend to go on with coding).
-   </p>
-   <h3 id="project-generator">
-    Project Generator
-   </h3>
-   <p>
-    <strong>
-     [Should I add instructions on how to use the PG or is it enough with its readme file?]
-    </strong>
-   </p>
-   <h3 id="using-addons-in-your-project">
-    Using addons in your project
-   </h3>
-   <h2 id="peeking-at-others-or-ofs-files-in-search-for-some-help.">
-    Peeking at others or OF's files in search for some help.
-   </h2>
-   <h2 id="some-basic-oop">
-    Some basic OOP
-   </h2>
-   <p>
-    related to the idea of making a lot of the same recipe, how to deal with it. Link to the other chapters where OOP is covered.
-   </p>
-   <h2 id="into-the-oven-aka.-compiling">
-    Into the oven (aka. compiling)
-   </h2>
-   <p>
-    When you write code, your end goal is a compiled application - an .exe or .app that you can click on an run. The job of the compiler is to make that executable for you, to turn text into compiled binary files. It's a 3 step process, and it's useful to know what's happening, especially since you can have errors at different steps along the way. Most IDEs output out a very length file of the compiling, and this can be really useful if you are posting to the forums, for example. Once you understand the process of how projects come to be, it can be easier to isolate errors. Nothing is as frustrating or daunting as looking at 500+ errors in a project when you go to compile, but when you notice that there's a missing include, it's clear why and usually one thing will fix many of the problems.
-   </p>
-   <h3 id="preprocess">
-    preprocess
-   </h3>
-   <p>
-    The first step is that a preprocessor modifies the text files themselves. When you see the # symbol, that's a preprocessor operation. The most common preprocessor statement you'll see is:
-   </p>
-   <p>
-    <code>
-     #include &quot;xxxxx.h&quot;
-    </code>
-   </p>
-   <p>
-    which actually means, take the content of this file and put it right here.
-    <strong>
-     [NOTE: more on &quot;&quot; vs &lt;&gt; ]
-    </strong>
-    You'll also see things like:
-   </p>
-   <p>
-    <code>
-     #define PI 3.1428
-    </code>
-   </p>
-   <p>
-    This means, when you see the word PI in the code, change it to this variable. This isn't a variable, this is literally modifying text.
-   </p>
-   <p>
-    Another common preprocessor step is asking a question. you can say things like:
-   </p>
-   <pre>
-    <code>
-     #ifdef windows
-    #include &quot;windows.h&quot;
+void ofApp::dragEvent(ofDragInfo dragInfo){ }</code></pre>
+<p>Here once again we find at the very beginning of the file a preprocess directive. <code>#include "ofApp.h"</code>. This declaration is what actually sticks your .h and .cpp files. So it is very important to have it there.</p>
+<p>All the following lines are the implementation of the methods defined in the .h file, hence this are the actual instructions or steps needed to follow. What´s important here is what goes in between { and }. In this case as we are looking at the empty example there's nothing but in any other example you'll find instructions. Now that you know when and how each of these methods are called you can imagine what an OF app does just by reading the code.</p>
+<p>As an exercise, open any example, preferably a simple one (with not to much lines of code), and try to imagine what is going to happen just by reading the code. Once done, run the code. Did it happen the same as what you imagined? If not try to figure out what was that you imagined wrong. It should be useful to comment lines (by placing <code>//</code> at the beginning of the line) and see what happens, thus you can figure out what each instruction is doing. I think this a very useful way to strengthen your OF skills as well as your abstract thinking (which you'll need a lot if you pretend to go on with coding).</p>
+<h3 id="project-generator">Project Generator</h3>
+<p><strong>[Should I add instructions on how to use the PG or is it enough with its readme file?]</strong></p>
+<h3 id="using-addons-in-your-project">Using addons in your project</h3>
+<h2 id="peeking-at-others-or-ofs-files-in-search-for-some-help.">Peeking at others or OF's files in search for some help.</h2>
+<h2 id="some-basic-oop">Some basic OOP</h2>
+<p>related to the idea of making a lot of the same recipe, how to deal with it. Link to the other chapters where OOP is covered.</p>
+<h2 id="into-the-oven-aka.-compiling">Into the oven (aka. compiling)</h2>
+<p>When you write code, your end goal is a compiled application - an .exe or .app that you can click on an run. The job of the compiler is to make that executable for you, to turn text into compiled binary files. It's a 3 step process, and it's useful to know what's happening, especially since you can have errors at different steps along the way. Most IDEs output out a very length file of the compiling, and this can be really useful if you are posting to the forums, for example. Once you understand the process of how projects come to be, it can be easier to isolate errors. Nothing is as frustrating or daunting as looking at 500+ errors in a project when you go to compile, but when you notice that there's a missing include, it's clear why and usually one thing will fix many of the problems.</p>
+<h3 id="preprocess">preprocess</h3>
+<p>The first step is that a preprocessor modifies the text files themselves. When you see the # symbol, that's a preprocessor operation. The most common preprocessor statement you'll see is:</p>
+<p><code>#include "xxxxx.h"</code></p>
+<p>which actually means, take the content of this file and put it right here. <strong>[NOTE: more on "" vs &lt;&gt; ]</strong> You'll also see things like:</p>
+<p><code>#define PI 3.1428</code></p>
+<p>This means, when you see the word PI in the code, change it to this variable. This isn't a variable, this is literally modifying text.</p>
+<p>Another common preprocessor step is asking a question. you can say things like:</p>
+<pre><code>#ifdef windows
+	#include "windows.h"
 #else
-    #include &quot;nonWindows.h&quot;
-#endif
-    </code>
-   </pre>
-   <p>
-    As you can imagine this is increadibly useful for cross platform compilcation. If you want to see preprocessor craziness, look at ofConstants.h.
-   </p>
-   <p>
-    One common error you'll have in the preprocess phase is a file not found error, if you include a file like
-   </p>
-   <pre>
-    <code>
-     #include &quot;opencv.h&quot;
-    </code>
-   </pre>
-   <p>
-    and it can't find the file, you will get an error at the preprocessing stage. The way to fix this is to add header search paths, basically the places (folders) the IDE goes to look for a file. This is a common error when using a new library and one of the things the project generator is deisgned to help with when adding an addon.
-   </p>
-   <p>
-    <strong>
-     [more on ofMain.h]
-    </strong>
-   </p>
-   <h3 id="compile">
-    compile
-   </h3>
-   <p>
-    Once the text has been modified, the job of the compiler is simply to take .cpp files and turn them into object code. It's taking the text and turning it into machine language instructions (also referred to as assembly). It doesn't touch the h files at all, it only thinks about .cpp files. In the previous phase the .cpp file has all the h files it uses added to it recursively.
-   </p>
-   <p>
-    This recursive h inclusion is one reason while you will see include guards on the top of h files. They will either look like:
-   </p>
-   <pre>
-    <code>
-     #ifndef SOMEWORD
+ 	#include "nonWindows.h"
+#endif</code></pre>
+<p>As you can imagine this is increadibly useful for cross platform compilcation. If you want to see preprocessor craziness, look at ofConstants.h.</p>
+<p>One common error you'll have in the preprocess phase is a file not found error, if you include a file like</p>
+<pre><code>#include "opencv.h"</code></pre>
+<p>and it can't find the file, you will get an error at the preprocessing stage. The way to fix this is to add header search paths, basically the places (folders) the IDE goes to look for a file. This is a common error when using a new library and one of the things the project generator is deisgned to help with when adding an addon.</p>
+<p><strong>[more on ofMain.h]</strong></p>
+<h3 id="compile">compile</h3>
+<p>Once the text has been modified, the job of the compiler is simply to take .cpp files and turn them into object code. It's taking the text and turning it into machine language instructions (also referred to as assembly). It doesn't touch the h files at all, it only thinks about .cpp files. In the previous phase the .cpp file has all the h files it uses added to it recursively.</p>
+<p>This recursive h inclusion is one reason while you will see include guards on the top of h files. They will either look like:</p>
+<pre><code>#ifndef SOMEWORD
 #define SOMEWORD
 ...
-#endif
-    </code>
-   </pre>
-   <p>
-    or the more modern
-   </p>
-   <pre>
-    <code>
-     #pragma once
-    </code>
-   </pre>
-   <p>
-    This is because if a file is included twice into a .cpp file the compiler could be confused. If it's sees the same definition twice, like:
-   </p>
-   <pre>
-    <code>
-     float position;
-float position;
-    </code>
-   </pre>
-   <p>
-    it will not know which one is which. The include guard prevents the file from being included twice.
-   </p>
-   <p>
-    there are plenty of errors that can happen at compile time -- using a variable that you haven't defined for example. The compiler will stop when it hits an error and the IDEs are designed to make it easy for you to see where the errors are and fix them.
-   </p>
-   <p>
-    The compilers job in life is to take the .cpp files and turn them into .o files. These are individual object files that it will compbine in the next phase, linking.
-   </p>
-   <h3 id="link">
-    link
-   </h3>
-   <p>
-    Finally, after we have a bunch of object files, our job is to link them into one thing -- in our case an application (alternatively, compilers can compile code into a library, for example). This is what the linker does. As you can imagine, there are jumps from one thing to another. For example, in ofApp you could call a graphics call from ofGraphics:
-   </p>
-   <pre>
-    <code>
-     void ofApp::draw(){
-    ofCircle(100,100,20);
-}
-    </code>
-   </pre>
-   <p>
-    This code is calling a function in another object. The linker figures out the links from object to object (in this case between ofApp.o and ofGraphics.o) and links them together into one file.
-   </p>
-   <p>
-    In addition to header search paths, there are also setting in the IDE for dealing with linker paths and libraries to link against. A common error you might see is a link error, where the code in your project compiles fine, but it's having trouble linking because some object is missing. For example, if you forget to include a .cpp file from the source code, the other code will comiple fine, but when the linker goes to make that jump, it can't find where to jump to. Linker errors are described as &quot;undefined reference&quot; errors and occur at the end of the compile process.
-   </p>
-  </div>
- </body>
+#endif</code></pre>
+<p>or the more modern</p>
+<pre><code>#pragma once</code></pre>
+<p>This is because if a file is included twice into a .cpp file the compiler could be confused. If it's sees the same definition twice, like:</p>
+<pre><code>float position;
+float position;</code></pre>
+<p>it will not know which one is which. The include guard prevents the file from being included twice.</p>
+<p>there are plenty of errors that can happen at compile time -- using a variable that you haven't defined for example. The compiler will stop when it hits an error and the IDEs are designed to make it easy for you to see where the errors are and fix them.</p>
+<p>The compilers job in life is to take the .cpp files and turn them into .o files. These are individual object files that it will compbine in the next phase, linking.</p>
+<h3 id="link">link</h3>
+<p>Finally, after we have a bunch of object files, our job is to link them into one thing -- in our case an application (alternatively, compilers can compile code into a library, for example). This is what the linker does. As you can imagine, there are jumps from one thing to another. For example, in ofApp you could call a graphics call from ofGraphics:</p>
+<pre><code>void ofApp::draw(){
+	ofCircle(100,100,20);
+}</code></pre>
+<p>This code is calling a function in another object. The linker figures out the links from object to object (in this case between ofApp.o and ofGraphics.o) and links them together into one file.</p>
+<p>In addition to header search paths, there are also setting in the IDE for dealing with linker paths and libraries to link against. A common error you might see is a link error, where the code in your project compiles fine, but it's having trouble linking because some object is missing. For example, if you forget to include a .cpp file from the source code, the other code will comiple fine, but when the linker goes to make that jump, it can't find where to jump to. Linker errors are described as "undefined reference" errors and occur at the end of the compile process.</p>
+</div>
+</body>
 </html>
