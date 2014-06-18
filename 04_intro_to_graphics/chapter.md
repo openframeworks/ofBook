@@ -373,9 +373,7 @@ We are now using `ofVec2f` for our offset.  We started with a vector that points
 **Extensions**
 
 1. Define some public variables to control brush parameters like `transparency`, `brushWidth`, `offsetDistance`, `numberOfShapes`, etc.
-1. Use the `keyPressed(...)` function (in `
-2. 
-3. .cpp`) to control those parameters at run time (e.g. increasing/decreasing `brushWidth` with the `+` and `-` keys).
+1. Use the `keyPressed(...)` function (in `.cpp`) to control those parameters at run time (e.g. increasing/decreasing `brushWidth` with the `+` and `-` keys).
 1. Track the mouse position and use the distance it moves between frames to control those parameters (e.g. fast moving mouse draws a thicker brush).
 
 #### Raster Graphics: Taking a Snapshot ####
