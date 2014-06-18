@@ -32,6 +32,76 @@ However, if you're connecting to an Arduino, it already appears to the computer 
 
 The speed at which data is transmitted between the Arduino and your software is measured in bits per second, or bps, a fairly self-explanatory unit of measurement.  The rate of bits per second is commonly referred to as the baud rate, and will vary based on your application.  For example, the standard baud rate of 9600bps will transfer data more slowly than a rate of 115200, but the faster baud rate may have more issues with byte scrambling.
 
+```
+-- editor joshuajnoble I think adding some explanation of what rs232 is (a picture of an oscilloscope would be good) the flow of using:
+
+enumerateDevices()
+setup()
+available()
+close()
+
+So you can find all serial devices, open the device, check if it has data, close the port and release the file handle.
+
+Might be nice to have the Arduino serial example mirror the DMX example, like:
+
+
+here's some Arduino code to kick this off
+
+int redPin   = 9;   // Red LED
+int greenPin = 10;  // Green LED
+int bluePin  = 11;  // Blue LED
+
+int color[4];
+long int inByte; 
+int wait = 10; //10ms
+
+void setup()
+{
+  pinMode(redPin,   OUTPUT);   // sets the pins as output
+  pinMode(greenPin, OUTPUT);   
+  pinMode(bluePin,  OUTPUT);
+  
+  Serial.begin(9600); 
+}
+
+void outputColour(int red, int green, int blue) {
+  analogWrite(redPin, red);
+  analogWrite(bluePin, blue);
+  analogWrite(greenPin, green);    
+}
+
+void setColor() {
+  int i = 0;
+  
+  //wait and be patient
+  while (i < 4)
+  {
+    if (Serial.available() > 0) {
+        color[i] = Serial.read();
+        i++;
+    }
+  }
+}
+
+// Main program
+void loop()
+{
+  if (Serial.available() > 0) {
+    // get incoming byte:
+    inByte = Serial.read();
+    
+     if (inByte == 'C') {
+      getColour();
+      analogWrite(redPin, color[1]);
+      analogWrite(bluePin, color[2]);
+      analogWrite(greenPin, color[3]); 
+    } 
+  }
+  delay(wait);
+}
+
+-- end editor
+```
 
 ## digital and analog communication
 
@@ -195,7 +265,7 @@ In order to send DMX first of all you need a DMX to USB control interface. This 
 
 **DMX data format**
 
-A DMX packet, in other words the data sent to the hardware each frame, consists of 512 channels, with an 8-bit value sent per channels (i.e. 0-255). One of the idiosyncracies of DMX is that the channel numbering starts at 1, channel 0 being a start code and not a data channel. This means that when setting up an array to hold your per-frame DMX data, you'll need to make it a size of 513 bytes (a byte in this case being also known as an 'unsigned char').
+A DMX packet, in other words the data sent to the hardware each frame, consists of 512 channels, with an 8-bit value sent per channels (i.e. 0-255). One of the idiosyncracies of DMX is that the channel numbering starts at 1, channel 0 being a start code and not a data channel. This means that when setting up an array to hold your per-frame DMX data, you'll need to make it a size of 513 bytes. In openFrameworks we almost always represent a byte as an unsigned char, though you can also represent this with other types.
 
     //setup the data structure
     unsigned char dmxData[513];
@@ -212,11 +282,11 @@ A number of OF addons have sprung up around DMX, a quick search of ofxAddons.com
 
 No matter which code or which addon you use, the way in which you'll send DMX data will be very similar to the following pseudo-code (replace the comments with the relevant code):
 
-    void Setup() {
+    void ofApp::setup() {
         //connect to your DMX controller
     }
 
-    void Update() {
+    void ofApp::update() {
     
         //assign the relevant values to your DMX data structure
         
@@ -226,8 +296,15 @@ No matter which code or which addon you use, the way in which you'll send DMX da
 The only concern then becomes what colour you'll be setting your lights and how you'd like to dim them.
 
 **Using a colour picker to set up your lights**
+```
+editor -- see above, I think could be cool to mirror this with the ofSerial example
+```
 
 *TODO*
+
+```
+-- editor joshuajnoble I really feel like we should have rpi in its own chapter. It's so tricky to get setup. I do think that talking about something like wiringPi in the context of hardware is a really good idea though, for sure.
+```
 
 ##Raspberry Pi - getting your OF app into small spaces##
 The Raspberry Pi is a popular small sized computer (also known as a single board computer) running on hardware not entirely dissimilar to that which powers today's smartphones. The processor at least, is part of the same ARM family of chips. Originally the Raspberry Pi (abbreviated as RPi) was originally developed as an educational platform to be able to teach the basics of computing hardware in a simple and affordable package. The Raspberry Pi is part of a much larger ecosystem of ARM devices, and the Model B Pi, the most popular version available shortly after launch, is technically classified as an ARM6 device. OpenFrameworks currently supports ARM6 and ARM7 devices, of which the latter are typically more recent and faster hardware designs. While there are plenty of small form-factor alternatives to the Pi, it's a good choice as a computing platform  due to the community that's formed around it and the various hardware and software extensions that have been developed for it.  The Raspberry Pi is also completely open source, including the source code for the Broadcom graphics stack that it contains, which is quite unusual in the hardware world. The advantages of this are again that it enables enthusiasts and professionals from within the RPi community to extend this device to its fullest potential. Having a platform that is well tested and can be used in many different applications is also of benefit, particularly for installations that need to run for extensive periods of time. However, as with any technology, there are advantages and there are caveats, which we'll cover here, along with some practical scenarios which might be useful to anyone interested in taking this mini-computer into the wilds.
@@ -274,7 +351,7 @@ Now you should be able to connect to other serial devices using your cable.
 
 **Raspberry Pi and GPIO**
 
-The RPi has a hardware serial port as well, literally two of the GPIO (General Purpose Input Output) pins on the board are dedicated(?) to serial transmit and receive. They are listed as pins 14 and 15 in the documentation. You might be inclined to use these if you've already used up the Pi's USB ports, or you might want to use them to interface directly with electronics. A word of caution however to anyone connecting any voltages directly to the GPIO pins - there's no protection here against wrong or incorrect voltages. It's nothing to be alarmed about, you're just going to be interfacing directly with the board and the advantages this opens up also exposes you to potentially damaging the board if you do something wrong. Always check your connections and voltages before hooking things up, its a good habit to get into and will avoid frying things. Although truth be told, the only real way to learn is to make mistakes, and there's nothing that'll imprint your memory more effectively than the smell of burning silicon, but I digress...
+The RPi has a hardware serial port as well, literally two of the GPIO (General Purpose Input Output) pins on the board are dedicated to hardware based serial transmit and receive. They are listed as pins 8 and 10 or GPIO14 and GPIO15 in the documentation. Don't get confused by the two different names, one is relative to all the pins (8 and 10) and the other is relative to the usable programmable pins (GPIO14 and GPIO15). You might be inclined to use these if you've already used up the Pi's USB ports, or you might want to use them to interface directly with electronics. A word of caution however to anyone connecting any voltages directly to the GPIO pins - there's no protection here against wrong or incorrect voltages. It's nothing to be alarmed about, you're just going to be interfacing directly with the board and the advantages this opens up also exposes you to potentially damaging the board if you do something wrong. Always check your connections and voltages before hooking things up, its a good habit to get into and will avoid frying things. Although truth be told, the only real way to learn is to make mistakes, and there's nothing that'll imprint your memory more effectively than the smell of burning silicon, but I digress...
 
 Another thing to keep in mind when using the hardware serial port is that all of the GPIO pins operate at around 3 volts. This means that a logic "high" will be approximately 3 volts, which differs from the more typical 5 volts used by most (but not all) Arduino devices. There are quite a few sensors and other electronics that operate at 3 volts, and a quick web search will point you in the right direction. This lower than normal voltage is quite useful in low power electronic setups, where the slightly lower voltage will save you a bit of energy, useful when running off batteries. However again be careful when hooking up 3 volt based sensors directly to the Pi as it may be safer to include a bit of protection between the electronics and the Pi to avoid damaging the board. 
 
