@@ -35,9 +35,7 @@ Before drawing any shape, we need to know how to specify locations on screen.  C
 
 If we apply this to the top left of my screen figure 1 (right), which happens to be my browser.  We can see the pixels and identify their locations in our new coordinate system.  The top left pixel is `(0, 0)`.  The top left pixel of the blue calender icon (with the white "19") is `(58, 5)`.  
 
-![Coordinate Systems](images/Figure1_CoordSystemFigure.png "Figure 1: 2D screen coordinates")
-
-**_Figure 1: 2D screen coordinates_**
+![Figure 1: 2D screen coordinates](images/Figure1_CoordSystemFigure.png "Figure 1: 2D screen coordinates")
 
 Now that we can talk about locations, let's jump into code.  Create an openFrameworks project and call it "BasicShapes" (or something more imaginative).  Open the source file, ofApp.cpp, and navigate to the `draw()` function.  Add the following:
     
@@ -71,9 +69,7 @@ We can control the thickness of the outlines, and our `ofLine(...)` lines, using
 
 Lines looking jagged?  We can fix that with a smoothing technique called [anti-aliasing](http://en.wikipedia.org/wiki/Spatial_anti-aliasing "Wiki on spatial anti-aliasing").  Add [`ofEnableAntiAliasing()`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofEnableAntiAliasing "ofEnableAntiAliasing Documentation Page") to `setup()`.  (For future reference, you can turn it off to save computing power: [`ofDisableAntiAliasing()`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofDisableAntiAliasing "ofDisableAntiAliasing Documentation Page").)
 
-![Basic Shapes](images/Figure2_BasicShapes.png "Figure 2: Basic shapes with and without a fill")
-
-**_Figure 2: Basic shapes with and without a fill_**
+![Figure 2: Basic shapes with and without a fill](images/Figure2_BasicShapes.png "Figure 2: Basic shapes with and without a fill")
 
 [[Source code for this section](https://github.com/openframeworks/ofBook/tree/master/04_intro_to_graphics/code/1_i_Basic_Shapes)]
 
@@ -86,9 +82,7 @@ Lines looking jagged?  We can fix that with a smoothing technique called [anti-a
 
 We survived the boring bits, but why draw one rectangle, when we can draw a million (figure 3)? That is essentially what we will be doing in this section.  We will build brushes that drop a burst of many small shapes whenever we press the left mouse button.  To make things more exciting, we will mix in some randomness.  Start a new openFrameworks project, called "ShapeBrush." 
 
-![Many Rectangles](images/Figure3_LotsOfRectangles.png "Figure 3: Okay, not actually a million rectangles")
-
-**_Figure 3: Okay, not actually a million rectangles_**
+![Figure 3: Okay, not actually a million rectangles](images/Figure3_LotsOfRectangles.png "Figure 3: Okay, not actually a million rectangles")
 
 #### Single Rectangle Brush: Using the Mouse ####
 
@@ -143,9 +137,7 @@ Randomness can make our code dark, mysterious and unpredictable.  Meet [`ofRando
 	float randomColor = ofRandom(50, 255);
 	ofSetColor(randomColor);  // Exclude dark grayscale values (0 - 50) that won't show on black background
 
-![Rectangle Snake](images/Figure4_RectangleSnake.png "Figure 4: Drawing a rectangle snake")
-
-**_Figure 4: Drawing a rectangle snake_**
+![Figure 4: Drawing a rectangle snake](images/Figure4_RectangleSnake.png "Figure 4: Drawing a rectangle snake")
 
 To finish off this single rectangle brush, let's add the ability to erase by pressing the right mouse button.  We will create a `isRightMousePressed` that will act very similarly to our `isLeftMousePressed`.  In the header file, create a public variable `bool isRightMousePressed`.  Initialize the value to false in `setup()`.  Inside of `mousePressed(...)`, set it to `true` if `button == OF_MOUSE_BUTTON_RIGHT`, and inside of `mouseReleased(...)`, set it to `false` if `button == OF_MOUSE_BUTTON_RIGHT`.  Lastly, at the beginning of the `draw()` function, draw a black background when `isRightMousePressed == true`.
 
@@ -192,9 +184,7 @@ Back to the code.  When we figure out our offsets, we want to pick a random dire
 		ofRect(mouseX+xOffset, mouseY+yOffset, width, height);
 	}
 
-![Cartesian Versus Polar Spreads](images/Figure5_CartesianVsPolarSpread.png "Figure 5: Cartesian brush spread versus polar brush spread")  
-
-**_Figure 5: Cartesian brush spread versus polar brush spread_**
+![Figure 5: Cartesian brush spread versus polar brush spread](images/Figure5_CartesianVsPolarSpread.png "Figure 5: Cartesian brush spread versus polar brush spread")
 
 [[Source code for this section](https://github.com/openframeworks/ofBook/tree/master/04_intro_to_graphics/code/1_ii_b_Bursting_Rect_Brush)]
 
@@ -219,9 +209,7 @@ Comment out the rectangle brush code inside the `if (isLeftMousePressed)` statem
 		ofCircle(mouseX+xOffset, mouseY+yOffset, radius);
 	}
 
-![Circle Glow Brush](images/Figure6_CircleGlowBrush.png "Figure 6: Results of using the circle glow brush")
-
-**_Figure 6: Results of using the circle glow brush_**
+![Figure 6: Results of using the circle glow brush](images/Figure6_CircleGlowBrush.png "Figure 6: Results of using the circle glow brush")
 
 We end up with something like figure 6, a glowing light except without color.  Tired of living in moody shades of gray?  `ofSetColor(...)` can make use of the [Red Blue Green (RGB) color model](http://en.wikipedia.org/wiki/RGB_color_model "Wiki on RGB Color Model") in addition to the grayscale color model.  We specify the amount (`0` to `255`) of red, blue and green light respectively, e.g. `ofSetColor(255, 0, 0)` for opaque red.  We can also add alpha, e.g. `ofSetColor(0, 0, 255, 10)` for transparent blue.  Go ahead and modify the `ofSetColor(...)` in our circle brush to use a nice orange: `ofSetColor(255, 103, 0, alpha)`.
 
@@ -274,9 +262,7 @@ What have we done with the alpha?  We used [`ofMap(...)`](http://www.openframewo
 
 We can also vary the line width using: `ofSetLineWidth(ofRandom(1.0, 5.0))`, but remember that if we change the line width in this brush, we will need go back and set our line width back to `1.0` in our other brushes.
 
-![Line Star Brush](images/Figure7_LineStarBrush.png "Figure 7: Results from using the line brush")
-
-**_Figure 7: Results from using the line brush_**
+![Figure 7: Results from using the line brush](images/Figure7_LineStarBrush.png "Figure 7: Results from using the line brush")
 
 [[Source code for this section](https://github.com/openframeworks/ofBook/tree/master/04_intro_to_graphics/code/1_ii_d_Star_Line_Brush)]
 
@@ -284,9 +270,7 @@ We can also vary the line width using: `ofSetLineWidth(ofRandom(1.0, 5.0))`, but
 
 Time for the last brush in section 1: the triangle.  We'll draw a bunch of triangles that are directed outward from the mouse position (figure 8, left).  `ofTriangle(...)` requires us to specify the three corners of the triangle, which means that we will need to calculate the rotation of the corners to make the triangle point away from the mouse.  A new class will make that math easier: [`ofVec2f`](http://openframeworks.cc/documentation/math/ofVec2f.html "ofVec2f Documentation Page").
 
-![Isosceles Triangle Diagrams](images/Figure8_IsoscelesTriangleDiagrams.png "Figure 8: Isosceles triangles in a brush, left, and isolated in a diagram, right")
-
-**_Figure 8: Isosceles triangles in a brush, left, and isolated in a diagram, right_**
+![Figure 8: Isosceles triangles in a brush, left, and isolated in a diagram, right](images/Figure8_IsoscelesTriangleDiagrams.png "Figure 8: Isosceles triangles in a brush, left, and isolated in a diagram, right")
 
 We've been defining points by keeping two separate variables: x and y.  `ofVec2f` is a 2D vector which allows us to hold both in one variable (and perform handy math operations):
 
@@ -331,9 +315,7 @@ Run it and see what happens.  We can add rotation with the `ofVec2f` class metho
 	p2.rotate(rotation);
 	p3.rotate(rotation);
 
-![Rotating Triangle Brush](images/Figure9_RotatingTriangleBrush.png "Figure 9: Results from using the rotating triangle brush")
-
-**_Figure 9: Results from using the rotating triangle brush_**
+![Figure 9: Results from using the rotating triangle brush](images/Figure9_RotatingTriangleBrush.png "Figure 9: Results from using the rotating triangle brush")
 
 Our brush looks something like figure 8 (left).  If we were to move that rotation code to *after* we shifted the triangle position, the code wouldn't work very nicely because `rotate(...)` assumes we want to rotate our point around the origin.  (Check out the documentation for an alternate way to use `rotate(...)` that rotates around an arbitrary point.)  Last step, let's integrate our prior approach of drawing multiple shapes that are offset from the mouse:
 
@@ -364,9 +346,7 @@ Our brush looks something like figure 8 (left).  If we were to move that rotatio
 
 We are now using `ofVec2f` for our offset.  We started with a vector that points rightward, the same direction our triangle starts out pointing.  When we apply the rotation to them both, they stay in sync (i.e. both pointing away from the mouse).  We can push them out of sync with: `triangleOffset.rotate(rotation+90)`, and we get a swirling blob of triangles.  After that, we can add some color using `ofRandom(...)` and `getLerped(...)` again (figure 9) or play with fill and line width.
 
-![Triangle Brush Swirl](images/Figure10_TriangleSwirlBrush.png "Figure 10: Results from using the final triangle brush")	
-
-**_Figure 10: Results from using the final triangle brush_**
+![Figure 10: Results from using the final triangle brush](images/Figure10_TriangleSwirlBrush.png "Figure 10: Results from using the final triangle brush")
 
 [[Source code for this section](https://github.com/openframeworks/ofBook/tree/master/04_intro_to_graphics/code/1_ii_e_Triangle_Brush)]
 
@@ -430,9 +410,7 @@ We can now draw our polylines in the `draw()` function:
 
 We created three different types of polylines (figure 11). `straightSegmentPolyline` is composed of a series points connected with straight lines.  `curvedSegmentPolyline` uses the same points but connects them with curved lines.  The curves that are created are [Catmull–Rom splines](http://en.wikipedia.org/wiki/Centripetal_Catmull%E2%80%93Rom_spline "Wiki on Catmull-Rom splines"), which use four points to define a curve: two define the start and end, while two control points determine the curvature.  These control points are the reason why we need to add the first and last vertex twice.  Lastly, `closedShapePolyline` uses straight line segments that are closed, connecting the first and last vertices.
 
-![Polyline Examples](images/Figure11_PolylineExamples.png "Figure 11: Examples of polylines - straight, curved and closed straight")
-
-**_Figure 11: Examples of polylines - straight, curved and closed straight_**
+![Figure 11: Examples of polylines - straight, curved and closed straight](images/Figure11_PolylineExamples.png "Figure 11: Examples of polylines - straight, curved and closed straight")
 
 The advantage of drawing in this way (versus raster graphics) is that the polylines are modifiable.  We could easily move, add, delete, scale our vertices on the the fly.
 
@@ -492,9 +470,7 @@ Define `vector <ofPolyline> polylines` in the header.  We will use it to save ou
 
 And we have a simple pen-like brush that tracks the mouse, and we can draw a dopey smiley face (figure 12).
 
-![Polyline Smilie](images/Figure12_PolylineSmilie.png "Figure 12: Drawing a smilie with the polyline brush")
-
-**_Figure 12: Drawing a smilie with the polyline brush_**
+![Figure 12: Drawing a smilie with the polyline brush](images/Figure12_PolylineSmilie.png "Figure 12: Drawing a smilie with the polyline brush")
 
 [[Source code for this section](https://github.com/openframeworks/ofBook/tree/master/04_intro_to_graphics/code/2_ii_a_Polyline_Pen)]
 
@@ -521,9 +497,7 @@ What happens when we run it?  Our white lines look thicker.  That's because our 
 
 `simplify(...)` is a method that will remove "duplicate" points from our polyline.  We pass a single argument into it: `tolerance`, a value between 0.0 and 1.0.  The `tolerance` describes how dis-similar points must be in order to be considered 'unique' enough to not be deleted.  The higher the `tolerance`, the more points will be removed.  So right before we save our polyline by putting it into our `polylines` vector, we can simplify it.  Inside of the if statement within `mouseReleased(...)` (before `polylines.push_back(currentPolyline)`), add: `currentPolyline.simplify(0.75)`.  Now we should see something like figure 13 (left).
 
-![Polyline Vertices](images/Figure13_PolylinePoints.png "Figure 13: Drawing circles at the vertices of a polyline, without and with resampling points evenly")
-
-**_Figure 13: Drawing circles at the vertices of a polyline, without and with resampling points evenly_**
+![Figure 13: Drawing circles at the vertices of a polyline, without and with resampling points evenly](images/Figure13_PolylinePoints.png "Figure 13: Drawing circles at the vertices of a polyline, without and with resampling points evenly")
 
 We can also sample points along the polyline using [`getPointAtPercent(...)`](http://openframeworks.cc/documentation/graphics/ofPolyline.html#show_getPointAtPercent "getPointAtPercent Documentation Page"), which takes a `float` between `0.0` and `1.0` and returns a `ofVec3f`.  Inside the `draw()` function, comment out the code that draws a circle at each vertex.  Below that, add: 
 
@@ -544,9 +518,7 @@ Now we have evenly spaced points (figure 13, right).  Let's try creating a brush
       
 We getting the all of the vertices in our `ofPolyline`.  But here, we are also using [`getNormalAtIndex`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html#show_getNormalAtIndex "getNormalAtIndex Documentation Page") which takes an index and returns an `ofVec3f` that represents the normal vector for the vertex at that index.  We take that normal, scale it and then display it centered around the vertex.  So, we have something like figure 14 (left), but we can also sample normals, using the function [`getNormalAtIndexInterpolated(...)`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html#show_getNormalAtIndexInterpolated "getNormalAtIndexInterpolated Documentation Page").  So let's comment out the code we just wrote, and try sampling our normals evenly along the polyline:
 
-![Polyline Normals](images/Figure14_PolylineNormals.png "Figure 14: Drawing normals at the vertices of a polyline, without and with resampling points evenly")
-
-**_Figure 14: Drawing normals at the vertices of a polyline, without and with resampling points evenly_**
+![Figure 14: Drawing normals at the vertices of a polyline, without and with resampling points evenly](images/Figure14_PolylineNormals.png "Figure 14: Drawing normals at the vertices of a polyline, without and with resampling points evenly")
 
 	float numPoints = polyline.size();
 	float normalLength = 50;
@@ -561,9 +533,7 @@ We can get an evenly spaced point by using percents again, but `getNormalAtIndex
 
 Now we can pump up the number of normals in our drawing.  Let's change our loop increment from `p+=10` to `p+=1`, change our loop condition from `p<100` to `p<500` and change our `p/100.0` lines of code to `p/500.0`.  We might also want to use a transparent white for drawing these normals, so let's add `ofSetColor(255,100)` right before our loop.  We will end up being able to draw ribbon lines, like figure 15.
 
-![Polyline With Many Many Sampled Normals](images/Figure15_PolylineManyNormals.png "Figure 15: Drawing many many normals to fill out the polyline")
-
-**_Figure 15: Drawing many many normals to fill out the polyline_**
+![Figure 15: Drawing many many normals to fill out the polyline](images/Figure15_PolylineManyNormals.png "Figure 15: Drawing many many normals to fill out the polyline")
 
 We've just added some thickness to our polylines.  Now let's have a quick aside about tangents, the "opposite" of normals.  These wonderful things are perpendicular to the normals that we just drew.  So if we drew tangents along a perfectly straight line we wouldn't really see anything.  The fun part comes when we draw tangents on a curved line, so let's see what that looks like.  Same drill as before.  Comment out the last code and add in the following:
 
@@ -577,9 +547,7 @@ We've just added some thickness to our polylines.  Now let's have a quick aside 
 	
 This should look very familiar except for [`getTangentAtIndex(...)`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html#show_getTangentAtIndex "getTangentAtIndex Documenation Page") which is the equivalent of `getNormalAtIndex(...)` but for tangents.  Not much happens for straight and slightly curved lines, however, sharply curved lines reveal the tangents figure 16 (left).
 
-![Polyline Tangents](images/Figure16_PolylineTangents.png "Figure 16: Drawing tangents at vertices of polylines")
-
-**_Figure 16: Drawing tangents at vertices of polylines_**
+![Figure 16: Drawing tangents at vertices of polylines](images/Figure16_PolylineTangents.png "Figure 16: Drawing tangents at vertices of polylines")
 
 I'm sure you can guess what's next... drawing a whole bunch of tangents at evenly spaced locations (figure 16, right)!  It's more fun that it sounds.  [`getTangentAtIndexInterpolated(...)`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html#show_getTangentAtIndexInterpolated "getTangentAtIndexInterpolated Documentation Page") works like `getNormalAtIndexInterpolated(...)`.  Same drill, comment out the last code, and add the following:
 
@@ -625,9 +593,7 @@ Imagine that we have a piece of graphing paper in front of us.  How would we dra
 
 Draw a white background and color the shapes, and we end up with something like figure 17 (left).
 
-![Arranging The Family](images/Figure17_ArrangingTheFamily.png "Figure 17: Arranging a little stick figure family")
-
-**_Figure 17: Arranging a little stick figure family_**
+![Figure 17: Arranging a little stick figure family](images/Figure17_ArrangingTheFamily.png "Figure 17: Arranging a little stick figure family")
 
 What if, after figuring out where to put our shapes, we needed to draw them at a different spot on the screen, or to draw a row of copies?  We *could* change all the positions manually, or we could use `ofTranslate(...)` to move our coordinate system and leave the positions alone:
     
@@ -659,9 +625,7 @@ So we need is to reset the coordinate system using [`ofPushMatrix()`](http://www
 
 And we should end up with a grid.  See figure 17, right. (I used `ofScale` to jam many in one image.) Or if you hate grids, we can make a mess of a crowd using random rotations and translations, figure 18.
 
-![A Crowd of Stick Figures](images/Figure18_Crowd.png "Figure 18: A crowd")
-
-**_Figure 18: A crowd_**
+![Figure 18: A crowd](images/Figure18_Crowd.png "Figure 18: A crowd")
 
 [[Source code for this section](https://github.com/openframeworks/ofBook/tree/master/04_intro_to_graphics/code/3_i_Translating_Stick_Family)]
 
@@ -669,9 +633,7 @@ And we should end up with a grid.  See figure 17, right. (I used `ofScale` to ja
 
 Onto `ofScale(...)` and `ofRotate(...)`!  Let's create a new project where rotating and scaling rectangles to get something like figure 19.
 
-![Spiraling Rectangles](images/Figure19_SpiralingRectangles.png "Figure 19: Drawing a series of spiraling rectangles")
-
-**_Figure 19: Drawing a series of spiraling rectangles_**
+![Figure 19: Drawing a series of spiraling rectangles](images/Figure19_SpiralingRectangles.png "Figure 19: Drawing a series of spiraling rectangles")
 
 Before knowing about `ofRotate(...)`, we couldn't have drawn a rotated rectangle with `ofRect(...)`.  [`ofRotate(...)`](http://www.openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofRotate "ofRotate Documentation Page") takes an angle (in degrees) and rotates our coordinate system around the current origin.  Let's attempt a rotated rectangle:
 
@@ -689,9 +651,7 @@ Before knowing about `ofRotate(...)`, we couldn't have drawn a rotated rectangle
 
 Hmm, not quite right (figure 20, left).  `ofRotate(...)` rotates around the current origin, the top left corner of the screen.  To rotate in place, we need `ofTranslate(...)` to move the origin to our rectangle *before* we rotate.  Add `ofTranslate(500, 200)` before rotating (figure 20, second from left).  Now we are rotating around the upper left corner of the rectangle.  The easiest way to rotate the rectangle around its center is to use `ofSetRectMode(OF_RECTMODE_CENTER)` draw the center at (500, 200).  Do that, and we finally get figure 20, third from left. 
 
-![Rectangle Rotations](images/Figure20_CoordSystemManipulations.png "Figure 20: Steps along the way to rotating and scaling a rectangle in place")
-
-**_Figure 20: Steps along the way to rotating and scaling a rectangle in place_**
+![Figure 20: Steps along the way to rotating and scaling a rectangle in place](images/Figure20_CoordSystemManipulations.png "Figure 20: Steps along the way to rotating and scaling a rectangle in place")
 
 Push, pop, rotate, translate - no problem.  Only thing left is [`ofScale(...)`](http://www.openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofScale "ofScale Documentation Page").  It takes two arguments: the desired scaling in x and y directions (and an optional z scaling).  Applying scaling to our rectangles:
 
@@ -775,9 +735,7 @@ One last extension.  We can slowly flip the background and rectangle colors, by 
 
 Now use `bgColor` for the transparent rectangle we draw on the screen and `fgColor` for the rectangle outlines to get figure 21
 
-![Contrast Reversing Spiral](images/Figure21_ContrastReversingSpiral.png "Figure 21: A single frame from animated spiraling rectangles where the contrast reverses over time")
-
-**_Figure 21: A single frame from animated spiraling rectangles where the contrast reverses over time_**
+![Figure 21: A single frame from animated spiraling rectangles where the contrast reverses over time](images/Figure21_ContrastReversingSpiral.png "Figure 21: A single frame from animated spiraling rectangles where the contrast reverses over time")
 
 [[Source code for this section](https://github.com/openframeworks/ofBook/tree/master/04_intro_to_graphics/code/3_ii_Rotating_and_Scaling)]
 

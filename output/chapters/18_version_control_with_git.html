@@ -7,7 +7,7 @@
 <meta content="pandoc" name="generator"/>
 <title></title>
 <style type="text/css">code{white-space: pre;}</style>
-<link href="../../style/style.css" rel="stylesheet" type="text/css"/>
+<link href="style/style.css" rel="stylesheet" type="text/css"/>
 <link href="http://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic|Merriweather:400,300,300italic,400italic,700,900,700italic,900italic" rel="stylesheet" type="text/css">
 </link></head>
 <body>
@@ -83,7 +83,7 @@
 <p>Branches can be <strong>merged</strong> into another branch. When this happens, Git analyzes the two different branches and merges their different histories/changes together.</p>
 <p>This figure visualizes how this looks like:</p>
 <div class="figure">
-<img alt="Simple Git branch diagram." src="images/branch_diagram.png" title="Simple Git branch diagram."/><span class="caption">Simple Git branch diagram.</span>
+<img alt="Simple Git branch diagram." src="18_version_control_with_git/images/branch_diagram.png" title="Simple Git branch diagram."/><span class="caption">Simple Git branch diagram.</span>
 </div>
 <p>Finally, there are three different "areas" in Git, which you will encounter often when reading about Git:</p>
 <p>The <strong>repository</strong> in the <code>.git</code> directory contains all the commits. The <strong>HEAD</strong> points to the current commit of the branch you are currently on. This represents the <em>latest committed state</em> of your repository. If you create a new commit, it will become this commit's parent (and HEAD will be moved to the new commit).</p>
@@ -91,7 +91,7 @@
 <p>When you prepare a commit, you first have to <strong>stage</strong> any changes you want that commit to contain. This means that these changes will be put into the <strong>index</strong> (or <strong>staging area</strong>).</p>
 <p>So, you modify your files in the working directory, you stage those modifications, putting them into the index, and then you <strong>create a commit</strong>, taking the files from the index and storing them in the repository. To get files <em>back</em> from the repository (i.e. restore the state as it was at some previous point), you <strong>check out</strong> files, putting them into the working directory. This is shown graphically in the following figure:</p>
 <div class="figure">
-<img alt="The three areas of Git." src="images/git_areas.png" title="The three areas of Git."/><span class="caption">The three areas of Git.</span>
+<img alt="The three areas of Git." src="18_version_control_with_git/images/git_areas.png" title="The three areas of Git."/><span class="caption">The three areas of Git.</span>
 </div>
 <p>Armed with these basic facts, we can dive right in, and start working on our first project!</p>
 <h3 id="getting-started-project-setup">Getting started: project setup</h3>

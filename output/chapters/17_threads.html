@@ -26,7 +26,7 @@ code > span.al { color: #ff0000; font-weight: bold; }
 code > span.fu { color: #06287e; }
 code > span.er { color: #ff0000; font-weight: bold; }
   </style>
-<link href="../../style/style.css" rel="stylesheet" type="text/css"/>
+<link href="style/style.css" rel="stylesheet" type="text/css"/>
 <link href="http://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic|Merriweather:400,300,300italic,400italic,700,900,700italic,900italic" rel="stylesheet" type="text/css">
 </link></head>
 <body>
@@ -84,7 +84,7 @@ ImageLoader imgLoader;
 <p>When we call <code>startThread()</code>, <code>ofThread</code> starts a new thread and returns immediately, that thread will call our <code>threadedFunction</code> and will finish when the function ends.</p>
 <p>This way the loading of the image happens simultaneously to our update/draw loop and our application doesn't stop while waiting till the image is loaded from disk.</p>
 <p>Now, how do we know when our image is loaded? The thread will run separately from the main thread of our application:</p>
-<p><img height="300" src="images/simple_thread.svg"/></p>
+<p><img height="300" src="17_threads/images/simple_thread.svg"/></p>
 <p>As we see in the image the duration of loading of the image and thus the duration of the call to threadedFunction is not automatically known to the main thread. Since all our thread does is load the image, we can check if the thread has finished running which will tell us that the image has loaded. For that ofThread has a method: <code>isThreadRunning()</code>:</p>
 <pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="kw">class</span> ImageLoader: <span class="kw">public</span> ofThread{
     <span class="dt">void</span> setup(string imagePath){
@@ -598,7 +598,7 @@ ofPixels accessSomeSharedData(){
 <h2 id="conclusion">Conclusion</h2>
 <p>As we've seen threads are a powerfull tool to allow for several tasks to happen simultaneously in the same application. They are also hard to use, the main problem is usually accessing shared resouces, usually shared memory. We've only seen one specific case, how to use threads to do background tasks that will pause the execution of the main task, there's other cases where we can parallelize 1 task by dividing it in small subtasks like for example doing some image operation by dividing the image in for subregions and assigning a thread to each. For those cases there's special libraries that make the syntax easier, OpenCv for example can do some operations using more than one core through <a href="https://www.threadingbuildingblocks.org/">TBB</a> and there's libraries like the same TBB or <a href="http://openmp.org/wp/">OpenMP</a> that allow to specify that a loop should be divided and run simultaneol¡usly in more than one core</p>
 <p><em style="font-size:0.8em; text-align:center; display:block;">This work is licensed under a <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.en_US" rel="license">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.</em></p>
-<p><a href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.en_US" rel="license"><img alt="Creative Commons License" src="http://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" style="border-width:0"/></a></p>
+<p><a href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.en_US" rel="license"><img alt="Creative Commons License" src="17_threads/http://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" style="border-width:0"/></a></p>
 </div>
 </body>
 </html>

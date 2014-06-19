@@ -27,7 +27,7 @@ code > span.fu { color: #06287e; }
 code > span.er { color: #ff0000; font-weight: bold; }
   </style>
 <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
-<link href="../../style/style.css" rel="stylesheet" type="text/css"/>
+<link href="style/style.css" rel="stylesheet" type="text/css"/>
 <link href="http://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic|Merriweather:400,300,300italic,400italic,700,900,700italic,900italic" rel="stylesheet" type="text/css">
 </link></head>
 <body>
@@ -195,7 +195,7 @@ line.addVertex(ofPoint(<span class="dv">200</span>, <span class="dv">400</span>)
 <span class="co">//A sequence of two control points and a destination: </span>
 <span class="co">//control 1's x and y, control 2's x and y, and the destination</span>
 line.bezierTo(<span class="dv">100</span>, <span class="dv">100</span>, <span class="dv">800</span>, <span class="dv">100</span>, <span class="dv">700</span>, <span class="dv">400</span>); </code></pre>
-<p>This generates this image: <img alt="Beziér" src="images/bezier.png"/></p>
+<p>This generates this image: <img alt="Beziér" src="math_chapters_unnumbered/images/bezier.png"/></p>
 <p>This is just one example of use though. All of the different combinations are documented extensively in the <em>Advanced Graphics</em> chapter.</p>
 <h3 id="tweening">Tweening</h3>
 <p>So far we've learned how to use a bunch of control points to create an interesting curve in space. We've used our parameter <span class="math">\(t\)</span> to simulate the time it takes to draw each point on the curve. We also implicitly assumed that time runs only in the period that we let it run in, in the case of our examples, between 0 and 1. But we never really tested what it looks like to run all of that in real time.</p>

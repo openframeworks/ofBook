@@ -7,7 +7,7 @@
 <meta content="pandoc" name="generator"/>
 <title></title>
 <style type="text/css">code{white-space: pre;}</style>
-<link href="../../style/style.css" rel="stylesheet" type="text/css"/>
+<link href="style/style.css" rel="stylesheet" type="text/css"/>
 <link href="http://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic|Merriweather:400,300,300italic,400italic,700,900,700italic,900italic" rel="stylesheet" type="text/css">
 </link></head>
 <body>
@@ -133,13 +133,13 @@ void testApp::draw(){
 <p><strong>[note: better explanation of how to read the chart]</strong> Think about the x value of the plot as the input and y value as the output. If put in 0, we get out a y value of 0, if we put in 0.1, we get out a y value of 0.01, all the way to putting in a value of 1 and getting out a value of 1.</p>
 <p>As side note, it's important to note that things in the world often don't move linearly. They don't take "even" steps. Roll a ball on the floor, it slows down. It's accelerating in a negative direction. Sometimes things speed up, like a baseball bat going from resting to swinging. Curving pct leads to interesting behavior. The objects still take the same amount of time to get there, but they do it in more lifelike, non-linear ways.</p>
 <div class="figure">
-<img alt="nonlinear" src="images/atob_nonlinear.png"/><span class="caption">nonlinear</span>
+<img alt="nonlinear" src="04_animation/images/atob_nonlinear.png"/><span class="caption">nonlinear</span>
 </div>
 <p>If you raise the incoming number between 0 and 1 to a larger power it looks more extreme. Interestingly, if you raise this value between 0 and 1 to a fractional (rational) power (i.e., a power that's less than 1 and greater than 0), it curves in the other direction.</p>
 <p>The second example shows an animation that uses pct again to get from A to B, but in this case, pct is raised to a power:</p>
 <p>In the 4th example (<strong>4_rectangleInterpolatePowfMultiple</strong>), you can see a variety of these rectangles, all moving with different shaping functions. They take the same amount of time to get from A to B, but do it in very different ways. I usually ask my students to guess which one is moving linearly -- see if you can figure it out without looking at the code:</p>
 <div class="figure">
-<img alt="xeno diagram" src="images/multiCurved.png"/><span class="caption">xeno diagram</span>
+<img alt="xeno diagram" src="04_animation/images/multiCurved.png"/><span class="caption">xeno diagram</span>
 </div>
 <p>http://en.wikipedia.org/wiki/12_basic_principles_of_animation#Slow_in_and_slow_out</p>
 <p><strong>[note: can we get rights for a screenshot of masahiko sato curves DVD ? ]</strong></p>
@@ -162,7 +162,7 @@ void testApp::draw(){
 <li>Go to (3).</li>
 </ol>
 <div class="figure">
-<img alt="xeno diagram" src="images/xeno.png"/><span class="caption">xeno diagram</span>
+<img alt="xeno diagram" src="04_animation/images/xeno.png"/><span class="caption">xeno diagram</span>
 </div>
 <p>In code, that's basically the same as saying</p>
 <pre><code>currentValue = currentValue + ( targetValue - currentValue ) * 0.5.</code></pre>
@@ -188,7 +188,7 @@ void testApp::draw(){
 <h4 id="everything-about-sin-and-cos-in-one-graph">Everything about sin and cos in one graph</h4>
 <p>So here's a simple drawing that helps explain sin and cos.</p>
 <div class="figure">
-<img alt="sin" src="images/atob_circle.png"/><span class="caption">sin</span>
+<img alt="sin" src="04_animation/images/atob_circle.png"/><span class="caption">sin</span>
 </div>
 <p>All you have to is imagine a unit circle, which has a radius of 1 and a center position of 0,0. Now, imagine a point moving counter clockwise around that point as a constant speed. If you look at the height of that point, it goes from 0 at the far right (3 o'clock position), up to 1 at the top (12 o'clock), back at 0 at the left (9 o'clock) and down to -1 at the bottom (6 o'clock). So it's a smooth, curving line that moves between -1 and 1. That's it. Sin is the height of this dot and cos is the horizontal position of this dot. At the far right, where the height of this dot is 0, the horizontal position is 1. When sin is 1, cos is 0, etc. They are in sync, but shifted.</p>
 <h4 id="simple-examples">Simple examples</h4>
@@ -312,7 +312,7 @@ void addClockwiseForce( float px, float py, float radius, float strength);
 void addCounterClockwiseForce( float px, float py, float radius, float strength);</code></pre>
 <p>They essentially adds forces the move towards or away from a point that you pass in, or in the case of clockwise forces, around a point.</p>
 <div class="figure">
-<img alt="sin" src="images/particle.png"/><span class="caption">sin</span>
+<img alt="sin" src="04_animation/images/particle.png"/><span class="caption">sin</span>
 </div>
 <p>The calculation of these forces is fairly straight forward - first, we figure out how far away from a point is from the center of the force. If it's outside of the radius of interaction, we disregard it. If it's inside, we figure out its percentage , ie, the distance between the force and the particle devided by the radius of interaction. This gives us a number that's close to 1 when we towards the far edge of the circle and 0 as we get towards the center. If we invert this, by taking 1 - percent, we get a number that's small on the outside, and larger as we get closer to the center.</p>
 <p>This is useful because often times forces are proportional to disctance. For example, a magnetic force will have a radius at which it works, and the closer you get to the magnet the stronger the force.</p>
@@ -391,7 +391,7 @@ p.frc.y = p.frc.y - diff.y * scale * pct;</code></pre>
 <p>We don't have time to get into it in this chapter, but there's different approaches to avoiding that many calculations. Many of them have to deal with spatial hashing, ways of quickly identifying which particles are far away enough to not even consider (thus avoiding a distance calculation).</p>
 <h3 id="local-interactions-lead-to-global-behavior">local interactions lead to global behavior</h3>
 <div class="figure">
-<img alt="sin" src="images/multiForces.png"/><span class="caption">sin</span>
+<img alt="sin" src="04_animation/images/multiForces.png"/><span class="caption">sin</span>
 </div>
 <h2 id="where-to-go-further">where to go further</h2>
 <h3 id="physics-and-animation-libraries">physics and animation libraries</h3>

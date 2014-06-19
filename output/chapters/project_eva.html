@@ -7,7 +7,7 @@
 <meta content="pandoc" name="generator"/>
 <title></title>
 <style type="text/css">code{white-space: pre;}</style>
-<link href="../../style/style.css" rel="stylesheet" type="text/css"/>
+<link href="style/style.css" rel="stylesheet" type="text/css"/>
 <link href="http://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic|Merriweather:400,300,300italic,400italic,700,900,700italic,900italic" rel="stylesheet" type="text/css">
 </link></head>
 <body>
@@ -70,10 +70,10 @@
 <p><a href="http://www.dailytouslesjours.com/project/choregraphies-pour-des-humains-et-des-etoiles/">Choreographies for Humans and Stars</a> is a permanent outdoor installation hosted at Montreal's Rio Tinto Alcan Planetarium. The interactive projection on the building's facade invites passers-by to a series of collective dance performances inspired by the different mechanics of planets and stars.</p>
 <p>Seven stones anchored into the ground delimit the dance area in front of the projection. A series of instructions on the screen guide participants through a set of choreographies that combine dance and astronomy. The participants use their bodies to understand celestial dynamics like eclipses, forces of attraction and combustion. A camera system tracks the movements across the dance stage and controls the images and animations on the projection. The original image material has been produced through workshops with local kids.</p>
 <div class="figure">
-<img alt="On site" src="images/revolutionsatplane.jpg" title="Project in action"/><span class="caption">On site</span>
+<img alt="On site" src="project_eva/images/revolutionsatplane.jpg" title="Project in action"/><span class="caption">On site</span>
 </div>
 <div class="figure">
-<img alt="On site" src="images/freezeatplane.jpg" title="Freeze"/><span class="caption">On site</span>
+<img alt="On site" src="project_eva/images/freezeatplane.jpg" title="Freeze"/><span class="caption">On site</span>
 </div>
 <p><a href="http://vimeo.com/85369669">video</a> (longer video with english subtitles coming soon)</p>
 <p>This chapter documents the various stages of <em>Choreographies for Humans and Stars</em> in chronological order. It talks about project logistics, prototyping processes and technological choices, before diving into some OF implementation details towards the end.</p>
@@ -91,7 +91,7 @@
 <p>From first brainstorms to final hand-over the mammoth project took an impressive 28 months to complete. That's 10 months longer than the official brief planned for. When you work with that many players (the city, the planetarium, collaborators..) your first and second attempt at a project timeline is bound to fail. A lot of the delay was due to elongated contract negotations with the city, as neither we nor they had negotiated the maintenance of permanent digital artworks before (not your typical bronze statue).</p>
 <p>Our more pragmatic goal was to get it all done by November 2013, with the main intention of avoiding all the snow and coldness that comes along with Montreal's winter season. Naturally we slipped right past that goal, and had our big opening amidst lots of snow mid January, with temperatures ranging between -15 to -25.</p>
 <div class="figure">
-<img alt="Project timeline" src="images/plane_timeline-01.png" title="The 3+ year long project timeline"/><span class="caption">Project timeline</span>
+<img alt="Project timeline" src="project_eva/images/plane_timeline-01.png" title="The 3+ year long project timeline"/><span class="caption">Project timeline</span>
 </div>
 <h3 id="everyone-involved">Everyone involved</h3>
 <p>Credit lists quickly grow long. The internal DTLJ team includes Mouna and Melissa being the main artists with the vision, Eva handling software, Pierre being heavily involved with visual identity and video production, Michael handling the LEDs in the outdoor furniture. The list of external collaborators include a producer (Nicolas), a choreographer (Dana), a technical director (Frederick), a software engineer (Emmanuel), a film animator (Patrick), an industrial design studio (Dikini), a graphic designer (Studio Atelier), a concrete workshop (M3Beton), engineers, a camera man, ...</p>
@@ -99,7 +99,7 @@
 <p><em>Choreographies for Humans and Stars</em> is inspired by space as the great unknown. We felt that our role could be to bring a physical experience that would help the planetarium visitors to not only understand but also feel what space is about. One of our early inspirations was the opening scene of the Béla Tarr's movie "<em>Werckmeister Harmonies</em>", where a party ends in dancing a solar system waltz with the Earth and the Moon turning around an eclipsing Sun.</p>
 <p>Very early in the process we started collaborating with a choreographer and together we explored how participants could use their bodies in ways that mimic celestial dynamics. In a choreography-driven narrative each scene would represent a recognizable space phenomena, instigating a journey from spinning like revolving planets, to lining up to cause an eclipse.</p>
 <div class="figure">
-<img alt="Celestial mechanics" src="images/PLANE_CELESTIAL_MECHANICS.png" title="Celestial mechanics"/><span class="caption">Celestial mechanics</span>
+<img alt="Celestial mechanics" src="project_eva/images/PLANE_CELESTIAL_MECHANICS.png" title="Celestial mechanics"/><span class="caption">Celestial mechanics</span>
 </div>
 <p>The individual choreographies would be communicated with text instructions and should allow participants to dance within a group, yet maintain enough freedom to indulge in personal interpretations.</p>
 <h3 id="challenges-in-the-interaction-design">Challenges in the Interaction design</h3>
@@ -107,13 +107,13 @@
 <p>One of the main challenges of the project was to find a balance between providing interesting reactive visuals while also giving people the freedom to perform choreographies without having their eyes constantly stuck on the screen. Being unable to use sound, all interaction feedback needed to be visual. But in order to encourage true freedom of movement, the colorful images of explosions and shooting stars needed to be tuned down in their <em>reactiveness</em> to provide more of a backdrop instead of the main attraction of the piece.</p>
 <p>Similar challenging was the task to communicate the instructions to the participants. While some actions could be phrased as one-worders - <em>"FREEZE!"</em> - others were more elaborate and cryptic - <em>"Walk with someone, keep the same distance between you (No hands!)"</em>. Creating the piece for a bilingual audience also highlighted the possible interpretive differences between English and French instructions. Having test sessions with uninitiated users was important to adjust the exact wording of instructions, and also to refine the timing of the individual scenes. (The factor that eventually ended up influencing the timing the most, was January's outside temperature).</p>
 <div class="figure">
-<img alt="Instructions" src="images/instructionsandvisuals.png" title="Instructions"/><span class="caption">Instructions</span>
+<img alt="Instructions" src="project_eva/images/instructionsandvisuals.png" title="Instructions"/><span class="caption">Instructions</span>
 </div>
 <h3 id="outlining-the-dance-zone">Outlining the dance zone</h3>
 <p>The projection being intangible, it was important to give the project a physical presence on the ground. Some sort of tangible intervention that would serve as interface for people to interact, and further represent the project during daylight hours.</p>
 <p>At the beginning we imagined a series of stones and platforms arranged to form celestial pathways and encouraged hopping from stone to stone. Yet this would have introduced too many physical obstacles (tripping over, slipping) and severely limited the free movements and interactions in the space. Over the course of prototyping the importance of the physical presence shifted from being an interface to providing a delimiting perimeter around the active dance zone. After going through many design proposals (a stage, a ring, a ballet pole!) we landed on 7 inch-high concrete stones positioned in a circular formation. A single white LED on each stone enhanced their presence. Installing the underground cabling for those 7 LEDs proved a big challenge and required the $10k rental of a ground-unfreezing device.</p>
 <div class="figure">
-<img alt="Dance zone" src="images/plane_dancezone.png" title="Dance zone encircled by 7 stones"/><span class="caption">Dance zone</span>
+<img alt="Dance zone" src="project_eva/images/plane_dancezone.png" title="Dance zone encircled by 7 stones"/><span class="caption">Dance zone</span>
 </div>
 <h3 id="producing-video-content">Producing video content</h3>
 <p>Since the project would be permanently installed, we involved locals in the making of these images, aiming to create a sense of ownership within the community that will be living next to the project for many years to come. The image and video content was created using simple analog animation techniques in a series of <a href="http://www.dailytouslesjours.com/to-community-and-beyond">workshops</a> with local kids aged 7 to 12. <strong>[possibly another blogpost link, with how-to instructions for the analog animation techniques]</strong></p>
@@ -123,7 +123,7 @@
 <p>The projection surface on the planetarium is 20 meter high and covered with shiny tiles. The shininess of these tiles was first worrisome, but an early projection test settled any doubts of projection quality. To cover a large area of the building surface, we required a high-lumen projector (<a href="http://www.barco.com/en/Products-Solutions/Projectors/Large-venue-projectors/20000-lumens-WUXGA-3-chip-DLP-projector-with-light-on-demand-option.aspx" title="Barco HDX-W20">Barco HDX-W20</a>) which naturally ate almost half the budget. To save further costs - and for weather-protection and easy-access reasons - the projector was placed in the neighbouring building: the Montreal biodome. We had to build a wooden platform for the projector and cut a glass replacement window out of the slightly tinted facade of the biodome. A simple $15 heater now ensures that that window is kept clear of ice and condensation. Additionally we negotiated with the landscape architects the trimming of any trees that were likely to grow into our projection cone over the next 3 years.</p>
 <p>Working inside the biodome turned out to be quite entertaining: my access route to our equipment led directly by the penguin compound, and work sessions were accompanied by a constant backdrop of bird chirping.</p>
 <div class="figure">
-<img alt="Projector and camera positon" src="images/sitein3d.png" title="Projector and camera position"/><span class="caption">Projector and camera positon</span>
+<img alt="Projector and camera positon" src="project_eva/images/sitein3d.png" title="Projector and camera position"/><span class="caption">Projector and camera positon</span>
 </div>
 <h4 id="camera-style-and-placement">Camera style and placement</h4>
 <p>In an ideal camera tracking scenario you have a controlled indoor environment that provides a clean top-down camera view and lets you create the lighting and background design of your choice. Our site at the planetarium is outdoors and therefore subject to all possible weather conditions. The foreground-background contrast can invert based on if snow covers the dark pavement or not. The general lighting conditions are poor, but the area can temporarily get lit up by the headlights of passing cars.</p>
@@ -133,7 +133,7 @@
 <p>After calculating our camera's bandwidth requirements (resolution 800x600px * framerate 28fps * color depth 8bit * raw compression = 13 MB/sec) we discovered that the local network wouldn't allow us to send the camera data directly to the projector site. We had to place one computer (Intel Core i5 3570K 3.40G/6M/S1155 with 8GB ram, Ubuntu 12.04 LTS) in close proximity to the camera and another computer (Intel Core i7 3770K 3.40G/8M/S1155 with 16GB ram and an Asus GTX680 graphics card, Ubuntu 12.04 LTS) next to the projector. The two sites were only a 3-4 minute footwalk apart, but required keycards and the occasional security guard to open locked doors. In hindsight we would have preferred to stick to the original plan of installing our own fiber optics link to place all computer equipment in the same location.</p>
 <p>The network being part of the city network, was heavily controlled, subject to 15min timeout internet access. A couple of request forms later we had a LAN connection between our two computers. VPN access for remote maintenance and remote updates took about 2-3 months, and we are still in negotiation to get SSH access. (Cities protect their networks).</p>
 <div class="figure">
-<img alt="Technical System Diagram" src="images/PLANETARIUM_TECH_DIAGRAM_20140322.png" title="Technical System Diagram"/><span class="caption">Technical System Diagram</span>
+<img alt="Technical System Diagram" src="project_eva/images/PLANETARIUM_TECH_DIAGRAM_20140322.png" title="Technical System Diagram"/><span class="caption">Technical System Diagram</span>
 </div>
 <h3 id="choice-of-tracking-software">Choice of tracking software</h3>
 <p>For the tracking software we found a collaborator in Emmanuel Durand, part of the research lab at <a href="http://www.sat.qc.ca/" title="Society for Arts and Technologies">Society for Arts and Technologies</a>. Emmanuel had developed <a href="https://github.com/paperManu/blobserver" title="blobserver on github">blobserver</a> - a opencv based software to implement various realtime detection algorithms - and was looking for first test projects. For the project he further developed and adapted blobserver to our needs. Blobserver is designed to take in multiple camera or video sources, detect entities and then report its findings via OSC. Live configuration of blobserver can be done through OSC as well, which allows for easy integration with any OSC-friendly software.</p>
@@ -141,7 +141,7 @@
 <p>To track participants in our dance zone we used blobserver's HOG detector (<a href="http://en.wikipedia.org/wiki/Histogram_of_oriented_gradients" title="Histogram of Oriented Gradients on wikipedia">histogram of oriented gradients</a>) which learns from a database of human shapes to detect human outlines. The HOG detection is processing optimized by limiting its areas of interest to areas with recent movements, detected by background subtraction.</p>
 <p>First tracking tests were done based on publicly available databases of human shapes [link?], but to get better results we created our own image database. We trained the system on images taken with our camera on site, providing the specific camera angle and the same specific background. Future project updates will include further training of the tracking model by including images showing people and environment in their summer-attire.</p>
 <div class="figure">
-<img alt="tracking" src="images/blobservertracking.png" title="left: camera source footage, right: blobserver tracking"/><span class="caption">tracking</span>
+<img alt="tracking" src="project_eva/images/blobservertracking.png" title="left: camera source footage, right: blobserver tracking"/><span class="caption">tracking</span>
 </div>
 <h4 id="tracking-challenges">Tracking challenges</h4>
 <p>The tracking algorithm performs great when dealing with ideal-case scenarios: maximum 3 people, moving at a distance from each other, their silhouettes standing out with high contrast from the background. But naturally, in a public setting without any sort of supervision you can't control how the audience uses your artwork. As soon as too many people enter the dance zone at once, the system can get confused by overlapping shapes. Similarly, small children, or clothes in the same brightness as the background can cause the detection algorithm to sporadically fail. Configuring the system to forgive those mistakes and let it pretend it still detects those participants, also widens the door for unintentional noise (fake positives).</p>
@@ -149,7 +149,7 @@
 <p>After learning this the hard way, we understood to lower our expectations and also figured out ways to make use of the limitations of the system. Certain instructions ask participants to change into untypical shapes (<em>"Hop from one spot to the other"</em>, <em>"Drop to the ground"</em>). Instead of training the system on the shapes of people hopping or lying on the ground, we'd use the fact that the detection system lost them, in order to trigger visual reactions.</p>
 <p>Similarly we'd detect people spinning - "<em>Take someone's hand, spin and lean out as far as possible</em>" - by counting how many times the system loses and re-detects their shapes. As we'd only look for one specific choreography in each scene, we were free to interpret the incoming tracking results as needed.</p>
 <div class="figure">
-<img alt="Drop and Spin" src="images/camview_dropandspin.png" title="Left: Drop to the ground, Right: Spin"/><span class="caption">Drop and Spin</span>
+<img alt="Drop and Spin" src="project_eva/images/camview_dropandspin.png" title="Left: Drop to the ground, Right: Spin"/><span class="caption">Drop and Spin</span>
 </div>
 <h3 id="choice-of-visualization-software">Choice of visualization software</h3>
 <p>This project provided the perfect excuse to jump back into openFrameworks. Previous company projects relying on computation mostly lived in the realm of music (max/MSP) or the web (python, node.js). On the rare occasion that visuals were involved, a too short timeline asked for a quick solution (processing). And in general we fall victim to the mistake of over-polluting the never ending prototype and simply turning it into production software.</p>
@@ -226,7 +226,7 @@
 <h4 id="perspective-transformation">Perspective transformation</h4>
 <p>The blob location data received from the tracking software is based on the angled view of the slightly off-center mounted camera. To be able to better tell the participants' position within the dance stage and their distance to each other, it was necessary to map that skewed 3d location data into a cleaner top-down perspective. Additional rotation of the now 2dimensional data enabled it to easily tell if participants aligned themselves along the axis facing the projection. The skewing and rotating of the data is achieved via <code>cv::perspectiveTransform</code>.</p>
 <div class="figure">
-<img alt="perspectiveTransform" src="images/perspective_transform.jpg" title="perspectiveTransform"/><span class="caption">perspectiveTransform</span>
+<img alt="perspectiveTransform" src="project_eva/images/perspective_transform.jpg" title="perspectiveTransform"/><span class="caption">perspectiveTransform</span>
 </div>
 <h3 id="implementing-video-content">Implementing video content</h3>
 <p>All our visual raw material exists in the form of videos (and some images). Besides written instructions that are drawn, everything on the projection is direct video display without any effects.</p>
@@ -317,7 +317,7 @@ ofAddListener( blobs[blobid].unFreeze, this, &amp;planeApp::blobUnFreeze );
 <p>For testing and tuning purposes the application is run on 2 screens: the projection and the debug screen (by using <code>window.setMultiDisplayFullscreen(true)</code>). The debug screen shows a visualization of the tracking data, the states of the blobs relevant for the current scene, two GUI panels for finetuning parameters, and a smaller preview of the projection view.</p>
 <p>When doing live testruns on site it is important to have all interaction parameters easily accessible via a GUI. Thresholds like: what velocity defines "standing still", or how exact does the alignment need to be to activate the eclipse - are easier to tune if comparison runs don't need to get interrupted by software compilation time.</p>
 <div class="figure">
-<img alt="GUI" src="images/blackGUI.png" title="GUI screen"/><span class="caption">GUI</span>
+<img alt="GUI" src="project_eva/images/blackGUI.png" title="GUI screen"/><span class="caption">GUI</span>
 </div>
 <h2 id="fail-safes-and-dirty-fixes">Fail-safes and dirty fixes</h2>
 <p>The nights before the opening were naturally used for heavy test sessions that led to some restructuring, some video updates and lots of parameters finetunings. Late night coding over remote desktop while dressing up every 5 minutes to run outside into the cold to test the changes with camera vision and projection - not the best of scenarios. Combined with the natural occurrence of bugs, suddenly the software didn't seem as stable and fast as just a few days ago. A mysterious segmentation fault error kept appearing (not often enough to be easily traceable), but other pressing issues didn't allow for proper investigations into the error's roots.</p>
@@ -347,15 +347,15 @@ ofAddListener( blobs[blobid].unFreeze, this, &amp;planeApp::blobUnFreeze );
 <p>At the point of writing this chapter <em>Choreographies for Humans and Stars</em> has been on show for 2-3 winter months. The projection on the shiny building looks very stunning and the snow landscape gives the site a beautiful lunar feeling. The project seems successful in addressing different kinds of audiences and manages to engage kids, teens and parents alike.</p>
 <p>While for most people the choreography instructions seem easy to follow, we've also observed several people mistaking the 7 concrete stones as interactive trigger elements. The confusion might be due to the delicate LEDs in the stones looking like sensors, or the descriptive text relief sculpted on top of the stones.</p>
 <div class="figure">
-<img alt="On stones" src="images/camview_onsteles.jpg" title="Participants mistaking the stones as trigger elements"/><span class="caption">On stones</span>
+<img alt="On stones" src="project_eva/images/camview_onsteles.jpg" title="Participants mistaking the stones as trigger elements"/><span class="caption">On stones</span>
 </div>
 <p>The reception from the audience is very good even though the usage count is not very high yet. Besides at events like Montreal's Nuit Blanche - luring with fires and hot beverages - the winter season with its low temperatures currently prohibits people from hanging out and letting the site become a destination in itself.</p>
 <p>For objective analysis of usage and interaction behaviours we are gathering data with a simple logging system. It will be interesting to observe the usage over time and analyse the difference between seasons and succeeding years. Besides looking at number, we are also curious to see how people (the planetarium staff, visitors and passersby) will live with the piece over time.</p>
 <div class="figure">
-<img alt="Exahle" src="images/exhaleatplane.jpg" title="Participants following the instruction to lie down, exhale and look at the sky"/><span class="caption">Exahle</span>
+<img alt="Exahle" src="project_eva/images/exhaleatplane.jpg" title="Participants following the instruction to lie down, exhale and look at the sky"/><span class="caption">Exahle</span>
 </div>
 <div class="figure">
-<img alt="On site" src="images/hopatplane.jpg" title="Project in action"/><span class="caption">On site</span>
+<img alt="On site" src="project_eva/images/hopatplane.jpg" title="Project in action"/><span class="caption">On site</span>
 </div>
 </div>
 </body>

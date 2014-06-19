@@ -26,7 +26,7 @@ code > span.al { color: #ff0000; font-weight: bold; }
 code > span.fu { color: #06287e; }
 code > span.er { color: #ff0000; font-weight: bold; }
   </style>
-<link href="../../style/style.css" rel="stylesheet" type="text/css"/>
+<link href="style/style.css" rel="stylesheet" type="text/css"/>
 <link href="http://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic|Merriweather:400,300,300italic,400italic,700,900,700italic,900italic" rel="stylesheet" type="text/css">
 </link></head>
 <body>
@@ -69,14 +69,14 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <p>what we are doing is reserving 4 bytes of those 4Gb to store an int, it doesn't really matter if we are storing ints or other types of data, the sizes will be different for and int a char, a float or a string but the type of memory is always the same.</p>
 <p>Internally the computer doens't really now about that memory area as <code>i</code> but as a memory address. A memory address is just a number that points to a specific byte in the 4Gb of memory.</p>
 <p>When we create a variable like <code>int i</code> we are telling our program to reserve 4 bytes of memory, associate the address of the first byte of those 4 to the variable name <code>i</code> and restrict the type of data that we are going to store in those 4 bytes to only ints.</p>
-<p><img height="300" src="images/int_i.svg"/></p>
+<p><img height="300" src="16_memory/images/int_i.svg"/></p>
 <p>Usually memory addresses are represented in <a href="http://en.wikipedia.org/wiki/Hexadecimal">hexadecimal</a>. In c++ you can get the memory address of a variable by using the <code>&amp;</code> operator, like:</p>
 <pre class="sourceCode cpp"><code class="sourceCode cpp">cout &lt;&lt; &amp;i &lt;&lt; endl;</code></pre>
 <p>The output of that cout is the memory address of the first byte of the variable <code>i</code> we just created.</p>
 <p>Later on, when we asign a value to that variable, what it's happening is that we are storing that value in the memory area that we've just reserved by declaring the variable, so when we do:</p>
 <pre class="sourceCode cpp"><code class="sourceCode cpp">i = <span class="dv">0</span>;</code></pre>
 <p>Our memory will look like:</p>
-<p><img height="300" src="images/int_i_equals_0.svg"/></p>
+<p><img height="300" src="16_memory/images/int_i_equals_0.svg"/></p>
 <p>The order in which the bytes that form the int are layed out in the memory depends on the architecture of our computer, you'll prpbably seen <a href="http://en.wikipedia.org/wiki/Endianness">little endian and big endian</a> mentioned sometime. Those terms refer to how the bytes of a data type are ordered in memory, if the most significative bytes come first or last. Most of the time we don't really need to know about this order but most modern computer architectures use little endian.</p>
 <p>If you've used c++ for a while you've probably had crashes in your programs because of bad memory accesses. Usually the message you'll see is something like <code>segmentation fault...</code>. What does that mean?</p>
 <p>When you create variables in a program, even in c++, you can't really access all the memory in the computer, for security reasons. Imagine you had your bank account opened in your browser, if any program could access all the memory in the computer a malign application could just access the memory of the browser and get that information or even modify it. To avoid it the operating system asigns chuncks of memory to every program. When your application starts it's asigned a <code>segment</code> of memory, later on as you create variables if there's enough memory in that <code>segment</code> your variables will be created there. When there's not more memory available in that segment the operating system asigns the application a new one and the application starts using that. If you try to access a memory address that doesn't belong to a segment asigned to your application, the operating system just kills the application to avoid possible security risks.</p>
@@ -133,13 +133,13 @@ cout &lt;&lt; a &lt;&lt; endl; <span class="co">// error a doesn't exist outside
 <pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="dt">int</span> i = <span class="dv">0</span>;
 <span class="dt">int</span> * p = &amp;i;</code></pre>
 <p>And what we get in memory is something like:</p>
-<p><img height="300" src="images/pointer.svg"/></p>
+<p><img height="300" src="16_memory/images/pointer.svg"/></p>
 <p>A pointer usually occupies 4/8 bytes (depending if we are on a 32 or 64bits application), we are representing it as 1 byte only to make things easier to understand, but as you can see it's just another variable, that instead of containing a value contains a memory address that points to a value. That's why it's called pointer.</p>
 <p>A pointer can point to heap or stack memory.</p>
 <p>Now, let's explain something that it's really important to take into account when programming in c++. As we've seen till now, when we declare a variable like:</p>
 <pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="dt">int</span> i;</code></pre>
 <p>We get a memory layout like:</p>
-<p><img height="300" src="images/int_i.svg"/></p>
+<p><img height="300" src="16_memory/images/int_i.svg"/></p>
 <p>As we see there's no value in that memory area yet. In other languages like processing doing something like:</p>
 <pre class="sourceCode java"><code class="sourceCode java"><span class="dt">int</span> i;
 <span class="fu">println</span>(i)</code></pre>
@@ -195,7 +195,7 @@ b2.pos.set(<span class="dv">30</span>,<span class="dv">30</span>);</code></pre>
 <p>In c++, instead when we do <code>b2 = b1</code> we are actually copying the values of the variables of b1 into b2 so we still have 2 different variables instead of a reference. When we modify b2, b1 stays the same.</p>
 <p>In both languages the <code>=</code> means copy the value of the right side into the variable on the left side of the <code>=</code>. The difference is that in Java an object is really a pointer to an object the contents of <code>b1</code> or <code>b2</code> are not the object itself but it's memory address, while in c++ b1 actually contains the object itself.</p>
 <p>This is more or less what memory would look like in Java and C++:</p>
-<p><img height="300" src="images/objects_java_c.svg"/></p>
+<p><img height="300" src="16_memory/images/objects_java_c.svg"/></p>
 <p>As you can see in c++ objects in memory are just all their member variables one after another. When we make an object variable equal to another, by default, c++ copies all the object to the left side of the equal operator.</p>
 <p>Now what would happen if we have a class like:</p>
 <pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="kw">class</span> Particle{
@@ -215,7 +215,7 @@ p1.pos.set(<span class="dv">20</span>,<span class="dv">20</span>);
 p1.parent = &amp;ps;
 p2 = p1;</code></pre>
 <p>Well as before c++ will copy the contents of p1 on p2, the contents of p1 are an ofVec2f which consits of 2 floats x and y and then a pointer to a ParticleSystem, and that'w what gets copied, the ParticleSystem itself won't get copied only the pointer to it, so p2 will end up having a copy of the position of p2 and a pointer to the same ParticleSystem but we'll have only 1 particle system.</p>
-<p><img height="300" src="images/object_pointers.svg"/></p>
+<p><img height="300" src="16_memory/images/object_pointers.svg"/></p>
 <p>The fact that things are copied by default and that objects can be stored in the stack as oposed to being always a pointer has certain adavantages. For example, in c++ a vector or an array of particles like the ones we've used in the last example will look like:</p>
 <pre class="sourceCode cpp"><code class="sourceCode cpp">vector&lt;Particle&gt; particles;</code></pre>
 <p>in memory all the particles will be contiguous, among other things, that makes accessing them faster than if we had pointers to a different location in memory. It also makes it easier to translate c++ vectors to openGL memory structures but that's the topic for another chapter.</p>
@@ -400,7 +400,7 @@ arr[<span class="dv">0</span>] = <span class="dv">5</span>;
 <span class="dt">int</span> a = arr[<span class="dv">25</span>];</code></pre>
 <p>most probably our application will crash if the memory address at arr + 25 is outside the memory that the operating system has asigned to our application.</p>
 <p>We've just sayd arr + 25? what does that mean? As we've seen before a variable is just some place in memmory, we can get it's memory address which is the first byte that is asigned to that variable in memory. With arrays is pretty much the same, for example since we know that an int occupies 4 bytes in memory, an array of 10 ints will occupy 40 bytes and those bytes are contiguous:</p>
-<p><img height="300" src="images/array.svg"/></p>
+<p><img height="300" src="16_memory/images/array.svg"/></p>
 <p>Remember that memory addresses are expressed as hexadecimal so 40 == 0x0028. Now to take the address of an array, as with other variable we might want to use the <code>&amp;</code> operator and indeed we can do it like:</p>
 <pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="dt">int</span> arr[<span class="dv">0</span>];
 <span class="dt">int</span> * a = &amp;arr[<span class="dv">0</span>];</code></pre>
@@ -461,10 +461,10 @@ vector&lt;<span class="dt">int</span>&gt; vecB = vec;</code></pre>
 <p>Vectors have some more features and using them properly might be tricky mostly if we want to optimize for performance or use them in multithreaded applications, but that's not the scope of this chapter, you can find some tutorials about vectors, this is an introductory one in the openFrameworks site: <a href="http://openframeworks.cc/tutorials/c++%20concepts/001_stl_vectors_basic.html">vectors basics</a> and this one explains more advanced concepts <a href="http://arturocastro.net/blog/2011/10/28/stl::vector/">std::vector</a></p>
 <h2 id="other-memory-structures-lists-and-maps">Other memory structures, lists and maps</h2>
 <p>Having objects in memory one after another is most of the time what we want, the access is really fast no matter if we want to access sequentially to each of them or randomly to anyone, since a vector is just an array internally, accesing let's say position 20 in it, just means that internally it just needs to get the memory address of the first position and add 20 to it. In soime cases though, vectors are not the most optimal memory structure. For example, if we want to frequnetly add or remove elements in the middle of the vector, and you imagine the vector as a memory strip, that means that we need to move the rest of the vector till the end one position to the right and then insert the new element in the free location. In memory there's no such thing as move, moving contiguous memory means copying it and as we've said before, copying memory is a relatively slow operation.</p>
-<p><img height="300" src="images/vector_inserting.svg"/></p>
+<p><img height="300" src="16_memory/images/vector_inserting.svg"/></p>
 <p>Sometimes, if there's not enough memory to move/copy the elements, one position to the right, the vector will need to copy the whole thing to a new memory location. If we are working with thousands of elements and doing this very frequently, like for example every frame, this can really slow things down a lot.</p>
 <p>To solve that, there's other memory structures like for example lists. In a list, memory, is not contiguous but instead each element has a pointer to the next and previous element so inserting one element just means changing those pointers to point to the newly added element. In a list we never need to move elements around but it's main disadvantage is that not being the elements contiguous in memory it's access can be slightly slower than a vector, also that we can't use it in certain cases like for example to upload data to the graphics card which always wants contiguos memory.</p>
-<p><img height="300" src="images/list.svg"/></p>
+<p><img height="300" src="16_memory/images/list.svg"/></p>
 <p>Another problem of lists is that trying to access an element in the middle of the list (what is called random access) is slow since we always have to go through all the list till we arrive to the desired element. Lists are used then, when we seldom need to access randomly to a position of it and we need to add or remove elements in the middle frequently. For the specifics of the syntax of a list you can check the <a href="http://www.cplusplus.com/reference/list/list/">c++ documentation on lists</a></p>
 <p>There's several memory structures in the c++ standard library or other c++ libraries, apart from vectors and lists we are only going to see briefly maps.</p>
 <p>Sometimes, we don't want to access things by their position or have an ordered list of elements but instead have something like an index or dictionary of elements that we can access by some key, that's what a map is. In a map we can store pairs of (key,value) and look for a value by it's key. For example let's say we have a collection of objects which have a name, if that name is unique for all the objects, we can store them in a map to be able to look for them by their name:</p>
@@ -582,7 +582,7 @@ SomeObject object;
 }</code></pre>
 <p>Is perfectly ok. The way a shared_ptr works is by keeping a count of how many references there are to it, whenever we make a copy of it, it increases that counter by one, whenever a reference is destroyed it decreases that reference by one. When the reference cound arrives to 0 it frees the allocated memory. That reference counting is done atomically, which means that we can share a shared_ptr across threads without having problems with the count. That doesn't mean that we can access the contained data safely in a multithreaded application, just that the reference count won't get wrong if we pass a shared_ptr accross different threads.</p>
 <p><em style="font-size:0.8em; text-align:center; display:block;">This work is licensed under a <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.en_US" rel="license">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.</em></p>
-<p><a href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.en_US" rel="license"><img alt="Creative Commons License" src="http://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" style="border-width:0"/></a></p>
+<p><a href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.en_US" rel="license"><img alt="Creative Commons License" src="16_memory/http://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" style="border-width:0"/></a></p>
 </div>
 </body>
 </html>
