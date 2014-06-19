@@ -18,7 +18,6 @@
 21_advanced_graphics
 22_network
 math_chapters_unnumbered
-out.txt
 project_elliot
 project_eva
 project_joel
