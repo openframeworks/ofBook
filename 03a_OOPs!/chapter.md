@@ -77,16 +77,15 @@ Folllow the code below and type into your own ofBall.h file, please note the com
 	#endif 
 
 
-We have declared the Ball class header file (the list of ingredients) and now lets get to the cooking part **[KL: I wouldn't use an arrow symbol within this text.]** **[RX: don;t understand what you mean?]** to see what these ingredients can do!
+We have declared the Ball class header file (the list of ingredients) and now lets get to the cooking part **[KL: I wouldn't use an arrow symbol within this text.]** **[RX: KL: do you mean excluding the point exmples to keep it simple?]** to see what these ingredients can do!
 Please notice the '#include' tag, this is a way to tell the compiler which file to include for each implementation file. When the program is compiled these '#include' tags will be replaced by the original file they're referring to. 
 The 'if statement' (#ifndef) is a way to prevent the repetition of header files which could easily occur, by using this expression it helps the compiler to only include the file once and avoid repetition. Don't worry about this now, we'll talk about it later on!
 
 
 Here's how you can write the class *.cpp file, the implementation file:
 
-**[KL: did the previous chapter talk about how to create a new class in oF? If so, no worries, but if it didn't, it's a good idea to address how to do that, and that the example below is ofBall.cpp.]**
-
-**[JTN: yes it did but only in the unabridged version ]**
+**[KL: did the previous chapter talk about how to create a new class in oF? If so, no worries, but if it didn't, it's a good idea to address how to do that, and that the example below is ofBall.cpp. - see below]**
+**[JTN: yes it did but only in the unabridged version - see below ]**
 **[RX: added xcode instructions below, anyone up to help with other IDEs? ]**
 
 	#include "ofBall.h"
@@ -129,6 +128,9 @@ Here's how you can write the class *.cpp file, the implementation file:
 		ofSetColor(color);
 		ofCircle(x, y, dim);
 	} 
+	
+Now, this is such a simple program that we could have wirtten it inside our OfApp(.h and .cpp) files and it wouldn;t be senseless to do if we didn;t want to re-use this code. In there lyes one of the advantages of Object Oriented Programming: re-use: Imagine we want to create thousands of these balls and how easily the ocde could get messy and extended, by creating our own class we can later re-create as many objects as need from it and just call the appropriate methods when needed keeping our code clean and eficient. In a more pragamatic example think of creating a class for each of your UI elements (button, slider, etc) and hopw easy it would be to them deploy them in your program but also to include and re-use them in future programs.
+
 **[KL: Explain exactly why we are creating this class outside of ofApp. This and the explanation below seem kind of rushed and OOP can benefit by using some real life analogies to demonstrate class relationships.]**
 
 ##• 4 - make an Object from your Class 
