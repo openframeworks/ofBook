@@ -1119,7 +1119,7 @@ We've reached the end of the chapter but not the end of the journey. A few great
 [Different Games](http://www.differentgames.org/)
 
 ###About us
-This chapter was written by founding members of the [Code Liberation Foundation](http://www.codeliberation.org), an organization that teaches women to program games for free. Featuring game art by Loren Bednar. We build community, create a safe spaces for women who want to learn to program in a non-male dominated setting and generally rock. 
+This chapter was written by two members of the [Code Liberation Foundation](http://www.codeliberation.org), [Phoenix Perry](http://www.phoenixperry.com) and [Jane Friedhoff](janefriedhoff.com). This organization teaches women to program games for free. Featuring game art by Loren Bednar. We build community, create a safe spaces for women who want to learn to program in a non-male dominated setting and generally rock. 
  
 ![](clfTwitter.png)
 
