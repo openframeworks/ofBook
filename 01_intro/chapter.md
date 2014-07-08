@@ -79,7 +79,7 @@ In OF (which is C++) you'll see .cpp and .h files (they are sometimes labeled as
 
 ## setup/update/draw
 
-OF runs in a kind of game loop model - where we get you a context to draw into and try to run as fast as we can and repetedly draw.  There are 3 main functions that you'll see a majority of the code in (as well as the even functions like mousePressed, keyPressed, etc) 
+OF runs in a kind of game loop model - where we get you a context to draw into and try to run as fast as we can and repetedly draw.  There are 3 main functions that you'll see a majority of the code in (as well as the event functions like mousePressed, keyPressed, etc) 
 
 * setup()
 * update()

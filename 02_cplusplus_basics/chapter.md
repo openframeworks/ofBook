@@ -571,11 +571,52 @@ int main(){
 
 For arithmetic completeness, I should mention that the subtractive *decrementing* operator (counter--) also exists. Also, as you might have guessed by now, if one can say `counter + 1`, then a C compiler would also recognize the other classic arithmetic like `counter - 3` (subtraction), `counter * 2` (asterisk is multiplication), `counter / 2` (division), and overriding the order of operations by using parentheses, such as `(counter + 1) / 2` evaluating to a different result than `counter + 1 / 2`. Putting a negative sign before a variable will also do the right thing and negate it, as if it were being subtracted from zero. C extends this basic palette of maths operators with boolean logic and bitwise manipulation; I will introduce them in Variables part 2.
 
-There are a few more essentials to learn about variables, but we're going to take what we've learned so far and run with it in the name of fun. In the meantime, give yourself another pat on the back for making it this far! You learned what variables are, and how to perform basic arithmetic on them. You also learned what the ++ operator does when placed before and after a variable name.
+There are a few more essentials to learn about variables,
+but we're going to take what we've learned so far and run
+with it in the name of fun. In the meantime, give yourself another pat on the back
+for making it this far! You learned what variables are, and how to perform basic
+arithmetic on them. You also learned what the ++ operator does when placed before
+and after a variable name.
 
 The C++ language gets its name from being the C language plus one.
 
 ##Conclusion
 
-Congratulations on getting through the first few pages of this introduction to C++. With these basic concepts, you should be able to explore plenty far on your own, but I will admit that it is not enough to prepare you to comprehend the code examples in the rest of ofBook. Because of limited paper resources, what you've seen here is a "teaser" chapter for a necessarily lengthier introduction to the C++ language. That version of this chapter got so big that it is now its own book — available unabridged on the web, and possibly in the future as its own companion book alongside ofBook. Teaching the C++ language to non-programmers is indeed a large subject all itself, which could not be effectively condensed to 35 pages, let alone the 100+ page book it grew to be. If you're serious about getting into OpenFrameworks, I highly recommend you stop and read the unabridged version of this chapter before continuing in ofBook, so that you may understand what you are reading. You will find those materials at https://github.com/openframeworks/ofBook/tree/master/02_cplusplus_basics/unabridged.md
+Congratulations on getting through the first few pages of this introduction to C++.
+With these basic concepts, you should be able to explore plenty far on your own,
+but I will admit that it is not enough to prepare you to comprehend the code examples
+in the rest of ofBook. Because of limited paper resources, what you've seen here is a
+"teaser" chapter for a necessarily lengthier introduction to the C++ language.
+That version of this chapter got so big that it is now its own book —
+available unabridged on the web, and possibly in the future as its own companion
+book alongside ofBook. Teaching the C++ language to non-programmers is indeed a large
+subject all itself, which could not be effectively condensed to 35 pages,
+let alone the 100+ page book it grew to be. If you're serious about getting into
+OpenFrameworks, I highly recommend you stop and read the unabridged version of this
+chapter before continuing in ofBook, so that you may understand what you are reading.
+You will find those materials at
+https://github.com/openframeworks/ofBook/tree/master/02_cplusplus_basics/unabridged.md
+
+##PS.
+
+Stopping the chapter here is by no means intended to separate what is important to
+learn about C++ from what is not important. We have simply run out of paper. In lieu of
+how important the rest of this intro to C++ is, and based on ofZach's teaching experience,
+here is more of what you'll find in the unabridged version:
+
++ Variables exist for different periods of time - some for a long time,
+and some for a small blip in your program's lifecycle. This subject of *scope*
+is covered in the unabridged version of this book, entitled *Variables (part 2)*.
+
++ Variables have a *data type*. For example, one holds a number while another holds some text.
+More about that in *Fundamental Types*.
+
++ It's important to reiterate that unlike Processing, variables do not necessarily
+start with a zero value. You must initialize them with your desired value, and otherwise
+there's no telling what will be waiting there for you. You'll find additional discussion of this
+phenomenon in the introduction to arrays.
+
+> The best way to predict your future is to create it.
+>
+> **--Abraham Lincoln**
 

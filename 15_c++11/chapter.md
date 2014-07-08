@@ -61,7 +61,7 @@ vector<shared_ptr<ofThread>>::iterator firstThreadIterator = this->myVectorOfThr
 auto firstThreadIterator = this->myVectorOfThreads.begin();
 ```
 
-Now this makes the code more readable (by decent humans), but also you could take advantage of `auto` in other ways, for example you could change makes changes in the h file, and the cpp file code would automatically correct itself. For example in the h you might change the `vector` to a `list`, or change to `shared_ptr<ofThread>` to `ofThread *`. These changes would perpetuate automatically to wherever an `auto` is listening. Nifty huh?
+Now this makes the code more readable (by decent humans), but also you could take advantage of `auto` in other ways, for example you could make changes things in the h file, and the cpp file code would automatically correct itself. For example in the h you might change the `vector` to a `list`, or change `shared_ptr<ofThread>` to `ofThread *`. These changes would perpetuate automatically to wherever an `auto` is listening out in the code. Nifty huh?
 
 ### Watch out for this
 #### `auto` is not a new type
@@ -69,10 +69,10 @@ Note that the following doesn't work:
 
 ```cpp
 auto myRectangle = ofGetCurrentViewport();
-myRectangle = "look mum! i'm a string!!"; // error!
+myRectangle = "look mum! i'm a string!!"; // compiler error!
 ```
 
-Remember that `auto` isn't a type itself, it's not a magic container that can take any kind of thing (such as `var` in C# or another dynamic typed language), it is simply a keyword which gets substituted at compile time, you can imagine that the compiler just types in for you whatever makes sense to type on that line where it is. In this case, it's an `ofRectangle`, and you can't assign a `string` to an `ofRectangle`.
+Remember that `auto` isn't a type itself, it's not a magic container that can take any kind of thing (such as `var` in C# or another dynamic typed language), it is simply a keyword which gets substituted at compile time, you can imagine that the compiler just writes in for you whatever makes sense on that line where it is. In this case, the first line makes sure that `myRectangle` is an `ofRectangle`, and you can't assign a `string` to an `ofRectangle`.
 
 #### You can't use `auto` in function arguments
 Since the `auto` must be implicitly defined by the line of code where it is used, and that this decision is made at compile time, it can not be a function argument, let's see what that means..
@@ -223,6 +223,7 @@ public:
 ```
 
 This tells the compiler that I'm intending to override a `virtual` function. In this case, the compiler will tell me that no `virtual` function called `mapTheGreekColums` exists, and that therefore my `override` is faulty. So following the compiler's complaint I can go in and fix the spelling mistake. Then I can get on with making my Projection Mappening on the town library facade.
+
 
 ### Summary
 * Use the keyword `override` at the end of function definitions in a derived class' h file when you are intending to override a `virtual` function in the base `class`
