@@ -4,19 +4,21 @@
 **NOTE: This chapter is formatted with MD and LaTeX. Github won't render it properly. Try [stackedit.io](http://stackedit.io) instead**
 
 ## How Artists Approach Math
-Math is a curious thing in arts. Many artists reference it directly as inspiration for their work, from Leonardo Da Vinci's _Vitruvian Man_, through Escher's different views of fields of numbers, to the tedious namedrop of "The Golden Ratio" for every concept product made in a design school since the iPhone (if you think that's a neat idea, please read this chapter more than twice).  **[mh: while this is humorous, it's also unfriendly]**
+Math is a curious thing in arts. Many artists reference it directly as inspiration for their work, from Leonardo Da Vinci's _Vitruvian Man_, through Escher's different views of fields of numbers, and many other highlighted, topical representations in art. It is otherwise known as a tool for bringing order into most arts: musicians religiously follow Chromatic Circles (which are just cyclic groups of order 12, $\mathbb{Z}/12\mathbb{Z}$), Architects create rhythms in harmonic series, $\frac{1}{2^n}$ or $\frac{1}{3^n}$, and product designers train their loved ones to wake them up in the middle of the night and ask them questions about The Golden Ratio, $\frac{1 + \sqrt{5}}{2}$ (Seriously guys, stop it). But just as it is important for artists to appreciate the order that Mathematics can bring, it is significantly more important to observe the chaos Mathematics contains.
 
-Computers allowed simulation to happen, which means people could draw more than (and faster than) they could think. When Benoît Mandelbrot worked for IBM, his attempt at printing the density map of a self-repeating sequence of complex numbers – something that would have taken forever for a human hand and head – resulted in a scientific measurement being reappropriated for its aesthetic value, in what we now call [Fractal Art](https://en.wikipedia.org/wiki/Fractal_art), a family that also grew to include tree-like structures generated from [L-System](http://en.wikipedia.org/wiki/L-system) grammars and three-dimensional extensions with lovely names such as "Mandelbulb". It's acceptable to call these things _Art_, because the thought that mathematicians had done this deliberately in their work would simply confuse the audience.
 
-Thing is, we know better than all of that. Math is everywhere in Art, just like Art is everywhere in Math. 
-When using a brush or pen or chisel, we're taking advantage of the hard work that nature is doing, calculating physics, rendering things perfectly for us, all in real time. ~~Our brains apply direct aesthetic knowledge to a work, and we're done. WYSIWYG.~~ **[mh: these two sentences could be omitted - first one is a bit indirect for saying "we manipulate visuals by hand," and the second, not everyone will know wysiwyg]** In the computer world, none of that is true. Things like L-Systems had to be created for us to use, because our hands can't reach into the computer. If you're doing any bit of digital art, the math is happening somewhere, whether you control it or not. This chapter will try to explain some of the basics of the black arts of graphics programming. I wish I could make this chapter 5 times as long and include the really neat stuff, but that would make this book too heavy to put in a rucksack.
+Randomness, events in large scales and unpredictabilty were Mathematical concepts that were inaccessible for rapid exploration until very recently. The concept of _simulation_ – letting a thing happen, bound to some conditions, on a massive scale – is something that computers enabled humans to explore. When Benoît Mandelbrot worked for IBM, his attempt at printing the density map of a self-repeating sequence of complex numbers – something that would have taken forever for a human hand and head – resulted in a scientific measurement being reappropriated for its aesthetic value, in what we now call [Fractal Art](https://en.wikipedia.org/wiki/Fractal_art). The same conseqeunce, that people could create a drawing faster than they could think, enabled an entire family of simulation arts, like the tree-like structures generated from [L-Systems](http://en.wikipedia.org/wiki/L-system), concieved by Aristid Lindenmayer, and many, many flavors of computer-generated biomimetic artifacts. It's acceptable to call these things _Art_, because the thought that mathematicians had done this deliberately in their work would simply confuse the audience.
+
+
+But just by picking up this book, any reader already knows better than to create this distinction. Math is everywhere in Art, just like Art is everywhere in Math. 
+When using a brush or pen or chisel, we're taking advantage of the hard work that nature is doing, calculating physics, rendering things perfectly for us, all in real time. In the computer world, none of that is true. Things like L-Systems had to be created for us to use, because our hands can't reach into the computer. If you're doing any bit of digital art, the math is happening somewhere, whether you control it or not. This chapter will try to expose basic inner-workings of the black arts of graphics programming. I wish I could make this chapter 5 times as long and include the really neat stuff, but that would make this book too heavy to put in a rucksack.
 
 ## About this Chapter
 A Math chapter for a book about graphics will always miss out on many ideas. In fact, there are entire books covering "math for graphics", mostly consisting of references to other books, focusing on a specific topic (like Linear Algebra, Multivariable Calculus, Differential Geometry, and many other words mysteriously connected to other words). This chapter must therefore be very concise about ideas. All topics here are explained in a friendly way, but please - never fear googling a thing for which you need better examples.
 
-This chapter will be divided into _'numbers of D's'_ : we'll start from one dimension, and slowly explore the possibilities of using scale and change in different dimensions. **[mh: this sentence might be a little unclear for newbies, as in why do I care about scale and change.]** Depending on how you choose to read it, this section contains hundreds of Mathematicians' lifetime research, or in other words, several classes of college math, so it's worth bookmarking.
+This chapter will be divided into _'numbers of D's'_ : we'll start from one dimension, and slowly explore the possibilities enabled by the amount of dimensions we're operating in. We'll explore concepts of _scale_ and _change_ and learn how much can be described just with these two words. Depending on how you choose to read it, this chapter contains hundreds years of Mathematical research, or in other words, several classes of college math, so it's worth bookmarking.
 
-When bringing math to innocent readers, most programming books will try to explain the idea, not necessarily the exact implementation. This book is no different. This chapter contains detailed breakdowns of concepts, but if you want to find out what's going on under the hood, there's no alternative to reading the source code - in fact, since all the math here is only a few lines long - it's actually _encouraged_ to have a look at the source.
+**Note:** When bringing math to innocent readers, most programming books will try to explain the idea, not necessarily the exact implementation. This book is no different. This chapter contains detailed breakdowns of concepts, but if you want to find out what's going on under the hood, there's no alternative to reading the source code - in fact, since all the math here is only a few lines long - it's actually _encouraged_ to have a look at the source.
 
 ## One Dimension: Using Change
 
@@ -118,21 +120,9 @@ Returns the sign of a number, as `-1.0` or `1.0`. Simple, eh?
 
 **[mh: I recognize that you are trying to be general here by talking about change, but at least throwing the word motion around as a type of change would give readers something upon which to anchor the concept.]**
 
-So far we've discussed change that is bound to a line. But in Real Life™ there's more than just straight lines. 
+So far we've discussed change that is bound to a line. But in Real Life™ there's more than just straight lines: For one, we can't even describe periodic events with straight lines If we need to describe the vibration of a guitar string [footnote: this example sounds kinda old. Of course I meant "the wobble of a dubstep instrument"] or the changing speed of a biliiard ball after impact, we're going to need to use higher orders of change. 
 
-The concept of change has many different applications in graphics and animation. For example, if we have a car moving at a steady pace along a straight road, we can describe its position using a `lerp` between the beginning and the end of the road. We also describe the car's speed that way, by saying it moves this (some number) much in that (some vector) direction:
-
-```cpp
-Vector3 beginningOfRoad;
-Vector3 endOfRoad;
-float amountOfTravel;
-//...
-ofLerp(beginningOfRoad, endOfRoad, amountOfTravel);
-```
-**//TODO: finish this**
-
-
-In this discussion, we're about to see how we can describe higher orders of complexity, via a cunning use of `lerp`s. Keep in mind that some of the code here is conceptual, not necessarily efficient.
+In this discussion, we're about to see how we can describe higher orders of complexity, via a cunning use of `lerp`s. You will see that some types of change can be reproduced this way (like that billiard ball) - while other types of motion, like harmonic motion, will need a separate mechanism. Keep in mind that some of the code here is conceptual, not necessarily efficient.
 
 #### Quadratic and Cubic Change Rates
 Consider this function:
@@ -232,6 +222,10 @@ So far we've learned how to use a bunch of control points to create an interesti
 Apparently, it's not that different from running it through space. By looking at the $x$ dimension of this graph as time and the $y$ dimension of this graph as a value for our creation, we can see some patterns of animation forming. The trick is simple: think of all of the values that need to change in your animation, and control them using functions. 
 
 Tweening is not yet a standard part of the openFrameworks library. In the meantime, some nice utility functions for tweening are available in the ofxTween library.
+
+#### Other Types of Change
+This chapter provides examples of rates of change achievable by using linear change in succession. But there's so much more to rates of change that can't fit here - for example, trigonometric functions (sines and cosines) can only be approximated using polynomials, but in order to actually describe them, we need to get into a discussion about _frequency_. The topic of _change_ is so broad that there's not a single branch of mathematics that deals with it – it encompases most of those I can think of. In the Sound chapter, you'll learn a litte more about dealing with frequency. Until then, you've already acquired a toolset that allows you to do a lot.
+
 
 ## More Dimensions: Some Linear Algebra
 Until now, we explored several ideas on how to change what's going on the number line. That's cool, but we want to know how to do graphics, and graphics has more than one dimension. Our ancient Mathematician ancestors (Just kidding, most important Mathematicians die before 30. Not kidding) also faced this problem when trying to address the space of shapes and structures, and invented some complex machinery to do so. The fancy name for this machinery is _Linear Algebra_, which is exactly what it sounds like: using algebraic operations (add and multiply, mostly), in order to control many lines. 
@@ -503,9 +497,22 @@ So for any matrix $M$, $$MI = IM = M$$.
 **Note:** You may have noticed that we're very careful right now with the order of multiplications, like when we took extra care to describe that $MI = IM$. There's a good reason for that, and you'll discover it in a few pages.
 
 ##### Scale
-You might remember that when scaling a vector (i.e point in space and/or velocity and/or force and/or brightness value for a colour, etc), we may choose to scale it uniformly by scalar multiplication **/\* TODO:Example \*/** or, because of a weird language design choice, most graphics applications will allow you to scale non-uniformly on a per-component basis: **/\* TODO:Example \*/**
+You might remember that when scaling a vector (i.e point in space and/or velocity and/or force and/or brightness value for a colour, etc), we may choose to scale it uniformly by scalar multiplication:
 
-To put an end to this insanity, scaling in matrix multiplication is well-defined (_sidenote_: well defined means blah blah) in openFrameworks (also in math!). It goes like this: The matrix $S$ that scales $\left(x,y,z\right)^{T}$ to $\left(ax,by,cz\right)^{T}$ is: $$S\cdot \left[\begin{array}{c}
+```cpp
+ofVec3f v(1, 2, 3);
+cout << ofToSting(v * 5) << endl; //prints (5, 10, 15)
+```
+
+or, because of a weird language design choice, most graphics applications will allow you to scale non-uniformly on a per-component basis: 
+
+```cpp
+ofVec3f v1(1, 2, 3);
+ofVec3f v2(10, 100, 1000);
+cout << ofToString(v1 * v2) << endl //prints (10, 200, 3000)
+```
+
+To put an end to this insanity, scaling in matrix multiplication is well-defined [footnote: "well-defined" is not just a compliment, it's a Mathematical term that essentially means that if you follow the rules, the computation will never _crash_, so to speak – it will never produce results outside the form you defined. For example, dividing by zero is undefined, therefore _division is not well defined on a domain of real numbers that contains zero_. Somebody closed that loop and defined division by zero to be exactly $\infty$, so for any range that contains infinity, _division is well defined_. You'll find the same issue in programming languages: some operations produce incompatible results. Many criticize C++ for allowing that to happen too often, but other languages (such as Haskell, Erlang and OCaml) are more strict about only using well-defined operations, so the compiler is able to catch your errors, not the end user.] in openFrameworks (also in math!). It goes like this: The matrix $S$ that scales $\left(x,y,z\right)^{T}$ to $\left(ax,by,cz\right)^{T}$ is: $$S\cdot \left[\begin{array}{c}
 x\\
 y\\
 z
@@ -538,8 +545,6 @@ M_{2}\cdot v\\
 M_{3}\cdot v
 \end{array}\end{array}\right]
 $$
-
-**//TODO: Improve this**
 
 So, in order to get a multiplication through that only affects $x$, we tune the vector (upper row of the matrix) $M_{1}$ to be zero anywhere but the interface with $x$: $$M_{1} = \left(a,0,0\right)$$ so the entire calculation would be:
 
@@ -593,17 +598,21 @@ Pretty neat, right? Try to remember this trick, as we're going to use it quite a
 
  
 ##### Rotation matrices
-We now see that any operation in Matrixland can really be expressed in a collection of vectors. We also know that dot products of vectors express the angle between two vectors times their magnitude. A slightly surprising fact is that those two properties are enough to describe any rotation.
+We now see that any operation in Matrixland can really be expressed in a collection of vectors. We also know that dot products of vectors express _the angle between two vectors times their magnitude_. A slightly surprising fact is that those two properties are enough to describe any rotation.
 
-In order to comprehend this last statement, let's first explain how rotating one vector works. Let's suppose for now our vector has length 1 (it's generally a good thing to start from, as it is then neutral to scaling), and that we would like to rotate the vector by an angle $\theta$, starting from a point on the x axis. The rotated vector would be $$v_{\theta}=\left[\begin{array}{c}
+In order to comprehend this last statement, let's first explain how rotating one vector works. Let's take the vector $$v_0 = \left[\begin{array}{c}
+1\\
+0
+\end{array}\right]$$
+I picked a vector that coincides entirely with the $x$ axis. Now, suppose that we would like to rotate the vector by an angle $\theta$, starting from the origin. Using our knowledge about [the unit circle](http://en.wikipedia.org/wiki/Unit_circle), we can describe the rotated vector as $$v_{\theta}=\left[\begin{array}{c}
 \cos\theta\\
 \sin\theta
 \end{array}\right]$$
 
-Now we found a target for the $x$ axis to go to. In order to find a new home for the old $y$ axis, we only need to know the angle between them. Luckily, we all know that it's 90 degrees, or in radians: $\frac{\pi}{2}$. The new home will then have to be at angle $\theta + \frac{\pi}{2}$ from the x axis (angle 0):
+Now we found a target for the $x$ axis to go to. Using the same rotation, let's try to find where the old $y$ axis (the vector $u_0 = \left[\begin{array}{c} 0\\1\end{array}\right]$), we only need to know the angle between them. Luckily, we all know that it's 90 degrees, or in radians: $\frac{\pi}{2}$. The new home will then have to be at angle $\theta + \frac{\pi}{2}$ from the x axis (angle 0):
 
 $$
-y_{\theta}=\left[\begin{array}{c}
+u_{\theta}=\left[\begin{array}{c}
 \cos\left(\theta+\frac{\pi}{2}\right)\\
 \sin\left(\theta+\frac{\pi}{2}\right)
 \end{array}\right] = \left[\begin{array}{c}
@@ -629,7 +638,7 @@ We now have all of the information we need to build a matrix that moves the vect
 \cos\theta
 \end{array}\right]\right\}$ :
 
-**//TODO: Write a 2D rotation matrix**
+$$R\left(\theta\right)= \begin{bmatrix} \cos \theta & -\sin \theta \\ \sin \theta & \cos \theta \end{bmatrix}$$
 
 Now, hold on. Check out what we did here: we placed the targets for the source vectors as _columns_ in the matrix, and then we took the resulting _rows_ of the matrix to do the rotation. Why did we do that? 
 
@@ -833,7 +842,7 @@ cout << ofToString(myRotatedVector) << endl;
 ```
 
 ###### Ok, Now What?
-This chapter is done. It's just the tip of the iceberg in what math can do for graphics. 
+This chapter is just the tip of the iceberg in what math can do for graphics. 
 
 In the 'Advanced Graphics' chapter you'll learn about two similar matrices: 
 * The _View_ matrix tramsforms the result of the _Model_ matrix to simulate where our camera is supposed to be at.
