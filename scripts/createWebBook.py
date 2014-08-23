@@ -73,9 +73,11 @@ for chapter in chapters:
 	sourceChapterPath = os.path.join(sourceDirectoryPath, "chapter.md")
 	sourceImagesPath = os.path.join(sourceDirectoryPath, "images")
 
-	destDirectoryPath = os.path.join("..", "output", "chapters", chapter)
+	destDirectoryPath = os.path.join("..", "output", "images", chapter)
 	destChapterPath = os.path.join("..", "output", "chapters", chapter+".html")
 	destImagesPath = os.path.join(destDirectoryPath, "images")
+
+	internalImagesPath = os.path.join("..", "images", chapter)
 
 	# I've remove the TOC from pandoc, will do it below...
 
@@ -85,6 +87,8 @@ for chapter in chapters:
 					"--include-in-header=createWebBookTemplate/IncludeInHeader.html",
 					"--include-before-body=createWebBookTemplate/IncludeBeforeBody.html",
 					"--include-after-body=createWebBookTemplate/IncludeAfterBody.html"])
+
+	print destImagesPath
 
 	if os.path.exists(sourceImagesPath):
 		copytree(sourceImagesPath, destImagesPath)
@@ -126,7 +130,8 @@ for chapter in chapters:
 		# but image references in the html are to ./images/.  Modify the image tags:
 		imgTags = soup.find_all("img")
 		for imgTag in imgTags:
-			imgTag["src"] = chapter + "/" + imgTag["src"]
+			imgTag["src"] = internalImagesPath + "/" + imgTag["src"]
+			
 
 		html = str(soup)
 		with open(destChapterPath, "wb") as file:
