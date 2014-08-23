@@ -62,6 +62,10 @@ def wrap(to_wrap, wrap_in):
 chapters = open("../chapters/order.txt").read().splitlines()
 
 
+if not os.path.exists("../output/chapters"):
+    os.makedirs("../output/chapters")
+
+
 copytree("../static/style", "../output/style")
 copytree("../static/javascript", "../output/javascript")
 
