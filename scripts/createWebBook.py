@@ -135,7 +135,11 @@ for chapter in chapters:
 		imgTags = soup.find_all("img")
 		for imgTag in imgTags:
 			imgTag["src"] = internalImagesPath + "/" + imgTag["src"]
-			
+		
+		# Make all hyperlinks in the chapter target a new window/tab
+		hyperlinkTags = soup.find_all("a")
+		for hyperlinkTag in hyperlinkTags:
+			hyperlinkTag["target"]= "_blank"
 
 		html = str(soup)
 		with open(destChapterPath, "wb") as file:
