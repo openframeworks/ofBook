@@ -4,13 +4,10 @@ setup_and_project_structure
 OOPs!
 animation
 intro_to_graphics
-image_processing_computer_vision
 data_vis
-game_design
 hardware
 sound
 ios
-arm_linux
 c++11
 memory
 threads
@@ -22,4 +19,3 @@ project_elliot
 project_eva
 project_joel
 project_memo
-installation_up_4evr
