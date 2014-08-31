@@ -324,7 +324,7 @@ Now that we have made our initial commit, we can make our first customizations t
 
 OK, we have a clean slate now, so let's start playing around with our OF project.
 A programming tutorial wouldn't be complete without saying hello to the world, so let's do that:
-Open `ofApp.cpp`, and in the implementation of `void ofApp::setup()`, add an appropriate message, e.g. `cout << "Hello world!";`, and save the file.
+Open `ofApp.cpp`, and in the implementation of `void ofApp::setup()`, add an appropriate message, e.g. `cout << "Hello world";`, and save the file.
 
 We have just made a modification to a file that Git is tracking, so it should pick up on this, right? Let's check, using `git status` (you hopefully already guessed that part):
 
@@ -450,7 +450,7 @@ There is a shorter way to achieve both operations in one, using `git checkout -b
     * celebration
       master
 
-To celebrate, let's add a second message after the "Hello World", e.g. `cout << "Yeah, it works!";`.
+To celebrate, let's add a second message after the "Hello World", e.g. `cout << "Yeah, it works";`.
 Let's confirm that Git has picked this up, using `git diff` as before:
 
     $ git diff
