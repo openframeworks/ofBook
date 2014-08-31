@@ -4,6 +4,7 @@ ofBook.tex
 ofBook.pdf
 /images
 /chapters/*/chapter_modified_for_print.md
+/scripts/ofBook.*
 
 web/_site
 *.orig

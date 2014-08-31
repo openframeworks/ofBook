@@ -63,9 +63,11 @@ with open(chapterOrderPath) as fh:
 
 # Set up the appropriate options for the pandoc command
 inputOptions = chapterPaths
-generalOptions = ["-N", "--smart", "--toc", "--toc-depth=4", "-s", "-p"]
-latexOptions = ["--template=ofBookTemplate.tex", "--latex-engine=xelatex", "-V documentclass=scrbook",
-				"-V papersize=a4", "--listings", "-V geometry:margin=1in", "-V links-as-notes"] 
+generalOptions = ["-N", "--smart", "--toc", "--toc-depth=4", "--standalone", "--preserve-tabs"]
+latexOptions = ["--template=ofBookTemplate.tex", "--latex-engine=xelatex", "--variable=documentclass:scrbook",
+				"--variable=papersize:a4", "--listings", "--variable=links-as-notes",
+				"--variable=geometry:inner=2in", "--variable=geometry:outer=1in", "--variable=geometry:margin=1.5in"]
+				# Order of margins matters here - pandoc processes these in reverse order
 outputOptions = ["--output={0}".format(pdfBookPath)]
 pandocCommand = ["pandoc"] + outputOptions + inputOptions + generalOptions + latexOptions
 
@@ -77,9 +79,21 @@ print "Using the following flags:"
 for flag in generalOptions+latexOptions:
 	print "\t{0}".format(flag)
 
+# For debugging purposes, it's a good idea to generate the .tex.  Errors
+# printed out through pandoc aren't as useful as those printed
+# directly from trying to build a PDF in TeXworks.
+texBookPath = "ofBook.tex"
+texOutputOptions = ["--output={0}".format(texBookPath)]
+texPandocCommand = ["pandoc"] + texOutputOptions + inputOptions + generalOptions + latexOptions
+returnCode = subprocess.call(texPandocCommand)
+if returnCode == 0: 
+	print "Successful building of {0}".format(texBookPath)
+else:
+	print "Error in building of {0}".format(texBookPath)
+
 # Call pandoc
 returnCode = subprocess.call(pandocCommand)
 if returnCode == 0: 
 	print "Successful building of {0}".format(pdfBookPath)
 else:
-	print "Error in building"
+	print "Error in building of {0}".format(pdfBookPath)
