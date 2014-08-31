@@ -3,6 +3,7 @@ ofBook.html
 ofBook.tex
 ofBook.pdf
 /images
+/chapters/*/chapter_modified_for_print.md
 
 web/_site
 *.orig
