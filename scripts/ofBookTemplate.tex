@@ -13,6 +13,8 @@ $if(euro)$
 $endif$
 \else % if luatex or xelatex
   \ifxetex
+    \usepackage{mathspec}
+    \usepackage{xltxtra,xunicode}
     \usepackage{fontspec}
     \setmainfont [Path=../static/style/fonts/ttf/, ItalicFont=FiraSans-LightItalic.ttf, BoldFont=FiraSans-Bold.ttf, BoldItalicFont=FiraSans-BoldItalic.ttf]{FiraSans-Light.ttf}
     \setsansfont [Path=../static/style/fonts/ttf/, ItalicFont=FiraSans-LightItalic.ttf, BoldFont=FiraSans-Bold.ttf, BoldItalicFont=FiraSans-BoldItalic.ttf]{FiraSans-Light.ttf}
@@ -39,6 +41,8 @@ $endif$
 \IfFileExists{microtype.sty}{\usepackage{microtype}}{}
 $if(geometry)$
 \usepackage[$for(geometry)$$geometry$$sep$,$endfor$]{geometry}
+$else$
+\usepackage{geometry} % Not sure why, but this appears to be necessary if no geometry variables are passed in with Pandoc. 
 $endif$
 $if(natbib)$
 \usepackage{natbib}
@@ -66,6 +70,8 @@ $if(listings)$
 		commentstyle=\color{commentColor}\ttfamily,
         morecomment=[l][\color{commentColor}]{\#},
 		breaklines=true, 
+		breakatwhitespace=true,
+		literate={\_}{}{0\discretionary{\_}{}{\_}},
         tabsize=4,
         frame=tlrb,
         frameround=tttt,
