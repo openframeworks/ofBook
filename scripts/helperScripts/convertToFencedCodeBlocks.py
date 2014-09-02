@@ -2,6 +2,9 @@
 	This program takes a chapter.md that uses spaced/tabbed code blocks
 	and converts them to spaced, cpp fenced code blocks.
 
+	If the chapter.md already has fenced code blocks, this will no function
+	properly!
+
 	This script takes a single command line argument:
 		e.g. ../chapters/animation/chapter.md
 	The output file is stored at:
@@ -17,8 +20,7 @@ import os
 import sys
 
 NUM_SPACES_PER_TAB = 4
-TAB_TO_SPACES = ""
-for s in range(NUM_SPACES_PER_TAB): TAB_TO_SPACES+=" "
+TAB_TO_SPACES = " " * NUM_SPACES_PER_TAB
 
 
 def convertToFencedCode(originalChapterPath):
@@ -47,15 +49,16 @@ def convertToFencedCode(originalChapterPath):
 		# 	re.MULTILINE	Allows "^" to match the start of any line
 		#					instead of just matching the start of the string
 		#	^\s+ 			Start with an empty line
-		#	((^[ \t]+.*)	Next line starts with tabs or spaces followed
+		#	((^( {4}|\t)+.*)
+		#					Next line starts with tabs or sets of 4 spaces followed
 		#					by zero or more wildcards.  AKA "indented line".
-		#	((\s+(^[ \t]+.*))*)) 
+		#	((\s+(^( {4}|\t)+.*))*)) 
 		#					Followed by zero or more of the following:
-		#						Whitespace followed by a "indented line"
+		#						Whitespace followed by an "indented line"
 		# Running the regex on the example above would return:
 		#	Line 3: "\tCODE_CODE_CODE\n"
 		#	Line 4: "\tCODE_CODE_CODE\n"	
-		pattern = r'^\s+((?:(?:^[ \t]+.*)(?:\s+(?:^[ \t]+.*))*))'
+		pattern = r'^\s+((?:(?:^(?: {4}|\t)+.*)(?:\s+(?:^(?: {4}|\t)+.*))*))'
 		matches = re.findall(pattern, fileString, flags=re.MULTILINE)
 
 		for match in matches:
