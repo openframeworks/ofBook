@@ -28,7 +28,7 @@ Scripts for building the web and pdf versions of the book are in `scripts/` dire
     2. Run `pip install beautifulsoup4` from the command line to install BeautifulSoup
   - Alternate [installation methods](http://www.crummy.com/software/BeautifulSoup/bs4/doc/#installing-beautiful-soup) for bs4
 3. Download and install pandoc using the latest windows installer (.msi) from [here](https://github.com/jgm/pandoc/releases)
-4. Download and install MiKTeX installer from [here](http://miktex.org/download)
+4. Download and install MiKTeX using the windows installer from [here](http://miktex.org/download)
 
 
 
