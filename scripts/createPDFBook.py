@@ -63,11 +63,9 @@ with open(chapterOrderPath) as fh:
 
 # Set up the appropriate options for the pandoc command
 inputOptions = chapterPaths
-generalOptions = ["-N", "--smart", "--toc", "--toc-depth=4", "--standalone", "--preserve-tabs"]
-latexOptions = ["--template=ofBookTemplate.tex", "--latex-engine=xelatex", "--variable=documentclass:scrbook",
-				"--variable=papersize:a4", "--listings", "--variable=links-as-notes",
-				"--variable=geometry:inner=2in", "--variable=geometry:outer=1in", "--variable=geometry:margin=1.5in"]
-				# Order of margins matters here - pandoc processes these in reverse order
+generalOptions = ["-N", "--smart", "--no-tex-ligatures", "--toc", "--toc-depth=4", "--standalone", "--preserve-tabs"]
+latexOptions = ["--template=ofBookTemplate.tex", "--latex-engine=xelatex", "--variable=papersize:a4", 
+				"--variable=documentclass:scrbook",	"--listings", "--variable=links-as-notes"]
 outputOptions = ["--output={0}".format(pdfBookPath)]
 pandocCommand = ["pandoc"] + outputOptions + inputOptions + generalOptions + latexOptions
 
