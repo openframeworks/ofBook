@@ -1,0 +1,21 @@
+	   </div>
+    </div>
+</div>
+
+    <script src="../javascript/jquery-1.8.3.min.js"></script>
+    <script src="../javascript/jquery-ui-1.9.1.custom.min.js"></script>
+    <script src="../javascript/bootstrap.js"></script>
+    <script src="../javascript/jquery.tocify.js"></script>
+    <script src="../javascript/prettify.js"></script>
+    <script>
+        $(function() {
+
+            var toc = $("#toc").tocify({
+              selectors: "h2,h3,h4,h5"
+            }).data("toc-tocify");
+
+            prettyPrint();
+            $(".optionName").popover({ trigger: "hover" });
+
+        });
+    </script>
