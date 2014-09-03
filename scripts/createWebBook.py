@@ -16,17 +16,25 @@
 					- chapter.md
 					- images
 				- order.txt 
-			- output
-				- chapters
+			- static
+				- javascript
 				- style
 					- fonts
-					- style.css
 
-	After running, the chapters will be added to output/chapters like this:
-		- chapters
-			- CHAPTER_X
-				- images
-			- CHAPTER_X.html
+	After running, the website will be added to output/webBook like this:
+		- ofBook
+			- ...
+			- output
+				- webBook
+					- chapters
+						- CHAPTER_NAME.html
+					- images
+						- CHAPTER_NAME
+							- images go here
+					- javascript
+					- style
+						- fonts
+					- toc.html (Table of Contents)			
 
 	The reason for this structure is that, for firefox, the fonts directory must be located
 	on the same domain as CHAPTER_X.html (i.e. it must be in /chapters or a subdirectory of /chapters)
@@ -59,15 +67,23 @@ def wrap(to_wrap, wrap_in):
     wrap_in.append(contents)
 
 
-chapters = open("../chapters/order.txt").read().splitlines()
+# Get the order of the chapters
+chapterOrderPath = os.path.join("..", "chapters", "order.txt")
+chapters = open(chapterOrderPath).read().splitlines()
 
+# Create the output directories for the webBook
+webBookPath = os.path.join("..", "output", "webBook")
+webBookChaptersPath = os.path.join(webBookPath, "chapters")
+if not os.path.exists(webBookPath): os.makedirs(webBookPath)
+if not os.path.exists(webBookChaptersPath): os.makedirs(webBookChaptersPath)
 
-if not os.path.exists("../output/chapters"):
-    os.makedirs("../output/chapters")
-
-
-copytree("../static/style", "../output/style")
-copytree("../static/javascript", "../output/javascript")
+# Copy static directories
+staticStylePath = os.path.join("..", "static", "style")
+webBookStylePath = os.path.join(webBookPath, "style")
+staticJSPath = os.path.join("..", "static", "javascript")
+webBookJSPath = os.path.join(webBookPath, "javascript")
+copytree(staticStylePath, webBookStylePath)
+copytree(staticJSPath, webBookJSPath)
 
 
 chapterTags = [];
@@ -77,8 +93,8 @@ for chapter in chapters:
 	sourceChapterPath = os.path.join(sourceDirectoryPath, "chapter.md")
 	sourceImagesPath = os.path.join(sourceDirectoryPath, "images")
 
-	destDirectoryPath = os.path.join("..", "output", "images", chapter)
-	destChapterPath = os.path.join("..", "output", "chapters", chapter+".html")
+	destDirectoryPath = os.path.join(webBookPath, "images", chapter)
+	destChapterPath = os.path.join(webBookPath, "chapters", chapter+".html")
 	destImagesPath = os.path.join(destDirectoryPath, "images")
 
 	internalImagesPath = os.path.join("..", "images", chapter)
@@ -167,7 +183,7 @@ for c in chapterTags:
 	ul = Tag(soup, None, "ul")
 	li = Tag(soup, None, "li")
 	a = Tag(soup, None, "a");
-	a['href'] = c['path'];
+	a['href'] = "chapters/" + c['path'] + ".html"
 	a.string = c['title']
 	li.append(a)
 	ul.append(li)
@@ -181,7 +197,8 @@ for c in chapterTags:
 			liInner = Tag(soup, None, "li")
 			ulInner.append(liInner)
 			a = Tag(soup, None, "a")
-			a['href'] = "chapters/" + c['path'] + ".html#" + tag
+			tagNoSpaces = tag.replace(" ", "")
+			a['href'] = "chapters/" + c['path'] + ".html#" + tagNoSpaces
 			a['target'] = "_top"
 			a.string = tag
 			liInner.append(a);
@@ -190,7 +207,8 @@ for c in chapterTags:
 	html.append(ul);
 
 htmlOut = soup.prettify("utf-8")
-with open("../output/toc.html", "wb") as file:
+tocPath = os.path.join(webBookPath, "toc.html")
+with open(tocPath, "wb") as file:
     file.write(htmlOut)
 
 # <ul>
