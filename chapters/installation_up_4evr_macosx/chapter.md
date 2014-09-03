@@ -1,8 +1,9 @@
+#Installation up 4evr - OSX#
+
 The original version of the article is [here][1]
 
 This article is intended as a starter guide to help keep a software based installation up for as long as possible in a public facing setting. This guide applies primarily to software running on Mac OSX 10.8+. The software is likely running as a fullscreen, single display app. Although I hope many different people find parts of the article useful in terms of prepping for the challenge of long term installs.
 
----------
 At work I recently had to set up a four installations of different configurations that would need to run all day, every day, 24 hours a day for a couple months with as few crashes or glitches as possible and without anyone going to check on them. This is something that a lot of media artists need to do all the time, and there are a bunch of different tricks and tips to keeping things up for an extended period, I figured I’d share my findings. There are alternate ways to do many of these tasks and this is only one road so please share some tips you’ve picked up out in the field down in the comments box below.
 
 I had to do several searches in a couple different places to find all the information I needed to keep everything consistently up and bug free. Luckily most of the installations I was dealing with this time were fairly light in terms of resources and complications, but it’s always best practices to have a safety net.
@@ -11,8 +12,8 @@ I usually run these off brand new, unboxed computers so this is sort of starting
 
 Tip: if you’re doing multiple computers, do these prep steps on one of them and just boot the others into target disk mode and use something like [Carbon Copy Cloner][2] to mirror the first one on the next so everything is as consistent as possible.
 
-**Step 1: Prep your software and the computer**
------------------------------------------------
+Step 1: Prep your software and the computer
+----------------------------------------------
 
 When building your software or whatever it might be, always keep the long running installation in mind. Plan which things will need to be adjusted by whoever is watching over the installation from the beginning (or at least don’t save it for the end). In my experience, keep it as simple as possible, so that it’s easy for the caretaker to get in there to fix or adjust what they need without opening Xcode and compiling or even exiting out of your app. Time you spend now to make things simple will save you hours of remote debugging when something breaks.
 
@@ -51,14 +52,14 @@ If necessary, You can also hide all of the desktop icons with this terminal comm
 > defaults write com.apple.finder CreateDesktop -bool false
 
 
-**Step 2: Boot into your software**
+Step 2: Boot into your software
 -------------------------------
 
 Things get unplugged, power goes out, not everyone has budget or space for a battery backup etc etc. Above, I covered how to have everything reboot automatically after power failures or freezes, but you’ll also need your app to be ready to go from boot and not leave the desktop open to prying eyes. There are many ways to have your application load automatically - the simplest is using OSX's built in tools: In the System Preferences “Accounts” panel, select “Login Items” and drag your application into there to have it open automatically on launch.
 
 ![Login Items][8]
 
-**Step 3: Keep it up (champ!)**
+Step 3: Keep it up (champ!)
 ---------------------------
 
 There are several ways to make sure your application goes up and stays up - 
@@ -133,7 +134,7 @@ Make sure to check the Console.app for any errors that may have come through whe
 
 Applescript is also a very solid choice for doing some more OS specific work in terms of having odd menus clicked or keypresses sent in some order.
 
-**Step 4: Reboot periodically**
+Step 4: Reboot periodically
 ---------------------------
 
 This one is a little more preventative, or maybe superstitious so hopefully someone can point out a concrete reason why this is a good idea. Depending on your app and the amount of stuff it reaches into, there could be some memory leaks or other OS bugs that you haven’t accounted for. Rebooting every day or week is a good idea to keep everything tidy, system wise.
@@ -154,7 +155,7 @@ If you’d like to just close your programs and re-open them and there is a back
 
 ![enter image description here][18]
 
-**Step 5: Check in on it from afar.**
+Step 5: Check in on it from afar
 ---------------------------------
 
 There are a bunch of options here from various paid web services (like [Logmein][19] or [Teamviewer][20]), to VNC (many options for this: [RealVNC][21] and Chicken of the VNC tend to come up a bunch) to [SSHing][22]. The choice here depends on your comfort level and how much you need to do to perform maintenance from far away. Also - see below for tips on logging the status of your app as an alternative way
@@ -266,7 +267,7 @@ See [this article][24] about combining the above process with something that kil
 
 Bonus – if using MadMapper – see [this link][25] for an AppleScript that will open MadMapper and have it enter fullscreen – and enter “OK” on a pesky dialog box.
 
-Alternate resources:
+Alternate resources
 --------------------
 
 This is an amazing addon for openFrameworks apps that keeps your application open even after a large range of failures: https://github.com/toolbits/ofxWatchdog

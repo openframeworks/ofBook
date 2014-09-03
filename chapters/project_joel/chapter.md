@@ -1,4 +1,4 @@
-# Anthropocene, an interactive film installation for Greenpeace as part of their field at Glastonbury 2013
+# Case Study: Anthropocene, an interactive film installation for Greenpeace as part of their field at Glastonbury 2013
 
 ## Project Overview
 

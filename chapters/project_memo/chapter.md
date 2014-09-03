@@ -1,4 +1,4 @@
-# Memo case study (need title!)
+# Case Study: Memo (TODO: need title!)
 Title candidates:
 
 - Particle Mayhem (I think this already exists as a plugin or something for something)
