@@ -8,6 +8,7 @@
 
 Traditionally, in frameworks like openFrameworks or processing, the way of drawing things has been something like:
 
+
 ```cpp
 void ofApp::draw(){
     ofFill();
@@ -20,9 +21,12 @@ void ofApp::draw(){
     ofEndShape(true);
 }
 ```
+
 `openFrameworks version`
 
+
 Which will draw a red square of side 20 at 20,20. For simple primitives like a rectangle we can use `ofRect()`, but if we want to draw more complex shapes the above method is common. This kind of syntax comes from the openGL equivalent:
+
 
 ```cpp
 void ofApp::draw(){
@@ -35,6 +39,7 @@ void ofApp::draw(){
     glEnd();
 }
 ```
+
 `GL version
 
 However, that method is deprecated since OpenGL 3. The openFrameworks version actually does something else. This is because while drawing a rectangle like that works in triangle fan mode, if we try to draw something more complex (mostly any concave shape), it won't work. Because OpenGL only knows how to draw triangles, drawing a concave shape needs one more step called tessellation. The tessellation process involves converting a shape into several triangles before sending to the graphics card.
