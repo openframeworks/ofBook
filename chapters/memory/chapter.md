@@ -1,4 +1,4 @@
-#Memory in c++#
+#Memory in C++#
 
 *by [Arturo Castro](http://arturocastro.net)*
 *corrections by Brandon Dorsey*
