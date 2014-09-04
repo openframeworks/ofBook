@@ -1,11 +1,11 @@
 # ofSketch
-By Brannon Dorsey (& Christopher Baker?)  
+By Brannon Dorsey (& Christopher Baker?)
 
 ![ofSketch Screenshot](images/ofSketch.jpg)
 
 **[MH: I modified the headers so that h1 is only used for the title.  Otherwise the web/pdf outputs get a little funky]**
 ## What is ofSketch?
-[ofSketch](https://github.com/olab-io/ofSketch) is a barebones development environment created specifically for building and running openFrameworks sketches. It is a "plug and play" openFrameworks application that allows you to spend more time coding and less time with configuration.
+[ofSketch](https://github.com/olab-io/ofSketch) is a barebones development environment created specifically for building and running openFrameworks sketches. It is a "plug and play" openFrameworks application that allows you to spend more time coding and less time with configuration.  **[mh: maybe instead of saying "plug and play," you could just mention that there is not installation process - it's just download and run]**
 
 One of the main goals in developing ofSketch is to decrease the barriers to entry for openFrameworks. For this reason, it should be noted that ofSketch is primarily geared towards beginners and new coders. 
 
@@ -218,7 +218,7 @@ Soon, ofSketch will include fancy project import and export feature which will a
 
 One of the highlights of the ofSketch browser editor is the ability to edit code on a remote machine through a network connection. This is especially helpful when coding with the Raspberry Pi, or when tweaking live installation code. The figure below illustrates this in practice. 
 
-**[mh: I'd add a screenshot of the ofSketch browser interface on the mac in the diagram]**
+**[mh: I'd add a screenshot of the ofSketch browser interface on the mac in the diagram.  Aside from that, kickass graphic.]**
 
 ![Remote Coding Diagram](images/remote_setup.png)
 
