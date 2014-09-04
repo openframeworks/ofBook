@@ -2,13 +2,9 @@
 *~
 
 output/*
-ofBook.html
-ofBook.tex
-ofBook.pdf
 /images
 /chapters/*/chapter_modified_for_print.md
-/scripts/ofBook.*
-
+/scripts/ofBook.tex*
 web/_site
 *.orig
 

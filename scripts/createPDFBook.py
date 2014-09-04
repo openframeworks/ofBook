@@ -8,16 +8,19 @@
 		- ofBook
 			- scripts
 				- createPDFBook.py
-				- ofBookTemplate.tex
+				- ofBookTemplate.tex 
 			- chapters
 				- CHAPTER_NAME
 					- chapter.md
 					- images/
-				- order.txt 
-
-	where order.txt is an ordered list of the chapters of ofBook
-
-	The final PDF is saved to ofBook/ofBook.pdf 
+				- order.txt (order list of chapters in ofBook)
+				
+	After running, the pdf and tex of ofBook will be added to output/ like this:
+		- ofBook
+			- ...
+			- output
+				- ofBook.pdf
+				- ofBook.tex	
 
 	Dependencies: 
 		Pandoc
@@ -28,7 +31,10 @@ import re
 import subprocess
 
 # Output path
-pdfBookPath = os.path.join("..", "ofBook.pdf") 
+outputPath = os.path.join("..", "output")
+if not os.path.exists(outputPath): os.makedirs(outputPath)
+pdfBookPath = os.path.join(outputPath, "ofBook.pdf") 
+texBookPath = os.path.join(outputPath, "ofBook.tex") 
 
 # Load each chapter from order.txt, do any pre-processing necessary and save the
 # final version as /../chapters/CHAPTER_NAME/chapterModified.md
@@ -80,7 +86,6 @@ for flag in generalOptions+latexOptions:
 # For debugging purposes, it's a good idea to generate the .tex.  Errors
 # printed out through pandoc aren't as useful as those printed
 # directly from trying to build a PDF in TeXworks.
-texBookPath = "ofBook.tex"
 texOutputOptions = ["--output={0}".format(texBookPath)]
 texPandocCommand = ["pandoc"] + texOutputOptions + inputOptions + generalOptions + latexOptions
 returnCode = subprocess.call(texPandocCommand)

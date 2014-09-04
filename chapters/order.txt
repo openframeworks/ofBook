@@ -15,6 +15,7 @@ version_control_with_git
 advanced_graphics
 network
 math
+ofSketch
 project_elliot
 project_eva
 project_joel
