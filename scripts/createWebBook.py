@@ -150,12 +150,6 @@ for chapter in chapters:
 				figCaption = fig.p
 				figCaption.name = "span"
 
-				# Use the img tag's title attribute as the caption
-				#	pandoc defaults to using the img tag's alt attribute
-				figTitle = fig.img.get('title')
-				if (figTitle):
-					figCaption.string = figTitle
-
 				# Images have been stored in ./CHAPTER_NAME/images/ relative 
 				# to the chapter html, but image references in the html are 
 				# to ./images/.  Modify the image tags:
