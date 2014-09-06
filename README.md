@@ -22,13 +22,9 @@ Scripts for building the web and pdf versions of the book are in `scripts/` dire
 
 ## OSX
 1. install pip at the terminal ```sudo easy_install pip```
-2. install [beauitful soup 4](http://www.crummy.com/software/BeautifulSoup/) (bs4)
-  - Method 1: 
-    1. Get the python package manager, [pip](https://pip.pypa.io/en/latest/installing.html).  This involves downloading `get-pip.py` and running it from command line.
-    2. Run `pip install beautifulsoup4` from the command line to install BeautifulSoup
-  - Alternate [installation methods](http://www.crummy.com/software/BeautifulSoup/bs4/doc/#installing-beautiful-soup) for bs4
-3. Install [pandoc](https://github.com/jgm/pandoc/releases)
-4. Install [basictex](http://www.tug.org/mactex/morepackages.html)
+2. install [beauitful soup 4](http://www.crummy.com/software/BeautifulSoup/) (bs4) `pip install beautifulsoup4`
+3. install [pandoc](https://github.com/jgm/pandoc/releases)
+4. install [basictex](http://www.tug.org/mactex/morepackages.html)
 
 ## Windows Installation of Dependencies
 1. Download and install [Python 2.7+](https://www.python.org/)
