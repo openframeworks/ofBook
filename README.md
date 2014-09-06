@@ -24,7 +24,7 @@ Scripts for building the web and pdf versions of the book are in `scripts/` dire
 1. install pip at the terminal ```sudo easy_install pip```
 2. install [beauitful soup 4](http://www.crummy.com/software/BeautifulSoup/) (bs4) `pip install beautifulsoup4`
 3. install [pandoc](https://github.com/jgm/pandoc/releases)
-4. install [basictex](http://www.tug.org/mactex/morepackages.html)
+4. install [basictex & MacTeX-Additions](http://www.tug.org/mactex/morepackages.html)
 
 ## Windows Installation of Dependencies
 1. Download and install [Python 2.7+](https://www.python.org/)
