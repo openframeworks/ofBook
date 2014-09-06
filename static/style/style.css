@@ -260,7 +260,6 @@ a:active {
 	width: 100%;
 	margin-bottom: 50px;
 	margin-top: 30px;
-	position: relative;
 	text-align: center;
 }
 
@@ -270,18 +269,12 @@ a:active {
 }
 
 .caption {  
-	border-left: 3px solid #cccccc;
-	bottom: 1px;
-	color: #333333;
-	font-family: "firaRegular";
-	font-size: 12px;
+    color: #7A7A7A;
+    font-family: "firaRegular";
+    font-size: 14px;
     font-style: italic;
-	line-height: 1.5em;
-	padding: 5px 5px 5px 10px;
-	position: absolute;
-	margin-left: 60px;
-	text-align: left;
-	width: 200px;
+    line-height: 2em;
+    text-align: center;
 }
 
 

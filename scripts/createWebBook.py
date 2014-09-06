@@ -141,16 +141,25 @@ for chapter in chapters:
 
 		chapterTags.append(chapterDict);
 
-		# Turn captions into spans for CSS formatting
-		pCaption = soup.find_all("p", class_="caption")
-		for tag in pCaption:
-			tag.name = "span"
+		# Find all the figures so that we can make a series of tweaks
+		divFigures = soup.find_all("div", class_="figure")
+		if len(divFigures) != 0:
+			
+			for fig in divFigures:
+				# Turn the caption into span for CSS formatting
+				figCaption = fig.p
+				figCaption.name = "span"
 
-		# Images have been stored in ./CHAPTER_NAME/images/ relative to the chapter html,
-		# but image references in the html are to ./images/.  Modify the image tags:
-		imgTags = soup.find_all("img")
-		for imgTag in imgTags:
-			imgTag["src"] = internalImagesPath + "/" + imgTag["src"]
+				# Use the img tag's title attribute as the caption
+				#	pandoc defaults to using the img tag's alt attribute
+				figTitle = fig.img.get('title')
+				if (figTitle):
+					figCaption.string = figTitle
+
+				# Images have been stored in ./CHAPTER_NAME/images/ relative 
+				# to the chapter html, but image references in the html are 
+				# to ./images/.  Modify the image tags:
+				fig.img["src"] = internalImagesPath + "/" + fig.img["src"]
 		
 		# Make all hyperlinks in the chapter target a new window/tab
 		hyperlinkTags = soup.find_all("a")
