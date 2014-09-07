@@ -1,3 +1,31 @@
+.btn-open {
+    position: fixed;
+    left: 10px;
+    top: 5px;
+    font-size: 30px;
+    color: #0088cc;
+    cursor: pointer;
+    font-size: 2.5em;
+}
+.btn-close {
+    float: right;
+    color: #dbdbdb;
+    cursor: pointer;
+    font-size: 2.65em;
+    margin-right: .1em
+}
+
+#chapter {
+    float: none;
+    margin: 0 auto;
+}
+
+.tocify {
+    position: fixed;
+    left: -450px;     
+}
+
+
 /*
     @font-face styling for fira borrowed from: http://www.carrois.com/en/fira-3-1/
 */
