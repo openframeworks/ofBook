@@ -5,6 +5,7 @@ OOPs!
 animation
 intro_to_graphics
 data_vis
+game_design
 hardware
 sound
 ios

@@ -3,16 +3,16 @@
 Game developers are, in greater and greater numbers, turning to openFrameworks' creative coding toolkit to develop their games. Unlike platforms like Unity, GameMaker, and Construct2, oF was not specifically developed for game makers. However, oF's ability to port to mobile, manipulate video, utilize camera input, support generative graphics, and hook in with devices like Arduino and Kinect (among other features) makes it a very attractive option for developers who want to be able to rapidly produce compelling, unique games.
 
 ###Popular games in open frameworks 
-![](RushModeSm.png)  
+![](images/RushModeSm.png)  
 **Spell Tower by Zach Gage** 
 
-![](particleMace.png)  
+![](images/particleMace.png)  
 **Particle Mace by Andy Wallace**    
 
-![](eliss012.jpg)  
+![](images/eliss012.jpg)  
 **Eliss by Steph Thirion**    
 
-![](screamup.png)  
+![](images/screamup.png)  
 **Scream Em Up by Jane Friedhoff**  
 
 In this chapter, we'll learn about game development in openFrameworks. We'll cover what goes into making a game, as well as how to code a simple space shooter. Finally, we'll put an experimental oF twist on our game by implementing OSC functionality, which will allow you to alter the difficulty of the game live—while a player is playing it. 
@@ -58,7 +58,7 @@ Here's what our game will have:
 * Bullets (for the player and the enemies), which have an on-screen position, images to represent them, a way to keep track of where they come from (player or enemy), and a speed
 * Bonus lives, which have an on-screen position, an image to represent them, and a speed
 
-![](game.png)  
+![](images/game.png)  
 ***Space Game in action!***  
 
 With all that written out, let’s use OSC to affect the following:
@@ -784,7 +784,7 @@ Congrats--you made a game!
 ###Linking oF and OSC
 Now let’s add in the OSC functionality. We are going to set our application up to receive messages from our iPad and then make changes in real-time while our game is running to test some possible player scenarios. As mentioned before, this can trump going into your application and making manual changes because you skip the need to recompile your game and playtest live. In fact, you can use Touch OSC to even open up new ways to interact with your players. 
 
-![](touchGame.png)  
+![](images/touchGame.png)  
 ***Nightgame developer interface by Phoenix Perry***  
 *Touch OSC is used to switch game levels on the fly and to run challenges.* 
    
@@ -861,21 +861,21 @@ int interval_time;
 float max_enemy_shoot_interval;
 bool triggerBonus; 
 ```
-![](controls.png)
+![](images/controls.png)
 
 To build the app, let’s start by adding our first knob. Right click in the black empty space to the right. Choose to make a `rotaryH`. Next make two `labelH` objects. The first one will be the name of our knob. The second one will be for displaying the value of the current variable in our game. Place one label above the knob and one below. It should look like the below image:
 
-![](label1_label2.png)
+![](images/label1_label2.png)
 
 Now look to the left side of the app. At this point, it’s time to set all of the values this knob will be sending and what the labels will display. Let’s start with `label1`. We will name our knob on screen to make things easier to read. The first value in our game we want to control, level controller interval time, should be what this label reads onscreen. Changing the name field in the app interface will do little. However, note under the name field you can change the color of the label. For this example, use yellow. Next, jump down to the next to last field on screen called `Text`. You will want to set this to level controller interval time. 
 
 Moving on, select the knob. This one will require more set up because it will actually be sending values to our game. Color it yellow first. In the dark grey OSC box set all of the values we need to receive for the game. If auto is checked, uncheck it. Now customize the text in that box to `/game/interval_time`. In the `From` fields set the parameters to a range of values to try out in the game during a playtest. We will use from 0 to 300. These two elements, the tag and the parameters will get packed up into a message and sent over our OSC network to our game when values change.
 
-![](game_interval_time.png)
+![](images/game_interval_time.png)
 
 The last thing to set up will be the bottom label to display what our interval variable is currently set to in our running game.  Select it. We will change the settings and the address tag to reflect that it is not game data being sent to our game but rather data being sent out of our game. Select the label on screen to pull up the parameters for it on the right. In the darkened OSC box change the parameters to those below: 
 
-![](updatedValsinterval.png)
+![](images/updatedValsinterval.png)
 
 This is the pattern we are going to use for all of our knobs and labels. Essentially, the pattern is 
 
@@ -942,7 +942,7 @@ Next tap on TouchOSC in the upper left corner of the app to go back to the setti
 
 Now click on `Layout`. Then tap `Add`. It will start to search for your computer. Switch back over to your computer now and into the TouchOSC Editor. Press the green `Sync` arrow. 
 
-![](sync.png)
+![](images/sync.png)
 
 Switch back to your device. You should see your computer listed under FOUND HOSTS. Select it. It will pop back to the settings screen. Scroll down and find PlaytestInterface in the list of interfaces. Select it and it will take you back to the main menu. Press Done in the upper left corner and your interface will now launch. If you want to get back to the settings screen at any point the white dot in the upper right hand corner will return the user interface to that screen. 
 
@@ -1121,6 +1121,6 @@ We've reached the end of the chapter but not the end of the journey. A few great
 ###About us
 This chapter was written by two members of the [Code Liberation Foundation](http://www.codeliberation.org), [Phoenix Perry](http://www.phoenixperry.com) and [Jane Friedhoff](janefriedhoff.com). This organization teaches women to program games for free. Featuring game art by Loren Bednar. We build community, create a safe spaces for women who want to learn to program in a non-male dominated setting and generally rock. 
  
-![](clfTwitter.png)
+![](images/clfTwitter.png)
 
  

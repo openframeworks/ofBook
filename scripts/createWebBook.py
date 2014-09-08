@@ -146,9 +146,13 @@ for chapter in chapters:
 		if len(divFigures) != 0:
 			
 			for fig in divFigures:
-				# Turn the caption into span for CSS formatting
+				
 				figCaption = fig.p
-				figCaption.name = "span"
+				# Turn the caption into span for CSS formatting
+
+				#note the games chapter needs some caption work
+				if figCaption is not None: 
+					figCaption.name = "span"
 
 				# Images have been stored in ./CHAPTER_NAME/images/ relative 
 				# to the chapter html, but image references in the html are 
