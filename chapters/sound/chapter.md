@@ -1,5 +1,7 @@
 # Sound
 
+*by [Adam Carlucci](http://adamcarlucci.com)*
+
 This chapter will demonstrate how to use the sound features that you'll find in openFrameworks, as well as some techniques you can use to generate and process sound.
 
 Here's a quick overview of the classes you can use to work with sound in openFrameworks:
