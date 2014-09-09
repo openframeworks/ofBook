@@ -82,8 +82,11 @@ staticStylePath = os.path.join("..", "static", "style")
 webBookStylePath = os.path.join(webBookPath, "style")
 staticJSPath = os.path.join("..", "static", "javascript")
 webBookJSPath = os.path.join(webBookPath, "javascript")
+staticFAPath = os.path.join("..", "static", "font-awesome")
+webBookFAPath = os.path.join(webBookPath, "font-awesome")
 copytree(staticStylePath, webBookStylePath)
 copytree(staticJSPath, webBookJSPath)
+copytree(staticFAPath, webBookFAPath)
 
 
 chapterTags = [];
