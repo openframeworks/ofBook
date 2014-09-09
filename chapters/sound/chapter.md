@@ -338,7 +338,7 @@ The standard way of controlling an envelope is with a relatively simple state ma
 
 A full ADSR implementation is left as an exercise for the reader, though [this example from earlevel.com](http://www.earlevel.com/main/2013/06/03/envelope-generators-adsr-code/) is a nice reference.
 
-## Frequency Control
+### Frequency Control
 
 You can probably tell where we're going, here. Now that the app is responding to key presses, we can use those key presses to determine the oscillator's frequency. We'll introduce a bit more `ofLerp(...)` here too to get a nice *legato* effect.
 
