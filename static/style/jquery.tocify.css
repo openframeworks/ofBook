@@ -5,16 +5,12 @@
 
 /* The Table of Contents container element */
 .tocify {
-    width: 20%;
-    max-height: 90%;
+    max-width: 400px;
+    max-height: 100%;
     overflow: auto;
-    margin-left: 2%;
-    margin-top: 2%;
     position: fixed;
     border: 1px solid #ccc;
-    webkit-border-radius: 6px;
-    moz-border-radius: 6px;
-    border-radius: 6px;
+    background: #fff;  
 }
 
 /* The Table of Contents is composed of multiple nested unordered lists.  These styles remove the default styling of an unordered list because it is ugly. */
@@ -34,7 +30,6 @@
 /* Top level subheader elements.  These are the first nested items underneath a header element. */
 .tocify-subheader {
     text-indent: 20px;
-    display: none;
 }
 
 /* Makes the font smaller for all subheader elements. */

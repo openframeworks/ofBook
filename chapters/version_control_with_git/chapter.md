@@ -1,6 +1,6 @@
 # Version control with Git
 
-*by Christoph Buchner*
+*by Christoph Buchner ([bilderbuchi](https://github.com/bilderbuchi))*
 
 In this chapter, you will learn about version control and why you should use it.
 You will get a short introduction to Git, the version control system of choice for openFrameworks.
@@ -27,7 +27,7 @@ Version control also enables programmers to effectively collaborate in teams, be
 I hope you'll agree by now that it is a very good idea to use some manner of version control when developing your programs.
 In the next section, I'll talk a bit about the different choices you have when choosing a particular system.
 
-## Version control systems
+## Different version control systems
 
 There is a number of version control systems out there, some of which you've maybe encountered already.
 They can be divided into two big camps: "centralized" and "distributed" systems.
@@ -131,21 +131,21 @@ When we have successfully set up Git, we create a new, **empty project** with th
 We will end up with a project folder containing some C++ files and some IDE files depending on OS and chosen IDE (in my case: Linux and Code::Blocks).
 This will look similar to this:
 
-    $ tree -a
+    $ tree -a --charset ascii
     .
-    ├── addons.make
-    ├── bin
-    │   └── data
-    │       └── .gitkeep
-    ├── config.make
-    ├── demoProject.cbp
-    ├── demoProject.workspace
-    ├── Makefile
-    └── src
-        ├── main.cpp
-        ├── ofApp.cpp
-        └── ofApp.h
-
+    |-- addons.make
+    |-- bin
+    |   `-- data
+    |       `-- .gitkeep
+    |-- config.make
+    |-- demoProject.cbp
+    |-- demoProject.workspace
+    |-- Makefile
+    `-- src
+        |-- main.cpp
+        |-- ofApp.cpp
+        `-- ofApp.h
+    
     3 directories, 9 files
 
 Now, it's time to create our Git repository, using the `git init` command:
@@ -169,37 +169,37 @@ Those ignored files will still exist in our working directory, that means we can
 If, later down the line, we see files appearing in our list of changes which should not be there, or if we can't seem to add a file that belongs in the repository, we don't force Git to do what it doesn't want to, rather fine-tune the `.gitignore` pattern to match our expectations.
 Note that the `.gitignore` pattern does _not_ affect files that have already been committed.
 
-Because it can be daunting to come up with a generally useful `.gitignore` template, we can (**[TODO: in the future, see [this issue](https://github.com/openframeworks/openFrameworks/issues/2791)]**) add a pre-made `.gitignore` file when we create our OF project.
+Because it can be daunting to come up with a generally useful `.gitignore` template, it's [currently planned](https://github.com/openframeworks/openFrameworks/issues/2791) that OF offers to add a pre-made `.gitignore` file when we create our project.
 This file will look similar to this (formatted into three columns for convenience):
 
     $ pr -tW84 -s"|" -i" "1 -3 .gitignore
-    ###########################|                     |.externalToolBuilders
-    # ignore generated binaries|# XCode              |
-    # but not the data folder  |*.pbxuser            |##################
-    ###########################|*.perspective        |# operating system
-                               |*.perspectivev3      |##################
-    /bin/*                     |*.mode1v3            |
-    !/bin/data/                |*.mode2v3            |# Linux
-                               |# XCode 4            |*~
-    #########                  |xcuserdata           |# KDE
-    # general                  |*.xcworkspace        |.directory
-    #########                  |                     |.AppleDouble
-                               |# Code::Blocks       |
-    [Bb]uild/                  |*.depend             |# OSX
-    [Oo]bj/                    |*.layout             |.DS_Store
-    *.o                        |                     |*.swp
-    [Dd]ebug*/                 |# Visual Studio      |*~.nib
-    [Rr]elease*/               |*.sdf                |# Thumbnails
-    *.mode*                    |*.opensdf            |._*
-    *.app/                     |*.suo                |
-    *.pyc                      |*.pdb                |# Windows
-    .svn/                      |*.ilk                |# Image file caches
-    *.log                      |*.aps                |Thumbs.db
-                               |ipch/                |# Folder config file
-    ########################   |                     |Desktop.ini
-    # IDE files which should   |# Eclipse            |
-    # be ignored               |.metadata            |# Android
-    ########################   |local.properties     |.csettings
+    ###########################|                   |.externalToolBuilders
+    # ignore generated binaries|# XCode            |
+    # but not the data folder  |*.pbxuser          |##################
+    ###########################|*.perspective      |# operating system
+                               |*.perspectivev3    |##################
+    /bin/*                     |*.mode1v3          |
+    !/bin/data/                |*.mode2v3          |# Linux
+                               |# XCode 4          |*~
+    #########                  |xcuserdata         |# KDE
+    # general                  |*.xcworkspace      |.directory
+    #########                  |                   |.AppleDouble
+                               |# Code::Blocks     |
+    [Bb]uild/                  |*.depend           |# OSX
+    [Oo]bj/                    |*.layout           |.DS_Store
+    *.o                        |                   |*.swp
+    [Dd]ebug*/                 |# Visual Studio    |*~.nib
+    [Rr]elease*/               |*.sdf              |# Thumbnails
+    *.mode*                    |*.opensdf          |._*
+    *.app/                     |*.suo              |
+    *.pyc                      |*.pdb              |# Windows
+    .svn/                      |*.ilk              |# Image file caches
+    *.log                      |*.aps              |Thumbs.db
+                               |ipch/              |# Folder config file
+    ########################   |                   |Desktop.ini
+    # IDE files which should   |# Eclipse          |
+    # be ignored               |.metadata          |# Android
+    ########################   |local.properties   |.csettings
 
 This might look like magic to you, but let us just continue for now, you can always look up more information on the `.gitignore` syntax later, for example [here](http://git-scm.com/docs/gitignore).
 
@@ -248,7 +248,7 @@ We can check this by running `git status -u` again.
 #### `git add`
 
 The next step is to *stage* the untracked files using [`git add`](http://git-scm.com/docs/git-add).
-This will put those files into the *index*, as discussed [previously](#basic-concepts). **[NOTE: This is an internal link!]**
+This will put those files into the *index*, as discussed [previously](#basic-concepts).
 
 We stage untracked files and modifications to files already in the repository with the command `git add <filespec>`, where `<filespec>` describes one or more files or directories, so could be for example `addons.make`, `src` or `*.cpp`.
 
@@ -716,7 +716,7 @@ This tag now permanently points to that commit, and you can (mostly) use it in G
 For example, `git checkout v1.2` will check out the repository's state (if the tag exists) just like it was when you published version 1.2.
 
 
-### Working with remote repositories, Github
+### Remote repositories and Github
 
 An important aspect of your work may involve collaboration with others.
 With Git, this typically involves one or more remote repositories (short **remotes**), to which you **push** your modifications, and from which you **fetch** the modifications of others.

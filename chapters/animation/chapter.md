@@ -489,7 +489,7 @@ you'll notice that this 2d for loop, the inner loop counts up to the outer loop,
 
 **[note: maybe a diagram to clarify]**
 
-One thing to note is that even through we've cut down the number of calculations, it's still quite a lot!  This is a problem that doen't scale linearly.  In computer science, you talk about a problem using "O" notation, ie big O notation.  This is a bite more like O^2 / 2 -- the complexity is like 1/2 of a square.  If you have 100 particles, you are doing almost 5000 calculations (100 * 100 / 2).  If you have 1000 particles, it's almost half a million.  Needless to say, lots of particles can get slow. 
+One thing to note is that even through we've cut down the number of calculations, it's still quite a lot!  This is a problem that doen't scale linearly.  In computer science, you talk about a problem using "O" notation, ie big O notation.  This is a bite more like O^2 / 2 -- the complexity is like 1/2 of a square.  If you have 100 particles, you are doing almost 5000 calculations (100 * 100 / 2).  If you have 1000 particles, it's almost half a million.  Needless to say, lots of particles can get slow...
 
 We don't have time to get into it in this chapter, but there's different approaches to avoiding that many calculations.  Many of them have to deal with spatial hashing, ways of quickly identifying which particles are far away enough to not even consider (thus avoiding a distance calculation).
 
