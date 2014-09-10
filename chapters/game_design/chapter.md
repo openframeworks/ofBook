@@ -41,14 +41,14 @@ OSC messages consist of the following:
 
 * An address pattern. This is a hierarchical name space, and looks a bit like a Unix filesystem or URL (e.g. `/Address1`). These patterns can effectively be anything you want (e.g. `/EnemySpeed`)--think of them as names for what you send.
 * A Type tag string. This simply represents the kind of data being sent (e.g. `int`, `string`).
-* Arguments. The actual value that is being transmitted (e.g. `6`, `“Hello world”`, etc.).
+* Arguments. The actual value that is being transmitted (e.g. `6`, `"Hello world"`, etc.).
 
 There are plenty of inexpensive apps for smartphones and tablets that provide customizable GUIs (complete with buttons, sliders, etc.) for sending different kinds of MIDI messages. Download one (we like TouchOSC) so we have something to send our messages with.	
 With this in mind, let's start making our game!
 
 ## Our basic game--& making it not-so-basic
 
-OpenFrameworks handles OSC as an included addon, so our first step will be to run the project generator and create a project with the OSC addon. (If you haven't had a chance to read about addons, now would be a good time to jump over to [here] and do just that!) Launch the project generator, then, in the main menu, click the word “Addons.” A popup will appear. Select ofxOsc and then click back. Now, next to the word Addons, you should see ofxOsc. Press “generate”. When it completes the project creation process, close the generator and open up the project in either Visual Studio or Xcode. The project will be set up in your myApps folder. Open it now.
+OpenFrameworks handles OSC as an included addon, so our first step will be to run the project generator and create a project with the OSC addon. (If you haven't had a chance to read about addons, now would be a good time to jump over to [here] and do just that!) Launch the project generator, then, in the main menu, click the word "Addons." A popup will appear. Select ofxOsc and then click back. Now, next to the word Addons, you should see ofxOsc. Press "generate". When it completes the project creation process, close the generator and open up the project in either Visual Studio or Xcode. The project will be set up in your myApps folder. Open it now.
 
 Here's what our game will have:
 
@@ -70,11 +70,11 @@ With all that written out, let’s use OSC to affect the following:
 
 These three parameters will allow the developer to, second-by-second, tailor the difficulty of the game to the individual playing it.
 
-Let’s start with our testApp. There are a few things we definitely know we’ll want classes for, so make corresponding .h and .cpp files for Player, Bullet, Life, Enemy, and LevelController. Remember to `#include “ofMain.h”` in each of those classes, and to include the .h file of each of those classes in `testApp.h`.
+Let’s start with our testApp. There are a few things we definitely know we’ll want classes for, so make corresponding .h and .cpp files for Player, Bullet, Life, Enemy, and LevelController. Remember to `#include "ofMain.h"` in each of those classes, and to include the .h file of each of those classes in `testApp.h`.
 
 ###Gamestates
 
-First let’s create the basic structure of our game. Games typically have at least three parts: a start screen, the game itself, and an end screen. We need to keep track of which section of the game we’re in, which we’ll do using a variable called a game state. In this example, our game state variable is a string, and the three parts of our game are `“start”`, `“game”`, and `“end”`. Let’s add a score and a player at this point as well. 
+First let’s create the basic structure of our game. Games typically have at least three parts: a start screen, the game itself, and an end screen. We need to keep track of which section of the game we’re in, which we’ll do using a variable called a game state. In this example, our game state variable is a string, and the three parts of our game are `"start"`, `"game"`, and `"end"`. Let’s add a score and a player at this point as well. 
 ```
 string game_state;
 int score;
@@ -89,7 +89,7 @@ void testApp::update(){
    if (game_state == "start") {
  
    } else if (game_state == "game") {
-   } else if (game_state == “end”) {
+   } else if (game_state == "end") {
  
    }
 }
@@ -97,13 +97,13 @@ void testApp::update(){
 void testApp::draw(){
    if (game_state == "start") {
    } else if (game_state == "game") {
-   } else if (game_state == “end”) {
+   } else if (game_state == "end") {
  
    }
 }
 ```
 
-Let’s set the initial value of `game_state` to `“start”` right when the app begins.
+Let’s set the initial value of `game_state` to `"start"` right when the app begins.
 
 ```
 //--------------------------------------------------------------
@@ -578,7 +578,7 @@ bool LevelController::should_spawn() {
 
 When we set up our level controller, we’ll give it a starting time. It’ll use this time as a baseline for the first enemy spawn. The should_spawn code should look familiar from the enemy bullet section.
 
-We’ll wait to set up our level controller until the game actually starts--namely, when the game state changes from `“start”` to `“game”`.
+We’ll wait to set up our level controller until the game actually starts--namely, when the game state changes from `"start"` to `"game"`.
 
 ```
 void testApp::keyReleased(int key){
