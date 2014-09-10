@@ -48,7 +48,7 @@ import os
 import subprocess
 import shutil
 from bs4 import BeautifulSoup as Soup
-from bs4 import Tag
+from bs4 import Tag, NavigableString
 
 def copytree(src, dst, symlinks=False, ignore=None):
     if not os.path.exists(dst):
@@ -66,6 +66,21 @@ def wrap(to_wrap, wrap_in):
     contents = to_wrap.replace_with(wrap_in)
     wrap_in.append(contents)
 
+#http://stackoverflow.com/questions/23057631/clone-element-with-beautifulsoup
+def clone(el):
+    if isinstance(el, NavigableString):
+        return type(el)(el)
+
+    copy = Tag(None, el.builder, el.name, el.namespace, el.nsprefix)
+    # work around bug where there is no builder set
+    # https://bugs.launchpad.net/beautifulsoup/+bug/1307471
+    copy.attrs = dict(el.attrs)
+    for attr in ('can_be_empty_element', 'hidden'):
+        setattr(copy, attr, getattr(el, attr))
+    for child in el.contents:
+        copy.append(clone(child))
+    return copy
+
 
 # Get the order of the chapters
 chapterOrderPath = os.path.join("..", "chapters", "order.txt")
@@ -82,8 +97,8 @@ staticStylePath = os.path.join("..", "static", "style")
 webBookStylePath = os.path.join(webBookPath, "style")
 staticJSPath = os.path.join("..", "static", "javascript")
 webBookJSPath = os.path.join(webBookPath, "javascript")
-staticFAPath = os.path.join("..", "static", "font-awesome")
-webBookFAPath = os.path.join(webBookPath, "font-awesome")
+staticFAPath = os.path.join("..", "static", "octicons")
+webBookFAPath = os.path.join(webBookPath, "octicons")
 copytree(staticStylePath, webBookStylePath)
 copytree(staticJSPath, webBookJSPath)
 copytree(staticFAPath, webBookFAPath)
@@ -134,6 +149,7 @@ for chapter in chapters:
 		h2s = soup.find_all("h2")
 
 		chapterDict['innerTags'] = [];
+		chapterDict['destChapterPath'] = destChapterPath
 		for h2 in h2s: 
 			#print h1
 			a = Tag(Soup, None, "a");
@@ -149,14 +165,25 @@ for chapter in chapters:
 		if len(divFigures) != 0:
 			
 			for fig in divFigures:
-				# Turn the caption into span for CSS formatting
+				
 				figCaption = fig.p
-				figCaption.name = "span"
+				# Turn the caption into span for CSS formatting
 
+				#note the games chapter needs some caption work
+				if figCaption is not None: 
+					figCaption.name = "span"
+
+				# [zach] -- this is to make images that are not full width, have captions below the image
+				
+				div = Tag(soup, None, "div")
+				div['style'] = "clear:both"
+				div.append(clone(fig.img));
+				
+				fig.img.replace_with(div)
 				# Images have been stored in ./CHAPTER_NAME/images/ relative 
 				# to the chapter html, but image references in the html are 
 				# to ./images/.  Modify the image tags:
-				fig.img["src"] = internalImagesPath + "/" + fig.img["src"]
+				div.img["src"] = internalImagesPath + "/" + div.img["src"]
 		
 		# Make all hyperlinks in the chapter target a new window/tab
 		hyperlinkTags = soup.find_all("a")
@@ -183,7 +210,44 @@ soup.append(html)
 # print soup.prettify()
 
 
+# now, we have a full list of chapters, let's add this to HTML of each page: 
 
+for chapter in chapterTags: 
+	soup = Soup()
+
+	a = Tag(soup, None, "a")
+	soup.append(html)
+	ul = Tag(soup, None, "ul")
+	for c in chapterTags: 
+		
+		li = Tag(soup, None, "li")
+		if (c == chapter):
+			 li['class'] = "selected"
+		a = Tag(soup, None, "a");
+		a['href'] =  c['path'] + ".html"
+		a.string = c['title']
+		li.append(a)
+		ul.append(li)
+		
+	
+
+	soupFromFile = Soup(open(chapter['destChapterPath']).read())
+	chaptersTag = soupFromFile.find_all("div", {"id":"chapters"})
+	chaptersTag[0].append(ul);
+	
+	htmlFromFile = str(soupFromFile)
+	
+	with open(chapter['destChapterPath'], "wb") as file:
+		file.write(htmlFromFile)
+
+	#print html
+
+
+
+soup = Soup()
+html = Tag(soup, None, "html")
+a = Tag(soup, None, "a")
+soup.append(html)
 
 for c in chapterTags: 
 	ul = Tag(soup, None, "ul")
@@ -216,6 +280,9 @@ htmlOut = soup.prettify("utf-8")
 tocPath = os.path.join(webBookPath, "toc.html")
 with open(tocPath, "wb") as file:
     file.write(htmlOut)
+
+
+
 
 # <ul>
 #   <li>Coffee</li>

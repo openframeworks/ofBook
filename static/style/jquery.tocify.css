@@ -5,12 +5,7 @@
 
 /* The Table of Contents container element */
 .tocify {
-    max-width: 400px;
-    max-height: 100%;
-    overflow: auto;
-    position: fixed;
-    border: 1px solid #ccc;
-    background: #fff;  
+    
 }
 
 /* The Table of Contents is composed of multiple nested unordered lists.  These styles remove the default styling of an unordered list because it is ugly. */
