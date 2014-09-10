@@ -4,28 +4,7 @@ _By: [Michael Hadley](http://www.mikewesthad.com/) with generous editor support 
 
 This chapter builds off of chapters 2 and 3, so if you aren't familiar with basic C++ and creating openFrameworks projects, check out those chapters first.
 
-In sections 1 and 2, we will create "paintbrushes" where the mouse is our brush and our code defines how our brush makes marks on the screen.  In section 3, we will explore something called "coordinate system transformations" to create hypnotizing, spiraling rectangles.  Source code for the projects is linked at the end of each section.  If you feel lost at any point, don't hesitate to look at the completed code!  You can check out the whole collection of code [here](https://github.com/openframeworks/ofBook/tree/master/04_intro_to_graphics/code).
-
-**Chapter Outline:**
-
-1. Brushes with Basic Shapes
-	1. Basic Shapes
-	1. Brushes from Basic Shapes
-    	1. Single Rectangle Brush: Using the Mouse
-    	1. Bursting Rectangle Brush: Creating Randomized Bursts
-    	1. Glowing Circle Brush: Using Transparency and Color
-    	1. Star Line Brush: Working with a Linear Map
-    	1. Fleeing Triangle Brush: Vectors and Rotations
-		1. Raster Graphics: Taking a Snapshot
-1. Brushes with Freeform Shapes
-	1. Basic Polylines
-	1. Building a Brushes from Polylines
-		1. Polyline Pen: Tracking the Mouse
-		1. Polyline Brushes: Using Points, Normals and Tangents
-1. Moving the World
-	1. Translating: Stick Family
-	1. Rotating and Scaling: Spiraling Rectangles
-1. Next Steps 
+In sections 1 and 2, we will create "paintbrushes" where the mouse is our brush and our code defines how our brush makes marks on the screen.  In section 3, we will explore something called "coordinate system transformations" to create hypnotizing, spiraling rectangles.  In the last section, we'll seeSource code for the projects is linked at the end of each section.  If you feel lost at any point, don't hesitate to look at the completed code!  You can check out the whole collection of code [here](https://github.com/openframeworks/ofBook/tree/master/04_intro_to_graphics/code).
 
 ## Brushes with Basic Shapes ##
 
