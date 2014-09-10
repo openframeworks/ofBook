@@ -1,20 +1,20 @@
 # Case Study: Choreographies for Humans and Stars 
 
-Permanent interactive outdoor installation developed by [Daily tous les jours](http://dailytouslesjours.com/ "Daily tous les jours") for Montreal's planetarium (2014). 
+Permanent interactive outdoor installation developed by [Daily tous les jours](http://dailytouslesjours.com/) for Montreal's planetarium (2014). 
 
-Chapter by Eva Schindling (with help from Pierre Thirion)
+Chapter by [Eva Schindling](http://evsc.net) (with help from [Pierre Thirion](http://www.21h42.fr))
 
-## Project Overview time
+!["Choreographies for Humans and Stars" in action at the Montreal's Rio Tinto Alcan Planetarium (January 2014)](images/revolutionsatplane.jpg "Project in action")
 
-[Choreographies for Humans and Stars](http://www.dailytouslesjours.com/project/choregraphies-pour-des-humains-et-des-etoiles/) is a permanent outdoor installation hosted at Montreal's Rio Tinto Alcan Planetarium. The interactive projection on the building's facade invites passers-by to a series of collective dance performances inspired by the different mechanics of planets and stars.
+## Project Overview
+
+[Choreographies for Humans and Stars](http://www.dailytouslesjours.com/project/choregraphies-pour-des-humains-et-des-etoiles/) is a permanent interactive outdoor installation hosted at Montreal's Rio Tinto Alcan Planetarium. The interactive projection on the building's facade invites passers-by to a series of collective dance performances inspired by the different mechanics of planets and stars.
 
 Seven stones anchored into the ground delimit the dance area in front of the projection. A series of instructions on the screen guide participants through a set of choreographies that combine dance and astronomy. The participants use their bodies to understand celestial dynamics like eclipses, forces of attraction and combustion. A camera system tracks the movements across the dance stage and controls the images and animations on the projection. The original image material has been produced through workshops with local kids.
 
-![On site](images/revolutionsatplane.jpg "Project in action")
 
-![On site](images/freezeatplane.jpg "Freeze")
+![The interactive projection invites passers-by to a series of collective dance performances](images/freezeatplane.jpg "Freeze!")
 
-[video](http://vimeo.com/85369669) (longer video with english subtitles coming soon)
 
 This chapter documents the various stages of *Choreographies for Humans and Stars* in chronological order. It talks about project logistics, prototyping processes and technological choices, before diving into some OF implementation details towards the end. 
 
@@ -36,11 +36,11 @@ From first brainstorms to final hand-over the mammoth project took an impressive
 
 Our more pragmatic goal was to get it all done by November 2013, with the main intention of avoiding all the snow and coldness that comes along with Montreal's winter season. Naturally we slipped right past that goal, and had our big opening amidst lots of snow mid January, with temperatures ranging between -15 to -25. 
 
-![Project timeline](images/plane_timeline-01.png "The 3+ year long project timeline")
+![The project timeline spanning impressive 28 months](images/plane_timeline-01.png "The 3+ year long project timeline")
 
 ### Everyone involved
 
-Credit lists quickly grow long. The internal DTLJ team includes Mouna and Melissa being the main artists with the vision, Eva handling software, Pierre being heavily involved with visual identity and video production, Michael handling the LEDs in the outdoor furniture. The list of external collaborators include a producer (Nicolas), a choreographer (Dana), a technical director (Frederick), a software engineer (Emmanuel), a film animator (Patrick), an industrial design studio (Dikini), a graphic designer (Studio Atelier), a concrete workshop (M3Beton), engineers, a camera man, ... 
+Credit lists quickly grow long. The internal DTLJ team includes Mouna and Melissa being the main artists with the vision, Eva handling software, Pierre being heavily involved with visual identity and video production, Michael handling the LEDs in the outdoor furniture. The list of external collaborators include a producer (Nicolas), a choreographer (Dana), a technical director (Frederick), a software engineer (Emmanuel), a film animator (Patrick), an industrial design studio ([Dikini](http://www.studiodikini.com/)), a graphic designer (Studio Atelier), a concrete workshop ([M3Beton](http://m3beton.ca/)), engineers, a camera man, ... 
 
 
 ## Ideation and Prototyping
@@ -49,7 +49,7 @@ Credit lists quickly grow long. The internal DTLJ team includes Mouna and Meliss
 
 Very early in the process we started collaborating with a choreographer and together we explored how participants could use their bodies in ways that mimic celestial dynamics. In a choreography-driven narrative each scene would represent a recognizable space phenomena, instigating a journey from spinning like revolving planets, to lining up to cause an eclipse. 
 
-![Celestial mechanics](images/PLANE_CELESTIAL_MECHANICS.png "Celestial mechanics")
+![The celestial mechanics and their corresponding body movements](images/PLANE_CELESTIAL_MECHANICS.png "Celestial mechanics")
 
 The individual choreographies would be communicated with text instructions and should allow participants to dance within a group, yet maintain enough freedom to indulge in personal interpretations. 
 
@@ -61,7 +61,7 @@ One of the main challenges of the project was to find a balance between providin
 Similar challenging was the task to communicate the instructions to the participants. While some actions could be phrased as one-worders - *"FREEZE!"* - others were more elaborate and cryptic - *"Walk with someone, keep the same distance between you (No hands!)"*. Creating the piece for a bilingual audience also highlighted the possible interpretive differences between English and French instructions. Having test sessions with uninitiated users was important to adjust the exact wording of instructions, and also to refine the timing of the individual scenes. (The factor that eventually ended up influencing the timing the most, was January's outside temperature).
 
 
-![Instructions](images/instructionsandvisuals.png "Instructions")
+![The seven scenes representing celestial movements and the instructions animating participants to perform](images/instructionsandvisuals.png "Instructions")
 
 
 ### Outlining the dance zone
@@ -70,11 +70,11 @@ The projection being intangible, it was important to give the project a physical
 
 At the beginning we imagined a series of stones and platforms arranged to form celestial pathways and encouraged hopping from stone to stone. Yet this would have introduced too many physical obstacles (tripping over, slipping) and severely limited the free movements and interactions in the space. Over the course of prototyping the importance of the physical presence shifted from being an interface to providing a delimiting perimeter around the active dance zone. After going through many design proposals (a stage, a ring, a ballet pole!) we landed on 7 inch-high concrete stones positioned in a circular formation. A single white LED on each stone enhanced their presence. Installing the underground cabling for those 7 LEDs proved a big challenge and required the $10k rental of a ground-unfreezing device. 
 
-![Dance zone](images/plane_dancezone.png "Dance zone encircled by 7 stones")
+![The circular dance zone in front of the projection, outlined by 7 concrete stones](images/plane_dancezone.png "Dance zone encircled by 7 stones")
 
 
 ### Producing video content
-Since the project would be permanently installed, we involved locals in the making of these images, aiming to create a sense of ownership within the community that will be living next to the project for many years to come. The image and video content was created using simple analog animation techniques in a series of [workshops](http://www.dailytouslesjours.com/to-community-and-beyond) with local kids aged 7 to 12. **[possibly another blogpost link, with how-to instructions for the analog animation techniques]**
+Since the project would be permanently installed, we involved locals in the making of these images, aiming to create a sense of ownership within the community that will be living next to the project for many years to come. The image and video content was created using simple analog animation techniques in a series of [workshops](http://www.dailytouslesjours.com/to-community-and-beyond) with local kids aged 7 to 12. 
 
 
 ## Finding the Technical Solutions
@@ -86,14 +86,14 @@ The projection surface on the planetarium is 20 meter high and covered with shin
 
 Working inside the biodome turned out to be quite entertaining: my access route to our equipment led directly by the penguin compound, and work sessions were accompanied by a constant backdrop of bird chirping. 
 
-![Projector and camera positon](images/sitein3d.png "Projector and camera position")
+![The camera is mounted at the planetarium, while the projector is installed in the neighboring biodome](images/sitein3d.png "Projector and camera position")
 
 #### Camera style and placement
 In an ideal camera tracking scenario you have a controlled indoor environment that provides a clean top-down camera view and lets you create the lighting and background design of your choice. Our site at the planetarium is outdoors and therefore subject to all possible weather conditions. The foreground-background contrast can invert based on if snow covers the dark pavement or not. The general lighting conditions are poor, but the area can temporarily get lit up by the headlights of passing cars. 
 
 When first brainstorming technical solutions Kinects were quickly excluded due to a distance of at least 20 meters between dance stage and any possible camera location. More viable options included thermal imaging cameras (\$\$ and low-res), laser range finders (\$\$ and limited to one dimension), stereoscopic 3d cameras (too dark environment, also too large distance), and cameras placed at 2 different angles to allow for dynamic mapping of two perspectives into one (double the fun/noise). 
 
-Finally we settled on going with one single camera [(Basler Scout scA1600-28gm)](http://www.baslerweb.com/products/scout.html?model=130 "camera on baslerweb.com"), with a high sensitivity lens [(Fuji HF12.5SA-1)](https://www.fujifilmusa.com/products/optical_devices/machine-vision/2-3-5/hf125sa-1/ "lens on fujifilmusa.com") for low-light situations and a tracking solution that could convert the 2d information into 3 dimensions. Strict architectural codes prohibited us from placing the camera on top or along the surface of the planetarium. After long negotiations we were limited to placing the camera at a quite low angle slightly to the left of the projection site. Surveillance style, we packed the camera into an ugly weatherproof housing (#HEB26D0A000B), together with a power supply, a heater and a fan system. 
+Finally we settled on going with one single camera [(Basler Scout scA1600-28gm)](http://www.baslerweb.com/products/scout.html?model=130 "camera on baslerweb.com"), with a high sensitivity lens [(Fuji HF12.5SA-1)](https://www.fujifilmusa.com/products/optical_devices/machine-vision/2-3-5/hf125sa-1/ "lens on fujifilmusa.com") for low-light situations and a tracking solution that could convert the 2d information into 3 dimensions. Strict architectural codes prohibited us from placing the camera on top or along the surface of the planetarium. After long negotiations we were limited to placing the camera at a quite low angle slightly to the left of the projection site. Surveillance style, we packed the camera into an ugly weatherproof housing, together with a power supply, a heater and a fan system. 
 
 
 #### Network setup and negotiations
@@ -101,7 +101,7 @@ After calculating our camera's bandwidth requirements (resolution 800x600px * fr
 
 The network being part of the city network, was heavily controlled, subject to 15min timeout internet access. A couple of request forms later we had a LAN connection between our two computers. VPN access for remote maintenance and remote updates took about 2-3 months, and we are still in negotiation to get SSH access. (Cities protect their networks).
 
-![Technical System Diagram](images/PLANETARIUM_TECH_DIAGRAM_20140322.png "Technical System Diagram")
+![The quite simple technical system diagram, the only obstacle was the city-run LAN network](images/PLANETARIUM_TECH_DIAGRAM_20140322.png "Technical System Diagram")
 
 ### Choice of tracking software
 For the tracking software we found a collaborator in Emmanuel Durand, part of the research lab at [Society for Arts and Technologies](http://www.sat.qc.ca/ "Society for Arts and Technologies"). Emmanuel had developed [blobserver](https://github.com/paperManu/blobserver "blobserver on github") - a opencv based software to implement various realtime detection algorithms - and was looking for first test projects. For the project he further developed and adapted blobserver to our needs. Blobserver is designed to take in multiple camera or video sources, detect entities and then report its findings via OSC. Live configuration of blobserver can be done through OSC as well, which allows for easy integration with any OSC-friendly software. 
@@ -113,7 +113,7 @@ To track participants in our dance zone we used blobserver's HOG detector ([hist
 
 First tracking tests were done based on publicly available databases of human shapes [link?], but to get better results we created our own image database. We trained the system on images taken with our camera on site, providing the specific camera angle and the same specific background. Future project updates will include further training of the tracking model by including images showing people and environment in their summer-attire. 
 
-![tracking](images/blobservertracking.png "left: camera source footage, right: blobserver tracking")
+![Tracking of participants worked extremely well in the high-contrast winter landscape](images/blobservertracking.png "left: camera source footage, right: blobserver tracking")
 
 #### Tracking challenges
 The tracking algorithm performs great when dealing with ideal-case scenarios: maximum 3 people, moving at a distance from each other, their silhouettes standing out with high contrast from the background. But naturally, in a public setting without any sort of supervision you can't control how the audience uses your artwork. As soon as too many people enter the dance zone at once, the system can get confused by overlapping shapes. Similarly, small children, or clothes in the same brightness as the background can cause the detection algorithm to sporadically fail. Configuring the system to forgive those mistakes and let it pretend it still detects those participants, also widens the door for unintentional noise (fake positives).  
@@ -124,7 +124,7 @@ After learning this the hard way, we understood to lower our expectations and al
 
 Similarly we'd detect people spinning - "*Take someone's hand, spin and lean out as far as possible*" - by counting how many times the system loses and re-detects their shapes. As we'd only look for one specific choreography in each scene, we were free to interpret the incoming tracking results as needed.
 
-![Drop and Spin](images/camview_dropandspin.png "Left: Drop to the ground, Right: Spin")
+![Correct execution of "Drop to the ground" and spinning instructions - in both cases we use the fact that the system loses detection to trigger visual reactions](images/camview_dropandspin.png "Left: Drop to the ground, Right: Spin")
 
 ### Choice of visualization software
 This project provided the perfect excuse to jump back into openFrameworks. Previous company projects relying on computation mostly lived in the realm of music (max/MSP) or the web (python, node.js). On the rare occasion that visuals were involved, a too short timeline asked for a quick solution (processing). And in general we fall victim to the mistake of over-polluting the never ending prototype and simply turning it into production software. 
@@ -162,7 +162,7 @@ OpenFrameworks was chosen as the programming environments because of C++'s fast 
 
 ## Developing the Visualization Software
 
-#### Development setup
+### Development setup
 The openFrameworks linux install is build for codeblocks, yet as i have come to like the code editor [Sublime Text](http://www.sublimetext.com/ "Sublime Text") for its lightweightness and simplicity, i chose to program in Sublime and then compile (`$ make`) and run the program (`$ ./bin/appName`) from the terminal (or [terminator](http://gnometerminator.blogspot.ca/p/introduction.html)). On my win7 laptop i code with Sublime, but compile and run the software from within Codeblocks. Besides its purpose of providing a history of the code, i use github mainly to push code between development and production computers. Alongside Sublime and a bunch of terminal windows, my typical programming setup includes a browser with tabs open on the openFrameworks forum, the openFrameworks documentation page, and github (to search specific function uses). 
 
 ### Quick summary of what the app does
@@ -181,7 +181,7 @@ The transition from one scene and segment to the next is either time-dependent (
 While the system usually goes through all scenes sequentially, the scene requiring at least 2 participants will be skipped if not enough people are detected in the dance zone. Additionally the system will fall into an idle mode, if no participants have been detected during the last 30 seconds. After the idle mode it restarts the sequence with scene 1. 
 
 ### Incoming tracking data
-The tracking software *blobserver* on the camera computer acts as OSC server and is configured to send tracking data to the IP address of the projection computer. Similarly the openFrameworks app registers itself as OSC client on the OSC server and is able to tune the tracking parameters according to specific scene requirements. **[reference network/OSC chapter]**
+The tracking software *blobserver* on the camera computer acts as OSC server and is configured to send tracking data to the IP address of the projection computer. Similarly the openFrameworks app registers itself as OSC client on the OSC server and is able to tune the tracking parameters according to specific scene requirements. 
 
 To be able to test and simulate the two-way OSC communication i created several processing dummies, which turned out to be very useful for occasions without the full technical setup. (1: dummy to print out received message. 2: dummy to send tracking parameters. 3: dummy to simulate incoming tracking data).
 
@@ -202,7 +202,7 @@ As it can't be guaranteed that *blobserver* and openFrameworks always run on the
 Similarly it could happen that half of the tracking messages are received before, and the other half after the baseApp's `update()` loop. To avoid this splitting of data to cause glitches (system thinks a specific blob-id disappeared, while it just hasn't been updated yet), it was necessary to hold off all processing of data, before at least one `/blobserver/endFrame` has been received during each openFrameworks frame. 
 
 #### Storing and updating tracking data
-The received tracking data is stored in a map of `Blob` objects `std::map<int,Blob> blobs`. Maps give all the flexibility of vectors (loop, iterator, etc.) but also allow for easy access of entities via their id. **[see chapter ref maps/vectors]**  
+The received tracking data is stored in a map of `Blob` objects `std::map<int,Blob> blobs`. Maps give all the flexibility of vectors (loop, iterator, etc.) but also allow for easy access of entities via their id. 
 
 If new tracking data arrives, the system first checks if the blob-id already exists in the map or if it needs to be created. Then it updates the instance with the new data. 
 
@@ -241,7 +241,7 @@ After the new tracking information has been filed away into the blobs map, the b
 #### Perspective transformation
 The blob location data received from the tracking software is based on the angled view of the slightly off-center mounted camera. To be able to better tell the participants' position within the dance stage and their distance to each other, it was necessary to map that skewed 3d location data into a cleaner top-down perspective. Additional rotation of the now 2dimensional data enabled it to easily tell if participants aligned themselves along the axis facing the projection. The skewing and rotating of the data is achieved via `cv::perspectiveTransform`. 
 
-![perspectiveTransform](images/perspective_transform.jpg "perspectiveTransform")
+![Transforming the perspective from the off-center camera to a correctly aligned top-down view](images/perspective_transform.jpg "perspectiveTransform")
 
 ### Implementing video content
 All our visual raw material exists in the form of videos (and some images). Besides written instructions that are drawn, everything on the projection is direct video display without any effects. 
@@ -256,7 +256,7 @@ Another round of video performance tests (post opening) led to the conclusion th
 Still, we encountered a few platform and player-dependent idiosyncrasies. an unsolved mystery is still why gstreamer doesn't like certain custom resolutions and displays a green line underneath those video (our fix: find a new resolution). 
 
 #### Dynamic video elements
-While the background videos appear on schedule and are preloaded by the system, most foreground videos appear dynamically based on participant actions. To be able to handle them easily all dynamic video elements are stored in a vector of shared pointers `std::vector< ofPtr<mediaElement> > fgMedia`. The whole vector of pointers can then be updated and drawn, no matter how few or many videos of shootings stars or planets are currently being displayed. By using `ofPtr` one doesn't need to worry about properly releasing dynamically allocated memory.  **[ref pointers / shared pointers?]** 
+While the background videos appear on schedule and are preloaded by the system, most foreground videos appear dynamically based on participant actions. To be able to handle them easily all dynamic video elements are stored in a vector of shared pointers `std::vector< ofPtr<mediaElement> > fgMedia`. The whole vector of pointers can then be updated and drawn, no matter how few or many videos of shootings stars or planets are currently being displayed. By using `ofPtr` one doesn't need to worry about properly releasing dynamically allocated memory.  
 
 Example: Everytime a user stands still long enough during scene 1, a video element displaying a blinking star gets added to the vector:
 
@@ -270,9 +270,6 @@ Example: Everytime a user stands still long enough during scene 1, a video eleme
     // link blob to video, to be able to control it later
     blobs[blobID].mediaLink = fgMedia[fgMedia.size()-1];
 
-
-**[i am sure there's someone to reference about video]**
-
 #### Preloading versus dynamic loading
 In general all video sources that are used in a controlled way (as in: used only as one instance) are preloaded at startup of the software. For video sources that are called up dynamically in possibly multiple instances at once, a combination of two approaches were used:
 
@@ -280,7 +277,7 @@ In general all video sources that are used in a controlled way (as in: used only
  2. Preload a large enough vector of multiple instances of the video, then cycle through them with a pointer ... allows for faster access/display, yet slows down the application if used for too big or too many video files
 
 ### Event-driven animation
-The control of video elements by the blobs (detected participants) is implemented with `ofEvent()` calls. **[reference chapter with events]** Events are an good way of giving objects a way of controlling elements in the baseApp without having to query each objects possible states from the baseApp's update() loop, or without having to give objects a pointer to the whole baseApp. 
+The control of video elements by the blobs (detected participants) is implemented with `ofEvent()` calls. Events are an good way of giving objects a way of controlling elements in the baseApp without having to query each objects possible states from the baseApp's update() loop, or without having to give objects a pointer to the whole baseApp. 
 
 Blob objects have multiple events they can trigger actions in the baseApp:
 
@@ -295,8 +292,6 @@ Blob objects have multiple events they can trigger actions in the baseApp:
  - **onBreakSteady** ... broke steady distance with neighbor, let star bridge disappear
  - **prepareToDie** ... make sure to disconnect all connected videos
  - ... 
-
-**[all the following event-code can probably be skipped, if ofEvent is demonstrated elsewhere]**
 
 `ofEvent` instances are defined in the blob object header:
 
@@ -357,7 +352,7 @@ For testing and tuning purposes the application is run on 2 screens: the project
 
 When doing live testruns on site it is important to have all interaction parameters easily accessible via a GUI. Thresholds like: what velocity defines "standing still", or how exact does the alignment need to be to activate the eclipse - are easier to tune if comparison runs don't need to get interrupted by software compilation time.  
 
-![GUI](images/blackGUI.png "GUI screen")
+![The debugscreen showing (from the top left): the abstracted camera view, the transformed top-down view, tracking analysis, the output visuals, system states and tunable parameters](images/blackGUI.png "GUI screen")
 
 
 
@@ -373,7 +368,7 @@ The one good thing about segmentation faults is that they kill your application 
 ### Second: Framerate cheats
 The second concern was the prevent or hide the drops in framerate that would be caused by too many dynamic videos being active at the same time. 
 
-- Erratic framerate variations can be hidden by updating animations with a FPS-dependent value **[ possible reference ? ]** `ofGetLastFrameTime()`
+- Erratic framerate variations can be hidden by updating animations with a FPS-dependent value `ofGetLastFrameTime()`
 - If the application's memory usage grows over time it probably has hidden memory leaks. To counter a steady drop in framerate it's not a bad idea to regularly terminate the app voluntarily. We found a natural and seamless opportunity to restart our application at the end of each 6-scene sequence.
 - By putting realistic limits on the number of your processed objects (blobs, video elements), you can avoid major framerate drops when mysterious glitches suddenly report the simultaneous detection of 100 blobs. 
 
@@ -397,15 +392,15 @@ At the point of writing this chapter *Choreographies for Humans and Stars* has b
 
 While for most people the choreography instructions seem easy to follow, we've also observed  several people mistaking the 7 concrete stones as interactive trigger elements. The confusion might be due to the delicate LEDs in the stones looking like sensors, or the descriptive text relief sculpted on top of the stones. 
 
-![On stones](images/camview_onsteles.jpg "Participants mistaking the stones as trigger elements")
+![Participants mistaking the stones as sensor objects](images/camview_onsteles.jpg "Participants mistaking the stones as trigger elements")
 
 The reception from the audience is very good even though the usage count is not very high yet. Besides at events like Montreal's Nuit Blanche - luring with fires and hot beverages - the winter season with its low temperatures currently prohibits people from hanging out and letting the site become a destination in itself. 
 
 For objective analysis of usage and interaction behaviours we are gathering data with a simple logging system. It will be interesting to observe the usage over time and analyse the difference between seasons and succeeding years. Besides looking at number, we are also curious to see how people (the planetarium staff, visitors and passersby) will live with the piece over time.
 
 
+![Explosions on the sun are triggered by jumping](images/hopatplane.jpg "Jumping instructions")
 
 
-![Exahle](images/exhaleatplane.jpg "Participants following the instruction to lie down, exhale and look at the sky")
+![The final instruction of the cycle asks participants to drop to the ground, exhale and look at the sky](images/exhaleatplane.jpg "Participants following the instruction to lie down, exhale and look at the sky")
 
-![On site](images/hopatplane.jpg "Project in action")
