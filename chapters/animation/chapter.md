@@ -1,6 +1,8 @@
 #Animation
 
-*by [Zach Lieberman](http://thesystemis.com) with edits from Kayla Lewis*
+*by [Zach Lieberman](http://thesystemis.com)* 
+
+*with edits from Kayla Lewis*
 
 ## Background 
 
@@ -319,8 +321,42 @@ If you alter the i/10.0, you can adjust the scale of the noise, either zooming i
    
 We can use noise to animate, for example, here, we move an object on screen using noise: 
 
+    float x = ofMap( ofNoise( ofGetElapsedTimef()), 0, 1, 0, ofGetWidth());
+    ofCircle(x,200,30);
+  
+If we move y via noise, we can take a noise input value somewhere "away" from the x value, ie further down the curved line: 
 
-** TODO ** 
+	float x = ofMap( ofNoise( ofGetElapsedTimef()), 0, 1, 0, ofGetWidth());
+    float y = ofMap( ofNoise( 1000.0+ ofGetElapsedTimef()), 0, 1, 0, ofGetHeight());
+    ofCircle(x,y,30);
+
+Alternatively, ofNoise takes multiple demensions.  Here's a quick sketch moving something in a path via ofNoise using the 2d dimensions
+
+![noise via 2d](images/noise2d.png)
+ 
+ The code for this example (note the 2 inputs into ofNoise, this is a 2-dimensional noise call.  it allows us to use the same value for time, but get different results):
+
+	//--------------------------------------------------------------
+    void ofApp::setup(){
+        ofBackground(0);
+        ofSetBackgroundAuto(false);
+    }
+
+    //--------------------------------------------------------------
+    void ofApp::update(){
+    }
+
+    //--------------------------------------------------------------
+    void ofApp::draw(){
+        
+        float x = ofMap( ofNoise( ofGetElapsedTimef()/2.0, -1000), 0, 1, 0, ofGetWidth());
+        float y = ofMap( ofNoise( ofGetElapsedTimef()/2.0, 1000), 0, 1, 0, ofGetHeight());
+        ofNoFill();
+        ofCircle(x,y,3);
+        
+    }
+
+There's a ton more we can do with noise, we'll leave it for now but encourage you to look at the noise examples that come with openframeworks, which show how noise can be use to create lifelike movement.  Also, we encourage readers to investigate the work of [Ken Perlin](http://mrl.nyu.edu/~perlin/), author of the simplex noise algorithm -- he's got great examples of how you can use noise in creative playful ways. 
 
 
 ## Simulation
