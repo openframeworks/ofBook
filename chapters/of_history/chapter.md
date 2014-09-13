@@ -1,5 +1,7 @@
 #History
 
+*by [Zach Lieberman](http://thesystemis.com)*
+
 
 Openframeworks began around 2004 / 2005.  I was teaching at Parsons School of Design, and at the same time, making a living as an artist creating interactive projects with code.  
 
