@@ -1,8 +1,4 @@
-#intro
-
-## OF history
-
-## philosophy 
+# philosophy
 
 openFrameworks is guided by a number of goals: it should be collaborative, usable and simple, consistent and intuitive, cross-platform, powerful, and extensible. openFrameworks is also driven by a "do it with others" (DIWO) philosophy.
 
