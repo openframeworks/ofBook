@@ -6,10 +6,11 @@ basics
 	setup_and_project_structure
 	intro_to_graphics
 	OOPs!
-	animation
 approaches
+	animation
 	data_vis
 	game_design
+	image_processing_computer_vision 
 i/o
 	hardware
 	sound
