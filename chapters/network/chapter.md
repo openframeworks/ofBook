@@ -3,7 +3,7 @@
 
 *by [Arturo Castro](http://arturocastro.net)*
 
-*corrections by Brandon Dorsey*
+*corrections by Brannon Dorsey*
 
 
 ## TCP vs UDP
