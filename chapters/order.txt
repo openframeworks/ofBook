@@ -1,25 +1,32 @@
 foreward
-of_philosophy
-cplusplus_basics
-setup_and_project_structure
-OOPs!
-animation
-intro_to_graphics
-data_vis
-game_design
-hardware
-sound
-ios
-c++11
-memory
-threads
-version_control_with_git
-advanced_graphics
-network
-math
-ofSketch
-project_elliot
-project_eva
-project_joel
-installation_up_4evr_macosx
-installation_up_4evr_linux
+	foreward
+basics
+	of_philosophy
+	cplusplus_basics
+	setup_and_project_structure
+	intro_to_graphics
+	OOPs!
+	animation
+approaches
+	data_vis
+	game_design
+i/o
+	hardware
+	sound
+	network	
+advanced topics
+	advanced_graphics
+	math
+	memory
+	threads
+	ios	
+	c++11
+project breakdowns
+	project_elliot
+	project_eva
+	project_joel
+tools 
+	version_control_with_git
+	ofSketch
+	installation_up_4evr_macosx
+	installation_up_4evr_linux

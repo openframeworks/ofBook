@@ -84,7 +84,37 @@ def clone(el):
 
 # Get the order of the chapters
 chapterOrderPath = os.path.join("..", "chapters", "order.txt")
-chapters = open(chapterOrderPath).read().splitlines()
+
+
+# (1) get a straight list of chapters
+
+chapters = []
+lines = open(chapterOrderPath).read().splitlines()
+for line in lines:
+	leading_spaces = len(line) - len(line.lstrip())
+	if (leading_spaces):
+		chapters.append(line.lstrip().rstrip())
+
+# (2) make an organizational heirarchy 
+
+chapterGroups = []
+chapterGroup = {}
+
+for line in lines:
+	leading_spaces = len(line) - len(line.lstrip())
+	if (leading_spaces == 0):
+		if ('groupName' in chapterGroup):
+			chapterGroups.append(chapterGroup)
+		chapterGroup = {}
+		chapterGroup['groupName'] = line.rstrip()
+		chapterGroup['chapters'] = []
+	if (leading_spaces):
+		chapterGroup['chapters'].append(line.lstrip().rstrip())
+#snag the last group if we got to the end
+if ('groupName' in chapterGroup):
+	chapterGroups.append(chapterGroup)
+
+
 
 # Create the output directories for the webBook
 webBookPath = os.path.join("..", "output", "webBook")
@@ -148,6 +178,7 @@ for chapter in chapters:
 			chapterDict['title'] = "needs h1"
 		h2s = soup.find_all("h2")
 
+		chapterDict['chapterListName'] = chapter
 		chapterDict['innerTags'] = [];
 		chapterDict['destChapterPath'] = destChapterPath
 		for h2 in h2s: 
@@ -212,25 +243,53 @@ soup.append(html)
 
 # now, we have a full list of chapters, let's add this to HTML of each page: 
 
+
+# for cg in chapterGroups:
+# 	print cg['name']
+# 	for c in cg['chapters']:
+# 		print c
+
+
+def returnChapterByCommonName( commonName ):
+	for c in chapterTags: 
+		if c['chapterListName'] == commonName: 
+			return c
+	return None
+
+
+
 for chapter in chapterTags: 
 	soup = Soup()
 
 	a = Tag(soup, None, "a")
 	soup.append(html)
 	ul = Tag(soup, None, "ul")
-	for c in chapterTags: 
-		
+
+	for cg in chapterGroups:
+
 		li = Tag(soup, None, "li")
-		if (c == chapter):
-			 li['class'] = "selected"
-		a = Tag(soup, None, "a");
-		a['href'] =  c['path'] + ".html"
-		a.string = c['title']
-		li.append(a)
+		li['class']="group"
+		li.append( cg['groupName'])
 		ul.append(li)
+
+		for chap in cg['chapters']:
+
+			
+
+			c = returnChapterByCommonName(chap)
+			if (c != None):
+				li = Tag(soup, None, "li")
+				if (c == chapter):
+					 li['class'] = "selected"
+				a = Tag(soup, None, "a");
+				a['href'] =  c['path'] + ".html"
+				a.string = c['title']
+				li.append(a)
+				ul.append(li)
+			else:
+				print chap
 		
 	
-
 	soupFromFile = Soup(open(chapter['destChapterPath']).read())
 	chaptersTag = soupFromFile.find_all("div", {"id":"chapters"})
 	chaptersTag[0].append(ul);
