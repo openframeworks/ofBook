@@ -17,7 +17,7 @@ In 2008 we won a prize at Ars electronica and built a labratory called OF lab wh
 
 We've been lucky in these events to be able to work with great institutions such as The Studio for Creative Inquiry, V&A museum, YCAM, Imal, Ars Electronica and Eyebeam, which have helped sponsored events to bring the OF community together. 
 
-In recent years, we've tried to help grow the community -- folks like Kyle Mcdonald have helped organize the diverse interests of developers and keep everything focused while Caitlin Morris has produced detailed surveys of the community.  Greg Borenstein and James George helped launch ofxAddons.com, an online repository which helps organize the impressive quantity of addons that the community is creating on a daily basis.  In addition, there are now section leaders for the development of OF, helping grow different parts of the codebase and help imagine what modern OF looks like.   Finally, there are countless contributors to OF who help with the codebase, documentation, examples, addons and help answer questions on the forum.   
+In recent years, we've tried to help grow and expand the community -- folks like Kyle Mcdonald have helped organize the diverse interests of developers and keep everything focused while Caitlin Morris has produced detailed surveys of the community.  Greg Borenstein and James George helped launch ofxAddons.com, an online repository which helps organize the impressive quantity of addons that the community is creating on a daily basis.  In addition, there are now section leaders for the development of OF, helping grow different parts of the codebase and help imagine what modern OF looks like.   Finally, there are countless contributors to OF who help with the codebase, documentation, examples, addons and help answer questions on the forum.   
 
 More then anything, we've tried as hard as we can to create a friendly atmosphere around programming, which can be an unfriendly activity and in some ways isolating.  We preach the idea of art making as a labratory, as R&D for humanity and OF is one attempt to make a large lab where we can grow and share experiments together. Somehow, luckily, and improbably, we've attracted some of the most amazing, helpful, warm hearted, lovely people to come be a part of this and if you're not already, we'd like to say **welcome**.
 
@@ -30,7 +30,11 @@ A couple of notes,
 
 * Feedback is very much appreciated and we'd like to know what's missing, or what you'd like to be in here.  Likewise, if you find something helpful, we'd love to here it too!  Our github repo is active and we take issues and pull requests.  
 * Please note that there's likely gaps here.  We've tried to roughly lay out chapters in order of skill level, but since it's a collectively written book it can feel a bit disorienting, some chapters are on the long side, some are short.  Think of it not as a book you read front to back, but more like a collection of short tutorials from the community.  
-* Everything unless noted in CC licensed **insert license**
+
+*Every chapter, unless noted, is licensed: [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-nc-sa/4.0/deed.en_US)*
+
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>
+
 
 ## credits
 
