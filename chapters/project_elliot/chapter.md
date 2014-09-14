@@ -1,16 +1,8 @@
 #Case Study : Line Segments Space
 
+*by [Mimi Son and  Elliot Woods (Kimchi and Chips)](http://www.kimchiandchips.com/)*
+
 ![Line Segments Space](images/title.jpg)
-
-==please format this==
-
-* Kimchi and Chips
-* Mimi Son, Elliot Woods
-* Installation
-* Seoul, 2013
-* 4x3x7 meters (WxHxD)
-* Digital Emulsion, Nylon String
-
 
 ##Foreward
 *Line Segments Space* is an artwork created by studio [Kimchi and Chips](http://kimchiandchips.com) (Mimi Son, Elliot Woods), and is the third installation within a series of works titled 'Digital Emulsion', preceded by Lit Tree (2011) and Assembly (2012). The pricipal technician for this project is me, Elliot, the voice of this chapter.

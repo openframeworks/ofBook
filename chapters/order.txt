@@ -21,6 +21,5 @@ ofSketch
 project_elliot
 project_eva
 project_joel
-project_memo
 installation_up_4evr_macosx
 installation_up_4evr_linux

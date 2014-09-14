@@ -486,6 +486,3 @@ void ofApp::draw(){
 >Note: While the example above aims to show how to use of3DPrimitive to create custom geometries while being simple enough to fit in this context, usually is not a good idea to use of3DPrimitive for simple primitives like the one above. Calculating the transformations of an ofNode is kind of expensive in terms of CPU usage. For primitives with lots of vertices it's the way to go, but for something like the previous example it is usually just faster to recalculate all the points in their new position using an ofVboMesh
 
 
-<em style="font-size:0.8em; text-align:center; display:block;">This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.en_US">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.</em>
-
-<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>

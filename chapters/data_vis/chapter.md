@@ -1,5 +1,8 @@
 #Information Visualization Chapter
 
+*by [Tega Brain](http://www.tegabrain.com/)*
+
+
 This chapter gives a brief overview of working with data in OpenFrameworks and introduces some basic information visualisation techniques. It describes steps in the data visualisation process, common file formats and useful functions for converting data. It is structured using two specific examples; a time based plot and a map with geolocated data. 
 
 ##Intro

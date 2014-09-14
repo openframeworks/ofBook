@@ -1,4 +1,7 @@
- #hardware
+#hardware
+
+*by [Caitlin Morris](http://www.caitlinmorris.net/) and [Pierre Proske](http://www.digitalstar.net/)*
+
 
 ## introduction
 

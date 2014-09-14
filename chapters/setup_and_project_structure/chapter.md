@@ -1,5 +1,7 @@
 #openFrameworks project structure and setup
 
+*by [Roy Mcdonald](http://macrobio.cl/)*
+
 Now that you've learned the basics of C++ in Chapter 2, let's get into openFrameworks (I'll refer to it as OF from now on). Chapter 1 talks about OF in very abstract and conceptual manner, which is really useful for understanding the design of the OF environment. It's really important to read Chapter 1 if you haven't yet.
 
 I have found that it is very useful to explain OF by making analogies to cooking. Coding and cooking have a lot of things in common, and most people are familiar with the act of cooking. In this chapter, I'll be drawing connections between processes and terminology in cooking and openFrameworks.
