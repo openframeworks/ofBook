@@ -2,7 +2,7 @@
 
 *by [Arturo Castro](http://arturocastro.net)*
 
-*corrections by Brandon Dorsey*
+*corrections by Brannon Dorsey*
 
 ## What's a thread and when to use it
 
