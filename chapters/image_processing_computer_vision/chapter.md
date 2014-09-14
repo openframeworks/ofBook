@@ -1,4 +1,9 @@
 
+# Image Processing and Computer Vision
+By [Golan Levin](http://www.flong.com/)
+
+Edited by [Brannon Dorsey](http://brannondorsey.com)
+
 ## 1. Preliminaries to Image Processing
 
 ### 1.1. Digital image acquisition and data structures
