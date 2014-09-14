@@ -1,31 +1,11 @@
 #Ooops! = Object Oriented Programming + Classes#
 
-##Contents
-• 1 - Overview
 
-• 2 - What is OOP
-
-• 3 - How to build your own Classes (simple Class)
-
-• 4 - make an Object from your Class 
-
-• 5 - make Objects from your Class
-
-• 5.1- make more Objects from your Class
-
-• 6 - make even more Objects from your Class: properties and  constructor
-
-• 6.1 - make even more Objects from your Class
-
-• 7 - make and delete as you wish  - vectors
-
-• 8 - quick intro to polymorphism (inheritance)
-
-##• 1 - Overview
+##Overview
 This tutorial is an quick and practical introduction to Object Oriented Programming in openFrameworks and a how-to guide to build and use your own classes.
 By the end of this chapter you should understand how to create your own objects and have a lot of balls bouncing on your screen!
 
-##• 2 - What is OOP
+##What is OOP
 Object Oriented Programming is a programming paradigm based on the use of objects and their interactions. Some terms and definitions used within OOP are listed below:
 
 -A Class defines the characteristics of a thing - the object - and its behaviors; it defines not only its properties and attributes but also what it can do.
@@ -38,7 +18,7 @@ A recurring analogy is to see a Class as a the cookie cutter and the cookies as 
 
 Note: please see chapter (Josh Nimoy's) for amore detailed explanation of Objected Oriented languages.
 
-##• 3 - How to build your own Classes (simple Class)
+##How to build your own Classes (simple Class)
 Classes and objects are similar to the concepts of movie clips and instances in Flash and are also a fundamental part of Java programming. 
 Because like coding, cooking is fun and we tend to experiment in the kitchen let's continue with the classic metaphor of a cookie cutter as a class and cookies as the objects.
 Every class has two files: a header file, also known as a Declarations file with the termination '.h' and an implementation file, terminating in '.cpp'.
@@ -133,7 +113,7 @@ Now, this is such a simple program that we could have wirtten it inside our OfAp
 
 **[KL: Explain exactly why we are creating this class outside of ofApp. This and the explanation below seem kind of rushed and OOP can benefit by using some real life analogies to demonstrate class relationships.]**
 
-##• 4 - make an Object from your Class 
+##make an Object from your Class 
 Now that we've created a class let's make the real object! In your testApp.h (header file) we'll have to declare a new object and get some free memory for it. But first we need to include (or give the instructions to do so) your ofBall class in our program. To do this we need to write:
 
 	#include "ofBall.h"
@@ -156,7 +136,7 @@ and in the draw() function lets add:
 Compile and run! By now you must be seeing a bouncing ball on the screen! Great!
 
 
-##• 5 - make Objects from your Class
+##make objects from your Class
 By now, you're probably asking yourself why you went to so much trouble to create a bouncing ball. You could have done this (and probably have) without using classes. In fact one of the advantages of using classes is to be able to create multiple individual objects with the same characteristics. So, let's do that now! Go back to your ofApp.h file and create a couple of new objects:
 
 	ofBall myBall1;
@@ -181,7 +161,7 @@ and also in the draw() function:
 
 
 
-##• 5.1- make more Objects from your Class
+##make more Objects from your Class
 We've just created 3 objects but what if we wanted to created 10, 100 or maybe 1000's of them?! Hardcoding one by one would be a painful and long process that can be easily solved by automating the object creation and function calls. Just by using a couple for loops we'll make this process simpler and cleaner. Instead of declaring a list of objects one by one we'll create an array of objects of type 'ofBall'. We'll also introduce another new element: a constant. Constants are defined after the #includes as #define CONSTANT_NAME value. This is a way of defining a constant value that won't ever change in the program:
 
 **[KL: The pseudo code-like explanation above is an effective approach. This is a good method to use before writing out the ofBall class above, too. Also, I've been taking out words like "just" before steps and simplifying verb tenses for clarity. I'd keep that in mind as you continue writing this chapter. The more concise, the better.]** 
@@ -213,7 +193,7 @@ in the draw() function:
 
 
 
-##• 6 - make even more Objects from your Class: properties and constructors
+##make even more Objects from your Class: properties and constructors
 
 As we've seen, each of the objects has a set of properties defined by its variables (position, speed, direction, and dimension). Another advantage of object oriented programming is that the objects created can have different values for each of its properties. For us to have better control of each object, we can have a constructor that defines these characteristics and lets us access them. In the ofBall definitions file (*.h) we can change the constructor to include some of the object's properties (let's say position and dimension):
 
@@ -307,7 +287,7 @@ As you see it is now possible to directly control the objects properties on its 
 
 
 
-##• 6.1 - make even more Objects from your Class
+##make even more Objects from your Class
 In this part of our OOPs! tutorial **[KL: I simplified two statements into one for concision.]** we'll demonstrate an automation process to create objects from our previously built class. We'll create more **[KL: "We'll create" works better than "we'll be creating." This is an example of verb tenses I've been changing. It's shorter and clearer.]**  objects by using arrays like we did in part 2.1 but this time we'll have to do some minor changes:
 
 	ofBall** myBall;   // an array of pointers of type ofBall
@@ -344,7 +324,7 @@ similarly when we want to draw and update the objects we've created we'll need '
 
 **[KL: Great tutorial so far. The organization works well. I'm eager to see the rest. The main thing so far would be focusing on concision in your writing.]**
 
-##• 7 - Make and delete as you wish  - using vectors
+##Make and delete as you wish  - using vectors
 
 In this part we'll look into more dynamic ways of creating and destroying objects from our class.
 Vectors are special arrays that don;t need a pre-fixed number of elements, that's their magic: vectors are elastic! 
@@ -400,7 +380,7 @@ On the testApp::MousePressed Call we will loop though our vector and check the d
 To learn more about stl::vector check xxx chapter or this online shory tutorial : http://www.openframeworks.cc/tutorials/c++%20concepts/001_stl_vectors_basic.html
 
 
-##• 8 - Quick intro to polymorphism (inheritance)
+##Quick intro to polymorphism (inheritance)
 You're now discovering the power of OOP, making a class and creating as many objects from that in an instant, adding and deleting by your application needs. Now, for a second let's go back to our cooking metaphor (yummi!) and imagine that your cookies, even sharing the same cookie cutter and dough using some different sprinkles on each won't hurt and add some desired variation to our cookie jar selection!
 This is also the power of OOP and inheritance: by allowing to use a base class and add some specific behaviours overwrite some of the behaviours of a class, creating a subset of instances / objects with slightly different behaviors.
 The great thing about this is it's repurposability, we're using the 'mother' class as a starting point, using all its capabilities but we overwrite one of its methods to give it more flexibility.
@@ -437,7 +417,8 @@ Your ofBall header file should look like this:
 
 And let's make some slight changes on the implementation file:
 lets; chage the min and maximum values of the random size to larger values and set the position to the center of the screen.Make it look like this: 
-#include "ofBall.h"
+
+	#include "ofBall.h"
 
 	ofBall::ofBall(){
 		x = ofGetWidth()*.5;
