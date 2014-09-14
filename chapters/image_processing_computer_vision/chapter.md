@@ -97,7 +97,7 @@ The header file for our app declares an `ofVideoGrabber`, which we will use to a
 
 class ofApp : public ofBaseApp{
 	public:
-
+	
 		void setup();
 		void update();
 		void draw();
@@ -115,7 +115,7 @@ Does the `unsigned char*` declaration look unfamiliar? It's important to recogni
 
 Below is the complete code of our webcam-grabbing .cpp file. As you might expect, the `ofVideoGrabber` object provides many more options and settings, not shown here. These allow you to do things like listing and selecting from available camera devices; setting your capture dimensions and framerate; and (depending on your hardware and drivers) adjusting parameters like camera exposure and contrast.
 
-Note that the example segregates our heavy computation into `update()`, and rendering our graphics into `draw()`. This is a recommended pattern. 
+Note that the example segregates our heavy computation into `update()`, and rendering our graphics into `draw()`. This is a recommended pattern for structuring your code. 
 
 ```cpp
 // Example 2. An application to capture, invert,
