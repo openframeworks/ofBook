@@ -1,11 +1,12 @@
 # ofSketch
-By Brannon Dorsey (& Christopher Baker?)
+By Brannon Dorsey
 
-![ofSketch Screenshot](images/ofSketch.jpg)
+Edited by [Michael Hadley](http://www.mikewesthad.com/).
 
-**[MH: I modified the headers so that h1 is only used for the title.  Otherwise the web/pdf outputs get a little funky]**
+![Hello World Example](images/HelloWorldExample.png)
+
 ## What is ofSketch?
-[ofSketch](https://github.com/olab-io/ofSketch) is a barebones development environment created specifically for building and running openFrameworks sketches. It is a "plug and play" openFrameworks application that allows you to spend more time coding and less time with configuration.  **[mh: maybe instead of saying "plug and play," you could just mention that there is not installation process - it's just download and run]**
+[ofSketch](https://github.com/olab-io/ofSketch) is a barebones development environment created specifically for building and running openFrameworks sketches. Its a minimal installation openFrameworks application that allows you to spend more time coding and less time with configuration.
 
 One of the main goals in developing ofSketch is to decrease the barriers to entry for openFrameworks. For this reason, it should be noted that ofSketch is primarily geared towards beginners and new coders. 
 
@@ -13,7 +14,7 @@ One of the main goals in developing ofSketch is to decrease the barriers to entr
 
 - Teaching or learning openFrameworks
 - Making [the leap](http://openframeworks.cc/tutorials/first%20steps/002_openFrameworks_for_processing_users.html) from [Processing](http://processing.org) to openFrameworks
-- Writing and running code quickly **[mh: Rapid prototyping? Running code quickly almost sounds like processing speed]**
+- Rapid code prototyping
 - Creating code snippets, experiments, and examples
 - Running openFrameworks on the [Raspberry Pi](http://www.raspberrypi.org/)
 
@@ -22,12 +23,16 @@ One of the main goals in developing ofSketch is to decrease the barriers to entr
 - Replacing a professional IDE like Xcode, Code::Blocks, Visual Studio, etc...
 - Building sizable projects or applications
 
-**[mh: I think the above two lists could be folded into one section, and then, the text below could be folded into the download and install section]**
+### How does ofSketch work?
 
-If you've read Roy's _openFrameworks Project Structure and Setup_ chapter **[mh: include ch number]** , ofSketch should be an easy step sideways **[mh: "step sideways" is a little unclear]**. That chapter gave an overview of installing and using openFrameworks with different professional IDEs. If you skipped ahead to this chapter, that is okay too! With ofSketch you don't have to worry about downloading openFrameworks or using Project Generator. All you need to do is download the ofSketch App. **[mh: is this going to be true for windows by the 15th?]**
+![App to Browser Diagram](images/browser_diagram.png)
+
+ofSketch works by internally communicating back and forth between the ofSketch application and the browser editor. The application, among other things, reads/writes files to your computer, and compiles and launches your projects. The browser editor acts as the graphical user interface (GUI), where you code, run, and manage your projects. When you interact with ofSketch you are doing so from the browser, however the distinction between the application and the browser should not be overlooked. For more info, check out the [ARCHITECTURE.md](https://github.com/olab-io/ofSketch/blob/master/ARCHITECTURE.md) file on the ofSketch GitHub repository. 
 
 
-## Download & Install [mh: Download and Run?]
+<!-- If you've read Roy's _openFrameworks Project Structure and Setup_ chapter, ofSketch should be an easy step sideways **[mh: "step sideways" is a little unclear]**. That chapter gave an overview of installing and using openFrameworks with different professional IDEs. If you skipped ahead to this chapter, that is okay too! With ofSketch you don't have to worry about downloading openFrameworks or using Project Generator. All you need to do is download the ofSketch App. -->
+
+## Download
 
 Visit the ofSketch [releases page](https://github.com/olab-io/ofSketch/releases) to download the ofSketch app for your platform.
 
@@ -53,13 +58,11 @@ Code in ofSketch looks a bit different than what you may be used to with openFra
 
 ### ofSketch Style Code
 
-ofSketch uses "header style" **[mh: maybe add a ref here]** C++, where code implementation is written along with declarations in the header file, instead of the matching `.cpp` source file. If this doesn't make since to you, don't worry. Essentially, this allows us to write simple, easy-to-read code, that is great for beginners!
+ofSketch uses "[header style](http://hanxue-it.blogspot.com/2014/04/why-include-cc-implementation-code-in.html)" C++, where code implementation is written along with declarations inside of the header file, instead of the matching `.cpp` source file. If this doesn't make since to you, don't worry. Essentially, this allows us to write simple, easy-to-read code, that is great for beginners!
 
 ### Project File
 
 Every ofSketch project starts with an empty project file that looks like this:
-
-**[mh: we're switching over to github flavored fencing for code blocks]**
 
 ```cpp
 void setup() {
@@ -73,7 +76,7 @@ void draw() {
 }
 ```
 
-If you are coming from Processing, this should be extremely familiar. To add global functions and variables, simply add them to this project file. You don't need to prefix any identifiers (variables, functions, etc...) with `ofApp` (or the older `testApp`). **[mh: not sure you even need to mention the testApp bit]**
+If you are coming from Processing, this should be extremely familiar. To add global functions and variables, simply add them to this project file. You don't need to prefix any identifiers (variables, functions, etc...) with `ofApp`.
 
 ```cpp
 // global variables go up here
@@ -98,16 +101,14 @@ void printHelloWorld() {
 
 ### Classes
 
-Using classes in ofSketch is easy! Press the "+" button in the tab bar **[mh: in the browser]** to add a new class. When you do this a class template is automatically generated for you. Here is an example class template for a class called "MyNewClass":
-
-**[mh: i'd suggest using Particle here rather than MyNewClass.  It helps link up this code block with the next one**]
+Using classes in ofSketch is easy! Press the "+" button in the tab bar in the ofSketch browser window to add a new class. When you do this a class template is automatically generated for you. Here is an example class template for a "Particle" class:
 
 ```cpp
-class MyNewClass{
+class Particle{
 
 public:
 
-    MyNewClass(){
+    Particle(){
 
     }        
 };
@@ -196,16 +197,15 @@ Note that we also added an `update` function. As you may know by now, it is cust
 
 ### Examples
 
-ofSketch comes packaged with a few basic examples that illustrate the ofSketch code style. Most of them are ported from the regular openFrameworks examples, but there are a few new ones too. Press the "Open Project" button inside ofSketch to open one of them. **[mh: shout out specific example to run and show a pic]**
+![Open Project](images/open_project.png)
 
-While the code in this chapter highlights the difference between ofSketch code and a normal implementation of C++ code, reviewing the examples should give you a better idea of the general ofSketch style.  **[mh: this paragraph seems redundant since you've already introduced the ofSketch style]**
+ofSketch comes packaged with a few basic examples that illustrate the ofSketch code style. Most of them are ported from the regular openFrameworks examples, but there are a few new ones too. Press the "Open Project" button inside ofSketch to open one of them.
 
+While the code in this chapter highlights the difference between ofSketch code and a normal implementation of C++ code, reviewing the examples should give you a better idea of the general ofSketch style.
 
 ## Sketch Format
 
 ![Sketch Folder Structure](images/sketch_folder_structure.png)
-
-**[mh: I assume data/ is in the bin/?  Might be useful to mention that somewhere.  Beginners might not know where to put files that they want to load.]**
 
 If you take a look at an app in your Projects folder, you will see a "sketch" directory. This is where all of the ofSketch source files are saved, each with a ".sketch" file extension. When you use ofSketch, you are editing the files in this directory. Whenever you run an app from inside ofSketch, all of the files in the "sketch" directory are processed to generate source files inside of the "src" directory. 
 
@@ -218,21 +218,16 @@ Soon, ofSketch will include fancy project import and export feature which will a
 
 One of the highlights of the ofSketch browser editor is the ability to edit code on a remote machine through a network connection. This is especially helpful when coding with the Raspberry Pi, or when tweaking live installation code. The figure below illustrates this in practice. 
 
-**[mh: I'd add a screenshot of the ofSketch browser interface on the mac in the diagram.  Aside from that, kickass graphic.]**
-
 ![Remote Coding Diagram](images/remote_setup.png)
 
 1. Raspberry Pi running an ofSketch app that draws a landscape to a connected to a TV
 2. Laptop with web browser pointed to RPi's IP address and port 7890 (e.x. http://192.168.0.204:7890)
 
-To code with ofSketch remotely, start ofSketch **[MH: Might not be clear to everyone that you mean the executable here]** on the machine that you want to run the openFrameworks app. In order to connect to ofSketch from that machine, you need to know its unique IP address on the network. You can use an application like [Bonjour Browser](https://www.google.com/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8#q=bonjour+browser) on CPU 2 to discover CPU 1's IP address.
+To code with ofSketch remotely, start the ofSketch application on the machine that you want to run the openFrameworks app. In order to connect to ofSketch from that machine, you need to know its unique IP address on the network. You can use an application like [Bonjour Browser](https://www.google.com/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8#q=bonjour+browser) on device 2 to discover device 1's IP address.
 
-Once you have the IP address of CPU 1, open a web browser on CPU 2 and visit `http://CPU_1_IP_ADDRESS:7890`. 
+Once you have the IP address of device 1, open a web browser on device 2 and visit `http://CPU_1_IP_ADDRESS:7890`. 
 
-You can now create, edit, and run projects remotely on CPU 2.
-
-__(BD: Is all of this "CPU 1" & "CPU 2" language confusing?)__
-**[mh: I'd go with something a bit more generic, like device 1 & 2.  Then you could include those names in your diagram]**
+You can now create, edit, and run projects using device 2.
 
 ## Future 
 
@@ -240,7 +235,7 @@ The ofSketch project is still in its infancy. In fact, at the time of writing th
 
 ### App Export
 
-App Export will allow users to export executables and resources to use on other computers **[mh: maybe "...resource that can be transferred to and run on a different computer."]**. These will be presented as a zipped bundle for easier transport. **[mh: maybe "the exported project will be downloaded a zipped bundle for easier transport."]**
+App Export will allow users to export executables and resources that can be transferred to and run on other computers. The exported project will be downloaded as zipped bundle for easy transport.
 
 ### Project File Export
 
@@ -250,8 +245,6 @@ These project files will be useful to allow new users to access more advanced ed
 ### Custom .h & .cpp Files
 
 To aid in the transition from ofSketch to more advanced IDEs, ofSketch users will be given the option to create and work with `.h` and `.cpp` files. Eventually, using this functionality will be as simple as including the appropriate extension when creating the file.
-
-Both Processing and [Arduino](http://arduino.cc/) IDEs allows similar functionality when creating and using `.java` or `.h` and `.cpp` files respectively.  **[mh: I don't think this is necessary to mention]**
 
 ### Clang Indexed Autocomplete
 
