@@ -56,7 +56,7 @@ void ofApp::draw(){
 }
 ```
 
-Compiling and running the above program displays the following canvas, in which this tiny image scaled up by a factor of 10, and rendered at pixel location (10,10). The positioning and scaling of the image are performed by the `myImage.draw()` command. Note that the image appears "blurry" because, by default, openFrameworks uses [linear interpolation](http://en.wikipedia.org/wiki/Linear_interpolation) when displaying upscaled images.
+Compiling and running the above program displays the following canvas, in which this (very tiny!) image is scaled up by a factor of 10, and rendered so that its upper left corner is positioned at pixel location (10,10). The positioning and scaling of the image are performed by the `myImage.draw()` command. Note that the image appears "blurry" because, by default, openFrameworks uses [linear interpolation](http://en.wikipedia.org/wiki/Linear_interpolation) when displaying upscaled images.
 
 ![Pixel data diagram](images/lincoln-displayed.jpg)
 
