@@ -55,13 +55,12 @@ void ofApp::draw(){
 	myImage.draw(10, 10, imgW * 10, imgH * 10);
 }
 ```
-**[BD: I changed `myImage.draw(10, 10, imgW*10.0, imgH*10.0);` to `myImage.draw(10, 10, imgW * 10, imgH * 10);` above for clarity, and to refrain from mixing int and float multiplication, which could be confusing even though it works fine in this case.]**
 
-Compiling and running the above program displays the following canvas, in which this tiny image scaled up by a factor of 10, and rendered at pixel location (10,10). The positioning and scaling of the image is all performed by the `myImage.draw()` command. Note that the image appears "blurry" because, by default, openFrameworks uses linear interpolation when displaying upscaled images. **[BD: Perhaps a link to a resource explaining linear interpolation would be helpful here]**
+Compiling and running the above program displays the following canvas, in which this tiny image scaled up by a factor of 10, and rendered at pixel location (10,10). The positioning and scaling of the image is all performed by the `myImage.draw()` command. Note that the image appears "blurry" because, by default, openFrameworks uses [linear interpolation](http://en.wikipedia.org/wiki/Linear_interpolation) when displaying upscaled images.
 
 ![Pixel data diagram](images/lincoln-displayed.jpg)
 
-If you're new to working with images in OF, it's worth pointing out that you should try to avoid loading images in the `draw()` or `update()` functions, if possible. Why? Well, reading data from disk is one of the slowest things you can ask a computer to do. In many circumstances, you can simply load all the images you'll need just once, when your program is first initialized, in `setup()`. By contrast, if you're repeatedly loading an image in your `draw()` loop — the same image, again and again, 60 times per second — you're hurting the performance of your app, and potentially even risking damage to your hard disk.  
+If you're new to working with images in OF, it's worth pointing out that you should try to avoid loading images in the `draw()` or `update()` functions, if possible. Why? Well, reading data from disk is one of the slowest things you can ask a computer to do. In many circumstances, you can simply load all the images you'll need just once, when your program is first initialized, in `setup()`. By contrast, if you're repeatedly loading an image in your `draw()` loop — the same image, again and again, sixty times per second — you're hurting the performance of your app, and potentially even risking damage to your hard disk.  
 
 #### Where (Else) Images Come From
 
@@ -72,24 +71,20 @@ In openFrameworks, raster images can come from a wide variety of sources, includ
 - a sequence of frames loaded from a digital video file (using an `ofVideoPlayer`);
 - a buffer of pixels grabbed from whatever you've already displayed on your screen, captured with `ofImage::grabScreen()`;
 - a synthetic computer graphic rendering, perhaps obtained from an `ofFBO` or stored in an `ofPixels` or `ofTexture` object;
-- a real-time video from a more specialized variety of camera, such as a 1394b Firewire camera (via `ofxLibdc`), a networked Ethernet camera (via `ofxIpCamera`), a Canon DSLR (using `ofxCanonEOS`), or with the help of a variety of other community-contributed addons like `ofxQTKitVideoGrabber`, `ofxRPiCameraVideoGrabber`, etc.
+- a real-time video from a more specialized variety of camera, such as a 1394b Firewire camera (via `ofxLibdc`), a networked Ethernet camera (via `ofxIpCamera`), a Canon DSLR (using `ofxCanonEOS`), or with the help of a variety of other community-contributed addons like `ofxQTKitVideoGrabber`, `ofxRPiCameraVideoGrabber`, etc.;
 - perhaps more exotically, a *depth image*, in which pixel values represent *distances* instead of colors. Depth images can be captured from real-world scenes with special cameras (such as a Microsoft Kinect via the `ofxKinect` addon), or extracted from synthetic CGI scenes using (for example) `ofFBO::getDepthTexture()`.
 
-**[BD: The above list uses ";" to terminate the first 6 elements, and "." to end the last 2. Perhaps pick one character and remain consistent in the list (or maybe I am being anal and you can ignore this //comment :) )]**
+![We don't have the rights to this image, it's just something I found on the internet. We need something similar](images/kinect_depth_image.png) *An example of a depth image (left) and a corresponding RGB color image (right), captured simultaneously with a Microsoft Kinect. In the depth image, the brightness of a pixel represents its proximity to the camera.*
 
-![We don't have the rights to this image, it's just something I found on the internet. We need something similar](images/kinect_depth_image.png) *An example of a depth image (left) and a corresponding RGB color image (right), captured with a Microsoft Kinect. In the depth image, the darkness of a pixel represents its distance from the camera.*
-
-Incidentally, OF makes it easy to **load images directly from the Internet**, by using a URL as the filename argument, as in `myImage.loadImage("http://blah.com/img.jpg");`. Keep in mind that doing this will load the remotely-stored image *synchronously*, meaning your program will "block" (or freeze) while it waits for all of the data to download from the web. For an improved user experience, you can also load Internet images *asynchronously* (in a background thread), using the response provided by `ofLoadURLAsync()`; a  sample implementation of this can be found in the openFrameworks *imageLoaderWebExample* graphics example. Now that you can load images stored on the Internet, you can fetch images *computationally* using fun APIs (like those of Temboo, Instagram or Flickr), or from dynamic online sources such as live traffic cameras.
-
-**[BD: Link to API resources, or a description of what an API is above]**
+Incidentally, OF makes it easy to **load images directly from the Internet**, by using a URL as the filename argument, as in `myImage.loadImage("http://blah.com/img.jpg");`. Keep in mind that doing this will load the remotely-stored image *synchronously*, meaning your program will "block" (or freeze) while it waits for all of the data to download from the web. For an improved user experience, you can also load Internet images *asynchronously* (in a background thread), using the response provided by `ofLoadURLAsync()`; a  sample implementation of this can be found in the openFrameworks *imageLoaderWebExample* graphics example. Now that you can load images stored on the Internet, you can fetch images *computationally* using fun APIs (like those of [Temboo](https://temboo.com/library/), [Instagram](http://instagram.com/developer/) or [Flickr](https://www.flickr.com/services/api/)), or from dynamic online sources such as live traffic cameras.
 
 #### Acquiring and Displaying a Webcam Image
 
-The procedure for **acquiring a video stream** from a live webcam or digital movie file is no more difficult than loading an `ofImage`. The main conceptual difference is that the image data contained within an `ofVideoGrabber` or `ofVideoPlayer` happens to be continually refreshed, ~~usually about 30 times per second.~~ **[BD: "at the framerate of the footage."]**
+The procedure for **acquiring a video stream** from a live webcam or digital movie file is no more difficult than loading an `ofImage`. The main conceptual difference is that the image data contained within an `ofVideoGrabber` or `ofVideoPlayer` happens to be continually refreshed, usually about 30 times per second, or at the framerate of the footage.
 
-The following program (which you can find elaborated in the OF *videoGrabberExample*) shows the basic procedure. In this example below, for some added fun, we also fetch the buffer of data that contain the `ofVideoGrabber`'s pixels, then "invert" this data (to produce a "photographic negative") and display it with an `ofTexture`.
+The following program (which you can find elaborated in the OF *videoGrabberExample*) shows the basic procedure. In this example below, for some added fun, we also retrieve the buffer of data that contains the `ofVideoGrabber`'s pixels, then "invert" this data (to produce a "photographic negative") and display it with an `ofTexture`.
 
-The header file declares an `ofVideoGrabber`, which will be used to acquire video data from our computer's default webcam. We also declare a buffer of unsigned chars to store the inverted video frame, and the `ofTexture` which we'll use to display it:
+The header file for our app declares an `ofVideoGrabber`, which we will use to acquire video data from our computer's default webcam. We also declare a buffer of unsigned chars to store the inverted video frame, and the `ofTexture` which we'll use to display it:
 
 ```cpp
 // Example 2. An application to capture, display,
@@ -115,9 +110,9 @@ class ofApp : public ofBaseApp{
 };
 
 ```
-Does the `unsigned char*` declaration look unfamiliar? It's important to recognize and understand, because this is a nearly universal way of storing and exchanging image data. The `unsigned` keyword means that the values which describe the colors in our image are exclusively positive numbers. The `char` means that each color component of each pixel is stored in a single 8-bit number—a byte, with values ranging from 0 to 255—which for many years was also the data type in which *char*acters were stored. And the `*` means that the data named by this variable is not just a single unsigned char, but rather, an *array* of unsigned chars (or more correctly, a pointer to a buffer of unsigned chars). For more information about such datatypes, see Chapter 9, *Memory in C++*.
+Does the `unsigned char*` declaration look unfamiliar? It's important to recognize and understand, because this is a nearly universal way of storing and exchanging image data. The `unsigned` keyword means that the values which describe the colors in our image are exclusively positive numbers. The `char` means that each color component of each pixel is stored in a single 8-bit number—a byte, with values ranging from 0 to 255—which for many years was also the data type in which *char*acters were stored. And the `*` means that the data named by this variable is not just a single unsigned char, but rather, an *array* of unsigned chars (or more accurately, a *pointer* to a buffer of unsigned chars). For more information about such datatypes, see Chapter 9, *Memory in C++*.
 
-Below is the complete code of our webcam-grabbing .cpp file. As you might expect, the `ofVideoGrabber` object provides many more options and settings, not shown here. These allow you to do things like listing and selecting from available camera devices; choosing capture dimensions and frame rate; and (depending on your hardware and drivers) adjusting parameters like camera exposure and contrast.
+Below is the complete code of our webcam-grabbing .cpp file. As you might expect, the `ofVideoGrabber` object provides many more options and settings, not shown here. These allow you to do things like listing and selecting from available camera devices; setting your capture dimensions and framerate; and (depending on your hardware and drivers) adjusting parameters like camera exposure and contrast.
 
 ```cpp
 // Example 2. An application to capture, display,
@@ -178,9 +173,9 @@ This application continually displays the live camera feed, and also presents a 
 
 ![Video grabber screenshot](images/videograbber.png)
 
-Acquiring frames from a Quicktime movie or other digital video file stored on disk is an almost identical procedure. See the OF *videoPlayerExample* implementation or [`ofVideoGrabber` documentation](http://openframeworks.cc/documentation/video/ofVideoGrabber.html) for details.
+Acquiring frames from a Quicktime movie or other digital video file stored on disk is an almost identical procedure. See the OF *videoPlayerExample* implementation or `ofVideoGrabber` [documentation](http://openframeworks.cc/documentation/video/ofVideoGrabber.html) for details.
 
-A common pattern among computer vision developers is to switch between a pre-stored "sample" video of your scene, and a live camera grabber. That way, you can refine your processing algorithms from the comfort of your hotel room, and then switch to "real" camera input when you're back at the installation site. A hacky if effective example of this pattern can be found in the *opencvExample* in the addons example directory, where the switch is built using a `#define` [preprocessor directive](http://www.cplusplus.com/doc/tutorial/preprocessor/):
+A common pattern among computer vision developers is to switch between a pre-stored "sample" video of your scene, and a live camera grabber. That way, you can refine your processing algorithms in the comfort of your hotel room, and then switch to "real" camera input when you're back at the installation site. A hacky if effective example of this pattern can be found in the openFrameworks *opencvExample*, in the addons example directory, where the switch is built using a `#define` [preprocessor directive](http://www.cplusplus.com/doc/tutorial/preprocessor/):
 
 ```cpp
     //...
@@ -192,6 +187,7 @@ A common pattern among computer vision developers is to switch between a pre-sto
 	#endif
 	//...
 ```
+Uncommenting the `//#define _USE_LIVE_VIDEO` line in the .h file of the *opencvExample* forces the compiler to attempt to use a webcam instead of a pre-stored sample video. 
 
 #### Pixels in Memory
 To begin our study of image processing and computer vision, we'll need to do more than just load and display images; we'll need to *access, manipulate and analyze the numeric data represented by their pixels*. It's therefore worth reviewing how pixels are stored in computer memory. Below is a simple illustration of the grayscale image buffer which stores our image of Abraham Lincoln. Each pixel's brightness is represented by a single 8-bit number, whose range is from 0 (black) to 255 (white):
