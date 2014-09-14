@@ -1,17 +1,17 @@
 
 # Image Processing and Computer Vision
+
 By [Golan Levin](http://www.flong.com/)
 
 Edited by [Brannon Dorsey](http://brannondorsey.com)
 
-## 1. Preliminaries to Image Processing
+## Preliminaries to Image Processing
 
-### 1.1. Digital image acquisition and data structures
-
+### Digital image acquisition and data structures
 
 This chapter introduces techniques for manipulating (and extracting certain kinds of information from) *raster images*. Such images are sometimes also known as *bitmap images* or *pixmap images*, though we'll just use the generic term **image** to refer to any array (or *buffer*) of numbers that represent the color values of a rectangular grid of *pixels* ("picture elements"). In openFrameworks, such buffers come in a variety of flavors, and are used within (and managed by) a wide variety of convenient container objects, as we shall see.
 
-#### 1.1.1. Loading and Displaying an Image
+#### Loading and Displaying an Image
 
 Image processing begins with, well, *an image*. Happily, loading and displaying an image is very straightforward in OF. Let's start with this tiny, low-resolution (12x16 pixel) grayscale portrait of Abraham Lincoln:
 
@@ -63,7 +63,7 @@ Compiling and running the above program displays the following canvas, in which 
 
 If you're new to working with images in OF, it's worth pointing out that you should try to avoid loading images in the `draw()` or `update()` functions, if possible. Why? Well, reading data from disk is one of the slowest things you can ask a computer to do. In many circumstances, you can simply load all the images you'll need just once, when your program is first initialized, in `setup()`. By contrast, if you're repeatedly loading an image in your `draw()` loop — the same image, again and again, 60 times per second — you're hurting the performance of your app, and potentially even risking damage to your hard disk.  
 
-#### 1.1.2. Where (Else) Images Come From
+#### Where (Else) Images Come From
 
 In openFrameworks, raster images can come from a wide variety of sources, including (but not limited to):
 
@@ -83,7 +83,7 @@ Incidentally, OF makes it easy to **load images directly from the Internet**, by
 
 **[BD: Link to API resources, or a description of what an API is above]**
 
-#### 1.1.3. Acquiring and Displaying a Webcam Image
+#### Acquiring and Displaying a Webcam Image
 
 The procedure for **acquiring a video stream** from a live webcam or digital movie file is no more difficult than loading an `ofImage`. The main conceptual difference is that the image data contained within an `ofVideoGrabber` or `ofVideoPlayer` happens to be continually refreshed, ~~usually about 30 times per second.~~ **[BD: "at the framerate of the footage."]**
 
@@ -193,7 +193,7 @@ A common pattern among computer vision developers is to switch between a pre-sto
 	//...
 ```
 
-#### 2.1.1. Pixels in Memory
+#### Pixels in Memory
 To begin our study of image processing and computer vision, we'll need to do more than just load and display images; we'll need to *access, manipulate and analyze the numeric data represented by their pixels*. It's therefore worth reviewing how pixels are stored in computer memory. Below is a simple illustration of the grayscale image buffer which stores our image of Abraham Lincoln. Each pixel's brightness is represented by a single 8-bit number, whose range is from 0 (black) to 255 (white):
 
 ![Pixel data diagram](images/lincoln_pixel_values.png)
@@ -220,7 +220,7 @@ In point of fact, pixel values are almost universally stored, at the hardware le
 ```
 This way of storing image data may run counter to your expectations, since the data certainly *appears* to be two-dimensional when it is displayed. Yet, this is the case, since computer memory consists simply of an ever-increasing linear list of address spaces. *(Note how this data includes no details about the image's width and height. Should this list of values be interpreted as a grayscale image which is 12 pixels wide and 16 pixels tall, or 8x24, or 3x64? Could it be interpreted as a color image? Such 'meta-data' is specified elsewhere — generally in a container object like an `ofImage`.)*
 
-#### 2.1.2. Grayscale Pixels and Array Indices
+#### Grayscale Pixels and Array Indices
 
 It's important to understand how pixel data is stored in computer memory. Each pixel has an *address*, indicated by a number (whose counting begins with zero):
 
@@ -272,7 +272,7 @@ ofColor colorAtXY = myImage.getColor(x, y);
 float brightnessOfColorAtXY = colorAtXY.getBrightness();
 ```
 
-#### 2.1.3. Finding the Brightest Pixel in an Image
+#### Finding the Brightest Pixel in an Image
 
 Using what we know now, we can write a simple computer-vision program that locates the brightest pixel in an image. This elementary concept was used to great artistic effect by the artist collective, Graffiti Research Lab (GRL), in the openFrameworks application for their 2007 project *L.A.S.E.R Tag*. The concept of *L.A.S.E.R Tag* was to allow people to draw projected graffiti on a large building facade, using a laser pointer. The bright spot from the laser pointer was tracked by code similar to that shown below, and used as the basis for creating projected graphics.
 
@@ -352,7 +352,8 @@ Being able to locate the brightest pixel in an image has other uses, too. For ex
 
 *The brightest pixel in a depth image corresponds to the nearest object to the camera.*
 
-#### 2.1.4. Three-Channel (RGB) Images.
+
+#### Three-Channel (RGB) Images.
 Our Lincoln portrait image shows an 8-bit, 1-channel image. Each pixel uses a single round number (technically, an unsigned char) to represent a single luminance value. But other data types and formats are possible.
 
 For example, it is common for color images to be represented by 8-bit, *3-channel* images. In this case, each pixel brings together 3 bytes' worth of information: one byte each for red, green and blue intensities. In computer memory, it is common for these values to be interleaved R-G-B. As you can see, color images necessarily contain three times as much data.
@@ -383,7 +384,7 @@ unsigned char greenValueAtXY = buffer[gArrayIndex];
 unsigned char blueValueAtXY  = buffer[bArrayIndex];
 ```
 
-#### 2.1.5. Other Kinds of Image Formats and Containers
+#### Other Kinds of Image Formats and Containers
 
 8-bit 1-channel and 8-bit 3-channel images are the most common image formats you'll find. Around the world of image processing algorithms, however, you'll sometimes encounter an exotic variety of others, including:
 - 8-bit *palettized* images, in which each pixel stores an index into an array of (up to) 256 possible colors;
@@ -411,7 +412,7 @@ In openFrameworks, images can be stored in a variety of different *containers*, 
 To the greatest extent possible, the designers of openFrameworks (and OF addons like ofxOpenCV and ofxCv) have provided simple operators to help make it easy to exchange data between these containers.
 
 
-#### 2.1.5 RGB, grayscale, and other color space conversions
+#### RGB, grayscale, and other color space conversions
 
 Many computer vision algorithms (though not all!) are commonly performed on grayscale or monochome images. Converting color images to grayscale can significantly improve the speed of many image processing routines by reducing both the number of calculations as well as the amount of memory required to process the data. Except where stated otherwise, *all of the examples in this chapter assume that you're working with monochrome images*. Here's some simple code to convert a color image (e.g. captured from a webcam) into a grayscale version:
 
@@ -426,7 +427,7 @@ Many computer vision algorithms (though not all!) are commonly performed on gray
 Of course, there are times when
 
 
-### 2.2. Image arithmetic: mathematical operations on images
+### Image arithmetic: mathematical operations on images
 
 A core part of the workflow of computer vision is *image arithmetic*. These are the basic mathematical operations we all know -- addition, subtraction, multiplication, and division -- but interpreted in the image domain. Here are two very simple examples:
 
@@ -450,22 +451,25 @@ In the examples presented here, for the sake of simplicity, we'll assume that th
 - Example: creating a running average
 - Example: creating a circular alpha-mask from a computed Blinn spot
 
-### 2.3. Filtering and Noise Removal Convolution Filtering
+
+### Filtering and Noise Removal Convolution Filtering
+
 - Blurring an image
 - Edge detection
 - Median filtering
 - Advanced sidebar: dealing with boundary conditions
 
-### 2.4. Suggestions for Further Experimentation
+### Suggestions for Further Experimentation
 
 I sometimes assign my students the project of copying a well-known work of interactive new-media art. Reimplementing projects such as the ones below can be highly instructive, and test the limits of your attention to detail. As Gerald King [writes](http://www.geraldking.com/Copying.htm), such copying "provides insights which cannot be learned from any other source." *I recommend you build...*
 
-#### 2.4.1. A Slit-Scanner.
+#### A Slit-Scanner.
 *Slit-scanning* — a type of "time-space imaging" — has been a common trope in interactive video art for more than twenty years. Interactive slit-scanners have been developed by some of the most revered pioneers of new media art (Toshio Iwai, Paul de Marinis, Steina Vasulka) as well as by [literally dozens](http://www.flong.com/texts/lists/slit_scan/) of other highly regarded practitioners. The premise remains an open-ended format for seemingly limitless experimentation, whose possibilities have yet to be exhausted. It is also a good exercise in managing image data, particularly in extracting and copying pixel ROIs. In digital slit-scanning, thin slices are extracted from a sequence of video frames, and concatenated into a new image. The result is an image which succinctly reveals the history of movements in a video or camera stream.
+>>>>>>> 7bcb18c0a8a3df6216ff6c130d64c6ee6e0beff5
 
 ![Daniel Rozin, Time Scan Mirror (2004)](http://www.flong.com/storage/images/texts/slit_scan/rozin_timescan.jpg)
 
-#### 2.4.2. *[Text Rain](http://camilleutterback.com/projects/text-rain/)* by Camille Utterback and Romy Achituv (1999).<br />
+#### *[Text Rain](http://camilleutterback.com/projects/text-rain/)* by Camille Utterback and Romy Achituv (1999).<br />
 *Text Rain* is a now-classic work of interactive art in which virtual letters appear to "fall" on the visitor's "silhouette". Utterback writes: "In the Text Rain installation, participants stand or move in front of a large projection screen. On the screen they see a mirrored video projection of themselves in black and white, combined with a color animation of falling letters. Like rain or snow, the letters appears to land on participants’ heads and arms. The letters respond to the participants’ motions and can be caught, lifted, and then let fall again. The falling text will 'land' on anything darker than a certain threshold, and 'fall' whenever that obstacle is removed."
 
 ![Camille Utterback and Romy Achituv, Text Rain (1999)](http://golancourses.net/2013/wp-content/uploads/2012/12/text-rain.jpg)
