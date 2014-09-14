@@ -1,8 +1,8 @@
-#openFrameworks project structure and setup
+#OF structure
 
 *by [Roy Mcdonald](http://macrobio.cl/)*
 
-Now that you've learned the basics of C++ in Chapter 2, let's get into openFrameworks (I'll refer to it as OF from now on). Chapter 1 talks about OF in very abstract and conceptual manner, which is really useful for understanding the design of the OF environment. It's really important to read Chapter 1 if you haven't yet.
+Let's get into openFrameworks (I'll refer to it as OF from now on). The philosophy chapter talks about OF in very abstract and conceptual manner, which is really useful for understanding the design of the OF environment.  Now, let's take a look at what the OF download looks like.
 
 I have found that it is very useful to explain OF by making analogies to cooking. Coding and cooking have a lot of things in common, and most people are familiar with the act of cooking. In this chapter, I'll be drawing connections between processes and terminology in cooking and openFrameworks.
 
@@ -11,86 +11,64 @@ You need to download the OF version and the IDE (Integrated Development Environm
 
 Go to [www.openframeworks.cc/downloads](www.openframeworks.cc/downloads "Download openFrameworks!") and download the version that you need. By the side of each available version you will find a link to the where to download the needed IDE and how to install it. 
 
-##Welcome to your new kitchen##
+##Welcome to your new kitchen
 
-###IDE:###
-- The main goal here would be to establish the similarities between all IDEs and explain where are the fundamental options needed to compile and solve common errors (missing include paths, linker errors).
-- Adding files to the IDE, in particular adding addons (should we mention, as a sidenote Adam's Xcode OF plugin?). How it must be done in each IDE.
+###IDE:
 
 As said before, the *Integrated Development Environment*, IDE, is the application you will be using to build your openFrameworks projects. It will let you write code, compile (bake it), test it and debug it (find out what is giving you problems, if there is any, and fix it).
 There are several different IDEs, at least one for each platform you might be utilizing.
+
 The IDE is your new kitchen, where you'll find all the tools to cook incredible stuff. Yet there are a lot of different kitchen brands, just like IDEs. All do the same but things might be laid out and named in a slightly different way. If you know how to use one, you can use any other. For clarification, I will go through each IDE and show where you will find the most used commands, controls and settings. Only read for the IDE you are going to use.    
-All IDEs have a very similar interface:
+
+All IDEs have a similar interface:
+
 ![Abstract IDE interface](images/IDE_Interfase.jpg "Abstract IDE interface")
+
 - Toolbar and Run Button: In the tool bar you'll find several useful buttons, such as open, save, save all, et cetera. The "run" button is very important. Usually it is labeled with a triangle pointing to the right, like the "play" button. When you press it, it will compile your code and if it went with no problem it will automatically run your code. Hence this is a frequently used button.
 - File selector and project navigator area: Here you will see your project and the files associated with it. Usually it is displayed like a hierarchically ordered list of files. Here you'll find all the OF library files, as well as the files that are particular to your project.
 - Editing area: When you open a file in the project navigation area, usually by double clicking it, it should open in the editing area. This looks just like any regular text-editing software, and behaves quite much the same.
-- Console: This is where your app, when running, outputs messages. These messages are really useful for debugging, You can print text messages to the console using the ````cout```` comand  or ````ofLog(...)```` function.
+- Console: This is where your app, when running, outputs messages. These messages are really useful for debugging, You can print text messages to the console using the `cout` comand  or `ofLog(...)` function.
 
-####Apple Xcode####
+####Apple Xcode
 
 Xcode is Apple's IDE. Used both for iOS apps and desktop apps.
-Even though there are other IDEs for MacOSX, Xcode is a a pretty mature one, with lots of nice and useful features, specially for dealing with iOS apps.
-The latest Xcode version is 5.0.2 yet the OF projects can be opened in version 3 onwards. **[Cofirm this]**
-![Xcode screenshot](images/XcodeScreenShot.jpg "Xcode screenshot")
-**[this screenshot is from Xcode 4. I think Xcode5's layout is slightly different. Can anyone confirm this please? If so, should we change this screenshot to Xcode5?]**
-**[zl: I don't think they are so different...]**
+Even though there are other IDEs for MacOSX, Xcode is a a pretty mature one with lots of nice and useful features, especially for dealing with iOS apps.
 
-####Microsoft Visual Studio 2012 Express####
-This is Microsoft's IDE, it is aimed for Windows development. Even though this is the express version it comes packed with a lot of really nice stuff.
+Use the latest version of Xcode and read the setup guide. 
+
+####Microsoft Visual Studio 2012 Express
+
+This is Microsoft's IDE, it is aimed for Windows development. It's a commercial product, but there's a free version you can download called "Express". 
+
 ![VS screenshot](images/VS_ScreenShot.jpg "VS screenshot")
-**[This screenshot was taken on Windows 8. Does it look different on Windows7? If so which one should we use?]**
-**[zl: I don't think they are so different...]**
 
-#### Code::Blocks####
-Code::Blocks is a free IDE. It runs on several platforms(several Linux distros, Windows and MacOSX). It is quite nice.
-**[add C::B screenshot]**
+#### Code::Blocks
 
-####Eclipse####
-Eclipse is the IDE of choice for Linux, yet it also runs on Mac and Windows machines. For Android development you'll need to use Eclipse, regardless of your platform.
-![Eclipse Screenshot](images/eclipseScreenshot.png "Eclipse Screenshot")
-**[zl: On linux, codeblocks is the IDE of choice.   eclipse is for android dev typically...]**
-
-####The NO-IDE IDE. Makefiles####
-Using the terminal and Makefiles. 
-OF has implemented makefiles across it complete ecosystem. Makefiles are some text files that describe how to compile something. These are used by a program called GNU Make, which is really nice as it allows to compile and configure large projects in a really simple way.When using this option your main interface will be the Terminal or Cmd app. It is a text-based interface, just like that old school DOS, but it is super powerful. 
-Any experienced programmer should feel very comfortable with this option, as it will work for any platform, and in some cases it can speed up development. If you are developing for the Raspberry Pi you'll have to make use of the Makefiles because another IDE option for it has not been implemented in OF yet. 
-Sometimes you might need to compile your code in a remote machine. An easy way is to log into the remote machine using SSH and compile via command line using the Makefiles.
-If you are really picky and you don't like any of the IDEs that OF has been implemented for, using the Makefiles will make it really easy to start using another IDE.
-To use the Makefiles you need to have GNU Make installed. 
-To install Make you must do the following:
-- On MacOSX, if you already have Xcode installed, go to Preferences in Xcode, choose "Downloads" and install "Command Line Tools". Otherwise download the Command Line tools from [https://developer.apple.com/downloads/index.action](https://developer.apple.com/downloads/index.action "Download Command Line Tools!")
-- On Windows, if you installed Visual Studio then you have Make already installed, yet the command used to run make will be ````nmake```` instead of ````make````. If not go download it and install from [http://gnuwin32.sourceforge.net/packages/make.htm](http://gnuwin32.sourceforge.net/packages/make.htm "Download Make!") 
-- On Linux, it comes installed by default **[Please someone confirm this!]**
-**[zl: I think there is a script to install dependencies -- let's double check...]**
+Code::Blocks is a free IDE. It runs on several platforms, but OF supports it for windows and linux. It is quite "light" in terms of downloading and we use it in workshops over VS, which can be a bit intimidating for beginners.  For windows, follow the setup instructions (including step "e") carefully.  For linux, there are scripts that help install dependencies and the codeblocks IDE. 
 
 
-###Running examples###
-Find the uncompressed OF version that you downloaded. From now on we will refer to this folder as the OF root folder.
-You can place the OF root folder anywhere you like. Open it. Inside of it you will find several folders. For now, open the one named "examples" (further on in this chapter we will see how the other folders are used). Inside of it you will see a lot of folders, choose any one you want (these are named according to the topic covered by the example). Open it, once again there will be more folders, these are for each example. Open any one you like. Inside of it you will find the project file for the example. The project files you find depend on the version of OF you downloaded. **[KL: maybe instead of letting a user choose any example, it would cut down this paragraph to just guide them to a specific one.]**
-Look at the image below and open, by double-clicking, the project file. 
-**[zl: on windows CB use the workspace file, on vs use the sln file, on linux CB use the workspace file -- this is because these files also contain a sub project to build the OF lib also...]**
-**[add project files icons]** 
-Now your IDE should open and load the OF example you chose. It should look like the IDE screenshots above.
-Locate the "Run Button" and click on it. The example should compile and run, which might take a few seconds. If everything went well, a new window will pop up and display the example you just compiled. If this happened, congrats! You just have installed and compiled openFrameworks successfully and you are ready to go on. If this didn't happen check the notes below for each IDE. 
+###Running examples
+
+Find the OF version that you downloaded and decompress it. From now on we will refer to this folder as the OF root folder. You can place the OF root folder anywhere you like.   One thing to stress is that OF is designed to be self contained -- everything you need will stay in one folder and this folder can even be moved around on your drive if need be.  If you download another version of openframeworks, it should stay in it's own folder and don't try to merge them. 
+
+Open it. Inside of it you will find several folders which we will describe below in more detail.  For now, navigate to the examples folder and let's try to compile examples/graphics/graphicsExample.   If you are on OSX, click on the graphicsExample.xcodeproj.  If you are using visual studio, choose the "sln" file.   On code::blocks, choose the "workspace" file.
+
+*As a quick side note, about workspace files, the reason we ask you to open those rather then the project file is that they contain a sub-project to build the OF library also.   If you have any doubts, please read the readme for your given platform.*
+
+Now your IDE should open and load this example. It should look like the IDE screenshots above. Locate the "Run" button or menu option and click on it. The example should compile (which might take a while, since the first time you compile you are comiling the OF library also).  You'll see alot of files being compiled the first time -- don't worry, this will just happen once, when the OF library needs to be rebuilt.  Feel free to get a cup of coffee or stretch.   Long compile times are great moments to take a screen break. 
+
+If everything went well, a new window will pop up and display the example you just compiled. If this happened, congrats! You just have installed and compiled openFrameworks successfully and you are ready to go on. If this didn't happen, the first rule is, don't panic! check the notes below for each IDE and be sure to read the release notes that come with OF. 
+
 - Xcode: make sure that the popdown menu just at the right of the run button has selected the item with the name of your example and not the one named "openFrameworks." There might be more than one item with the name of the example you are trying to run. Select anyone as long as it is not the one named "openFrameworks". This popdown menu selects the target you want to compile. If "openFrameworks" is selected you will just compile the openFrameworks core and not the example code. When you select the other items xcode will compile both the OF core and the code for your example and when done it will run the example. 
-- **[add VS notes]**
-- **[add C::B notes]**
-**[zl: important to emphasize the CB / VS sln stuff here. I'll add this shortly...]**
-- Eclipse: You might need to select the project in the project navigator, then press the hammer button in the tool bar, that will compile the project. Once compilation is done press the play button to run the application.
-- Makefiles: Using Makefiles is very simple. Just open the Terminal(Mac: /Applications/Utilities/Terminal.app Linux:**[???]**) or Cmd app (Win: search for cmd **[any better idea??]**)
-**[zl: I don't eclipse needs to be covered here, let's double check with others...]**
-**[zl:I'd put makefiles in a seperate section, mix it less with these first steps...]**
-Once open type the following
-````cd /Path/to/an/OF/Example/folder```` mind the space after cd. Press enter. 
-````make```` and press enter. your OF app should compile if there are no errors in your code. Once compiled type ````make run```` to run your app. That's all!
+- VS: make sure you've opened the .sln file.  Visual studio express doesn't have a triangle button by default (I think it looks like a gear for debugging).  Locate the [run without debugging option](http://social.msdn.microsoft.com/Forums/vstudio/en-US/7b2182f9-0e46-4e6f-a8db-3ab5af39f14b/start-without-debugging-option-missing-from-debug-menu?forum=vsdebug), which you can add to the menu bar if you want to customize the IDE. 
+- CB: make sure you've opened the .workspace file.   If you are opening up other projects, be sure to close the current workspace first, as CB doesn't handle multiple projects open very well.   
+- With all IDEs, the play button will compile and run the project, but sometime you might need to hit the button twice if the window doesn't launch.
 
-Spend some time going through the examples and running them. It should be fun! 
+If the graphics example works, spend some time going through the other OF examples and running them.  Usually it's good practice to close the current project / workspace completely before you open another one.  Once the OF library is compiled It should be fun! 
+
+If you have trouble, please keep track of what errors you have, what platform you are on, and start with using the [OF forum](http://forum.openframeworks.cc/).  There's years of experience there, and really helpful folks who can help answer questions.  First, try searching for a specific error and if you don't see it, post a question in the forum.  When you are beginning it can be quite frustrating, but the community is very good at helping each other out. 
+
 Once done continue reading.
-
-
-**[zl: here could be a "don't worry" kind of paragraph, reference the OF forum, common errors, etc...]**
-
 
 ###OF folder structure###
 
@@ -99,14 +77,13 @@ Inside the OF root folder you will find several other folders, at least, the fol
 ####Addons####
 The "addons" folder will contain the included "core" addons. Addons are extra pieces of code that extend OF's functionalities, allowing you to do almost anything with OF. Addons are usually written by third parties that have shared these. The "core" addons, the ones already included in your OF download, are addons that are used so frequently that it has been decided to include them as part of the official OF download. These are coded and maintained by OF's core developers.     
 Check the examples/addons folder in your OF root folder where you will find at least one example about how to use each of these addons.
-You can also go to [ofxAddons](http://ofxaddons.com/ "ofxaddons, a collection of OF addons") where you'll find almost every other addon ever made.
+You can also go to [ofxAddons](http://ofxaddons.com/ "ofxaddons, a collection of OF addons") where you'll find a huge collection of additional addons from the community. 
 
 ####Apps####
-This is the folder where you put your project files.
-Your current OF download contains the folder named "myApps" inside of "apps," which just has an empty example project folder.
-IMPORTANT: you have to respect the folder structure within the apps folder, otherwise your projects won't compile. This should be like this:
-![Apps Folder structure](images/appsFolderStructure.png "Apps Folder Structure").
+This is the folder where you put your project files. Your current OF download contains the folder named "myApps" inside of "apps," which just has an empty example project folder. *IMPORTANT: you have to respect the folder structure within the apps folder, otherwise your projects won't compile.*   
 
+This should be like this:
+![Apps Folder structure](images/appsFolderStructure.png "Apps Folder Structure").
 
 ####Examples####
 Quite obvious. A folder with examples, sorted out by topic. There are a big bunch of examples that cover almost all of OF's aspects. Each example is made with the idea of keeping it simple and focused to the particular aspect it tries to address, thus making it easily understandable and a good starting point when you want to do something similar in your project.
@@ -122,29 +99,16 @@ Here you'll find an Arduino sketch for using with the serial example located at 
 
 OF now ships with a simple project generator which is really useful for making new projects.  One of the larger challenges has always been making a new project and this tool takes a template and modifies it, chaning the name to a new name that you choose and even allowing you to add addons. It allows you to place the project anywhere you want, and while we've structured all the examples to be a certain distance away from the root, you can change the height using this tool.  It's designed to make it easy / trivial to start sketching in code, without worrying too much about making a new project.  In the past we've always recommend that you copy an old project and rename it, but this is a more civilized approach to making projects. Check the readme file inside where the usage of this app is described. Further down there are some instructions on how to use the project generator **[Should I add these instructions or is it enough by pointing the reader to the readme file?]**
 
-####scripts####
-
-**[zl: they are shell scripts...  personally, I don't think they need to be explained here since they are more advanced]**
-
-**[should I call these bash or shell scripts. I understand the difference between these two, but as I don't want to go in depth into it I don't know what is the most correct naming.]**
-Just a few bash scripts useful for compiling, cleaning and testing all the examples.
-Bash scripts are a way to program command line instructions. The command line instructions are the ones you usually type into the Terminal or Cmd app and run. Using bash scripts you can save, run (and share!) several instructions to be performed. This scripts can get very complex by using loops and conditionals, even you can run these on different platforms and let the script to know on which it is running and proceed accordingly.
-To run a one of these open the Terminal or Cmd app.
-- On windows search for "cmd" the first match shown should be the cmd app. Open It. 
-- On MacOSX go to Applications/Utilities and open Terminal.app.
-- On Linux....
-**[How do you open the terminal in Linux? Does drag and drop work on it?]**
-**[zl: again, I think we drifting from getting stuff up and running]**
-Once opened you'll see a new window in which you can type text. It should display the working directory among other things as the username. Drag and drop into it any script file  and press enter. The script should now run and perform the instructions in it. It depends totally on what's written in the script what's going to happen. If the script was able to run with no errors an new line will show up, similar to the one that appeared when you opened the Terminal or Cmd app. If there were any errors a description of these will show up.
-
-
 ###The OF Pantry:###
+
 Your default new kitchen will only have tools for coding, but the OF kitchen comes with a super nice pantry, filled up with really nice, cool and useful stuff. 
+
 Imagine that you want to cook something but your kitchen has no pantry or if it has it is completely empty. In such conditions, cooking anything would be quite difficult, as you'll have to go out and buy the things you need and you probably won't find everything in one outing. This is not a nice scenario, especially if you want to get creative and make awesome things. 
 
 So, what happens when you have your pantry filled with OF's components? You will be able to cook whatever you want because some really good ingredients are already there. Additionally, there are some really nice tools in there. This will let you complete recipes in a short amount of time, leaving you more time to get creative and try out new and more delicious recipes.
 
 ####What is inside the OF pantry####
+
 Here you will find a lot of different things, from ingredients to tools, all ordered according to use.
 
 - **3D**
