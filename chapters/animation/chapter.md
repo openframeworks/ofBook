@@ -1,5 +1,9 @@
 #Animation
 
+*by [Zach Lieberman](http://thesystemis.com)* 
+
+*with edits from Kayla Lewis*
+
 ## Background 
 
 The word animation is a medieval term stemming from the Latin animare, which means ‘instill with life’. In modern terms, it's used to describe the process of creating movement from still, sequential images. Early creators of animation used spinning discs (phenakistoscopes) and cylinders (zoetropes) with successive frames to create the illusion of a smooth movement from persistence of vision.   In modern times, we're quite used to other techniques such as flip books and cinematic techniques like stop motion. Increasingly, artists have been using computational techniques to create animation -- using code to "bring life" to objects on the screen over successive frames. This chapter is going to look at these techniques and specifically try to address a central question: how can we create compelling, organic, and even absurd movement through code?
@@ -32,10 +36,10 @@ The second point to make about animation is that it requires variables. A variab
 
 The third point to make about OF and animation is frame rate.  We animate in openframeworks using successive frames.  Frame rate refers to how quickly frames get drawn.  In OF there are several important functions to know about.
 
-- `ofGetFrameRate()` returns the current frame rate (in frames per second). Set it 0 to run as fast as possible **[note:double check this]**
+- `ofGetFrameRate()` returns the current frame rate (in frames per second). Set it 0 to run as fast as possible 
 - `ofSetFrameRate( float targetFrameRate )` sets the maximum frame rate. If the software is animating faster than this, it will slow it down. Think of it like a speed limit. It doesn't make you go faster, but it prevents you from going too fast. 
 
-In addition, openGL works with an output display and will attempt to synchronize with the refresh rate of the monitor -- sometimes called vertical-sync or vertical blanking.  If you don't synchronize with the refresh rate, you can get something called frame tearing, where the non-synchronization can mean frames get drawn before and after a change, leading to horizontal lines of discontinuity. 
+In addition, openGL works with an output display and will attempt to synchronize with the refresh rate of the monitor -- sometimes called vertical-sync or vertical blanking.  If you don't synchronize with the refresh rate, you can get something called frame tearing, where the non-synchronization can mean frames get drawn before and after a change, leading to horizontal lines of discontinuity, called [screen tearing](http://en.wikipedia.org/wiki/Screen_tearing) 
 
 **[note: frame rip graphic here]**
 
@@ -118,7 +122,7 @@ which is 75% of A + 25% of B. Essentially by taking a mix, you get from one to t
 
 One of the interesting properties of numbers between 0 and 1 is that they can be easily adjusted / curved.  
 
-The easiest way to see this is by raising the number to a power.  A power, as you might remember from math class, is multiplying a number by itself,  e.g., 2^3 **[note: latex helpful here?]**  = `2*2*2 = 8`. Numbers between 0 and 1 have some interesting properties. If you raise 0 to any power it equals 0 (`0x0x0x0 = 0`). The same thing is true for 1 (`1*1*1*1 = 1`), but if you raise a number between 0 and 1 to a power, it changes. For example, 0.5 to the 2nd power = 0.25.
+The easiest way to see this is by raising the number to a power.  A power, as you might remember from math class, is multiplying a number by itself,  e.g., 2^3 = `2*2*2 = 8`. Numbers between 0 and 1 have some interesting properties. If you raise 0 to any power it equals 0 (`0x0x0x0 = 0`). The same thing is true for 1 (`1*1*1*1 = 1`), but if you raise a number between 0 and 1 to a power, it changes. For example, 0.5 to the 2nd power = 0.25.
 
 Let's look at a plot of pct raised to the second power: 
 
@@ -204,9 +208,7 @@ Sin and cos (sine and cosine) are trigonometric functions, which means they are 
 
 *As a side note, sometimes it can be confusing that some functions in OF take degress where others take radians. Sin and cos are part of the math library, so they take radians, whereas most openGL rotation takes degrees. We have some helper constants such as `DEG_TO_RAD` and `RAD_TO_DEG`, which can help you convert one to the other.*
 
-#### Everything about sin and cos in one graph
-
-So here's a simple drawing that helps explain sin and cos. 
+Here's a simple drawing that helps explain sin and cos. 
 
 ![sin](images/atob_circle.png)
 
@@ -289,8 +291,72 @@ Finally, if we alter the angles we pass in to x and y for this formula in differ
 
 ### Noise
 
+Noise is similar sin/cos in that it's a function that takes some input and produces output, which we can then use for movement.  In the case of sin/cos you are passing in an angle and getting a results back that goes back and forth between -1 and 1.  In openframeworks we wrap code that uses [simplex noise](http://en.wikipedia.org/wiki/Simplex_noise), which is comparable to Perlin noise and we have a function `ofNoise()` that takes an input and produces an output.  Both algorithms (Perlin, Simplex) provide a psueduo random noise pattern -- they are quite useful for animation, because they are continuous functions, unlike something like ofRandom, which just returns random values.  
 
-** TODO ** 
+When I say continuous function, what I mean is if you pass in smaller changes as input, you get smaller output and if you pass in the same value you get the same result.  For example, `sin(1.7)` always returns the same value, and `ofNoise(1.7)` also always returns the same result.   Likewise if you call `sin(1.7)` and `sin(1.75)` you get results that are continuous (meaning, you can call `sin(1.71) sin(1.72)... sin(1.74)` to get intermediate results).  
+
+You can do the same thing with ofNoise -- here, I write a for loop to draw noise as a line.  `ofNoise` takes an input, here i/10 and produces an output which is between 0 and 1.  `ofSignedNoise` is similar but it produces an output between -1 and 1.
+
+![noise line](images/noiseLine.png)
+
+    ofBackground(0,0,0);
+    ofSetColor(255);
+    
+    ofNoFill();
+    ofBeginShape();
+    for (int i = 0; i < 500; i++){
+        
+        float x = i;
+        float noise = ofNoise(i/10.0);
+        float y = ofMap(noise, 0,1, 0, 100);
+        ofVertex(x,y);
+    }
+    ofEndShape();
+    
+If you alter the i/10.0, you can adjust the scale of the noise, either zooming in (ie, i/100.0), so you see more details, or zooming out (ie, i/5.0) so you see more variation. 
+
+![noise with i dividied by 100](images/noise_i_d_100.png)
+
+![noise with i dividied by 5](images/noise_i_d_5.png)
+   
+We can use noise to animate, for example, here, we move an object on screen using noise: 
+
+    float x = ofMap( ofNoise( ofGetElapsedTimef()), 0, 1, 0, ofGetWidth());
+    ofCircle(x,200,30);
+  
+If we move y via noise, we can take a noise input value somewhere "away" from the x value, ie further down the curved line: 
+
+	float x = ofMap( ofNoise( ofGetElapsedTimef()), 0, 1, 0, ofGetWidth());
+    float y = ofMap( ofNoise( 1000.0+ ofGetElapsedTimef()), 0, 1, 0, ofGetHeight());
+    ofCircle(x,y,30);
+
+Alternatively, ofNoise takes multiple demensions.  Here's a quick sketch moving something in a path via ofNoise using the 2d dimensions
+
+![noise via 2d](images/noise2d.png)
+ 
+ The code for this example (note the 2 inputs into ofNoise, this is a 2-dimensional noise call.  it allows us to use the same value for time, but get different results):
+
+	//--------------------------------------------------------------
+    void ofApp::setup(){
+        ofBackground(0);
+        ofSetBackgroundAuto(false);
+    }
+
+    //--------------------------------------------------------------
+    void ofApp::update(){
+    }
+
+    //--------------------------------------------------------------
+    void ofApp::draw(){
+        
+        float x = ofMap( ofNoise( ofGetElapsedTimef()/2.0, -1000), 0, 1, 0, ofGetWidth());
+        float y = ofMap( ofNoise( ofGetElapsedTimef()/2.0, 1000), 0, 1, 0, ofGetHeight());
+        ofNoFill();
+        ofCircle(x,y,3);
+        
+    }
+
+There's a ton more we can do with noise, we'll leave it for now but encourage you to look at the noise examples that come with openframeworks, which show how noise can be use to create lifelike movement.  Also, we encourage readers to investigate the work of [Ken Perlin](http://mrl.nyu.edu/~perlin/), author of the simplex noise algorithm -- he's got great examples of how you can use noise in creative playful ways. 
 
 
 ## Simulation

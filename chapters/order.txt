@@ -1,4 +1,5 @@
-intro
+of_history
+of_philosophy
 cplusplus_basics
 setup_and_project_structure
 OOPs!
