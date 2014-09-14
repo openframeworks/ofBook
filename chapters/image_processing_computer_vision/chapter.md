@@ -33,7 +33,7 @@ class ofApp : public ofBaseApp{
 		ofImage myImage;
 };
 ```
-Below is our complete *ofApp.cpp* file. The Lincoln image is *loaded* from our hard drive (once) in the `setup()` function; then we *display* it (many times per second) in our `draw()` function. As you can see from the filepath provided to the `loadImage()` function, the program assumes that the image *lincoln.png* can be found in a directory called "images" alongside your executable: **[BD: Don't you mean inside the `data/` alongside the executable?]**
+Below is our complete *ofApp.cpp* file. The Lincoln image is *loaded* from our hard drive (once) in the `setup()` function; then we *display* it (many times per second) in our `draw()` function. As you can see from the filepath provided to the `loadImage()` function, the program assumes that the image *lincoln.png* can be found in a directory called "data" alongside your executable: 
 
 ```cpp
 // Example 1: Load and display an image.
@@ -42,7 +42,7 @@ Below is our complete *ofApp.cpp* file. The Lincoln image is *loaded* from our h
 #include "ofApp.h"
 
 void ofApp::setup(){
-	myImage.loadImage("images/lincoln.png");
+	myImage.loadImage("lincoln.png");
 	myImage.setImageType(OF_IMAGE_GRAYSCALE);
 }
 
