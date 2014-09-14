@@ -1,7 +1,7 @@
 #Memory in C++#
 
 *by [Arturo Castro](http://arturocastro.net)*
-*corrections by Brandon Dorsey*
+
 
 Correctly using memory is one of the trickiest parts of working with c++. The main difference with other languages like Java, Python and in general any languages that are "garbage collected" is that in c++ we can explicitly reserve and free memory while in those an element called garbage collector does the work for us.
 
@@ -961,7 +961,3 @@ Is perfectly ok. The way a shared_ptr works is by keeping a count of how many re
 
 
 
-
-<em style="font-size:0.8em; text-align:center; display:block;">This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.en_US">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.</em>
-
-<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>

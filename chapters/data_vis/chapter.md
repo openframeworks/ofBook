@@ -1,15 +1,18 @@
 #Information Visualization Chapter
 
+*by [Tega Brain](http://www.tegabrain.com/)*
+
+
 This chapter gives a brief overview of working with data in OpenFrameworks and introduces some basic information visualisation techniques. It describes steps in the data visualisation process, common file formats and useful functions for converting data. It is structured using two specific examples; a time based plot and a map with geolocated data. 
 
-##1. Intro
+##Intro
 
-###1.1 What is data? What is information? 
+###What is data? What is information? 
 Computation has driven a huge increase in our capacity to collect, sort and store data and yet our ability to understand it remains limited by our sensory and cognitive capacities. A visual process that is used across multiple fields, data visualisation is a way of interpreting and presenting data and can potentially reveal trends and patterns that might otherwise remain invisible.
 
 Data are symbols or numerical interpretations that represent the properties of objects and environments (Ackoff, 1989). Information is produced from analysing the context and descriptive qualities of data, it relates to why the data was collected. Although these terms are often used interchangeably, in the field of information science data is generally thought of as a raw material from which information is produced through analytical processes.
 
-###1.3 Steps of visualising data 
+###Steps of visualising data 
 Ben Fry is a data artist and the author of Visualizing Data (2008), a well-known text outlining data visualisation approaches for the Processing programming environment. In this excellent reference text Fry describes seven stages for visualising data and these provide a useful structure for approaching data-driven projects. These steps are:
 
 *Acquire:  Obtain the data. 
@@ -30,9 +33,9 @@ As Fry (2008) outlines, the mining stage of visualising data involves applying s
 
 *Interact: Add methods for manipulating the data or controlling what features are visible.
 
-##2. Working with data files in OpenFrameworks
+##Working with data files in OpenFrameworks
 
-###2.1 Common data file structures: tsv, csv, xml, json 
+###Common data file structures: tsv, csv, xml, json 
 Data is available and stored in specific file types that have particular structures and syntax. The following file types are some of the most common forms of structuring data.
 
 
@@ -53,7 +56,7 @@ Reading an XML file in OF requires the use of an OF addon called ofXmlSettings.
 *JSON: JSON stands for ‘javascript object notation’. This is a human readable file that is built on two structures, a collection of name/value pairs which can be realised in OF as a struct and an ordered list of values, realised as a vector. Json files also are parsed using an OF addon called ofxJSON, see example 2.XX for how to implement this. 
 
 
-###2.2 Example - Visualising Time Series Plot
+###Example - Visualising Time Series Plot
 
 **Step 1 Acquire:** This section works through an example of a data visualisation of US population data downloaded from the United States Census service here: http://www.nber.org/data/census-decennial-population.html
 
@@ -95,7 +98,7 @@ Our file will look like this:
 #include "testApp.h"
 #include "ofAppGlutWindow.h"
 
-//========================================================================
+
 int main( ){
     
     ofAppGlutWindow window;
@@ -137,6 +140,7 @@ vector < popData > dataPoints;
 Explain typedef ???
 
 We will also need to declare some variables to contain some minimum and maximum values from our dataset. 
+
 ```cpp
 int minYear;
     int maxYear;
@@ -197,11 +201,11 @@ IN THE TESTAPP FILE:
 
 We will now load the data file into OF using the ofBuffer class. 
 
-####2.2.1 ofBuffer Class
+####ofBuffer Class
 ofBuffer will read the data into a buffer which is temporary storage for it as we write code to restructure and process it.
 ofBuffer is what is known as a convenience class, and provides easy methods for reading from and writing to files. A convenience class simply means that this is a class that doesn’t do anything by itself but wraps or allows access to the functionality of a group of other classes.
 
-#### 2.2.2 Buffer Functions
+####Buffer Functions
 ofBufferFromFile();  is a function that allows you to load your data file.
 ```cpp	
 ofBuffer file = ofBufferFromFile(“population.tsv");
@@ -483,9 +487,9 @@ Finally the last step here is to draw the titles to the screen which is done by 
 ```
 
 
-##2.3 More Useful functions for working with data
+##More Useful functions for working with data
 
-###2.3.1 Conversion functions (ofSplitString, ofToString, ofToInt)
+###Conversion functions (ofSplitString, ofToString, ofToInt)
 Conversion functions enable the manipulation of each line of data in the buffer. They allow each line to be split and for parts of it to be placed into string or integer variables.
 ```cpp
 ofSplitString(line, “\t” );
@@ -507,8 +511,8 @@ ofToFloat(string);
 This object converts another variable type into an a float variable. 
  
 
-##3. Working with APIs 
-###3.1 What are APIs?
+##Working with APIs 
+###What are APIs?
 An API is an Application Programming Interface. This means it is a software to software interface allowing one piece of software to interact automatically with another online software. It takes the form of a set of instructions for how a program can be designed to interface with the online service. Every API is different with some being very well documented while others are not. 
 
 You can write programs in OpenFrameworks so that data an be pulled from an API automatically and used in your sketch. For example if we want to be able to pull data from the New York Times API we would inspect the instructions for doing so here: http://developer.nytimes.com/docs.

@@ -1,6 +1,6 @@
 #C++ Language Basics#
 
-*by [jtnimoy](http://jtnimoy.net)*
+*by [Josh Nimoy](http://jtnimoy.net)*
 
 > The magician of the future will use mathematical formulas.
 >

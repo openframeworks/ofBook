@@ -1,4 +1,7 @@
 #ofxiOS
+
+*by [Lukasz Karluk](http://www.julapy.com/)*
+
 ##OpenFrameworks on iOS devices.
 
 ![Figure 1: OF on iPhone.](images/ofxiOS_iPhone_sml.png "Figure 1: OF on iPhone.")
