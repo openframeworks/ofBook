@@ -1,5 +1,5 @@
-foreward
-	foreward
+foreword
+	foreword
 basics
 	of_philosophy
 	cplusplus_basics
