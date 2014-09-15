@@ -103,7 +103,7 @@ void testApp::mouseReleased(int x, int y, int button){
 }
 ```
 
-The `button` variable above is an `int` that identifies which button is being pressed/released.  openFrameworks provides some public constants for us to identify `button`: `OF_MOUSE_BUTTON_LEFT`, `OF_MOUSE_BUTTON_MIDDLE` and `OF_MOUSE_BUTTON_RIGHT`.  
+The `button` variable above is an `int` that identifies which button is being pressed/released.  openFrameworks provides some public constants for us to identify `button`: `OF_MOUSE_BUTTON_LEFT`, `OF_MOUSE_BUTTON_MIDDLE` and `OF_MOUSE_BUTTON_RIGHT`.  These public constants are variables that cannot be changed and can be accessed anywhere you have included openFrameworks.
 
 Let's add some graphics.  Hop over to the `draw()` function where we can start making use of our newly acquired mouse information:
 
@@ -239,7 +239,7 @@ myYellow.g = 255;
 myYellow.a = 255;
 ```
 
-If we wanted to make our brush fierier, we would draw using random colors that are in-between orange and red.  `ofColor` gives us in-betweenness using something called "[linear interpolation](http://en.wikipedia.org/wiki/Linear_interpolation "Wiki for Linear Interpolation")" with a function called [`getLerped(...)`](http://www.openframeworks.cc/documentation/types/ofColor.html#show_getLerped "getLerped Documentation Page").  `getLerped(...)` is a class method of `ofColor`, so we call it using an instance of `ofColor` like this: `myFirstColor.getLerped(mySecondColor, 0.3)`.  We pass in two arguments, an `ofColor` and a `float` value between `0.0` and `1.0`.  The function returns a new `ofColor` that is between the two specified colors, and the `float` determines how close the new color is to our original color (here, `myFirstColor`).  We can use this in `draw()` like this: 
+If we wanted to make our brush fierier, we would draw using random colors that are in-between orange and red.  `ofColor` gives us in-betweenness using something called "[linear interpolation](http://en.wikipedia.org/wiki/Linear_interpolation "Wiki for Linear Interpolation")" with a function called [`getLerped(...)`](http://www.openframeworks.cc/documentation/types/ofColor.html#show_getLerped "getLerped Documentation Page").  `getLerped(...)` is a class method of `ofColor`, which means that if we have an `ofColor` variable, we can interpolate like this: `myFirstColor.getLerped(mySecondColor, 0.3)`.  (For an explanation of classes and methods, see the OOPS! chapter.)  We pass in two arguments, an `ofColor` and a `float` value between `0.0` and `1.0`.  The function returns a new `ofColor` that is between the two specified colors, and the `float` determines how close the new color is to our original color (here, `myFirstColor`).  We can use this in `draw()` like this: 
 
 ```cpp
 ofColor myOrange(255, 132, 0, alpha);
@@ -269,7 +269,7 @@ for (int i=0; i<numLines; i++) {
 }
 ```
 
-What have we done with the alpha?  We used [`ofMap(...)`](http://www.openframeworks.cc/documentation/math/ofMath.html#show_ofMap "ofMap Documentation Page") to do a linear interpolation, similar to `getLerped(...)`.  To get a "twinkle" we want our shortest lines to be the most opaque and our longer lines to be the most transparent.  `ofMap(...)` takes a value from one range and maps it into another range like this: `ofMap(value, inputMin, inputMax, outputMin, outputMax)`.  We tell it that distance is a value in-between `minRadius` and `maxRadius` and that we want it mapped so that a distance value of 125 (`maxRadius`) returns an alpha value of 50 and a distance value of 25 (`minRadius`) returns an alpha value of 0.
+What have we done with the alpha?  We used [`ofMap(...)`](http://www.openframeworks.cc/documentation/math/ofMath.html#show_ofMap "ofMap Documentation Page") to do a linear interpolation, similar to `getLerped(...)`.  `ofMap(...)` transforms one range of values into a different range of values - like taking the "loudness" of a sound recorded on a microphone and using it to determine the color of a shape drawn on the screen. To get a "twinkle" effect, we want our shortest lines to be the most opaque and our longer lines to be the most transparent.  `ofMap(...)` takes a value from one range and maps it into another range like this: `ofMap(value, inputMin, inputMax, outputMin, outputMax)`.  We tell it that distance is a `value` in-between `minRadius` and `maxRadius` and that we want it mapped so that a distance value of 125 (`maxRadius`) returns an alpha value of 50 and a distance value of 25 (`minRadius`) returns an alpha value of 0.
 
 We can also vary the line width using: `ofSetLineWidth(ofRandom(1.0, 5.0))`, but remember that if we change the line width in this brush, we will need go back and set our line width back to `1.0` in our other brushes.
 
@@ -456,7 +456,23 @@ The advantage of drawing in this way (versus raster graphics) is that the polyli
 
 Let's use polylines to draw brush strokes.  Create a new project, "PolylineBrush."  When the left mouse button is held down, we will create an `ofPolyline` and continually extend it to the mouse position.  We will use a `bool` to tell us if the left mouse button is being held down.  If it is being held down, we'll add the mouse position to the polyline, but instead of adding *every* mouse position, we'll add the mouse positions where the mouse has moved a distance away from the last point in our polyline. 
 
-Let's move on to the code.  Create four variables in the header: `ofPolyline currentPolyline`, `bool leftMouseButtonPressed`, `ofVec2f lastPoint` and `float minDistance.`  Initialize `minDistance` to `10` and `currentedAddingPoints` to `false` in `setup()`.  Inside of `mousePressed(...)`, we want to start the polyline:
+Let's move on to the code.  Create four variables in the header:
+
+```cpp
+ofPolyline currentPolyline; 
+bool leftMouseButtonPressed;
+ofVec2f lastPoint; 
+float minDistance;
+```
+
+Initialize `minDistance` and `currentedAddingPoints` in `setup()`:
+
+```cpp
+minDistance = 10;
+currentlyAddingPoints = false;
+```  
+
+Inside of `mousePressed(...)`, we want to start the polyline:
 
 ```cpp
 if (button == OF_MOUSE_BUTTON_LEFT) {
@@ -550,7 +566,7 @@ We can also sample points along the polyline using [`getPointAtPercent(...)`](ht
     }
 ```
 
-Now we have evenly spaced points (figure 13, right).  Let's try creating a brush stroke where the thickness of the line changes. To do this we need to use a [normal vector](http://en.wikipedia.org/w/index.php?title=Normal_vector "Wiki on normal vectors in geometry").  The normal vector points in the perpendicular direction for a point on our polyline. Figure 14 shows normals drawn over some polylines.  Imagine drawing a normal at every point along a polyline, figure 15.  That is one way to add "thickness" to our brush.  We can comment out our circle drawing code in `draw()`, and add these lines of code instead: 
+Now we have evenly spaced points (figure 13, right).  Let's try creating a brush stroke where the thickness of the line changes. To do this we need to use a [normal vector](http://en.wikipedia.org/w/index.php?title=Normal_vector "Wiki on normal vectors in geometry").  Figure 14 shows normals drawn over some polylines - they points in the opposite (perpendicular) direction to the polyline.  Imagine drawing a normal at every point along a polyline, like figure 15.  That is one way to add "thickness" to our brush.  We can comment out our circle drawing code in `draw()`, and add these lines of code instead: 
 
 ```cpp
     vector<ofVec3f> vertices = polyline.getVertices();
@@ -578,6 +594,7 @@ for (int p=0; p<100; p+=10) {
 }
 
 ```
+
 We can get an evenly spaced point by using percents again, but `getNormalAtIndexInterpolated(...)` is asking for an index.  Specifically, it is asking for a `floatIndex` which means that we can pass in 1.5 and the polyline will return a normal that lives halfway between the point at index 1 and halfway between the point at index 2.  So we need to convert our percent, `p/100.0`, to a `floatIndex`.  All we need to do is to multiply the percent by the last index in our polyline (which we can get from subtracting one from the [`size()`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html#show_size "size Documentation Page") which tells us how many vertices are in our polyline), resulting in figure 14 (right).
 
 Now we can pump up the number of normals in our drawing.  Let's change our loop increment from `p+=10` to `p+=1`, change our loop condition from `p<100` to `p<500` and change our `p/100.0` lines of code to `p/500.0`.  We might also want to use a transparent white for drawing these normals, so let's add `ofSetColor(255,100)` right before our loop.  We will end up being able to draw ribbon lines, like figure 15.
