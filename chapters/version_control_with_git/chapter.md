@@ -131,28 +131,32 @@ When we have successfully set up Git, we create a new, **empty project** with th
 We will end up with a project folder containing some C++ files and some IDE files depending on OS and chosen IDE (in my case: Linux and Code::Blocks).
 This will look similar to this:
 
-    $ tree -a --charset ascii
-    .
-    |-- addons.make
-    |-- bin
-    |   `-- data
-    |       `-- .gitkeep
-    |-- config.make
-    |-- demoProject.cbp
-    |-- demoProject.workspace
-    |-- Makefile
-    `-- src
-        |-- main.cpp
-        |-- ofApp.cpp
-        `-- ofApp.h
-    
-    3 directories, 9 files
+```bash
+$ tree -a --charset ascii
+.
+|-- addons.make
+|-- bin
+|   `-- data
+|       `-- .gitkeep
+|-- config.make
+|-- demoProject.cbp
+|-- demoProject.workspace
+|-- Makefile
+`-- src
+    |-- main.cpp
+    |-- ofApp.cpp
+    `-- ofApp.h
+
+3 directories, 9 files
+```
 
 Now, it's time to create our Git repository, using the `git init` command:
 
 
-    $ git init
-    Initialised empty Git repository in /home/bilderbuchi/demoProject/.git/
+```bash
+$ git init
+Initialised empty Git repository in /home/bilderbuchi/demoProject/.git/
+```
 
 #### `.gitignore`
 
@@ -172,34 +176,36 @@ Note that the `.gitignore` pattern does _not_ affect files that have already bee
 Because it can be daunting to come up with a generally useful `.gitignore` template, it's [currently planned](https://github.com/openframeworks/openFrameworks/issues/2791) that OF offers to add a pre-made `.gitignore` file when we create our project.
 This file will look similar to this (formatted into three columns for convenience):
 
-    $ pr -tW84 -s"|" -i" "1 -3 .gitignore
-    ###########################|                   |.externalToolBuilders
-    # ignore generated binaries|# XCode            |
-    # but not the data folder  |*.pbxuser          |##################
-    ###########################|*.perspective      |# operating system
-                               |*.perspectivev3    |##################
-    /bin/*                     |*.mode1v3          |
-    !/bin/data/                |*.mode2v3          |# Linux
-                               |# XCode 4          |*~
-    #########                  |xcuserdata         |# KDE
-    # general                  |*.xcworkspace      |.directory
-    #########                  |                   |.AppleDouble
-                               |# Code::Blocks     |
-    [Bb]uild/                  |*.depend           |# OSX
-    [Oo]bj/                    |*.layout           |.DS_Store
-    *.o                        |                   |*.swp
-    [Dd]ebug*/                 |# Visual Studio    |*~.nib
-    [Rr]elease*/               |*.sdf              |# Thumbnails
-    *.mode*                    |*.opensdf          |._*
-    *.app/                     |*.suo              |
-    *.pyc                      |*.pdb              |# Windows
-    .svn/                      |*.ilk              |# Image file caches
-    *.log                      |*.aps              |Thumbs.db
-                               |ipch/              |# Folder config file
-    ########################   |                   |Desktop.ini
-    # IDE files which should   |# Eclipse          |
-    # be ignored               |.metadata          |# Android
-    ########################   |local.properties   |.csettings
+```bash
+$ pr -tW84 -s"|" -i" "1 -3 .gitignore
+###########################|                   |.externalToolBuilders
+# ignore generated binaries|# XCode            |
+# but not the data folder  |*.pbxuser          |##################
+###########################|*.perspective      |# operating system
+                           |*.perspectivev3    |##################
+/bin/*                     |*.mode1v3          |
+!/bin/data/                |*.mode2v3          |# Linux
+                           |# XCode 4          |*~
+#########                  |xcuserdata         |# KDE
+# general                  |*.xcworkspace      |.directory
+#########                  |                   |.AppleDouble
+                           |# Code::Blocks     |
+[Bb]uild/                  |*.depend           |# OSX
+[Oo]bj/                    |*.layout           |.DS_Store
+*.o                        |                   |*.swp
+[Dd]ebug*/                 |# Visual Studio    |*~.nib
+[Rr]elease*/               |*.sdf              |# Thumbnails
+*.mode*                    |*.opensdf          |._*
+*.app/                     |*.suo              |
+*.pyc                      |*.pdb              |# Windows
+.svn/                      |*.ilk              |# Image file caches
+*.log                      |*.aps              |Thumbs.db
+                           |ipch/              |# Folder config file
+########################   |                   |Desktop.ini
+# IDE files which should   |# Eclipse          |
+# be ignored               |.metadata          |# Android
+########################   |local.properties   |.csettings
+```
 
 This might look like magic to you, but let us just continue for now, you can always look up more information on the `.gitignore` syntax later, for example [here](http://git-scm.com/docs/gitignore).
 
@@ -211,25 +217,27 @@ It offers some flags to fine-tune its output (like most Git commands).
 
 Alright, let's use `git status -u` to see what's going on in our repository. The `-u` flag makes sure we see _all_ untracked files, even in subdirectories:
 
-    $ git status -u
-    # On branch master
-    #
-    # Initial commit
-    #
-    # Untracked files:
-    #   (use "git add <file>..." to include in what will be committed)
-    #
-    #	.gitignore
-    #	Makefile
-    #	addons.make
-    #	bin/data/.gitkeep
-    #	config.make
-    #	demoProject.cbp
-    #	demoProject.workspace
-    #	src/main.cpp
-    #	src/ofApp.cpp
-    #	src/ofApp.h
-    nothing added to commit but untracked files present (use "git add" to track)
+```bash
+$ git status -u
+# On branch master
+#
+# Initial commit
+#
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#    .gitignore
+#    Makefile
+#    addons.make
+#    bin/data/.gitkeep
+#    config.make
+#    demoProject.cbp
+#    demoProject.workspace
+#    src/main.cpp
+#    src/ofApp.cpp
+#    src/ofApp.h
+nothing added to commit but untracked files present (use "git add" to track)
+```
 
 The output tells us which branch we are currently on (`master`), that we haven't committed anything yet, and that there are a couple of untracked files (i.e. not yet known to Git) in the repository and, importantly, what we should do next.
 Using `git status -s` is an option to get more condensed output.
@@ -254,29 +262,33 @@ We stage untracked files and modifications to files already in the repository wi
 
 We can also add _all_ files and modifications in the repository with `git add .`, but as this is a catch-all filespec, we will have to check the output of `git status -u` first, to make sure no unwanted files are missed by the `.gitignore` pattern and would slip into the repository! Since we just made sure our git status looks alright, let's do it:
 
-    $ git add .
+```bash
+$ git add .
+```
 
 You will notice a change when we run `git status` next:
 
-    $ git status
-    # On branch master
-    #
-    # Initial commit
-    #
-    # Changes to be committed:
-    #   (use "git rm --cached <file>..." to unstage)
-    #
-    #	new file:   .gitignore
-    #	new file:   Makefile
-    #	new file:   addons.make
-    #	new file:   bin/data/.gitkeep
-    #	new file:   config.make
-    #	new file:   demoProject.cbp
-    #	new file:   demoProject.workspace
-    #	new file:   src/main.cpp
-    #	new file:   src/ofApp.cpp
-    #	new file:   src/ofApp.h
-    #
+```bash
+$ git status
+# On branch master
+#
+# Initial commit
+#
+# Changes to be committed:
+#   (use "git rm --cached <file>..." to unstage)
+#
+#    new file:   .gitignore
+#    new file:   Makefile
+#    new file:   addons.make
+#    new file:   bin/data/.gitkeep
+#    new file:   config.make
+#    new file:   demoProject.cbp
+#    new file:   demoProject.workspace
+#    new file:   src/main.cpp
+#    new file:   src/ofApp.cpp
+#    new file:   src/ofApp.h
+#
+```
 
 All those untracked files are now in the "Changes to be committed" section, and so will end up in the next commit we make (if we don't unstage them before that).
 
@@ -288,19 +300,21 @@ Now that we've prepared the staging area/index for our first commit, we can go a
 To this end we will use [`git commit`](http://git-scm.com/docs/git-commit).
 We can supply a required commit message at the same time by using the `-m` flag, otherwise Git will open an editor where we can enter a message (and then save and exit to proceed).
 
-    $ git commit -m "Add initial set of files."
-    [master (root-commit) 3ef08e9] Add initial set of files.
-     10 files changed, 388 insertions(+)
-     create mode 100644 .gitignore
-     create mode 100644 Makefile
-     create mode 100644 addons.make
-     create mode 100644 bin/data/.gitkeep
-     create mode 100644 config.make
-     create mode 100644 demoProject.cbp
-     create mode 100644 demoProject.workspace
-     create mode 100644 src/main.cpp
-     create mode 100644 src/ofApp.cpp
-     create mode 100644 src/ofApp.h
+```bash
+$ git commit -m "Add initial set of files."
+[master (root-commit) 3ef08e9] Add initial set of files.
+ 10 files changed, 388 insertions(+)
+ create mode 100644 .gitignore
+ create mode 100644 Makefile
+ create mode 100644 addons.make
+ create mode 100644 bin/data/.gitkeep
+ create mode 100644 config.make
+ create mode 100644 demoProject.cbp
+ create mode 100644 demoProject.workspace
+ create mode 100644 src/main.cpp
+ create mode 100644 src/ofApp.cpp
+ create mode 100644 src/ofApp.h
+```
 
 The first line of the output shows us the branch we are on (`master`), and that this was our first commit, creating the root of our commit tree.
 Also, we see the hash (i.e. the unique ID) of the commit we just created (`3ef08e9`) and the commit message.
@@ -310,9 +324,11 @@ The rest lists the files new to Git, the mysterious `mode 100644` is a unix-styl
 
 Now, let's check our status to see what's going on in the repository:
 
-    $ git status
-    # On branch master
-    nothing to commit, working directory clean
+```bash
+$ git status
+# On branch master
+nothing to commit, working directory clean
+```
 
 Hooray, that's the all-clear, all systems green message!
 It means that the working directory as it is right now is already committed to Git (with the exception of ignored files).
@@ -328,15 +344,17 @@ Open `ofApp.cpp`, and in the implementation of `void ofApp::setup()`, add an app
 
 We have just made a modification to a file that Git is tracking, so it should pick up on this, right? Let's check, using `git status` (you hopefully already guessed that part):
 
-    $ git status
-    # On branch master
-    # Changes not staged for commit:
-    #   (use "git add <file>..." to update what will be committed)
-    #   (use "git checkout -- <file>..." to discard changes in working directory)
-    #
-    #	modified:   src/ofApp.cpp
-    #
-    no changes added to commit (use "git add" and/or "git commit -a")
+```bash
+$ git status
+# On branch master
+# Changes not staged for commit:
+#   (use "git add <file>..." to update what will be committed)
+#   (use "git checkout -- <file>..." to discard changes in working directory)
+#
+#    modified:   src/ofApp.cpp
+#
+no changes added to commit (use "git add" and/or "git commit -a")
+```
 
 Alright, Git tells us it knows that we modified `ofApp.cpp`.
 Note that now the entry is in a section called "Changes not staged for commit", not "untracked files" as before.
@@ -350,19 +368,21 @@ It can be used to compare states between all kinds of areas (check out the examp
 (Use the `--staged` option to see the diff of *already staged* changes.)
 Let's check it out:
 
-    $ git diff
-    diff --git a/src/ofApp.cpp b/src/ofApp.cpp
-    index b182cce..8018cf7 100644
-    --- a/src/ofApp.cpp
-    +++ b/src/ofApp.cpp
-    @@ -3,6 +3,7 @@
-     //--------------------------------------------------------------
-     void ofApp::setup(){
+```bash
+$ git diff
+diff --git a/src/ofApp.cpp b/src/ofApp.cpp
+index b182cce..8018cf7 100644
+--- a/src/ofApp.cpp
++++ b/src/ofApp.cpp
+@@ -3,6 +3,7 @@
+ //--------------------------------------------------------------
+ void ofApp::setup(){
 
-    +    cout << "Hello world!";
-     }
++    cout << "Hello world!";
+ }
 
-     //--------------------------------------------------------------
+ //--------------------------------------------------------------
+```
 
 This output shows the difference between two files in the [unified diff format](http://en.wikipedia.org/wiki/Diff#Unified_format) (`diff` is a popular Unix tool for comparing text files).
 It looks pretty confusing, but let's pick it apart a bit to highlight the most useful parts.
@@ -382,15 +402,17 @@ We can see that one line containing a hello world message was added.
 Now that we have made some changes, we can compile and run the program to confirm it works as expected, and we didn't make a mistake.
 Then, we can prepare a commit with the modification, as before:
 
-    $ git add src/ofApp.cpp
+```bash
+$ git add src/ofApp.cpp
 
-    $ git status
-    # On branch master
-    # Changes to be committed:
-    #   (use "git reset HEAD <file>..." to unstage)
-    #
-    #	modified:   src/ofApp.cpp
-    #
+$ git status
+# On branch master
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#    modified:   src/ofApp.cpp
+#
+```
 
 Before we commit again, a couple of words regarding commits and commit messages:
 
@@ -408,13 +430,15 @@ If this is not enough, follow this with a blank line(!) and a more detailed summ
 
 Now that that is out of the way, we can commit the change we just added, and check the status afterwards:
 
-    $ git commit -m "Add welcome message"
-    [master e84ba14] Add welcome message
-     1 file changed, 1 insertion(+)
+```bash
+$ git commit -m "Add welcome message"
+[master e84ba14] Add welcome message
+ 1 file changed, 1 insertion(+)
 
-    $ git status
-    # On branch master
-    nothing to commit, working directory clean
+$ git status
+# On branch master
+nothing to commit, working directory clean
+```
 
 
 
@@ -436,102 +460,118 @@ This has several advantages:
 To get a list of the branches in a repository, we use [`git branch`](http://git-scm.com/docs/git-branch) without arguments (`*` denotes the current branch).
 Since we only have one branch for now, this is not very exciting:
 
-    $ git branch
-    * master
+```bash
+$ git branch
+* master
+```
 
 To create a new branch, we use `git branch <branchname>`.
 To then check out that branch, to make it the current one, we use [`git checkout <branchname>`](http://git-scm.com/docs/git-checkout).
 There is a shorter way to achieve both operations in one, using `git checkout -b <branchname>`, so let's use that to create **and** check out a new branch called `celebration`:
 
-    $ git checkout -b celebration
-    Switched to a new branch 'celebration'
+```bash
+$ git checkout -b celebration
+Switched to a new branch 'celebration'
 
-    $ git branch
-    * celebration
-      master
+$ git branch
+* celebration
+  master
+```
 
 To celebrate, let's add a second message after the "Hello World", e.g. `cout << "Yeah, it works";`.
 Let's confirm that Git has picked this up, using `git diff` as before:
 
-    $ git diff
-    diff --git a/src/ofApp.cpp b/src/ofApp.cpp
-    index 8018cf7..59d84fa 100644
-    --- a/src/ofApp.cpp
-    +++ b/src/ofApp.cpp
-    @@ -4,6 +4,7 @@
-     void ofApp::setup(){
+```bash
+$ git diff
+diff --git a/src/ofApp.cpp b/src/ofApp.cpp
+index 8018cf7..59d84fa 100644
+--- a/src/ofApp.cpp
++++ b/src/ofApp.cpp
+@@ -4,6 +4,7 @@
+ void ofApp::setup(){
 
-         cout << "Hello world!";
-    +    cout << "\nYeah, it works!";
-     }
+     cout << "Hello world!";
++    cout << "\nYeah, it works!";
+ }
 
-     //--------------------------------------------------------------
+ //--------------------------------------------------------------
+```
 
 If we run `git status` again, it will show that we are on the `celebration` branch now:
 
-    $ git status
-    # On branch celebration
-    # Changes not staged for commit:
-    #   (use "git add <file>..." to update what will be committed)
-    #   (use "git checkout -- <file>..." to discard changes in working directory)
-    #
-    #	modified:   src/ofApp.cpp
-    #
-    no changes added to commit (use "git add" and/or "git commit -a")
+```bash
+$ git status
+# On branch celebration
+# Changes not staged for commit:
+#   (use "git add <file>..." to update what will be committed)
+#   (use "git checkout -- <file>..." to discard changes in working directory)
+#
+#    modified:   src/ofApp.cpp
+#
+no changes added to commit (use "git add" and/or "git commit -a")
+```
 
 Because we have confirmed that the list of changes to be staged and committed is alright, we can take a little shortcut.
 Using the `-a` flag of [`git commit`](http://git-scm.com/docs/git-commit), we can tell Git to automatically stage modified or deleted files (new files are not affected) when committing, so we can skip the `git add` step:
 
-    $ git commit -am "Let us celebrate!"
-    [celebration bc636f4] Let us celebrate!
-     1 file changed, 1 insertion(+)
+```bash
+$ git commit -am "Let us celebrate!"
+[celebration bc636f4] Let us celebrate!
+ 1 file changed, 1 insertion(+)
 
-    $ git status
-    # On branch celebration
-    nothing to commit, working directory clean
+$ git status
+# On branch celebration
+nothing to commit, working directory clean
+```
 
 #### Merging branches
 
 Let us meanwhile add a feature on the `master` branch.
 First, we check out the `master` branch:
 
-    $ git checkout master
-    Switched to branch 'master'
+```bash
+$ git checkout master
+Switched to branch 'master'
+```
 
 Now, we can add some code to switch the background color if the space key is pressed.
 You should be able to recognize what I did by looking at the output of `git diff`.
 Try to approximately replicate these changes:
 
-    $ git diff
-    diff --git a/src/ofApp.cpp b/src/ofApp.cpp
-    index 8018cf7..f7e3dbc 100644
-    --- a/src/ofApp.cpp
-    +++ b/src/ofApp.cpp
-    @@ -18,12 +18,16 @@ void ofApp::draw(){
+```bash
+$ git diff
+diff --git a/src/ofApp.cpp b/src/ofApp.cpp
+index 8018cf7..f7e3dbc 100644
+--- a/src/ofApp.cpp
++++ b/src/ofApp.cpp
+@@ -18,12 +18,16 @@ void ofApp::draw(){
 
-     //--------------------------------------------------------------
-     void ofApp::keyPressed(int key){
-    -
-    +	if (key == ' ') {
-    +		ofBackground(255);
-    +	}
-     }
+ //--------------------------------------------------------------
+ void ofApp::keyPressed(int key){
+-
++    if (key == ' ') {
++        ofBackground(255);
++    }
+ }
 
-     //--------------------------------------------------------------
-     void ofApp::keyReleased(int key){
-    -
-    +	if (key == ' ') {
-    +		ofBackground(127);
-    +	}
-     }
+ //--------------------------------------------------------------
+ void ofApp::keyReleased(int key){
+-
++    if (key == ' ') {
++        ofBackground(127);
++    }
+ }
 
-     //--------------------------------------------------------------
+ //--------------------------------------------------------------
+```
 
 Next, we again commit quickly (as we already checked the modifications to be committed with `git diff`):
 
-    $ git commit -am "Add background switching"
-    [master 7cc405c] Add background switching
-     1 file changed, 6 insertions(+), 2 deletions(-)
+```bash
+$ git commit -am "Add background switching"
+[master 7cc405c] Add background switching
+ 1 file changed, 6 insertions(+), 2 deletions(-)
+```
 
 #### `git log`
 
@@ -539,12 +579,14 @@ To show commit logs, we can use the [`git log`](http://git-scm.com/docs/git-log)
 In it's default form, `git log` shows a plain list of commits, printing their hashes, timestamp, author and commit message.
 Its output is heavily customizable, and one nice thing we can do is generate a primitive tree view with this incantation *(which you could save under an [alias](http://stackoverflow.com/questions/2553786/how-do-i-alias-commands-in-git) to make it shorter, but this is out of scope for this tutorial)*:
 
-    $ git log --all --graph --decorate --oneline
-    * bc636f4 (celebration) Let us celebrate!
-    | * 7cc405c (HEAD, master) Add background switching
-    |/
-    * e84ba14 Add welcome message
-    * 3ef08e9 Add initial set of files.
+```bash
+$ git log --all --graph --decorate --oneline
+* bc636f4 (celebration) Let us celebrate!
+| * 7cc405c (HEAD, master) Add background switching
+|/
+* e84ba14 Add welcome message
+* 3ef08e9 Add initial set of files.
+```
 
 We see the whole history of the repository here, showing the branch structure, including brief commit messages.
 We can also see the branch tips in parentheses, and also the current branch (where `HEAD` points to).
@@ -556,24 +598,28 @@ We can now merge the `celebration` branch back into our `master` branch to make 
 This happens with the [`git merge`](http://git-scm.com/docs/git-merge) command.
 We use `git merge <branchname>` to merge another branch into the current branch, like so:
 
-    $ git merge celebration
-    Auto-merging src/ofApp.cpp
-    Merge made by the 'recursive' strategy.
-     src/ofApp.cpp | 1 +
-     1 file changed, 1 insertion(+)
+```bash
+$ git merge celebration
+Auto-merging src/ofApp.cpp
+Merge made by the 'recursive' strategy.
+ src/ofApp.cpp | 1 +
+ 1 file changed, 1 insertion(+)
+```
 
 Git automatically figured out how to merge `ofApp.cpp` so that `master` now contains the modifications from both branches (go ahead and take a look at `ofApp.cpp` now).
 
 The tree view now looks like this:
 
-    $ git log --all --graph --decorate --oneline
-    *   1c6d4aa (HEAD, master) Merge branch 'celebration'
-    |\
-    | * bc636f4 (celebration) Let us celebrate!
-    * | 7cc405c Add background switching
-    |/
-    * e84ba14 Add welcome message
-    * 3ef08e9 Add initial set of files.
+```bash
+$ git log --all --graph --decorate --oneline
+*   1c6d4aa (HEAD, master) Merge branch 'celebration'
+|\
+| * bc636f4 (celebration) Let us celebrate!
+* | 7cc405c Add background switching
+|/
+* e84ba14 Add welcome message
+* 3ef08e9 Add initial set of files.
+```
 
 We can see that the two branches have been merged together successfully, so `master` now contains all our modifications.
 Also note that the `celebration` branch is unaffected by the merge, it's still pointing to its original commit.
@@ -591,8 +637,10 @@ In contrast, the `--soft` flag just moves the `HEAD` pointer to another commit, 
 
 Anyway, let's reset our `master` branch back one commit now:
 
-    $ git reset --hard HEAD~1
-    HEAD is now at 68d2674 Add background switching
+```bash
+$ git reset --hard HEAD~1
+HEAD is now at 68d2674 Add background switching
+```
 
 You can consult the tree view again to see that the merge commit has disappeared, and `master` is back at "Add background switching".
 Now, let's try to make a merge fail.
@@ -607,102 +655,118 @@ We just add a second output line after the "Hello world" statement.
 Since in the `celebration` branch, another statement was *also* added right after "Hello world", Git will not know how to correctly resolve this.
 Our `cout` statement looks like this:
 
-    $ git diff
-    diff --git a/src/ofApp.cpp b/src/ofApp.cpp
-    index f7e3dbc..6e232ba 100644
-    --- a/src/ofApp.cpp
-    +++ b/src/ofApp.cpp
-    @@ -4,6 +4,7 @@
-     void ofApp::setup(){
+```bash
+$ git diff
+diff --git a/src/ofApp.cpp b/src/ofApp.cpp
+index f7e3dbc..6e232ba 100644
+--- a/src/ofApp.cpp
++++ b/src/ofApp.cpp
+@@ -4,6 +4,7 @@
+ void ofApp::setup(){
 
-         cout << "Hello world!";
-    +    cout << "\nThis is not going to end well!";
-     }
+     cout << "Hello world!";
++    cout << "\nThis is not going to end well!";
+ }
 
-     //--------------------------------------------------------------
+ //--------------------------------------------------------------
+```
 
 Now we will create a commit (we are still on `master`):
 
-    $ git commit -am "Trigger a conflict"
-    [master 2608b52] Trigger a conflict
-     1 file changed, 1 insertion(+)
+```bash
+$ git commit -am "Trigger a conflict"
+[master 2608b52] Trigger a conflict
+ 1 file changed, 1 insertion(+)
+```
 
 When we attempt to merge `celebration` into `master`, bad things happen:
 
-    $ git merge celebration
-    Auto-merging src/ofApp.cpp
-    CONFLICT (content): Merge conflict in src/ofApp.cpp
-    Automatic merge failed; fix conflicts and then commit the result.
+```bash
+$ git merge celebration
+Auto-merging src/ofApp.cpp
+CONFLICT (content): Merge conflict in src/ofApp.cpp
+Automatic merge failed; fix conflicts and then commit the result.
+```
 
 When a conflict is detected by Git, it will stop the merging process and put ["conflict markers"](http://git-scm.com/book/en/Git-Branching-Basic-Branching-and-Merging#Basic-Merge-Conflicts) into the conflicted files.
 Those markers look like this:
 
-    $ head -n 14 src/ofApp.cpp
-    #include "ofApp.h"
+```bash
+$ head -n 14 src/ofApp.cpp
+#include "ofApp.h"
 
-    //--------------------------------------------------------------
-    void ofApp::setup(){
+//--------------------------------------------------------------
+void ofApp::setup(){
 
-        cout << "Hello world!";
-    <<<<<<< HEAD
-        cout << "\nThis is not going to end well!";
-    =======
-        cout << "\nYeah, it works!";
-    >>>>>>> celebration
-    }
+    cout << "Hello world!";
+<<<<<<< HEAD
+    cout << "\nThis is not going to end well!";
+=======
+    cout << "\nYeah, it works!";
+>>>>>>> celebration
+}
 
-    //--------------------------------------------------------------
+//--------------------------------------------------------------
+```
 
 The part between `<<<` and `===` shows the file as it is in `HEAD`, the current branch we want to merge  _into_.
 The part between `===` and `>>>` shows the file as it is in the named branch, in our case `celebration`.
 What we have to do now next is resolve the conflict by implementing the conflicted section in a way which makes sense for our program, remove the conflict markers and save the file.
 For example, we can make the conflicted section look like this:
 
-    void ofApp::setup(){
+```cpp
+void ofApp::setup(){
 
-        cout << "Conflict averted!";
-        cout << "\nHello world!";
-        cout << "\nYeah, it works!";
+    cout << "Conflict averted!";
+    cout << "\nHello world!";
+    cout << "\nYeah, it works!";
 
-    }
+}
+```
 
 After doing this, Git still knows that there has been a conflict, and `git status` again tells us what to do next:
 
-    $ git status
-    # On branch master
-    # You have unmerged paths.
-    #   (fix conflicts and run "git commit")
-    #
-    # Unmerged paths:
-    #   (use "git add <file>..." to mark resolution)
-    #
-    #	both modified:      src/ofApp.cpp
-    #
-    no changes added to commit (use "git add" and/or "git commit -a")
+```bash
+$ git status
+# On branch master
+# You have unmerged paths.
+#   (fix conflicts and run "git commit")
+#
+# Unmerged paths:
+#   (use "git add <file>..." to mark resolution)
+#
+#    both modified:      src/ofApp.cpp
+#
+no changes added to commit (use "git add" and/or "git commit -a")
+```
 
 Obediently, we run `git add src/ofApp.cpp` to stage our conflict-free file and mark the conflict as resolved.
 Now, we can finish the merge.
 If we omit the `-m <message>` part, `git commit` will open an editor (which one depends on your setup) with a proposed commit message which mentions the files for which conflicts had occured.
 You can either try that way, or just create a self-made commit message directly, as usual:
 
-    $ git commit -m "Merge after resolving conflict"
-    [master 29d152e] Merge after resolving conflict
+```bash
+$ git commit -m "Merge after resolving conflict"
+[master 29d152e] Merge after resolving conflict
+```
 
 All that remains is to check if everything worked alright, and take a last look at our tree view:
 
-    $ git status
-    # On branch master
-    nothing to commit, working directory clean
+```bash
+$ git status
+# On branch master
+nothing to commit, working directory clean
 
-    $ git log --all --graph --decorate --oneline
-    *   29d152e (HEAD, master) Merge after resolving conflict
-    |\
-    | * d9be50b (celebration) Let us celebrate!
-    * | 2608b52 Trigger a conflict
-    * | e822ea4 Add background switching
-    |/
-    * 1964a43 Add welcome message
-    * f6caa7b Add initial set of files.
+$ git log --all --graph --decorate --oneline
+*   29d152e (HEAD, master) Merge after resolving conflict
+|\
+| * d9be50b (celebration) Let us celebrate!
+* | 2608b52 Trigger a conflict
+* | e822ea4 Add background switching
+|/
+* 1964a43 Add welcome message
+* f6caa7b Add initial set of files.
+```
 
 Congratulations, you have just resolved your first merge conflict!
 This concludes the walk-through portion of this chapter, I will continue with more high-level explanations of Git features.

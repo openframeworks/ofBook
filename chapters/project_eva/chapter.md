@@ -189,11 +189,13 @@ To be able to test and simulate the two-way OSC communication i created several 
 
 The OSC messages sent by the tracking software take this format:
 
-    /blobserver/startFrame      389 1
-    /blobserver/hog             128 140 287 0.4 1.2 77 4 1	
-    /blobserver/hog             135 418 103 2.2 2.8 20 0 0
-    /blobserver/hog             136 356 72 0.3 0.2 18 0 0
-    /blobserver/endFrame
+```
+/blobserver/startFrame      389 1
+/blobserver/hog             128 140 287 0.4 1.2 77 4 1    
+/blobserver/hog             135 418 103 2.2 2.8 20 0 0
+/blobserver/hog             136 356 72 0.3 0.2 18 0 0
+/blobserver/endFrame
+```
 
 Each message with the address line `/blobserver/hog`  signifies the tracking data for one recognized shape, and communicates blob id, position, velocity, age, etc. Bounded by the `/blobserver/startFrame` and `/blobserver/endFrame` messages, an arbitrary amount of tracking messages (= current number of *people* recognized) can be received at any time. The frequency of those message blocks depends on the framerate of *blobserver*. 
 
@@ -206,35 +208,37 @@ The received tracking data is stored in a map of `Blob` objects `std::map<int,Bl
 
 If new tracking data arrives, the system first checks if the blob-id already exists in the map or if it needs to be created. Then it updates the instance with the new data. 
 
-    while (receiver.hasWaitingMessages()) {
+```cpp
+while (receiver.hasWaitingMessages()) {
+
+    // ...
+    if(m.getAddress() == "/blobserver/hog") {
     
-        // ...
-        if(m.getAddress() == "/blobserver/hog") {
-        
-            // parse incoming message arguments
-            int blobid = m.getArgAsInt32(0);
-			int posx = m.getArgAsInt32(1);
-			int posy = m.getArgAsInt32(2);
-        
-            // first look if object with that ID already exists
-            std::map<int,Blob>::iterator iter = blobs.find(blobid);
-            if( iter == blobs.end() ) {
-                // didn't exist yet, therefore we create it
-                blobs[blobid].id = blobid;
-                //....
-                ofAddListener( blobs[blobid].onLost, this, &planeApp::blobOnLost );
-            }
-            
-            // now update the blob (old or new)
-            Blob* b = &blobs.find(blobid)->second;
-            b->setRawPosition(posx, posy);
-            b->setVelocity(velx, vely);
-            b->age = age;
+        // parse incoming message arguments
+        int blobid = m.getArgAsInt32(0);
+        int posx = m.getArgAsInt32(1);
+        int posy = m.getArgAsInt32(2);
+    
+        // first look if object with that ID already exists
+        std::map<int,Blob>::iterator iter = blobs.find(blobid);
+        if( iter == blobs.end() ) {
+            // didn't exist yet, therefore we create it
+            blobs[blobid].id = blobid;
             //....
-        
+            ofAddListener( blobs[blobid].onLost, this, &planeApp::blobOnLost );
         }
+        
+        // now update the blob (old or new)
+        Blob* b = &blobs.find(blobid)->second;
+        b->setRawPosition(posx, posy);
+        b->setVelocity(velx, vely);
+        b->age = age;
+        //....
     
     }
+
+}
+```
 
 After the new tracking information has been filed away into the blobs map, the blobs map is cleaned of all non-updated members. 
 
@@ -260,15 +264,17 @@ While the background videos appear on schedule and are preloaded by the system, 
 
 Example: Everytime a user stands still long enough during scene 1, a video element displaying a blinking star gets added to the vector:
 
-    // add new STAR video
-    fgMedia.push_back(ofPtr<mediaElement>( new videoElement("video/stars/STAR_01.mov")));
-    
-    // set position of video, and press play
-    ( *fgMedia[fgMedia.size()-1] ).setPosition( blobMapToScreen( blobs[blobID].position ) );
-    ( *fgMedia[fgMedia.size()-1] ).playVideo();
-    
-    // link blob to video, to be able to control it later
-    blobs[blobID].mediaLink = fgMedia[fgMedia.size()-1];
+```cpp
+// add new STAR video
+fgMedia.push_back(ofPtr<mediaElement>( new videoElement("video/stars/STAR_01.mov")));
+
+// set position of video, and press play
+( *fgMedia[fgMedia.size()-1] ).setPosition( blobMapToScreen( blobs[blobID].position ) );
+( *fgMedia[fgMedia.size()-1] ).playVideo();
+
+// link blob to video, to be able to control it later
+blobs[blobID].mediaLink = fgMedia[fgMedia.size()-1];
+```
 
 #### Preloading versus dynamic loading
 In general all video sources that are used in a controlled way (as in: used only as one instance) are preloaded at startup of the software. For video sources that are called up dynamically in possibly multiple instances at once, a combination of two approaches were used:
@@ -295,53 +301,61 @@ Blob objects have multiple events they can trigger actions in the baseApp:
 
 `ofEvent` instances are defined in the blob object header:
 
-    class Blob {
-        
-        ofEvent<int> onLost;            
-        ofEvent<int> onFreeze;     
-        ofEvent<int> unFreeze; 
-        
-    }
+```cpp
+class Blob {
+    
+    ofEvent<int> onLost;            
+    ofEvent<int> onFreeze;     
+    ofEvent<int> unFreeze; 
+    
+}
+```
 
 When a new blob object is created in the baseApp, `ofAddListener()` connects the object's events to functions within the baseApp. 
 
-    // create new blob
-    blobs[blobid].id = blobid;
+```cpp
+// create new blob
+blobs[blobid].id = blobid;
 
-    ofAddListener( blobs[blobid].onLost, this, &planeApp::blobOnLost );
-    ofAddListener( blobs[blobid].onFreeze, this, &planeApp::blobOnFreeze );
-    ofAddListener( blobs[blobid].unFreeze, this, &planeApp::blobUnFreeze );
-    // ... 
+ofAddListener( blobs[blobid].onLost, this, &planeApp::blobOnLost );
+ofAddListener( blobs[blobid].onFreeze, this, &planeApp::blobOnFreeze );
+ofAddListener( blobs[blobid].unFreeze, this, &planeApp::blobUnFreeze );
+// ... 
+```
 
 When a blob then updates and analyses its position, velocity etc. it can trigger those events with `ofNotifyEvent()`.
 
-    void Blob::evalVelocity(float freezeMaxVel, float freezeMinTime) {
-    
-        if ( this->vel < freezeMaxVel ) {
-            if ( !frozen ) {
-                frozen = true;
-                ofNotifyEvent(onFreeze,this->id,this);
-            }
-        } else {
-            if ( frozen ) {
-                frozen = false;
-                ofNotifyEvent(unFreeze,this->id,this);
-            }
+```cpp
+void Blob::evalVelocity(float freezeMaxVel, float freezeMinTime) {
+
+    if ( this->vel < freezeMaxVel ) {
+        if ( !frozen ) {
+            frozen = true;
+            ofNotifyEvent(onFreeze,this->id,this);
         }
-        
+    } else {
+        if ( frozen ) {
+            frozen = false;
+            ofNotifyEvent(unFreeze,this->id,this);
+        }
     }
+    
+}
+```
 
 The `ofNotifyEvent()` call then triggers the connected function in the baseApp:
 
-    void planeApp::blobOnFreeze(int & blobID) {
-    
-        if (scene==STARS && blobs[blobID].onStage) {
-            // add new STAR video
-            fgMedia.push_back(ofPtr<mediaElement>( new videoElement("video/stars/STAR_01.mov")));
-            // ...
-        }
-        
+```cpp
+void planeApp::blobOnFreeze(int & blobID) {
+
+    if (scene==STARS && blobs[blobID].onStage) {
+        // add new STAR video
+        fgMedia.push_back(ofPtr<mediaElement>( new videoElement("video/stars/STAR_01.mov")));
+        // ...
     }
+    
+}
+```
 
 
 

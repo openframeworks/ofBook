@@ -51,24 +51,28 @@ By default, OF enables vertical sync and sets a frame rate of 60FPS. You can adj
 
 Another imporant point which is a bit hard to cover deeply in this chapter is frame rate independence. If you animate using a simple model -- say for example, you create a variable called xPos, increase it by a certain amount every frame and draw it. 
 
-	void testApp::setup(){
-		xPos = 100;
-	}
-	
-	void testApp::update(){
-		xPos += 0.5;
-	}
-	
-	void testApp::draw(){
-		ofRect(xPos, 100, 10, 10);
-	}
+```cpp
+void testApp::setup(){
+    xPos = 100;
+}
+
+void testApp::update(){
+    xPos += 0.5;
+}
+
+void testApp::draw(){
+    ofRect(xPos, 100, 10, 10);
+}
+```
 
 this kind of animation works fine, but it assumes that your frame rate is constant.  If you app runs faster, say by jumping from 30fps to 60fps, the object will appear to go twice as fast, since there will be 2x the number of update and draw functions called per second.   Typically more complex animation will be written to take this into account, either by using functions like time (explained below) or mixing the frame rate or elapsed time into your update.  For example, a solution might be something like: 
 
-	void testApp::update(){
-		xPos += 0.5 * (30.0 / ofGetFrameRate());
-	}
-	
+```cpp
+void testApp::update(){
+    xPos += 0.5 * (30.0 / ofGetFrameRate());
+}
+```
+
 if ofGetFrameRate() returns 30, we multiply 0.5 by 1, if ofGetFrameRate() returns 60, we multiply it by 1/2, so although we are animating twice as fast, we take half sized steps, therefore effectively moving at the same speed regardless of framerate.  Framerate indepence is fairly important to think about once you get the hang of things, since as observers of animation, we really do feel objects speeding up or slowwing down even slightly, but in this chapter I will skip it for the sake of simplicity in the code. 
 
 ### Time functions
@@ -102,16 +106,22 @@ The first and probably most important lesson of animation is that we **love** nu
 
 The thing about numbers between 0 and 1 is that they are super easy to use in interesting ways. We typically refer to these kinds of numbers as percent, and you'll see me use the shorthand `pct` in the code–this is a floating point number between 0 and 1. If we wanted to get from point A to point B, we could use this number to figure out how much of one point and how much of another point to use. The formula is this: 
 
-    ((1-pct) * A) + (pct * B)
-    
+```cpp
+((1-pct) * A) + (pct * B)
+```
+
 To add some detail if we are 0 pct of the way from A to B, we calculate 
 
-    ((1-0) * A) + (0 * B)
-    
+```cpp
+((1-0) * A) + (0 * B)
+```
+
 which simplifies to `(1*A + 0*B)` or A. If we are 25 percent of the way, it looks like 
 
-    ((1-0.75) * A) + (0.25 * B)
-    
+```cpp
+((1-0.75) * A) + (0.25 * B)
+```
+
 which is 75% of A + 25% of B. Essentially by taking a mix, you get from one to the other. The first example shows how this is done.
 
 **[note: linear example code here]**
@@ -171,26 +181,34 @@ If we take the linear interpolation code but always alter our own position inste
 
 In code, that's basically the same as saying 
 
-    currentValue = currentValue + ( targetValue - currentValue ) * 0.5.
+```cpp
+currentValue = currentValue + ( targetValue - currentValue ) * 0.5.
+```
 
 In this case `targetValue - currentValue` is the distance. You could also change the size of the step you make every time, for example, taking steps of 10% instead of 50%: 
 
-    currentValue = currentValue + ( targetValue - currentValue ) * 0.1.
+```cpp
+currentValue = currentValue + ( targetValue - currentValue ) * 0.1.
+```
 
 If you expand the expression, you can write the same thing this way: 
 
-    currentValue = currentValue * 0.9 + targetValue * 0.1.
-    
+```cpp
+currentValue = currentValue * 0.9 + targetValue * 0.1.
+
+```
 This is a form of smoothing: you take some percentage of your current value and another percentage of the target and add them together. Those percentages have to add up to 100%, so if you take 95% of the current position, you need to take 5% of the target (e.g., currentValue * 0.95 + target * 0.05).
 
 In Zeno's paradox, you never actually get to the target, since there's always some remaining distance to go. On the computer, since we are dealing with pixel positions on the screen and floating point numbers at a specific range, the object appears to stop.  
 
 In the 5th example **(5_rectangleXeno)**, we add a function to the rectangle that uses xeno to catch up to a point: 
 
-	void rectangle::xenoToPoint(float catchX, float catchY){
-		pos.x = catchUpSpeed * catchX + (1-catchUpSpeed) * pos.x; 
-		pos.y = catchUpSpeed * catchY + (1-catchUpSpeed) * pos.y; 
-	}
+```cpp
+void rectangle::xenoToPoint(float catchX, float catchY){
+    pos.x = catchUpSpeed * catchX + (1-catchUpSpeed) * pos.x; 
+    pos.y = catchUpSpeed * catchY + (1-catchUpSpeed) * pos.y; 
+}
+```
 
 Here, we have a value, `catchUpSpeed`,  that represents how fast we catch up to the object we are trying to get to.   It's set to 0.01 (1%) in this example code, which means take 99% of my own postion, 1% of the target position and move to their sum.  If you alter this number you'll see the rectangle catch up to the mouse faster or slower.  0.001 means it will run 10 times slower, 0.1 means ten times faster. 
 
@@ -220,35 +238,37 @@ It's pretty easy to use sin to animate the position of an object.
 
 Here, we'll take the sin of the elapsed time `sin(ofGetElpasedTimef())`. This returns a number between negative one and one. It does this every 6.28 seconds.  We can use of map to map this to a new range. For example 
 
-	void ofApp::draw(){
-		float xPos = ofMap(sin(ofGetElpasedTimef()), -1, 1, 0, ofGetWidth());
-		ofRect(xPos, ofGetHeight/2, 10,10);
-	}
-	
+```cpp
+void ofApp::draw(){
+    float xPos = ofMap(sin(ofGetElpasedTimef()), -1, 1, 0, ofGetWidth());
+    ofRect(xPos, ofGetHeight/2, 10,10);
+}
+
+```
 This draws a rectangle which move sinusoidally across the screen, back and forth every 6.28 seconds. 
 
 You can do simple things with offseting the phase (how shifted over the sin wave is).  In example 7 **(7_sinExample_phase)**, we calculate the sin of time twice, but the second time, we add PI: `ofGetElapsedTimef() + PI`.  This means to the two values will be offset from each other by 180 degrees on the circle (imaginging our dot, when one is far right, the other will be far left.  When one is up, the other is down).  Here we set the background color and the color of a rectangle using these offset values.  It's useful if you start playing with sin and cos to start to manipulate phase. 
 
-	//--------------------------------------------------------------
-	void testApp::draw(){
-		
-		
-		float sinOfTime				= sin( ofGetElapsedTimef() );
-		float sinOfTimeMapped		= ofMap( sinOfTime, -1, 1, 0, 255);
-		
-		
-		ofBackground(sinOfTimeMapped, sinOfTimeMapped, sinOfTimeMapped);
-	
-		
-		float sinOfTime2			= sin( ofGetElapsedTimef() + PI);
-		float sinOfTimeMapped2		= ofMap( sinOfTime2, -1, 1, 0, 255);
-		
-		ofSetColor(sinOfTimeMapped2, sinOfTimeMapped2, sinOfTimeMapped2);
-		ofRect(100,100,ofGetWidth()-200, ofGetHeight()-200);
-		
-		
-	
-	}
+```cpp
+//--------------------------------------------------------------
+void testApp::draw(){
+    
+    
+    float sinOfTime                = sin( ofGetElapsedTimef() );
+    float sinOfTimeMapped        = ofMap( sinOfTime, -1, 1, 0, 255);
+    
+    
+    ofBackground(sinOfTimeMapped, sinOfTimeMapped, sinOfTimeMapped);
+
+    
+    float sinOfTime2            = sin( ofGetElapsedTimef() + PI);
+    float sinOfTimeMapped2        = ofMap( sinOfTime2, -1, 1, 0, 255);
+    
+    ofSetColor(sinOfTimeMapped2, sinOfTimeMapped2, sinOfTimeMapped2);
+    ofRect(100,100,ofGetWidth()-200, ofGetHeight()-200);
+    
+}
+```
 
 *As a nerdy detail, floating point numbers are not linearly precise, e.g., there's a different number of floating point numbers between 0.0 and 1.0 than 100.0 and 101.0. You actually lose precision the larger a floating point number gets, so taking sin of elapsed time can start looking crunch after some time. For long running installations I will sometimes write code that looks like* `sin((ofGetElapsedTimeMillis() % 6283) / 6283.0)` *or something similar, to account for this. Even though ofGetElapsedTimef() gets larger over time, it's a worse and worse input to sin() as it grows.  ofGetElapsedTimeMillis() doesn't suffer from this problem since it's an integer number and the number of integers between 0 and 10 is the same as between 1000 and 1010.*
 
@@ -262,16 +282,20 @@ Since sin and cos are derived from the circle, if we want to move things in a ci
 
 The formula is fairly simple: 
 
-	xPos = xOrig + radius * cos(angle);
-	yPos = yOrig + radius * sin(angle);
+```cpp
+xPos = xOrig + radius * cos(angle);
+yPos = yOrig + radius * sin(angle);
+```
 
 This allows us to create something moving in a circular way.  In the circle example, I will animate using this approach.  
 
-	float xorig = 500;
-	float yorig = 300;
-	float angle = ofGetElapsedTimef()*3.5;
-	float x = xorig + radius * cos(angle);
-	float y = yorig + radius * sin(angle);
+```cpp
+float xorig = 500;
+float yorig = 300;
+float angle = ofGetElapsedTimef()*3.5;
+float x = xorig + radius * cos(angle);
+float y = yorig + radius * sin(angle);
+```
 
 *Note: In OF, the top left corner is 0,0 (y axis is increasing as you go down) so you'll notive that the point travels clockwise instead of counter-clockwise.  If this bugs you (since above, I asked you imagine it moving counter clockwise) you can modify this line `float y = yorig + radius * sin(angle)` to `float y = yorig + radius * -sin(angle)` and see the circle go in the counter clockwise direction.*
 
@@ -279,9 +303,11 @@ For these examples, I start to add a "trail" to the object by using the ofPolyli
 
 If we increase the radius, for example by doing: 
 
-	void testApp::update(){
-		radius = radius + 0.1;
-	}
+```cpp
+void testApp::update(){
+    radius = radius + 0.1;
+}
+```
 
 we get spirals. 
 
@@ -299,20 +325,22 @@ You can do the same thing with ofNoise -- here, I write a for loop to draw noise
 
 ![noise line](images/noiseLine.png)
 
-    ofBackground(0,0,0);
-    ofSetColor(255);
+```cpp
+ofBackground(0,0,0);
+ofSetColor(255);
+
+ofNoFill();
+ofBeginShape();
+for (int i = 0; i < 500; i++){
     
-    ofNoFill();
-    ofBeginShape();
-    for (int i = 0; i < 500; i++){
-        
-        float x = i;
-        float noise = ofNoise(i/10.0);
-        float y = ofMap(noise, 0,1, 0, 100);
-        ofVertex(x,y);
-    }
-    ofEndShape();
-    
+    float x = i;
+    float noise = ofNoise(i/10.0);
+    float y = ofMap(noise, 0,1, 0, 100);
+    ofVertex(x,y);
+}
+ofEndShape();
+```
+
 If you alter the i/10.0, you can adjust the scale of the noise, either zooming in (ie, i/100.0), so you see more details, or zooming out (ie, i/5.0) so you see more variation. 
 
 ![noise with i dividied by 100](images/noise_i_d_100.png)
@@ -321,14 +349,18 @@ If you alter the i/10.0, you can adjust the scale of the noise, either zooming i
    
 We can use noise to animate, for example, here, we move an object on screen using noise: 
 
-    float x = ofMap( ofNoise( ofGetElapsedTimef()), 0, 1, 0, ofGetWidth());
-    ofCircle(x,200,30);
+```cpp
+float x = ofMap( ofNoise( ofGetElapsedTimef()), 0, 1, 0, ofGetWidth());
+ofCircle(x,200,30);
+```
   
 If we move y via noise, we can take a noise input value somewhere "away" from the x value, ie further down the curved line: 
 
-	float x = ofMap( ofNoise( ofGetElapsedTimef()), 0, 1, 0, ofGetWidth());
-    float y = ofMap( ofNoise( 1000.0+ ofGetElapsedTimef()), 0, 1, 0, ofGetHeight());
-    ofCircle(x,y,30);
+```cpp
+float x = ofMap( ofNoise( ofGetElapsedTimef()), 0, 1, 0, ofGetWidth());
+float y = ofMap( ofNoise( 1000.0+ ofGetElapsedTimef()), 0, 1, 0, ofGetHeight());
+ofCircle(x,y,30);
+```
 
 Alternatively, ofNoise takes multiple demensions.  Here's a quick sketch moving something in a path via ofNoise using the 2d dimensions
 
@@ -336,25 +368,27 @@ Alternatively, ofNoise takes multiple demensions.  Here's a quick sketch moving 
  
  The code for this example (note the 2 inputs into ofNoise, this is a 2-dimensional noise call.  it allows us to use the same value for time, but get different results):
 
-	//--------------------------------------------------------------
-    void ofApp::setup(){
-        ofBackground(0);
-        ofSetBackgroundAuto(false);
-    }
+```cpp
+//--------------------------------------------------------------
+void ofApp::setup(){
+    ofBackground(0);
+    ofSetBackgroundAuto(false);
+}
 
-    //--------------------------------------------------------------
-    void ofApp::update(){
-    }
+//--------------------------------------------------------------
+void ofApp::update(){
+}
 
-    //--------------------------------------------------------------
-    void ofApp::draw(){
-        
-        float x = ofMap( ofNoise( ofGetElapsedTimef()/2.0, -1000), 0, 1, 0, ofGetWidth());
-        float y = ofMap( ofNoise( ofGetElapsedTimef()/2.0, 1000), 0, 1, 0, ofGetHeight());
-        ofNoFill();
-        ofCircle(x,y,3);
-        
-    }
+//--------------------------------------------------------------
+void ofApp::draw(){
+    
+    float x = ofMap( ofNoise( ofGetElapsedTimef()/2.0, -1000), 0, 1, 0, ofGetWidth());
+    float y = ofMap( ofNoise( ofGetElapsedTimef()/2.0, 1000), 0, 1, 0, ofGetHeight());
+    ofNoFill();
+    ofCircle(x,y,3);
+    
+}
+```
 
 There's a ton more we can do with noise, we'll leave it for now but encourage you to look at the noise examples that come with openframeworks, which show how noise can be use to create lifelike movement.  Also, we encourage readers to investigate the work of [Ken Perlin](http://mrl.nyu.edu/~perlin/), author of the simplex noise algorithm -- he's got great examples of how you can use noise in creative playful ways. 
 
@@ -367,33 +401,45 @@ The individual measurements compared together tell us something about movement. 
 
 If you know how fast an object is traveling, you can determine how far it's traveled in a certain amount of time. For example, if you are driving at 50 miles per hour (roughly 80km / hour), how far have you traveled in one hour? That's easy. You've traveled 50 miles. How far have you traveled in two or three hours? There is a simple equation to calculate this distance:
 
-    position = position + (velocity * elapsed time)
+```cpp
+position = position + (velocity * elapsed time)
+```
 
 e.g.: 
     
-    position = position + 50 * 1;   // for one hour away
+```cpp
+position = position + 50 * 1;   // for one hour away
+```
 
 or
 
-    position = position + 50 * 2;   // for two hours driving
-    
-    
+```cpp
+position = position + 50 * 2;   // for two hours driving
+
+
+```
 The key expression–position = position + velocity–in shorthand would be `p=p+v`.
 
 *Note, the elapsed time part is important, but when we animate we'll be doing p=p+v quite regularly and you may see us drop this to simplify things (assume every frame has an elapsed time of one). This isn't entirely accurate but it keeps things simple. See the previous section on frame rate (and frame rate independence) for more details* 
 
 In addition, if you are traveling at 50 miles per hour (apologies to everyone who thinks in km!) and you accelerate by 5 miles per hour, how fast are you driving in 1 hr? The answer is 55 mph. In 2 hrs, you'd be traveling 60 mph.  In these examples, you are doing the following: 
 
-    velocity = velocity + acceleration
+```cpp
+velocity = velocity + acceleration
+```
 
 In shorthand, we'll use `v=v+a`. So we have two important equations for showing movement based on speed: 
 
-    p = p + v;   // position = position + velocity
-    v = v + a;   // velocity = velocity + acceleration
+```cpp
+p = p + v;   // position = position + velocity
+v = v + a;   // velocity = velocity + acceleration
+```
 
 The amazing thing is that we've just described a system that can use acceleration to control position. Why is this useful? It's useful–if you remember from physics class– because Newton had very simple laws of motion, the second of which says 
 
-    Force = Mass x Acceleration
+```cpp
+Force = Mass x Acceleration
+```
 
 In shorthand, `F = M x A`.  This means force and acceleration are linearly related.  If we assume that an object has a mass of one, then force equals acceleration.  This means we can use force to control velocity and velocity to control position.  
 
@@ -405,25 +451,27 @@ I have several particle examples that use this approach, and while I won't go de
 
 The particle class in all of the examples is designed to be pretty straight forward.  Let's take a look at the H file: 
 
-	class particle{
-		
-	    public:
-	
-	        ofPoint pos;
-	        ofPoint vel;
-	        ofPoint frc;  
-	        float damping;
-	        				
-	        particle();
-	        void setInitialCondition(float px, float py, float vx, float vy);
-	       	
-	        void resetForce();
-	        void addForce(float x, float y);
-	        void addDampingForce();
-	        
-	        void update();
-	        void draw();	
-	};
+```cpp
+class particle{
+    
+    public:
+
+        ofPoint pos;
+        ofPoint vel;
+        ofPoint frc;  
+        float damping;
+                        
+        particle();
+        void setInitialCondition(float px, float py, float vx, float vy);
+           
+        void resetForce();
+        void addForce(float x, float y);
+        void addDampingForce();
+        
+        void update();
+        void draw();    
+};
+```
 
 For variables, it has ofPoint objects for position, velocity and force (abbreviated as pos, vel and frc).  It also has a variable for damping, which represents how much this object slows down over time.  A damping of 0 would mean not slowing down at all, and as damping gets higher, it's like adding more friction - imagine rolling a ball on ice, conrete or sand, it would slow down at different rates. 
 
@@ -431,16 +479,18 @@ In terms of functions, it has a contructor which sets some internal variables li
 
 The particle class is really simple, and throughout these examples, we add complexity to it.  In general though formula you will see in all the examples is: 
 
-	for (int i = 0; i < particles.size(); i++){
-		particles[i].resetForce();
-	}
+```cpp
+for (int i = 0; i < particles.size(); i++){
+    particles[i].resetForce();
+}
 
-	// <------ magic happens here --------->
-	
-	for (int i = 0; i < particles.size(); i++){
-		particles[i].update();
-	}
-	
+// <------ magic happens here --------->
+
+for (int i = 0; i < particles.size(); i++){
+    particles[i].update();
+}
+```
+
 where the magic is happening between the reset force and update.   Although these examples increase in complexity, they do so simply by adding new functions to the particle class, and adding more things between reset and update. 
 
 **[note: add screenshot of simple particle examples]**
@@ -449,10 +499,12 @@ where the magic is happening between the reset force and update.   Although thes
 
 In the next few examples, I added a few functions to the particle object: 
 
-	void addRepulsionForce( float px, float py, float radius, float strength);
-	void addAttractionForce( float px, float py, float radius, float strength);
-	void addClockwiseForce( float px, float py, float radius, float strength);
-	void addCounterClockwiseForce( float px, float py, float radius, float strength);
+```cpp
+void addRepulsionForce( float px, float py, float radius, float strength);
+void addAttractionForce( float px, float py, float radius, float strength);
+void addClockwiseForce( float px, float py, float radius, float strength);
+void addCounterClockwiseForce( float px, float py, float radius, float strength);
+```
 
 They essentially adds forces the move towards or away from a point that you pass in, or in the case of clockwise forces, around a point.
 
@@ -465,26 +517,30 @@ This is useful because often times forces are proportional to disctance.  For ex
 Here's a quick look at one of the functions for adding force: 
 
 
-	void particle::addAttractionForce( float px, float py, float radius, float strength){
+```cpp
+void particle::addAttractionForce( float px, float py, float radius, float strength){
 
-		ofVec2f posOfForce;
-		posOfForce.set(px, py);
-		ofVec2f diff = pos - posOfForce;
-		
-		if (diff.length() < radius){ 
-			float pct = 1 - (diff.length() / radius);
-			diff.normalize();
-			frc.x -= diff.x * pct * strength;
-			frc.y -= diff.y * pct * strength;
-		}
-	} 
-	
+    ofVec2f posOfForce;
+    posOfForce.set(px, py);
+    ofVec2f diff = pos - posOfForce;
+    
+    if (diff.length() < radius){ 
+        float pct = 1 - (diff.length() / radius);
+        diff.normalize();
+        frc.x -= diff.x * pct * strength;
+        frc.y -= diff.y * pct * strength;
+    }
+} 
+```
+
 `diff` is a line between the particle and the position of the force.  If the length of diff is less then the radius, we calculate the pct as a number that goes between 0 and 1 (0 on the outside of the radius of interaction, 1 as we get to the center of the force).  We take the line `diff` and normalize it to get a "directional" vector, its magnitude (distance) is one, but the angle is still there.  We then multiply that by pct * strength to get a line that tells us how to move.  This gets added to our force. 
 
 You'll notice that all the code is relatively similar, but with different additions to force.  For example, repulsion is just the opposite of attraction: 
 
-			frc.x += diff.x * pct * strength;
-			frc.y += diff.y * pct * strength;
+```cpp
+        frc.x += diff.x * pct * strength;
+        frc.y += diff.y * pct * strength;
+```
 
 We just move in the oppisite direction.  For the clockwise and counter clockwise forces we add the perpindicular of the diff line.  The perpindicular of a 2d vector is just simply switching x and y and making one of them negative.
 
@@ -496,60 +552,68 @@ Now that we have particles interacting with forces, the next step is to give the
 
 We've added new functions to the particle object (looking in the h file):
 
-	void addRepulsionForce(particle &p, float radius, float scale);
-	void addAttractionForce(particle &p, float radius, float scale);
+```cpp
+void addRepulsionForce(particle &p, float radius, float scale);
+void addAttractionForce(particle &p, float radius, float scale);
+```
 
 This looks really similar to the code before, except here we pass in a particle instead of an x and y position. You'll notice that we pass by reference (using &) as opposed to passing by copy.  This is because internally we'll alter both the particle who has this function called as well as particle p -- ie, if you calculate A vs B, you don't need to calculate B vs A.
 	
-	void particle::addRepulsionForce(particle &p, float radius, float scale){
-		
-		// ----------- (1) make a vector of where this particle p is: 
-		ofVec2f posOfForce;
-		posOfForce.set(p.pos.x,p.pos.y);
-		
-		// ----------- (2) calculate the difference & length 
-		
-		ofVec2f diff	= pos - posOfForce;
-		float length	= diff.length();
-		
-		// ----------- (3) check close enough
-		
-		bool bAmCloseEnough = true;
-	    if (radius > 0){
-	        if (length > radius){
-	            bAmCloseEnough = false;
-	        }
-	    }
-		
-		// ----------- (4) if so, update force
-	    
-		if (bAmCloseEnough == true){
-			float pct = 1 - (length / radius);  // stronger on the inside
-			diff.normalize();
-			frc.x = frc.x + diff.x * scale * pct;
-	        frc.y = frc.y + diff.y * scale * pct;
-			p.frc.x = p.frc.x - diff.x * scale * pct;
-	        p.frc.y = p.frc.y - diff.y * scale * pct;
-	    }
-	}
+```cpp
+void particle::addRepulsionForce(particle &p, float radius, float scale){
+    
+    // ----------- (1) make a vector of where this particle p is: 
+    ofVec2f posOfForce;
+    posOfForce.set(p.pos.x,p.pos.y);
+    
+    // ----------- (2) calculate the difference & length 
+    
+    ofVec2f diff    = pos - posOfForce;
+    float length    = diff.length();
+    
+    // ----------- (3) check close enough
+    
+    bool bAmCloseEnough = true;
+    if (radius > 0){
+        if (length > radius){
+            bAmCloseEnough = false;
+        }
+    }
+    
+    // ----------- (4) if so, update force
+    
+    if (bAmCloseEnough == true){
+        float pct = 1 - (length / radius);  // stronger on the inside
+        diff.normalize();
+        frc.x = frc.x + diff.x * scale * pct;
+        frc.y = frc.y + diff.y * scale * pct;
+        p.frc.x = p.frc.x - diff.x * scale * pct;
+        p.frc.y = p.frc.y - diff.y * scale * pct;
+    }
+}
+```
 
 The code should look very similar to before, except with these added lines: 
 
-	frc.x = frc.x + diff.x * scale * pct;
-	frc.y = frc.y + diff.y * scale * pct;
-	p.frc.x = p.frc.x - diff.x * scale * pct;
-	p.frc.y = p.frc.y - diff.y * scale * pct;
-	
+```cpp
+frc.x = frc.x + diff.x * scale * pct;
+frc.y = frc.y + diff.y * scale * pct;
+p.frc.x = p.frc.x - diff.x * scale * pct;
+p.frc.y = p.frc.y - diff.y * scale * pct;
+
+```
 This is modifying both the particle you are calling this on and the particle that is passed in.  
 
 This means we can cut down on the number of particle particle interactions we need to calculate: 
 
 
-	for (int i = 0; i < particles.size(); i++){
-        for (int j = 0; j < i; j++){
-            particles[i].addRepulsionForce(particles[j], 10, 0.4);
-        }
-	}
+```cpp
+for (int i = 0; i < particles.size(); i++){
+    for (int j = 0; j < i; j++){
+        particles[i].addRepulsionForce(particles[j], 10, 0.4);
+    }
+}
+```
 
 you'll notice that this 2d for loop, the inner loop counts up to the outer loop, so when i is 0, we don't even do the inner loop.  When i is 1, we compare it to 0 (1 vs 0).  When i is 2, we compare it to 0 and 1 (2 vs 0, 2 vs 1).  This way we never compare a particle with itself, as that would make no sense (although we might know some poeple in our lives that have a strong self attraction or repulsion). 
 

@@ -114,9 +114,11 @@ The Arduino IDE has a built-in Serial monitor, which enables you to "tune in" to
 
 In the Arduino sketch, set up Serial communication and print a basic "Hello world!" phrase to the Serial monitor in the setup() function:
 
-	Serial.begin(9600);
-    Serial.println("Hello world!");
-    
+```cpp
+Serial.begin(9600);
+Serial.println("Hello world!");
+
+```
 Open the Serial monitor and make sure that your monitor is set to the same baud rate as your sketch (the variable that you set in Serial.begin() ). Note that the TX/RX lights on your Arduino flash once on setup - you can press the reset button on your Arduino (on most devices) to run setup again to see this more clearly.  The Arduino itself is sending the printed text over Serial and the Serial Monitor is picking up that text and printing it for us to read.
 
 Of course, you can also use the Serial monitor to reflect more interesting data coming from devices that are connected to your Arduino.  You can print both digital and analog input data to Serial.
@@ -127,8 +129,10 @@ http://arduino.cc/en/tutorial/button
 
 To print the value of the pushbutton to Serial, store the returned value from digitalRead in a variable and print that variable to Serial, just as done previously with the "hello world!" example.  Here, though, print in the loop() function rather than setup() so that the value updates continuously rather than only once on reset.
 
-    buttonState = digitalRead(buttonPin);
-    Serial.println( buttonState );
+```cpp
+buttonState = digitalRead(buttonPin);
+Serial.println( buttonState );
+```
 
 If you're feeling limited by the binary nature of the pushbutton, you can also read from an analog input, using a component like a potentiometer, photoresistor, or any of the wide variety of sensors that provide non-binary input.
 
@@ -140,8 +144,10 @@ http://arduino.cc/en/Tutorial/AnalogInput
 
 Printing the incoming variables to the Serial monitor is the same as with a digital input, except that you'll be using the Arduino function for analogRead() rather than digitalRead():
 
-    sensorValue = analogRead(sensorPin);
-    Serial.println( sensorValue );
+```cpp
+sensorValue = analogRead(sensorPin);
+Serial.println( sensorValue );
+```
 
 
 
@@ -176,11 +182,13 @@ The basic flow of what we’re going to do looks like this: (graphic missing)
 
 The first step is to add an ofArduino object into the header file of your project (usually, testApp.h).  I'll call this myArduino.
 
-	void setup();
-	void update();
-	void draw();
-	
-	ofArduino myArduino;
+```cpp
+void setup();
+void update();
+void draw();
+
+ofArduino myArduino;
+```
 
 Now we've extended the capabilities of the native openFrameworks ofArduino class into our sketch, and we can work with the object myArduino.
 
@@ -188,61 +196,78 @@ Now we've extended the capabilities of the native openFrameworks ofArduino class
 
 In the setup() of testApp.cpp, use the ofArduino `connect()` function to set up a connection at the appropriate port and baud rate.  `connect()` takes two parameters: the first is a String of the serial port name, which should match the serial port name you connected to in the Arduino application; the second is the baud rate.  Firmata uses a standard baud rate of 57600 bps.
 
-	ard.connect("/dev/tty.usbserial-a700fiyD", 57600);
-	
+```cpp
+ard.connect("/dev/tty.usbserial-a700fiyD", 57600);
+```
+
 **Set up an event listener to determine whether we’ve successfully connected to the Arduino**
 
 If you're working only within the Arduino IDE, it's easy to have functions (like setting up the pin modes) called only once at the start of the program -- you can just call those functions from within `setup()` with the confidence that they'll always be run once when the device initializes.   When you're communicating with other software like openFrameworks, however, it's important to have a checking system to ensure that any setup functions only occur after a connection has been established.  openFrameworks uses the ofEventUtils class to make this easier, relying on the default `ofAddListener()` and `ofRemoveListener()` functions to check for the connection event.
 
 Within the openFrameworks app, we'll want to create an Arduino-specific `setup()` function, which is only called once as a result of the serial connection being established.  We'll declare this function first in testApp.h:
 
-	void setupArduino(const int & version);
-	
+```cpp
+void setupArduino(const int & version);
+```
+
 ... and call it from testApp.cpp:
 
-	void testApp::setupArduino(const int & version) {
-		// Arduino setup tasks will go here
-	}
-	
+```cpp
+void testApp::setupArduino(const int & version) {
+    // Arduino setup tasks will go here
+}
+```
+
 The argument that's being passed to the function, `const int & version`, is a default return from the listener we're about to set up, which always responds to a connection event by sending back an argument with the connected firmware version.  That can stay as it is.
 
 In the `setup()` of testApp.cpp, create a listener using `ofAddListener()`.  `ofAddListener()` is a function of ofEventUtils, which takes the arguments (event object, callback object, callback function).  When the event object happens (in this case, when the ofArduino EInitialized event is triggered), ofAddListener tells the callback object (here, a pointer to the testApp itself, referred to as “this”) to perform the setupArduino function that we created in the last step.
 
-	ofAddListener(myArduino.EInitialized, this, &testApp.setupArduino);
-	
+```cpp
+ofAddListener(myArduino.EInitialized, this, &testApp.setupArduino);
+```
+
 When the EInitialized event is triggered (when the connection to the Arduino is complete, and the Arduino responds by sending back information about its firmware version), the listener sends us to the callback function, which in this case is `setupArduino()`.
 
 Within `setupArduino()`, we can remove the listener, because we know a connection has been established.  `ofRemoveListener()` takes the same arguments as its counterpart.
 
-	ofRemoveListener(myArduino.EInitialized, this, &testApp.setupArduino);
-	
+```cpp
+ofRemoveListener(myArduino.EInitialized, this, &testApp.setupArduino);
+```
+
 **Set up a pin to communicate with, and specify whether that communication is analog or digital**
 
 Now it's time to treat our Arduino setup function just like we would within a standard Arduino app, and set up our pins and pin modes.  Here, I'm going to set up my Arduino Pin 13 as a digital output, in preparation for making a basic LED blink.
 
-	myArduino.sendDigitalPinMode(13, ARD_OUTPUT);
-	
+```cpp
+myArduino.sendDigitalPinMode(13, ARD_OUTPUT);
+```
+
 The other options for pin setup follow in line with standard Arduino pin settings:
 
-	sendDigitalPinMode(PIN_NUMBER, ARD_INPUT) // digital input
-	sendAnalogPinMode(PIN_NUMBER, ARD_OUTPUT) // analog output
-	sendAnalogPinMode(PIN_NUMBER, ARD_INPUT) // analog input
-	
+```cpp
+sendDigitalPinMode(PIN_NUMBER, ARD_INPUT) // digital input
+sendAnalogPinMode(PIN_NUMBER, ARD_OUTPUT) // analog output
+sendAnalogPinMode(PIN_NUMBER, ARD_INPUT) // analog input
+```
+
 **Poll for data from the serial port**
 
 In order to continuously update with new information on the serial port, it's important to periodically call the ofArduino `update()` function.  This can be done in its own Arduino-specific function, or can be called directly from `testApp::update()`:
 
-	myArduino.update();
-	
+```cpp
+myArduino.update();
+```
+
 That's it! Now you're ready to start sending digital signals to pin 13 on your Arduino. 
 
 There are any number of triggers that you can use to control this signalling: you could set up a timer, integrate it into a game event, use a camera input... the possibilities are endless!  Here, I'm going to trigger my Pin 13 LED to turn on and off based on the up and down arrow keys.
 
 Because I'm controlling activity with keyboard keys, I'm going to use the `void testApp::keyPressed (int key)` function, but you could also place your triggers within `draw()` or another function depending on your desired effect.
 
-	void testApp::keyPressed  (int key){
-	    switch (key) {
-	        case OF_KEY_UP:
+```cpp
+void testApp::keyPressed  (int key){
+    switch (key) {
+        case OF_KEY_UP:
    	         	ard.sendDigital(13, ARD_HIGH);  // turn LED on
    	         	break;
 			case OF_KEY_DOWN:
@@ -252,6 +277,7 @@ Because I'm controlling activity with keyboard keys, I'm going to use the `void 
            		break;
     	}
 	}
+```
 	
 When all the parts are together, run the app and toggle your UP and DOWN arrow keys to turn the on-board LED on your Arduino on and off!  You can also put in a 3mm or 5mm LED on pin 13 to make the effect more obvious.  Remember that pin 13 is the only Arduino pin with a built-in resistor, so if you want to add LEDs or other components on other pins, you'll need to build a full circuit with resistors to avoid burning out your parts.
 
@@ -270,14 +296,16 @@ In order to send DMX first of all you need a DMX to USB control interface. This 
 
 A DMX packet, in other words the data sent to the hardware each frame, consists of 512 channels, with an 8-bit value sent per channels (i.e. 0-255). One of the idiosyncracies of DMX is that the channel numbering starts at 1, channel 0 being a start code and not a data channel. This means that when setting up an array to hold your per-frame DMX data, you'll need to make it a size of 513 bytes. In openFrameworks we almost always represent a byte as an unsigned char, though you can also represent this with other types.
 
-    //setup the data structure
-    unsigned char dmxData[513];
+```cpp
+//setup the data structure
+unsigned char dmxData[513];
 
-    // zero the first value
-    dmxData[0] = 0;
-    
-    // channels are valid from here on up
-    dmxData[1] = 126;
+// zero the first value
+dmxData[0] = 0;
+
+// channels are valid from here on up
+dmxData[1] = 126;
+```
 
 A number of OF addons have sprung up around DMX, a quick search of ofxAddons.com will reveal the most up to date. Typically these addons will have set up all the necessary data structures, including the one above, so you won't need to worry about anything other than sending the right data to the right channels. The hardest part will probably be installing the drivers for your controller!
 
@@ -285,29 +313,28 @@ A number of OF addons have sprung up around DMX, a quick search of ofxAddons.com
 
 No matter which code or which addon you use, the way in which you'll send DMX data will be very similar to the following pseudo-code (replace the comments with the relevant code):
 
-    void ofApp::setup() {
-        //connect to your DMX controller
-    }
+```cpp
+void ofApp::setup() {
+    //connect to your DMX controller
+}
 
-    void ofApp::update() {
+void ofApp::update() {
+
+    //assign the relevant values to your DMX data structure
     
-        //assign the relevant values to your DMX data structure
-        
-        //update the DMX controller with the new data
-    }
-    
+    //update the DMX controller with the new data
+}
+
+```
 The only concern then becomes what colour you'll be setting your lights and how you'd like to dim them.
 
 **Using a colour picker to set up your lights**
-```
-editor -- see above, I think could be cool to mirror this with the ofSerial example
-```
+
+> editor -- see above, I think could be cool to mirror this with the ofSerial example
 
 *TODO*
 
-```
--- editor joshuajnoble I really feel like we should have rpi in its own chapter. It's so tricky to get setup. I do think that talking about something like wiringPi in the context of hardware is a really good idea though, for sure.
-```
+> editor joshuajnoble I really feel like we should have rpi in its own chapter. It's so tricky to get setup. I do think that talking about something like wiringPi in the context of hardware is a really good idea though, for sure.
 
 ##Raspberry Pi - getting your OF app into small spaces##
 The Raspberry Pi is a popular small sized computer (also known as a single board computer) running on hardware not entirely dissimilar to that which powers today's smartphones. The processor at least, is part of the same ARM family of chips. Originally the Raspberry Pi (abbreviated as RPi) was originally developed as an educational platform to be able to teach the basics of computing hardware in a simple and affordable package. The Raspberry Pi is part of a much larger ecosystem of ARM devices, and the Model B Pi, the most popular version available shortly after launch, is technically classified as an ARM6 device. OpenFrameworks currently supports ARM6 and ARM7 devices, of which the latter are typically more recent and faster hardware designs. While there are plenty of small form-factor alternatives to the Pi, it's a good choice as a computing platform  due to the community that's formed around it and the various hardware and software extensions that have been developed for it.  The Raspberry Pi is also completely open source, including the source code for the Broadcom graphics stack that it contains, which is quite unusual in the hardware world. The advantages of this are again that it enables enthusiasts and professionals from within the RPi community to extend this device to its fullest potential. Having a platform that is well tested and can be used in many different applications is also of benefit, particularly for installations that need to run for extensive periods of time. However, as with any technology, there are advantages and there are caveats, which we'll cover here, along with some practical scenarios which might be useful to anyone interested in taking this mini-computer into the wilds.
@@ -328,27 +355,37 @@ There are multiple ways to set up a serial connection on the RPi. The first meth
 
 Assuming you've successfully installed your RPi, if you've booted into the graphical environment, then open up a terminal window (double click the LXTerminal icon on the desktop if you're using Raspbian). Otherwise you'll already be on the command-line. Either way, type the following command:
 
-    ls -la /dev/ttyUSB*
+```bash
+ls -la /dev/ttyUSB*
+```
 
 This should list all of the serial devices on your system, starting from ttyUSB0 and counting upwards. If you see such a device, your USB serial cable has been installed correctly. Plugging in an Arduino to a Raspberry Pi will also create such a serial device, so if you're heading down that path this is where you should look to confirm it is connected. The next thing you should check before moving on however is check what permissions the serial port has.  The Linux file system, much like OSX under the hood, uses the concept of an "owner" of a file and what "group" it belongs to. If you are a member of a file group, you'll be able to access that file even if you are not its owner. File permissions are there for security reasons, which is a good thing, but sometimes they'll trip you up. 
 The above command should return with something like this:
 
-    crw-rw---- 1 root dialout 4, 64 Apr  6 23:03 /dev/ttyUSB0
-    
+```bash
+crw-rw---- 1 root dialout 4, 64 Apr  6 23:03 /dev/ttyUSB0
+```
+
 In order to be able to read and write to this device normally, you'll need to be a member of group it belongs to, in this case, the "dialout" group.
 
 To check which groups you belong to, type in the following command:
 
-    groups
-    
+```bash
+groups
+```
+
 This will return something like:
 
-    adm dialout cdrom sudo dip video plugdev lpadmin sambashare
-    
+```bash
+adm dialout cdrom sudo dip video plugdev lpadmin sambashare
+```
+
 The only thing of note here is to make sure that the group assigned to the serial port (in this case "dialout") is in your groups list. Typically the default "pi" user wil be a member of this group. If it isn't, just run the following command to add it, appending your user login name at the end:
 
-    usermod -a -G dialout yourusername
-    
+```bash
+usermod -a -G dialout yourusername
+```
+
 Now you should be able to connect to other serial devices using your cable.
 
 
@@ -362,12 +399,16 @@ In order to compensate for the difference in voltage between a regular 5V Arduin
 
 To install minicom, just open a terminal window and type the following:
 
-    sudo apt-get install minicom
+```bash
+sudo apt-get install minicom
+```
 
 You can then send characters to the Arduino via Minicom, and view them using the serial monitor on the Arduino. Make sure both devices have the same baud rate. Launch minicom using the following command (if operating at 9600 baud):
 
-    minicom -b 9600 -o -D /dev/ttyAMA0
-    
+```bash
+minicom -b 9600 -o -D /dev/ttyAMA0
+```
+
 where the number 9600 represents the baud rate and /dev/ttyAMA0 is the address of our GPIO serial port.
 What you type into the minicom terminal screen should appear on the Arduino serial monitor and vice versa.
 
@@ -380,11 +421,13 @@ One of the nifty uses of a Raspberry Pi is to use it as a master DMX controller.
 
 Given that the Raspberry Pi can be viewed as a Swiss-army knife in the installation world and has less processing power than a desktop computer, you may often find yourself using it for a specific task and that task may not require any graphical output (like churning out DMX commands for example). In this case, you can disable the graphical capabilities of openFrameworks in order to streamline your application for the task at hand. Using an application in this fashion is know as running the application "headless". In order to build a headless application (which works for all target platforms, not just the RPi), all you'll need to do is open up your project's main.cpp and change it to the following:
 
-    //ofSetupOpenGL(1024,768, OF_WINDOW);			// <-------- comment out the setup of the GL context
+```cpp
+//ofSetupOpenGL(1024,768, OF_WINDOW);            // <-------- comment out the setup of the GL context
 
-	// this kicks off the running of my headless app:
-	ofRunApp( new ofAppNoWindow());
-	
+// this kicks off the running of my headless app:
+ofRunApp( new ofAppNoWindow());
+```
+
 Voila! Your application will now run without opening a graphical window. This can be particularly useful when launch it from a script or the command-line, as well see shortly.
 
 
@@ -395,48 +438,64 @@ So, you've created an OF app that does some amazing stuff, and chances are you'v
 Running an application on start up can be done in many different ways on a Linux based system such as the Pi. However here are a couple of methods that you could use depending on your needs.
 Firstly, there's a file called "rc.local" in amongst the Pi's system files where you can list applications that'll be run on start up. In order to make use of this you'll need to have the Pi booting into the command line. If the Pi is running the GUI, this won't work. To configure your Pi to start up in command-line mode, run the So to make use of this method, open up a terminal and do the following:
 
-    sudo nano /etc/rc.local
-    
+```bash
+sudo nano /etc/rc.local
+```
+
 This will open up this file using the command-line text editor "nano" and because it is a system file you'll need to use the "sudo" (short for Super User Do ....i.e. do something as if you were the super user, a user with permission to modify system files) command to give you access to an otherwise protected file. Once you've opened this file, after the initial comments (lines beginning with '#') add the following lines (replacing "myProject" with the name of your app):
 
-    # Auto run our application
-    /home/pi/openFrameworks/apps/myApps/myProject/bin/myProject &
+```bash
+# Auto run our application
+/home/pi/openFrameworks/apps/myApps/myProject/bin/myProject &
+```
 
 Add these lines and then hit CTRL-X to save (hit 'Y to confirm that you want to overwrite the current file). The ampersand indicates thatThen if all has gone well, next time you reboot your application will launch. You won't have any window decorations (such as a border and buttons for minimise and close), but if you run the application full-screen that won't matter anyway, and you have the advantage of not running a GUI environment which eats up resources on the otherwise busy Pi.
 
 
 The other way to run applications is to use the "cron" system.  Cron, if enabled (which it normally will be by default on a Pi), is a daemon (or persistent application that runs in the background) is a piece of software whose only purpose is to carry out actions at particular times of the day. Essentially it's a scheduler, much like a calendar reminder system except instead of reminders you'll be scheduling various tasks. All you need to do then will be to tell Cron to run your app whenever the system boots up. All cron actions are stored in special files which exist on the Pi in the /var/spool/cron/contab/ directory. You aren't allowed to edit these files directly, you need to run a special application called *crontab* which you can then use to create and modify those files.
 
-In the case of starting our app on boot, all we need to do then is type the following in a terminal (replace 'pi' with your username if not logged in with the default account)
-:
-    sudo crontab -e -u pi
+In the case of starting our app on boot, all we need to do then is type the following in a terminal (replace 'pi' with your username if not logged in with the default account):
+
+```bash
+sudo crontab -e -u pi
+```
     
 Then a file will open up and you can edit it in the same way as you would using nano (if fact *crontab* is making use of *nano* in this process). Just add the following line to the file:
 
-    @reboot  /home/pi/openFrameworks/apps/myApps/myExampleApp &
+```bash
+@reboot  /home/pi/openFrameworks/apps/myApps/myExampleApp &
+```
 
 Substitute the right app and and the right folder names depending on where your OF app is located. You'll need to get the full path right, so make sure it's correct before hitting CTRL-X to save the file.
 Once saved, again all you'll need to do is reboot to witness your app being kicked off on start-up. Presto!
 
 In either case above, if you wanted to make sure that your app restarted upon crashing, you could wrap the application in a shell script running a while loop, such as this:
 
-    #!/bin/bash
-    cd /home/pi/openFrameworks/app/myApps/myExampleApp/bin
-    while true; do
-    	./myExampleApp
-    done
+```bash
+#!/bin/bash
+cd /home/pi/openFrameworks/app/myApps/myExampleApp/bin
+while true; do
+    ./myExampleApp
+done
+```
 
 All you would need to do would be to copy the above code into a file and save it as something like "myApp.sh". Then make it executable by changing the file's permissions:
 
-    chmod a+x myApp.sh
+```bash
+chmod a+x myApp.sh
+```
 
 To test the shell script, just try running it in a terminal window by typing "./myApp.sh" in the same directory as the script. If it launches successfully, you can then replace any direct references to the app in the above auto-start examples with this script. Keep in mind, the only way to fully kill the app will be to kill the process running this shell script with a command such as
 
-    kill -9 1234
-    
+```bash
+kill -9 1234
+
+```
 where you need to replace '1234' with the process id (PID) of your script. The PID can be found by typing 
 
-    ps -A
+```bash
+ps -A
+```
    
 in a terminal. This will list all running processes on the system. Anyhow, that's enough system administration for the moment, time to get creative instead.
 
