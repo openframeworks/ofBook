@@ -368,7 +368,7 @@ Take a very close look at your LCD screen, and you'll see how this way of storin
 
 ![Not mine](https://dl.dropboxusercontent.com/u/10137599/ofbook/rgb-screen.jpg)
 
-Accessing pixel values in buffers containing RGB data is therefore slightly more complex. Here's how you can retrieve the values representing the individual red, green and blue components of pixel at a given (x,y) location:
+Because the color data are interleaved, accessing pixel values in buffers containing RGB data is slightly more complex. Here's how you can retrieve the values representing the individual red, green and blue components of pixel at a given (x,y) location:
 
 ```cpp
 // Given:
@@ -390,22 +390,22 @@ unsigned char blueValueAtXY  = buffer[bArrayIndex];
 
 #### Other Kinds of Image Formats and Containers
 
-8-bit 1-channel and 8-bit 3-channel images are the most common image formats you'll find. Around the world of image processing algorithms, however, you'll sometimes encounter an exotic variety of other types of images, including:
+8-bit 1-channel and 8-bit 3-channel images are the most common image formats you'll find. In the wide world of image processing algorithms, however, you'll eventually encounter an exotic variety of other types of images, including:
 - 8-bit *palettized* images, in which each pixel stores an index into an array of (up to) 256 possible colors;
 - 16-bit (unsigned short) images, in which each channel uses *two* bytes to store each of the color values of each pixel, with a number that ranges from 0-65535;
 - 32-bit (float) images, in which each color channel's data is represented by floating point numbers.  
 
-For a practical example, consider the original Microsoft Kinect sensor, which produces a depth image whose values range from 0 to 1090. Clearly, that's wider than the range of 8-bit data (from 0 to 255) one might typically encounter; in fact, it's approximately 11 bits of resolution. To accommodate this, the `ofxKinect` addon uses a 16-bit image to store this information without losing precision. Likewise, the precision of 32-bit floats is almost mandatory for computing high-quality video composites.
+For a practical example, consider Microsoft's popular Kinect sensor, which produces a depth image whose values range from 0 to 1090. Clearly, that's wider than the range of 8-bit data (from 0 to 255) one might typically encounter; in fact, it's approximately 11 bits of resolution. To accommodate this, the `ofxKinect` addon employs a 16-bit image to store this information without losing precision. Likewise, the precision of 32-bit floats is almost mandatory for computing high-quality video composites.
 
 You'll also find:
-- 2-channel images (commonly, for luminance plus transparency)
-- 3-channel images (generally for RGB data, but occasionally used to store images in other color spaces, such as HSB or YUV).
-- 4-channel images (commonly for RGBA images, but occasionally for CMYK)
-- *Bayer images*, in which the RGB color channels are not interleaved R-G-B-R-G-B-R-G-B... but rather appear in a unique checkerboard pattern.
+- 2-channel images (commonly used for luminance plus transparency);
+- 3-channel images (generally for RGB data, but occasionally used to store images in other color spaces, such as HSB or YUV);
+- 4-channel images (commonly for RGBA images, but occasionally for CMYK);
+- *Bayer images*, in which the RGB color channels are not interleaved R-G-B-R-G-B-R-G-B... but instead appear in a unique checkerboard pattern.
 
 It gets even more exotic. ["Hyperspectral" imagery from the Landsat 8 satellite](https://www.mapbox.com/blog/putting-landsat-8-bands-to-work/), for example, has 11 channels, including bands for ultraviolet, near infrared, and thermal (deep) infrared!
 
-In openFrameworks, images can be stored in a variety of different *containers*, which allow their data to be used (captured, displayed, manipulated, and stored) in different ways and contexts. Some of the more common containers you may encounter are:
+In openFrameworks, images can be stored in a variety of different *container classes*, which allow their data to be used (captured, displayed, manipulated, and stored) in different ways and contexts. Some of the more common containers you may encounter are:
 
 - **unsigned char*** An array of unsigned chars, this is the raw format used for storing buffers of pixel data. It's not very smart, but it's often useful for exchanging data with different libraries. Many image processing textbooks will assume your data is stored this way.
 - **ofPixels** This is a container for pixel data which lives inside each ofImage, as well as other classes like ofVideoGrabber. It's a wrapper around a buffer that includes additional information like width and height.
@@ -413,14 +413,11 @@ In openFrameworks, images can be stored in a variety of different *containers*, 
 - **ofxCvImage** This is a container for image data used by the ofxOpenCV addon for openFrameworks, which supports certain functionality from the popular OpenCV library for filtering, thresholding, and other image manipulations.
 - **cv::Mat** This is the data structure used by OpenCV to store image information. It's not used in openFrameworks, but if you work a lot with OpenCV, you'll often find yourself placing and extracting data from this format.
 
-To the greatest extent possible, the designers of openFrameworks (and OF addons like ofxOpenCV and ofxCv) have provided simple operators to help make it easy to exchange data between these containers.
-
+To the greatest extent possible, the designers of openFrameworks (and OF addons for image processing, like ofxOpenCV and ofxCv) have provided simple operators to help make it easy to exchange data between these containers.
 
 #### RGB, grayscale, and other color space conversions
 
-Many computer vision algorithms (though not all!) are commonly performed on grayscale or monochome images. Converting color images to grayscale can significantly improve the speed of many image processing routines by reducing both the number of calculations as well as the amount of memory required to process the data. Except where stated otherwise, *all of the examples in this chapter assume that you're working with monochrome images*. Here's some simple code to convert a color image (e.g. captured from a webcam) into a grayscale version:
-
-`[Code to fetch an RGB image from a real-time camera stream]`
+Many computer vision algorithms (though not all!) are commonly performed on grayscale or monochome images. Converting color images to grayscale can significantly improve the speed of many image processing routines, because it reduces both the number of calculations as well as the amount of memory required to process the data. Except where stated otherwise, *all of the examples in this chapter assume that you're working with monochrome images*. Here's some simple code to convert a color image (e.g. captured from a webcam) into a grayscale version:
 
 `[Code to convert RGB to grayscale using openFrameworks] `
 
@@ -463,23 +460,6 @@ In the examples presented here, for the sake of simplicity, we'll assume that th
 - Median filtering
 - Advanced sidebar: dealing with boundary conditions
 
-### Suggestions for Further Experimentation
-
-I sometimes assign my students the project of copying a well-known work of interactive new-media art. Reimplementing projects such as the ones below can be highly instructive, and test the limits of your attention to detail. As Gerald King [writes](http://www.geraldking.com/Copying.htm), such copying "provides insights which cannot be learned from any other source." *I recommend you build...*
-
-#### A Slit-Scanner.
-*Slit-scanning* — a type of "time-space imaging" — has been a common trope in interactive video art for more than twenty years. Interactive slit-scanners have been developed by some of the most revered pioneers of new media art (Toshio Iwai, Paul de Marinis, Steina Vasulka) as well as by [literally dozens](http://www.flong.com/texts/lists/slit_scan/) of other highly regarded practitioners. The premise remains an open-ended format for seemingly limitless experimentation, whose possibilities have yet to be exhausted. It is also a good exercise in managing image data, particularly in extracting and copying pixel ROIs. In digital slit-scanning, thin slices are extracted from a sequence of video frames, and concatenated into a new image. The result is an image which succinctly reveals the history of movements in a video or camera stream.
->>>>>>> 7bcb18c0a8a3df6216ff6c130d64c6ee6e0beff5
-
-![Daniel Rozin, Time Scan Mirror (2004)](http://www.flong.com/storage/images/texts/slit_scan/rozin_timescan.jpg)
-
-#### *[Text Rain](http://camilleutterback.com/projects/text-rain/)* by Camille Utterback and Romy Achituv (1999).<br />
-*Text Rain* is a now-classic work of interactive art in which virtual letters appear to "fall" on the visitor's "silhouette". Utterback writes: "In the Text Rain installation, participants stand or move in front of a large projection screen. On the screen they see a mirrored video projection of themselves in black and white, combined with a color animation of falling letters. Like rain or snow, the letters appears to land on participants’ heads and arms. The letters respond to the participants’ motions and can be caught, lifted, and then let fall again. The falling text will 'land' on anything darker than a certain threshold, and 'fall' whenever that obstacle is removed."
-
-![Camille Utterback and Romy Achituv, Text Rain (1999)](http://golancourses.net/2013/wp-content/uploads/2012/12/text-rain.jpg)
-
-
-
 ========================================================
 3. Scenario I. Basic Blobs (e.g. Manual Input Sessions)
 
@@ -513,7 +493,6 @@ sfdflkj
    - Calculcating blob orientation (central axis)
    - Locating corners in contours, estimating local curvature
    - 1D Filtering of contours to eliminate noise, i.e local averaging.
-   - Convexity defects, contourFinder.getConvexityDefects()
    - Other shape metrics; shape recognition
 
 3.6. Using Kinect depth images
@@ -526,6 +505,8 @@ sfdflkj
    - Tracking multiple blobs with ofxCv.tracker
    - Box2D polygons using OpenCV contours, e.g. https://vimeo.com/9951522
 
+Automatic thresholding is 
+
 ========================================================
 4. Scenario II. Face Tracking.
 
@@ -534,11 +515,19 @@ Some examples of projects that use face-tracking
 - *[Face Substitution](https://vimeo.com/29348533)* by Kyle McDonald & Arturo Castro (2011). The classic
 - *[Google Faces](http://www.onformative.com/lab/googlefaces/)* by Onformative (2012). This project, which identifies face-like features in Google Earth satellite imagery, explores what Greg Borenstein has called *machine pareidolia* -- the possibility that computer algorithms can "hallucinate" faces in everyday images.
 
-### 4.2. A basic face detector.
-Let's get to it. In this section we'll implement face detection using the classic Viola-Jones detector that comes with OpenCV.
+### A basic face detector.
+In this section we'll which implements face detection using the classic "Viola-Jones" face detector that comes with OpenCV.
 - Face detection with classic OpenCV viola-Jones detector
 - How it works, and considerations when using it.
 - cvDazzle;
+
+How does the Viola-Jones face-tracker work?
+
+The [cvDazzle](http://cvdazzle.com/) project by Adam Harvey 
+
+Ada writes: "OpenCV is one of the most widely used face detectors. This algorithm performs best for frontal face imagery and excels at computational speed. It's ideal for real-time face detection and is used widely in mobile phone apps, web apps, robotics, and for scientific research.
+
+OpenCV is based on the the Viola-Jones algorithm. This video shows the process used by the Viola Jones algorithm, a cascading set of features that scans across an image at increasing sizes. By understanding how the algorithm detects a face, the process of designing an "anti-face" becomes more intuitive."
 
 #### SIDEBAR
 > *Orientation-dependence in the OpenCV face detector: Bug or Feature?*
@@ -552,6 +541,25 @@ Now that you can locate faces in images and video, consider using the following 
 - Make a face-controlled puppet
 - Mine an image database for faces
 - Make a kinetic sculpture that points toward a visitor's face.
+
+
+
+
+### Suggestions for Further Experimentation
+
+I sometimes assign my students the project of copying a well-known work of interactive new-media art. Reimplementing projects such as the ones below can be highly instructive, and test the limits of your attention to detail. As Gerald King [writes](http://www.geraldking.com/Copying.htm), such copying "provides insights which cannot be learned from any other source." *I recommend you build...*
+
+#### A Slit-Scanner.
+*Slit-scanning* — a type of "time-space imaging" — has been a common trope in interactive video art for more than twenty years. Interactive slit-scanners have been developed by some of the most revered pioneers of new media art (Toshio Iwai, Paul de Marinis, Steina Vasulka) as well as by [literally dozens](http://www.flong.com/texts/lists/slit_scan/) of other highly regarded practitioners. The premise remains an open-ended format for seemingly limitless experimentation, whose possibilities have yet to be exhausted. It is also a good exercise in managing image data, particularly in extracting and copying pixel ROIs. In digital slit-scanning, thin slices are extracted from a sequence of video frames, and concatenated into a new image. The result is an image which succinctly reveals the history of movements in a video or camera stream.
+
+![Daniel Rozin, Time Scan Mirror (2004)](images/rozin_timescan.jpg)
+
+#### *[Text Rain](http://camilleutterback.com/projects/text-rain/)* by Camille Utterback and Romy Achituv (1999).<br />
+*Text Rain* is a now-classic work of interactive art in which virtual letters appear to "fall" on the visitor's "silhouette". Utterback writes: "In the Text Rain installation, participants stand or move in front of a large projection screen. On the screen they see a mirrored video projection of themselves in black and white, combined with a color animation of falling letters. Like rain or snow, the letters appears to land on participants’ heads and arms. The letters respond to the participants’ motions and can be caught, lifted, and then let fall again. The falling text will 'land' on anything darker than a certain threshold, and 'fall' whenever that obstacle is removed."
+
+![Camille Utterback and Romy Achituv, Text Rain (1999)](images/text-rain.jpg)
+
+
 
 
 ========================================================  
