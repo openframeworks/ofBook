@@ -255,9 +255,8 @@ li {
 
 
 p {
-
-    padding-top: 5px;
-    padding-bottom: 5px;
+	margin: 0;
+	padding: 11px 0;
 }
 
 strong {
@@ -369,6 +368,8 @@ pre {
     border: none; !important;
     border-radius:0px; !important;
     white-space: pre-wrap;
+    margin: 0;
+	padding: 13px 0;
 }
 
 pre code {
@@ -412,9 +413,8 @@ a:active {
 /* Styling of images and their captions */
 
 .figure {
+	padding: 13px 0;
 	width: 100%;
-	margin-bottom: 50px;
-	margin-top: 30px;
 	text-align: center;
 }
 
