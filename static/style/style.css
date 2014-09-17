@@ -205,15 +205,6 @@ p, li {
     line-height: 1.6em;
 }
 
-ul {
-    padding-left:3em;
-    margin:0;
-}
-
-li { 
-    padding-left: 1em; 
-    text-indent: -.7em;
-}
 
 #toc ul { 
 	list-style: none !important; 
@@ -235,25 +226,22 @@ li {
 
 
 #chapters ul { 
-	padding-left:1em;
-	list-style: none !important; 
+    padding-left: 0;
+    list-style: none !important; 
 }
-#chapters li { 
-    text-indent: -1em;
+#chapters .group {
+    padding-left: 0;
+    text-indent: 0px; 
 }
-
+#chapters li {
+    padding-left: 0;
+    text-indent: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;   
+}
 #chapters li.selected { 
     font-weight: bold;
-}
-
-
-
-#chapters ul { 
-	list-style: none !important; 
-}
-#chapters li { 
-	padding-left: 0em; 
-  
 }
 
 
