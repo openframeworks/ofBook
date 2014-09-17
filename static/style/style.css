@@ -12,11 +12,11 @@
 
 
 .closeBtn{
-     z-index: 10;
-  position: absolute;
-  right: 0;
-  top: 0;
-  padding:15px;
+    z-index: 10;
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding:15px;
 }
 
 .side-nav-button{
@@ -219,10 +219,15 @@ li {
 	list-style: none !important; 
 }
 #toc li { 
-	padding-left: 0em; 
-    text-indent: 0em;
+    padding-left: inherit; 
+    text-indent: inherit;
 }
-
+#toc li a { 
+    /* has to be applied directly to the a element */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 #toc li.active { 
 	padding-left: 0em; 
     text-indent: 0em;
