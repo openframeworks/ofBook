@@ -22,32 +22,38 @@ As of this writing, these classes are slated to be introduced in the next minor 
 
 Playing a sound file is only a couple lines of code in openFrameworks. Just point an `ofSoundPlayer` at a file stored in your app's data folder and tell it to play.
 
-    class ofApp : public ofBaseApp {
-      ...
-      ofSoundPlayer soundPlayer;
-    };
+```cpp
+class ofApp : public ofBaseApp {
+  ...
+  ofSoundPlayer soundPlayer;
+};
 
-    void ofApp::setup() {
-      soundPlayer.loadSound("song.mp3");
-      soundPlayer.play();
-    }
+void ofApp::setup() {
+  soundPlayer.loadSound("song.mp3");
+  soundPlayer.play();
+}
+```
 
 This is fine for adding some background music or ambiance to your app, but ofSoundPlayer comes with a few extra features that are particularly handy for handling sound effects.
 
 "Multiplay" allows you to have a file playing several times simultaneously. This is great for any sound effect which might end up getting triggered rapidly, so you don't get stuck with an unnatural cutoff as the player's playhead abruptly jumps back to the beginning of the file. Multiplay isn't on by default. Use `soundPlayer.setMultiPlay(true)` to enable it. Then you can get natural sound effect behaviour with dead-simple trigger logic like this:
 
-    if ( thingHappened )
-      soundPlayer.play();
-    }
+```cpp
+if ( thingHappened )
+  soundPlayer.play();
+}
+```
 
 Another feature built-in to ofSoundPlayer is speed control. If you set the speed faster than normal, the sound's pitch will rise accordingly, and vice-versa (just like a vinyl record). Playback speed is defined relative to "1", so "0.5" is half speed and "2" is double speed.
 
 Speed control and multiplay are made for each other. Making use of both simultaneously can really extend the life of a single sound effect file. Every time you change a sound player's playback speed with multiplay enabled, previously triggered sound effects continue on unaffected. So, by extending the above trigger logic to something like...
 
-    if( thingHappened ) {
-      soundPlayer.setSpeed(ofRandom(0.8, 1.2));
-      soundPlayer.play();
-    }
+```cpp
+if( thingHappened ) {
+  soundPlayer.setSpeed(ofRandom(0.8, 1.2));
+  soundPlayer.play();
+}
+```
 
 ...you'll introduce a bit of unique character to each instance of the sound.
 
@@ -61,25 +67,27 @@ ofSoundStream is the gateway to the audio hardware on your computer, such as the
 
 You may never have to use the ofSoundStream directly, but it's the object that manages the resources needed to trigger `audioOut()` and `audioIn()` on your app. These two functions are optional members of your ofApp, like `keyPressed()`, `windowResized()` and `mouseMoved()`. They will start being called once you implement them and initiate the sound stream. Here's the basic structure for a sound-producing openFrameworks app:
 
-    class ofApp : public ofBaseApp {
-      ...
-      void audioOut( float * output, int bufferSize, int nChannels );
-      double phase;
-    }
+```cpp
+class ofApp : public ofBaseApp {
+  ...
+  void audioOut( float * output, int bufferSize, int nChannels );
+  double phase;
+}
 
-    void ofApp::setup() {
-      phase = 0;
-      ofSoundStreamSetup(2, 0); // 2 output channels (stereo), 0 input channels
-    }
+void ofApp::setup() {
+  phase = 0;
+  ofSoundStreamSetup(2, 0); // 2 output channels (stereo), 0 input channels
+}
 
-    void ofApp::audioOut( float * output, int bufferSize, int nChannels ) {
-      for(int i = 0; i < bufferSize * nChannels; i+=2) {
-        float sample = sin(phase); // generating a sine wave sample
-        output[i] = sample; // writing to the left channel
-        output[i+1] = sample; // writing to the right channel
-        phase += 0.05;
-      }
-    }
+void ofApp::audioOut( float * output, int bufferSize, int nChannels ) {
+  for(int i = 0; i < bufferSize * nChannels; i+=2) {
+    float sample = sin(phase); // generating a sine wave sample
+    output[i] = sample; // writing to the left channel
+    output[i+1] = sample; // writing to the right channel
+    phase += 0.05;
+  }
+}
+```
 
 When producing or receiving audio, the format is floating point numbers between -1 and 1 (the reason for this is coming a little later in this chapter). The sound will arrive in your app in the form of *buffers*. Buffers are just arrays, but the term "buffer" implies that each time you get a new one, it represents the chunk of time after the previous buffer. The reason openFrameworks asks you for buffers (instead of individual samples) is due to the overhead involved in shuttling data from your program to the audio hardware, and is a little outside the scope of this book.
 
@@ -87,7 +95,9 @@ The buffer size is adjustable, but it's usually a good idea to leave it at the d
 
 Sound buffers in openFrameworks are *interleaved* meaning that the samples for each channel are right next to each other, like:
 
-    [Left] [Right] [Left] [Right] ...
+```
+[Left] [Right] [Left] [Right] ...
+```
 
 This means you access individual sound channels in much the same way as accessing different colours in an ofPixels object (i.e. `buffer[i]` for the left channel, `buffer[i + 1]` for the right channel). The total size of the buffer you get in `audioIn()` / `audioOut()` can be calculated with `bufferSize * nChannels`.
 
@@ -125,14 +135,18 @@ You can transform a signal from the time domain to the frequency domain by a ubi
 
 In an FFT sample, bins in the higher indexes will represent higher pitched frequencies (i.e. treble) and the lower ones will represent bassy frequencies. Exactly *which* frequency is represented by each bin depends on the number of time-domain samples that went into the transform. You can calculate this as follows:
 
-    frequency = (binIndex * sampleRate) / totalSampleCount
-    
+```cpp
+frequency = (binIndex * sampleRate) / totalSampleCount
+```
+
 So, if you were to run an FFT on a buffer of 1024 time domain samples at 44100Hz, bin 3 would represent 129.2Hz ( `(3 * 44100) / 1024 ≈ 129.2` ). This calculation demonstrates a property of the FFT that is very useful to keep in mind: the more time domain samples you use to calculate the FFT, the better frequency resolution you'll get (as in, each subsequent FFT bin will represent frequencies that are closer together). The tradeoff for increasing the frequency resolution this way is that you'll start losing track of time, since your FFT will be representing a bigger portion of the signal.
 
 Note: A raw FFT sample will typically represent its output as [Complex numbers](http://en.wikipedia.org/wiki/Complex_number), though this probably isn't what you're after if you're attempting to do something like audio visualization. A more intuitive representation is the *magnitude* of each complex number, which is calculated as:
 
-    magnitude = sqrt( pow(complex.real, 2) + pow(complex.imaginary, 2) )
-    
+```cpp
+magnitude = sqrt( pow(complex.real, 2) + pow(complex.imaginary, 2) )
+```
+
 If you're working with an FFT implementation that gives you a simple array of float values, it's most likely already done this calculation for you.
 
 You can also transform a signal from the frequency domain *back* to the time domain, using an Inverse Fast Fourier Transform (aka IFFT). This is less common, but there is an entire genre of audio synthesis called Additive Synthesis which is built around this principle (generating values in the frequency domain then running an IFFT on them to create synthesized sound).
@@ -146,51 +160,55 @@ The math behind the Fourier transform is a bit tricky, but it is fairly straight
 ### RMS
 One of the simplest ways to add audio-reactivity to your app is to calculate the RMS of incoming buffers of audio data. RMS stands for "root mean square" and is a pretty straightforward calculation that serves as a good approximation of "loudness" (much better than something like averaging the buffer or picking the maximum value). The "square" step of the algorithim will ensure that the output will always be a positive value. This means you can ignore the fact that the original audio may have had "negative" samples (since they'd sound just as loud as their positive equivalent, anyway). You can see RMS being calculated in the *audioInputExample*.
 
-    // modified from audioInputExample
-    float rms = 0.0;
-	int numCounted = 0;
-	
-	for (int i = 0; i < bufferSize; i++){
-	    float leftSample = input[i * 2] * 0.5;
-	    float rightSample = input[i * 2 + 1] * 0.5;
-		
-	    rms += leftSample * leftSample;
-	    rms += rightSample * rightSample;
-	    numCounted += 2;
-	}
-	
-	rms /= (float)numCounted;
-	rms = sqrt(rms);
-	// rms is now calculated
+```cpp
+// modified from audioInputExample
+float rms = 0.0;
+int numCounted = 0;
+
+for (int i = 0; i < bufferSize; i++){
+    float leftSample = input[i * 2] * 0.5;
+    float rightSample = input[i * 2 + 1] * 0.5;
+    
+    rms += leftSample * leftSample;
+    rms += rightSample * rightSample;
+    numCounted += 2;
+}
+
+rms /= (float)numCounted;
+rms = sqrt(rms);
+// rms is now calculated
+```
 
 ### Onset Detection (aka Beat Detection)
 Onset detection algorithms attempt to locate moments in an audio stream where an *onset* occurs, which is usually something like an instrument playing a note or the impulse of a drum hit. There are many onset detection algorithms available at various levels of complexity and accuracy, some fine-tuned for speech as opposed to music, some working in the frequency domain instead of the time domain, some made for offline processing as opposed to realtime, etc.
 
 A simple realtime onset detection algorithm can be built on top of the RMS calculation above.
 
-    class class ofApp : public ofBaseApp {
-        ...
-        float threshold;
-        float minimumThreshold;
-        float decayRate;
+```cpp
+class class ofApp : public ofBaseApp {
+    ...
+    float threshold;
+    float minimumThreshold;
+    float decayRate;
+}
+
+void ofApp::setup() {
+    ...
+    decayRate = 0.05;
+    minimumThreshold = 0.1;
+    threshold = minimumThreshold;
+}
+
+void ofApp::audioIn(float * input, int bufferSize, int nChannels) {
+    ...
+    threshold = ofLerp(threshold, minimumThreshold, decayRate);
+
+    if(rms > threshold) {
+        // onset detected!
+        threshold = rms;
     }
-    
-    void ofApp::setup() {
-        ...
-        decayRate = 0.05;
-        minimumThreshold = 0.1;
-        threshold = minimumThreshold;
-    }
-    
-    void ofApp::audioIn(float * input, int bufferSize, int nChannels) {
-        ...
-        threshold = ofLerp(threshold, minimumThreshold, decayRate);
-	
-        if(rms > threshold) {
-            // onset detected!
-            threshold = rms;
-        }
-	}
+}
+```
 
 This will probably work fine on an isolated drum track, sparse music or for something like detecting whether or not someone's speaking into a microphone. However, in practice you'll likely find that this won't really cut it for reliable audio visualization or more intricate audio work. 
 
@@ -217,82 +235,86 @@ A common technique for implementing a waveform is to create a *Lookup Table* con
 
 Here's a starting point for a synthesizer app that we'll keep expanding upon during this section. It demonstrates the lookup table technique for storing a waveform, and also visualizes the waveform and resulting audio output. You can use the mouse to change the resolution of the lookup table as well as the rendered frequency.
 
-    class ofApp : public ofBaseApp {
-    public:
-		void setup();
-		void update();
-		void draw();
-		
-		void updateWaveform(int waveformResolution);
-		void audioOut(float * output, int bufferSize, int nChannels);
-		
-		std::vector<float> waveform; // this is the lookup table
-		double phase;
-		float frequency;
-	
-		ofMutex waveformMutex;
-		ofPolyline waveLine;
-		ofPolyline outLine;
-	};
+```cpp
+class ofApp : public ofBaseApp {
+public:
+    void setup();
+    void update();
+    void draw();
+    
+    void updateWaveform(int waveformResolution);
+    void audioOut(float * output, int bufferSize, int nChannels);
+    
+    std::vector<float> waveform; // this is the lookup table
+    double phase;
+    float frequency;
 
-	void ofApp::setup() {
-		phase = 0;
-		updateWaveform(32);
-		ofSoundStreamSetup(1, 0); // mono output
-	}
-	
-	void ofApp::update() {
-		ofScopedLock waveformLock(waveformMutex);
-		updateWaveform(ofMap(ofGetMouseX(), 0, ofGetWidth(), 3, 64, true));
-		frequency = ofMap(ofGetMouseY(), 0, ofGetHeight(), 60, 700, true);
-	}
+    ofMutex waveformMutex;
+    ofPolyline waveLine;
+    ofPolyline outLine;
+};
 
-	void ofApp::draw() {
-		ofBackground(ofColor::black);
-		ofSetLineWidth(5);
-		ofSetColor(ofColor::lightGreen);
-		outLine.draw();
-		ofSetColor(ofColor::cyan);
-		waveLine.draw();
-	}
+void ofApp::setup() {
+    phase = 0;
+    updateWaveform(32);
+    ofSoundStreamSetup(1, 0); // mono output
+}
 
-	void ofApp::updateWaveform(int waveformResolution) {
-		waveform.resize(waveformResolution);
-		waveLine.clear();
-		
-		// "waveformStep" maps a full oscillation of sin() to the size 
-		// of the waveform lookup table
-		float waveformStep = (M_PI * 2.) / (float) waveform.size();
-		
-		for(int i = 0; i < waveform.size(); i++) {
-			waveform[i] = sin(i * waveformStep);
-			
-			waveLine.addVertex(ofMap(i, 0, waveform.size() - 1, 0, ofGetWidth()),
-			                   ofMap(waveform[i], -1, 1, 0, ofGetHeight()));
-		}
-	}
-	
-	void ofApp::audioOut(float * output, int bufferSize, int nChannels) {
-		ofScopedLock waveformLock(waveformMutex);
-		
-		float sampleRate = 44100;
-		float phaseStep = frequency / sampleRate;
-		
-		outLine.clear();
-		
-		for(int i = 0; i < bufferSize * nChannels; i += nChannels) {
-			phase += phaseStep;
-			int waveformIndex = (int)(phase * waveform.size()) % waveform.size();
-			output[i] = waveform[waveformIndex];
-			
-			outLine.addVertex(ofMap(i, 0, bufferSize - 1, 0, ofGetWidth()),
-			                  ofMap(output[i], -1, 1, 0, ofGetHeight()));
-		}
-	}
+void ofApp::update() {
+    ofScopedLock waveformLock(waveformMutex);
+    updateWaveform(ofMap(ofGetMouseX(), 0, ofGetWidth(), 3, 64, true));
+    frequency = ofMap(ofGetMouseY(), 0, ofGetHeight(), 60, 700, true);
+}
+
+void ofApp::draw() {
+    ofBackground(ofColor::black);
+    ofSetLineWidth(5);
+    ofSetColor(ofColor::lightGreen);
+    outLine.draw();
+    ofSetColor(ofColor::cyan);
+    waveLine.draw();
+}
+
+void ofApp::updateWaveform(int waveformResolution) {
+    waveform.resize(waveformResolution);
+    waveLine.clear();
+    
+    // "waveformStep" maps a full oscillation of sin() to the size 
+    // of the waveform lookup table
+    float waveformStep = (M_PI * 2.) / (float) waveform.size();
+    
+    for(int i = 0; i < waveform.size(); i++) {
+        waveform[i] = sin(i * waveformStep);
+        
+        waveLine.addVertex(ofMap(i, 0, waveform.size() - 1, 0, ofGetWidth()),
+                           ofMap(waveform[i], -1, 1, 0, ofGetHeight()));
+    }
+}
+
+void ofApp::audioOut(float * output, int bufferSize, int nChannels) {
+    ofScopedLock waveformLock(waveformMutex);
+    
+    float sampleRate = 44100;
+    float phaseStep = frequency / sampleRate;
+    
+    outLine.clear();
+    
+    for(int i = 0; i < bufferSize * nChannels; i += nChannels) {
+        phase += phaseStep;
+        int waveformIndex = (int)(phase * waveform.size()) % waveform.size();
+        output[i] = waveform[waveformIndex];
+        
+        outLine.addVertex(ofMap(i, 0, bufferSize - 1, 0, ofGetWidth()),
+                          ofMap(output[i], -1, 1, 0, ofGetHeight()));
+    }
+}
+```
 
 Once you've got this running, try experimenting with different ways of filling up the waveform table (the line with `sin(...)` in it inside `updateWaveform(...)`). For instance, a fun one is to replace that line with:
 
-    waveform[i] = ofSignedNoise(i * waveformStep, ofGetElapsedTimef());
+```cpp
+waveform[i] = ofSignedNoise(i * waveformStep, ofGetElapsedTimef());
+```
 
 This will get you a waveform that naturally evolves over time. Be careful to keep your waveform samples in the range -1 to 1, though, lest you explode your speakers and / or brain.
 
@@ -302,30 +324,32 @@ We've got a drone generator happening now, but adding some volume modulation int
 
 We can create a simple (but effective) envelope with `ofLerp(...)` by adding the following to our app:
 
-    class ofApp : public ofBaseApp {
-        ...
-    	float volume;
-    };
-    
-    void ofApp::setup() {
-        ...
-        volume = 0;
-    }
-    
-    void ofApp::update() {
-        ...
-        if(ofGetKeyPressed()) {
-    		volume = ofLerp(volume, 1, 0.8); // jump quickly to 1
-	    } else {
-		    volume = ofLerp(volume, 0, 0.1); // fade slowly to 0
-    	}    
-    }
-    
-    void ofApp::audioOut(float * output, int bufferSize, int nChannels) {
-        ...
-        output[i] = waveform[waveformIndex] * volume;
-        ...
-    }
+```cpp
+class ofApp : public ofBaseApp {
+    ...
+    float volume;
+};
+
+void ofApp::setup() {
+    ...
+    volume = 0;
+}
+
+void ofApp::update() {
+    ...
+    if(ofGetKeyPressed()) {
+        volume = ofLerp(volume, 1, 0.8); // jump quickly to 1
+    } else {
+        volume = ofLerp(volume, 0, 0.1); // fade slowly to 0
+    }    
+}
+
+void ofApp::audioOut(float * output, int bufferSize, int nChannels) {
+    ...
+    output[i] = waveform[waveformIndex] * volume;
+    ...
+}
+```
 
 Now, whenever you press a key the oscillator will spring to life, fading out gradually after the key is released.
 
@@ -342,41 +366,43 @@ A full ADSR implementation is left as an exercise for the reader, though [this e
 
 You can probably tell where we're going, here. Now that the app is responding to key presses, we can use those key presses to determine the oscillator's frequency. We'll introduce a bit more `ofLerp(...)` here too to get a nice *legato* effect.
 
-    class ofApp : public ofBaseApp {
-        ...
-        void keyPressed(int key);
-        float frequencyTarget;
+```cpp
+class ofApp : public ofBaseApp {
+    ...
+    void keyPressed(int key);
+    float frequencyTarget;
+}
+
+void ofApp::setup() {
+    ...
+    frequency = 0;
+    frequencyTarget = frequency;
+}
+
+void ofApp::update() {
+    ...
+    // replace the "frequency = " line from earlier with this
+    frequency = ofLerp(frequency, frequencyTarget, 0.4);
+}
+
+void ofApp::keyPressed(int key) {
+    if(key == 'z') {
+        frequencyTarget = 261.63; // C
+    } else if(key == 'x') {
+        frequencyTarget = 293.67; // D
+    } else if(key == 'c') {
+        frequencyTarget = 329.63; // E
+    } else if(key == 'v') {
+        frequencyTarget = 349.23; // F
+    } else if(key == 'b') {
+        frequencyTarget = 392.00; // G
+    } else if(key == 'n') {
+        frequencyTarget = 440.00; // A
+    } else if(key == 'm') {
+        frequencyTarget = 493.88; // B
     }
-    
-    void ofApp::setup() {
-        ...
-        frequency = 0;
-        frequencyTarget = frequency;
-    }
-    
-    void ofApp::update() {
-        ...
-        // replace the "frequency = " line from earlier with this
-        frequency = ofLerp(frequency, frequencyTarget, 0.4);
-    }
-    
-    void ofApp::keyPressed(int key) {
-        if(key == 'z') {
-            frequencyTarget = 261.63; // C
-        } else if(key == 'x') {
-            frequencyTarget = 293.67; // D
-        } else if(key == 'c') {
-            frequencyTarget = 329.63; // E
-        } else if(key == 'v') {
-            frequencyTarget = 349.23; // F
-        } else if(key == 'b') {
-            frequencyTarget = 392.00; // G
-        } else if(key == 'n') {
-            frequencyTarget = 440.00; // A
-        } else if(key == 'm') {
-            frequencyTarget = 493.88; // B
-        }
-    }
+}
+```
 
 Now we've got a basic, useable instrument!
 
@@ -391,31 +417,33 @@ A few things to try, if you'd like to explore further:
 
 For example:
 
-    void ofApp::audioOut(float * output, int bufferSize, int nChannels) {
-        ofScopedLock waveformLock(waveformMutex);
-    
-        float sampleRate = 44100;
-        float t = ofGetElapsedTimef();
-        float detune = 5;
-	
-        for(int phaseIndex = 0; phaseIndex < phases.size(); phaseIndex++) {
-            float phaseFreq = frequency + ofSignedNoise(phaseIndex, t) * detune;
-            float phaseStep = phaseFreq / sampleRate;
+```cpp
+void ofApp::audioOut(float * output, int bufferSize, int nChannels) {
+    ofScopedLock waveformLock(waveformMutex);
 
-            for(int i = 0; i < bufferSize * nChannels; i += nChannels) {
-                phases[phaseIndex] += phaseStep;
-                int waveformIndex = (int)(phases[phaseIndex] * waveform.size()) % waveform.size();
-                output[i] += waveform[waveformIndex] * volume;
-            }
+    float sampleRate = 44100;
+    float t = ofGetElapsedTimef();
+    float detune = 5;
+
+    for(int phaseIndex = 0; phaseIndex < phases.size(); phaseIndex++) {
+        float phaseFreq = frequency + ofSignedNoise(phaseIndex, t) * detune;
+        float phaseStep = phaseFreq / sampleRate;
+
+        for(int i = 0; i < bufferSize * nChannels; i += nChannels) {
+            phases[phaseIndex] += phaseStep;
+            int waveformIndex = (int)(phases[phaseIndex] * waveform.size()) % waveform.size();
+            output[i] += waveform[waveformIndex] * volume;
         }
-        
-        outLine.clear();
-        for(int i = 0; i < bufferSize * nChannels; i+= nChannels) {
-            output[i] /= phases.size();
-            outLine.addVertex(ofMap(i, 0, bufferSize - 1, 0, ofGetWidth()),
-                              ofMap(output[i], -1, 1, 0, ofGetHeight()));
-	    }
     }
+    
+    outLine.clear();
+    for(int i = 0; i < bufferSize * nChannels; i+= nChannels) {
+        output[i] /= phases.size();
+        outLine.addVertex(ofMap(i, 0, bufferSize - 1, 0, ofGetWidth()),
+                          ofMap(output[i], -1, 1, 0, ofGetHeight()));
+    }
+}
+```
 
 ## Audio Gotchas
 

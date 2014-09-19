@@ -12,11 +12,11 @@
 
 
 .closeBtn{
-     z-index: 10;
-  position: absolute;
-  right: 0;
-  top: 0;
-  padding:15px;
+    z-index: 10;
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding:15px;
 }
 
 .side-nav-button{
@@ -205,59 +205,50 @@ p, li {
     line-height: 1.6em;
 }
 
-ul {
-    padding-left:3em;
-    margin:0;
-}
-
-li { 
-    padding-left: 1em; 
-    text-indent: -.7em;
-}
 
 #toc ul { 
 	list-style: none !important; 
 }
 #toc li { 
-	padding-left: 0em; 
-    text-indent: 0em;
+    padding-left: inherit; 
+    text-indent: inherit;
 }
-
+#toc li a { 
+    /* has to be applied directly to the a element */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 #toc li.active { 
-	padding-left: 0em; 
-    text-indent: 0em;
     background-color:#ddd;
+    font-weight: bold;
 }
 
 
 #chapters ul { 
-	padding-left:1em;
-	list-style: none !important; 
+    padding-left: 0;
+    list-style: none !important; 
 }
-#chapters li { 
-    text-indent: -1em;
+#chapters .group {
+    padding-left: 0;
+    text-indent: 0px; 
 }
-
+#chapters li {
+    padding-left: 0;
+    text-indent: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;   
+}
 #chapters li.selected { 
     font-weight: bold;
 }
 
 
 
-#chapters ul { 
-	list-style: none !important; 
-}
-#chapters li { 
-	padding-left: 0em; 
-  
-}
-
-
-
 p {
-
-    padding-top: 5px;
-    padding-bottom: 5px;
+	margin: 0;
+	padding: 11px 0;
 }
 
 strong {
@@ -369,6 +360,8 @@ pre {
     border: none; !important;
     border-radius:0px; !important;
     white-space: pre-wrap;
+    margin: 0;
+	padding: 13px 0;
 }
 
 pre code {
@@ -412,9 +405,8 @@ a:active {
 /* Styling of images and their captions */
 
 .figure {
+	padding: 13px 0;
 	width: 100%;
-	margin-bottom: 50px;
-	margin-top: 30px;
 	text-align: center;
 }
 
