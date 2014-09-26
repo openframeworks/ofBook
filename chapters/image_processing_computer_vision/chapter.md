@@ -362,11 +362,11 @@ Our Lincoln portrait image shows an 8-bit, 1-channel image. Each pixel uses a si
 
 For example, it is common for color images to be represented by 8-bit, *3-channel* images. In this case, each pixel brings together 3 bytes' worth of information: one byte each for red, green and blue intensities. In computer memory, it is common for these values to be interleaved R-G-B. As you can see, color images necessarily contain three times as much data.
 
-![Not mine](https://dl.dropboxusercontent.com/u/10137599/ofbook/interleaved.jpg)
+![Not mine](images/interleaved.jpg)
 
 Take a very close look at your LCD screen, and you'll see how this way of storing the data is directly motivated by the layout of your display's phosphors:
 
-![Not mine](https://dl.dropboxusercontent.com/u/10137599/ofbook/rgb-screen.jpg)
+![Not mine](images/rgb-screen.jpg)
 
 Because the color data are interleaved, accessing pixel values in buffers containing RGB data is slightly more complex. Here's how you can retrieve the values representing the individual red, green and blue components of pixel at a given (x,y) location:
 
