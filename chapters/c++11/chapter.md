@@ -46,14 +46,10 @@ Then the compiler can do some of the coding for us. In fact, thanks to `auto`, w
 Well obviously auto's going to save you keystrokes.  Imagine the following:
 
 ```cpp
-[.h]
-
 vector<shared_ptr<ofThread> > myVectorOfThreads;
 ````
 
 ```cpp
-[.cpp]
-
 // the old way
 vector<shared_ptr<ofThread>>::iterator firstThreadIterator = this->myVectorOfThreads.begin();
 
@@ -64,7 +60,9 @@ auto firstThreadIterator = this->myVectorOfThreads.begin();
 Now this makes the code more readable (by decent humans), but also you could take advantage of `auto` in other ways, for example you could make changes things in the h file, and the cpp file code would automatically correct itself. For example in the h you might change the `vector` to a `list`, or change `shared_ptr<ofThread>` to `ofThread *`. These changes would perpetuate automatically to wherever an `auto` is listening out in the code. Nifty huh?
 
 ### Watch out for this
+
 #### `auto` is not a new type
+
 Note that the following doesn't work:
 
 ```cpp
@@ -199,8 +197,6 @@ Notice that `for(thing : things)` gels so well with `auto`. Also notice that I'm
 `override` saves you time not by reducing the amount of typing you do, but by reducing the amount of head-scratching you might do when dealing with `virtual` functions. Imagine the following:
 
 ```cpp
-[.h]
-
 class BuildingProjectionMapper {
 public:
 //...
