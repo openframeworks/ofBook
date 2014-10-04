@@ -16,7 +16,7 @@ Dependencies
 - LaTeX 
   - Windows: [MiKTeX](http://miktex.org/) is recommended 
 
-Scripts for building the web and pdf versions of the book are in `scripts/` directory: `createWebBook.py` and `createPDFBook.pdf`.  You must run them from the `scripts/` directory, so either double-click the script or run it from command line.
+Scripts for building the web and pdf versions of the book are in `scripts/` directory: `createWebBook.py` and `createPDFBook.py`.  You must run them from the `scripts/` directory, so either double-click the script or run it from command line.
 - When building the web book, the website is stored in the `output/webBook` directory.  Opening up `output/webBook/toc.html` will open up the table of contents.
 - When building the pdf book, the pdf is created at `output/ofBook.pdf`. `output/ofBook.tex` is also created, for debugging purposes.
 
