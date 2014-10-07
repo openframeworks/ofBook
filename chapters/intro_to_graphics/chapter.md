@@ -4,7 +4,7 @@ _By: [Michael Hadley](http://www.mikewesthad.com/) with generous editor support 
 
 This chapter builds off of the *C++ Basics* and *Setup and Project Structure* chapters, so if you aren't familiar with basic C++ and creating openFrameworks projects, check out those chapters first.
 
-In sections 1 and 2, we will create "paintbrushes" where the mouse is our brush and our code defines how our brush makes marks on the screen.  In section 3, we will explore something called "coordinate system transformations" to create hypnotizing, spiraling rectangles.  Source code for the projects is linked at the end of each section.  If you feel lost at any point, don't hesitate to look at the completed code!  You can check out the whole collection of code [here](https://github.com/openframeworks/ofBook/tree/master/04_intro_to_graphics/code).
+In sections 1 and 2, we will create "paintbrushes" where the mouse is our brush and our code defines how our brush makes marks on the screen.  In section 3, we will explore something called "coordinate system transformations" to create hypnotizing, spiraling rectangles.  Source code for the projects is linked at the end of each section.  If you feel lost at any point, don't hesitate to look at the completed code!  You can check out the whole collection of code [here](https://github.com/openframeworks/ofBook/tree/master/chapters/intro_to_graphics/code).
 
 ## Brushes with Basic Shapes ##
 
@@ -58,7 +58,7 @@ Lines looking jagged?  We can fix that with a smoothing technique called [anti-a
 
 ![Figure 2: Basic shapes with and without a fill](images/Figure2_BasicShapes.png "Figure 2: Basic shapes with and without a fill")
 
-[[Source code for this section](https://github.com/openframeworks/ofBook/tree/master/04_intro_to_graphics/code/1_i_Basic_Shapes)]
+[[Source code for this section](https://github.com/openframeworks/ofBook/tree/master/chapters/intro_to_graphics/code/1_i_Basic_Shapes)]
 
 **Extensions**
 
@@ -140,7 +140,7 @@ ofSetColor(randomColor);  // Exclude dark grayscale values (0 - 50) that won't s
 
 To finish off this single rectangle brush, let's add the ability to erase by pressing the right mouse button.  We will create a `isRightMousePressed` that will act very similarly to our `isLeftMousePressed`.  In the header file, create a public variable `bool isRightMousePressed`.  Initialize the value to false in `setup()`.  Inside of `mousePressed(...)`, set it to `true` if `button == OF_MOUSE_BUTTON_RIGHT`, and inside of `mouseReleased(...)`, set it to `false` if `button == OF_MOUSE_BUTTON_RIGHT`.  Lastly, at the beginning of the `draw()` function, draw a black background when `isRightMousePressed == true`.
 
-[[Source code for this section](https://github.com/openframeworks/ofBook/tree/master/04_intro_to_graphics/code/1_ii_a_Single_Rectangle_Brush)]
+[[Source code for this section](https://github.com/openframeworks/ofBook/tree/master/chapters/intro_to_graphics/code/1_ii_a_Single_Rectangle_Brush)]
 
 #### Bursting Rectangle Brush: Creating Randomized Bursts #####
 
@@ -189,7 +189,7 @@ for (int r=0; r<numRects; r++) {
 
 ![Figure 5: Cartesian brush spread versus polar brush spread](images/Figure5_CartesianVsPolarSpread.png "Figure 5: Cartesian brush spread versus polar brush spread")  
 
-[[Source code for this section](https://github.com/openframeworks/ofBook/tree/master/04_intro_to_graphics/code/1_ii_b_Bursting_Rect_Brush)]
+[[Source code for this section](https://github.com/openframeworks/ofBook/tree/master/chapters/intro_to_graphics/code/1_ii_b_Bursting_Rect_Brush)]
 
 #### Glowing Circle Brush: Using Transparency and Color ####
 
@@ -248,7 +248,7 @@ ofColor inBetween = myOrange.getLerped(myRed, ofRandom(1.0));
 ofSetColor(inBetween);
 ```
 
-[[Source code for this section](https://github.com/openframeworks/ofBook/tree/master/04_intro_to_graphics/code/1_ii_c_Glowing_Circle_Brush)]
+[[Source code for this section](https://github.com/openframeworks/ofBook/tree/master/chapters/intro_to_graphics/code/1_ii_c_Glowing_Circle_Brush)]
 
 #### Star Line Brush: Working with a Linear Map ####
 
@@ -275,7 +275,7 @@ We can also vary the line width using: `ofSetLineWidth(ofRandom(1.0, 5.0))`, but
 
 ![Figure 7: Results from using the line brush](images/Figure7_LineStarBrush.png "Figure 7: Results from using the line brush")
 
-[[Source code for this section](https://github.com/openframeworks/ofBook/tree/master/04_intro_to_graphics/code/1_ii_d_Star_Line_Brush)]
+[[Source code for this section](https://github.com/openframeworks/ofBook/tree/master/chapters/intro_to_graphics/code/1_ii_d_Star_Line_Brush)]
 
 #### Fleeing Triangle Brush: Vectors and Rotations ####
 
@@ -367,7 +367,7 @@ We are now using `ofVec2f` for our offset.  We started with a vector that points
 
 ![Figure 10: Results from using the final triangle brush](images/Figure10_TriangleSwirlBrush.png "Figure 10: Results from using the final triangle brush")	
 
-[[Source code for this section](https://github.com/openframeworks/ofBook/tree/master/04_intro_to_graphics/code/1_ii_e_Triangle_Brush)]
+[[Source code for this section](https://github.com/openframeworks/ofBook/tree/master/chapters/intro_to_graphics/code/1_ii_e_Triangle_Brush)]
 
 **Extensions**
 
@@ -444,7 +444,7 @@ We created three different types of polylines (figure 11). `straightSegmentPolyl
 
 The advantage of drawing in this way (versus raster graphics) is that the polylines are modifiable.  We could easily move, add, delete, scale our vertices on the the fly.
 
-[[Source code for this section](https://github.com/openframeworks/ofBook/tree/master/04_intro_to_graphics/code/2_i_Basic_Polylines)]
+[[Source code for this section](https://github.com/openframeworks/ofBook/tree/master/chapters/intro_to_graphics/code/2_i_Basic_Polylines)]
 
 **Extensions**
 
@@ -528,7 +528,7 @@ And we have a simple pen-like brush that tracks the mouse, and we can draw a dop
 
 ![Figure 12: Drawing a smilie with the polyline brush](images/Figure12_PolylineSmilie.png "Figure 12: Drawing a smilie with the polyline brush")
 
-[[Source code for this section](https://github.com/openframeworks/ofBook/tree/master/04_intro_to_graphics/code/2_ii_a_Polyline_Pen)]
+[[Source code for this section](https://github.com/openframeworks/ofBook/tree/master/chapters/intro_to_graphics/code/2_ii_a_Polyline_Pen)]
 
 **Extensions**
 
@@ -631,7 +631,7 @@ for (int p=0; p<500; p+=1) {
 }
 ```
 
-[[Source code for this section](https://github.com/openframeworks/ofBook/tree/master/04_intro_to_graphics/code/2_ii_b_Polyline_Brushes)]
+[[Source code for this section](https://github.com/openframeworks/ofBook/tree/master/chapters/intro_to_graphics/code/2_ii_b_Polyline_Brushes)]
 
 **Extensions**
 
@@ -703,7 +703,7 @@ And we should end up with a grid.  See figure 17, right. (I used `ofScale` to ja
 
 ![Figure 18: A crowd](images/Figure18_Crowd.png "Figure 18: A crowd")
 
-[[Source code for this section](https://github.com/openframeworks/ofBook/tree/master/04_intro_to_graphics/code/3_i_Translating_Stick_Family)]
+[[Source code for this section](https://github.com/openframeworks/ofBook/tree/master/chapters/intro_to_graphics/code/3_i_Translating_Stick_Family)]
 
 ### Rotating and Scaling: Spiraling Rectangles ###
 
@@ -829,7 +829,7 @@ Now use `bgColor` for the transparent rectangle we draw on the screen and `fgCol
 
 ![Figure 21: A single frame from animated spiraling rectangles where the contrast reverses over time](images/Figure21_ContrastReversingSpiral.png "Figure 21: A single frame from animated spiraling rectangles where the contrast reverses over time")
 
-[[Source code for this section](https://github.com/openframeworks/ofBook/tree/master/04_intro_to_graphics/code/3_ii_Rotating_and_Scaling)]
+[[Source code for this section](https://github.com/openframeworks/ofBook/tree/master/chapters/intro_to_graphics/code/3_ii_Rotating_and_Scaling)]
 
 **Extensions**
 
