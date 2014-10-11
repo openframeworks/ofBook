@@ -19,7 +19,7 @@ If we apply this to the top left of my screen figure 1 (right), which happens to
 ![Figure 1: 2D screen coordinates](images/Figure1_CoordSystemFigure.png "Figure 1: 2D screen coordinates")
 
 Now that we can talk about locations, let's jump into code.  Create an openFrameworks project and call it "BasicShapes" (or something more imaginative).  Open the source file, ofApp.cpp, and navigate to the `draw()` function.  Add the following:
-    
+
 ```cpp
 ofBackground(0);  // Clear the screen with a black color
 ofSetColor(255);  // Set the drawing color to white
@@ -38,9 +38,9 @@ When we run the code, we see white shapes on a black background.  Success!  Each
     
 ```cpp
 ofFill(); // If we omit this and leave ofNoFill(), all the shapes will be outlines!
-// Draw some shapes (code omitted)     
+// Draw some shapes (code omitted)
 
-ofNoFill(); // If we omit this and leave ofFill(), all the shapes will be filled!    
+ofNoFill(); // If we omit this and leave ofFill(), all the shapes will be filled!
 // Draw some shapes (code omitted)
 ```
 
@@ -48,7 +48,7 @@ We can control the thickness of the outlines, and our `ofLine(...)` lines, using
 
 ```cpp
 ofSetLineWidth(2); // Line width is a default value of 1 if you don't modify it
-// Draw some shapes (code omitted)     
+// Draw some shapes (code omitted)
 
 ofSetLineWidth(4.5); // A higher value will render thicker lines
 // Draw some shapes (code omitted)
@@ -130,7 +130,7 @@ ofBackground(0);
 First brush, done!  We are going to make this a bit more interesting by adding 1) randomness and 2) repetition.
 
 Randomness can make our code dark, mysterious and unpredictable.  Meet [`ofRandom(...)`](http://openframeworks.cc/documentation/math/ofMath.html#!show_ofRandom "ofRandom Documentation Page").  It can be used in two different ways: by passing in two values `ofRandom(float min, float max)` or by passing in a single value `ofRandom(float max)` where the min is assumed to be `0`.  The function returns a random value between the min and max.  We can inject some randomness into our rectangle color (figure 4) by using:
-	
+
 ```cpp
 float randomColor = ofRandom(50, 255);
 ofSetColor(randomColor);  // Exclude dark grayscale values (0 - 50) that won't show on black background
@@ -323,7 +323,7 @@ ofTriangle(p1, p2, p3);
 ```
 
 Run it and see what happens.  We can add rotation with the `ofVec2f` class method [`rotate(...)`](http://www.openframeworks.cc/documentation/math/ofVec2f.html#show_rotate "ofVec2f's rotate function documentation page") like this: `myPoint.rotate(45.0)` where `myPoint` is rotated around the origin, `(0, 0)`, by `45.0` degrees. Back to our code, add this right before shifting the triangle to the mouse position:
-		
+
 ```cpp
 // Rotate the triangle points around the origin
 float rotation = ofRandom(360); // Uses degrees!
@@ -345,7 +345,7 @@ int maxOffset = 70;
 int alpha = 150;    
 for (int t=0; t<numTriangles; ++t) {
     float offsetDistance = ofRandom(minOffset, maxOffset);
-    
+
     // Define a triangle at the origin (0,0) that points to the right (code omitted)
     // The triangle size is a bit smaller than the last brush - see the source code
 
@@ -353,11 +353,11 @@ for (int t=0; t<numTriangles; ++t) {
 
     ofVec2f triangleOffset(offsetDistance, 0.0);
     triangleOffset.rotate(rotation);
-    
+
     p1 += mousePos + triangleOffset;
     p2 += mousePos + triangleOffset;
     p3 += mousePos + triangleOffset;
-    
+
     ofSetColor(255, alpha);
     ofTriangle(p1, p2, p3);
 }
@@ -512,14 +512,14 @@ Note that this only adds points when the mouse has moved a certain threshold amo
 All that is left is to add code to draw the polyline in `draw()`, and we've got a basic curved polyline drawing program.  But we don't have the ability to save multiple polylines, so we have something similar to an Etch A Sketch.  We can only draw a single, continuous line.  In order to be able to draw multiple lines that don't have to be connected to each other, we will turn to something called a `vector`.  This isn't the same kind of vector that we talked about earlier in the context of `of2Vecf`.  If you haven't seen vectors before, check out the [stl::vector basics tutorial](http://openframeworks.cc/tutorials/c++%20concepts/001_stl_vectors_basic.html "Link to vector basics tutorial on openFrameworks") on the site.
 
 Define `vector <ofPolyline> polylines` in the header.  We will use it to save our polyline brush strokes.  When we finish a stroke, we want to add the polyline to our vector.  So in the if statement inside of `mouseReleased(...)`, before `currentPolyline.clear()`, add `polylines.push_back(currentPolyline)`.  Then we can draw the polylines like this:
-	
+
 ```cpp
 ofBackground(0);
 ofSetColor(255);  // White color for saved polylines
 for (int i=0; i<polylines.size(); i++) {
     ofPolyline polyline = polylines[i];
     polyline.draw();
-}    
+}
 ofSetColor(255,100,0);  // Orange color for active polyline
 currentPolyline.draw();
 ```
@@ -576,7 +576,7 @@ Now we have evenly spaced points (figure 13, right).  Let's try creating a brush
         ofVec3f normal = polyline.getNormalAtIndex(vertexIndex) * normalLength;  // Scale the normal
         ofLine(vertex-normal/2, vertex+normal/2);  // Center the scaled normal around the vertex
     }
-  
+
 ```
 
 We are getting all of the vertices in our `ofPolyline`.  But here, we are also using [`getNormalAtIndex`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html#show_getNormalAtIndex "getNormalAtIndex Documentation Page") which takes an index and returns an `ofVec3f` that represents the normal vector for the vertex at that index.  We take that normal, scale it and then display it centered around the vertex.  So, we have something like figure 14 (left), but we can also sample normals, using the function [`getNormalAtIndexInterpolated(...)`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html#show_getNormalAtIndexInterpolated "getNormalAtIndexInterpolated Documentation Page").  So let's comment out the code we just wrote, and try sampling our normals evenly along the polyline:
@@ -668,13 +668,13 @@ Draw a white background and color the shapes, and we end up with something like 
 ![Figure 17: Arranging a little stick figure family](images/Figure17_ArrangingTheFamily.png "Figure 17: Arranging a little stick figure family")
 
 What if, after figuring out where to put our shapes, we needed to draw them at a different spot on the screen, or to draw a row of copies?  We *could* change all the positions manually, or we could use `ofTranslate(...)` to move our coordinate system and leave the positions alone:
-    
+
 ```cpp
 // Loop and draw a row
 for (int cols=0; cols<10; cols++) {
 
     // Draw the stick figure family (code omitted)
-    
+
     ofTranslate(150, 0);
 }
 ```
@@ -689,7 +689,7 @@ So what we need is to reset the coordinate system using [`ofPushMatrix()`](http:
 ```cpp
     for (int rows=0; rows<10; rows++) {
         ofPushMatrix(); // Save the coordinate system before we shift it horizontally
-            
+
             // It is often helpful to indent any code in-between push and pop matrix for readability
 
             // Loop and draw a row (code omitted)
@@ -719,7 +719,7 @@ ofPushMatrix();
     // Original rectangle in blue
     ofSetColor(0, 0, 255);
     ofRect(500, 200, 200, 200);
-    
+
     // Rotated rectangle in red
     ofRotate(45);
     ofSetColor(255, 0, 0);
@@ -741,7 +741,7 @@ ofPushMatrix();
     // Original rectangle in blue
     ofSetColor(0, 0, 255);
     ofRect(500, 200, 200, 200);
-    
+
     // Scaled down rectangle in red
     ofTranslate(500, 200);
     ofScale(0.5, 0.5);  // We are only working in x and y, so let's leave the z scale at its default (1.0)
@@ -771,7 +771,7 @@ ofPopMatrix();
 ```
 
 That's it (figure 19).  We can play with the scaling, rotation, size of the rectangle, etc.  Three lines of code will add some life to our rectangles and cause them to coil and uncoil over time.  Put these in the place of `ofRotate(5)`:
-	
+
 ```cpp
 // Noise is a topic that deserves a section in a book unto itself
 // Check out Section 1.6 of "The Nature of Code" for a good explanation
@@ -791,7 +791,7 @@ ofBackground(255);
 ```
 
 Delete `ofBackground(255)` from our `draw()` function.  Then, add this to the beginning of our `draw()` function:
-	
+
 ```cpp
 float clearAlpha = 100;
 ofSetColor(255, clearAlpha);
