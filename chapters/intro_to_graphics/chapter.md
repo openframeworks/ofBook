@@ -731,7 +731,7 @@ Hmm, not quite right (figure 20, left).  `ofRotate(...)` rotates around the curr
 
 ![Figure 20: Steps along the way to rotating and scaling a rectangle in place](images/Figure20_CoordSystemManipulations.png "Figure 20: Steps along the way to rotating and scaling a rectangle in place")
 
-Push, pop, rotate, translate - no problem.  Only thing left is [`ofScale(...)`](http://www.openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofScale "ofScale Documentation Page").  It takes two arguments: the desired scaling in x and y directions (and an optional z scaling).  Applying scaling to our rectangles:
+Push, translate, rotate, pop - no problem.  Only thing left is [`ofScale(...)`](http://www.openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofScale "ofScale Documentation Page").  It takes two arguments: the desired scaling in x and y directions (and an optional z scaling).  Applying scaling to our rectangles:
 
 ```cpp
 ofSetRectMode(OF_RECTMODE_CENTER);
