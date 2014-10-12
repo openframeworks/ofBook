@@ -1,6 +1,6 @@
 # Graphics #
 
-_By: [Michael Hadley](http://www.mikewesthad.com/) with generous editor support from [Abraham Avnisan](http://abrahamavnisan.com/) and [Brannon Dorsey](http://brannondorsey.com/)_
+_By: [Michael Hadley](http://www.mikewesthad.com/) with generous editor support from [Abraham Avnisan](http://abrahamavnisan.com/), [Brannon Dorsey](http://brannondorsey.com/) and [Christopher Baker](http://christopherbaker.net/)_
 
 This chapter builds off of the *C++ Basics* and *Setup and Project Structure* chapters, so if you aren't familiar with basic C++ and creating openFrameworks projects, check out those chapters first.
 
