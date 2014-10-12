@@ -645,6 +645,55 @@ for (int p=0; p<500; p+=1) {
 1. The density of tangents or normals drawn is dependent on the length of the brush stroke.  Try making it independent (hint: you may need to adjust your loop and use `getPerimeter()` to calculate the length).
 1. Check out how to draw polygons using `ofPath` and try drawing a brush stroke that is a giant, closed shape.
 
+#### Vector Graphics: Taking a Snapshot (Part 2) ####
+ 
+Remember how we saved our drawings that we made with the basic shape brushes by doing a screen capture?  Well, we can also save drawings as a PDF.  A PDF stores the graphics as a series of geometric objects rather than as a series of pixel values.  So, if we render out our polylines as a PDF, we can open it in a vector graphics editor (like [Inkscape](http://www.inkscape.org/en/) or Adobe Illustrator) and modify our polylines in all sorts of ways.  For example, see figure 17 where I colored and blurred the polylines to create a glowing effect.
+
+Once we have a PDF, we could also use it to blow up our polyines to create a massive, high resolution print.
+
+To do any of this, we need to use [`ofBeginSaveScreenAsPDF(...)`](http://www.openframeworks.cc/documentation/graphics/ofGraphics.html#!show_ofBeginSaveScreenAsPDF "ofBeginSaveScreenAsPDF openFrameworks Documentation") and [`ofEndSaveScreenAsPDF()`](http://www.openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofEndSaveScreenAsPDF "ofBeingEndSaveAsPDF openFrameworks Documentation").  When we call `ofBeginSaveScreenAsPDF(...)`, any subsequent drawing commands will output to a PDF *instead of* being drawn to the screen.  `ofBeginSaveScreenAsPDF(...)` takes one required argument, a `string` that contains the desired filename for the PDF.  (The PDF will be saved into `./bin/data/` unless you specify an alternate path).  When we call `ofEndSaveScreenAsPDF()`, the PDF is saved and drawing commands begin outputting back to the screen.
+
+Let's use the polyline brush code from the last section to save a PDF.  The way we saved a screenshot previously was to put `ofSaveScreen()` inside of `keyPressed(...)`.  We can't do that here because `ofBeginSaveScreenAsPDF(...)` and `ofEndSaveScreenAsPDF()` need to be before and after (respectively) the drawing code.  So we'll make use of a `bool` variable.  Add `bool isSavingPDF` to the header (.h) file, and then modify your source code (.cpp) to look like this:
+
+```cpp
+void ofApp::setup(){
+	// Setup code omitted for clarity...
+
+    isSavingPDF = false;
+}
+
+void ofApp::draw(){
+    // If isSavingPDF is true (i.e. the s key has been pressed), then
+    // anything in between ofBeginSaveScreenAsPDF(...) and ofEndSaveScreenAsPDF()
+    // is saved to the file.
+    if (isSavingPDF) {
+        ofBeginSaveScreenAsPDF("savedScreenshot_"+ofGetTimestampString()+".pdf");
+    }
+
+	// Drawing code omitted for clarity...
+
+    // Finish saving the PDF and reset the isSavingPDF flag to false
+    // Ending the PDF tells openFrameworks to resume drawing to the screen.
+    if (isSavingPDF) {
+        ofEndSaveScreenAsPDF();
+        isSavingPDF = false;
+    }
+}
+
+void ofApp::keyPressed(int key){
+    if (key == 's') {
+        // isSavingPDF is a flag that lets us know whether or not save a PDF
+        isSavingPDF = true;
+    }
+}
+
+```
+
+![Figure 17: Editing a saved PDF from openFrameworks in Illustrator](images/Figure17_EditingVectorGraphics.png "Figure 17: Editing a saved PDF from openFrameworks in Illustrator")
+
+[[Source code for this section](https://github.com/openframeworks/ofBook/tree/master/chapters/intro_to_graphics/code/2_ii_c_Save_Vector_Graphics)]
+[[ofSketch file for this section](https://github.com/openframeworks/ofBook/blob/master/chapters/intro_to_graphics/code/2_ii_c_Save_Vector_Graphics.sketch)]
+
 ## Moving The World ##
 
 We've been making brushes for a long time, so let's move onto something different: moving the world. By the world, I really just mean the coordinate system (though it sounds more exciting the other way).
@@ -669,9 +718,9 @@ ofCircle(80, 90, 15);
 ofRect(65, 110, 30, 60);
 ```
 
-Draw a white background and color the shapes, and we end up with something like figure 17 (left).
+Draw a white background and color the shapes, and we end up with something like figure 18 (left).
 
-![Figure 17: Arranging a little stick figure family](images/Figure17_ArrangingTheFamily.png "Figure 17: Arranging a little stick figure family")
+![Figure 18: Arranging a little stick figure family](images/Figure18_ArrangingTheFamily.png "Figure 18: Arranging a little stick figure family")
 
 What if, after figuring out where to put our shapes, we needed to draw them at a different spot on the screen, or to draw a row of copies?  We *could* change all the positions manually, or we could use `ofTranslate(...)` to move our coordinate system and leave the positions alone:
 
@@ -686,9 +735,9 @@ for (int cols=0; cols<10; cols++) {
 ```
 
 
-So our original shapes are wrapped it in a loop with `ofTranslate(150, 0)`, which shifts our coordinate system to the left 150 pixels each time it executes.  And we'll end up with figure 17 (second from left).  Or something close to that, I randomized the colors in the figure - every family is different, right?
+So our original shapes are wrapped it in a loop with `ofTranslate(150, 0)`, which shifts our coordinate system to the left 150 pixels each time it executes.  And we'll end up with figure 18 (second from left).  Or something close to that, I randomized the colors in the figure - every family is different, right?
 
-If we wanted to create a grid of families, we will run into problems.  After the first row of families, our coordinate system will have been moved quite far to the left.  If we move our coordinate system up in order to start drawing our second row, we will end up drawing off the screen.  It would look like figure 17 (third from left).
+If we wanted to create a grid of families, we will run into problems.  After the first row of families, our coordinate system will have been moved quite far to the left.  If we move our coordinate system up in order to start drawing our second row, we will end up drawing off the screen.  It would look like figure 18 (third from left).
 
 So what we need is to reset the coordinate system using [`ofPushMatrix()`](http://www.openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofPushMatrix "ofPushMatrix Documentation Page") and [`ofPopMatrix()`](http://www.openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofPopMatrix "ofPopMatrix Documentation Page").  `ofPushMatrix()` saves the current coordinate system and `ofPopMatrix()` returns us to the last saved coordinate system.  These functions have the word matrix in them because openFrameworks stores all of our combined rotations, translations and scalings in a single matrix.  So we can use these new functions like this:
 
@@ -705,18 +754,18 @@ So what we need is to reset the coordinate system using [`ofPushMatrix()`](http:
     }
 ```
 
-And we should end up with a grid.  See figure 17, right. (I used `ofScale` to jam many in one image.) Or if you hate grids, we can make a mess of a crowd using random rotations and translations, figure 18.
+And we should end up with a grid.  See figure 18, right. (I used `ofScale` to jam many in one image.) Or if you hate grids, we can make a mess of a crowd using random rotations and translations, figure 19.
 
-![Figure 18: A crowd](images/Figure18_Crowd.png "Figure 18: A crowd")
+![Figure 19: A crowd](images/Figure19_Crowd.png "Figure 19: A crowd")
 
 [[Source code for this section](https://github.com/openframeworks/ofBook/tree/master/chapters/intro_to_graphics/code/3_i_Translating_Stick_Family)]
 [[ofSketch file for this section](https://github.com/openframeworks/ofBook/blob/master/chapters/intro_to_graphics/code/3_i_Translating_Stick_Family.sketch)]
 
 ### Rotating and Scaling: Spiraling Rectangles ###
 
-Onto `ofScale(...)` and `ofRotate(...)`!  Let's create a new project where rotating and scaling rectangles to get something like figure 19.
+Onto `ofScale(...)` and `ofRotate(...)`!  Let's create a new project where rotating and scaling rectangles to get something like figure 20.
 
-![Figure 19: Drawing a series of spiraling rectangles](images/Figure19_SpiralingRectangles.png "Figure 19: Drawing a series of spiraling rectangles")
+![Figure 20: Drawing a series of spiraling rectangles](images/Figure20_SpiralingRectangles.png "Figure 20: Drawing a series of spiraling rectangles")
 
 Before knowing about `ofRotate(...)`, we couldn't have drawn a rotated rectangle with `ofRect(...)`.  [`ofRotate(...)`](http://www.openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofRotate "ofRotate Documentation Page") takes an angle (in degrees) and rotates our coordinate system around the current origin.  Let's attempt a rotated rectangle:
 
@@ -734,9 +783,9 @@ ofPushMatrix();
 ofPopMatrix();
 ```
 
-Hmm, not quite right (figure 20, left).  `ofRotate(...)` rotates around the current origin, the top left corner of the screen.  To rotate in place, we need `ofTranslate(...)` to move the origin to our rectangle *before* we rotate.  Add `ofTranslate(500, 200)` before rotating (figure 20, second from left).  Now we are rotating around the upper left corner of the rectangle.  The easiest way to rotate the rectangle around its center is to use `ofSetRectMode(OF_RECTMODE_CENTER)` draw the center at (500, 200).  Do that, and we finally get figure 20, third from left.
+Hmm, not quite right (figure 21, left).  `ofRotate(...)` rotates around the current origin, the top left corner of the screen.  To rotate in place, we need `ofTranslate(...)` to move the origin to our rectangle *before* we rotate.  Add `ofTranslate(500, 200)` before rotating (figure 21, second from left).  Now we are rotating around the upper left corner of the rectangle.  The easiest way to rotate the rectangle around its center is to use `ofSetRectMode(OF_RECTMODE_CENTER)` draw the center at (500, 200).  Do that, and we finally get figure 21, third from left.
 
-![Figure 20: Steps along the way to rotating and scaling a rectangle in place](images/Figure20_CoordSystemManipulations.png "Figure 20: Steps along the way to rotating and scaling a rectangle in place")
+![Figure 21: Steps along the way to rotating and scaling a rectangle in place](images/Figure21_CoordSystemManipulations.png "Figure 21: Steps along the way to rotating and scaling a rectangle in place")
 
 Push, translate, rotate, pop - no problem.  Only thing left is [`ofScale(...)`](http://www.openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofScale "ofScale Documentation Page").  It takes two arguments: the desired scaling in x and y directions (and an optional z scaling).  Applying scaling to our rectangles:
 
@@ -757,7 +806,7 @@ ofPushMatrix();
 ofPopMatrix();
 ```
 
-We'll run into the same issues that we ran into with rotation and centering.  The solution is the same - translating before scaling and using `OF_RECTMODE_CENTER`.  Example scaling shown in figure 20 (right).
+We'll run into the same issues that we ran into with rotation and centering.  The solution is the same - translating before scaling and using `OF_RECTMODE_CENTER`.  Example scaling shown in figure 21 (right).
 
 Now we can make trippy rectangles.  Start a new project.  The idea is really simple, we are going to draw a rectangle at the center of the screen, scale, rotate, draw a rectangle, repeat and repeat.  Add the following to our `draw()` function:
 
@@ -777,7 +826,7 @@ ofPushMatrix();
 ofPopMatrix();
 ```
 
-That's it (figure 19).  We can play with the scaling, rotation, size of the rectangle, etc.  Three lines of code will add some life to our rectangles and cause them to coil and uncoil over time.  Put these in the place of `ofRotate(5)`:
+That's it (figure 20).  We can play with the scaling, rotation, size of the rectangle, etc.  Three lines of code will add some life to our rectangles and cause them to coil and uncoil over time.  Put these in the place of `ofRotate(5)`:
 
 ```cpp
 // Noise is a topic that deserves a section in a book unto itself
@@ -832,9 +881,9 @@ ofColor fgColor = lightColor;  // Color for the rectangle outlines
 fgColor.lerp(darkColor, percent);  // Modifies color in place
 ```
 
-Now use `bgColor` for the transparent rectangle we draw on the screen and `fgColor` for the rectangle outlines to get figure 21
+Now use `bgColor` for the transparent rectangle we draw on the screen and `fgColor` for the rectangle outlines to get figure 22.
 
-![Figure 21: A single frame from animated spiraling rectangles where the contrast reverses over time](images/Figure21_ContrastReversingSpiral.png "Figure 21: A single frame from animated spiraling rectangles where the contrast reverses over time")
+![Figure 22: A single frame from animated spiraling rectangles where the contrast reverses over time](images/Figure22_ContrastReversingSpiral.png "Figure 22: A single frame from animated spiraling rectangles where the contrast reverses over time")
 
 [[Source code for this section](https://github.com/openframeworks/ofBook/tree/master/chapters/intro_to_graphics/code/3_ii_Rotating_and_Scaling)]
 [[ofSketch file for this section](https://github.com/openframeworks/ofBook/blob/master/chapters/intro_to_graphics/code/3_ii_Rotating_and_Scaling.sketch)]
