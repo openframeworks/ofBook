@@ -1,6 +1,6 @@
 # Graphics #
 
-_By: [Michael Hadley](http://www.mikewesthad.com/) with generous editor support from [Abraham Avnisan](http://abrahamavnisan.com/), [Brannon Dorsey](http://brannondorsey.com/) and [Christopher Baker](http://christopherbaker.net/)_
+_By: [Michael Hadley](http://www.mikewesthad.com/) with generous editor support from [Abraham Avnisan](http://abrahamavnisan.com/), [Brannon Dorsey](http://brannondorsey.com/) and [Christopher Baker](http://christopherbaker.net/)._
 
 This chapter builds off of the *C++ Basics* and *Setup and Project Structure* chapters, so if you aren't familiar with basic C++ and creating openFrameworks projects, check out those chapters first.
 
@@ -53,6 +53,7 @@ The individual lines that make up our outlines can be jagged too.  We can fix th
 ![Figure 2: Basic shapes with and without a fill](images/Figure2_BasicShapes.png "Figure 2: Basic shapes with and without a fill")
 
 [[Source code for this section](https://github.com/openframeworks/ofBook/tree/master/chapters/intro_to_graphics/code/1_i_Basic_Shapes)]
+
 [[ofSketch file for this section](https://github.com/openframeworks/ofBook/blob/master/chapters/intro_to_graphics/code/1_i_Basic_Shapes.sketch)]
 
 **Extensions**
@@ -116,7 +117,10 @@ if (ofGetMousePressed(OF_MOUSE_BUTTON_RIGHT)) {  // If the right mouse button is
 }
 ```
 
-[[Source code for this section](https://github.com/openframeworks/ofBook/tree/master/chapters/intro_to_graphics/code/1_ii_a_Single_Rectangle_Brush)]
+[Source code for this section](https://github.com/openframeworks/ofBook/tree/master/chapters/intro_to_graphics/code/1_ii_a_Single_Rectangle_Brush)]
+
+[[ofSketch file for this section](https://github.com/openframeworks/ofBook/blob/master/chapters/intro_to_graphics/code/1_ii_a_Single_Rectangle_Brush.sketch)]
+
 
 #### Bursting Rectangle Brush: Creating Randomized Bursts #####
 
@@ -170,6 +174,7 @@ for (int r=0; r<numRects; r++) {
 ![Figure 5: Cartesian brush spread versus polar brush spread](images/Figure5_CartesianVsPolarSpread.png "Figure 5: Cartesian brush spread versus polar brush spread")  
 
 [[Source code for this section](https://github.com/openframeworks/ofBook/tree/master/chapters/intro_to_graphics/code/1_ii_b_Bursting_Rect_Brush)]
+
 [[ofSketch file for this section](https://github.com/openframeworks/ofBook/blob/master/chapters/intro_to_graphics/code/1_ii_a_Single_Rectangle_Brush.sketch)]
 
 #### Glowing Circle Brush: Using Transparency and Color ####
@@ -235,6 +240,7 @@ ofSetColor(inBetween);
 ```
 
 [[Source code for this section](https://github.com/openframeworks/ofBook/tree/master/chapters/intro_to_graphics/code/1_ii_c_Glowing_Circle_Brush)]
+
 [[ofSketch file for this section](https://github.com/openframeworks/ofBook/blob/master/chapters/intro_to_graphics/code/1_ii_c_Glowing_Circle_Brush.sketch)]
 
 #### Star Line Brush: Working with a Linear Map ####
@@ -263,6 +269,8 @@ We can also vary the line width using: `ofSetLineWidth(ofRandom(1.0, 5.0))`, but
 ![Figure 7: Results from using the line brush](images/Figure7_LineStarBrush.png "Figure 7: Results from using the line brush")
 
 [[Source code for this section](https://github.com/openframeworks/ofBook/tree/master/chapters/intro_to_graphics/code/1_ii_d_Star_Line_Brush)]
+
+[[ofSketch file for this section](https://github.com/openframeworks/ofBook/blob/master/chapters/intro_to_graphics/code/1_ii_d_Star_Line_Brush.sketch)]
 
 #### Fleeing Triangle Brush: Vectors and Rotations ####
 
@@ -355,6 +363,7 @@ We are now using `ofVec2f` for our offset.  We started with a vector that points
 ![Figure 10: Results from using the final triangle brush](images/Figure10_TriangleSwirlBrush.png "Figure 10: Results from using the final triangle brush")
 
 [[Source code for this section](https://github.com/openframeworks/ofBook/tree/master/chapters/intro_to_graphics/code/1_ii_e_Triangle_Brush)]
+
 [[ofSketch file for this section](https://github.com/openframeworks/ofBook/blob/master/chapters/intro_to_graphics/code/1_ii_e_Triangle_Brush.sketch)]
 
 **Extensions**
@@ -440,6 +449,7 @@ We created three different types of polylines (figure 11). `straightSegmentPolyl
 The advantage of drawing in this way (versus raster graphics) is that the polylines are modifiable.  We could easily move, add, delete, scale our vertices on the the fly.
 
 [[Source code for this section](https://github.com/openframeworks/ofBook/tree/master/chapters/intro_to_graphics/code/2_i_Basic_Polylines)]
+
 [[ofSketch file for this section](https://github.com/openframeworks/ofBook/blob/master/chapters/intro_to_graphics/code/2_i_Basic_Polylines.sketch)]
 
 **Extensions**
@@ -532,6 +542,7 @@ And we have a simple pen-like brush that tracks the mouse, and we can draw a dop
 ![Figure 12: Drawing a smilie with the polyline brush](images/Figure12_PolylineSmilie.png "Figure 12: Drawing a smilie with the polyline brush")
 
 [[Source code for this section](https://github.com/openframeworks/ofBook/tree/master/chapters/intro_to_graphics/code/2_ii_a_Polyline_Pen)]
+
 [[ofSketch file for this section](https://github.com/openframeworks/ofBook/blob/master/chapters/intro_to_graphics/code/2_ii_a_Polyline_Pen.sketch)]
 
 
@@ -637,6 +648,7 @@ for (int p=0; p<500; p+=1) {
 ```
 
 [[Source code for this section](https://github.com/openframeworks/ofBook/tree/master/chapters/intro_to_graphics/code/2_ii_b_Polyline_Brushes)]
+
 [[ofSketch file for this section](https://github.com/openframeworks/ofBook/blob/master/chapters/intro_to_graphics/code/2_ii_b_Polyline_Brushes.sketch)]
 
 **Extensions**
@@ -692,6 +704,7 @@ void ofApp::keyPressed(int key){
 ![Figure 17: Editing a saved PDF from openFrameworks in Illustrator](images/Figure17_EditingVectorGraphics.png "Figure 17: Editing a saved PDF from openFrameworks in Illustrator")
 
 [[Source code for this section](https://github.com/openframeworks/ofBook/tree/master/chapters/intro_to_graphics/code/2_ii_c_Save_Vector_Graphics)]
+
 [[ofSketch file for this section](https://github.com/openframeworks/ofBook/blob/master/chapters/intro_to_graphics/code/2_ii_c_Save_Vector_Graphics.sketch)]
 
 ## Moving The World ##
@@ -759,6 +772,7 @@ And we should end up with a grid.  See figure 18, right. (I used `ofScale` to ja
 ![Figure 19: A crowd](images/Figure19_Crowd.png "Figure 19: A crowd")
 
 [[Source code for this section](https://github.com/openframeworks/ofBook/tree/master/chapters/intro_to_graphics/code/3_i_Translating_Stick_Family)]
+
 [[ofSketch file for this section](https://github.com/openframeworks/ofBook/blob/master/chapters/intro_to_graphics/code/3_i_Translating_Stick_Family.sketch)]
 
 ### Rotating and Scaling: Spiraling Rectangles ###
@@ -886,6 +900,7 @@ Now use `bgColor` for the transparent rectangle we draw on the screen and `fgCol
 ![Figure 22: A single frame from animated spiraling rectangles where the contrast reverses over time](images/Figure22_ContrastReversingSpiral.png "Figure 22: A single frame from animated spiraling rectangles where the contrast reverses over time")
 
 [[Source code for this section](https://github.com/openframeworks/ofBook/tree/master/chapters/intro_to_graphics/code/3_ii_Rotating_and_Scaling)]
+
 [[ofSketch file for this section](https://github.com/openframeworks/ofBook/blob/master/chapters/intro_to_graphics/code/3_ii_Rotating_and_Scaling.sketch)]
 
 **Extensions**
