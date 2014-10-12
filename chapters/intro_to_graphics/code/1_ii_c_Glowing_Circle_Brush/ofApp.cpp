@@ -1,6 +1,6 @@
 // =============================================================================
 //
-// Source code for section 1.ii.e. Fleeing Triangle Brush from the Introduction
+// Source code for section 1.ii.c. Glowing Circle Brush from the Introduction
 // to Graphics chapter of ofBook (https://github.com/openframeworks/ofBook).
 //
 // Copyright (c) 2014 Michael Hadley, mikewesthad.com
@@ -29,9 +29,9 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    ofSetFrameRate(60);
-    isLeftMousePressed = false;
-    ofSetBackgroundAuto(false);
+    ofSetFrameRate(60); // Limit the speed of our program to 60 frames per second
+
+    ofSetBackgroundAuto(false); // Stop the background from being redrawn each frame
     // We still want to draw on a black background, so we need to draw
     // the background before we do anything with the brush
     ofBackground(0);
@@ -44,71 +44,38 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    if (isLeftMousePressed) {
+    // If the left mouse button is pressed...
+    if (ofGetMousePressed(OF_MOUSE_BUTTON_LEFT)) {
+        int maxRadius = 100;  // Increase for a wider brush
+        int radiusStepSize = 5;  // Decrease for more circles (i.e. a more opaque brush)
+        int alpha = 3;  // Increase for a more opaque brush
+        int maxOffsetDistance = 100;  // Increase for a larger spread of circles
+        for (int radius=maxRadius; radius>0; radius-=radiusStepSize) {
 
-        // Code for the rotating triangle brush:
+            // Formula for converting from polar to Cartesian coordinates:
+            //    x = cos(polar angle) * (polar distance)
+            //    y = sin(polar angle) * (polar distance)
+            // We need our angle to be in radians if we want to use sin() or cos()
+            // so we can make use of an openFrameworks function to convert from degrees
+            // to radians
+            float angle = ofRandom(ofDegToRad(360.0));
+            float distance = ofRandom(maxOffsetDistance);
+            float xOffset = cos(angle) * distance;
+            float yOffset = sin(angle) * distance;
 
-//        ofVec2f mousePos(mouseX, mouseY);
-//
-//        // Define a triangle at the origin (0,0) that points to the right
-//        ofVec2f p1(0, 25.0);
-//        ofVec2f p2(100, 0);
-//        ofVec2f p3(0, -25.0);
-//
-//        // Rotate the triangle points around the origin
-//        float rotation = ofRandom(360); // Uses degrees!
-//        p1.rotate(rotation);
-//        p2.rotate(rotation);
-//        p3.rotate(rotation);
-//
-//        // Shift the triangle to the mouse position
-//        p1 += mousePos;
-//        p2 += mousePos;
-//        p3 += mousePos;
-//
-//        ofSetColor(255, 50);
-//        ofTriangle(p1, p2, p3);
+            // Using the ofColor class, we will randomly select a color between orange and red
+            ofColor myOrange(255, 132, 0, alpha);
+            ofColor myRed(255, 6, 0, alpha);
+            ofColor inBetween = myOrange.getLerped(myRed, ofRandom(1.0));
+            ofSetColor(inBetween);
 
-
-
-        // Code for the final version of the brush:
-
-        ofVec2f mousePos(mouseX, mouseY);
-
-        int numTriangles = 10;
-        int minOffset = 5;
-        int maxOffset = 70;
-        int alpha = 150;
-
-        for (int t=0; t<numTriangles; ++t) {
-            float offsetDistance = ofRandom(minOffset, maxOffset);
-
-            ofVec2f mousePos(mouseX, mouseY);
-
-            // Define a triangle at the origin (0,0) that points to the right
-            ofVec2f p1(0, 6.25);
-            ofVec2f p2(25, 0);
-            ofVec2f p3(0, -6.25);
-
-            float rotation = ofRandom(360); // Uses degrees!
-            p1.rotate(rotation);
-            p2.rotate(rotation);
-            p3.rotate(rotation);
-
-            ofVec2f triangleOffset(offsetDistance, 0.0);
-            triangleOffset.rotate(rotation);
-
-            p1 += mousePos + triangleOffset;
-            p2 += mousePos + triangleOffset;
-            p3 += mousePos + triangleOffset;
-
-            ofColor aqua(0, 252, 255, alpha);
-            ofColor purple(198, 0, 205, alpha);
-            ofColor inbetween = aqua.getLerped(purple, ofRandom(1.0));
-            ofSetColor(inbetween);
-
-            ofTriangle(p1, p2, p3);
+            ofCircle(ofGetMouseX()+xOffset, ofGetMouseY()+yOffset, radius);
         }
+    }
+
+    // If the right mouse button is pressed...
+    if (ofGetMousePressed(OF_MOUSE_BUTTON_RIGHT)) {
+        ofBackground(0);  // Erase the screen with a black background
     }
 }
 
@@ -142,12 +109,12 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-    if (button == OF_MOUSE_BUTTON_LEFT) isLeftMousePressed = true;
+
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
-    if (button == OF_MOUSE_BUTTON_LEFT) isLeftMousePressed = false;
+
 }
 
 //--------------------------------------------------------------

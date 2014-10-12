@@ -1,7 +1,7 @@
 // =============================================================================
 //
-// Source code for section 1.i. Basic Shapes from the Introduction to Graphics
-// chapter of ofBook (https://github.com/openframeworks/ofBook).
+// Source code for section 2.ii.a. Polyline Pen from the Introduction
+// to Graphics chapter of ofBook (https://github.com/openframeworks/ofBook).
 //
 // Copyright (c) 2014 Michael Hadley, mikewesthad.com
 //
@@ -29,48 +29,33 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    ofEnableAntiAliasing();
+    minDistance = 10.0;
+    leftMouseButtonPressed = false;
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-
+    if (leftMouseButtonPressed) {
+        ofVec2f mousePos(ofGetMouseX(), ofGetMouseY());
+        if (lastPoint.distance(mousePos) >= minDistance) {
+            // a.distance(b) calculates the Euclidean distance between point a and b.  It's
+            // the straight line distance between the points.
+            currentPolyline.curveTo(mousePos);  // Here we are using an ofVec2f with curveTo(...)
+            lastPoint = mousePos;
+        }
+    }
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    ofBackground(0);  // Clear the screen with a black color
-    ofSetColor(255);  // Set the drawing color to white
-
-    ofFill(); // If we omit this and leave ofNoFill(), all the shapes will be outlines!
-    ofSetLineWidth(2); // Line width is a default value of 1 if you don't modify it
-
-    // Draw some shapes
-    ofRect(50, 50, 100, 100); // 100 wide x 100 high, top left corner at (50, 50)
-    ofCircle(250, 100, 50); // Radius of 50, centered at (250, 100)
-    ofEllipse(400, 100, 80, 100); // 80 wide x 100 high, centered at (400 100)
-    ofTriangle(500, 150, 550, 50, 600, 150); // Three corners: (500, 150), (550, 50), (600, 150)
-    ofLine(700, 50, 700, 150); // Line from (700, 50) to (700, 150)
-
-    // If you are curious how to generate the series of lines shown in figure 2, you can use a for loop:
-    //for (int i=0; i<11; i++) {
-	//	ofLine(650, 50+(i*10), 750, 75+(i*5));
-	//}
-
-    ofNoFill(); // If we omit this and leave ofFill(), all the shapes will be filled!
-    ofSetLineWidth(4.5); // A higher value will render thicker lines
-
-    // Draw some shapes (shifted down 150 pixels)
-    ofRect(50, 200, 100, 100);
-    ofCircle(250, 250, 50);
-    ofEllipse(400, 250, 80, 100);
-    ofTriangle(500, 300, 550, 200, 600, 300);
-    ofLine(700, 200, 700, 300);
-
-    // Again, for generating the series of lines from figure 2:
-    //for (int i=0; i<11; i++) {
-	//	ofLine(650, 50+(i*10), 750, 75+(i*5));
-	//}
+    ofBackground(0);
+    ofSetColor(255);  // White color for saved polylines
+    for (int i=0; i<polylines.size(); i++) {
+        ofPolyline polyline = polylines[i];
+        polyline.draw();
+    }
+    ofSetColor(255,100,0);  // Orange color for active polyline
+    currentPolyline.draw();
 }
 
 //--------------------------------------------------------------
@@ -95,12 +80,22 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-
+    if (button == OF_MOUSE_BUTTON_LEFT) {
+        leftMouseButtonPressed = true;
+        currentPolyline.curveTo(x, y);  // Remember that x and y are the location of the mouse
+        currentPolyline.curveTo(x, y);  // Necessary duplicate for first control point
+        lastPoint.set(x, y);  // Set the x and y of a ofVec2f in a single line
+    }
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
-
+    if (button == OF_MOUSE_BUTTON_LEFT) {
+        leftMouseButtonPressed = false;
+        currentPolyline.curveTo(x, y);   // Necessary duplicate for last control point
+        polylines.push_back(currentPolyline);
+        currentPolyline.clear();  // Erase the vertices, allows us to start a new brush stroke
+    }
 }
 
 //--------------------------------------------------------------

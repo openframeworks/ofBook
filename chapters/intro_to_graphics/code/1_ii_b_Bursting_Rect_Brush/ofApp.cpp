@@ -30,9 +30,9 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    ofSetFrameRate(60);
-    isLeftMousePressed = false;
-    ofSetBackgroundAuto(false);
+    ofSetFrameRate(60); // Limit the speed of our program to 60 frames per second
+
+    ofSetBackgroundAuto(false); // Stop the background from being redrawn each frame
     // We still want to draw on a black background, so we need to draw
     // the background before we do anything with the brush
     ofBackground(0);
@@ -45,24 +45,34 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    if (isLeftMousePressed) {
+    // If the left mouse button is pressed...
+    if (ofGetMousePressed(OF_MOUSE_BUTTON_LEFT)) {
         ofSetRectMode(OF_RECTMODE_CENTER);
         int numRects = 10;
         for (int r=0; r<numRects; r++) {
             ofSetColor(ofRandom(50, 255));
             float width = ofRandom(5, 20);
             float height = ofRandom(5, 20);
-            float angle = ofRandom(2.0*PI); // Angle in radians because sin(...) and cos(...) use radians
             float distance = ofRandom(35);
 
             // Formula for converting from polar to Cartesian coordinates:
             //  x = cos(polar angle) * (polar distance)
             //  y = sin(polar angle) * (polar distance)
 
+            // We need our angle to be in radians if we want to use sin() or cos()
+            // so we can make use of an openFrameworks function to convert from degrees
+            // to radians
+            float angle = ofRandom(ofDegToRad(360.0));
+
             float xOffset = cos(angle) * distance;
             float yOffset = sin(angle) * distance;
-            ofRect(mouseX+xOffset, mouseY+yOffset, width, height);
+            ofRect(ofGetMouseX()+xOffset, ofGetMouseY()+yOffset, width, height);
         }
+    }
+
+    // If the right mouse button is pressed...
+    if (ofGetMousePressed(OF_MOUSE_BUTTON_RIGHT)) {
+        ofBackground(0);  // Erase the screen with a black background
     }
 }
 
@@ -96,12 +106,12 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-    if (button == OF_MOUSE_BUTTON_LEFT) isLeftMousePressed = true;
+
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
-    if (button == OF_MOUSE_BUTTON_LEFT) isLeftMousePressed = false;
+
 }
 
 //--------------------------------------------------------------

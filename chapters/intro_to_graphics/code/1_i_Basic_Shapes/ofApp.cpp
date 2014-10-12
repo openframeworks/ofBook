@@ -1,7 +1,7 @@
 // =============================================================================
 //
-// Source code for section 1.ii.a. Single Rectangle Brush from the Introduction
-// to Graphics chapter of ofBook (https://github.com/openframeworks/ofBook).
+// Source code for section 1.i. Basic Shapes from the Introduction to Graphics
+// chapter of ofBook (https://github.com/openframeworks/ofBook).
 //
 // Copyright (c) 2014 Michael Hadley, mikewesthad.com
 //
@@ -29,13 +29,10 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    isLeftMousePressed = false;
+    // This is enabled by default in recent version of openFrameworks
+    ofEnableAntiAliasing();
 
-    ofSetBackgroundAuto(false);
-
-    // We still want to draw on a black background, so we need to draw
-    // the background before we do anything with the brush
-    ofBackground(0);
+    ofSetCircleResolution(50); // For smoother looking circles + ellipses
 }
 
 //--------------------------------------------------------------
@@ -45,29 +42,44 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    if (isLeftMousePressed) {
+    ofBackground(0); // Clear the screen with a black color
+    ofSetColor(255); // Set the drawing color to white
 
-        // Randomness!
-        float randomColor = ofRandom(50, 255);
-        ofSetColor(randomColor);  // Exclude dark grayscale values (0 - 50) that won't show on black background
+    ofFill(); // If we omit this and leave ofNoFill(), all the shapes will be outlines!
+    ofSetLineWidth(2); // Line width is a default value of 1 if you don't modify it
 
-        ofSetRectMode(OF_RECTMODE_CENTER);
+    // Draw some shapes
+    ofRect(50, 50, 100, 100); // 100 wide x 100 high, top left corner at (50, 50)
+    ofCircle(250, 100, 50); // Radius of 50, centered at (250, 100)
+    ofEllipse(400, 100, 80, 100); // 80 wide x 100 high, centered at (400 100)
+    ofTriangle(500, 150, 550, 50, 600, 150); // Three corners: (500, 150), (550, 50), (600, 150)
+    ofLine(700, 50, 700, 150); // Line from (700, 50) to (700, 150)
 
-        ofRect(mouseX, mouseY, 50, 50);  // Draw a 50 x 50 rect centered over the mouse
-    }
+    // If you are curious how to generate the series of lines shown in figure 2, you can use a for loop:
+    //for (int i=0; i<11; i++) {
+	//	ofLine(650, 50+(i*10), 750, 75+(i*5));
+	//}
+
+    ofNoFill(); // If we omit this and leave ofFill(), all the shapes will be filled!
+    ofSetLineWidth(4.5); // A higher value will render thicker lines
+    // Note: Using ofSetLineWidth is tricky - it doesn't work with all graphics cards!
+
+    // Draw some shapes (shifted down 150 pixels)
+    ofRect(50, 200, 100, 100);
+    ofCircle(250, 250, 50);
+    ofEllipse(400, 250, 80, 100);
+    ofTriangle(500, 300, 550, 200, 600, 300);
+    ofLine(700, 200, 700, 300);
+
+    // Again, for generating the series of lines from figure 2:
+    //for (int i=0; i<11; i++) {
+	//	ofLine(650, 50+(i*10), 750, 75+(i*5));
+	//}
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-    // From section 1.ii.f, allowing you to save a screenshot by pressing the 's' key:
-    if (key == 's') {
-        // HACK: only needed on windows, when using ofSetAutoBackground(false)
-        glReadBuffer(GL_FRONT);
 
-        // We use the timestamp here so that you can save multiple images without
-        // overriding previous screenshots (i.e. each file has a unique name)
-        ofSaveScreen("savedScreenshot_"+ofGetTimestampString()+".png");
-    }
 }
 
 //--------------------------------------------------------------
@@ -87,12 +99,12 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-    if (button == OF_MOUSE_BUTTON_LEFT) isLeftMousePressed = true;
+
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
-    if (button == OF_MOUSE_BUTTON_LEFT) isLeftMousePressed = false;
+
 }
 
 //--------------------------------------------------------------

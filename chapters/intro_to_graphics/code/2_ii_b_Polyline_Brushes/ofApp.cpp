@@ -36,9 +36,11 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
     if (leftMouseButtonPressed) {
-        ofVec2f mousePos(mouseX, mouseY);
+        ofVec2f mousePos(ofGetMouseX(), ofGetMouseY());
         if (lastPoint.distance(mousePos) >= minDistance) {
-            currentPolyline.curveTo(mousePos);  // You can also call curveTo with an ofVec2f
+            // a.distance(b) calculates the Euclidean distance between point a and b.  It's
+            // the straight line distance between the points.
+            currentPolyline.curveTo(mousePos);  // Here we are using an ofVec2f with curveTo(...)
             lastPoint = mousePos;
         }
     }
@@ -56,7 +58,7 @@ void ofApp::draw(){
 
         // Below are three different drawing methods: points, normals and tangents.
         // Use comments to select which one you'd like to run.  You can comment out the
-        // original polyline drawing on line 55, if you like.
+        // original polyline drawing on line 57, if you like.
 
         // Drawing evenly spaced points along the polyline
 //        vector<ofVec3f> vertices = polyline.getVertices();  // If you haven't seen a vector < >, before

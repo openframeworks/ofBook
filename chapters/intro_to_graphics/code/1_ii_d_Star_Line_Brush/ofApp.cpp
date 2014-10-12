@@ -1,6 +1,6 @@
 // =============================================================================
 //
-// Source code for section 2.ii.a. Polyline Pen from the Introduction
+// Source code for section 1.ii.d. Star Line Brush from the Introduction
 // to Graphics chapter of ofBook (https://github.com/openframeworks/ofBook).
 //
 // Copyright (c) 2014 Michael Hadley, mikewesthad.com
@@ -29,36 +29,64 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    minDistance = 10.0;
-    leftMouseButtonPressed = false;
+    ofSetFrameRate(60); // Limit the speed of our program to 60 frames per second
+
+    ofSetBackgroundAuto(false); // Stop the background from being redrawn each frame
+    // We still want to draw on a black background, so we need to draw
+    // the background before we do anything with the brush
+    ofBackground(0);
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    if (leftMouseButtonPressed) {
-        ofVec2f mousePos(mouseX, mouseY);
-        if (lastPoint.distance(mousePos) >= minDistance) {
-            currentPolyline.curveTo(mousePos);  // You can also call curveTo with an ofVec2f
-            lastPoint = mousePos;
-        }
-    }
+
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    ofBackground(0);
-    ofSetColor(255);  // White color for saved polylines
-    for (int i=0; i<polylines.size(); i++) {
-        ofPolyline polyline = polylines[i];
-        polyline.draw();
+    // If the left mouse button is pressed...
+    if (ofGetMousePressed(OF_MOUSE_BUTTON_LEFT)) {
+        int numLines = 30;
+        int minRadius = 25;
+        int maxRadius = 125;
+        for (int i=0; i<numLines; i++) {
+
+            // Formula for converting from polar to Cartesian coordinates:
+            //    x = cos(polar angle) * (polar distance)
+            //    y = sin(polar angle) * (polar distance)
+            // We need our angle to be in radians if we want to use sin() or cos()
+            // so we can make use of an openFrameworks function to convert from degrees
+            // to radians
+            float angle = ofRandom(ofDegToRad(360.0));
+            float distance = ofRandom(minRadius, maxRadius);
+            float xOffset = cos(angle) * distance;
+            float yOffset = sin(angle) * distance;
+
+            float alpha = ofMap(distance, minRadius, maxRadius, 50, 0); // Make shorter lines more opaque
+            ofSetColor(255, alpha);
+
+            ofSetLineWidth(ofRandom(1.0, 5.0)); // Remember, this doesn't work on all graphics cards
+            ofLine(ofGetMouseX(), ofGetMouseY(), ofGetMouseX()+xOffset, ofGetMouseY()+yOffset);
+        }
     }
-    ofSetColor(255,100,0);  // Orange color for active polyline
-    currentPolyline.draw();
+
+    // If the right mouse button is pressed...
+    if (ofGetMousePressed(OF_MOUSE_BUTTON_RIGHT)) {
+        ofBackground(0);  // Erase the screen with a black background
+    }
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
+    // From section 1.ii.f, allowing you to save a screenshot by pressing the 's' key:
+    if (key == 's') {
+        // HACK: only needed on windows, when using ofSetAutoBackground(false)
+        glReadBuffer(GL_FRONT);
 
+        // We use the timestamp here so that you can save multiple images without
+        // overriding previous screenshots (i.e. each file has a unique name)
+        ofSaveScreen("savedScreenshot_"+ofGetTimestampString()+".png");
+    }
 }
 
 //--------------------------------------------------------------
@@ -78,22 +106,12 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-    if (button == OF_MOUSE_BUTTON_LEFT) {
-        leftMouseButtonPressed = true;
-        currentPolyline.curveTo(x, y);  // Remember that x and y are the location of the mouse
-        currentPolyline.curveTo(x, y);  // Necessary duplicate for first control point
-        lastPoint.set(x, y);  // Set the x and y of a ofVec2f in a single line
-    }
+
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
-    if (button == OF_MOUSE_BUTTON_LEFT) {
-        leftMouseButtonPressed = false;
-        currentPolyline.curveTo(x, y);   // Necessary duplicate for last control point
-        polylines.push_back(currentPolyline);
-        currentPolyline.clear();  // Erase the vertices, allows us to start a new brush stroke
-    }
+
 }
 
 //--------------------------------------------------------------

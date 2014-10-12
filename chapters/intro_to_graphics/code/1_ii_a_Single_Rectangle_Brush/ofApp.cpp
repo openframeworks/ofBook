@@ -1,6 +1,6 @@
 // =============================================================================
 //
-// Source code for section 2.i Basic Polylines from the Introduction
+// Source code for section 1.ii.a. Single Rectangle Brush from the Introduction
 // to Graphics chapter of ofBook (https://github.com/openframeworks/ofBook).
 //
 // Copyright (c) 2014 Michael Hadley, mikewesthad.com
@@ -29,27 +29,11 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
+    ofSetBackgroundAuto(false); // Stop the background from being redrawn each frame
 
-    straightSegmentPolyline.addVertex(100, 100);  // Add a new point: (100, 100)
-    straightSegmentPolyline.addVertex(150, 150);  // Add a new point: (150, 150)
-    straightSegmentPolyline.addVertex(200, 100);  // etc...
-    straightSegmentPolyline.addVertex(250, 150);
-    straightSegmentPolyline.addVertex(300, 100);
-
-    curvedSegmentPolyline.curveTo(350, 100);  // These curves are Catmull-Rom splines
-    curvedSegmentPolyline.curveTo(350, 100);  // Necessary Duplicate for Control Point
-    curvedSegmentPolyline.curveTo(400, 150);
-    curvedSegmentPolyline.curveTo(450, 100);
-    curvedSegmentPolyline.curveTo(500, 150);
-    curvedSegmentPolyline.curveTo(550, 100);
-    curvedSegmentPolyline.curveTo(550, 100);  // Necessary Duplicate for Control Point
-
-    closedShapePolyline.addVertex(600, 125);
-    closedShapePolyline.addVertex(700, 100);
-    closedShapePolyline.addVertex(800, 125);
-    closedShapePolyline.addVertex(700, 150);
-    closedShapePolyline.close();  // Connect first and last vertices
-
+    // We still want to draw on a black background, so we need to draw
+    // the background before we do anything with the brush
+    ofBackground(0);
 }
 
 //--------------------------------------------------------------
@@ -59,19 +43,33 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+    // If the left mouse button is pressed...
+    if (ofGetMousePressed(OF_MOUSE_BUTTON_LEFT)) {
+        // Randomness!
+        float randomColor = ofRandom(50, 255);
+        ofSetColor(randomColor); // Exclude dark grayscale values (0 - 50) that won't show on black background
 
-    ofBackground(0);
-    ofSetLineWidth(2.0);  // Line width will apply to polylines
-    ofSetColor(255,100,0);
-    straightSegmentPolyline.draw();  // This is how we draw polylines
-    curvedSegmentPolyline.draw();  // Nice and easy, right?
-    closedShapePolyline.draw();
+        ofSetRectMode(OF_RECTMODE_CENTER); // Draw rect by specifying the center
+        ofRect(ofGetMouseX(), ofGetMouseY(), 50, 50); // Draw a 50 x 50 rect centered over the mouse
+    }
 
+    // If the right mouse button is pressed...
+    if (ofGetMousePressed(OF_MOUSE_BUTTON_RIGHT)) {
+        ofBackground(0);  // Erase the screen with a black background
+    }
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
+    // From section 1.ii.f, allowing you to save a screenshot by pressing the 's' key:
+    if (key == 's') {
+        // HACK: only needed on windows, when using ofSetAutoBackground(false)
+        glReadBuffer(GL_FRONT);
 
+        // We use the timestamp here so that you can save multiple images without
+        // overriding previous screenshots (i.e. each file has a unique name)
+        ofSaveScreen("savedScreenshot_"+ofGetTimestampString()+".png");
+    }
 }
 
 //--------------------------------------------------------------
