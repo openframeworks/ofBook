@@ -215,6 +215,12 @@ for chapter in chapters:
 				# to the chapter html, but image references in the html are 
 				# to ./images/.  Modify the image tags:
 				div.img["src"] = internalImagesPath + "/" + div.img["src"]
+
+				# Turn the figure image into a hyperlink that points to the
+				# full resolution version of the image
+				imgHyperlink = soup.new_tag("a", href=fig.img["src"])
+				fig.img.wrap(imgHyperlink)
+
 		
 		# Make all hyperlinks in the chapter target a new window/tab
 		hyperlinkTags = soup.find_all("a")
