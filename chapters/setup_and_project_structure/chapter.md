@@ -1,6 +1,6 @@
 #OF structure
 
-*by [Roy Mcdonald](http://macrobio.cl/)*
+*by [Roy Macdonald](http://github.com/roymacdonald/)*
 
 Let's get into openFrameworks (I'll refer to it as OF from now on). The philosophy chapter talks about OF in very abstract and conceptual manner, which is really useful for understanding the design of the OF environment.  Now, let's take a look at what the OF download looks like.
 
