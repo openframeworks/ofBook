@@ -38,7 +38,7 @@ A couple of notes,
 
 ## credits
 
-Countless thanks to Rachel Uwa for organizing this project, Tega Brain for helping edit it, Ishac Bertran and Andy Clymer for directing the design, and Arturo Castro, Christopher Buchner and Michael Hadley for developing the codebase for generating the book. **MORE MORE MORE MORE** 
+Countless thanks to Rachel Uwa for organizing this project, Tega Brain for helping edit it, Ishac Bertran and Andy Clymer for directing the design, and Arturo Castro, Christoph Buchner and Michael Hadley for developing the codebase for generating the book. **MORE MORE MORE MORE** 
 
 Editors: **MORE MORE MORE MORE**
 
