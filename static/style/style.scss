@@ -132,13 +132,22 @@ a:active {
   display: block;
   margin-left: 246px;
   padding:15px 25px 30px;
+  text-rendering: optimizeLegibility;
 
+  p, li {
+    font-family: 'fira';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 15px;
+
+    letter-spacing:0.02em;
+    line-height: 1.6em;
+  }
 
   h1, h2, h3, h4 {
     font-family: 'firaMedium';
     font-style: normal;
     font-weight: normal;
-    text-rendering: optimizeLegibility;
   }
 
   h1 {
