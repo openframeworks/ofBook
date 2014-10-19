@@ -299,15 +299,35 @@ for chapter in chapterTags:
 				chapli = Tag(soup, None, "li")
 				if (c == chapter):
 					 chapli['class'] = "selected"
+					 li['class']="group selected"
 				a = Tag(soup, None, "a");
 				a['href'] =  c['path'] + ".html"
 				a.string = c['title']
 				chapli.append(a)
 				chapul.append(chapli)
+
+				if (len(c['innerTags'])):
+						ulInner = Tag(soup, None, "ul")
+						chapli.append(ulInner);
+						for tag in c['innerTags']: 
+							liInner = Tag(soup, None, "li")
+							ulInner.append(liInner)
+							a = Tag(soup, None, "a")
+							tagNoSpaces = tag.replace(" ", "")
+							a['href'] = "chapters/" + c['path'] + ".html#" + tagNoSpaces
+							a['target'] = "_top"
+							a.string = tag
+							liInner.append(a);
+
+
+
+
 			else:
 				print chap
 		
-	
+
+				
+
 	#navULTag = soupFromFile.find_all("ul", {"id":"nav-parts"})
 	#navULTag[0].append(ul);
 	
@@ -337,7 +357,7 @@ for c in chapterTags:
 
 	#print c['title']
 	#print c['path']
-	if (len(['innerTags'])):
+	if (len(c['innerTags'])):
 		ulInner = Tag(soup, None, "ul")
 		li.append(ulInner);
 		for tag in c['innerTags']: 
