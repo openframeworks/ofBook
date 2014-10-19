@@ -13,6 +13,8 @@ Dependencies
 - [pandoc](http://johnmacfarlane.net/pandoc/)
 - [python 2.7+](https://www.python.org/)
 - [beauitful soup 4](http://www.crummy.com/software/BeautifulSoup/) 
+- [sass](http://sass-lang.com/)
+- [libsass](https://github.com/dahlia/libsass-python)
 - LaTeX 
   - Windows: [MiKTeX](http://miktex.org/) is recommended 
 
@@ -25,6 +27,7 @@ Scripts for building the web and pdf versions of the book are in `scripts/` dire
 2. install [beauitful soup 4](http://www.crummy.com/software/BeautifulSoup/) (bs4) `pip install beautifulsoup4`
 3. install [pandoc](https://github.com/jgm/pandoc/releases)
 4. install [basictex & MacTeX-Additions](http://www.tug.org/mactex/morepackages.html)
+5. install [libsass](https://github.com/dahlia/libsass-python) `sudo pip install libsass`
 
 ## Windows Installation of Dependencies
 1. Download and install [Python 2.7+](https://www.python.org/)
