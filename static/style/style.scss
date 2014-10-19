@@ -180,12 +180,14 @@ a:active {
   }
 
   code {
-    background-color: inherit;
+    background-color: #f5f5f5;
     border: none;
     color: inherit;
+    font-family: 'firaMono';
+    font-size: 12px;
     font-style: normal;
     line-height: inherit;
-    padding: 0;
+    padding: 3px;
     text-rendering: normal;
     white-space: nowrap;
   }
@@ -198,8 +200,8 @@ a:active {
   */
 
   pre {
-    font-family: Menlo, Consolas, "Courier New", Monaco, monospace;
-    font-size: 13px;
+    /*font-family: Menlo, Consolas, "Courier New", Monaco, monospace;
+    font-size: 13px;*/
     tab-size: 4;
     border: none !important;
     border-radius:0px !important;
@@ -222,24 +224,39 @@ a:active {
     }
   }
 
+  blockquote {
+    text-align: right;
+    margin: 0px;
+  }
 
   .figure {
     padding: 13px 0;
     width: 100%;
     text-align: center;
+    overflow: auto;
   }
 
   .figure img {
     max-width: 100%; max-height: 100%;
+    max-width: 100%; max-height: 100%;
+    /*box-shadow: 0px 1px 1px 1px rgba(100, 100, 100, .1);*/
+    border-color: #DDDDDD;
+    border-style: solid;
+    border-width: thin;
   }
 
   .caption {
-    color: #7A7A7A;
-    font-family: "firaRegular";
-    font-size: 14px;
+    
+    color: #CCCCCC;
+    font-family: "fira";
+    font-size: 12px;
     font-style: italic;
     line-height: 2em;
     text-align: center;
+    float:right;
+    /*float:right;
+    padding-right:10px;*/
+    padding-top:8px;
   }
 }
 
