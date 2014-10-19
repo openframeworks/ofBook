@@ -142,17 +142,20 @@ chapterTags = [];
 
 #-------------------------------------------------------------- make the book
 for chapter in chapters:
+
+	#src: 
 	sourceDirectoryPath = os.path.join("..", "chapters", chapter)
 	sourceChapterPath = os.path.join(sourceDirectoryPath, "chapter.md")
 	sourceImagesPath = os.path.join(sourceDirectoryPath, "images")
-
+	
+	#dst: 
 	destDirectoryPath = os.path.join(webBookPath, "images", chapter)
 	destChapterPath = os.path.join(webBookPath, "chapters", chapter+".html")
 	destImagesPath = os.path.join(destDirectoryPath, "images")
-
+	
 	internalImagesPath = os.path.join("..", "images", chapter)
 
-	# I've remove the TOC from pandoc, will do it below...
+	# ----------- run pandoc
 
 	print "Converting", sourceChapterPath, "to", destChapterPath, "..."
 	subprocess.call(["pandoc", "-o", destChapterPath, sourceChapterPath,
@@ -161,23 +164,23 @@ for chapter in chapters:
 					"--include-before-body=createWebBookTemplate/IncludeBeforeBody.html",
 					"--include-after-body=createWebBookTemplate/IncludeAfterBody.html"])
 
-
+	# ----------- copy images over: 
 
 	print destImagesPath
-
 	if os.path.exists(sourceImagesPath):
 		copytree(sourceImagesPath, destImagesPath)
-	
+
 
 	chapterDict = {}
 	chapterDict['path'] = chapter
 
+	# ----------- now let's alter the HTML that's produced: 
 
-	#now, let's parse the index.html and change some things: 
 	if os.path.exists(destChapterPath):
 		soup = Soup(open(destChapterPath).read())
 
-		
+		# --- grab the title from h1
+
 		h1s = soup.find_all("h1")
 		if (len(h1s) > 0):
 			chapterDict['title'] = h1s[0].getText()
@@ -197,6 +200,8 @@ for chapter in chapters:
 			chapterDict['innerTags'].append(h2.getText())
 
 		chapterTags.append(chapterDict);
+
+		# --- change images (path and tag)
 
 		# Find all the figures so that we can make a series of tweaks
 		divFigures = soup.find_all("div", class_="figure")
@@ -229,7 +234,9 @@ for chapter in chapters:
 				fig.img.wrap(imgHyperlink)
 
 		
+		# --- make html links work better
 		# Make all hyperlinks in the chapter target a new window/tab
+		
 		hyperlinkTags = soup.find_all("a")
 		for hyperlinkTag in hyperlinkTags:
 			hyperlinkTag["target"]= "_blank"
