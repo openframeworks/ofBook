@@ -124,7 +124,70 @@ a:active {
   display:none;
 }
 
-.chapter {
+nav {
+  background-color: rgba(249,249,249,1);
+  border-top: 1px solid rgba(233,233,233,1);
+  border-left: 1px solid rgba(233,233,233,1);
+  border-right: 1px solid rgba(233,233,233,1);
+  bottom: 0;
+  box-shadow: 0 0 1px rgba(0,0,0,.07);
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  position: fixed;
+  top: 70px;
+  width: 230px;
+
+  #nav-parts {
+    color: rgba(128,128,128,1);
+    font-weight: 100;
+    line-height: 140%;
+    list-style-type: none;
+    margin: 0;
+    -webkit-padding-start: 0;
+
+    .group {
+      border-bottom: 1px solid rgba(233,233,233,1);
+      font-family: Helvetica;
+      font-size: 1.6em;
+      line-height: 150%;
+      list-style-type: none;
+      margin: 0;
+      padding: 15px 30px 15px 20px;
+      cursor: pointer;
+
+      &.group-selected {
+        background-color: rgba(255,255,255,1);
+        color: rgba(0,0,0,1);
+        cursor: default;
+      }
+
+      ul {
+        li {
+          font-size: .8em;
+          list-style-position: outside;
+          list-style-type: none;
+          margin: 0;
+          padding: 0 0 8px;
+
+
+
+          a {
+            color: rgba(128,128,128,1);
+            display: block;
+            margin-left: 15px;
+            text-decoration: none;
+          }
+
+          &.selected {
+            font-weight: bold;
+          }
+        }
+      }
+    }
+  }
+}
+
+.chapter-content {
   width: 734px;
  // background-color: rgba(255,255,255,1);
  // border: 1px solid rgba(233,233,233,1);

@@ -297,8 +297,10 @@ for chapter in chapterTags:
 				li.append(chapul)
 
 				chapli = Tag(soup, None, "li")
+				chapli['class'] = "chapter"
+				
 				if (c == chapter):
-					 chapli['class'] = "selected"
+					 chapli['class'] = "chapter selected"
 					 li['class']="group selected"
 				a = Tag(soup, None, "a");
 				a['href'] =  c['path'] + ".html"
@@ -311,6 +313,7 @@ for chapter in chapterTags:
 						chapli.append(ulInner);
 						for tag in c['innerTags']: 
 							liInner = Tag(soup, None, "li")
+							liInner['class'] = 'section'
 							ulInner.append(liInner)
 							a = Tag(soup, None, "a")
 							tagNoSpaces = tag.replace(" ", "")
