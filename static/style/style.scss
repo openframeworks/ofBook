@@ -233,11 +233,6 @@ a:active {
     margin: 0px;
   }
 
-  .figure {
-    padding: 13px 0;
-    text-align: center;
-
-  }
 
    .figure {
     padding: 13px 0;
@@ -252,10 +247,7 @@ a:active {
 
   .figure img {
     max-width: 100%; max-height: 100%;
-    /*box-shadow: 0px 1px 1px 1px rgba(100, 100, 100, .1);*/
-    border-color: #DDDDDD;
-    border-style: solid;
-    border-width: thin;
+    box-shadow: 3px 3px 5px 5px rgba(100, 100, 100, .1);
   }
 
   .caption {

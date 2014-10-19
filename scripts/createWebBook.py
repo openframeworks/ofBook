@@ -236,7 +236,7 @@ for chapter in chapters:
 				
 				div = Tag(soup, None, "div")
 				
-				div['style'] = "innerImage" #"clear:both"
+				div['style'] = "image" #"clear:both"
 				
 				div.append(clone(fig.img))
 				
