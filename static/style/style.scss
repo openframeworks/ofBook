@@ -1,10 +1,9 @@
 
-@import '_navbar.scss';
-
-
 /*
     @font-face styling for fira borrowed from: http://www.carrois.com/en/fira-3-1/
 */
+@import '_navbar.scss';
+
 @font-face {
   font-family: 'firaMono';
   src: url('fonts/eot/FiraMono-Regular.eot'); /* IE9 Compat Modes */
@@ -127,12 +126,11 @@ a:active {
   display:none;
 }
 
-
 .chapter-content {
   width: 734px;
- // background-color: rgba(255,255,255,1);
- // border: 1px solid rgba(233,233,233,1);
- // box-shadow: 0 0 1px rgba(0,0,0,.07);
+  // background-color: rgba(255,255,255,1);
+  // border: 1px solid rgba(233,233,233,1);
+  // box-shadow: 0 0 1px rgba(0,0,0,.07);
   display: block;
   margin-left: 246px;
   padding:15px 25px 30px;
@@ -164,14 +162,14 @@ a:active {
   h2 {
     font-style: italic;
     font-size: 32px;
-    margin-top:1.4em;
+    margin-top:2.6em;
     margin-bottom:0.7em;
     border-color: #cccccc;
   }
 
   h3 {
     font-size: 20px;
-    margin-top:2.8em;
+    margin-top:2em;
     margin-bottom:1.4em;
     letter-spacing: 0.025em;
   }
@@ -184,12 +182,14 @@ a:active {
   }
 
   code {
-    background-color: inherit;
+    background-color: #f5f5f5;
     border: none;
     color: inherit;
+    font-family: 'firaMono';
+    font-size: 12px;
     font-style: normal;
     line-height: inherit;
-    padding: 0;
+    padding: 3px;
     text-rendering: normal;
     white-space: nowrap;
   }
@@ -202,13 +202,13 @@ a:active {
   */
 
   pre {
-    font-family: Menlo, Consolas, "Courier New", Monaco, monospace;
-    font-size: 13px;
+    /*font-family: Menlo, Consolas, "Courier New", Monaco, monospace;
+    font-size: 13px;*/
     tab-size: 4;
     border: none !important;
     border-radius:0px !important;
     white-space: pre-wrap;
-    margin: 0;
+    margin-top: -10px;
     padding: 13px 0;
 
     code {
@@ -226,24 +226,39 @@ a:active {
     }
   }
 
+  blockquote {
+    text-align: right;
+    margin: 0px;
+  }
 
   .figure {
     padding: 13px 0;
     width: 100%;
     text-align: center;
+    overflow: auto;
   }
 
   .figure img {
     max-width: 100%; max-height: 100%;
+    max-width: 100%; max-height: 100%;
+    /*box-shadow: 0px 1px 1px 1px rgba(100, 100, 100, .1);*/
+    border-color: #DDDDDD;
+    border-style: solid;
+    border-width: thin;
   }
 
   .caption {
-    color: #7A7A7A;
-    font-family: "firaRegular";
-    font-size: 14px;
+    display:block;
+    color: #CCCCCC;
+    font-family: "fira";
+    font-size: 12px;
     font-style: italic;
     line-height: 2em;
     text-align: center;
+    float:right;
+    /*float:right;
+    padding-right:10px;*/
+    padding-top:8px;
   }
 }
 

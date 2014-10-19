@@ -20,29 +20,32 @@ nav {
     margin: 0;
     -webkit-padding-start: 0;
 
-    .group {
+    li.group {
       border-bottom: 1px solid rgba(233,233,233,1);
       font-family: Helvetica;
       font-size: 1.6em;
       line-height: 150%;
       list-style-type: none;
       margin: 0;
-      padding: 7px 30px 7px 20px;
+      padding: 10px 30px 10px 20px;
       cursor: pointer;
+      color: rgba(0,0,0,1);
 
 
+      overflow: hidden;
+      max-height:48px;
+      transition: all 0.3s;
 
-      ul {
-        padding: 0px;
-        li.chapter {
-          display:none;
-        }
-      }
+
 
       &.selected {
         background-color: rgba(255,255,255,1);
-        color: rgba(0,0,0,1);
+        max-height:800px;
         cursor: default;
+      }
+
+      ul {
+        padding: 0px;
 
         li.chapter {
           display:block;
@@ -53,16 +56,35 @@ nav {
             color: rgba(128,128,128,1);
           }
 
-          &.selected {
-            font-weight: bold;
-          }
-
           li.section {
             display:none;
+            font-weight: normal;
+            padding-left:13px;
+
+            a {
+              color: #B8B8B8;
+            }
           }
+
+          &.selected {
+            font-weight: bold;
+
+            li.section {
+              display:block;
+            }
+
+          }
+
+
 
         }
       }
+
+
+
+
+
+
 
 
 
