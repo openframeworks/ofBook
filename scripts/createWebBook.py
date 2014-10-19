@@ -210,7 +210,7 @@ for chapter in chapters:
 			sectionName = h2.getText();
 			a['name'] = sectionName
 			#wrap(h2, a)
-			chapterDict['innerTags'].append(h2.getText())
+			chapterDict['innerTags'].append([h2.getText(), h2['id']])
 
 		chapterTags.append(chapterDict);
 
@@ -320,18 +320,17 @@ for chapter in chapterTags:
 				chapul.append(chapli)
 
 				if (len(c['innerTags'])):
-						ulInner = Tag(soup, None, "ul")
-						chapli.append(ulInner);
-						for tag in c['innerTags']: 
-							liInner = Tag(soup, None, "li")
-							liInner['class'] = 'section'
-							ulInner.append(liInner)
-							a = Tag(soup, None, "a")
-							tagNoSpaces = tag.replace(" ", "")
-							a['href'] = "chapters/" + c['path'] + ".html#" + tagNoSpaces
-							a['target'] = "_top"
-							a.string = tag
-							liInner.append(a);
+					ulInner = Tag(soup, None, "ul")
+					chapli.append(ulInner);
+					for tag in c['innerTags']: 
+						liInner = Tag(soup, None, "li")
+						liInner['class'] = 'section'
+						ulInner.append(liInner)
+						a = Tag(soup, None, "a")
+						a['href'] = "#" + tag[1]
+						a['target'] = "_top"
+						a.string = tag[0]
+						liInner.append(a);
 
 
 
@@ -378,10 +377,9 @@ for c in chapterTags:
 			liInner = Tag(soup, None, "li")
 			ulInner.append(liInner)
 			a = Tag(soup, None, "a")
-			tagNoSpaces = tag.replace(" ", "")
-			a['href'] = "chapters/" + c['path'] + ".html#" + tagNoSpaces
+			a['href'] = "chapters/" + c['path'] + ".html#" + tag[1]
 			a['target'] = "_top"
-			a.string = tag
+			a.string = tag[0]
 			liInner.append(a);
 		#print "\t" + tag
 
