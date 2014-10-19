@@ -47,6 +47,7 @@
 import os
 import subprocess
 import shutil
+import sass
 from bs4 import BeautifulSoup as Soup
 from bs4 import Tag, NavigableString
 
@@ -126,6 +127,8 @@ webBookChaptersPath = os.path.join(webBookPath, "chapters")
 if not os.path.exists(webBookPath): os.makedirs(webBookPath)
 if not os.path.exists(webBookChaptersPath): os.makedirs(webBookChaptersPath)
 
+
+#--------------------------------------------------------------  static stuff
 # Copy static directories
 staticStylePath = os.path.join("..", "static", "style")
 webBookStylePath = os.path.join(webBookPath, "style")
@@ -136,6 +139,16 @@ webBookFAPath = os.path.join(webBookPath, "octicons")
 copytree(staticStylePath, webBookStylePath)
 copytree(staticJSPath, webBookJSPath)
 copytree(staticFAPath, webBookFAPath)
+
+staticScssFile = os.path.join("..", "static", "style", 'style.scss')
+outputCssFile = os.path.join(webBookPath, "style", "style.css")
+
+print "compiling " + staticScssFile
+compiledCss = sass.compile(filename=staticScssFile)
+cssFile = open(outputCssFile, 'w')
+cssFile.write(compiledCss)
+cssFile.close()
+print "output " + outputCssFile
 
 
 chapterTags = [];
@@ -214,12 +227,12 @@ for chapter in chapters:
 
 				#note the games chapter needs some caption work
 				if figCaption is not None: 
-					figCaption.name = "span"
+					figCaption.name = "div"
 
 				# [zach] -- this is to make images that are not full width, have captions below the image
 				
 				div = Tag(soup, None, "div")
-				div['style'] = "clear:both"
+				div['style'] = "" #"clear:both"
 				div.append(clone(fig.img));
 				
 				fig.img.replace_with(div)
@@ -236,7 +249,7 @@ for chapter in chapters:
 		
 		# --- make html links work better
 		# Make all hyperlinks in the chapter target a new window/tab
-		
+
 		hyperlinkTags = soup.find_all("a")
 		for hyperlinkTag in hyperlinkTags:
 			hyperlinkTag["target"]= "_blank"
