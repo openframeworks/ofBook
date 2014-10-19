@@ -156,6 +156,8 @@ for chapter in chapters:
 					"--include-before-body=createWebBookTemplate/IncludeBeforeBody.html",
 					"--include-after-body=createWebBookTemplate/IncludeAfterBody.html"])
 
+
+
 	print destImagesPath
 
 	if os.path.exists(sourceImagesPath):
@@ -263,6 +265,7 @@ def returnChapterByCommonName( commonName ):
 	return None
 
 
+#----------------------------------------------------- make sidebar for chapters
 
 for chapter in chapterTags: 
 	soup = Soup()
@@ -308,6 +311,7 @@ for chapter in chapterTags:
 	#print html
 
 
+#----------------------------------------------------- make TOC
 
 soup = Soup()
 html = Tag(soup, None, "html")
