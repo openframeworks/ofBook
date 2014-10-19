@@ -218,10 +218,13 @@ for chapter in chapters:
 
 		# Find all the figures so that we can make a series of tweaks
 		divFigures = soup.find_all("div", class_="figure")
+
 		if len(divFigures) != 0:
 			
 			for fig in divFigures:
-				
+						
+				print str(fig)
+
 				figCaption = fig.p
 				# Turn the caption into span for CSS formatting
 
@@ -232,8 +235,10 @@ for chapter in chapters:
 				# [zach] -- this is to make images that are not full width, have captions below the image
 				
 				div = Tag(soup, None, "div")
-				div['style'] = "" #"clear:both"
-				div.append(clone(fig.img));
+				
+				div['style'] = "innerImage" #"clear:both"
+				
+				div.append(clone(fig.img))
 				
 				fig.img.replace_with(div)
 				# Images have been stored in ./CHAPTER_NAME/images/ relative 
@@ -246,6 +251,12 @@ for chapter in chapters:
 				imgHyperlink = soup.new_tag("a", href=fig.img["src"])
 				fig.img.wrap(imgHyperlink)
 
+
+				fig['class'] = "inner"
+				divWhole = Tag(soup, None, "div")
+				divWhole['class'] = "figure"
+				divWhole.append(clone(fig));
+				fig.replace_with(divWhole)
 		
 		# --- make html links work better
 		# Make all hyperlinks in the chapter target a new window/tab

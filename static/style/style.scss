@@ -236,7 +236,19 @@ a:active {
   .figure {
     padding: 13px 0;
     text-align: center;
+
   }
+
+   .figure {
+    padding: 13px 0;
+    text-align: center;
+    width:100%;
+
+    .inner{
+      display:inline-block;
+    }
+  }
+
 
   .figure img {
     max-width: 100%; max-height: 100%;
