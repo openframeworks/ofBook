@@ -278,38 +278,38 @@ def returnChapterByCommonName( commonName ):
 for chapter in chapterTags: 
 	soup = Soup()
 
+	soupFromFile = Soup(open(chapter['destChapterPath']).read())
+
 	a = Tag(soup, None, "a")
 	soup.append(html)
-	ul = Tag(soup, None, "ul")
+	ul = soupFromFile.find_all("ul", {"id":"nav-parts"})[0]
 
 	for cg in chapterGroups:
-
 		li = Tag(soup, None, "li")
 		li['class']="group"
 		li.append( cg['groupName'])
 		ul.append(li)
 
 		for chap in cg['chapters']:
-
-			
-
 			c = returnChapterByCommonName(chap)
 			if (c != None):
-				li = Tag(soup, None, "li")
+				chapul = Tag(soup, None, "ul")
+				li.append(chapul)
+
+				chapli = Tag(soup, None, "li")
 				if (c == chapter):
-					 li['class'] = "selected"
+					 chapli['class'] = "selected"
 				a = Tag(soup, None, "a");
 				a['href'] =  c['path'] + ".html"
 				a.string = c['title']
-				li.append(a)
-				ul.append(li)
+				chapli.append(a)
+				chapul.append(chapli)
 			else:
 				print chap
 		
 	
-	soupFromFile = Soup(open(chapter['destChapterPath']).read())
-	chaptersTag = soupFromFile.find_all("div", {"id":"chapters"})
-	chaptersTag[0].append(ul);
+	#navULTag = soupFromFile.find_all("ul", {"id":"nav-parts"})
+	#navULTag[0].append(ul);
 	
 	htmlFromFile = str(soupFromFile)
 	
