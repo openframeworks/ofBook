@@ -50,6 +50,8 @@ import shutil
 from bs4 import BeautifulSoup as Soup
 from bs4 import Tag, NavigableString
 
+
+#-------------------------------------------------------------- copy a folder recursively
 def copytree(src, dst, symlinks=False, ignore=None):
     if not os.path.exists(dst):
         os.makedirs(dst)
@@ -62,10 +64,12 @@ def copytree(src, dst, symlinks=False, ignore=None):
             if not os.path.exists(d) or os.stat(src).st_mtime - os.stat(dst).st_mtime > 1:
                 shutil.copy2(s, d)
 
+#-------------------------------------------------------------- wrap function for soup
 def wrap(to_wrap, wrap_in):
     contents = to_wrap.replace_with(wrap_in)
     wrap_in.append(contents)
 
+#-------------------------------------------------------------- clone function for soup
 #http://stackoverflow.com/questions/23057631/clone-element-with-beautifulsoup
 def clone(el):
     if isinstance(el, NavigableString):
@@ -81,7 +85,7 @@ def clone(el):
         copy.append(clone(child))
     return copy
 
-
+#-------------------------------------------------------------- parse out the chapter list and path
 # Get the order of the chapters
 chapterOrderPath = os.path.join("..", "chapters", "order.txt")
 
@@ -115,7 +119,7 @@ if ('groupName' in chapterGroup):
 	chapterGroups.append(chapterGroup)
 
 
-
+#-------------------------------------------------------------- folders for the book
 # Create the output directories for the webBook
 webBookPath = os.path.join("..", "output", "webBook")
 webBookChaptersPath = os.path.join(webBookPath, "chapters")
@@ -136,6 +140,7 @@ copytree(staticFAPath, webBookFAPath)
 
 chapterTags = [];
 
+#-------------------------------------------------------------- make the book
 for chapter in chapters:
 	sourceDirectoryPath = os.path.join("..", "chapters", chapter)
 	sourceChapterPath = os.path.join(sourceDirectoryPath, "chapter.md")
@@ -235,27 +240,10 @@ for chapter in chapters:
 
 	#h1s will be super helpful for sidebar and building up a map of content :)
 	
-
-soup = Soup()
-html = Tag(soup, None, "html")
-a = Tag(soup, None, "a")
-soup.append(html)
-# html.append(table)
-# table.append(tr)
-# for attr in mem_attr:
-#     th = Tag(soup, None, "th")
-#     tr.append(th)
-#     th.append(attr)
-# print soup.prettify()
-
-
-# now, we have a full list of chapters, let's add this to HTML of each page: 
-
-
-# for cg in chapterGroups:
-# 	print cg['name']
-# 	for c in cg['chapters']:
-# 		print c
+	soup = Soup()
+	html = Tag(soup, None, "html")
+	a = Tag(soup, None, "a")
+	soup.append(html)
 
 
 def returnChapterByCommonName( commonName ):
