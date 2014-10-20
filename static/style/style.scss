@@ -129,7 +129,44 @@ a:active {
 .content-wrapper {
   margin: 0 auto;
   width: 980px;
-  
+}
+
+
+/*
+.of-logo {
+  background-image: url('http://openframeworks.cc/images/of-logo.svg');
+  background-repeat: no-repeat;
+  width:100px;
+  height: 100px;
+  position:fixed;
+  top: 8px;
+}*/
+
+.banner {
+  position:fixed;
+  background-color: rgba(120,120,120,0.9);
+  width:100%;
+  left:0px;
+  top:0px;
+  z-index: 200;
+
+  color: white;
+
+  padding: 8px 0px;
+  font-size:16px;
+
+
+  font-family: 'fira';
+  b {
+    font-family: 'firaMedium';
+  }
+  a {
+    color: white;
+    text-decoration: underline;
+  }
+
+  @include box-shadow();
+
 }
 
 #chapters, #toc {
