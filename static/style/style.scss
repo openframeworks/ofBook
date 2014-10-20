@@ -188,6 +188,10 @@ a:active {
     margin-top: 2.8em;
   }
 
+  h1 + p {
+    margin-top:-38px;
+  }
+
   code {
    // background-color: #f6f6f6;
     border: none;
