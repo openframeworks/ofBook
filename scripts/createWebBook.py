@@ -322,15 +322,21 @@ for chapter in chapterTags:
 				if (len(c['innerTags'])):
 					ulInner = Tag(soup, None, "ul")
 					chapli.append(ulInner);
+
+					first = True
 					for tag in c['innerTags']: 
 						liInner = Tag(soup, None, "li")
 						liInner['class'] = 'section'
+						if(first):
+							liInner['class'] = 'section selected'
+
 						ulInner.append(liInner)
 						a = Tag(soup, None, "a")
 						a['href'] = "#" + tag[1]
 						a['target'] = "_top"
 						a.string = tag[0]
 						liInner.append(a);
+						first = False;
 
 
 

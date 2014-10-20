@@ -49,7 +49,8 @@ nav {
 
         li.chapter {
           display:block;
-          line-height:20px;
+          line-height:13px;
+          margin: 9px 0px;
 
           a {
             font-size:12px;
@@ -60,9 +61,20 @@ nav {
             display:none;
             font-weight: normal;
             padding-left:13px;
+            margin: 5px 0px;
+
 
             a {
               color: #B8B8B8;
+              transition: all 0.3s;
+
+            }
+
+            &.selected {
+              a {
+                color: #B83737;
+              }
+
             }
           }
 
