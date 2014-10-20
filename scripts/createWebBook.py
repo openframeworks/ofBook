@@ -198,23 +198,20 @@ for chapter in chapters:
 			chapterDict['title'] = h1s[0].getText()
 		else: 
 			chapterDict['title'] = "needs h1"
-		h2s = soup.find_all("h2")
-
+		
 		chapterDict['chapterListName'] = chapter
-		chapterDict['innerTags'] = [];
+		chapterDict['sections'] = [];
 		chapterDict['destChapterPath'] = destChapterPath
-		for h2 in h2s: 
-			#print h1
-			a = Tag(Soup, None, "a");
-			sectionName = h2.getText()
-
+		
+		# --- Grab all the h2 (we call them sections)
+		h2s = soup.find_all("h2")
+		for h2 in h2s: 			
+			# Remove punctuations from the id of the sections (punctiations like . wont work with anchors)
 			for c in string.punctuation:
-				sectionName= sectionName.replace(c,"")
+				h2['id'] = h2['id'].replace(c,"")
 
-			a['name'] = sectionName
-			h2['id'] = sectionName
-			#wrap(h2, a)
-			chapterDict['innerTags'].append([h2.getText(), h2['id']])
+			# Store the section [0] = title  and [1] = ID
+			chapterDict['sections'].append([h2.getText(), h2['id']])
 
 		chapterTags.append(chapterDict);
 
@@ -271,13 +268,7 @@ for chapter in chapters:
 		html = str(soup)
 		with open(destChapterPath, "wb") as file:
 			file.write(html)
-
-	#h1s will be super helpful for sidebar and building up a map of content :)
 	
-	soup = Soup()
-	html = Tag(soup, None, "html")
-	a = Tag(soup, None, "a")
-	soup.append(html)
 
 
 def returnChapterByCommonName( commonName ):
@@ -287,47 +278,52 @@ def returnChapterByCommonName( commonName ):
 	return None
 
 
-#----------------------------------------------------- make sidebar for chapters
+#----------------------------------------------------- 
+# make sidebar for chapters
+#----------------------------------------------------- 
 
 for chapter in chapterTags: 
 	soup = Soup()
 
 	soupFromFile = Soup(open(chapter['destChapterPath']).read())
 
-	a = Tag(soup, None, "a")
-	soup.append(html)
-	ul = soupFromFile.find_all("ul", {"id":"nav-parts"})[0]
+	# Find the navbar UL
+	navbar = soupFromFile.find_all("ul", {"id":"nav-parts"})[0]
 
-	for cg in chapterGroups:
-		li = Tag(soup, None, "li")
-		li['class']="group"
-		li.append( cg['groupName'])
-		ul.append(li)
+	# Run through the chapter groups
+	for group in chapterGroups:
+		# Create a chapter group LI 
+		groupLi = Tag(soup, None, "li")
+		groupLi['class']="group"
+		groupLi.append( group['groupName'])
+		navbar.append(groupLi)
 
-		for chap in cg['chapters']:
+		# Run through the chapters of the group
+		for chap in group['chapters']:
 			c = returnChapterByCommonName(chap)
 			if (c != None):
-				chapul = Tag(soup, None, "ul")
-				li.append(chapul)
+				chapUl = Tag(soup, None, "ul")
+				groupLi.append(chapUl)
 
-				chapli = Tag(soup, None, "li")
-				chapli['class'] = "chapter"
+				chapLi = Tag(soup, None, "li")
+				chapLi['class'] = "chapter"
 				
 				if (c == chapter):
-					 chapli['class'] = "chapter selected"
-					 li['class']="group selected"
+					chapLi['class'] = "chapter selected"
+					groupLi['class']="group selected"
+
 				a = Tag(soup, None, "a");
 				a['href'] =  c['path'] + ".html"
 				a.string = c['title']
-				chapli.append(a)
-				chapul.append(chapli)
+				chapLi.append(a)
+				chapUl.append(chapLi)
 
-				if (len(c['innerTags'])):
+				if (len(c['sections'])):
 					ulInner = Tag(soup, None, "ul")
-					chapli.append(ulInner);
+					chapLi.append(ulInner);
 
 					first = True
-					for tag in c['innerTags']: 
+					for tag in c['sections']: 
 						liInner = Tag(soup, None, "li")
 						liInner['class'] = 'section'
 						if(first):
@@ -343,10 +339,6 @@ for chapter in chapterTags:
 						a.string = tag[0]
 						liInner.append(a);
 						first = False;
-
-
-
-
 			else:
 				print chap
 		
@@ -382,10 +374,10 @@ for c in chapterTags:
 
 	#print c['title']
 	#print c['path']
-	if (len(c['innerTags'])):
+	if (len(c['sections'])):
 		ulInner = Tag(soup, None, "ul")
 		li.append(ulInner);
-		for tag in c['innerTags']: 
+		for tag in c['sections']: 
 			liInner = Tag(soup, None, "li")
 			ulInner.append(liInner)
 			a = Tag(soup, None, "a")
