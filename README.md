@@ -39,6 +39,8 @@ Scripts for building the web and pdf versions of the book are in `scripts/` dire
 3. Download and install pandoc using the latest windows installer (.msi) from [here](https://github.com/jgm/pandoc/releases)
 4. Download and install MiKTeX using the windows installer from [here](http://miktex.org/download)
   - When installing, check the box for "Install Packages on the Fly."  The pandoc -> PDF pipeline uses latex packages that don't all come standard with MiKTeX, so this will allow you to grab any missing packages when building the book for the first time.
+5. Download and install [libsass](https://github.com/dahlia/libsass-python)
+  - Using pip: `pip install libsass`
 
 
 
