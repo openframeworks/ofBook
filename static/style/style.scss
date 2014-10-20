@@ -4,6 +4,12 @@
 */
 @import '_navbar.scss';
 
+@mixin box-shadow($left:-3px, $top:3px, $blur:13px, $color:rgba(100,100,100,0.6), $inset:"") {
+      -webkit-box-shadow:$left $top $blur $color #{$inset};
+      -moz-box-shadow:$left $top $blur $color #{$inset};
+      box-shadow:$left $top $blur $color #{$inset};
+}
+
 @font-face {
   font-family: 'firaMono';
   src: url('fonts/eot/FiraMono-Regular.eot'); /* IE9 Compat Modes */
@@ -95,6 +101,9 @@
   font-style: italic;
 }
 
+body {
+	background-color:#e3e3e3
+}
 
 a:link {
   color: #d14;
@@ -120,6 +129,7 @@ a:active {
 .content-wrapper {
   margin: 0 auto;
   width: 980px;
+  
 }
 
 #chapters, #toc {
@@ -128,7 +138,8 @@ a:active {
 
 .chapter-content {
   width: 734px;
-  // background-color: rgba(255,255,255,1);
+  margin-top:70px;
+  background-color: rgba(255,255,255,1);
   // border: 1px solid rgba(233,233,233,1);
   // box-shadow: 0 0 1px rgba(0,0,0,.07);
   display: block;
@@ -136,7 +147,7 @@ a:active {
   padding:15px 25px 30px;
   text-rendering: optimizeLegibility;
 
-  p, li {
+  p {
     font-family: 'fira';
     font-style: normal;
     font-weight: normal;
@@ -144,6 +155,17 @@ a:active {
 
     letter-spacing:0.02em;
     line-height: 1.6em;
+  }
+  
+  ul, li {
+    font-family: 'fira';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+
+    letter-spacing:0.02em;
+    line-height: 1.5em;
+    padding-bottom: 5px
   }
 
   h1, h2, h3, h4 {
@@ -195,16 +217,18 @@ a:active {
   code {
    // background-color: #f6f6f6;
     border: none;
-    color: rgba(0,0,0,0.5);
+    color: #EC6A88;
     font-family: 'firaMono';
     font-size: 12px;
     font-style: normal;
     line-height: inherit;
-    padding: 3px;
+    padding: 3px 5px 3px 5px;
+    margin-right: 2px;
+    margin-left: 1px;
     text-rendering: normal;
     white-space: nowrap;
-
     border-radius: 3px;
+    background-color: rgba(0,0,0,0.06);
 
   }
 
@@ -227,11 +251,12 @@ a:active {
     white-space: pre-wrap;
     margin-top: -10px;
     padding: 13px 0;
+    font-size: 11px;
 
     code {
-      border-left: 6px solid rgba(237, 238, 239, 0.65);
+      border-left: 6px solid rgba(197, 213, 229, 0.65);
       position: relative;
-      background-color: rgba(0,0,0,0);
+      background-color: rgba(0,0,0,0.1);
       width: 650px;
       left: 0px;
       padding: 6px 20px !important;
@@ -262,10 +287,7 @@ a:active {
 
   .figure img {
     max-width: 100%; max-height: 100%;
-    /*box-shadow: 0px 1px 1px 1px rgba(100, 100, 100, .1);*/
-    border-color: #DDDDDD;
-    border-style: solid;
-    border-width: thin;
+    @include box-shadow();
   }
 
 
