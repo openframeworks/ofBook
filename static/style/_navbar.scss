@@ -23,17 +23,17 @@ nav {
     li.group {
       border-bottom: 1px solid rgba(233,233,233,1);
       font-family: Helvetica;
-      font-size: 1.6em;
+      font-size: 1.2em;
       line-height: 150%;
       list-style-type: none;
       margin: 0;
       padding: 10px 30px 10px 20px;
       cursor: pointer;
-      color: rgba(0,0,0,1);
+      color: #333;
 
 
       overflow: hidden;
-      max-height:48px;
+      max-height:42px;
       transition: all 0.3s;
 
 
@@ -72,7 +72,7 @@ nav {
 
             &.selected {
               a {
-                color: #B83737;
+                color: darken(#d14, 5);
               }
 
             }
