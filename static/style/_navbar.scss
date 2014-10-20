@@ -12,28 +12,29 @@ nav {
   top: 70px;
   width: 230px;
 
-  #nav-parts {
+  ul#nav-parts {
     color: rgba(128,128,128,1);
     font-weight: 100;
     line-height: 140%;
     list-style-type: none;
     margin: 0;
     -webkit-padding-start: 0;
+    padding-left:0px;
 
     li.group {
       border-bottom: 1px solid rgba(233,233,233,1);
       font-family: Helvetica;
-      font-size: 1.6em;
+      font-size: 1.2em;
       line-height: 150%;
       list-style-type: none;
       margin: 0;
       padding: 10px 30px 10px 20px;
       cursor: pointer;
-      color: rgba(0,0,0,1);
+      color: #333;
 
 
       overflow: hidden;
-      max-height:48px;
+      max-height:42px;
       transition: all 0.3s;
 
 
@@ -72,7 +73,7 @@ nav {
 
             &.selected {
               a {
-                color: #B83737;
+                color: darken(#d14, 5);
               }
 
             }
