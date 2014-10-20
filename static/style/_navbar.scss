@@ -12,13 +12,14 @@ nav {
   top: 70px;
   width: 230px;
 
-  #nav-parts {
+  ul#nav-parts {
     color: rgba(128,128,128,1);
     font-weight: 100;
     line-height: 140%;
     list-style-type: none;
     margin: 0;
     -webkit-padding-start: 0;
+    padding-left:0px;
 
     li.group {
       border-bottom: 1px solid rgba(233,233,233,1);
