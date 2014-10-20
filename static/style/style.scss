@@ -267,3 +267,26 @@ a:active {
   }
 }
 
+
+
+code {
+  span.dv {
+    color: #3A00DC;
+  }
+  span.kw {
+    color: #C800A4;
+    font-weight: normal;
+  }
+  span.dt {
+    color: #C800A4;
+  }
+  span.co {
+    color: #008E00;
+  }
+  span.ot {
+    color:  #902000;
+  }
+  span.st {
+    color: #DF0002
+  }
+}
