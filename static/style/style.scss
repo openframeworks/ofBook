@@ -5,9 +5,9 @@
 @import '_navbar.scss';
 
 @mixin box-shadow($left:-3px, $top:3px, $blur:13px, $color:rgba(100,100,100,0.6), $inset:"") {
-      -webkit-box-shadow:$left $top $blur $color #{$inset};
-      -moz-box-shadow:$left $top $blur $color #{$inset};
-      box-shadow:$left $top $blur $color #{$inset};
+  -webkit-box-shadow:$left $top $blur $color #{$inset};
+  -moz-box-shadow:$left $top $blur $color #{$inset};
+  box-shadow:$left $top $blur $color #{$inset};
 }
 
 @font-face {
@@ -102,7 +102,7 @@
 }
 
 body {
-	background-color:#e3e3e3
+  background-color:#e3e3e3
 }
 
 a:link {
@@ -193,7 +193,7 @@ a:active {
     letter-spacing:0.02em;
     line-height: 1.6em;
   }
-  
+
   ul, li {
     font-family: 'fira';
     font-style: normal;
@@ -252,7 +252,7 @@ a:active {
   }
 
   code {
-   // background-color: #f6f6f6;
+    // background-color: #f6f6f6;
     border: none;
     color: #EC6A88;
     font-family: 'firaMono';
@@ -269,9 +269,9 @@ a:active {
 
   }
 
- /* a code {
-    color:black;
-  }*/
+  /* a code {
+     color:black;
+   }*/
 
   /*
       Fenced off code block look like this: <pre><code></code></pre>
@@ -310,7 +310,7 @@ a:active {
     margin: 0px;
   }
 
-   .figure {
+  .figure {
     padding: 13px 0;
     text-align: center;
     width:100%;
@@ -329,7 +329,7 @@ a:active {
 
 
   .caption {
-    
+
     color: #CCCCCC;
     font-family: "fira";
     font-size: 12px;
@@ -340,6 +340,17 @@ a:active {
     /*float:right;
     padding-right:10px;*/
     padding-top:8px;
+  }
+
+  .footer {
+    padding:15px 0px;
+
+    #prev_chapter {
+      float:left;
+    }
+    #next_chapter {
+      float:right;
+    }
   }
 }
 

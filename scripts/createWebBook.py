@@ -150,7 +150,7 @@ cssFile.close()
 print "output " + outputCssFile
 
 
-chapterTags = [];
+chapterDicts = [];
 
 #-------------------------------------------------------------- make the book
 for chapter in chapters:
@@ -185,6 +185,7 @@ for chapter in chapters:
 
 	chapterDict = {}
 	chapterDict['path'] = chapter
+	chapterDict['href'] = chapter + ".html"
 
 	# ----------- now let's alter the HTML that's produced: 
 
@@ -213,7 +214,10 @@ for chapter in chapters:
 			# Store the section [0] = title  and [1] = ID
 			chapterDict['sections'].append([h2.getText(), h2['id']])
 
-		chapterTags.append(chapterDict);
+		chapterDicts.append(chapterDict);
+
+		# --- Update the title
+		soup.title.string = "ofBook - " + chapterDict['title']
 
 		# --- change images (path and tag)
 
@@ -272,7 +276,7 @@ for chapter in chapters:
 
 
 def returnChapterByCommonName( commonName ):
-	for c in chapterTags: 
+	for c in chapterDicts: 
 		if c['chapterListName'] == commonName: 
 			return c
 	return None
@@ -282,11 +286,29 @@ def returnChapterByCommonName( commonName ):
 # make sidebar for chapters
 #----------------------------------------------------- 
 
-for chapter in chapterTags: 
+for idx, chapter in enumerate(chapterDicts): 
 	soup = Soup()
 
 	soupFromFile = Soup(open(chapter['destChapterPath']).read())
 
+	# Create previous/next links in the footer
+	nextChapterDiv = soupFromFile.find(id='next_chapter')
+	prevChapterDiv = soupFromFile.find(id='prev_chapter')
+
+	if (idx != 0):
+		prevLink = Tag(soup, None, "a")
+		prevLink['href'] = chapterDicts[idx-1]['href']
+		prevLink.string = "< " + chapterDicts[idx-1]['title'] 
+		prevChapterDiv.append(prevLink)
+	
+
+	if(idx != len(chapterDicts)-1):
+		nextLink = Tag(soup, None, "a")
+		nextLink['href'] = chapterDicts[idx+1]['href']
+		nextLink.string = chapterDicts[idx+1]['title'] + " >"		
+		nextChapterDiv.append(nextLink)
+	
+	
 	# Find the navbar UL
 	navbar = soupFromFile.find_all("ul", {"id":"nav-parts"})[0]
 
@@ -313,7 +335,7 @@ for chapter in chapterTags:
 					groupLi['class']="group selected"
 
 				a = Tag(soup, None, "a");
-				a['href'] =  c['path'] + ".html"
+				a['href'] =  c['href']
 				a.string = c['title']
 				chapLi.append(a)
 				chapUl.append(chapLi)
@@ -363,7 +385,7 @@ html = Tag(soup, None, "html")
 a = Tag(soup, None, "a")
 soup.append(html)
 
-for c in chapterTags: 
+for c in chapterDicts: 
 	ul = Tag(soup, None, "ul")
 	li = Tag(soup, None, "li")
 	a = Tag(soup, None, "a");
