@@ -4,7 +4,7 @@
 */
 @import '_navbar.scss';
 
-@mixin box-shadow($left:-3px, $top:3px, $blur:13px, $color:rgba(100,100,100,0.6), $inset:"") {
+@mixin box-shadow($left:1px, $top:3px, $blur:13px, $color:rgba(100,100,100,0.6), $inset:"") {
   -webkit-box-shadow:$left $top $blur $color #{$inset};
   -moz-box-shadow:$left $top $blur $color #{$inset};
   box-shadow:$left $top $blur $color #{$inset};
@@ -251,6 +251,10 @@ a:active {
     margin-top:-38px;
   }
 
+  h2 + blockquote {
+    margin-top:-26px;
+  }
+
   code {
     // background-color: #f6f6f6;
     border: none;
@@ -293,7 +297,7 @@ a:active {
     code {
       border-left: 6px solid rgba(197, 213, 229, 0.65);
       position: relative;
-      background-color: rgba(0,0,0,0.1);
+      background-color: rgba(0,0,0,0.03);
       width: 650px;
       left: 0px;
       padding: 6px 20px !important;
@@ -308,6 +312,11 @@ a:active {
   blockquote {
     text-align: right;
     margin: 0px;
+    padding-left:60px;
+    strong {
+      margin-top:-10px;
+      display:block;
+    }
   }
 
   .figure {
