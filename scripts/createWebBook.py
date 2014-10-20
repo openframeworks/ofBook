@@ -48,6 +48,7 @@ import os
 import subprocess
 import shutil
 import sass
+import string
 from bs4 import BeautifulSoup as Soup
 from bs4 import Tag, NavigableString
 
@@ -207,8 +208,13 @@ for chapter in chapters:
 		for h2 in h2s: 
 			#print h1
 			a = Tag(Soup, None, "a");
-			sectionName = h2.getText();
+			sectionName = h2.getText()
+
+			for c in string.punctuation:
+				sectionName= sectionName.replace(c,"")
+
 			a['name'] = sectionName
+			h2['id'] = sectionName
 			#wrap(h2, a)
 			chapterDict['innerTags'].append([h2.getText(), h2['id']])
 
@@ -223,8 +229,7 @@ for chapter in chapters:
 			
 			for fig in divFigures:
 						
-				print str(fig)
-
+				
 				figCaption = fig.p
 				# Turn the caption into span for CSS formatting
 
@@ -332,6 +337,9 @@ for chapter in chapterTags:
 
 						ulInner.append(liInner)
 						a = Tag(soup, None, "a")
+						
+						
+						
 						a['href'] = "#" + tag[1]
 						a['target'] = "_top"
 						a.string = tag[0]
