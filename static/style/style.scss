@@ -165,12 +165,19 @@ a:active {
     margin-top:2.6em;
     margin-bottom:0.7em;
     border-color: #cccccc;
+
   }
+
+  h2 + h3 {
+    //If the h3 comes right after the h2
+    margin-top:-20px;
+  }
+
 
   h3 {
     font-size: 20px;
     margin-top:2em;
-    margin-bottom:1.4em;
+    margin-bottom:0px;
     letter-spacing: 0.025em;
   }
 
