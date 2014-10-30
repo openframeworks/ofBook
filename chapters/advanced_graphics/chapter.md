@@ -229,7 +229,7 @@ If you want to know more about how transformation matrices work you should check
 
 In openFrameworks, there's a utility class called ofNode, that allows you to apply complex transformations like set an object to look to another, set a hierarchy of nodes... When working with 3D it's useful to keep an ofNode along with every mesh that represents it's transformations, so when you draw each mesh, instead of using ofTranslate, rotate, scale you can just apply the transformation of it's node using `node.transformGL()`. This will multiply the current matrix by the one in the node. When you are done you can use `node.restoreTransformGL()`to go back to the previous state. 
 
-The most important idea of this section is that when working with complex transformations, instead of using ofTranslate/Rotate/Scale, it is usually easier to implement an ofNode associated to each mesh or shape that you draw. This is also much easier for readability. For meshes, there's a new class in openFrameworks since 0.8.0 called of3DPrimitive, that internally has an ofVboMesh and an ofNode so you can use this pattern in an easy way.
+The most important idea of this section is that when working with complex transformations, instead of using ofTranslate/Rotate/Scale, it is usually easier to implement an ofNode associated to each mesh or shape that you draw. This is also much easier for readability. For meshes, there's a new class in openFrameworks since 0.8.0 called of3dPrimitive, that internally has an ofVboMesh and an ofNode so you can use this pattern in an easy way.
 
 
 ### ofCamera
@@ -286,13 +286,13 @@ ofMesh mesh;
 // ofApp.cpp
 
 void ofApp::setup(){
-    mesh.addVertex(ofVec3f(20,20);
+    mesh.addVertex(ofVec3f(20,20));
     mesh.addColor(ofColor::red);
-    mesh.addVertex(ofVec3f(40,20);
+    mesh.addVertex(ofVec3f(40,20));
     mesh.addColor(ofColor::red);
-    mesh.addVertex(ofVec3f(40,40);
+    mesh.addVertex(ofVec3f(40,40));
     mesh.addColor(ofColor::red);
-    mesh.addVertex(ofVec3f(20,40);
+    mesh.addVertex(ofVec3f(20,40));
     mesh.addColor(ofColor::red);
     mesh.setMode(OF_PRIMITIVE_TRIANGLE_FAN);
 }
@@ -312,10 +312,10 @@ ofMesh mesh;
 // ofApp.cpp
 
 void ofApp::setup(){
-    mesh.addVertex(ofVec3f(20,20);
-    mesh.addVertex(ofVec3f(40,20);
-    mesh.addVertex(ofVec3f(40,40);
-    mesh.addVertex(ofVec3f(20,40);
+    mesh.addVertex(ofVec3f(20,20));
+    mesh.addVertex(ofVec3f(40,20));
+    mesh.addVertex(ofVec3f(40,40));
+    mesh.addVertex(ofVec3f(20,40));
     mesh.addColor(ofColor::red);
     mesh.addColor(ofColor::red);
     mesh.addColor(ofColor::red);
@@ -339,13 +339,13 @@ ofMesh mesh;
 // ofApp.cpp
 
 void ofApp::setup(){
-    mesh.addVertex(ofVec3f(20,20);
+    mesh.addVertex(ofVec3f(20,20));
     mesh.addColor(ofColor::red);
-    mesh.addVertex(ofVec3f(40,20);
+    mesh.addVertex(ofVec3f(40,20));
     mesh.addColor(ofColor::red);
-    mesh.addVertex(ofVec3f(40,40);
+    mesh.addVertex(ofVec3f(40,40));
     mesh.addColor(ofColor::blue);
-    mesh.addVertex(ofVec3f(20,40);
+    mesh.addVertex(ofVec3f(20,40));
     mesh.addColor(ofColor::blue);
     mesh.setMode(OF_PRIMITIVE_TRIANGLE_FAN);
 }
@@ -366,13 +366,13 @@ ofImage img;
 // ofApp.cpp
 
 void ofApp::setup(){
-    mesh.addVertex(ofVec3f(20,20);
+    mesh.addVertex(ofVec3f(20,20));
     mesh.addTexCoord(ofVec2f(0,0));
-    mesh.addVertex(ofVec3f(40,20);
+    mesh.addVertex(ofVec3f(40,20));
     mesh.addTexCoord(ofVec2f(20,0));
-    mesh.addVertex(ofVec3f(40,40);
+    mesh.addVertex(ofVec3f(40,40));
     mesh.addTexCoord(ofVec2f(20,20));
-    mesh.addVertex(ofVec3f(20,40);
+    mesh.addVertex(ofVec3f(20,40));
     mesh.addTexCoord(ofVec2f(0,20));
     mesh.setMode(OF_PRIMITIVE_TRIANGLE_FAN);
     img.loadImage("some20x20img.png");
@@ -405,10 +405,10 @@ ofVboMesh mesh;
 // ofApp.cpp
 
 void ofApp::setup(){
-    mesh.addVertex(ofVec3f(20,20);
-    mesh.addVertex(ofVec3f(40,20);
-    mesh.addVertex(ofVec3f(40,40);
-    mesh.addVertex(ofVec3f(20,40);
+    mesh.addVertex(ofVec3f(20,20));
+    mesh.addVertex(ofVec3f(40,20));
+    mesh.addVertex(ofVec3f(40,40));
+    mesh.addVertex(ofVec3f(20,40));
     mesh.setMode(OF_PRIMITIVE_TRIANGLE_FAN);
 }
 
@@ -431,10 +431,10 @@ ofVboMesh mesh2;
 // ofApp.cpp
 
 void ofApp::setup(){
-    mesh.addVertex(ofVec3f(20,20);
-    mesh.addVertex(ofVec3f(40,20);
-    mesh.addVertex(ofVec3f(40,40);
-    mesh.addVertex(ofVec3f(20,40);
+    mesh.addVertex(ofVec3f(20,20));
+    mesh.addVertex(ofVec3f(40,20));
+    mesh.addVertex(ofVec3f(40,40));
+    mesh.addVertex(ofVec3f(20,40));
     mesh.setMode(OF_PRIMITIVE_TRIANGLE_FAN);
     mesh2 = mesh;
 }
@@ -453,24 +453,24 @@ void ofApp::draw(){
 
 ### of3dPrimitive
 
-As we've mentioned before, of3DPrimitive is a helper class that encapsulates an ofVboMesh and inherits from ofNode. You can call any method you would call on an ofNode, because of how inheritance works, it is actually an ofNode so we can change it's position, rotate it, make it look to some other node, add it to a node hierarchy... And when you call `draw` on it, it'll draw the mesh it contains applying the transformation defined by it's node.
+As we've mentioned before, of3dPrimitive is a helper class that encapsulates an ofVboMesh and inherits from ofNode. You can call any method you would call on an ofNode, because of how inheritance works, it is actually an ofNode so we can change it's position, rotate it, make it look to some other node, add it to a node hierarchy... And when you call `draw` on it, it'll draw the mesh it contains applying the transformation defined by it's node.
 
 There's several predefined 3D primitives, like `ofPlanePrimitive`, `ofSpherePrimitive`, `ofIcoSpherePrimitive` or `ofCylinderPrimitive` which know about the particulars of the geometry of the mesh they contain. This makes it easy to apply textures to it or change the resolution of the mesh...
 
-Or you can create your own using `of3DPrimitive` directly:
+Or you can create your own using `of3dPrimitive` directly:
 
 ```cpp
 // ofApp.h
 
-of3DPrimitive primitive;
+of3dPrimitive primitive;
 
 // ofApp.cpp
 
 void ofApp::setup(){
-    primitive.getMesh().addVertex(ofVec3f(20,20);
-    primitive.getMesh().addVertex(ofVec3f(40,20);
-    primitive.getMesh().addVertex(ofVec3f(40,40);
-    primitive.getMesh().addVertex(ofVec3f(20,40);
+    primitive.getMesh().addVertex(ofVec3f(20,20));
+    primitive.getMesh().addVertex(ofVec3f(40,20));
+    primitive.getMesh().addVertex(ofVec3f(40,40));
+    primitive.getMesh().addVertex(ofVec3f(20,40));
     primitive.getMesh().setMode(OF_PRIMITIVE_TRIANGLE_FAN);
 }
 
@@ -483,6 +483,6 @@ void ofApp::draw(){
 }
 ```
 
->Note: While the example above aims to show how to use of3DPrimitive to create custom geometries while being simple enough to fit in this context, usually is not a good idea to use of3DPrimitive for simple primitives like the one above. Calculating the transformations of an ofNode is kind of expensive in terms of CPU usage. For primitives with lots of vertices it's the way to go, but for something like the previous example it is usually just faster to recalculate all the points in their new position using an ofVboMesh
+>Note: While the example above aims to show how to use of3dPrimitive to create custom geometries while being simple enough to fit in this context, usually is not a good idea to use of3dPrimitive for simple primitives like the one above. Calculating the transformations of an ofNode is kind of expensive in terms of CPU usage. For primitives with lots of vertices it's the way to go, but for something like the previous example it is usually just faster to recalculate all the points in their new position using an ofVboMesh
 
 
