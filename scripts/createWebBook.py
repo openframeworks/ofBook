@@ -312,6 +312,7 @@ for idx, chapter in enumerate(chapterDicts):
 	# Find the navbar UL
 	navbar = soupFromFile.find_all("ul", {"id":"nav-parts"})[0]
 
+
 	# Run through the chapter groups
 	for group in chapterGroups:
 		# Create a chapter group LI 
@@ -337,12 +338,27 @@ for idx, chapter in enumerate(chapterDicts):
 				a = Tag(soup, None, "a");
 				a['href'] =  c['href']
 				a.string = c['title']
-				chapLi.append(a)
+
+				div = Tag(soup, None, "div");
+				div['class'] = "chapterTitle";
+				if (c == chapter):
+					div['class'] = "chapterTitle selected";
+				div.append(a);
+
+				chapLi.append(div)
 				chapUl.append(chapLi)
 
 				if (len(c['sections'])):
+					
 					ulInner = Tag(soup, None, "ul")
-					chapLi.append(ulInner);
+					divTag = Tag(soup, None, "div")
+					divTag['class'] = "chapterContents"
+					if (c == chapter):
+						divTag['class'] = "chapterContents selected"
+					divTag.append(ulInner);
+					chapLi.append(divTag);
+
+					
 
 					first = True
 					for tag in c['sections']: 
