@@ -179,11 +179,12 @@ for chapter in chapters:
                                         "--include-after-body=createWebBookTemplate/IncludeAfterBody.html",
                                         "--template=createWebBookTemplate/default.html"])
 	else:
-	        subprocess.call(["pandoc", "-o", destChapterPath, sourceChapterPath,
+		subprocess.call(["pandoc", "-o", destChapterPath, sourceChapterPath,
                                         "-s", "-p", "--mathjax",
                                         "--include-in-header=createWebBookTemplate/IncludeInHeader.html",
                                         "--include-before-body=createWebBookTemplate/IncludeBeforeBody.html",
-                                        "--include-after-body=createWebBookTemplate/IncludeAfterBody.html"])
+                                        "--include-after-body=createWebBookTemplate/IncludeAfterBody.html",
+                                        "--template=createWebBookTemplate/default.html"])
 
 
 
