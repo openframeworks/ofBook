@@ -51,7 +51,7 @@ import sass
 import string
 from bs4 import BeautifulSoup as Soup
 from bs4 import Tag, NavigableString
-
+from sys import platform as _platform
 
 #-------------------------------------------------------------- copy a folder recursively
 def copytree(src, dst, symlinks=False, ignore=None):
@@ -170,11 +170,23 @@ for chapter in chapters:
 	# ----------- run pandoc
 
 	print "Converting", sourceChapterPath, "to", destChapterPath, "..."
-	subprocess.call(["pandoc", "-o", destChapterPath, sourceChapterPath,
-					"-s", "-p", "--mathjax",	
-					"--include-in-header=createWebBookTemplate/IncludeInHeader.html",
-					"--include-before-body=createWebBookTemplate/IncludeBeforeBody.html",
-					"--include-after-body=createWebBookTemplate/IncludeAfterBody.html"])
+
+	if _platform == "linux" or _platform == "linux2":
+		subprocess.call(["pandoc", "-o", destChapterPath, sourceChapterPath,
+                                        "-s", "-p", "--mathjax",
+                                        "--include-in-header=createWebBookTemplate/IncludeInHeader.html",
+                                        "--include-before-body=createWebBookTemplate/IncludeBeforeBody.html",
+                                        "--include-after-body=createWebBookTemplate/IncludeAfterBody.html",
+                                        "--template=createWebBookTemplate/default.html"])
+	else:
+	        subprocess.call(["pandoc", "-o", destChapterPath, sourceChapterPath,
+                                        "-s", "-p", "--mathjax",
+                                        "--include-in-header=createWebBookTemplate/IncludeInHeader.html",
+                                        "--include-before-body=createWebBookTemplate/IncludeBeforeBody.html",
+                                        "--include-after-body=createWebBookTemplate/IncludeAfterBody.html"])
+
+
+
 
 	# ----------- copy images over: 
 
