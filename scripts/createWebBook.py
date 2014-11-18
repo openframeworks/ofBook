@@ -171,22 +171,14 @@ for chapter in chapters:
 
 	print "Converting", sourceChapterPath, "to", destChapterPath, "..."
 
-	if _platform == "linux" or _platform == "linux2":
-		subprocess.call(["pandoc", "-o", destChapterPath, sourceChapterPath,
+	
+	subprocess.call(["pandoc", "-o", destChapterPath, sourceChapterPath,
                                         "-s", "-p", "--mathjax",
                                         "--include-in-header=createWebBookTemplate/IncludeInHeader.html",
                                         "--include-before-body=createWebBookTemplate/IncludeBeforeBody.html",
                                         "--include-after-body=createWebBookTemplate/IncludeAfterBody.html",
                                         "--template=createWebBookTemplate/default.html"])
-	else:
-		subprocess.call(["pandoc", "-o", destChapterPath, sourceChapterPath,
-                                        "-s", "-p", "--mathjax",
-                                        "--include-in-header=createWebBookTemplate/IncludeInHeader.html",
-                                        "--include-before-body=createWebBookTemplate/IncludeBeforeBody.html",
-                                        "--include-after-body=createWebBookTemplate/IncludeAfterBody.html",
-                                        "--template=createWebBookTemplate/default.html"])
-
-
+	
 
 
 	# ----------- copy images over: 

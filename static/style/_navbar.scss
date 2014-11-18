@@ -11,7 +11,6 @@ nav {
   position: fixed;
   top: 70px;
   width: 230px;
-
   ul#nav-parts {
     color: rgba(128,128,128,1);
     font-weight: 100;
@@ -37,8 +36,6 @@ nav {
       max-height:42px;
       transition: all 0.3s;
 
-
-
       &.selected {
         background-color: rgba(255,255,255,1);
         max-height:800px;
@@ -52,35 +49,34 @@ nav {
           display:block;
           line-height:13px;
           margin: 9px 0px;
-
           a {
-            font-size:12px;
+            font-size:13px;
             color: rgba(128,128,128,1);
           }
 
           li.section {
             display:none;
             font-weight: normal;
-            padding-left:13px;
             margin: 5px 0px;
 
 
             a {
               color: #B8B8B8;
-              transition: all 0.3s;
+              transition: all 0.2s;
 
             }
 
             &.selected {
               a {
-                color: darken(#d14, 5);
+                color: #EC6A88; 
+                
               }
 
             }
           }
 
           &.selected {
-            font-weight: bold;
+            //font-weight: bold;
 
             li.section {
               display:block;
@@ -92,15 +88,27 @@ nav {
 
         }
       }
-
-
-
-
-
-
-
-
-
     }
   }
 }
+
+
+li.chapter.selected {
+  background-color:fff;
+}
+
+.chapterContents.selected{
+  padding-left: 10px;
+  border-left: 3px solid #eee;
+
+}
+
+.chapterTitle.selected{
+   background-color: #f9f9f9;
+  padding: 5px;
+  margin-bottom: 7px;
+}
+nav ul.chapter.selected {
+  background-color:#ccc;
+}
+
