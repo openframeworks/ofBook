@@ -227,13 +227,12 @@ for chapter in chapters:
 		# --- change images (path and tag)
 
 		# Find all the figures so that we can make a series of tweaks
-		divFigures = soup.find_all("div", class_="figure")
+		divFigures = soup.findAll("div",{"class":"figure"})
 
 		if len(divFigures) != 0:
 			
 			for fig in divFigures:
 						
-				
 				figCaption = fig.p
 				# Turn the caption into span for CSS formatting
 
@@ -254,7 +253,6 @@ for chapter in chapters:
 				# to the chapter html, but image references in the html are 
 				# to ./images/.  Modify the image tags:
 				div.img["src"] = internalImagesPath + "/" + div.img["src"]
-
 				# Turn the figure image into a hyperlink that points to the
 				# full resolution version of the image
 				imgHyperlink = soup.new_tag("a", href=fig.img["src"])
@@ -275,8 +273,11 @@ for chapter in chapters:
 			hyperlinkTag["target"]= "_blank"
 
 		html = str(soup)
-		with open(destChapterPath, "wb") as file:
+		destChapterPathTemp = destChapterPath + ".temp"
+
+		with open(destChapterPathTemp, "wb") as file:
 			file.write(html)
+			shutil.move(destChapterPathTemp, destChapterPath)
 	
 
 
