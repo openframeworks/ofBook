@@ -144,7 +144,7 @@ a:active {
 
 .banner {
   position:fixed;
-  background-color: rgba(120,120,120,0.9);
+  background-color: rgba(200,120,120,0.9);
   width:100%;
   left:0px;
   top:0px;
@@ -215,7 +215,7 @@ a:active {
     font-weight: 300;
     font-size: 50px;
     margin-top: 1.5em;
-    margin-bottom: 0.7em;
+    margin-bottom: 1.9em;
   }
 
   h2 {
@@ -310,13 +310,13 @@ a:active {
   }
 
   blockquote {
-    text-align: right;
-    margin: 0px;
-    padding-left:60px;
-    strong {
-      margin-top:-10px;
-      display:block;
-    }
+
+    text-align: left;
+    margin: 50px;
+    background-color: rgba(0,0,0, 0.03);
+    padding:10px 10px 10px 20px;
+    border-radius: 3px;
+
   }
 
   .figure {
@@ -352,6 +352,8 @@ a:active {
   }
 
   .footer {
+    font-family: "fira";
+    margin-top:50px;
     padding:15px 0px;
 
     #prev_chapter {
@@ -361,6 +363,15 @@ a:active {
       float:right;
     }
   }
+}
+
+
+#help {
+  font-family: 'fira';
+  color: #FFF;
+  background-color: rgba(120,120,120,0.4);
+  margin-top:50px;
+  padding:10px;
 }
 
 
