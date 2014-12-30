@@ -1,7 +1,6 @@
 # That Math Chapter: From 1D to 4D 
 *by [Omer Shapira](http://omershapira.com)*
 
-**NOTE: This chapter is formatted with MD and LaTeX. Github won't render it properly. Try [stackedit.io](http://stackedit.io) instead**
 
 ## How Artists Approach Math
 Math is a curious thing in arts. Many artists reference it directly as inspiration for their work, from Leonardo Da Vinci's _Vitruvian Man_, through Escher's different views of fields of numbers, and many other highlighted, topical representations in art. It is otherwise known as a tool for bringing order into most arts: musicians religiously follow Chromatic Circles (which are just cyclic groups of order 12, $\mathbb{Z}/12\mathbb{Z}$), Architects create rhythms in harmonic series, $\frac{1}{2^n}$ or $\frac{1}{3^n}$, and product designers train their loved ones to wake them up in the middle of the night and ask them questions about The Golden Ratio, $\frac{1 + \sqrt{5}}{2}$ (Seriously guys, stop it). But just as it is important for artists to appreciate the order that Mathematics can bring, it is significantly more important to observe the chaos Mathematics contains.
@@ -43,7 +42,7 @@ With the `lerp` function, you can take any two quantities, in our case `start` a
 ##### Note: What does _linear_ really mean?
 Engineers, Programmers and English Speakers like to think of _linear_ as _anything you can put on a line_. Mathematicians, having to deal with all the conceptual mess the former group of people creates, define it _anything you can put on a line **that begins at (0,0)**_. There's  good reasoning behind that, which we will see in the discussion about Linear Algebra. In the meantime, think of it this way: 
 
-> A _Linear Transform_ takes any line that has a value 0 at the point 0 and returns a line with the same property, $f\left(x\right)=ax$. If it returns a line value different from 0 at $x=0$, $f\left(x\right)=ax + b$, it's an _Affine Transform_ instead. 
+> A _Linear Transform_ takes any line that has a value 0 at the point 0 and returns a line with the same property, $$f\left(x\right)=ax$$. If it returns a line value different from 0 at $x=0$, $$f\left(x\right)=ax + b$$, it's an _Affine Transform_ instead. 
 
 At this point you probably know, but it's worth repeating: Those two transformations may either change lines into lines, or in some degenerate cases, lines to points. For example, $f\left(x\right) = x^{2}$ is totally not linear.
 
@@ -55,7 +54,7 @@ Tip: Its much easier to start solving with pen and paper than it is with a keybo
 
 **Think:**
 
-1. Why can we use `lerp` outside the range of 0 and 1?
+1. Can we use `lerp` outside the range of 0 and 1? Why?
 2. What would it take to write a function that converts inches into centimetres?
 
 #### Affine Mapping: The `ofMap`
@@ -71,7 +70,7 @@ However, when dealing with real world problems, programmers run into domains of 
 If we want to use the `lerp` function, we're aiming to get it to the range between 0 and 1. We can do that by knocking `inputMin` off the input `value` so that it starts at 0, then dividing by the size of the domain: $$x=\frac{\text{value}-\text{inputMin}}{\text{inputMax}-\text{inputMin}}$$
 Now that we've tamed the input domain to be between 0 and 1, we do the exact opposite to the output: `ofMap(value, inputMin, inputMax, outputMin, outputMax)` $=\frac{\text{value}-\text{inputMin}}{\text{inputMax}-\text{inputMin}}\cdot\left(\text{outputMax}-\text{outputMin}\right)+\text{outputMin}$
 
-Here's an example. Let's say we're given a dataset in Farenheit. Farenheit sets 0 to be the freezing point of brine and 100 to be the body temperature of a slightly ill British human (duh?). In order to do _anything_ with that, we first need to convert that to Celsius, which at least uses *The Same Damn Substance™* for 0 and 100: Water. Now, we happen to know that water freezes at $32_{\text{f}}$ and boils at $212_{\text{f}}$, so we have the same exact objective range, now it's time to map. We'll use an array for this:
+Here's an example. Let's say we're given a dataset in Farenheit. Farenheit sets 0 to be the freezing point of brine and 100 to be the body temperature of a slightly ill British human (_duh?_). In order to do anything with that information, we first need to convert that to Celsius, which at least uses _The Same Damn Substance™_ for 0 and 100: Water. Now, we happen to know that water freezes at $32_{\text{f}}$ and boils at $212_{\text{f}}$, so we have the same exact objective range, now it's time to map. We'll use an array for this:
 
 ```cpp
 vector<float> farenheitValues;
@@ -81,11 +80,11 @@ for (int i = 0 ; i < farenheitValues.size() ; ++i){
 	celsiusValues.pushBack(ofMap(32, 212, 0, 100, farenheitValues[i]));
 }
 ```
-Watch what we did here. We took the _domain_ of 32 to 212 and converted it to a _range_ of 0 to 100. There are two things to note about that:
+Watch what we did here. We took a numerical range (let's call it the _domain_) of 32 to 212 and converted it to different one (we'l call this one the _range_) of 0 to 100. There are two things to note about that:
 
 * In Mathematics, we often use the words _domain_ and _range_ as origin and target. Using those terms allows us to introduce another concept we care about: _Separation of Concern_. If we know that every input a function takes is guaranteed to be in a certain _domain_, we can engineer it so it guarantees an output in a certain _range_, and make sure it doesn't fail. In fact, this is the mathematical definition of a function:
 
-> A Function is a Mathematical object that maps _every_ value of a certain domain to a _single_ value of a certain range.
+> A _Function_ is a Mathematical object that maps _every_ value of a certain domain to a _single_ corresponding value of a certain range.
 
 
 * We defined the range of 32 to 212 as two points we know on a line. The actual range of temperatures is -459.67 (the absolute zero, in Farenheits) to somewhere very, very large (known as the planck temperature) - it's not very conventient to calculate that. So instead of choosing the whoe range, we mapped a known area of it to a known area of it in the range. We are allowed to use an `ofMap()` for that, because the scale is linear. Some scales are not linear; For example, the decibel ($\text{dB}$), commonly used in sound measurement, is logarithmic, so converting between a range of $0_{\text{dB}}$ - $6_{\text{dB}}$ to $6_{\text{dB}}$-$15_{\text{dB}}$ would not convey any meaning. 
@@ -234,7 +233,7 @@ In this part you're going to learn many concepts in how to store and manipulate 
 ### The Vector
 You may have heard of vectors before when discussing directions or position, and after understanding that they can represent both, may have gotten a little confused. Here's the truth about Vectors™: 
 	
-> A vector is just an array that stores multiple pieces of the same type of information. 
+> A _vector_ is just an array that stores multiple pieces of the same type of information. 
 
 Seriously, that's all it is. Quit hiding.
 
@@ -413,7 +412,7 @@ float ofVec3f::dot( const ofVec3f& vec )
 
 The dot product of two vectors has a definition that's not too clear at first. On one hand, the operation can be defined as $$v_{a}\bullet v_{b}=x_{a}\cdot x_{b}+y_{a}\cdot y_{b}+z_{a}\cdot z_{b}$$ which is really easy to implement (in fact, graphics cards have special circuitry for doing just that!). On the other hand, it can also bet defined as $$v_{a}\bullet v_{b}=\left\Vert v_{a}\right\Vert \cdot\left\Vert v_{b}\right\Vert \cdot\cos\theta$$ where $\theta$ is the angle between the two vectors. Soon you'll see that this is a rather lucky coincidence. In the meantime, here's how you _shoud_ remember dot products:
 
-> A dot product of $a$ and $b$ reflects how one vector projects in the other vector's direction.
+> A _dot product_ of $a$ and $b$ reflects how one vector projects in the other vector's direction.
 
 Hold it. That's not the end of the story. As you can see, the $\left\Vert v_{a}\right\Vert \cdot\left\Vert v_{b}\right\Vert$ part of $\left\Vert v_{a}\right\Vert \cdot\left\Vert v_{b}\right\Vert \cdot\cos\theta$ should tell you that both vectors' lengths have equal parts in determining the final size of the thing, but in most practical cases, you'll be using dot products to determine either vector length or angles between vectors.
 
@@ -469,7 +468,7 @@ In the computer world, a program needs the two things to function: Algorithms an
 
 At the core of the heavy machinery built to control 3d space, a matrix is just a data structure, like a vector. However, the 'algorithms' applied to this data structure (operations, in Mathland) make it an extremely powerful one. All of the _affine_ operations we care about in 3D can be described in the form of a matrix: translation, rotation, scaling, inversion, squeezing, shearing, projection and more and more. Here's a simple way to remember this:
 
-> A Matrix is a mathematical object that stores a geometric transformation of points.
+> A _Matrix_ is a mathematical object which can store a geometric transformation of points.
 
 
 **Notation Convention:** When dealing with matrices, most authors usually mark vectors with lowercase letters and matrices with uppercase letters.
