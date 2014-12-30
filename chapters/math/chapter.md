@@ -118,13 +118,12 @@ Returns the sign of a number, as `-1.0` or `1.0`. Simple, eh?
 
 ### Beyond Linear: Changing Change 
 
-**[mh: I recognize that you are trying to be general here by talking about change, but at least throwing the word motion around as a type of change would give readers something upon which to anchor the concept.]**
-
-So far we've discussed change that is bound to a line. But in Real Life™ there's more than just straight lines: For one, we can't even describe periodic events with straight lines If we need to describe the vibration of a guitar string [footnote: this example sounds kinda old. Of course I meant "the wobble of a dubstep instrument"] or the changing speed of a biliiard ball after impact, we're going to need to use higher orders of change. 
+So far we've discussed change that is bound to a line. But in Real Life™ there's more than just straight lines: For one, we can't even describe periodic events with straight lines If we need to describe the vibration of a guitar string [footnote: this example sounds kinda old. Of course I meant "the wobble of a dubstep instrument"] or the changing speed of a billiard ball after impact, we're going to need to use higher orders of change. 
 
 In this discussion, we're about to see how we can describe higher orders of complexity, via a cunning use of `lerp`s. You will see that some types of change can be reproduced this way (like that billiard ball) - while other types of motion, like harmonic motion, will need a separate mechanism. Keep in mind that some of the code here is conceptual, not necessarily efficient.
 
 #### Quadratic and Cubic Change Rates
+
 Consider this function:
 
 ```cpp
@@ -192,12 +191,12 @@ So instead of using polynomials the way they are, some mathematicians thought of
 
 In the illustration, we've taken a few parts of the same cubic (3rd degree) polynomial, moved it around and scaled it to taste, and added all of them together at each point (let's call it 'mixing'). 
 
-The resulting curve is seamless and easy to deal with. It also carries some sweet properties: using it, one can use the absolute minimum of direction changes to draw any cubic polynomial between any two points. **[mh: maybe add another sentence here to unpack this]** In other words, _it's smooth_.
+The resulting curve is seamless and easy to deal with. It also carries some sweet properties: turns out this flavor of curves promises the smallest amount of changes in direction needed to connect two adjacent points, emitting no extraneous motion. In other words, _it's smooth_.
 
 These properties make this way of creating curves pretty popular in computer graphics, and you may find its variants under different names, like _Beziér Curves_ or Spline Curves. The code for implementing this is a little long and tedious in C++, so this chapter won't go into it - but in case you were wondering, it's just the same code for making polynomials we discussed above, only with a lot of `if` statements to check if `t` is in the correct range.
 
 
-Using the curve functions in openFrameworks is pretty straightforward: All you have to do is start from a point, and then add a destination, along with the control points **[mh: worth defining a control point somewhere in here]** to reach it:
+Using the curve functions in openFrameworks is pretty straightforward: For each curve segment, all we need is a beginning point, a destination point, and two points in between (called _control points_) that mark where the tangents (coming out of the beginning and end points) are pointing:
 ```cpp
 //The beginning point
 line.addVertex(ofPoint(200, 400)); 
@@ -327,8 +326,6 @@ void testApp::draw(){
 ```
 
 ##### Note: C++ Operator Overloading
-
-**[mh: this proke the flor a bit for me, so I'd recommend pushing it later]**
 
 Just like we had to define the meaning of a product of a scalar quantity and a vector, programming languages - working with abstract representations of mathematical objects, also need to have definitions of such an operation built in. C++ takes special care of these cases, using a feature called _Operator Overloading_: defining the `*` operation to accept a scalar quantity and a vector as left-hand side and right-hand side arguments:
 
@@ -697,7 +694,7 @@ In high school Algebra, we used to think that $a\cdot b=b\cdot a$. No reason not
 
 But, in matrixland we're not talking about things we counted - instead, we're talking about operations, and here's the deal: 
 
-> Operations (like Rotation, Translation and Scaling) are generally not commutative.
+> Operations (like Rotation, Translation and Scaling) may describe different outcomes if applied at different orders.
 
 There's a difference between scaling a square by x and then rotating it by 90 degrees and doing it the other way around:
 
@@ -766,14 +763,12 @@ Notice that because we placed a 1 at the $w$ (4th) dimension, all of the multipl
 #### SRT (Scale-Rotate-Translate) operations
 Now we've defined the operations we like the most to describe (sort-of) real world objects moved around in space. Let's spend a few paragraphs talking about how to combine all of the operations together.
 
-If you recall, geometric operations are _non-commutative_, which means that if we defined them in a specific order, there's no guarantee that changing the order will provide us with similar results. ~~That means that when building a graphics system we need to exercise systematic vigilance when executing human stuff like "Turn that spindle around so I
-may see its refractions of the sun" without accidentally turning the sun around its' axis, incinerating the good people of Uranus.~~ **[mh: this felt distracting]**
+If you recall, geometric operations are _non-commutative_, which means that if we defined them in a specific order, there's no guarantee that changing the order will provide us with similar results. Therefore, when building a graphics system we must exercise systematic vigilance, so implementing human thoughts like "Turn this globe around its axis, it glows so nicely in the sunlight" without accidentally turning the sun around the same axis, resulting in a very confusing, very short year.
 
 The way we execute that vigilance is by a predefined order for handling objects. If you grab a pen and paper it won't take too long to figure that order out:
-1. Modify the scale (if need be).
-2. Modify the orientation (if need be).
-3. Modify the position (if need be).
-4. Rejoice.
+1. Modify the **scale** (if need be, otherwise apply the _identity scale_).
+2. Modify the **orientation** (if need be, otherwise apply the _identity rotation_).
+3. Modify the **position** (if need be, otherwise apply the _identity translation_).
 
 Any other order will cause weird effects, like things growing and spinning off their axes (anchor point / pivot, if animation is your jam). This may seem like common sense, but Ken Perlin notes that it was only the late 80s when that system became a standard for 3d. 
 
@@ -794,7 +789,7 @@ ofMatrix4x4( const ofQuaternion& quat ) {
 	makeRotationMatrix(quat);
 }
 
-ofMatrix4x4(	float a00, float a01, float a02, float a03,
+ofMatrix4x4(  float a00, float a01, float a02, float a03,
               float a10, float a11, float a12, float a13,
               float a20, float a21, float a22, float a23,
               float a30, float a31, float a32, float a33);
