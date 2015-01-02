@@ -1,5 +1,4 @@
-# Case Study: Anthropocene, an interactive film installation for Greenpeace as part of their field at Glastonbury 2013
-
+# Case Study: Anthropocene, an body reactive video installation
 ## Project Overview
 
 **Anthropocene**
@@ -8,7 +7,9 @@ _Adjective_
 
 _Relating to or denoting the current geological age, viewed as the period during which human activity has been been the dominant influence on climate and the environment._
 
-To see the finished project as part of a wider video all about the Greenpeace Field at Glastonbury 2013, please see the YouTube link below:
+Anthropocene, an body reactive interactive video installation for Greenpeace as part of their field at Glastonbury 2013.
+
+To see the finished project as part of a wider event please see the YouTube link below:
 
 http://youtu.be/LwokmKqT0og?t=1m12s
 
