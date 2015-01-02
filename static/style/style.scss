@@ -325,8 +325,10 @@ a:active {
     width:100%;
 
     .inner{
-      padding-bottom: 2em;
-      padding-top: 2em;
+      padding-bottom: 1em;
+      padding-top: 1em;
+      display: inline-block;
+      max-width: 100%;
     }
 
   }
