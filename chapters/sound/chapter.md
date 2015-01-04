@@ -107,7 +107,7 @@ An important caveat to keep in mind when dealing with ofSoundStream is that audi
 
 In order to understand *why* openFrameworks chooses to represent sound as a continuous stream of `float` values ranging from -1 to 1, it'll be helpful to know how sound is created on a physical level.
 
-*[ a minimal picture showing the mechanics of a speaker, reference: http://wiki.backyardbrains.com/images/5/54/Exp5_fig7.jpg ]*
+![Speaker Mechanics](images/speaker.png "simplified diagram of a speaker, showing the push/pull dynamics of its magnet")
 
 At the most basic level, a speaker consists of a cone and an electromagnet. The electromagnet pushes and pulls the cone to create vibrations in air pressure. These vibrations make their way to your ears, where they are interpreted as sound. When the electromagnet is off, the cone is simply "at rest", neither pulled in or pushed out.
 
@@ -457,7 +457,7 @@ If you're getting pops in the middle of your playback, you can diagnose it by tr
 ### "Clipping" / Distortion
 If your samples begin to exceed the range of -1 to 1, you'll likely start to hear what's known as "clipping", which generally sounds like a grating, unpleasant distortion. Some audio hardware will handle this gracefully by allowing you a bit of leeway outside of the -1 to 1 range, but others will "clip" your buffers.
 
-*[ clipped waveform image, reference http://www.st-andrews.ac.uk/~www_pa/Scots_Guide/audio/clipping/fig1.gif ]*
+![Clipping](images/clipped-sinwave.png "diagram showing two sine waves, one demonstrating clipping by extending beyond the upper and lower bounds")
 
 Assuming this isn't your intent, you can generally blame clipping on a misbehaving addition or subtraction in your code. A multiplication of any two numbers between -1 and 1 will always result in another number between -1 and 1.
 
