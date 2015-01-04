@@ -127,7 +127,7 @@ This is because what you actually hear is the *changes* in values over time. Any
 
 When representing sound as a continuous stream of values between -1 and 1, you're working with sound in what's known as the "Time Domain". This means that each value you're dealing with is referring to a specific moment in time. There is another way of representing sound which can be very helpful when you're using sound to drive some other aspect of your app. That representation is known as the "Frequency Domain".
 
-*[ image of a waveform vs an FFT bar graph, reference http://upload.wikimedia.org/wikipedia/commons/8/8c/Time_domain_to_frequency_domain.jpg ]*
+![Time vs Frequency domain](images/time-vs-freq.png "two graphs, one showing a signal represented in the time domain and the other showing the same signal in the frequency domain")
 
 In the frequency domain, you'll be able to see how much of your input signal lies in various frequencies, split into separate "bins" (see above image).
 
