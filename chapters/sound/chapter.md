@@ -39,7 +39,7 @@ This is fine for adding some background music or ambiance to your app, but ofSou
 "Multiplay" allows you to have a file playing several times simultaneously. This is great for any sound effect which might end up getting triggered rapidly, so you don't get stuck with an unnatural cutoff as the player's playhead abruptly jumps back to the beginning of the file. Multiplay isn't on by default. Use `soundPlayer.setMultiPlay(true)` to enable it. Then you can get natural sound effect behaviour with dead-simple trigger logic like this:
 
 ```cpp
-if ( thingHappened )
+if ( thingHappened ) {
   soundPlayer.play();
 }
 ```
