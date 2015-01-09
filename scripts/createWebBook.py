@@ -277,7 +277,7 @@ for chapter in chapters:
 
 		with open(destChapterPathTemp, "wb") as file:
 			file.write(html)
-			shutil.move(destChapterPathTemp, destChapterPath)
+		shutil.move(destChapterPathTemp, destChapterPath)
 	
 
 
