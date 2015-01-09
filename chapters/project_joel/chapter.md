@@ -58,8 +58,11 @@ After some studio thinking, by 16th April we responded with the following docume
 >4: Generative audio - a four channel speaker system that adds depth and texture the visuals.
 
 ![Third Page of Presentation, Proposed Diagram](images/2013_04_16_Greenpeace_HandL_03.jpg "Third Page of Presentation, Proposed Diagram")
+
 ![Fourth Page of Presentation, Visual Experimentation](images/2013_04_16_Greenpeace_HandL_04.jpg "Fourth Page of Presentation, Visual Experimentation")
+
 ![Sixth Page of Presentation, Arctic Experiments](images/2013_04_16_Greenpeace_HandL_06.jpg "Sixth Page of Presentation, Arctic Experiments")
+
 ![Tenth Page of Presentation, Kaleidoscope Imagery from previous installation](images/2013_04_16_Greenpeace_HandL_10.jpg "Tenth Page of Presentation, Kaleidoscope Imagery from previous installation")
 
 On April 30th, we recieved an email from Paul:
@@ -89,10 +92,15 @@ The site awaited us.
 ### Interactive Background to Delay Maps, and the possibility of generating a Delay Map from the Kinect Depth Image
 
 ![We are the time. We are the famous. Created at Fabrica.](images/FabricaWeAreTheTimeWeAreTheFamous.jpg "We are the time. We are the famous. Created at Fabrica.")
+
 We are the time. We are the famous. Created at Fabrica.
+
 ![Hereafter by United Visual Artists.](images/UVAHereafter.jpg "Hereafter by United Visual Artists.")
+
 Hereafter by United Visual Artists.
+
 ![Feedback by Hellicar&Lewis.](images/HellicarAndLewisFeedback.jpg "Feedback by Hellicar&Lewis.")
+
 Feedback by Hellicar&Lewis.
 
 Pete started the project by doing some sketches in Photoshop of how two dimensional angular shapes could "shatter" video footage - I realised that we could make similar effects in real time by using a delay map. This brought me back to previous projects around varying video delay across a whole image - starting with ["We are the time. We are the famous"](http://www.benettongroup.com/40years-press/fabrica_yeux_ouverts.html) at [Fabrica](http://fabrica.it/), continuing with [Hereafter](http://uva.co.uk/work/hereafter) at [UnitedVisualArtists](http://uva.co.uk/) and finally [Feedback](http://www.hellicarandlewis.com/the-roundhouse/) at [Hellicar&Lewis](http://hellicarandlewis.com). Many people have been interested in this area for some time, [Golan Levin](http://www.flong.com/) has compiled a [list of related works](http://www.flong.com/texts/lists/slit_scan/).
