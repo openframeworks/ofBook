@@ -270,7 +270,6 @@ a:active {
     white-space: nowrap;
     border-radius: 3px;
     background-color: rgba(0,0,0,0.06);
-
   }
 
   /* a code {
@@ -397,6 +396,17 @@ code {
     color:  #902000;
   }
   span.st {
-    color: #DF0002
+    color: #DF0002;
+  }
+}
+
+/* Styling for bash fenced code blocks */
+code.sourceCode.bash {
+  span.kw {
+    color: inherit;
+    font-weight:normal;
+  }
+  span.co {
+    font-style: normal;
   }
 }
