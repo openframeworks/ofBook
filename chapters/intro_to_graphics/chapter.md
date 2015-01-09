@@ -117,7 +117,7 @@ if (ofGetMousePressed(OF_MOUSE_BUTTON_RIGHT)) {  // If the right mouse button is
 }
 ```
 
-[Source code for this section](https://github.com/openframeworks/ofBook/tree/master/chapters/intro_to_graphics/code/1_ii_a_Single_Rectangle_Brush)]
+[[Source code for this section](https://github.com/openframeworks/ofBook/tree/master/chapters/intro_to_graphics/code/1_ii_a_Single_Rectangle_Brush)]
 
 [[ofSketch file for this section](https://github.com/openframeworks/ofBook/blob/master/chapters/intro_to_graphics/code/1_ii_a_Single_Rectangle_Brush.sketch)]
 
@@ -582,7 +582,7 @@ We can also sample points along the polyline using [`getPointAtPercent(...)`](ht
     }
 ```
 
-Now we have evenly spaced points (figure 13, right).  Let's try creating a brush stroke where the thickness of the line changes. To do this we need to use a [normal vector](http://en.wikipedia.org/w/index.php?title=Normal_vector "Wiki on normal vectors in geometry").  Figure 14 shows normals drawn over some polylines - they points in the opposite (perpendicular) direction to the polyline.  Imagine drawing a normal at every point along a polyline, like figure 15.  That is one way to add "thickness" to our brush.  We can comment out our circle drawing code in `draw()`, and add these lines of code instead:
+Now we have evenly spaced points (figure 13, right).  Let's try creating a brush stroke where the thickness of the line changes. To do this we need to use a [normal vector](http://en.wikipedia.org/w/index.php?title=Normal_vector "Wiki on normal vectors in geometry").  Figure 14 shows normals drawn over some polylines - they point in the opposite (perpendicular) direction to the polyline.  Imagine drawing a normal at every point along a polyline, like figure 15.  That is one way to add "thickness" to our brush.  We can comment out our circle drawing code in `draw()`, and add these lines of code instead:
 
 ```cpp
     vector<ofVec3f> vertices = polyline.getVertices();
