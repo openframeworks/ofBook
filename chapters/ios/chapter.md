@@ -53,6 +53,7 @@ The implementation (.m) file is where you add your actual code for the methods d
 Nice thing about XCode is that it makes programming easier by creating the basic structure of a class when you first create it, so you don't have to type out the above code structure everytime. By going to File menu, selecting New and then File... a dialogue will appear showing all the files that XCode can create for you. Select `Objective-C class` and another dialogue will appear where you can name your new Class and specify which Subclass it will extend. MyClass will then be automatically generated, ready for you to enter your code into.
 
 ![Figure 1: OF on iPhone.](images/ofxiOS_objc_0_sml.jpg "Figure 1: OF on iPhone.")
+
 ![Figure 1: OF on iPhone.](images/ofxiOS_objc_1_sml.jpg "Figure 1: OF on iPhone.")
 
 ###Variables and Methods
@@ -130,6 +131,7 @@ All that the above is doing is assigning a new string value to `firstName` but i
 The basic theory behind reference counting is that when ever an object is retained, the reference count goes up by +1 and everytime it is released, the reference count is goes down by -1. When the reference count is back down to zero, the object is released from memory.
 
 ![Figure 1: OF on iPhone.](images/ofxiOS_objc_2.png "Figure 2: ofxiOS XCode.")
+
 NEED TO RECREATE THIS DIAGRAM.
 
 There are a couple way of creating an Obj-C object and we'll use the NSString class to demonstrate. Below is a code sample of how a `NSString` object is created using the `alloc` method. Calling `alloc` on a `NSString` class returns a new `NSString` object. A very important thing to note here is that when an object is created using `alloc`, it's reference count is at +1. So behind the scenes, Obj-C has created a new string object and has already called `retain` on the object for us. The final line in the code example is initialising the string object with some text which says `"I'm a string"`.
@@ -443,6 +445,7 @@ avVideoPlayer = (AVFoundationVideoPlayer *)video.getAVFoundationVideoPlayer();
 ###ofxiOSSoundStream
 
 ![Figure 1: OF on iPhone.](images/ofxiOS_audioInputExample_sml.png "Figure 2: ofxiOS XCode.")
+
 ![Figure 1: OF on iPhone.](images/ofxiOS_audioOutputExample_sml.png "Figure 2: ofxiOS XCode.")
 
 

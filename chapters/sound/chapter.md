@@ -457,7 +457,7 @@ If you're getting pops in the middle of your playback, you can diagnose it by tr
 ### "Clipping" / Distortion
 If your samples begin to exceed the range of -1 to 1, you'll likely start to hear what's known as "clipping", which generally sounds like a grating, unpleasant distortion. Some audio hardware will handle this gracefully by allowing you a bit of leeway outside of the -1 to 1 range, but others will "clip" your buffers.
 
-![Clipping](images/clipped-sinwave.png "diagram showing two sine waves, one demonstrating clipping by extending beyond the upper and lower bounds")
+![Clipping](images/clipped-sinewave.png "diagram showing two sine waves, one demonstrating clipping by extending beyond the upper and lower bounds")
 
 Assuming this isn't your intent, you can generally blame clipping on a misbehaving addition or subtraction in your code. A multiplication of any two numbers between -1 and 1 will always result in another number between -1 and 1.
 
