@@ -160,10 +160,10 @@ for (int r=0; r<numRects; r++) {
     //  x = cos(polar angle) * (polar distance)
     //  y = sin(polar angle) * (polar distance)
 
-	// We need our angle to be in radians if we want to use sin() or cos()
-	// so we can make use of an openFrameworks function to convert from degrees
-	// to radians
-	float angle = ofRandom(ofDegToRad(360.0)); 
+    // We need our angle to be in radians if we want to use sin() or cos()
+    // so we can make use of an openFrameworks function to convert from degrees
+    // to radians
+    float angle = ofRandom(ofDegToRad(360.0)); 
 
     float xOffset = cos(angle) * distance;
     float yOffset = sin(angle) * distance;
@@ -384,7 +384,7 @@ In the `keyPressed(...)` function, add the following:
 if (key == 's') {
     // It's strange that we can compare the int key to a character like `s`, right?  Well, the super short 
     // explanation is that characters are represented by numbers in programming.  `s` and 115 are the same
-	// thing.  If you want to know more, look check out the wiki for ASCII.
+    // thing.  If you want to know more, look check out the wiki for ASCII.
     glReadBuffer(GL_FRONT);  // HACK: only needed on windows, when using ofSetAutoBackground(false)
     ofSaveScreen("savedScreenshot_"+ofGetTimestampString()+".png");
 }
@@ -512,8 +512,8 @@ Let's add points to our polyline in `update()`:
 if (leftMouseButtonPressed) {
     ofVec2f mousePos(ofGetMouseX(), ofGetMouseY());
     if (lastPoint.distance(mousePos) >= minDistance) {
-		// a.distance(b) calculates the Euclidean distance between point a and b.  It's
-		// the straight line distance between the points.
+        // a.distance(b) calculates the Euclidean distance between point a and b.  It's
+        // the straight line distance between the points.
         currentPolyline.curveTo(mousePos);  // Here we are using an ofVec2f with curveTo(...)
         lastPoint = mousePos;
     }
@@ -682,7 +682,7 @@ void ofApp::draw(){
         ofBeginSaveScreenAsPDF("savedScreenshot_"+ofGetTimestampString()+".pdf");
     }
 
-	// Drawing code omitted for clarity...
+    // Drawing code omitted for clarity...
 
     // Finish saving the PDF and reset the isSavingPDF flag to false
     // Ending the PDF tells openFrameworks to resume drawing to the screen.
@@ -758,9 +758,9 @@ So what we need is to reset the coordinate system using [`ofPushMatrix()`](http:
     for (int rows=0; rows<10; rows++) {
         ofPushMatrix(); // Save the coordinate system before we shift it horizontally
 
-            // It is often helpful to indent any code in-between push and pop matrix for readability
+        // It is often helpful to indent any code in-between push and pop matrix for readability
 
-            // Loop and draw a row (code omitted)
+        // Loop and draw a row (code omitted)
 
         ofPopMatrix(); // Return to the coordinate system before we shifted it horizontally
         ofTranslate(0, 200);
