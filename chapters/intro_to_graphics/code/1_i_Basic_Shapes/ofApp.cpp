@@ -73,7 +73,7 @@ void ofApp::draw(){
 
     // Again, for generating the series of lines from figure 2:
     //for (int i=0; i<11; i++) {
-	//	ofLine(650, 50+(i*10), 750, 75+(i*5));
+	//	ofLine(650, 200+(i*10), 750, 225+(i*5));
 	//}
 }
 
