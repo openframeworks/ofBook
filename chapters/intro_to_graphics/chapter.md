@@ -384,7 +384,7 @@ In the `keyPressed(...)` function, add the following:
 if (key == 's') {
     // It's strange that we can compare the int key to a character like `s`, right?  Well, the super short 
     // explanation is that characters are represented by numbers in programming.  `s` and 115 are the same
-    // thing.  If you want to know more, look check out the wiki for ASCII.
+    // thing.  If you want to know more, check out the wiki for ASCII.
     glReadBuffer(GL_FRONT);  // HACK: only needed on windows, when using ofSetAutoBackground(false)
     ofSaveScreen("savedScreenshot_"+ofGetTimestampString()+".png");
 }
@@ -504,7 +504,7 @@ if (button == OF_MOUSE_BUTTON_LEFT) {
 }
 ```
 
-Now let's move over to the `update()` function.  For ofSketch users, this another default function that you might not see in your sketch.  It is a function that is called once per frame, and it is intended for doing non-drawing tasks.  It's easy to add - see the [ofSketch file](https://github.com/openframeworks/ofBook/blob/master/chapters/intro_to_graphics/code/2_ii_a_Polyline_Pen.sketch) for this section. 
+Now let's move over to the `update()` function.  For ofSketch users, this is another default function that you might not see in your sketch.  It is a function that is called once per frame, and it is intended for doing non-drawing tasks.  It's easy to add - see the [ofSketch file](https://github.com/openframeworks/ofBook/blob/master/chapters/intro_to_graphics/code/2_ii_a_Polyline_Pen.sketch) for this section. 
 
 Let's add points to our polyline in `update()`:
 
@@ -555,7 +555,7 @@ And we have a simple pen-like brush that tracks the mouse, and we can draw a dop
 
 #### Polyline Brushes: Points, Normals and Tangents ####
 
-Since we have the basic drawing in place, now we play with how we are rendering our polylines.  We will draw points, normals and tangents.  We'll talk about what normals and tangents in a little bit.  First, let's draw points (circles) at the vertices in our polylines.  Inside the `for` loop in `draw()` (after `polyline.draw()`), add this:
+Since we have the basic drawing in place, now we play with how we are rendering our polylines.  We will draw points, normals and tangents.  We'll talk about what normals and tangents are in a little bit.  First, let's draw points (circles) at the vertices in our polylines.  Inside the `for` loop in `draw()` (after `polyline.draw()`), add this:
 
 ```cpp
 vector<ofVec3f> vertices = polyline.getVertices();
@@ -907,7 +907,7 @@ Now use `bgColor` for the transparent rectangle we draw on the screen and `fgCol
 
 **Extensions**
 
-1. Pass in a third parameter, `z`, into `ofTranslate(...)` and `ofScale(...)` or rotate around the x and y axes with of `ofRotate(...)`.
+1. Pass in a third parameter, `z`, into `ofTranslate(...)` and `ofScale(...)` or rotate around the x and y axes with `ofRotate(...)`.
 1. Capture animated works using an addon called [ofxVideoRecorder](https://github.com/timscaffidi/ofxVideoRecorder "ofxVideoRecorder github").  If you are using Windows, like me, that won't work for you, so try screen capture software (like fraps) or saving out a series of images using `ofSaveScreen(...)` and using them to create a GIF or movie with your preferred tools (photoshop, ffmpeg etc.)
 
 ## Next Steps ##
