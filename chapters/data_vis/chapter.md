@@ -116,7 +116,7 @@ int main( ){
 
 
 IN THE H FILE:
-We define a struct called timeData which will hold the values from each line of our file.
+We define a struct called popData which will hold the values from each line of our file.
 ```cpp
 typedef struct {
     
@@ -125,7 +125,7 @@ typedef struct {
 	float lou;
 	float ala;
 
-} timeData;
+} popData;
 ```
 
 We will then declare a vector that contains a list of structs, one for each line of our data file. 
