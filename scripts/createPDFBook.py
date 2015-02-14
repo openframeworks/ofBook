@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 """
 	Takes the markdown chapters, and using pandoc, converts and combines them into 
 	a PDF.  Pandoc uses LaTex for the conversion.  The file scripts/ofBookTemplate.tex
