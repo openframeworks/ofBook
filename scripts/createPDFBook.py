@@ -29,6 +29,7 @@
 import os
 import re
 import subprocess
+import sys
 
 # Output path
 outputPath = os.path.join("..", "output")
@@ -98,14 +99,23 @@ for flag in generalOptions+latexOptions:
 # directly from trying to build a PDF in TeXworks.
 texOutputOptions = ["--output={0}".format(texBookPath)]
 texPandocCommand = ["pandoc"] + texOutputOptions + inputOptions + generalOptions + latexOptions
-returnCode = subprocess.call(texPandocCommand)
+returncode = -1
+try:
+        returnCode = subprocess.call(texPandocCommand)
+except OSError:
+        print("You seem to lack pandoc. Is it installed and placed in $PATH?")
+        sys.exit(1)
 if returnCode == 0: 
 	print "Successful building of {0}".format(texBookPath)
 else:
 	print "Error in building of {0}".format(texBookPath)
 
 # Call pandoc
-returnCode = subprocess.call(pandocCommand)
+try:
+        returnCode = subprocess.call(pandocCommand)
+except OSError:
+        print("You seem to lack pandoc. Is it installed and placed in $PATH?")
+        sys.exit(1)
 if returnCode == 0: 
 	print "Successful building of {0}".format(pdfBookPath)
 else:
