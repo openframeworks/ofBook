@@ -273,9 +273,6 @@ void testApp::setup(){
         data.ala = ofToFloat(split[3]);
         dataPoints.push_back(data);
     }
-
- // let's round up to the next "10" on the max value
-    maxValue = ceil(maxValue / 10) * 10;
     
     
     // let's find the min and max years, and the max value for the data.
