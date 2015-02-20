@@ -595,7 +595,7 @@ let alone the 100+ page book it grew to be. If you're serious about getting into
 OpenFrameworks, I highly recommend you stop and read the unabridged version of this
 chapter before continuing in ofBook, so that you may understand what you are reading.
 You will find those materials at
-https://github.com/openframeworks/ofBook/tree/master/02_cplusplus_basics/unabridged.md
+https://github.com/openframeworks/ofBook/blob/master/chapters/cplusplus_basics/unabridged.md
 
 ##PS.
 
