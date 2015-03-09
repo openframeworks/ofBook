@@ -471,11 +471,11 @@ ofVec2f lastPoint;
 float minDistance;
 ```
 
-Initialize `minDistance` and `currentedAddingPoints` in `setup()`:
+Initialize `minDistance` and `leftMouseButtonPressed` in `setup()`:
 
 ```cpp
 minDistance = 10;
-currentlyAddingPoints = false;
+leftMouseButtonPressed = false;
 ```  
 
 Now we are going to take advantage of two new functions - [`mousePressed(int x, int y, int button)`](http://www.openframeworks.cc/documentation/application/ofBaseApp.html#!show_mousePressed "mousePressed openFrameworks Documentation") and [`mouseReleased(int x, int y, int button)`](http://www.openframeworks.cc/documentation/application/ofBaseApp.html#show_mouseReleased "mouseReleased openFrameworks Documentation").  These are functions that are built into your application by default.  They are event handling functions, so whenever a mouse button is pressed, whatever code you put into `mousePressed(...)` is called.  It's important to note that `mousePressed(...)` is only called when the mouse button is initially pressed.  No matter how long we hold the mouse button down, the function is still only called once.  The same goes for `mouseReleased(...)`.  
