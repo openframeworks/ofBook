@@ -174,7 +174,7 @@ for(auto & mySelfie : mySelfies) {
 auto myFriends = snapChatClient.getFriends();
 
 //now let's send them to all my friends
-for(auto & myFriend : myFriend) { 
+for(auto & myFriend : myFriends) { 
 	if (myFriend.isHot()) {
 		for(auto & mySelfie : mySelfies) {
 			myFriend.sendImage(mySelfie); // (2)
