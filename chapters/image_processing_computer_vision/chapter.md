@@ -9,7 +9,7 @@ Edited by [Brannon Dorsey](http://brannondorsey.com)
 
 ### Digital image acquisition and data structures
 
-This chapter introduces techniques for manipulating (and extracting certain kinds of information from) *raster images*. Such images are sometimes also known as *bitmap images* or *pixmap images*, though we'll just use the generic term **image** to refer to any array (or *buffer*) of numbers that represenRat the color values of a rectangular grid of *pixels* ("picture elements"). In openFrameworks, such buffers come in a variety of flavors, and are used within (and managed by) a wide variety of convenient container objects, as we shall see.
+This chapter introduces techniques for manipulating (and extracting certain kinds of information from) *raster images*. Such images are sometimes also known as *bitmap images* or *pixmap images*, though we'll just use the generic term **image** to refer to any array (or *buffer*) of numbers that represent the color values of a rectangular grid of *pixels* ("picture elements"). In openFrameworks, such buffers come in a variety of flavors, and are used within (and managed by) a wide variety of convenient container objects, as we shall see.
 
 #### Loading and Displaying an Image
 
@@ -479,7 +479,7 @@ It's helpful to know that there's generally a performance penalty for moving ima
 
 #### RGB, Grayscale, and other Color Space Conversions
 
-Many computer vision algorithms (though not all!) are commonly performed on grayscale or monochome images. If color isn't important to your vision problem, working in grayscale can significantly improve the speed of image processing routines, because it reduces both the number of calculations as well as the amount of memory required to process the data. Assuming your source data is in color (as is common with webcams), depending on your application, you'll either clobber your color image to grayscale directly, or create a grayscale copy for subsequent processing. 
+Many computer vision algorithms (though not all!) are commonly performed on grayscale or monochrome images. If color isn't important to your vision problem, working in grayscale can significantly improve the speed of image processing routines, because it reduces both the number of calculations as well as the amount of memory required to process the data. Assuming your source data is in color (as is common with webcams), depending on your application, you'll either clobber your color image to grayscale directly, or create a grayscale copy for subsequent processing. 
 
 The simplest method to convert a color image to grayscale is to clobber its data by changing its OF image type to `OF_IMAGE_GRAYSCALE`. Note that this causes the image to be reallocated and any ofTextures to be updated, so it can be an expensive operation if done frequently. It's also a "destructive operation", in the sense that the color information is lost in the conversion.</p>
 
@@ -559,7 +559,7 @@ sfdflkj
 
 3.5. The Vector space: Extracting information from Blob Contours
    - Area, Perimeter, Centroids, Bounding box
-   - Calculcating blob orientation (central axis)
+   - Calculating blob orientation (central axis)
    - Locating corners in contours, estimating local curvature
    - 1D Filtering of contours to eliminate noise, i.e local averaging.
    - Other shape metrics; shape recognition
