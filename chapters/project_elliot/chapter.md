@@ -1,4 +1,4 @@
-#Case Study : Line Segments Space
+#Line Segments Space
 
 *by [Mimi Son and  Elliot Woods (Kimchi and Chips)](http://www.kimchiandchips.com/)*
 
@@ -125,10 +125,8 @@ Editing a 3D scene through a computer monitor is often confusing, especially whe
 One simple way of seeing the scene from 2 'views' is to draw shadows into the scene, enabling us to judge depth in the scene much more easily.
 
 ![Without shadows](images/shadows_without.png)
-Without shadows
 
 ![With shadows](images/shadows_with.png)
-With shadows
 
  ==suggest arranging these 2 images side by side==
 

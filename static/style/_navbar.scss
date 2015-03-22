@@ -1,0 +1,114 @@
+
+nav {
+  background-color: rgba(249,249,249,1);
+  border-top: 1px solid rgba(233,233,233,1);
+  border-left: 1px solid rgba(233,233,233,1);
+  border-right: 1px solid rgba(233,233,233,1);
+  bottom: 0;
+  box-shadow: 0 0 1px rgba(0,0,0,.07);
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  position: fixed;
+  top: 70px;
+  width: 230px;
+  ul#nav-parts {
+    color: rgba(128,128,128,1);
+    font-weight: 100;
+    line-height: 140%;
+    list-style-type: none;
+    margin: 0;
+    -webkit-padding-start: 0;
+    padding-left:0px;
+
+    li.group {
+      border-bottom: 1px solid rgba(233,233,233,1);
+      font-family: 'fira';
+      font-size: 1.2em;
+      line-height: 150%;
+      list-style-type: none;
+      margin: 0;
+      padding: 10px 30px 10px 20px;
+      cursor: pointer;
+      color: #333;
+
+
+      overflow: hidden;
+      max-height:42px;
+      transition: all 0.3s;
+
+      &.selected {
+        background-color: rgba(255,255,255,1);
+        max-height:800px;
+        cursor: default;
+      }
+
+      ul {
+        padding: 0px;
+
+        li.chapter {
+          display:block;
+          line-height:13px;
+          margin: 9px 0px;
+          a {
+            font-size:13px;
+            color: rgba(128,128,128,1);
+          }
+
+          li.section {
+            display:none;
+            font-weight: normal;
+            margin: 5px 0px;
+
+
+            a {
+              color: #B8B8B8;
+              transition: all 0.2s;
+
+            }
+
+            &.selected {
+              a {
+                color: #EC6A88; 
+                
+              }
+
+            }
+          }
+
+          &.selected {
+            //font-weight: bold;
+
+            li.section {
+              display:block;
+            }
+
+          }
+
+
+
+        }
+      }
+    }
+  }
+}
+
+
+li.chapter.selected {
+  background-color:fff;
+}
+
+.chapterContents.selected{
+  padding-left: 10px;
+  border-left: 3px solid #eee;
+
+}
+
+.chapterTitle.selected{
+   background-color: #f9f9f9;
+  padding: 5px;
+  margin-bottom: 7px;
+}
+nav ul.chapter.selected {
+  background-color:#ccc;
+}
+

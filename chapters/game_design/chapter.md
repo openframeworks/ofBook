@@ -1,4 +1,4 @@
-#Experimental Game Development in openFrameworks
+#Experimental Game Development
 
 *by [Phoenix Perry](http://www.phoenixperry.com) and [Jane Friedhoff](janefriedhoff.com)*
 
@@ -72,8 +72,9 @@ Let’s start with our testApp. There are a few things we definitely know we’l
 
 ###Gamestates
 
-First let’s create the basic structure of our game. Games typically have at least three parts: a start screen, the game itself, and an end screen. We need to keep track of which section of the game we’re in, which we’ll do using a variable called a game state. In this example, our game state variable is a string, and the three parts of our game are `"start"`, `"game"`, and `"end"`. Let’s add a score and a player at this point as well. 
-```
+First let’s create the basic structure of our game. Games typically have at least three parts: a start screen, the game itself, and an end screen. We need to keep track of which section of the game we’re in, which we’ll do using a variable called a game state. In this example, our game state variable is a string, and the three parts of our game are `"start"`, `"game"`, and `"end"`. Let’s add a score and a player at this point as well.
+ 
+```cpp
 string game_state;
 int score;
 Player player_1;
@@ -81,7 +82,7 @@ Player player_1;
 
 We’ll then divide up `testApp`’s `update()` and `draw()` loops between those game states:
 
-```
+```cpp
 //--------------------------------------------------------------
 void testApp::update(){
    if (game_state == "start") {
@@ -103,7 +104,7 @@ void testApp::draw(){
 
 Let’s set the initial value of `game_state` to `"start"` right when the app begins.
 
-```
+```cpp
 //--------------------------------------------------------------
 void testApp::setup(){
    game_state = "start";
@@ -113,7 +114,7 @@ void testApp::setup(){
 
 Finally, let’s make sure that we can move forward from the start screen. In this example, when the player is on the start screen and releases the space key, they’ll be taken to the game.
 
-```
+```cpp
 //--------------------------------------------------------------
 void testApp::keyReleased(int key){
    
@@ -129,7 +130,7 @@ void testApp::keyReleased(int key){
 
 Great! Let’s move onto our player. Our player’s class looks like this:
 
-```
+```cpp
 class Player {
 public:
    ofPoint pos;
@@ -168,7 +169,7 @@ The problem is that, in openFrameworks, `keyPressed()` does not return all the k
 
 Here’s what our new `keyPressed()` and `keyReleased()` functions look like:
 
-```
+```cpp
 //--------------------------------------------------------------
 void testApp::keyPressed(int key){
    if (game_state == "game") {
@@ -217,7 +218,7 @@ void testApp::keyReleased(int key){
 
 Add `ofImage player_image` to `testApp.h`, then load the player’s image and instantiate the player in `testApp`’s `setup()`:
 
-```
+```cpp
 void testApp::setup(){
    game_state = "start";
    player_image.loadImage("player.png");
@@ -228,7 +229,7 @@ void testApp::setup(){
 
 Finally, update and draw your player in the appropriate part of `testApp::update()` and `testApp::draw()`:
 
-```
+```cpp
 //--------------------------------------------------------------
 void testApp::update(){
    if (game_state == "start") {
@@ -257,7 +258,7 @@ Let’s make our bullets next. In order to have a variable number of bullets on 
 
 Our bullet class will look a lot like the player class, having a position, speed, width, pointer to an image, and various functions. The big difference is that the bullets will keep track of who they came from (since that will affect who they can hurt and which direction they move).
 
-```
+```cpp
 class Bullet {
 public:
    ofPoint pos;
@@ -275,7 +276,7 @@ public:
 
 Our `Bullet.cpp` will look like this:
 
-```
+```cpp
 void Bullet::setup(bool f_p, ofPoint p, float s, ofImage * bullet_image) {
    from_player = f_p;
    pos = p;
@@ -306,7 +307,7 @@ Now that our bullet class is implemented, we can go back to `testApp::setup()` a
  
 For now, our `update_bullets()` function will call the `update()` function in each bullet, and will also get rid of bullets that have flown offscreen in either direction.
 
-```
+```cpp
 //--------------------------------------------------------------
 void testApp::update_bullets() {
    for (int i = 0; i < bullets.size(); i++) {
@@ -321,7 +322,7 @@ void testApp::update_bullets() {
 
 Our `testApp::update()` and `testApp::draw()` will now look like this:
 
-```
+```cpp
 //--------------------------------------------------------------
 void testApp::update(){
    if (game_state == "start") {
@@ -350,7 +351,7 @@ void testApp::draw(){
 
 Finally, let’s add an if-statement to our `keyPressed()` so that when we press the spacebar during the game, we spawn a player bullet: 
 
-```
+```cpp
 //--------------------------------------------------------------
 void testApp::keyPressed(int key){
    if (game_state == "game") {
@@ -386,7 +387,7 @@ Remember, the first parameter in the bullet’s setup is whether it comes from t
 Let’s move on to our enemy. This process should be familiar by now. Add an `ofImage enemy_image;` and a `vector<Enemy> enemies;` to `testApp.h`. Additionally, add `float max_enemy_amplitude;` and `float max_enemy_shoot_interval;` to `testApp.h`--these are two of the enemy parameters we’ll affect with OSC.
  Your enemy class will look like this:
 
-```
+```cpp
 class Enemy {
 public:
    ofPoint pos;
@@ -409,7 +410,7 @@ public:
 Our enemy’s horizontal movement will be shaped by the values fed to a sine wave (which we’ll see in a moment). We’ll keep track of our amplitude variable (so different enemies can have different amplitudes). We’ll also want to keep track of whether enough time has passed for this enemy to shoot again, necessitating the start_shoot and shoot_interval variables. Both of these variables will actually be set in our setup() function. Finally, we’ll have a boolean function that will tell us whether the enemy can shoot this frame or not.
  Our enemy class will look like this:
 
-```
+```cpp
 void Enemy::setup(float max_enemy_amplitude, float max_enemy_shoot_interval, ofImage * enemy_image) {
    pos.x = ofRandom(ofGetWidth());
    pos.y = 0;
@@ -441,7 +442,7 @@ In update, we’re using the current elapsed time in frames to give us a constan
 In `time_to_shoot()`, we check to see whether the difference between the current time and the time this enemy last shot is greater than the enemy’s shooting interval. If it is, we set `start_shoot` to the current time, and return true. If not, we return false.
  Let’s integrate our enemies into the rest of our `testApp.cpp`:
 
-```
+```cpp
 //--------------------------------------------------------------
 void testApp::setup(){
    game_state = "start";
@@ -496,7 +497,7 @@ void testApp::draw(){
 
 Let’s implement our bullet collision checks. Add a void `check_bullet_collisions();` to your `testApp.h`, then write the following function: 
 
-```
+```cpp
 //--------------------------------------------------------------
 void testApp::check_bullet_collisions() {
    for (int i = 0; i < bullets.size(); i++) {
@@ -527,7 +528,7 @@ This code is a bit nested, but actually pretty simple. First, it goes through ea
 
 Don’t forget to call `check_bullet_collisions()` as part of `update_bullets()`:
 
-```
+```cpp
 //--------------------------------------------------------------
 void testApp::update_bullets() {
    for (int i = 0; i < bullets.size(); i++) {
@@ -545,7 +546,7 @@ void testApp::update_bullets() {
 Great! Except… we don’t have any enemies yet! Definitely an oversight. This is where our level controller comes in. Add `LevelController level_controller;` to your `testApp.h`.
  Our level controller class is super-simple:
 
-```
+```cpp
 class LevelController {
 public:
    float start_time;
@@ -560,7 +561,7 @@ As you might guess, all it’ll really do is keep track of whether it’s time t
 
 Inside our `LevelController.cpp`:
 
-```
+```cpp
 void LevelController::setup(float s) {
    start_time = s;
    interval_time = 500;
@@ -578,7 +579,7 @@ When we set up our level controller, we’ll give it a starting time. It’ll us
 
 We’ll wait to set up our level controller until the game actually starts--namely, when the game state changes from `"start"` to `"game"`.
 
-```
+```cpp
 void testApp::keyReleased(int key){
    if (game_state == "start") {
        game_state = "game";
@@ -591,7 +592,7 @@ void testApp::keyReleased(int key){
 
 Next we’ll integrate it into our `testApp::update()`:
 
-```
+```cpp
 //--------------------------------------------------------------
 void testApp::update(){
    if (game_state == "start") {
@@ -626,7 +627,7 @@ Before we finish, let’s add in our last OSC feature: the ability to throw in b
 
 `Life.h` should look like this:
 
-```
+```cpp
 class Life {
 public:
    ofPoint pos;
@@ -643,7 +644,7 @@ public:
 
 And it’ll function like this--a lot like the bullet:
 
-```
+```cpp
 void Life::setup(ofImage * _img) {
    img = _img;
    width = img->width;
@@ -661,7 +662,7 @@ void Life::draw() {
 
 Our `update_bonuses()` function works a lot like the bullet collision function:
 
-```
+```cpp
 //--------------------------------------------------------------
 void testApp::update_bonuses() {
    for (int i = bonuses.size()-1; i > 0; i--) {
@@ -680,7 +681,7 @@ void testApp::update_bonuses() {
 
 All that’s left for our lives functionality is to alter `testApp::update()` and `testApp::draw()`.
 
-```
+```cpp
 //--------------------------------------------------------------
 void testApp::update(){
    if (game_state == "start") {
@@ -739,7 +740,7 @@ Finally, we’ve been a bit stingy with visual feedback, so let’s add in a sta
 
 Change `testApp::setup()` to load in those assets:
 
-```
+```cpp
 //--------------------------------------------------------------
 void testApp::setup(){
     ...
@@ -754,7 +755,7 @@ Draw them in the appropriate game states using `start_screen.draw(0, 0);` and `e
 
 Add in the last two functions:
 
-```
+```cpp
 //--------------------------------------------------------------
 void testApp::draw_lives() {
    for (int i = 0; i < player_1.lives; i++) {
@@ -791,14 +792,14 @@ And let’s add the line to import the OSC at the top of your file after your pr
 
 Add the following: 	
 
-```
+```cpp
 #include <iostream>
 #include "ofxOsc.h"
 ```
 
 Next let’s set up all of our variables we are going to use to receive OSC data and map it to in game values. Add the following code into your class.
 
-```
+```cpp
 class LiveTesting
 {
 public: 
@@ -852,7 +853,7 @@ At this point, go ahead and launch TouchOSC on your device and the Touch OSC des
 
 We are going to make this interface now and deploy it to our phone. We will make this interface to control these parameters in our game: 
 
-```
+```cpp
 //these are the values we will be tweaking during testing
 float max_enemy_amplitude; 
 int interval_time;
@@ -947,7 +948,7 @@ Switch back to your device. You should see your computer listed under FOUND HOST
 
 Finally, TouchOSC is set up. Let’s link it to our game and run our very first playtest. Go back to the programming IDE. Open up `LiveTesting.cpp`. In our default constructor, we will now set up our game to send and receive values over the network. To do this we will need to know which Ip address and port on our device we will send to as well as set up a port on our local computer’s network to receive incoming data. Your computer will have only one IP address but it can send and receive data on thousands of ports. While we aren’t going too deep into ports there, you can think of the IP address like a boat pier. Lots of boats can be docked at a single pier. This is no different. Your ports are your docks and your IP address is your pier. You can think of the data like the people departing and arriving. You’ll need a separate port for each activity in this scenario. If a port isn’t used by your operating system, you can send and receive data there. We are going to use `8000` and `8001`. The final thing to establish is the Address Pattern. It will look like a file path and it will allow us to specify the address pattern match our messages to their right values. Add this code: 
 
-```
+```cpp
 #include "LiveTesting.h"
 
 LiveTesting::LiveTesting(){
@@ -977,7 +978,7 @@ Let’s move on to the next major function we want to write. We need to run an u
 
 Each time we make a change on our device, it will send over the updates to our code via Touch OSC. We want to make sure we get all of the incoming messages that are being sent so we will create a simple while loop. We will loop through the whole list of messages that came into our game that frame and match it to the corresponding variable in our game via if statements. 
 
-```
+```cpp
   while (receiver.hasWaitingMessages()) {        
         //get the next message
         ofxOscMessage m;
@@ -987,7 +988,7 @@ Each time we make a change on our device, it will send over the updates to our c
        
 Every incoming message will come with its own unique address tag and new arguments. You can get access to a message's address via the getAddress function. For example,`if(m.getAddress() == "/game/max_enemy_amplitude")`, will test to see if the message address is /game/max_enemy_amplitude. If it is, set the variable equal to that value in your game's codebase and they are linked together. Every swipe of the knob will translate to direct changes in your game. We do this for every single value we want to set.  
 
-```      
+```cpp      
 	if(m.getAddress() == "/game/max_enemy_amplitude")
         {
             max_enemy_amplitude = m.getArgAsFloat(0);
@@ -1009,7 +1010,7 @@ To pack up all of the values in our current running game and send them back to t
 
 Here's the complete code to add to your LiveTesting.cpp file 
 
-```
+```cpp
 void LiveTesting::update()
 {
     //our simple while loop to make sure we get all of our messages

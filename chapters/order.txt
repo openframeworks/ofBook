@@ -1,33 +1,33 @@
-foreword
+Foreword
 	foreword
-basics
+Basics
 	of_philosophy
 	cplusplus_basics
 	setup_and_project_structure
 	intro_to_graphics
 	OOPs!
-approaches
+Approaches
 	animation
 	data_vis
 	game_design
 	image_processing_computer_vision 
-i/o
+I/O
 	hardware
 	sound
 	network	
-advanced topics
+Advanced topics
 	advanced_graphics
 	math
 	memory
 	threads
 	ios	
 	c++11
-project breakdowns
-	project_elliot
-	project_eva
-	project_joel
-tools 
+Tools
 	version_control_with_git
 	ofSketch
 	installation_up_4evr_macosx
 	installation_up_4evr_linux
+Case studies
+	project_elliot
+	project_eva
+	project_joel

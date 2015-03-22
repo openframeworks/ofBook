@@ -9,7 +9,7 @@ Edited by [Brannon Dorsey](http://brannondorsey.com)
 
 ### Digital image acquisition and data structures
 
-This chapter introduces techniques for manipulating (and extracting certain kinds of information from) *raster images*. Such images are sometimes also known as *bitmap images* or *pixmap images*, though we'll just use the generic term **image** to refer to any array (or *buffer*) of numbers that represent the color values of a rectangular grid of *pixels* ("picture elements"). In openFrameworks, such buffers come in a variety of flavors, and are used within (and managed by) a wide variety of convenient container objects, as we shall see.
+This chapter introduces techniques for manipulating (and extracting certain kinds of information from) *raster images*. Such images are sometimes also known as *bitmap images* or *pixmap images*, though we'll just use the generic term **image** to refer to any array (or *buffer*) of numbers that represenRat the color values of a rectangular grid of *pixels* ("picture elements"). In openFrameworks, such buffers come in a variety of flavors, and are used within (and managed by) a wide variety of convenient container objects, as we shall see.
 
 #### Loading and Displaying an Image
 
@@ -50,9 +50,9 @@ void ofApp::draw(){
 	ofBackground(255);
 	ofSetColor(255);
 
-	int imgW = myImage.width;
-	int imgH = myImage.height;
-	myImage.draw(10, 10, imgW * 10, imgH * 10);
+	int imgWidth  = myImage.width;
+	int imgHeight = myImage.height;
+	myImage.draw(10, 10, imgWidth * 10, imgHeight * 10);
 }
 ```
 
@@ -66,24 +66,24 @@ If you're new to working with images in OF, it's worth pointing out that you sho
 
 In openFrameworks, raster images can come from a wide variety of sources, including (but not limited to):
 
-- an image file (stored in a commonly-used format like .JPEG, .PNG, .TIFF, or .GIF), loaded and decompressed from your hard drive into an `ofImage`;
-- a real-time image stream from a webcam or other video camera (using an `ofVideoGrabber`);
-- a sequence of frames loaded from a digital video file (using an `ofVideoPlayer`);
-- a buffer of pixels grabbed from whatever you've already displayed on your screen, captured with `ofImage::grabScreen()`;
-- a synthetic computer graphic rendering, perhaps obtained from an `ofFBO` or stored in an `ofPixels` or `ofTexture` object;
-- a real-time video from a more specialized variety of camera, such as a 1394b Firewire camera (via `ofxLibdc`), a networked Ethernet camera (via `ofxIpCamera`), a Canon DSLR (using `ofxCanonEOS`), or with the help of a variety of other community-contributed addons like `ofxQTKitVideoGrabber`, `ofxRPiCameraVideoGrabber`, etc.;
-- perhaps more exotically, a *depth image*, in which pixel values represent *distances* instead of colors. Depth images can be captured from real-world scenes with special cameras (such as a Microsoft Kinect via the `ofxKinect` addon), or extracted from synthetic CGI scenes using (for example) `ofFBO::getDepthTexture()`.
+- an image file (stored in a commonly-used format like .JPEG, .PNG, .TIFF, or .GIF), loaded and decompressed from your hard drive into an `ofImage`
+- a real-time image stream from a webcam or other video camera (using an `ofVideoGrabber`)
+- a sequence of frames loaded from a digital video file (using an `ofVideoPlayer`)
+- a buffer of pixels grabbed from whatever you've already displayed on your screen, captured with `ofImage::grabScreen()`
+- a generated computer graphic rendering, perhaps obtained from an `ofFBO` or stored in an `ofPixels` or `ofTexture` object
+- a real-time video from a more specialized variety of camera, such as a 1394b Firewire camera (via `ofxLibdc`), a networked Ethernet camera (via `ofxIpCamera`), a Canon DSLR (using `ofxCanonEOS`), or with the help of a variety of other community-contributed addons like `ofxQTKitVideoGrabber`, `ofxRPiCameraVideoGrabber`, etc.
+- perhaps more exotically, a *depth image*, in which pixel values represent *distances* instead of colors. Depth images can be captured from real-world scenes with special cameras (such as a Microsoft Kinect via the `ofxKinect` addon), or extracted from CGI scenes using (for example) `ofFBO::getDepthTexture()`.
 
 ![We don't have the rights to this image, it's just something I found on the internet. We need something similar](images/kinect_depth_image.png) 
-*An example of a depth image (left) and a corresponding RGB color image (right), captured simultaneously with a Microsoft Kinect. In the depth image, the brightness of a pixel represents its proximity to the camera.*
+*An example of a depth image (left) and a corresponding RGB color image (right), captured simultaneously with a Microsoft Kinect. In the depth image, the brightness of a pixel represents its proximity to the camera. (Note that these two images, presented in a raw state, are not yet "calibrated" to each other, meaning that there is not an exact pixel-for-pixel correspondence between a pixel's color and its corresponding depth.)*
 
 Incidentally, OF makes it easy to **load images directly from the Internet**, by using a URL as the filename argument, as in `myImage.loadImage("http://en.wikipedia.org/wiki/File:Example.jpg");`. Keep in mind that doing this will load the remotely-stored image *synchronously*, meaning your program will "block" (or freeze) while it waits for all of the data to download from the web. For an improved user experience, you can also load Internet images *asynchronously* (in a background thread), using the response provided by `ofLoadURLAsync()`; a  sample implementation of this can be found in the openFrameworks *imageLoaderWebExample* graphics example. Now that you can load images stored on the Internet, you can fetch images *computationally* using fun APIs (like those of [Temboo](https://temboo.com/library/), [Instagram](http://instagram.com/developer/) or [Flickr](https://www.flickr.com/services/api/)), or from dynamic online sources such as live traffic cameras.
 
 #### Acquiring and Displaying a Webcam Image
 
-The procedure for **acquiring a video stream** from a live webcam or digital movie file is no more difficult than loading an `ofImage`. The main conceptual difference is that the image data contained within an `ofVideoGrabber` or `ofVideoPlayer` happens to be continually refreshed, usually about 30 times per second (or at the framerate of the footage).
+The procedure for **acquiring a video stream** from a live webcam or digital movie file is no more difficult than loading an `ofImage`. The main conceptual difference is that the image data contained within an `ofVideoGrabber` or `ofVideoPlayer` object happens to be continually refreshed, usually about 30 times per second (or at the framerate of the footage). Each time you ask this object to render its data to the screen, as in `myVideoGrabber.draw()` below, the pixels will contain freshly updated values. 
 
-The following program (which you can find elaborated in the OF *videoGrabberExample*) shows the basic procedure. In this example below, for some added fun, we also retrieve the buffer of data that contains the `ofVideoGrabber`'s pixels, then "invert" this data (to produce a "photographic negative") and display it with an `ofTexture`.
+The following program (which you can find elaborated in the OF *videoGrabberExample*) shows the basic procedure. In this example below, for some added fun, we also retrieve the buffer of data that contains the `ofVideoGrabber`'s pixels, then arithmetically "invert" this data (to produce a "photographic negative") and display it with an `ofTexture`.
 
 The header file for our app declares an `ofVideoGrabber`, which we will use to acquire video data from our computer's default webcam. We also declare a buffer of unsigned chars to store the inverted video frame, and the `ofTexture` which we'll use to display it:
 
@@ -111,9 +111,9 @@ class ofApp : public ofBaseApp{
 };
 
 ```
-Does the `unsigned char*` declaration look unfamiliar? It's important to recognize and understand, because this is a nearly universal way of storing and exchanging image data. The `unsigned` keyword means that the values which describe the colors in our image are exclusively positive numbers. The `char` means that each color component of each pixel is stored in a single 8-bit number—a byte, with values ranging from 0 to 255—which for many years was also the data type in which *char*acters were stored. And the `*` means that the data named by this variable is not just a single unsigned char, but rather, an *array* of unsigned chars (or more accurately, a *pointer* to a buffer of unsigned chars). For more information about such datatypes, see Chapter 9, *Memory in C++*.
+Does the `unsigned char*` declaration look unfamiliar? It's important to recognize and understand, because this is a nearly universal way of storing and exchanging image data. The `unsigned` keyword means that the values which describe the colors in our image are exclusively positive numbers. The `char` means that each color component of each pixel is stored in a single 8-bit number—a byte, with values ranging from 0 to 255—which for many years was also the data type in which *char*acters were stored. And the asterisk (`*`) means that the data named by this variable is not just a single unsigned char, but rather, an *array* of unsigned chars (or more accurately, a *pointer* to a buffer of unsigned chars). For more information about such datatypes, see the *Memory in C++* chapter.
 
-Below is the complete code of our webcam-grabbing .cpp file. As you might expect, the `ofVideoGrabber` object provides many more options and settings, not shown here. These allow you to do things like listing and selecting from available camera devices; setting your capture dimensions and framerate; and (depending on your hardware and drivers) adjusting parameters like camera exposure and contrast.
+Below is the complete code of our webcam-grabbing .cpp file. As you might expect, the `ofVideoGrabber` object provides many more methods and settings, not shown here. These allow you to do things like listing and selecting from available camera devices; setting your capture dimensions and framerate; and (depending on your hardware and drivers) adjusting parameters like camera exposure and contrast.
 
 Note that the example segregates our heavy computation into `update()`, and rendering our graphics into `draw()`. This is a recommended pattern for structuring your code. 
 
@@ -148,9 +148,14 @@ void ofApp::update(){
 
 		// Obtain a pointer to the grabber's image data.
 		unsigned char* pixelData = myVideoGrabber.getPixels();
-
-		// For every byte of the RGB image data,
+		
+		// Reckon the total number of bytes to examine. 
+		// This is the image's width times its height,
+		// times 3 -- because each pixel requires 3 bytes
+		// to store its R, G, and B color components.  
 		int nTotalBytes = camWidth*camHeight*3;
+		
+		// For every byte of the RGB image data,
 		for (int i=0; i<nTotalBytes; i++){
 
 			// pixelData[i] is the i'th byte of the image;
@@ -178,7 +183,7 @@ This application continually displays the live camera feed, and also presents a 
 
 Acquiring frames from a Quicktime movie or other digital video file stored on disk is an almost identical procedure. See the OF *videoPlayerExample* implementation or `ofVideoGrabber` [documentation](http://openframeworks.cc/documentation/video/ofVideoGrabber.html) for details.
 
-A common pattern among developers of interactive computer vision systems is to enable easy switching between a pre-stored "sample" video of your scene, and video from a live camera grabber. That way, you can test and refine your processing algorithms in the comfort of your hotel room, and then switch to "real" camera input when you're back at the installation site. A hacky if effective example of this pattern can be found in the openFrameworks *opencvExample*, in the addons example directory, where the switch is built using a `#define` [preprocessor directive](http://www.cplusplus.com/doc/tutorial/preprocessor/):
+A common pattern among developers of interactive computer vision systems is to enable easy switching between a pre-stored "sample" video of your scene, and video from a live camera grabber. That way, you can test and refine your processing algorithms in the comfort of your hotel room, and then switch to "real" camera input when you're back at the installation site. A hacky if effective example of this pattern can be found in the openFrameworks *opencvExample*, in the addons example directory, where the "switch" is built using a `#define` [preprocessor directive](http://www.cplusplus.com/doc/tutorial/preprocessor/):
 
 ```cpp
     //...
@@ -219,7 +224,7 @@ In point of fact, pixel values are almost universally stored, at the hardware le
 ```
 This way of storing image data may run counter to your expectations, since the data certainly *appears* to be two-dimensional when it is displayed. Yet, this is the case, since computer memory consists simply of an ever-increasing linear list of address spaces. 
 
-Note how this data includes no details about the image's width and height. Should this list of values be interpreted as a grayscale image which is 12 pixels wide and 16 pixels tall, or 8x24, or 3x64? Could it be interpreted as a color image? Such 'meta-data' is specified elsewhere — generally in a container object like an `ofImage`.
+Note how this data includes no details about the image's width and height. Should this list of values be interpreted as a grayscale image which is 12 pixels wide and 16 pixels tall, or 8x24, or 3x64? Could it be interpreted as a color image? Such 'meta-data' is specified elsewhere — generally in a container object like an `ofImage`. 
 
 #### Grayscale Pixels and Array Indices
 
@@ -227,7 +232,7 @@ It's important to understand how pixel data is stored in computer memory. Each p
 
 ![Based on Shiffman's image in the Processing tutorial](images/pixels_in_memory.png)
 
-Observe how the (one-dimensional) list of values have been distributed to successive (two-dimensional) pixel locations in the image — wrapping over the right edge just like English text.
+Observe how a one-dimensional list of values in memory can be arranged into successive rows of a two-dimensional grid of pixels, and vice versa.
 
 It frequently happens that you'll need to determine the array-index of a given pixel *(x,y)* in an image that is stored in an `unsigned char*` buffer. This little task comes up often enough that it's worth committing the following pattern to memory:
 
@@ -236,9 +241,9 @@ It frequently happens that you'll need to determine the array-index of a given p
 // unsigned char *buffer, an array storing a one-channel image
 // int x, the horizontal coordinate (column) of your query pixel
 // int y, the vertical coordinate (row) of your query pixel
-// int imgW, the width of your image
+// int imgWidth, the width of your image
 
-int arrayIndex = y*imgW + x;
+int arrayIndex = y*imgWidth + x;
 
 // Now you can GET values at location (x,y), e.g.:
 unsigned char pixelValueAtXY = buffer[arrayIndex];
@@ -252,16 +257,16 @@ Reciprocally, you can also fetch the x and y locations of a pixel corresponding 
 // Given:
 // A one-channel (e.g. grayscale) image
 // int arrayIndex, an index in that image's array of pixels
-// int imgW, the width of the image
+// int imgWidth, the width of the image
 
-int y = arrayIndex / imgW; // NOTE, this is integer division!
-int x = arrayIndex % imgW;
+int y = arrayIndex / imgWidth; // NOTE, this is integer division!
+int x = arrayIndex % imgWidth; // The friendly modulus operator.
 ```
 
 Most of the time, you'll be working with image data that is stored in a higher-level container object, such as an `ofImage`. There are *two* ways to get the values of pixel data stored in such a container. In one method, we can ask the image for its array of unsigned char pixel data, using `.getPixels()`, and then fetch the value we want from this array. Many image containers, such as `ofVideoGrabber`, also support a `.getPixels()` function.
 
 ```cpp
-int arrayIndex = y*imgW + x;
+int arrayIndex = y*imgWidth + x;
 unsigned char* myImagePixelBuffer = myImage.getPixels();
 unsigned char pixelValueAtXY = myImagePixelBuffer[arrayIndex];
 ```
@@ -292,7 +297,9 @@ class ofApp : public ofBaseApp{
 	public:
 		void setup();
 		void draw();
+		
 		ofImage laserTagImage;
+		// replace this ofImage with live video, eventually
 };
 ```
 
@@ -316,12 +323,13 @@ void ofApp::draw(){
 	int w = laserTagImage.getWidth();
 	int h = laserTagImage.getHeight();
 
-	float maxBrightness = 0;  // these are used in the search
+	float maxBrightness  = 0; // these are used in the search
 	int   maxBrightnessX = 0; // for the brightest location
 	int   maxBrightnessY = 0;
 
 	// Search through every pixel. If it is brighter than any
 	// we've seen before, store its brightness and coordinates.
+	// After testing every pixel, we'll know which is brightest!
 	for (int y=0; y<h; y++) {
 		for(int x=0; x<w; x++) {
 			ofColor colorAtXY = laserTagImage.getColor(x, y);
@@ -340,33 +348,84 @@ void ofApp::draw(){
 
 	// Draw a circle at the brightest location.
 	ofNoFill();
-	ofEllipse (maxBrightnessX, maxBrightnessY, 40,40);
+	ofDrawEllipse (maxBrightnessX, maxBrightnessY, 40,40);
 }
 ```
-Our application locates the bright spot of the laser (which, luckily for us, is the brightest part of the scene) and draws a circle around it. Of course, now that we know where the brightest (or darkest) spot is, we can can develop many interesting applications, such as sun trackers, turtle trackers...
+Our application locates the bright spot of the laser (which, luckily for us, is the brightest part of the scene) and draws a circle around it. Of course, now that we know where the brightest (or darkest) spot is, we can can develop many other interesting applications, such as sun trackers, turtle trackers...
 
 ![Laser Tag by GRL](images/laser_tag_result.jpg)
 
-Being able to locate the brightest pixel in an image has other uses, too. For example, in a depth image (such as produced by a Kinect sensor), the brightest pixel corresponds to the *foremost point*—or the nearest object to the camera. This can be extremely useful if you're making an interactive installation that tracks a user's hand.
+Being able to locate the brightest pixel in an image has other uses, too. For example, in a depth image (such as produced by a Kinect sensor), the brightest pixel corresponds to the *foremost point*—or the nearest object to the camera. Depending on your installation geometry, this can be extremely useful if you're making an interactive installation that tracks a user's hand.
 
 ![Not mine](images/kinect-forepoint.jpg)
 
-*The brightest pixel in a depth image corresponds to the nearest object to the camera.*
+*The brightest pixel in a depth image corresponds to the nearest object to the camera. In the configuration shown here, the "nearest point" is almost certain to be the user's hand.*
 
-Unsurprisingly, tracking *more than one* bright point requires more sophisticated forms of processing. If you're able to design and control the tracking environment, one simple yet effective way to track up to three objects is to search for the reddest, greenest and bluest pixels in the scene. Zachary Lieberman used a technique similar to this in his [*IQ Font*](https://vimeo.com/5233789) collaboration with typographers Pierre & Damien et al., in which letterforms were created by tracking the movements of a specially-marked sports car. 
+Unsurprisingly, tracking *more than one* bright point requires more sophisticated forms of processing. If you're able to design and control the tracking environment, one simple yet effective way to track up to three objects is to search for the reddest, greenest and bluest pixels in the scene. Zachary Lieberman used a technique similar to this in his [*IQ Font*](https://vimeo.com/5233789) collaboration with typographers Pierre & Damien et al., in which letterforms were created by tracking the movements of a specially-marked sports car.
 
 ![Not mine](images/iq_font.jpg)
 
+More generally, you can create a system that tracks a (single) spot with a *specific* color. A very simple way to achieve this is to find the pixel whose color has the shortest Euclidean distance (in "RGB space") to the target color. Here is a code fragment which shows this.
+
+```
+// Our target color is CSS LightPink: #FFB6C1 or (255, 182, 193)
+float rTarget = 255; 
+float gTarget = 182;
+float bTarget = 193; 
+
+// these are used in the search for the location of the pixel 
+// whose color is the closest to our target color.
+float leastDistanceSoFar = 255; 
+int   xOfPixelWithClosestColor = 0; 
+int   yOfPixelWithClosestColor = 0;
+
+for (int y=0; y<h; y++) {
+	for (int x=0; x<w; x++) {
+	
+		// Extract the color components of the pixel at (x,y)
+		// from myVideoGrabber (or some other image source)
+		ofColor colorAtXY = myVideoGrabber.getColor(x, y);
+		float rAtXY = colorAtXY.r; 
+		float gAtXY = colorAtXY.g; 
+		float bAtXY = colorAtXY.b;
+		
+		// Compute the difference between those (r,g,b) values 
+		// and the (r,g,b) values of our target color
+		float rDif = rAtXY - rTarget; // difference in reds 
+		float gDif = gAtXY - gTarget; // difference in greens 
+		float bDif = bAtXY - bTarget; // difference in blues 
+		
+		// The Pythagorean theorem gives us the Euclidean distance.
+		float colorDistance = 
+			sqrt (rDif*rDif + gDif*gDif + bDif*bDif); 
+			
+		if (colorDistance < leastDistanceSoFar){
+			leastDistanceSoFar = colorDistance;
+			xOfPixelWithClosestColor = x;
+			yOfPixelWithClosestColor = y;
+		}
+	}
+}
+
+// At this point, we now know the location of the pixel 
+// whose color is closest to our target color: 
+// (xOfPixelWithClosestColor, yOfPixelWithClosestColor)
+
+```
+
+This technique is often used with an "eyedropper-style" interaction, in which the user selects the target color interactively (by clicking). Note that there are more sophisticated ways of measuring "[color distance](http://en.wikipedia.org/wiki/Color_difference)", such as the Delta-E [calculation](http://colormine.org/delta-e-calculator/) in the CIE76 color space, that are much more robust to variations in lighting and also have a stronger basis in human color perception. 
+
 #### Three-Channel (RGB) Images.
-Our Lincoln portrait image shows an 8-bit, 1-channel image. Each pixel uses a single round number (technically, an unsigned char) to represent a single luminance value. But other data types and formats are possible.
+
+Our Lincoln portrait image shows an 8-bit, 1-channel, "[grayscale](http://en.wikipedia.org/wiki/Grayscale)" image. Each pixel uses a single round number (technically, an unsigned char) to represent a single luminance value. But other data types and formats are possible.
 
 For example, it is common for color images to be represented by 8-bit, *3-channel* images. In this case, each pixel brings together 3 bytes' worth of information: one byte each for red, green and blue intensities. In computer memory, it is common for these values to be interleaved R-G-B. As you can see, color images necessarily contain three times as much data.
 
-![Not mine](https://dl.dropboxusercontent.com/u/10137599/ofbook/interleaved.jpg)
+![Not mine](images/interleaved.jpg)
 
 Take a very close look at your LCD screen, and you'll see how this way of storing the data is directly motivated by the layout of your display's phosphors:
 
-![Not mine](https://dl.dropboxusercontent.com/u/10137599/ofbook/rgb-screen.jpg)
+![Not mine](images/rgb-screen.jpg)
 
 Because the color data are interleaved, accessing pixel values in buffers containing RGB data is slightly more complex. Here's how you can retrieve the values representing the individual red, green and blue components of pixel at a given (x,y) location:
 
@@ -387,15 +446,18 @@ unsigned char redValueAtXY   = buffer[rArrayIndex];
 unsigned char greenValueAtXY = buffer[gArrayIndex];
 unsigned char blueValueAtXY  = buffer[bArrayIndex];
 ```
+This is, then, the three-channel "RGB version" of the basic `index = y*width + x` pattern we used earlier to fetch pixel values from monochrome images.
 
-#### Other Kinds of Image Formats and Containers
+Note that you may occasionally encounter libraries or hardware which deliver RGB bytes in a different order, such as BGR. 
 
-8-bit 1-channel and 8-bit 3-channel images are the most common image formats you'll find. In the wide world of image processing algorithms, however, you'll eventually encounter an exotic variety of other types of images, including:
+#### Varieties of Image Formats
+
+8-bit 1-channel (grayscale) and 8-bit 3-channel (RGB) images are the most common image formats you'll find. In the wide world of image processing algorithms, however, you'll eventually encounter an exotic variety of other types of images, including:
 - 8-bit *palettized* images, in which each pixel stores an index into an array of (up to) 256 possible colors;
 - 16-bit (unsigned short) images, in which each channel uses *two* bytes to store each of the color values of each pixel, with a number that ranges from 0-65535;
 - 32-bit (float) images, in which each color channel's data is represented by floating point numbers.  
 
-For a practical example, consider Microsoft's popular Kinect sensor, which produces a depth image whose values range from 0 to 1090. Clearly, that's wider than the range of 8-bit data (from 0 to 255) one might typically encounter; in fact, it's approximately 11 bits of resolution. To accommodate this, the `ofxKinect` addon employs a 16-bit image to store this information without losing precision. Likewise, the precision of 32-bit floats is almost mandatory for computing high-quality video composites.
+For a practical example, consider once again Microsoft's popular Kinect sensor, whose 2011-era version produces a depth image whose values range from 0 to 1090. Clearly, that's wider than the range of 8-bit values (from 0 to 255) that one typically encounters in image data; in fact, it's approximately 11 bits of resolution. To accommodate this, the `ofxKinect` addon employs a 16-bit image to store this information without losing precision. Likewise, the precision of 32-bit floats is almost mandatory for computing high-quality video composites.
 
 You'll also find:
 - 2-channel images (commonly used for luminance plus transparency);
@@ -405,28 +467,43 @@ You'll also find:
 
 It gets even more exotic. ["Hyperspectral" imagery from the Landsat 8 satellite](https://www.mapbox.com/blog/putting-landsat-8-bands-to-work/), for example, has 11 channels, including bands for ultraviolet, near infrared, and thermal (deep) infrared!
 
+#### Varieties of OF Image Containers (Data Structures)
+
 In openFrameworks, images can be stored in a variety of different *container classes*, which allow their data to be used (captured, displayed, manipulated, and stored) in different ways and contexts. Some of the more common containers you may encounter are:
 
-- **unsigned char*** An array of unsigned chars, this is the raw format used for storing buffers of pixel data. It's not very smart, but it's often useful for exchanging data with different libraries. Many image processing textbooks will assume your data is stored this way.
-- **ofPixels** This is a container for pixel data which lives inside each ofImage, as well as other classes like ofVideoGrabber. It's a wrapper around a buffer that includes additional information like width and height.
-- **ofImage** The `ofImage` is the most common object for loading, saving and displaying static images in openFrameworks. Loading a file into the ofImage allocates an (internal) ofPixels object to store the image data. ofImage objects are not merely containers, but also support methods for displaying their pixel data.
+- **unsigned char*** An array of unsigned chars, this is the raw, old-school, C-style format used for storing buffers of pixel data. It's not very "smart"—it has no special functionality or metadata for managing *image* data—but it's often useful for exchanging data with different libraries. Many image processing textbooks will assume your data is stored this way.
+- **ofPixels** This is an openFrameworks container for pixel data which lives inside each ofImage, as well as other classes like `ofVideoGrabber`. It's a wrapper around a buffer that includes additional information like width and height.
+- **ofImage** The `ofImage` is the most common object for loading, saving and displaying static images in openFrameworks. Loading a file into the ofImage allocates an internal `ofPixels` object (and often, an `ofTexture` as well) to store the image data. `ofImage` objects are not merely containers, but also support methods for displaying their pixel data.
 - **ofxCvImage** This is a container for image data used by the ofxOpenCV addon for openFrameworks, which supports certain functionality from the popular OpenCV library for filtering, thresholding, and other image manipulations.
+- **ofTexture** This container stores image data in the texture memory of your computer's graphics card (GPU). Many other classes, like `ofImage`, `ofxCvImage`,`ofVideoPlayer`, `ofVideoGrabber`, `ofFbo`, and `ofKinect`, use one of these to render their data to the screen. 
 - **cv::Mat** This is the data structure used by OpenCV to store image information. It's not used in openFrameworks, but if you work a lot with OpenCV, you'll often find yourself placing and extracting data from this format.
 
-To the greatest extent possible, the designers of openFrameworks (and OF addons for image processing, like ofxOpenCV and ofxCv) have provided simple operators to help make it easy to exchange data between these containers.
+To the greatest extent possible, the designers of openFrameworks (and OF addons for image processing, like ofxOpenCV and Kyle McDonald's ofxCv) have provided simple operators to help make it easy to exchange data between these containers. 
 
-#### RGB, grayscale, and other color space conversions
+It's important to point out that image data may be stored in very different parts of your computer's memory. Good old-fashioned unsigned chars, and image data in container classes like `ofPixels` and `ofxCvImage`, are maintained in your computer's main RAM; that's handy for image processing operations by the CPU. By contrast, the `ofTexture` class, as indicated above, stores its data in GPU memory, which is ideal for rendering it quickly to the screen. 
 
-Many computer vision algorithms (though not all!) are commonly performed on grayscale or monochome images. Converting color images to grayscale can significantly improve the speed of many image processing routines, because it reduces both the number of calculations as well as the amount of memory required to process the data. Except where stated otherwise, *all of the examples in this chapter assume that you're working with monochrome images*. Here's some simple code to convert a color image (e.g. captured from a webcam) into a grayscale version:
+It's helpful to know that there's generally a performance penalty for moving image data back-and-forth between the CPU and GPU, such as the `ofImage::grabScreen()` method, which captures a portion of the screen from the GPU and stores it in an `ofImage`, or the `ofTexture::readToPixels()` method, which copies image data from an `ofTexture` to an `ofPixels`.
 
-`[Code to convert RGB to grayscale using openFrameworks] `
+#### RGB, Grayscale, and other Color Space Conversions
+
+Many computer vision algorithms (though not all!) are commonly performed on grayscale or monochome images. If color isn't important to your vision problem, working in grayscale can significantly improve the speed of image processing routines, because it reduces both the number of calculations as well as the amount of memory required to process the data. Assuming your source data is in color (as is common with webcams), depending on your application, you'll either clobber your color image to grayscale directly, or create a grayscale copy for subsequent processing. 
+
+The simplest method to convert a color image to grayscale is to clobber its data by changing its OF image type to `OF_IMAGE_GRAYSCALE`. Note that this causes the image to be reallocated and any ofTextures to be updated, so it can be an expensive operation if done frequently. It's also a "destructive operation", in the sense that the image's original color information is lost in the conversion.</p>
+
+```
+ofImage myImage; 
+myImage.loadImage ("colorful.jpg"); // Load a colorful image.
+myImage.setImageType (OF_IMAGE_GRAYSCALE); // Poof! It's grayscale. 
+```
+The ofxOpenCV addon library provides several methods for converting color imagery to grayscale. For example, the `convertToGrayscalePlanarImage()` and `setFromColorImage()` functions create or set an `ofxCvGrayscaleImage` from color image data stored in an `ofxCvColorImage`:
 
 `[Code to convert RGB to grayscale using ofxCV]`
 
 `[Code to convert RGB to grayscale using OpenCV]`
 
-Of course, there are times when
+Even if your project is based around color imagery, you'll probably still use monochrome pixel data to represent and store many of the intermediate results in your image processing chain. For example, if you're calculating a "blob" to represent the location of a user's body, it's common to store that blob in a buffer of monochrome pixels. Typically, pixels containing 255 (white) are the foreground blob, and pixels containing 0 (black) are the background. 
 
+Except where stated otherwise, *all of the examples in this chapter assume that you're working with monochrome images*. 
 
 ### Image arithmetic: mathematical operations on images
 
@@ -442,7 +519,7 @@ When  assume that these operations are performed *pixelwise* -- meaning, for eve
 
 
 
-In the examples presented here, for the sake of simplicity, we'll assume that the images upon which we'll perform these operations are all the same size -- for example, 640x480 pixels, a typical capture size for many webcams. We'll also assume that these images are monochrome or grayscale.
+In the examples presented here, for the sake of simplicity, we'll assume that the images upon which we'll perform these operations are all the same size -- for example, 640x480 pixels, a typical capture size for many SD ("standard definition") webcams. We'll also assume that these images are monochrome or grayscale.
 
 - adding two images together
 - subtracting two images
@@ -554,8 +631,9 @@ I sometimes assign my students the project of copying a well-known work of inter
 
 ![Daniel Rozin, Time Scan Mirror (2004)](images/rozin_timescan.jpg)
 
-#### *[Text Rain](http://camilleutterback.com/projects/text-rain/)* by Camille Utterback and Romy Achituv (1999).<br />
-*Text Rain* is a now-classic work of interactive art in which virtual letters appear to "fall" on the visitor's "silhouette". Utterback writes: "In the Text Rain installation, participants stand or move in front of a large projection screen. On the screen they see a mirrored video projection of themselves in black and white, combined with a color animation of falling letters. Like rain or snow, the letters appears to land on participants’ heads and arms. The letters respond to the participants’ motions and can be caught, lifted, and then let fall again. The falling text will 'land' on anything darker than a certain threshold, and 'fall' whenever that obstacle is removed."
+#### Text Rain by Camille Utterback and Romy Achituv (1999).
+
+*[Text Rain](http://camilleutterback.com/projects/text-rain/)* is a now-classic work of interactive art in which virtual letters appear to "fall" on the visitor's "silhouette". Utterback writes: "In the Text Rain installation, participants stand or move in front of a large projection screen. On the screen they see a mirrored video projection of themselves in black and white, combined with a color animation of falling letters. Like rain or snow, the letters appears to land on participants’ heads and arms. The letters respond to the participants’ motions and can be caught, lifted, and then let fall again. The falling text will 'land' on anything darker than a certain threshold, and 'fall' whenever that obstacle is removed."
 
 ![Camille Utterback and Romy Achituv, Text Rain (1999)](images/text-rain.jpg)
 

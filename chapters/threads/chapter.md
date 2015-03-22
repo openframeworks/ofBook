@@ -56,7 +56,7 @@ This way the loading of the image happens simultaneously to our update/draw loop
 
 Now, how do we know when our image is loaded? The thread will run separately from the main thread of our application:
 
-<img src="images/simple_thread.svg" height="300"/>
+![Simple Thread](images/simple_thread.png "Simple Thread")
 
 As we see in the image the duration of loading of the image and thus the duration of the call to threadedFunction is not automatically known to the main thread. Since all our thread does is load the image, we can check if the thread has finished running which will tell us that the image has loaded. For that ofThread has a method: `isThreadRunning()`:
 

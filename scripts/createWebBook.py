@@ -47,9 +47,13 @@
 import os
 import subprocess
 import shutil
+import sass
+import string
 from bs4 import BeautifulSoup as Soup
 from bs4 import Tag, NavigableString
+from sys import platform as _platform
 
+#-------------------------------------------------------------- copy a folder recursively
 def copytree(src, dst, symlinks=False, ignore=None):
     if not os.path.exists(dst):
         os.makedirs(dst)
@@ -62,10 +66,12 @@ def copytree(src, dst, symlinks=False, ignore=None):
             if not os.path.exists(d) or os.stat(src).st_mtime - os.stat(dst).st_mtime > 1:
                 shutil.copy2(s, d)
 
+#-------------------------------------------------------------- wrap function for soup
 def wrap(to_wrap, wrap_in):
     contents = to_wrap.replace_with(wrap_in)
     wrap_in.append(contents)
 
+#-------------------------------------------------------------- clone function for soup
 #http://stackoverflow.com/questions/23057631/clone-element-with-beautifulsoup
 def clone(el):
     if isinstance(el, NavigableString):
@@ -81,7 +87,7 @@ def clone(el):
         copy.append(clone(child))
     return copy
 
-
+#-------------------------------------------------------------- parse out the chapter list and path
 # Get the order of the chapters
 chapterOrderPath = os.path.join("..", "chapters", "order.txt")
 
@@ -115,184 +121,276 @@ if ('groupName' in chapterGroup):
 	chapterGroups.append(chapterGroup)
 
 
-
+#-------------------------------------------------------------- folders for the book
 # Create the output directories for the webBook
 webBookPath = os.path.join("..", "output", "webBook")
 webBookChaptersPath = os.path.join(webBookPath, "chapters")
 if not os.path.exists(webBookPath): os.makedirs(webBookPath)
 if not os.path.exists(webBookChaptersPath): os.makedirs(webBookChaptersPath)
 
+
+#--------------------------------------------------------------  static stuff
 # Copy static directories
 staticStylePath = os.path.join("..", "static", "style")
 webBookStylePath = os.path.join(webBookPath, "style")
 staticJSPath = os.path.join("..", "static", "javascript")
 webBookJSPath = os.path.join(webBookPath, "javascript")
 staticFAPath = os.path.join("..", "static", "octicons")
-webBookFAPath = os.path.join(webBookPath, "octicons")
 copytree(staticStylePath, webBookStylePath)
 copytree(staticJSPath, webBookJSPath)
-copytree(staticFAPath, webBookFAPath)
+
+staticScssFile = os.path.join("..", "static", "style", 'style.scss')
+outputCssFile = os.path.join(webBookPath, "style", "style.css")
+
+print "compiling " + staticScssFile
+compiledCss = sass.compile(filename=staticScssFile)
+cssFile = open(outputCssFile, 'w')
+cssFile.write(compiledCss)
+cssFile.close()
+print "output " + outputCssFile
 
 
-chapterTags = [];
+chapterDicts = [];
 
+#-------------------------------------------------------------- make the book
 for chapter in chapters:
+
+	#src: 
 	sourceDirectoryPath = os.path.join("..", "chapters", chapter)
 	sourceChapterPath = os.path.join(sourceDirectoryPath, "chapter.md")
 	sourceImagesPath = os.path.join(sourceDirectoryPath, "images")
-
+	
+	#dst: 
 	destDirectoryPath = os.path.join(webBookPath, "images", chapter)
 	destChapterPath = os.path.join(webBookPath, "chapters", chapter+".html")
 	destImagesPath = os.path.join(destDirectoryPath, "images")
-
+	
 	internalImagesPath = os.path.join("..", "images", chapter)
 
-	# I've remove the TOC from pandoc, will do it below...
+	# ----------- run pandoc
 
 	print "Converting", sourceChapterPath, "to", destChapterPath, "..."
+
+	
 	subprocess.call(["pandoc", "-o", destChapterPath, sourceChapterPath,
-					"-s", "-p", "--mathjax",	
-					"--include-in-header=createWebBookTemplate/IncludeInHeader.html",
-					"--include-before-body=createWebBookTemplate/IncludeBeforeBody.html",
-					"--include-after-body=createWebBookTemplate/IncludeAfterBody.html"])
+                                        "-s", "-p", "--mathjax",
+                                        "--include-in-header=createWebBookTemplate/IncludeInHeader.html",
+                                        "--include-before-body=createWebBookTemplate/IncludeBeforeBody.html",
+                                        "--include-after-body=createWebBookTemplate/IncludeAfterBody.html",
+                                        "--template=createWebBookTemplate/default.html"])
+	
+
+
+	# ----------- copy images over: 
 
 	print destImagesPath
-
 	if os.path.exists(sourceImagesPath):
 		copytree(sourceImagesPath, destImagesPath)
-	
+
 
 	chapterDict = {}
 	chapterDict['path'] = chapter
+	chapterDict['href'] = chapter + ".html"
 
+	# ----------- now let's alter the HTML that's produced: 
 
-	#now, let's parse the index.html and change some things: 
 	if os.path.exists(destChapterPath):
 		soup = Soup(open(destChapterPath).read())
 
-		
+		# --- grab the title from h1
+
 		h1s = soup.find_all("h1")
 		if (len(h1s) > 0):
 			chapterDict['title'] = h1s[0].getText()
 		else: 
 			chapterDict['title'] = "needs h1"
-		h2s = soup.find_all("h2")
-
+		
 		chapterDict['chapterListName'] = chapter
-		chapterDict['innerTags'] = [];
+		chapterDict['sections'] = [];
 		chapterDict['destChapterPath'] = destChapterPath
-		for h2 in h2s: 
-			#print h1
-			a = Tag(Soup, None, "a");
-			sectionName = h2.getText();
-			a['name'] = sectionName
-			#wrap(h2, a)
-			chapterDict['innerTags'].append(h2.getText())
+		
+		# --- Grab all the h2 (we call them sections)
+		h2s = soup.find_all("h2")
+		for h2 in h2s: 			
+			# Remove punctuations from the id of the sections (punctiations like . wont work with anchors)
+			for c in string.punctuation:
+				h2['id'] = h2['id'].replace(c,"")
 
-		chapterTags.append(chapterDict);
+			# Store the section [0] = title  and [1] = ID
+			chapterDict['sections'].append([h2.getText(), h2['id']])
+
+		chapterDicts.append(chapterDict);
+
+		# --- Update the title
+		soup.title.string = "ofBook - " + chapterDict['title']
+
+		# --- change images (path and tag)
 
 		# Find all the figures so that we can make a series of tweaks
-		divFigures = soup.find_all("div", class_="figure")
+		divFigures = soup.findAll("div",{"class":"figure"})
+
 		if len(divFigures) != 0:
 			
 			for fig in divFigures:
-				
+						
 				figCaption = fig.p
 				# Turn the caption into span for CSS formatting
 
 				#note the games chapter needs some caption work
 				if figCaption is not None: 
-					figCaption.name = "span"
+					figCaption.name = "div"
 
 				# [zach] -- this is to make images that are not full width, have captions below the image
 				
 				div = Tag(soup, None, "div")
-				div['style'] = "clear:both"
-				div.append(clone(fig.img));
+				
+				div['style'] = "image" #"clear:both"
+				
+				div.append(clone(fig.img))
 				
 				fig.img.replace_with(div)
 				# Images have been stored in ./CHAPTER_NAME/images/ relative 
 				# to the chapter html, but image references in the html are 
 				# to ./images/.  Modify the image tags:
 				div.img["src"] = internalImagesPath + "/" + div.img["src"]
+				# Turn the figure image into a hyperlink that points to the
+				# full resolution version of the image
+				imgHyperlink = soup.new_tag("a", href=fig.img["src"])
+				fig.img.wrap(imgHyperlink)
+
+
+				fig['class'] = "inner"
+				divWhole = Tag(soup, None, "div")
+				divWhole['class'] = "figure"
+				divWhole.append(clone(fig));
+				fig.replace_with(divWhole)
 		
+		# --- make html links work better
 		# Make all hyperlinks in the chapter target a new window/tab
+
 		hyperlinkTags = soup.find_all("a")
 		for hyperlinkTag in hyperlinkTags:
 			hyperlinkTag["target"]= "_blank"
 
 		html = str(soup)
-		with open(destChapterPath, "wb") as file:
+		destChapterPathTemp = destChapterPath + ".temp"
+
+		with open(destChapterPathTemp, "wb") as file:
 			file.write(html)
-
-	#h1s will be super helpful for sidebar and building up a map of content :)
+		shutil.move(destChapterPathTemp, destChapterPath)
 	
-
-soup = Soup()
-html = Tag(soup, None, "html")
-a = Tag(soup, None, "a")
-soup.append(html)
-# html.append(table)
-# table.append(tr)
-# for attr in mem_attr:
-#     th = Tag(soup, None, "th")
-#     tr.append(th)
-#     th.append(attr)
-# print soup.prettify()
-
-
-# now, we have a full list of chapters, let's add this to HTML of each page: 
-
-
-# for cg in chapterGroups:
-# 	print cg['name']
-# 	for c in cg['chapters']:
-# 		print c
 
 
 def returnChapterByCommonName( commonName ):
-	for c in chapterTags: 
+	for c in chapterDicts: 
 		if c['chapterListName'] == commonName: 
 			return c
 	return None
 
 
+#----------------------------------------------------- 
+# make sidebar for chapters
+#----------------------------------------------------- 
 
-for chapter in chapterTags: 
+for idx, chapter in enumerate(chapterDicts): 
 	soup = Soup()
 
-	a = Tag(soup, None, "a")
-	soup.append(html)
-	ul = Tag(soup, None, "ul")
+	soupFromFile = Soup(open(chapter['destChapterPath']).read())
 
-	for cg in chapterGroups:
+	# Create previous/next links in the footer
+	nextChapterDiv = soupFromFile.find(id='next_chapter')
+	prevChapterDiv = soupFromFile.find(id='prev_chapter')
 
-		li = Tag(soup, None, "li")
-		li['class']="group"
-		li.append( cg['groupName'])
-		ul.append(li)
+	if (idx != 0):
+		prevLink = Tag(soup, None, "a")
+		prevLink['href'] = chapterDicts[idx-1]['href']
+		prevLink.string = "< " + chapterDicts[idx-1]['title'] 
+		prevChapterDiv.append(prevLink)
+	
 
-		for chap in cg['chapters']:
+	if(idx != len(chapterDicts)-1):
+		nextLink = Tag(soup, None, "a")
+		nextLink['href'] = chapterDicts[idx+1]['href']
+		nextLink.string = chapterDicts[idx+1]['title'] + " >"		
+		nextChapterDiv.append(nextLink)
+	
+	
+	# Find the navbar UL
+	navbar = soupFromFile.find_all("ul", {"id":"nav-parts"})[0]
 
-			
 
+	# Run through the chapter groups
+	for group in chapterGroups:
+		# Create a chapter group LI 
+		groupLi = Tag(soup, None, "li")
+		groupLi['class']="group"
+		groupLi.append( group['groupName'])
+		navbar.append(groupLi)
+
+		# Run through the chapters of the group
+		for chap in group['chapters']:
 			c = returnChapterByCommonName(chap)
 			if (c != None):
-				li = Tag(soup, None, "li")
+				chapUl = Tag(soup, None, "ul")
+				groupLi.append(chapUl)
+
+				chapLi = Tag(soup, None, "li")
+				chapLi['class'] = "chapter"
+				
 				if (c == chapter):
-					 li['class'] = "selected"
+					chapLi['class'] = "chapter selected"
+					groupLi['class']="group selected"
+
 				a = Tag(soup, None, "a");
-				a['href'] =  c['path'] + ".html"
+				a['href'] =  c['href']
 				a.string = c['title']
-				li.append(a)
-				ul.append(li)
+
+				div = Tag(soup, None, "div");
+				div['class'] = "chapterTitle";
+				if (c == chapter):
+					div['class'] = "chapterTitle selected";
+				div.append(a);
+
+				chapLi.append(div)
+				chapUl.append(chapLi)
+
+				if (len(c['sections'])):
+					
+					ulInner = Tag(soup, None, "ul")
+					divTag = Tag(soup, None, "div")
+					divTag['class'] = "chapterContents"
+					if (c == chapter):
+						divTag['class'] = "chapterContents selected"
+					divTag.append(ulInner);
+					chapLi.append(divTag);
+
+					
+
+					first = True
+					for tag in c['sections']: 
+						liInner = Tag(soup, None, "li")
+						liInner['class'] = 'section'
+						if(first):
+							liInner['class'] = 'section selected'
+
+						ulInner.append(liInner)
+						a = Tag(soup, None, "a")
+						
+						
+						
+						a['href'] = "#" + tag[1]
+						a['target'] = "_top"
+						a.string = tag[0]
+						liInner.append(a);
+						first = False;
 			else:
 				print chap
 		
-	
-	soupFromFile = Soup(open(chapter['destChapterPath']).read())
-	chaptersTag = soupFromFile.find_all("div", {"id":"chapters"})
-	chaptersTag[0].append(ul);
+
+				
+
+	#navULTag = soupFromFile.find_all("ul", {"id":"nav-parts"})
+	#navULTag[0].append(ul);
 	
 	htmlFromFile = str(soupFromFile)
 	
@@ -302,13 +400,14 @@ for chapter in chapterTags:
 	#print html
 
 
+#----------------------------------------------------- make TOC
 
 soup = Soup()
 html = Tag(soup, None, "html")
 a = Tag(soup, None, "a")
 soup.append(html)
 
-for c in chapterTags: 
+for c in chapterDicts: 
 	ul = Tag(soup, None, "ul")
 	li = Tag(soup, None, "li")
 	a = Tag(soup, None, "a");
@@ -319,17 +418,16 @@ for c in chapterTags:
 
 	#print c['title']
 	#print c['path']
-	if (len(['innerTags'])):
+	if (len(c['sections'])):
 		ulInner = Tag(soup, None, "ul")
 		li.append(ulInner);
-		for tag in c['innerTags']: 
+		for tag in c['sections']: 
 			liInner = Tag(soup, None, "li")
 			ulInner.append(liInner)
 			a = Tag(soup, None, "a")
-			tagNoSpaces = tag.replace(" ", "")
-			a['href'] = "chapters/" + c['path'] + ".html#" + tagNoSpaces
+			a['href'] = "chapters/" + c['path'] + ".html#" + tag[1]
 			a['target'] = "_top"
-			a.string = tag
+			a.string = tag[0]
 			liInner.append(a);
 		#print "\t" + tag
 

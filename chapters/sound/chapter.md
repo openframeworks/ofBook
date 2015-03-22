@@ -10,13 +10,7 @@ Here's a quick overview of the classes you can use to work with sound in openFra
 
 `ofSoundStream` gives you access to the computer's sound hardware, allowing you to generate your own sound as well as react to sound coming into your computer from something like a microphone or line-in jack.
 
-As of this writing, these classes are slated to be introduced in the next minor OF version (0.9.0):
-
-`ofSoundBuffer` is used to store a sequence of `float` values, and perform audio-related things on said values (like resampling)
-
-`ofSoundFile` allows you to extract uncompressed ofSoundBuffers from files.
-
-`ofSoundObject` is an interface for chaining bits of sound code together, similar to how a guitarist might use guitar pedals. This is mostly relevant for addon authors or people looking to share their audio processing code.
+`ofSoundBuffer` is used to store a sequence of audio samples and perform audio-related things on said samples (like resampling). This is new in openFrameworks 0.9.0.
 
 ## Getting Started With Sound Files
 
@@ -39,7 +33,7 @@ This is fine for adding some background music or ambiance to your app, but ofSou
 "Multiplay" allows you to have a file playing several times simultaneously. This is great for any sound effect which might end up getting triggered rapidly, so you don't get stuck with an unnatural cutoff as the player's playhead abruptly jumps back to the beginning of the file. Multiplay isn't on by default. Use `soundPlayer.setMultiPlay(true)` to enable it. Then you can get natural sound effect behaviour with dead-simple trigger logic like this:
 
 ```cpp
-if ( thingHappened )
+if ( thingHappened ) {
   soundPlayer.play();
 }
 ```
@@ -80,7 +74,7 @@ void ofApp::setup() {
 }
 
 void ofApp::audioOut( float * output, int bufferSize, int nChannels ) {
-  for(int i = 0; i < bufferSize * nChannels; i+=2) {
+  for(int i = 0; i < bufferSize * nChannels; i += 2) {
     float sample = sin(phase); // generating a sine wave sample
     output[i] = sample; // writing to the left channel
     output[i+1] = sample; // writing to the right channel
@@ -103,23 +97,34 @@ This means you access individual sound channels in much the same way as accessin
 
 An important caveat to keep in mind when dealing with ofSoundStream is that audio callbacks like `audioIn()` and `audioOut()` will be called on a seperate *thread* from the standard `setup()`, `update()`, `draw()` functions. This means that if you'd like to share any data between (for example) `update()` and `audioOut()`, you need to make use of an `ofMutex` to keep both threads from getting in each others' way. You can see this in action a little later in this chapter, or check out the threads chapter for a more in-depth explanation.
 
+In openFrameworks 0.9.0, there's a new class *ofSoundBuffer* that can be used in `audioOut()` instead of the `float * output, int bufferSize, int channels` form. In this case, the `audioOut()` function above can be rewritten to the simpler form:
+
+```cpp
+void ofApp::audioOut(ofSoundBuffer &outBuffer) {
+	for(int i = 0; i < outBuffer.size(); i += 2) {
+		float sample = sin(phase); // generating a sine wave sample
+		outBuffer[i] = sample; // writing to the left channel
+		outBuffer[i + 1] = sample; // writing to the right channel
+		phase += 0.05;
+	}
+}
+```
+
 ## Why -1 to 1?
 
 In order to understand *why* openFrameworks chooses to represent sound as a continuous stream of `float` values ranging from -1 to 1, it'll be helpful to know how sound is created on a physical level.
 
-*[ a minimal picture showing the mechanics of a speaker, reference: http://wiki.backyardbrains.com/images/5/54/Exp5_fig7.jpg ]*
+![Speaker Mechanics](images/speaker.png "simplified diagram of a speaker, showing the push/pull dynamics of its magnet")
 
-At the most basic level, a speaker consists of a cone and an electromagnet. The electromagnet pushes and pulls the cone to create vibrations in air pressure. These vibrations make their way to your ears, where they are interpreted as sound. When the electromagnet is off, the cone is simply "at rest", neither pulled in or pushed out.
-
-[footnote] A basic microphone works much the same way: allowing air pressure to vibrate an object held in place by a magnet, thereby creating an electrical signal.
+At the most basic level, a speaker consists of a cone and an electromagnet. The electromagnet pushes and pulls the cone to create vibrations in air pressure. These vibrations make their way to your ears, where they are interpreted as sound. When the electromagnet is off, the cone is simply "at rest", neither pulled in or pushed out. A basic microphone works much the same way: allowing air pressure to vibrate an object held in place by a magnet, thereby creating an electrical signal.
 
 From the perspective of an openFrameworks app, it's not important what the sound hardware's specific voltages are. All that really matters is that the speaker cone is being driven between its "fully pushed out" and "fully pulled in" positions, which are represented as 1 and -1. This is similar to the notion of "1" as a representation of 100% as described in the animation chapter, though sound introduces the concept of -100%.
 
-[footnote] Some other systems use an integer-based representation, moving between something like -65535 and +65535 with 0 still being the representation of "at rest". The Web Audio API provides an unsigned 8-bit representation, which ranges between 0 and 255 with 127 being "at rest".
+Some other systems use an integer-based representation, moving between something like -65535 and +65535 with 0 still being the representation of "at rest". The Web Audio API provides an unsigned 8-bit representation, which ranges between 0 and 255 with 127 being "at rest".
 
 A major way that sound differs from visual content is that there isn't really a "static" representation of sound. For example, if you were dealing with an OpenGL texture which represents 0 as "black" and 1 as "white", you could fill the texture with all 0s or all 1s and end up with a static image of "black" or "white" respectively. This is not the case with sound. If you were to create a sound buffer of all 0s, all 1s, all -1s, or any single number, they would all sound like exactly the same thing: nothing at all.
 
-[footnote] Technically, you'd probably hear a pop right at the beginning as the speaker moves from the "at rest" position to whatever number your buffer is full of, but the remainder of your sound buffer would just be silence.
+> Technically, you'd probably hear a pop right at the beginning as the speaker moves from the "at rest" position to whatever number your buffer is full of, but the remainder of your sound buffer would just be silence.
 
 This is because what you actually hear is the *changes* in values over time. Any individual sample in a buffer doesn't really have a sound on its own. What you hear is the *difference* between the sample and the one before it. For instance, a sound's "loudness" isn't necessarily related to how "big" the individual numbers in a buffer are. A sine wave which oscillates between 0.9 and 1.0 is going to be much much quieter than one that oscillates between -0.5 and 0.5.
 
@@ -127,7 +132,7 @@ This is because what you actually hear is the *changes* in values over time. Any
 
 When representing sound as a continuous stream of values between -1 and 1, you're working with sound in what's known as the "Time Domain". This means that each value you're dealing with is referring to a specific moment in time. There is another way of representing sound which can be very helpful when you're using sound to drive some other aspect of your app. That representation is known as the "Frequency Domain".
 
-*[ image of a waveform vs an FFT bar graph, reference http://upload.wikimedia.org/wikipedia/commons/8/8c/Time_domain_to_frequency_domain.jpg ]*
+![Time vs Frequency domain](images/time-vs-freq.png "two graphs, one showing a signal represented in the time domain and the other showing the same signal in the frequency domain")
 
 In the frequency domain, you'll be able to see how much of your input signal lies in various frequencies, split into separate "bins" (see above image).
 
@@ -210,16 +215,18 @@ void ofApp::audioIn(float * input, int bufferSize, int nChannels) {
 }
 ```
 
-This will probably work fine on an isolated drum track, sparse music or for something like detecting whether or not someone's speaking into a microphone. However, in practice you'll likely find that this won't really cut it for reliable audio visualization or more intricate audio work. 
+This will probably work fine on an isolated drum track, sparse music or for something like detecting whether or not someone's speaking into a microphone. However, in practice you'll likely find that this won't really cut it for reliable audio visualization or more intricate audio work.
 
 You could of course grab an external onset detection algorithm (there's quite a few addons available for it), but if you'd like to experiment, try incorporating the FFT into your algorithm. For instance, try swapping the RMS for the average amplitude of a range of FFT bins.
+
+If you'd like to dig into the world of onset detection algorithms (and the larger ecosystem of what's known as "music information retrieval" algorithms), the [Music Information Retrieval Evaluation eXchange wiki](http://www.music-ir.org/mirex/wiki/MIREX_HOME) is a great source. On this wiki, you'll find the results of annual competitions comparing algorithms for things like onset detection, musical key detection, melody extraction, tempo estimation and so on.
 
 ### FFT
 Running an FFT on your input audio will give you back a buffer of values representing the input's frequency content. A straight up FFT *won't* tell you which notes are present in a piece of music, but you will be able to use the data to take the input's sonic "texture" into account. For instance, the FFT data will let you know how much "bass" / "mid" / "treble" there is in the input at a pretty fine granularity (a typical FFT used for realtime audio-reactive work will give you something like 512 to 4096 individual frequency bins to play with). 
 
 When using the FFT to analyze music, you should keep in mind that the FFT's bins increment on a *linear* scale, whereas humans interpret frequency on a *logarithmic* scale. So, if you were to use an FFT to split a musical signal into 512 bins, the lowest bins (bin 0 through bin 40 or so) will probably contain the bulk of the data, and the remaining bins will mostly just be high frequency content. If you were to isolate the sound on a bin-to-bin basis, you'd be able to easily tell the difference between the sound of bins 3 and 4, but bins 500 and 501 would probably sound exactly the same. Unless you had robot ears.
 
-[footnote] There's another transform called the *Constant Q Transform* (aka CQT) that is similar in concept to the FFT, but spaces its bins out logarithmically which is much more intuitive when dealing with music. As of this writing I'm not aware of any openFrameworks-ready addons for the CQT, but it's worth keeping in mind if you feel like pursuing other audio visualization options beyond the FFT.
+There's another transform called the *Constant Q Transform* (aka CQT) that is similar in concept to the FFT, but spaces its bins out logarithmically, which is much more intuitive when dealing with music. For instance you can space out the result bins in a CQT such that they represent C, C#, D... in order. As of this writing I'm not aware of any openFrameworks-ready addons for the CQT, but it's worth keeping in mind if you feel like pursuing other audio visualization options beyond the FFT. I've had good results with [this Constant-Q implementation](https://code.soundsoftware.ac.uk/projects/constant-q-cpp), which is part of the [Vamp](http://www.vamp-plugins.org/) collection of plugins and tools.
 
 ## Synthesizing Audio
 
@@ -411,6 +418,7 @@ Now we've got a basic, useable instrument!
 A few things to try, if you'd like to explore further:
 
 - Instead of using `keyPressed(...)` to determine the oscillator's frequency, use ofxMidi to respond to external MIDI messages. If you want to get fancy, try implementing pitch bend or use MIDI CC messages to control the frequency lerp rate.
+- Instead of "snapping" to the nearest sample in the waveform lookup table, try interpolating between neighbouring values to reduce the noisy artifacts a low-resolution lookup table produces
 - Try filling the waveform table with data from an image, or from a live camera (`ofMap(...)` will be handy to keep your data in the -1 to 1 range)
 - Implement a *polyphonic* synthesizer. This is one which uses multiple oscillators to let you play more than one note at a time.
 - Keep several copies of the `phase` index, and use `ofSignedNoise(...)` to slightly modify the frequency they represent. Add each of the waveforms together in `output`, but average the result by the number of phases you're tracking.
@@ -457,7 +465,7 @@ If you're getting pops in the middle of your playback, you can diagnose it by tr
 ### "Clipping" / Distortion
 If your samples begin to exceed the range of -1 to 1, you'll likely start to hear what's known as "clipping", which generally sounds like a grating, unpleasant distortion. Some audio hardware will handle this gracefully by allowing you a bit of leeway outside of the -1 to 1 range, but others will "clip" your buffers.
 
-*[ clipped waveform image, reference http://www.st-andrews.ac.uk/~www_pa/Scots_Guide/audio/clipping/fig1.gif ]*
+![Clipping](images/clipped-sinewave.png "diagram showing two sine waves, one demonstrating clipping by extending beyond the upper and lower bounds")
 
 Assuming this isn't your intent, you can generally blame clipping on a misbehaving addition or subtraction in your code. A multiplication of any two numbers between -1 and 1 will always result in another number between -1 and 1.
 

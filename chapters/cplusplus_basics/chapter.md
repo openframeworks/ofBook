@@ -33,13 +33,13 @@ For those just now familiarizing themselves with what it means to write small pr
 
 Let us start by making the smallest, most immediate C++ program possible, then use the convenient environment to test small snippets of C++ code throughout this chapter. In order to do that, we must have a *compiler*, which is a program that translates some code into an actual runnable app, sometimes referred to as the executable file. C++ compilers are mostly free of charge to download, and in a lot of cases, open source. The apps we generate will not automatically show up in places like Apple's App store, Google Play, Steam, Ubuntu Apps Directory, or Pi Store. Instead, they are your personal, private program files and you will be responsible for manually sharing them later on. In the following chapter *OF Setup and Project Structure*, the compiler will sit on your local computer, able to run offline. For now, we will be impatient and compile some casual C++ on the web using a convenient tool by Sphere Research Labs. Please open your web browser and go to [ideone](http://ideone.com) (http://ideone.com).
 
-You will notice right away that there is an editor already containing some code, but it may be set to another language. Let's switch the language to C++11 if it is not already in that mode. Down at the bottom left of the editor, press the button just to the left of "stdin", as shown in Figure 4. The label for this button could be any number of things.
+You will notice right away that there is an editor already containing some code, but it may be set to another language. Let's switch the language to C++14 if it is not already in that mode. Down at the bottom left of the editor, press the button just to the left of "stdin", as shown in Figure 4. The label for this button could be any number of things.
 
 ![Figure 4](images/where-is-says-java.png "Figure 4")
 
-A menu drops down with a list of programming languages. Please choose C++11, shown in Figure 5.
+A menu drops down with a list of programming languages. Please choose C++14, shown in Figure 5.
 
-![Figure 5](images/choose-c11.png "Figure 5")
+![Figure 5](images/choose-c14.png "Figure 5")
 
 Notice that the code in the editor changed, and looks something like figure 6.
 
@@ -595,7 +595,7 @@ let alone the 100+ page book it grew to be. If you're serious about getting into
 OpenFrameworks, I highly recommend you stop and read the unabridged version of this
 chapter before continuing in ofBook, so that you may understand what you are reading.
 You will find those materials at
-https://github.com/openframeworks/ofBook/tree/master/02_cplusplus_basics/unabridged.md
+https://github.com/openframeworks/ofBook/blob/master/chapters/cplusplus_basics/unabridged.md
 
 ##PS.
 
