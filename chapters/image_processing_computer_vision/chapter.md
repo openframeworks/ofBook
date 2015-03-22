@@ -232,7 +232,7 @@ It's important to understand how pixel data is stored in computer memory. Each p
 
 ![Based on Shiffman's image in the Processing tutorial](images/pixels_in_memory.png)
 
-Observe how the (one-dimensional) list of values have been distributed to successive (two-dimensional) pixel locations in the image — wrapping over the right edge just like English text.
+Observe how a one-dimensional list of values in memory can be arranged into successive rows of a two-dimensional grid of pixels, and vice versa.
 
 It frequently happens that you'll need to determine the array-index of a given pixel *(x,y)* in an image that is stored in an `unsigned char*` buffer. This little task comes up often enough that it's worth committing the following pattern to memory:
 
