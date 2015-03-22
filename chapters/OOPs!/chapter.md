@@ -5,24 +5,26 @@
 This tutorial is a quick and practical introduction to Object Oriented Programming in openFrameworks and a how-to guide to build and use your own classes.
 By the end of this chapter you should understand how to create your own objects and have a lot of balls bouncing on your screen!
 
+**[MH: Add a picture here so that people can get excited about their goal]**
+
 ##What is OOP
-Object Oriented Programming is a programming paradigm based on the use of objects and their interactions. Some terms and definitions used within OOP are listed below:
+Object Oriented Programming is a programming paradigm based on the use of objects and their interactions. A recurring analogy is to see a "Class" as a cookie cutter that can create many cookies, "the Objects". **[MH: I'd take a second to tell people unfamiliar with OOP why they should care.]** Some terms and definitions used within OOP are listed below:
 
 -A Class defines the characteristics of a thing - the object - and its behaviors; it defines not only its properties and attributes but also what it can do.
 
 -An Object is an instance of a class.
 
--The Methods are the objects abilities and how we can call them.
+-The Methods are the objects abilities
 
-A recurring analogy is to see a Class as a the cookie cutter and the cookies as the Objects. 
 
-Note: please see chapter (Josh Nimoy's) for a more detailed explanation of Objected Oriented languages.
+**[MH: Josh's chapter does not cover OOP.]**
+~~Note: please see chapter (Josh Nimoy's) for a more detailed explanation of Objected Oriented languages.~~
 
 ##How to build your own Classes (simple Class)
 Classes and objects are similar to the concepts of movie clips and instances in Flash and are also a fundamental part of Java programming. 
 Because cooking, like coding, is fun and we tend to experiment in the kitchen let's continue with the classic metaphor of a cookie cutter as a class and cookies as the objects.
 Every class has two files: a header file, also known as a Declarations file with the termination '.h' and an implementation file, terminating in '.cpp'.
-A very easy way of knowing what these two files do is to think of the header file (.h) as a recipe, a list of the main ingredients of your cookie. The implementation file (.cpp) is what we're going to do with them, how you mix and work them to be the perfect cookie!
+A very easy way of knowing what these two files do is to think of the header file (.h) as a recipe, a list of the main ingredients of your cookie. The implementation file (.cpp) is what we're going to do with them, how you mix and work them to be the perfect cookie!  **[MH: I'd give an example here before you jump into the code; e.g. the header file would say that the ball has a color, but the implementation file say exactly which color it is (or how the color is determined).]**
 So let's see how it works:
 
 First of all let's create the two class files: 
@@ -31,6 +33,8 @@ Now let's edit your class header (.h) file. Feel free to delete all its contents
 Declare a class in the header file (.h). In this case, the file name should be Ball.h. 
 Follow the code below and type into your own Ball.h file, please note the comments I've included to guide you along.
 
+**[MH: I'd use radius instead of "dim".]**
+**[MH: Also, ofVec2fs were covered in the previous chapter (graphics) if you wanted to use that.]**
 
 ```cpp
 #ifndef _BALL // if this class hasn't been defined, the program can define it
@@ -64,8 +68,12 @@ We have declared the Ball class header file (the list of ingredients) and now le
 Please notice the '#include' tag, this is a way to tell the compiler about any files to include in the implementation file. When the program is compiled these '#include' tags will be replaced by the original file they're referring to. 
 The 'if statement' (#ifndef) is a way to prevent the repetition of header files which could easily occur, by using this expression it helps the compiler to only include the file once and avoid repetition. Don't worry about this now, we'll talk about it later on!
 
+**[MH: might be useful to link to an external resource for include guards or a general resource on how compiling works.  It don't think that beginners will understand the explanation here and trying to explain it yourself it would make your chapter much longer.]**
+
 
 Here's how you can write the class *.cpp file, the implementation file:
+
+**[MH: I'd add a quick overview of this code before diving into it.  E.g. explain that we are creating a ball that moves with a random speed, in a random direction, that bounces off of the walls.  And mention the concept behind the reflection.]**
 
 ```cpp
 #include "Ball.h"
@@ -113,10 +121,14 @@ void Ball::draw(){
 
 ```
 
-Now, this is such a simple program that we could have written it inside our ofApp(.h and .cpp) files and it wouldn't be senseless to do if we didn't want to reuse this code. In there lies one of the advantages of Object Oriented Programming: reuse. Imagine we want to create thousands of these balls and how easily the code could get messy and extended, by creating our own class we can later re-create as many objects as need from it and just call the appropriate methods when needed keeping our code clean and efficient. In a more pragmatic example think of creating a class for each of your UI elements (button, slider, etc) and how easy it would be to then deploy them in your program but also to include and reuse them in future programs.
+**[MH: earlier you say every class has a .h and .cpp so what you are saying here will confuse beginners without you elaborating on what you mean.  Maybe you can ask the reader to imagine how they would do this without OOP:  They'd need to store a SEPARATE array of x values, y values, x speeds, y speeds, etc. and keep track of them all themselves.  OOP allows you to hide and organize that information.  Then you can also bring in the idea of extending your code.  Say you want to have a ball that is filled with helium and floats... now you need all those x/y/speed/etc arrays again, but you need to keep track of which ones are normal balls and which are helium etc etc...]**
+
+**[MH: You might also want to save this paragraph until the next section when the readers have instantiated some objects.]**
+
+Now, this is such a simple program that we could have written it inside our ofApp(.h and .cpp) files and that would make sense if we didn't want to reuse this code elsewhere. One of the advantages of Object Oriented Programming is reuse. Imagine we want to create thousands of these balls. The code could easily get messy without OOP. By creating our own class we can later re-create as many objects as we need from it and just call the appropriate methods when needed keeping our code clean and efficient. In a more pragmatic example think of creating a class for each of your UI elements (button, slider, etc) and how easy it would be to then deploy them in your program but also to include and reuse them in future programs.
 
 ##Make an Object from your Class 
-Now that we've created a class let's make the real object! In your ofApp.h (header file) we'll have to declare a new object and get some free memory for it. But first we need to include (or give the instructions to do so) your Ball class in our program. To do this we need to write:
+Now that we've created a class let's make the real object! In your ofApp.h (header file) we'll have to declare a new object ~~and get some free memory for it~~ **[MH: I'd drop that memory bit for now]**. But first we need to include (or give the instructions to do so) your Ball class in our program. To do this we need to write:
 
 ```cpp
 #include "Ball.h"
@@ -127,7 +139,6 @@ on the top of your ofApp.h file. Then we can finally declare an instance of the 
 ```cpp
 Ball myBall;
 ```
-
 
 Now let's get that ball bouncing on screen! Go to your project ofApp.cpp (implementation) file. Now that we've created the object, we just need to set it up and then update its values and draw it by calling its methods. 
 
@@ -149,7 +160,6 @@ and in the draw() function lets add:
 ```cpp
 myBall.draw();  // call the draw method to draw the object
 ```
-
 
 Compile and run! At this point you should be seeing a bouncing ball on the screen! Great!
 
@@ -194,7 +204,9 @@ myBall3.draw();
 
 
 ##Make more Objects from your Class
-We've just created 3 objects but you can have already see how tedious it woud become if we wanted to created 10, 100 or maybe 1000's of them. Hardcoding them one by one would be a long and painful process that could be easily solved by automating the object creation and function calls. Just by using a couple for loops we'll make this process simpler and cleaner. Instead of declaring a list of objects one by one we'll create an array of objects of type 'Ball'. We'll also introduce another new element: a constant. Constants are set after any #includes as #define CONSTANT_NAME value. This is a way of setting a value that won't ever change in the program.
+We've just created 3 objects but you can have already see how tedious it would be to create 10, 100 or maybe 1000's of them. Hardcoding them one by one would be a long and painful process that could be easily solved by automating the object creation and function calls. Just by using a couple for loops we'll make this process simpler and cleaner. Instead of declaring a list of objects one by one, we'll create an array of objects of type 'Ball'. We'll also introduce another new element: a constant. Constants are set after any #includes as #define CONSTANT_NAME value. This is a way of setting a value that won't ever change in the program. 
+**[MH: I think Josh mentions these, maybe drop a ref to his chapter here.]**
+**[MH: I don't think arrays have been covered at this point in the book.  But Josh covers them in his unabridged chapter, maybe drop a ref in to that as well.]**
 
 In the ofApp class header file, where you define the balls objects also define the constant that we'll use for the number of objects:
 
@@ -202,8 +214,7 @@ In the ofApp class header file, where you define the balls objects also define t
 #define NBALLS 10
 ```
 
-
-we'll now use the CONSTANT value to define the size of our array of objects:
+We'll now use the CONSTANT value to define the size of our array of objects:
 
 
 ```cpp
@@ -242,7 +253,7 @@ for(int i=0; i<NBALLS; i++){
 
 ##Make even more Objects from your Class: properties and constructors
 
-As we've seen, each of the objects has a set of properties defined by its variables (position, speed, direction, and dimension). Another advantage of object oriented programming is that the objects created can have different values for each of their properties. For us to have better control of each object, we can have a method that allows us to define these characteristics and lets us access them. Because we want to do this right after creating the object and we're preparing it or setting it up, let's do this in the method called setup().  We will modify it to allow to pass in some of the objects properties, let's say its position and dimension. First let's do this in the Ball definitions file (*.h): 
+As we've seen, each of the objects has a set of properties defined by its variables (position, speed, direction, and dimension). Another advantage of object oriented programming is that the objects created can have different values for each of their properties. For us to have better control of each object, we can have a method that allows us to define these characteristics and lets us access them. Because we want to do this right after creating the object, let's do this in the method called setup().  We will modify it to allow to pass in some of the objects properties, let's say its position and dimension. First, let's do this in the Ball definitions file (*.h): 
 
 ```cpp
 void setup(float _x, float _y, int _dim);
@@ -318,7 +329,7 @@ Now in the ofApp.cpp file we will need to run this newly implemented method righ
 ```cpp
 for(int i=0; i<NBALLS; i++){
 	
-	int size = (i+1) * 10; // defining the size of each ball based o its place in the array
+	int size = (i+1) * 10; // defining the size of each ball based on its place in the array
 	int randomX = ofRandom( 0, ofGetWidth() ); //generate a random value bigger than 0 and smaller than our application screen width
 	int randomY = ofRandom( 0, ofGetHeight() ); //generate a random value bigger than 0 and smaller than our application screen height
 	
@@ -339,13 +350,17 @@ myBall.draw();
 
 
 ##Make Objects on the fly
-While many times you'll already have a pre-defined number of objects you'll need to create and using arrays is the right choice, there are other ways to create multiple objects that offer other advantages: welcome vectors!
+**[MH: Needs a little more intro.  E.g. You may have noticed that we had to define the number of balls before we could run our program, and we weren't able to add or remove balls once the program started running...]**While many times you'll already have a pre-defined number of objects you'll need to create and using arrays is the right choice, there are other ways to create multiple objects that offer other advantages: welcome vectors!
 Vectors are really great as they'll allow to create collections of objects without a predefined number of elements. They're quite dynamic and allow you to add objects on the fly but also to remove them when you need longer need the objects. Think of them as elastic arrays.
 So, let's use them!
 Note: You'll be hearing about two different types of vectors throughout this book. Please don't confuse stl::vectors (the elastic arrays type we're talking about) with math vectors (forces).
 
+**[MH: Link to the oF std::vector tutorial here, rather than at the end.]**
+
 Back to our beloved ofApp.h file, let's define a vector of Ball objects by typing:
 
+
+**[MH: Make this myBalls instead of myBall]**
 ```cpp
 vector <Ball> myBall;
 ```
@@ -358,7 +373,7 @@ void ofApp::mouseDragged(int x, int y, int button){
 }
 ```
 
-In this method we're listening to the dragging activity of your mouse or trackpad and we'll use this simplicity to create interaction! So let's just create some code to create ofBalls and add them to our program when we drag the mouse.
+In this method we're listening to the dragging activity of your mouse, and we'll use this to create interaction! So let's just create some code to create ofBalls and add them to our program when we drag the mouse.
 The dragging activity of your mouse or trackpad is an ubiquitous, simple but also very gestural source of data and we'll use this simplicity to create interaction! Let's add some code to create Balls and add them to our program when we drag the mouse.
 
 ```cpp
@@ -369,7 +384,7 @@ void ofApp::mouseDragged(int x, int y, int button){
 }
 ```
 
-A few new things in our code: we begin by declaring a temporary object, think of it as a placeholder for the real object - that will be inside the vector! - we them define its initial properties by assigning the 'x' and 'y' mouse drag coordinates to its setup variables. Afterwards, we  use this temporary object as a palceholder to add Ball objects to our vector.
+A few new things in our code: we begin by declaring a temporary object, think of it as a placeholder for the real object - that will be inside the vector! - we them define its initial properties by assigning the 'x' and 'y' mouse drag coordinates to its setup variables. Afterwards, we use this temporary object as a placeholder to add Ball objects to our vector.
 
 Back to our update and draw methods we can add the needed 'for loops' to iterate over the objects in the vector to update and draw them like we would do with arrays. This time though we didn't declare a variable that stores the maximum number of objects but instead, the vector object provides us with a handy method we can call to know their size ( myVector.size() ). 
 See code below for update() and draw():
@@ -390,10 +405,12 @@ for (int i = 0 ; i<myBall.size(); i++) {
 
 ##Making and delete as you wish - using vectors
 
-If you ran the previous code you'll see that in a very short time you'll not only create a huge amount of balls but at some point your system might become slugish because there are just way too many objects on screen. As we just mentioned Vectors are very special as we can add and remove elements dynamically, that's their magic: vectors are elastic! 
+If you ran the previous code you'll see that in a very short time you'll not only create a huge amount of balls but at some point your system might become sluggish because there are just way too many objects on screen. As we just mentioned Vectors are very special as we can add and remove elements dynamically, that's their magic: vectors are elastic! 
 So, let's also implement a way to delete them before we have way too many Balls.
 
-On the ofApp::MousePressed call we will loop though our vector and check the distance between the coordinates of the mouse with the Ball position, if this distance is smaller than the Ball dimension then, we know that we're clicking inside it, we can delete it. Because we're using the vector.erase method we need to use an iterator ( myBall.begin() ), a shortcut that references to the first element of the vector as a starting point to access the vector element we really want to erase ( 'i' ).
+On the ofApp::MousePressed call we will loop though our vector and check the distance between the coordinates of the mouse with the Ball position, if this distance is smaller than the Ball ~~dimension~~**[MH: radius]** then, we know that we're clicking inside it, we can delete it. Because we're using the vector.erase method we need to use an iterator ( myBall.begin() ), a shortcut that references to the first element of the vector as a starting point to access the vector element we really want to erase ( 'i' ).
+
+**[MH: Needs an additional sentence explaining what an iterator is and why you use it here]**
 
 ```cpp
 for (int i =0; i < myBall.size(); i++) {
@@ -420,8 +437,7 @@ You're now discovering the power of OOP, making a class and creating as many obj
 This is also the power of OOP and inheritance: by allowing to use a base class and add some specific behaviors, overwriting some of the behaviors of a class, creating a subset of instances / objects with slightly different behaviors.
 The great thing about this is it's reusability, we're using the 'mother' class as a starting point, using all its capabilities but we overwrite one of its methods to give it more flexibility.
 Going back to the initial version of our Ball class (step 1) we'll build some 'daughter' classes based on its main characteristics (motion behaviors and shape) but we'll distinguish each inherited subClass by using a different color on its drawing method.
-We'll need to make some chages in our mother class, namely because we'll want to redefine the drawing method in each  derived class (daughter class) we'll make it a virtual method.
-
+**[MH: Give the reader an idea of what you are going to do.  E.g. why you are changing the Mother class, what the daughter class will be doing.  You could use a figure (tree diagram of some sort) here that gives the reader an idea of the class hierarchy you are building]**
 Your Ball header file should look like this:
 
 ```cpp
@@ -434,9 +450,9 @@ class Ball {
     
 public: // place public functions or variables declarations here
     
-void setup(float _x, float _y, int _dim);	    
+void setup();	    
 void update();
-virtual void draw(); 
+void draw(); 
 
 // variables
 float x;      
@@ -455,6 +471,29 @@ private:
 #endif
 ```
 
+And let's make some slight changes on the implementation file:
+lets change the minimum and maximum values of the random size to larger values and set the position to the center of the screen. Make it look like this: 
+
+```cpp
+#include "Ball.h"
+
+Ball::Ball(){
+}
+
+Ball::setup(){
+
+    x = ofGetWidth()*.5;
+    y = ofGetHeight()*.5;
+    dim = ofRandom(200,250);
+    
+    speedX = ofRandom(-1, 1);
+    speedY = ofRandom(-1, 1);
+    
+    color.set(ofRandom(255), ofRandom(255), ofRandom(255));
+}
+```
+
+We can leave the update() and draw() functions as they were.
 Now, let's start making 'daughter' versions of this 'mother' class.
 Create a new Class set of files and name them 'BallBlue'. Feel free to copy the code below and
 it's '.h' should look like this:
@@ -469,7 +508,7 @@ class BallBlue : public Ball {     // we set the class to inherit from 'Ball'
 
 public: 
 
-    void draw();             // this is the only method we actually want to be different from the 'mother class'
+    virtual void draw();             // this is the only methid we actually want to be different from the 'mother class'
 
 };
 ```
