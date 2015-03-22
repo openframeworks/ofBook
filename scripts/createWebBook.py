@@ -403,49 +403,52 @@ for idx, chapter in enumerate(chapterDicts):
 #----------------------------------------------------- make TOC content
 
 soup = Soup()
-a = Tag(soup, None, "a")
 
-for c in chapterDicts: 
-	ul = Tag(soup, None, "ul")
-	li = Tag(soup, None, "li")
-	a = Tag(soup, None, "a");
-	a['href'] = c['path'] + ".html"
-	a.string = c['title']
-	li.append(a)
-	ul.append(li)
+wrapperDiv = Tag(soup, None, "div");
+wrapperDiv['class'] = "toc-wrapper"
 
-	#print c['title']
-	#print c['path']
-	if (len(c['sections'])):
-		ulInner = Tag(soup, None, "ul")
-		li.append(ulInner);
-		for tag in c['sections']: 
-			liInner = Tag(soup, None, "li")
-			ulInner.append(liInner)
-			a = Tag(soup, None, "a")
-			a['href'] = "chapters/" + c['path'] + ".html#" + tag[1]
-			a['target'] = "_top"
-			a.string = tag[0]
-			liInner.append(a);
-		#print "\t" + tag
 
-	soup.append(ul);
+# Build the output like...
+# div[toc-wrapper]
+#   h3 Group name
+#   ul
+#     li Chapter name
+#     li Chapter name
+
+# Run through the chapter groups
+for group in chapterGroups:
+
+	h3 = Tag(soup, None, "h3")
+	h3.append(group['groupName'])
+	wrapperDiv.append(h3)
+
+	ul = Tag(soup, None, "ul");
+
+	# Run through the chapters of the group
+	for chap in group['chapters']:
+		c = returnChapterByCommonName(chap)
+		if (c != None):
+
+			a = Tag(soup, None, "a");
+			a['href'] =  c['href']
+			a.string = c['title']
+
+			li = Tag(soup, None, "li");
+			li.append(a)
+			ul.append(li)
+
+		else:
+			print chap
+
+	wrapperDiv.append(ul)
+
+soup.append(wrapperDiv)		
 
 htmlOut = soup.prettify("utf-8")
 tocPath = os.path.join(webBookPath, "toc.html")
 with open(tocPath, "wb") as file:
     file.write(htmlOut)
 
-# <ul>
-#   <li>Coffee</li>
-#   <li>Tea
-#     <ul>
-#     <li>Black tea</li>
-#     <li>Green tea</li>
-#     </ul>
-#   </li>
-#   <li>Milk</li>
-# </ul>
 
 #----------------------------------------------------- run pandoc for TOC
 
@@ -462,9 +465,3 @@ subprocess.call(["pandoc", "-o", destTocPath, sourceTocPath,
 
 print "Removing", sourceTocPath, "..."
 os.remove(sourceTocPath)
-
-
-
-
-
-
