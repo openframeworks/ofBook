@@ -22,12 +22,12 @@ Advanced topics
 	threads
 	ios	
 	c++11
-Project breakdowns
-	project_elliot
-	project_eva
-	project_joel
 Tools
 	version_control_with_git
 	ofSketch
 	installation_up_4evr_macosx
 	installation_up_4evr_linux
+Case studies
+	project_elliot
+	project_eva
+	project_joel
