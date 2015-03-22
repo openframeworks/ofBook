@@ -169,11 +169,11 @@ a:active {
 
 }
 
-#chapters, #toc {
+#chapters {
   display:none;
 }
 
-.chapter-content {
+.chapter-content, .toc {
   width: 734px;
   margin-top:70px;
   background-color: rgba(255,255,255,1);
@@ -367,6 +367,10 @@ a:active {
   }
 }
 
+.toc {
+  width: 980px;
+  margin-left: 0px;
+}
 
 #help {
   font-family: 'fira';
