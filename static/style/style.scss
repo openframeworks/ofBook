@@ -132,6 +132,13 @@ a:active {
 }
 
 
+.MathJax_Display{
+  padding-top: 2em;         // add a bit of padding around math figures in the math secions
+  padding-bottom: 2em;
+}
+
+
+
 /*
 .of-logo {
   background-image: url('http://openframeworks.cc/images/of-logo.svg');
