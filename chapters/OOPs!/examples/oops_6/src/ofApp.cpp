@@ -1,71 +1,77 @@
-#include "testApp.h"
+#include "ofApp.h"
 
 //--------------------------------------------------------------
-void testApp::setup(){
-    ofBackground(0);
+void ofApp::setup(){
+
+    ofBackground(0); // let's make our background black
+    
+    int xCenter = ofGetWidth()*.5;
+    int yCenter = ofGetHeight()*.5;
+    int dim = ofRandom(200,250);
+    redBall.setup(xCenter, yCenter, dim);
+    greenBall.setup(xCenter, yCenter, dim);
+    blueBall.setup(xCenter, yCenter, dim);
 }
 
 //--------------------------------------------------------------
-void testApp::update(){
-
+void ofApp::update(){
+    
     redBall.update();
     greenBall.update();
     blueBall.update();
-
 }
 
 //--------------------------------------------------------------
-void testApp::draw(){
+void ofApp::draw(){
     
     ofEnableBlendMode(OF_BLENDMODE_ADD);
     redBall.draw();
     greenBall.draw();
     blueBall.draw();
     
+}
+
+//--------------------------------------------------------------
+void ofApp::keyPressed(int key){
 
 }
 
 //--------------------------------------------------------------
-void testApp::keyPressed(int key){
+void ofApp::keyReleased(int key){
 
 }
 
 //--------------------------------------------------------------
-void testApp::keyReleased(int key){
+void ofApp::mouseMoved(int x, int y){
 
 }
 
 //--------------------------------------------------------------
-void testApp::mouseMoved(int x, int y){
+void ofApp::mouseDragged(int x, int y, int button){
+    
+}
+
+//--------------------------------------------------------------
+void ofApp::mousePressed(int x, int y, int button){
 
 }
 
 //--------------------------------------------------------------
-void testApp::mouseDragged(int x, int y, int button){
+void ofApp::mouseReleased(int x, int y, int button){
 
 }
 
 //--------------------------------------------------------------
-void testApp::mousePressed(int x, int y, int button){
+void ofApp::windowResized(int w, int h){
 
 }
 
 //--------------------------------------------------------------
-void testApp::mouseReleased(int x, int y, int button){
+void ofApp::gotMessage(ofMessage msg){
 
 }
 
 //--------------------------------------------------------------
-void testApp::windowResized(int w, int h){
-
-}
-
-//--------------------------------------------------------------
-void testApp::gotMessage(ofMessage msg){
-
-}
-
-//--------------------------------------------------------------
-void testApp::dragEvent(ofDragInfo dragInfo){ 
+void ofApp::dragEvent(ofDragInfo dragInfo){ 
 
 }
