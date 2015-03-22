@@ -158,7 +158,7 @@ And what we get in memory is something like:
 
 ![Pointer](images/pointer.svg "")
 
-A pointer usually occupies 4/8 bytes (depending if we are on a 32 or 64bits application), we are representing it as 1 byte only to make things easier to understand, but as you can see it's just another variable, that instead of containing a value contains a memory address that points to a value. That's why it's called pointer.
+A pointer usually occupies 4 or 8 bytes (depending if we are on a 32 or 64bits application), we are representing it as 1 byte only to make things easier to understand, but as you can see it's just another variable, that instead of containing a value contains a memory address that points to a value. That's why it's called pointer.
 
 A pointer can point to heap or stack memory.
 
