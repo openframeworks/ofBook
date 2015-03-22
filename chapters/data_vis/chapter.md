@@ -515,5 +515,5 @@ You can write programs in OpenFrameworks so that data an be pulled from an API a
 JSON validation tools like: http://jsonlint.com/
 
 ##References
-Fry, B. (2008). *Visualizing Data,* O’Reilly Media.
+Fry, B. (2008). *Visualizing Data,* O’Reilly Media.  
 Ackoff, R. L. (1989). *From Data to Wisdom. Journal of Applied Systems Analysis,* 16, 3–9.
