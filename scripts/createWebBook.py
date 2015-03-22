@@ -465,3 +465,11 @@ subprocess.call(["pandoc", "-o", destTocPath, sourceTocPath,
 
 print "Removing", sourceTocPath, "..."
 os.remove(sourceTocPath)
+
+#----------------------------------------------------- copy index redirect to TOC
+
+destPath = os.path.join(webBookPath, "index.html")
+sourcePath = os.path.join("createWebBookTemplate", "index.html")
+
+print "Copying", sourcePath, "to", destPath, "..."
+shutil.copyfile(sourcePath, destPath)
