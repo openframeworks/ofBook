@@ -215,9 +215,11 @@ void ofApp::audioIn(float * input, int bufferSize, int nChannels) {
 }
 ```
 
-This will probably work fine on an isolated drum track, sparse music or for something like detecting whether or not someone's speaking into a microphone. However, in practice you'll likely find that this won't really cut it for reliable audio visualization or more intricate audio work. 
+This will probably work fine on an isolated drum track, sparse music or for something like detecting whether or not someone's speaking into a microphone. However, in practice you'll likely find that this won't really cut it for reliable audio visualization or more intricate audio work.
 
 You could of course grab an external onset detection algorithm (there's quite a few addons available for it), but if you'd like to experiment, try incorporating the FFT into your algorithm. For instance, try swapping the RMS for the average amplitude of a range of FFT bins.
+
+If you'd like to dig into the world of onset detection algorithms (and the larger ecosystem of what's known as "music information retrieval" algorithms), the [Music Information Retrieval Evaluation eXchange wiki](http://www.music-ir.org/mirex/wiki/MIREX_HOME) is a great source. On this wiki, you'll find the results of annual competitions comparing algorithms for things like onset detection, musical key detection, melody extraction, tempo estimation and so on.
 
 ### FFT
 Running an FFT on your input audio will give you back a buffer of values representing the input's frequency content. A straight up FFT *won't* tell you which notes are present in a piece of music, but you will be able to use the data to take the input's sonic "texture" into account. For instance, the FFT data will let you know how much "bass" / "mid" / "treble" there is in the input at a pretty fine granularity (a typical FFT used for realtime audio-reactive work will give you something like 512 to 4096 individual frequency bins to play with). 
