@@ -194,11 +194,9 @@ myBall3.draw();
 
 
 ##Make more Objects from your Class
-We've just created 3 objects but you can have already see how tedious it woud become if we wanted to created 10, 100 or maybe 1000's of them. Hardcoding them one by one would be a long and painful process that could be easily solved by automating the object creation and function calls. Just by using a couple for loops we'll make this process simpler and cleaner. Instead of declaring a list of objects one by one we'll create an array of objects of type 'Ball'. We'll also introduce another new element: a constant. Constants are set after any #includes as #define CONSTANT_NAME value. This is a way of setting a value that won't ever change in the program:
+We've just created 3 objects but you can have already see how tedious it woud become if we wanted to created 10, 100 or maybe 1000's of them. Hardcoding them one by one would be a long and painful process that could be easily solved by automating the object creation and function calls. Just by using a couple for loops we'll make this process simpler and cleaner. Instead of declaring a list of objects one by one we'll create an array of objects of type 'Ball'. We'll also introduce another new element: a constant. Constants are set after any #includes as #define CONSTANT_NAME value. This is a way of setting a value that won't ever change in the program.
 
-**[KL: The pseudo code-like explanation above is an effective approach. This is a good method to use before writing out the Ball class above, too. Also, I've been taking out words like "just" before steps and simplifying verb tenses for clarity. I'd keep that in mind as you continue writing this chapter. The more concise, the better.]** 
-**[KL: Restate which file this is happening in.]**
-in the ofApp class header file, where you define the balls objects also define the constant that we'll use for the number of objects:
+In the ofApp class header file, where you define the balls objects also define the constant that we'll use for the number of objects:
 
 ```cpp
 #define NBALLS 10
