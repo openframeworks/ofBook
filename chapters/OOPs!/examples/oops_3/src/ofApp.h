@@ -1,12 +1,11 @@
 #pragma once
 
 #include "ofMain.h"
-#include "ofBall.h"
-#include "ofBallRed.h"
-#include "ofBallGreen.h"
-#include "ofBallBlue.h"
+#include "Ball.h"
 
-class testApp : public ofBaseApp{
+#define NBALLS 10  // this is a CONSTANT, a value you won't want to change throughout your program
+
+class ofApp : public ofBaseApp{
 	public:
 		void setup();
 		void update();
@@ -22,8 +21,6 @@ class testApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
     
-    ofBallRed redBall;
-    ofBallGreen greenBall;
-    ofBallBlue blueBall;
+    Ball myBall[NBALLS];
     
 };

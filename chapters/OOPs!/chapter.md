@@ -318,9 +318,9 @@ Now in the ofApp.cpp file we will need to run this newly implemented method righ
 ```cpp
 for(int i=0; i<NBALLS; i++){
 	
-	int size = (i+1)*10); // defining the size of each ball based o its place in the array
-	int randomX = ofRandom(0, ofGetWidth()); //generate a random value bigger than 0 and smaller than our application screen width
-	int randomY = ofRandom(0, ofGetHeight()); //generate a random value bigger than 0 and smaller than our application screen height
+	int size = (i+1) * 10; // defining the size of each ball based o its place in the array
+	int randomX = ofRandom( 0, ofGetWidth() ); //generate a random value bigger than 0 and smaller than our application screen width
+	int randomY = ofRandom( 0, ofGetHeight() ); //generate a random value bigger than 0 and smaller than our application screen height
 	
     myBall[i].setup(randomX, randomY, size);
 }
