@@ -1,9 +1,9 @@
 #include "ofBall.h"
 
-ofBall::ofBall(float _x, float _y, int _dim){
-    x = _x;
-    y = _y;
-    dim = _dim;
+ofBall::ofBall(){
+    x = ofGetWidth()*.5;
+    y = ofGetHeight()*.5;
+    dim = ofRandom(200,250);
     
     speedX = ofRandom(-1, 1);
     speedY = ofRandom(-1, 1);

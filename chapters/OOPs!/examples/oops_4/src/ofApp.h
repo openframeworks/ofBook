@@ -1,11 +1,11 @@
 #pragma once
 
 #include "ofMain.h"
-#include "ofBall.h"
+#include "Ball.h"
 
-#define NBALLS 100
+#define NBALLS 10  // this is a CONSTANT, a value you won't want to change throughout your program
 
-class testApp : public ofBaseApp{
+class ofApp : public ofBaseApp{
 	public:
 		void setup();
 		void update();
@@ -21,6 +21,6 @@ class testApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
     
-    ofBall myBall[NBALLS];
+    Ball myBall[NBALLS];
     
 };

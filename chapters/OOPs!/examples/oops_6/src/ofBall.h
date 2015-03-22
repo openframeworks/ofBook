@@ -1,8 +1,8 @@
 //
 //  ofBall.h
-//  emptyExample
+//  oops! - object oriented programming 
 //
-//  Created by rux on 3/31/14.
+//  Created by rux for ofBook
 //
 //
 
@@ -28,10 +28,8 @@ class ofBall {
 
         ofColor color;// color usinf ofColor type
     
-        ofBall(float _x, float _y, int _dim); // constructor - used to initialize an object, if no properties are passed the program sets them to the default value
-        virtual ~ofBall(){
-            cout << "destroyed"<<endl;
-        }
+        ofBall(); // constructor - used to initialize an object, if no properties are passed the program sets them to the default value
+   
 private: // place private functions or variables declarations here
 
 }; // don't forget the semicolon!!
