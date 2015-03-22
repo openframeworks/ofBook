@@ -475,7 +475,7 @@ In openFrameworks, images can be stored in a variety of different *container cla
 - **ofPixels** This is an openFrameworks container for pixel data which lives inside each ofImage, as well as other classes like `ofVideoGrabber`. It's a wrapper around a buffer that includes additional information like width and height.
 - **ofImage** The `ofImage` is the most common object for loading, saving and displaying static images in openFrameworks. Loading a file into the ofImage allocates an internal `ofPixels` object (and often, an `ofTexture` as well) to store the image data. `ofImage` objects are not merely containers, but also support methods for displaying their pixel data.
 - **ofxCvImage** This is a container for image data used by the ofxOpenCV addon for openFrameworks, which supports certain functionality from the popular OpenCV library for filtering, thresholding, and other image manipulations.
-- **ofTexture** This container stores image data in the texture memory of your computer's graphics card (GPU). Many other classes, like `ofImage`, `ofxCvImage`,`ofVideoPlayer`, `ofVideoGrabber`, `ofFbo`, and `ofKinect`, use one of these to render their data to the screen. 
+- **ofTexture** This container stores image data in the texture memory of your computer's graphics card (GPU). Many other classes, including `ofImage`, `ofxCvImage`, `ofVideoPlayer`, `ofVideoGrabber`, `ofFbo`, and `ofKinect`, maintain an internal ofTexture object to render their data to the screen. 
 - **cv::Mat** This is the data structure used by OpenCV to store image information. It's not used in openFrameworks, but if you work a lot with OpenCV, you'll often find yourself placing and extracting data from this format.
 
 To the greatest extent possible, the designers of openFrameworks (and OF addons for image processing, like ofxOpenCV and Kyle McDonald's ofxCv) have provided simple operators to help make it easy to exchange data between these containers. 
@@ -497,8 +497,15 @@ myImage.setImageType (OF_IMAGE_GRAYSCALE); // Poof! It's grayscale.
 ```
 The ofxOpenCV addon library provides several methods for converting color imagery to grayscale. For example, the `convertToGrayscalePlanarImage()` and `setFromColorImage()` functions create or set an `ofxCvGrayscaleImage` from color image data stored in an `ofxCvColorImage`:
 
-`[Code to convert RGB to grayscale using ofxCV]`
+`[Code to convert RGB to grayscale using ofxOpenCV]`
 
+Although OF provides the above utilities to convert color images to grayscale, it's worth taking a moment to understand the subtleties of the conversion process. There are three common techniques for performing the conversion: 
+
+* **Extracting one of the R,G, or B color channels,** as a proxy for its luminance. For example, one might fetch only the green values as an approximation to an image's luminance, discarding its red and blue data. For a typical color image whose bytes are interleaved R-G-B, this can be done by fetching every 3rd byte. This method is computationally fast, but it's also perceptually inaccurate, and it tends to produce a noisier results for images of natural scenes. 
+* **Taking the average of the R,G, and B color channels.** A slower but more perceptually accurate method approximates luminance (often written *Y*) as a straight average of the red, green and blue values for every pixel: `Y = (R+G+B)/3;`. This not only produces a better representation of the image's luminance across the visible color spectrum, but it also diminishes the influence of noise in any one color channel.
+* **Computing the luminance with colorimetric coefficients**. The most perceptually accurate methods for computing grayscale from color images employ a specially-weighted "colorimetric" average of the RGB color data. These methods are marginally more expensive to compute, as each color channel must be multiplied by its own weighting factor. The CCIR 601 imaging specification, which is used in the OpenCV [cvtColor](http://docs.opencv.org/modules/imgproc/doc/miscellaneous_transformations.html#cvtcolor) function, itself used in the ofxOpenCV addon, employs the formula `Y = 0.299*R + 0.587*G + 0.114*B` (with the assumption that the RGB values have been gamma-corrected). According to [Wikipedia](http://en.wikipedia.org/wiki/Luma_(video)), "these coefficients represent the measured intensity perception of typical trichromat humans; in particular, human vision is most sensitive to green and least sensitive to blue."
+
+The following code snippet 
 `[Code to convert RGB to grayscale using OpenCV]`
 
 Even if your project is based around color imagery, you'll probably still use monochrome pixel data to represent and store many of the intermediate results in your image processing chain. For example, if you're calculating a "blob" to represent the location of a user's body, it's common to store that blob in a buffer of monochrome pixels. Typically, pixels containing 255 (white) are the foreground blob, and pixels containing 0 (black) are the background. 
