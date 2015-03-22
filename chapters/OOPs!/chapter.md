@@ -433,7 +433,8 @@ Your Ball header file should look like this:
 class Ball {
     
 public: // place public functions or variables declarations here
-        
+    
+void setup();	    
 void update();
 void draw(); 
 
@@ -461,6 +462,10 @@ lets change the minimum and maximum values of the random size to larger values a
 #include "Ball.h"
 
 Ball::Ball(){
+}
+
+Ball::setup(){
+
     x = ofGetWidth()*.5;
     y = ofGetHeight()*.5;
     dim = ofRandom(200,250);
@@ -487,7 +492,7 @@ class BallBlue : public Ball {     // we set the class to inherit from 'Ball'
 
 public: 
 
-    void draw();             // this is the only methid we actually want to be different from the 'mother class'
+    virtual void draw();             // this is the only methid we actually want to be different from the 'mother class'
 
 };
 ```
