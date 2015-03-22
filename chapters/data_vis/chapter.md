@@ -407,7 +407,7 @@ Here we have a for loop generating values for i that range from 0 to maxValue. S
 
 **Step 6 Interact.**
 
-Finally we can add interactivity by creating clickable tabs that will switch between the different datasets in our file. This section turns our code into a state machine, where we define a variable called 'which' which is toggled between the values 0,1 and 2. The value of ‘which’, dictates what dataset will be displayed.
+Finally we can add interactivity by creating clickable tabs that will switch between the different datasets in our file. This section turns our code into a state machine, where we define a variable called 'which' which is toggled between the values 0,1 and 2. The value of ‘which', dictates what dataset will be displayed.
 
 In testApp.h, declare which:
 ```cpp
@@ -466,7 +466,7 @@ to this:
     }
 
 ```
-We have created a new float 'value' to hold each data point. Depending on the value of ‘which’, value is assigned data from one of the three data sets in the tsp file. 
+We have created a new float 'value' to hold each data point. Depending on the value of ‘which', value is assigned data from one of the three data sets in the tsp file. 
 
 Finally the last step here is to draw the titles to the screen which is done by adding the last block of code underneath the for loop we just changed.
 

@@ -302,13 +302,13 @@ Kieran and Bafic were the people who ran the show for the general public, below 
 
 *Did you have a routine before show time?*
 
-Before the first show of the day we'd double check the connection between the laptop and the Kinect and test with the skeleton tracking that everything was working correctly. Before show time we’d dim the lights, make sure the sound was turned on, switch to the point cloud setting so people could see themselves as they walked in and then we’d turn the beanbags upright so as to ’set the scene’. Then, as people started to walk in we’d raise the lights as though they were walking on stage. And then before we pressed play we’d dim the lights to black.
+Before the first show of the day we'd double check the connection between the laptop and the Kinect and test with the skeleton tracking that everything was working correctly. Before show time we'd dim the lights, make sure the sound was turned on, switch to the point cloud setting so people could see themselves as they walked in and then we'd turn the beanbags upright so as to ’set the scene’. Then, as people started to walk in we’d raise the lights as though they were walking on stage. And then before we pressed play we’d dim the lights to black.
 
 *Any problems during shows? Crashes? Funny stories?*
 
 A couple of times the connection between the Kinect and the laptop failed due to the cable being under tension so we just had to let the show run to the end before we could fix it. The main problem we had was the projector overheating and displaying a lamp warning which involved having to find the technician to sort it. At one point the projector overheated so badly that we had to leave it switched off for 40 minutes before we could run the show again.
 
-Off the top of my head I can't think of anything I’d like to change about it, the GUI had quite a steep learning curve so it took a while to remember all the keys to press to hide each part of the interface but once we’d mastered that everything was fine. I guess the only thing that would be good but most likely ultimately un-achieveable would be full automation in the sense that the station wouldn’t have to be manned at all times.
+Off the top of my head I can't think of anything I'd like to change about it, the GUI had quite a steep learning curve so it took a while to remember all the keys to press to hide each part of the interface but once we'd mastered that everything was fine. I guess the only thing that would be good but most likely ultimately un-achieveable would be full automation in the sense that the station wouldn’t have to be manned at all times.
 
 Following is Bafic's post show report:
 
