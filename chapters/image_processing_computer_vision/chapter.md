@@ -354,13 +354,13 @@ Being able to locate the brightest pixel in an image has other uses, too. For ex
 
 ![Not mine](images/kinect-forepoint.jpg)
 
-*The brightest pixel in a depth image corresponds to the nearest object to the camera. In the configuration shown here, the "nearest object" is almost certain to be the user's hand (or nose).*
+*The brightest pixel in a depth image corresponds to the nearest object to the camera. In the configuration shown here, the "nearest point" is almost certain to be the user's hand.*
 
 Unsurprisingly, tracking *more than one* bright point requires more sophisticated forms of processing. If you're able to design and control the tracking environment, one simple yet effective way to track up to three objects is to search for the reddest, greenest and bluest pixels in the scene. Zachary Lieberman used a technique similar to this in his [*IQ Font*](https://vimeo.com/5233789) collaboration with typographers Pierre & Damien et al., in which letterforms were created by tracking the movements of a specially-marked sports car.
 
 ![Not mine](images/iq_font.jpg)
 
-More generally, you can create a system that tracks a (single) spot with a *specific* color. A simple way to achieve this is to find the pixel whose color has the shortest Euclidean distance (in "RGB space") to the target color. Here is a code fragment which shows this.
+More generally, you can create a system that tracks a (single) spot with a *specific* color. A very simple way to achieve this is to find the pixel whose color has the shortest Euclidean distance (in "RGB space") to the target color. Here is a code fragment which shows this.
 
 ```
 // Our target color is CSS LightPink: #FFB6C1 or (255, 182, 193)
@@ -408,7 +408,7 @@ for (int y=0; y<h; y++) {
 
 ```
 
-This technique is often used with an "eyedropper-style" interaction, in which the user selects the target color interactively (by clicking). Note that there are more sophisticated ways of measuring "color distance", such as techniques that use other color spaces, that can be more robust to variations in lighting. The distance method used here is not particularly good at distinguishing among very dark colors.  
+This technique is often used with an "eyedropper-style" interaction, in which the user selects the target color interactively (by clicking). Note that there are more sophisticated ways of measuring "[color distance](http://en.wikipedia.org/wiki/Color_difference)", such as the Delta-E [calculation](http://colormine.org/delta-e-calculator/) in the CIE76 color space, that are much more robust to variations in lighting and also have a stronger basis in human color perception. 
 
 #### Three-Channel (RGB) Images.
 
