@@ -10,13 +10,7 @@ Here's a quick overview of the classes you can use to work with sound in openFra
 
 `ofSoundStream` gives you access to the computer's sound hardware, allowing you to generate your own sound as well as react to sound coming into your computer from something like a microphone or line-in jack.
 
-As of this writing, these classes are slated to be introduced in the next minor OF version (0.9.0):
-
-`ofSoundBuffer` is used to store a sequence of `float` values, and perform audio-related things on said values (like resampling)
-
-`ofSoundFile` allows you to extract uncompressed ofSoundBuffers from files.
-
-`ofSoundObject` is an interface for chaining bits of sound code together, similar to how a guitarist might use guitar pedals. This is mostly relevant for addon authors or people looking to share their audio processing code.
+`ofSoundBuffer` is used to store a sequence of `float` values, and perform audio-related things on said values (like resampling).
 
 ## Getting Started With Sound Files
 
