@@ -1,4 +1,4 @@
-#Case Study : Line Segments Space
+#Line Segments Space
 
 *by [Mimi Son and  Elliot Woods (Kimchi and Chips)](http://www.kimchiandchips.com/)*
 

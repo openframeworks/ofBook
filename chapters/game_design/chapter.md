@@ -1,4 +1,4 @@
-#Experimental Game Development in openFrameworks
+#Experimental Game Development
 
 *by [Phoenix Perry](http://www.phoenixperry.com) and [Jane Friedhoff](janefriedhoff.com)*
 

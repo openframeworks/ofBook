@@ -1,4 +1,4 @@
-# philosophy
+# Philosophy
 
 *by [Zach Lieberman](http://thesystemis.com)*
 

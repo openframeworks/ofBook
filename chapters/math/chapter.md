@@ -1,4 +1,5 @@
-# That Math Chapter: From 1D to 4D 
+# Math: From 1D to 4D 
+
 *by [Omer Shapira](http://omershapira.com)*
 
 

@@ -1,4 +1,4 @@
-#Information Visualization Chapter
+#Information Visualization
 
 *by [Tega Brain](http://www.tegabrain.com/)*
 

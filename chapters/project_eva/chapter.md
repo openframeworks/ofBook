@@ -1,4 +1,4 @@
-# Case Study: Choreographies for Humans and Stars 
+#Choreographies for Humans and Stars 
 
 Permanent interactive outdoor installation developed by [Daily tous les jours](http://dailytouslesjours.com/) for Montreal's planetarium (2014). 
 

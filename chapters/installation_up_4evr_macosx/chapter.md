@@ -1,3 +1,7 @@
+#Installation up 4evr#
+
+*by [Blair Neal](http://blairneal.com/)*
+
 The original version of the article is [here](http://blairneal.com/blog/installation-up-4evr/) - I wanted to post it here to more easily/consistently update it and open it up to other people's modifications tips and suggestions - a Linux/Windows version would be great to build out too!
 
 Edited the article with https://stackedit.io/# for help with rendering Github Flavored Markup

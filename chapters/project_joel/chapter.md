@@ -1,4 +1,5 @@
-# Case Study: Anthropocene, an body reactive video installation
+#Anthropocene
+
 ## Project Overview
 
 **Anthropocene**
