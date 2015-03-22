@@ -351,7 +351,7 @@ void ofApp::draw(){
 	ofDrawEllipse (maxBrightnessX, maxBrightnessY, 40,40);
 }
 ```
-Our application locates the bright spot of the laser (which, luckily for us, is the brightest part of the scene) and draws a circle around it. Of course, now that we know where the brightest (or darkest) spot is, we can can develop many interesting applications, such as sun trackers, turtle trackers...
+Our application locates the bright spot of the laser (which, luckily for us, is the brightest part of the scene) and draws a circle around it. Of course, now that we know where the brightest (or darkest) spot is, we can can develop many other interesting applications, such as sun trackers, turtle trackers...
 
 ![Laser Tag by GRL](images/laser_tag_result.jpg)
 
@@ -446,7 +446,7 @@ unsigned char redValueAtXY   = buffer[rArrayIndex];
 unsigned char greenValueAtXY = buffer[gArrayIndex];
 unsigned char blueValueAtXY  = buffer[bArrayIndex];
 ```
-This is, then, the three-channel "RGB version" of the elementary `index = y*width + x` pattern we used earlier to fetch pixel values from monochrome images.
+This is, then, the three-channel "RGB version" of the basic `index = y*width + x` pattern we used earlier to fetch pixel values from monochrome images.
 
 Note that you may occasionally encounter libraries or hardware which deliver RGB bytes in a different order, such as BGR. 
 
@@ -488,13 +488,14 @@ It's helpful to know that there's generally a performance penalty for moving ima
 
 Many computer vision algorithms (though not all!) are commonly performed on grayscale or monochome images. If color isn't important to your vision problem, working in grayscale can significantly improve the speed of image processing routines, because it reduces both the number of calculations as well as the amount of memory required to process the data. Assuming your source data is in color (as is common with webcams), depending on your application, you'll either clobber your color image to grayscale directly, or create a grayscale copy for subsequent processing. 
 
-The simplest method to convert a color image to grayscale is to clobber its data by changing its OF image type to `OF_IMAGE_GRAYSCALE`. Note that this causes the image to be reallocated and any ofTextures to be updated, so it can be an expensive operation if done frequently. It's also a "destructive operation", in the sense that the color information is lost in the conversion.</p>
+The simplest method to convert a color image to grayscale is to clobber its data by changing its OF image type to `OF_IMAGE_GRAYSCALE`. Note that this causes the image to be reallocated and any ofTextures to be updated, so it can be an expensive operation if done frequently. It's also a "destructive operation", in the sense that the image's original color information is lost in the conversion.</p>
 
 ```
 ofImage myImage; 
 myImage.loadImage ("colorful.jpg"); // Load a colorful image.
-myImage.setImageType (OF_IMAGE_GRAYSCALE); // Poof! I'm grayscale. 
+myImage.setImageType (OF_IMAGE_GRAYSCALE); // Poof! It's grayscale. 
 ```
+The ofxOpenCV addon library provides several methods for converting color imagery to grayscale. For example, the `convertToGrayscalePlanarImage()` and `setFromColorImage()` functions create or set an `ofxCvGrayscaleImage` from color image data stored in an `ofxCvColorImage`:
 
 `[Code to convert RGB to grayscale using ofxCV]`
 
