@@ -415,9 +415,26 @@ for (int i = 0 ; i<myBall.size(); i++) {
 
 
 ```
+<<<<<<< Updated upstream
 
 Now let's also implement a way to delete them before we have way too many ofBalls:
 On the ofApp::MousePressed call we will loop though our vector and check the distance between the coordinates of the mouse with the ofBall position, if this distance is smaller than the ofBall dimension then, we know that we're clicking inside it, we can delete it. Because we're using the vector.erase method we need to use an iterator ( myBall.begin() ), a shortcut that references to the first element of the vector as a starting point to access the vector element we really want to erase ( 'i' ).
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+'''
+On the ofApp::MousePressed() call we will loop though our vector and check the distance between the coordinates of the mouse with the Ball position, if this distance is smaller than the Ball dimension then, we know that we're clicking inside it, we can delete it. Because we're using the vector.erase method we need to use an iterator ( myBall.begin() ), a shortcut that references to the first element of the vector as a starting point to access the vector element we really want to erase ( 'i' ).
+=======
+
+Now let's also implement a way to delete them before we have way too many ofBalls:
+On the ofApp::MousePressed call we will loop though our vector and check the distance between the coordinates of the mouse with the ofBall position, if this distance is smaller than the ofBall dimension then, we know that we're clicking inside it, we can delete it. Because we're using the vector.erase method we need to use an iterator ( myBall.begin() ), a shortcut that references to the first element of the vector as a starting point to access the vector element we really want to erase ( 'i' ).
+>>>>>>> origin/master
+=======
+
+Now let's also implement a way to delete them before we have way too many ofBalls:
+On the ofApp::MousePressed call we will loop though our vector and check the distance between the coordinates of the mouse with the ofBall position, if this distance is smaller than the ofBall dimension then, we know that we're clicking inside it, we can delete it. Because we're using the vector.erase method we need to use an iterator ( myBall.begin() ), a shortcut that references to the first element of the vector as a starting point to access the vector element we really want to erase ( 'i' ).
+>>>>>>> origin/master
+>>>>>>> Stashed changes
 
 ```cpp
 for (int i =0; i < myBall.size(); i++) {
@@ -429,6 +446,12 @@ for (int i =0; i < myBall.size(); i++) {
 }
 ```
 
+But because there's always a time you might just want to destroy them all, vectors also have a very handy method to help you: clear().
+Feel free to experiemnt and try using it yourself!
+
+```cpp
+balls.clear();
+```
 
 To learn more about stl::vector check xxx chapter or this short online tutorial : http://www.openframeworks.cc/tutorials/c++%20concepts/001_stl_vectors_basic.html
 
