@@ -446,7 +446,9 @@ unsigned char redValueAtXY   = buffer[rArrayIndex];
 unsigned char greenValueAtXY = buffer[gArrayIndex];
 unsigned char blueValueAtXY  = buffer[bArrayIndex];
 ```
-This is the RGB version of the elementary `index = y*width + x` pattern we used earlier to fetch pixel values from monochrome images.
+This is, then, the three-channel "RGB version" of the elementary `index = y*width + x` pattern we used earlier to fetch pixel values from monochrome images.
+
+Note that you may occasionally encounter libraries or hardware which deliver RGB bytes in a different order, such as BGR. 
 
 #### Varieties of Image Formats
 
