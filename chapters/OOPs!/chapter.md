@@ -194,7 +194,7 @@ myBall3.draw();
 
 
 ##Make more Objects from your Class
-We've just created 3 objects but what if we wanted to created 10, 100 or maybe 1000's of them?! Hardcoding them one by one would be a long and painful process that could be easily solved by automating the object creation and function calls. Just by using a couple for loops we'll make this process simpler and cleaner. Instead of declaring a list of objects one by one we'll create an array of objects of type 'Ball'. We'll also introduce another new element: a constant. Constants are set after any #includes as #define CONSTANT_NAME value. This is a way of setting a value that won't ever change in the program:
+We've just created 3 objects but you can have already see how tedious it woud become if we wanted to created 10, 100 or maybe 1000's of them. Hardcoding them one by one would be a long and painful process that could be easily solved by automating the object creation and function calls. Just by using a couple for loops we'll make this process simpler and cleaner. Instead of declaring a list of objects one by one we'll create an array of objects of type 'Ball'. We'll also introduce another new element: a constant. Constants are set after any #includes as #define CONSTANT_NAME value. This is a way of setting a value that won't ever change in the program:
 
 **[KL: The pseudo code-like explanation above is an effective approach. This is a good method to use before writing out the Ball class above, too. Also, I've been taking out words like "just" before steps and simplifying verb tenses for clarity. I'd keep that in mind as you continue writing this chapter. The more concise, the better.]** 
 **[KL: Restate which file this is happening in.]**
@@ -214,6 +214,15 @@ Ball myBall[NBALLS];
 
 
 back to our implementation file we'll just need to create an array of objects and call their methods through 'for' loops.
+
+in the setup() function:
+
+```cpp
+for(int i=0; i<NBALLS; i++){
+    myBall[i].setup();
+}
+```
+
 in the update() function:
 
 ```cpp
@@ -235,17 +244,17 @@ for(int i=0; i<NBALLS; i++){
 
 ##Make even more Objects from your Class: properties and constructors
 
-As we've seen, each of the objects has a set of properties defined by its variables (position, speed, direction, and dimension). Another advantage of object oriented programming is that the objects created can have different values for each of their properties. For us to have better control of each object, we can have a constructor that defines these characteristics and lets us access them. In the Ball definitions file (*.h) we can change the constructor to include some of the object's properties (let's say position and dimension):
+As we've seen, each of the objects has a set of properties defined by its variables (position, speed, direction, and dimension). Another advantage of object oriented programming is that the objects created can have different values for each of their properties. For us to have better control of each object, we can have a method that allows us to define these characteristics and lets us access them. Because we want to do this right after creating the object and we're preparing it or setting it up, let's do this in the method called setup().  We will modify it to allow to pass in some of the objects properties, let's say its position and dimension. First let's do this in the Ball definitions file (*.h): 
 
 ```cpp
-Ball(float x, float y, int dim);
+void setup(float x, float y, int dim);
 ```
 
 
-Since we've changed the constructor, we'll need to update the Ball implementation (*.cpp) file to reflect these.
+We'll need to update the Ball implementation (*.cpp) file to reflect these changes.
 
 ```cpp
-Ball::Ball(float _x, float _y, int _dim){
+Ball::setup(float x, float y, int dim){
     x = _x;
     y = _y;
     dim = _dim;
@@ -260,7 +269,10 @@ Your Ball.cpp file should look like this by now:
 ```cpp
 #include "Ball.h"
 
-Ball::Ball(float _x, float _y, int _dim){
+Ball::Ball(){
+};
+
+Ball::setup(float x, float y, int dim){
         x = _x;
         y = _y;
         dim = _dim;
@@ -302,39 +314,29 @@ void Ball::draw(){
 }
 ```
 
-By implementing these changes we'll also need to create space in memory for these objects. We'll do this by creating a pointer (a reference in memory) for each object. Back to the ofApp.h (definitions) file we'll declare a new object like this:
 
-
-```cpp
-Ball *myBall;  
-```
-
-
-The star(*) means it will be created in a reserved part of memory just for it, we'll dynamically allocate this instance of the Ball class.
-
-**[KL: specify why we'd make it into a pointer vs not a pointer]**
-
-Now in the ofApp.cpp file we will need to create the object in the setup and we'll call the object's methods on the draw() and update() functions in a different way than before. Instead of using the (.) dot syntax like we have been doing so far, from now on we'll use the (->) arrow syntax. Also, we'll also be creating a new instance way more explicitly. So, in setup()
+Now in the ofApp.cpp file we will need to run this newly implemented method right when we start our application so it will reflect the different settings on each object as they are created.So, in the  ofApp::setup()
 
 ```cpp
-            // x-position,        y-position,           size
-myBall = new Ball(ofRandom(300,400), ofRandom(200,300), ofRandom(10,40));
+for(int i=0; i<NBALLS; i++){
+	
+	int size = (i+1)*10); // defining the size of each ball based o its place in the array
+	int randomX = ofRandom(0, ofGetWidth()); //generate a random value bigger than 0 and smaller than our application screen width
+	int randomY = ofRandom(0, ofGetHeight()); //generate a random value bigger than 0 and smaller than our application screen height
+	
+    myBall[i].setup(randomX, randomY, size);
+}
 ```
 
 
 As you see it is now possible to directly control the objects properties on its creation. and now we'll just need to update and draw it.
 
 ```cpp
-myBall->update();
+myBall.update();
 
 
-myBall->draw();
+myBall.draw();
 ```
-
-**[KL: We've changed myBall.update() to myBall->update(). That's kind of a big deal and warrants explanation concerning pointers.]**
-
-**[JTN: no harm in explaining it twice, but i introduced it at the end of my unabridged chapter https://github.com/openframeworks/ofBook/blob/master/02_cplusplus_basics/unabridged.md#classes  ]**
-
 
 
 ##Make even more Objects from your Class
