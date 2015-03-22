@@ -418,6 +418,7 @@ Now we've got a basic, useable instrument!
 A few things to try, if you'd like to explore further:
 
 - Instead of using `keyPressed(...)` to determine the oscillator's frequency, use ofxMidi to respond to external MIDI messages. If you want to get fancy, try implementing pitch bend or use MIDI CC messages to control the frequency lerp rate.
+- Instead of "snapping" to the nearest sample in the waveform lookup table, try interpolating between neighbouring values to reduce the noisy artifacts a low-resolution lookup table produces
 - Try filling the waveform table with data from an image, or from a live camera (`ofMap(...)` will be handy to keep your data in the -1 to 1 range)
 - Implement a *polyphonic* synthesizer. This is one which uses multiple oscillators to let you play more than one note at a time.
 - Keep several copies of the `phase` index, and use `ofSignedNoise(...)` to slightly modify the frequency they represent. Add each of the waveforms together in `output`, but average the result by the number of phases you're tracking.
