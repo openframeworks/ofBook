@@ -453,29 +453,6 @@ private:
 #endif
 ```
 
-And let's make some slight changes on the implementation file:
-lets change the minimum and maximum values of the random size to larger values and set the position to the center of the screen. Make it look like this: 
-
-```cpp
-#include "Ball.h"
-
-Ball::Ball(){
-}
-
-Ball::setup(){
-
-    x = ofGetWidth()*.5;
-    y = ofGetHeight()*.5;
-    dim = ofRandom(200,250);
-    
-    speedX = ofRandom(-1, 1);
-    speedY = ofRandom(-1, 1);
-    
-    color.set(ofRandom(255), ofRandom(255), ofRandom(255));
-}
-```
-
-We can leave the update() and draw() functions as they were.
 Now, let's start making 'daughter' versions of this 'mother' class.
 Create a new Class set of files and name them 'BallBlue'. Feel free to copy the code below and
 it's '.h' should look like this:
