@@ -50,9 +50,9 @@ void ofApp::draw(){
 	ofBackground(255);
 	ofSetColor(255);
 
-	int imgW = myImage.width;
-	int imgH = myImage.height;
-	myImage.draw(10, 10, imgW * 10, imgH * 10);
+	int imgWidth  = myImage.width;
+	int imgHeight = myImage.height;
+	myImage.draw(10, 10, imgWidth * 10, imgHeight * 10);
 }
 ```
 
@@ -148,9 +148,14 @@ void ofApp::update(){
 
 		// Obtain a pointer to the grabber's image data.
 		unsigned char* pixelData = myVideoGrabber.getPixels();
-
-		// For every byte of the RGB image data,
+		
+		// Reckon the total number of bytes to examine. 
+		// This is the image's width times its height,
+		// times 3 -- because each pixel requires 3 bytes
+		// to store its R, G, and B color components.  
 		int nTotalBytes = camWidth*camHeight*3;
+		
+		// For every byte of the RGB image data,
 		for (int i=0; i<nTotalBytes; i++){
 
 			// pixelData[i] is the i'th byte of the image;
@@ -227,7 +232,7 @@ It's important to understand how pixel data is stored in computer memory. Each p
 
 ![Based on Shiffman's image in the Processing tutorial](images/pixels_in_memory.png)
 
-Observe how the (one-dimensional) list of values have been distributed to successive (two-dimensional) pixel locations in the image — wrapping over the right edge just like English text.
+Observe how a one-dimensional list of values in memory can be arranged into successive rows of a two-dimensional grid of pixels, and vice versa.
 
 It frequently happens that you'll need to determine the array-index of a given pixel *(x,y)* in an image that is stored in an `unsigned char*` buffer. This little task comes up often enough that it's worth committing the following pattern to memory:
 
@@ -236,9 +241,9 @@ It frequently happens that you'll need to determine the array-index of a given p
 // unsigned char *buffer, an array storing a one-channel image
 // int x, the horizontal coordinate (column) of your query pixel
 // int y, the vertical coordinate (row) of your query pixel
-// int imgW, the width of your image
+// int imgWidth, the width of your image
 
-int arrayIndex = y*imgW + x;
+int arrayIndex = y*imgWidth + x;
 
 // Now you can GET values at location (x,y), e.g.:
 unsigned char pixelValueAtXY = buffer[arrayIndex];
@@ -252,16 +257,16 @@ Reciprocally, you can also fetch the x and y locations of a pixel corresponding 
 // Given:
 // A one-channel (e.g. grayscale) image
 // int arrayIndex, an index in that image's array of pixels
-// int imgW, the width of the image
+// int imgWidth, the width of the image
 
-int y = arrayIndex / imgW; // NOTE, this is integer division!
-int x = arrayIndex % imgW; // The friendly modulus operator.
+int y = arrayIndex / imgWidth; // NOTE, this is integer division!
+int x = arrayIndex % imgWidth; // The friendly modulus operator.
 ```
 
 Most of the time, you'll be working with image data that is stored in a higher-level container object, such as an `ofImage`. There are *two* ways to get the values of pixel data stored in such a container. In one method, we can ask the image for its array of unsigned char pixel data, using `.getPixels()`, and then fetch the value we want from this array. Many image containers, such as `ofVideoGrabber`, also support a `.getPixels()` function.
 
 ```cpp
-int arrayIndex = y*imgW + x;
+int arrayIndex = y*imgWidth + x;
 unsigned char* myImagePixelBuffer = myImage.getPixels();
 unsigned char pixelValueAtXY = myImagePixelBuffer[arrayIndex];
 ```
@@ -441,7 +446,9 @@ unsigned char redValueAtXY   = buffer[rArrayIndex];
 unsigned char greenValueAtXY = buffer[gArrayIndex];
 unsigned char blueValueAtXY  = buffer[bArrayIndex];
 ```
-This is the RGB version of the elementary `index = y*width + x` pattern we used earlier to fetch pixel values from monochrome images.
+This is, then, the three-channel "RGB version" of the elementary `index = y*width + x` pattern we used earlier to fetch pixel values from monochrome images.
+
+Note that you may occasionally encounter libraries or hardware which deliver RGB bytes in a different order, such as BGR. 
 
 #### Varieties of Image Formats
 
