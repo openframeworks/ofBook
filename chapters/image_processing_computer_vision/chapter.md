@@ -148,9 +148,14 @@ void ofApp::update(){
 
 		// Obtain a pointer to the grabber's image data.
 		unsigned char* pixelData = myVideoGrabber.getPixels();
-
-		// For every byte of the RGB image data,
+		
+		// Reckon the total number of bytes to examine. 
+		// This is the image's width times its height,
+		// times 3 -- because each pixel requires 3 bytes
+		// to store its R, G, and B color components.  
 		int nTotalBytes = camWidth*camHeight*3;
+		
+		// For every byte of the RGB image data,
 		for (int i=0; i<nTotalBytes; i++){
 
 			// pixelData[i] is the i'th byte of the image;
