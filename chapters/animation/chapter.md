@@ -36,8 +36,8 @@ The second point to make about animation is that it requires variables. A variab
 
 The third point to make about OF and animation is frame rate.  We animate in openFrameworks using successive frames.  Frame rate refers to how quickly frames get drawn.  In OF there are several important functions to know about.
 
-- `ofGetFrameRate()` returns the current frame rate (in frames per second). 
-- `ofSetFrameRate( float targetFrameRate )` sets the maximum frame rate. If the software is animating faster than this, `ofSetFrameRate` will slow it down. Think of it like a speed limit. It doesn't make you go faster, but it prevents you from going too fast. Set the value to 0 to run as fast as possible.
+- [`ofGetFrameRate()`](http://openframeworks.cc/documentation/application/ofAppRunner.html#!show_ofGetFrameRate "ofGetFrameRate Documentation Page") returns the current frame rate (in frames per second). 
+- [`ofSetFrameRate( float targetFrameRate )`](http://openframeworks.cc/documentation/application/ofAppRunner.html#!show_ofSetFrameRate "ofSetFrameRate Documentation Page") sets the maximum frame rate. If the software is animating faster than this, `ofSetFrameRate` will slow it down. Think of it like a speed limit. It doesn't make you go faster, but it prevents you from going too fast. Set the value to 0 to run as fast as possible.
 
 In addition, openGL works with an output display and will attempt to synchronize with the refresh rate of the monitor -- sometimes called vertical-sync or vertical blanking.  If you don't synchronize with the refresh rate, you can get something called frame tearing, where the non-synchronization can mean frames get drawn before and after a change, leading to horizontal lines of discontinuity, called [screen tearing](http://en.wikipedia.org/wiki/Screen_tearing) 
 
@@ -45,7 +45,7 @@ In addition, openGL works with an output display and will attempt to synchronize
 
 We have a function in OF for controlling this. Some graphics card drivers (see for example Nvidia's PC drivers) have settings that override application settings, so please be sure to check your driver options. 
 
-- `ofSetVerticalSync (bool bUseSync)` set this true if you want to synchronized vertically, false if you want to draw as fast as possible. 
+- [`ofSetVerticalSync (bool bUseSync)`](http://openframeworks.cc/documentation/application/ofAppRunner.html#!show_ofSetVerticalSync "ofSetVerticalSync Documentation Page") set this true if you want to synchronized vertically, false if you want to draw as fast as possible. 
 
 By default, OF enables vertical sync and sets a frame rate of 60FPS. You can adjust the VSYNC and frame rate settings if you want to animate faster, but please note that by default OF wants to run as fast as possible. It's not uncommon if you are drawing a simple scene to see frame rates of 800 FPS if you don't have VSYNC enabled (and the frame rate cap set really high or disabled).
 
@@ -79,13 +79,13 @@ If ofGetFrameRate() returns 30, we multiply 0.5 by 1, if ofGetFrameRate() return
 
 Finally, there are a few other functions that are useful for animation timing: 
 
-- `ofGetElapsedTimef()` returns the elapsed time in floating point numbers, starting from 0 when the app starts. 
-- `ofGetElapsedTimeMillis()` similarly returns the elapsed time starting from 0 in milliseconds.
-- `ofGetFrameNum()` returns the number of frames the software has drawn. If you wanted, for example, to do something every other frame you could use the mod operator, e.g., `if (ofGetFrameNum() % 2 == 0)`.
+- [`ofGetElapsedTimef()`](http://openframeworks.cc/documentation/utils/ofUtils.html#!show_ofGetElapsedTimef "ofGetElapsedTimef Documentation Page") returns the elapsed time in floating point numbers, starting from 0 when the app starts. 
+- [`ofGetElapsedTimeMillis()`](http://openframeworks.cc/documentation/utils/ofUtils.html#!show_ofGetElapsedTimeMillis "ofGetElapsedTimeMillis Documentation Page") similarly returns the elapsed time starting from 0 in milliseconds.
+- [`ofGetFrameNum()`](http://openframeworks.cc/documentation/utils/ofUtils.html#!show_ofGetFrameNum "ofGetFrameNum Documentation Page") returns the number of frames the software has drawn. If you wanted, for example, to do something every other frame you could use the mod operator, e.g., `if (ofGetFrameNum() % 2 == 0)`.
 
 ### Objects
 
-In these examples, I'll be using objects pretty heavily. It's helpful to feel comfortable with OOP to understand the code. One object that is used heavily is `ofPoint`, which contains an x,y and z variable. In the past this was called "ofVec3f" (vector of three floating point numbers), but we just use the more convenient ofPoint. In some animation code, you'll see vectors used, and you should know that ofPoint is essentially a vector.  
+In these examples, I'll be using objects pretty heavily. It's helpful to feel comfortable with OOP to understand the code. One object that is used heavily is [`ofPoint`](http://openframeworks.cc/documentation/types/ofPoint.html "ofPoint Documentation Page"), which contains an x,y and z variable. In the past this was called "ofVec3f" (vector of three floating point numbers), but we just use the more convenient ofPoint. In some animation code, you'll see vectors used, and you should know that ofPoint is essentially a vector.  
 
 You will also see objects that have basic functionality and internal variables. I will typically have a setup, update and draw inside them. A lot of times, these objects are either made because they are useful recipes to have many things on the screen or they help by putting all the variables and logic of movement in one place. I like to have as little code as possible at the testApp / ofApp level. If you are familiar with ActionScript / Flash, this would be similar to having as a little as possible in your main timeline. 
 
@@ -300,7 +300,7 @@ float y = yorig + radius * sin(angle);
 
 *Note: In OF, the top left corner is 0,0 (y axis is increasing as you go down) so you'll notice that the point travels clockwise instead of counterclockwise.  If this bugs you (since above, I asked you imagine it moving counterclockwise) you can modify this line `float y = yorig + radius * sin(angle)` to `float y = yorig + radius * -sin(angle)` and see the circle go in the counterclockwise direction.*
 
-For these examples, I start to add a "trail" to the object by using the ofPolyline object. I keep adding points, and once I have a certain number I delete the oldest one. This helps us better see the motion of the object. 
+For these examples, I start to add a "trail" to the object by using the [ofPolyline](http://openframeworks.cc/documentation/graphics/ofPolyline.html "ofPolyline Documentation Page") object. I keep adding points, and once I have a certain number I delete the oldest one. This helps us better see the motion of the object. 
 
 If we increase the radius, for example by doing: 
 
@@ -318,11 +318,11 @@ Finally, if we alter the angles we pass in to x and y for this formula at differ
 
 ### Noise
 
-Noise is similar to sin/cos in that it's a function taking some input and producing output, which we can then use for movement.  In the case of sin/cos you are passing in an angle and getting a result back that goes back and forth between -1 and 1.  In openFrameworks we wrap code using [simplex noise](http://en.wikipedia.org/wiki/Simplex_noise), which is comparable to Perlin noise and we have a function `ofNoise()` that takes an input and produces an output.  Both algorithms (Perlin, Simplex) provide a pseudo random noise pattern -- they are quite useful for animation, because they are continuous functions, unlike ofRandom for example, which just returns random values.  
+Noise is similar to sin/cos in that it's a function taking some input and producing output, which we can then use for movement.  In the case of sin/cos you are passing in an angle and getting a result back that goes back and forth between -1 and 1.  In openFrameworks we wrap code using [simplex noise](http://en.wikipedia.org/wiki/Simplex_noise), which is comparable to Perlin noise and we have a function [`ofNoise()`](http://openframeworks.cc/documentation/math/ofMath.html#!show_ofNoise "ofNoise Documentation Page") that takes an input and produces an output.  Both algorithms (Perlin, Simplex) provide a pseudo random noise pattern -- they are quite useful for animation, because they are continuous functions, unlike [ofRandom](http://openframeworks.cc/documentation/math/ofMath.html#!show_ofRandom "ofRandom Documentation Page") for example, which just returns random values.  
 
 When I say continuous function, what I mean is if you pass in smaller changes as input, you get smaller output and if you pass in the same value you get the same result.  For example, `sin(1.7)` always returns the same value, and `ofNoise(1.7)` also always returns the same result.   Likewise if you call `sin(1.7)` and `sin(1.75)` you get results that are continuous (meaning, you can call `sin(1.71) sin(1.72)... sin(1.74)` to get intermediate results).  
 
-You can do the same thing with ofNoise -- here, I write a for loop to draw noise as a line.  `ofNoise` takes an input, here i/10 and produces an output which is between 0 and 1.  `ofSignedNoise` is similar but it produces an output between -1 and 1.
+You can do the same thing with ofNoise -- here, I write a for loop to draw noise as a line.  `ofNoise` takes an input, here i/10 and produces an output which is between 0 and 1.  [`ofSignedNoise`](http://openframeworks.cc/documentation/math/ofMath.html#!show_ofSignedNoise "ofSignedNoise Documentation Page") is similar but it produces an output between -1 and 1.
 
 ![noise line](images/noiseLine.png)
 
@@ -474,7 +474,7 @@ class particle{
 };
 ```
 
-For variables, it has ofPoint objects for position, velocity and force (abbreviated as pos, vel and frc).  It also has a variable for damping, which represents how much this object slows down over time.  A damping of 0 would mean not slowing down at all, and as damping gets higher, it's like adding more friction - imagine rolling a ball on ice, concrete or sand. It would slow down at different rates. 
+For variables, it has [ofPoint](http://openframeworks.cc/documentation/types/ofPoint.html "ofPoint Documentation Page") objects for position, velocity and force (abbreviated as pos, vel and frc).  It also has a variable for damping, which represents how much this object slows down over time.  A damping of 0 would mean not slowing down at all, and as damping gets higher, it's like adding more friction - imagine rolling a ball on ice, concrete or sand. It would slow down at different rates. 
 
 In terms of functions, it has a constructor which sets some internal variables like damping and a setInitialCondition() that allows you to set the position and velocity of the particle.  Think about this as setting up its initial state, and from here you let the particle play out.   The next three functions are about forces (we'll see more) -- the first one, `resetForce()`, clears all the internal force variable frc.  Forces are not cumulative across frames, so at the start of every frame we clear it.  `addForce()` adds a force in a given direction, useful for constant forces, like gravity.  `addDampingForce()` adds a force opposite velocity (damping is a force felt opposite the direction of travel).   Finally, update takes force and adds it to velocity, and takes velocity and adds it to position.  Draw just draws a dot where position is. 
 

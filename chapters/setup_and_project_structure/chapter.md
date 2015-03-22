@@ -27,7 +27,7 @@ All IDEs have a similar interface:
 - Toolbar and Run Button: In the tool bar you'll find several useful buttons, such as open, save, save all, et cetera. The "run" button is very important. Usually it is labeled with a triangle pointing to the right, like the "play" button. When you press it, your code will compile and if no problems are encountered it will automatically run your code. Hence this is a frequently used button.
 - File selector and project navigator area: Here you will see your project and the files associated with it. Usually it is displayed like a hierarchically ordered list of files. Here you'll find all the OF library files, as well as the files that are particular to your project.
 - Editing area: When you open a file in the project navigation area, usually by double clicking it, it should open in the editing area. This looks just like any regular text-editing software, and behaves much the same.
-- Console: This is where your app, when running, outputs messages. These messages are really useful for debugging. You can print text messages to the console using the `cout` comand  or `ofLog(...)` function.
+- Console: This is where your app, when running, outputs messages. These messages are really useful for debugging. You can print text messages to the console using the `cout` comand  or [`ofLog(...)`](http://openframeworks.cc/documentation/utils/ofLog.html "ofLog Documentation Page") function.
 
 ####Apple Xcode
 
@@ -116,16 +116,16 @@ Here you will find a lot of different things, from ingredients to tools, all ord
 
 - **3D**
     - Tools for drawing basic 3D polygonal objects, such as spheres, cubes, pyramids, etc.
-    - `ofCamera`, `ofEasyCam` 3d cameras for navigating and viewing your 3D scene, either interactively or not.
-    - `ofNode` a 3D point in space, which is the base type for any 3d object, allowing it to be moved, rotated, scaled, nested and drawn.
-    - `ofMesh` A primitive for batching points in 3D space that allows you to draw them in several different ways such as points, lines, line strips, triangles, triangle strips, and attach textures (images) to these. All of this is done very efficiently using your computer's GPU. 
+    - [`ofCamera`](http://openframeworks.cc/documentation/3d/ofCamera.html "ofCamera Documentation Page"), [`ofEasyCam`](http://openframeworks.cc/documentation/3d/ofEasyCam.html "ofEasyCam Documentation Page") 3d cameras for navigating and viewing your 3D scene, either interactively or not.
+    - [`ofNode`](http://openframeworks.cc/documentation/3d/ofNode.html "ofNode Documentation Page") a 3D point in space, which is the base type for any 3d object, allowing it to be moved, rotated, scaled, nested and drawn.
+    - [`ofMesh`](http://openframeworks.cc/documentation/3d/ofMesh.html "ofMesh Documenation Page") A primitive for batching points in 3D space that allows you to draw them in several different ways such as points, lines, line strips, triangles, triangle strips, and attach textures (images) to these. All of this is done very efficiently using your computer's GPU. 
     - functions to help load and save 3D objects.
 - **app**
     - Tools for setting and getting properties of your app such as window size, position, different drawing modes, framerate, et cetera.
-    - different windowing systems, such as `ofAppNoWindow` which sets up openframeworks in a windowless context.
+    - different windowing systems, such as [`ofAppNoWindow`](http://openframeworks.cc/documentation/application/ofAppNoWindow.html "ofAppNoWindow Documenation Page") which sets up openframeworks in a windowless context.
 - **communication**
-    - `ofSerial` which provides simple serial port communication
-    - `ofArduino` which allows openframeworks to communicate via Firmata
+    - [`ofSerial`](http://openframeworks.cc/documentation/communication/ofSerial.html "ofSerial Documentation Page") which provides simple serial port communication
+    - [`ofArduino`](http://openframeworks.cc/documentation/communication/ofArduino.html "ofArduino Documentation Page") which allows openframeworks to communicate via Firmata
 - **events**
     - this is code for the OF event manager, allowing you to tap into app events if you need or even creating your own events. 
 - **gl** 
@@ -133,21 +133,21 @@ Here you will find a lot of different things, from ingredients to tools, all ord
     - OF implements different rendering pipelines, Fixed and Programable rendering pipelines as well as OpenGL ES (used on less powerful devices such as smartphones and the Raspberry Pi) -- most of this code is found in the gl folder. 
 - **graphics**
     - There are a lot of capabilities here, such as loading and saving images of almost any kind, implementing several different methods for drawing in 2D, and exhibiting colors and styles. Most of the drawing tools rely on OpenGL so these are usually very fast. Graphics also allows you to render as PDF, and it features typography with several kinds of rendering options and utilities.
-    - There are useful objects like ofImage, a class for loading, saving and drawing images
-    - `ofTrueTypeFont` is a library for loading and drawing true type fonts
+    - There are useful objects like [`ofImage`](http://openframeworks.cc/documentation/graphics/ofImage.html "ofImage Documentation Page"), a class for loading, saving and drawing images
+    - [`ofTrueTypeFont`](http://openframeworks.cc/documentation/graphics/ofTrueTypeFont.html "ofTrueTypeFont Documenation Page") is a library for loading and drawing true type fonts
 - **math**
-    - in ofMath you'll find things like vectors (ie `ofVec2f`, `ofVec3f`) , matrices (ie `ofMatrix3x3`, `ofMatrix4x4`), quaternions and some really useful math help functions like `ofRandom` and `ofNoise`.
+    - in ofMath you'll find things like vectors (ie [`ofVec2f`](http://openframeworks.cc/documentation/math/ofVec2f.html "ofVec2f Documenation Page"), [`ofVec3f`](http://openframeworks.cc/documentation/math/ofVec3f.html "ofVec3f Documentation Page")) , matrices (ie [`ofMatrix3x3`](http://openframeworks.cc/documentation/math/ofMatrix3x3.html "ofMatrix3x3 Documenation Page"), [`ofMatrix4x4`](http://openframeworks.cc/documentation/math/ofMatrix4x4.html "ofMatrix4x4 Documenation Page")), quaternions (ie [`ofQuaternion`](http://openframeworks.cc/documentation/math/ofQuaternion.html "ofQuaternion Documentation Page")) and some really useful math help functions like [`ofRandom`](http://openframeworks.cc/documentation/math/ofMath.html#!show_ofRandom "ofRandom Documentation Page") and [`ofNoise`](http://openframeworks.cc/documentation/math/ofMath.html#!show_ofNoise "ofNoise Documentation Page").
 - **sound**
-    - openframeworks has both low level sound, `ofSoundStream`, for direct access to the sound card, as well as higher level code `ofSoundPlayer` for playing samples and sound effects. 
+    - openframeworks has both low level sound, [`ofSoundStream`](http://openframeworks.cc/documentation/sound/ofSoundStream.html "ofSoundStream Documentation Page"), for direct access to the sound card, as well as higher level code [`ofSoundPlayer`](http://openframeworks.cc/documentation/sound/ofSoundPlayer.html "ofSoundPlayer Documentation Page") for playing samples and sound effects. 
 - **base types**
-    - A lot of different base types used extensively within OF.  For folks that want to understand the archtecture of OF, this is a useful place where you'll find base types for common elements. 
+    - A lot of different base types used extensively within OF.  For folks that want to understand the architecture of OF, this is a useful place where you'll find base types for common elements. 
 - **utils**
     -  Utilities for file input and output, logging, threading, system dialogs (open, save, alert), URL file loader, reading and saving XML files (super useful for storing and reading your app's settings)
-    - `ofDirectory` which can help iterate through a directory
+    - [`ofDirectory`](http://openframeworks.cc/documentation/utils/ofDirectory.html "ofDirectory Documentation Page") which can help iterate through a directory
 - **video**
     - Video Grabber and player, with behind-the-scenes implementations for all the supported platforms.
-    - `ofVideoGrabber` helps with grabbing from a webcam or attached camera
-    - `ofVideoPlayer` helps with playing video files
+    - [`ofVideoGrabber`](http://openframeworks.cc/documentation/video/ofVideoGrabber.html "ofVideoGrabber Documentation Page") helps with grabbing from a webcam or attached camera
+    - [`ofVideoPlayer`](http://openframeworks.cc/documentation/video/ofVideoPlayer.html "ofVideoPlayer Documentation Page") helps with playing video files
 
 
 ####Addons
