@@ -14,7 +14,6 @@ http://www.openframeworks.cc/tutorials/first%20steps/003_ooops_object_oriented_p
 			- make your object from the class
 			- make multiple objects the hard way
 			- make an array of objects (the easy way) _ using a CONSTANT
-			- make an array of objects (the easy way) _ array using pointers
 			- make an array of objects (the easy way) _ dynamic size of array using stl::vector
 			- make an array of objects (the easy way) _ dynamic size of array using stl::vector and destroying objects if they leave the screen
 	
