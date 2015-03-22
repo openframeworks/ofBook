@@ -50,9 +50,9 @@ void ofApp::draw(){
 	ofBackground(255);
 	ofSetColor(255);
 
-	int imgW = myImage.width;
-	int imgH = myImage.height;
-	myImage.draw(10, 10, imgW * 10, imgH * 10);
+	int imgWidth  = myImage.width;
+	int imgHeight = myImage.height;
+	myImage.draw(10, 10, imgWidth * 10, imgHeight * 10);
 }
 ```
 
@@ -148,9 +148,14 @@ void ofApp::update(){
 
 		// Obtain a pointer to the grabber's image data.
 		unsigned char* pixelData = myVideoGrabber.getPixels();
-
-		// For every byte of the RGB image data,
+		
+		// Reckon the total number of bytes to examine. 
+		// This is the image's width times its height,
+		// times 3 -- because each pixel requires 3 bytes
+		// to store its R, G, and B color components.  
 		int nTotalBytes = camWidth*camHeight*3;
+		
+		// For every byte of the RGB image data,
 		for (int i=0; i<nTotalBytes; i++){
 
 			// pixelData[i] is the i'th byte of the image;
@@ -227,7 +232,7 @@ It's important to understand how pixel data is stored in computer memory. Each p
 
 ![Based on Shiffman's image in the Processing tutorial](images/pixels_in_memory.png)
 
-Observe how the (one-dimensional) list of values have been distributed to successive (two-dimensional) pixel locations in the image — wrapping over the right edge just like English text.
+Observe how a one-dimensional list of values in memory can be arranged into successive rows of a two-dimensional grid of pixels, and vice versa.
 
 It frequently happens that you'll need to determine the array-index of a given pixel *(x,y)* in an image that is stored in an `unsigned char*` buffer. This little task comes up often enough that it's worth committing the following pattern to memory:
 
@@ -236,9 +241,9 @@ It frequently happens that you'll need to determine the array-index of a given p
 // unsigned char *buffer, an array storing a one-channel image
 // int x, the horizontal coordinate (column) of your query pixel
 // int y, the vertical coordinate (row) of your query pixel
-// int imgW, the width of your image
+// int imgWidth, the width of your image
 
-int arrayIndex = y*imgW + x;
+int arrayIndex = y*imgWidth + x;
 
 // Now you can GET values at location (x,y), e.g.:
 unsigned char pixelValueAtXY = buffer[arrayIndex];
@@ -252,16 +257,16 @@ Reciprocally, you can also fetch the x and y locations of a pixel corresponding 
 // Given:
 // A one-channel (e.g. grayscale) image
 // int arrayIndex, an index in that image's array of pixels
-// int imgW, the width of the image
+// int imgWidth, the width of the image
 
-int y = arrayIndex / imgW; // NOTE, this is integer division!
-int x = arrayIndex % imgW; // The friendly modulus operator.
+int y = arrayIndex / imgWidth; // NOTE, this is integer division!
+int x = arrayIndex % imgWidth; // The friendly modulus operator.
 ```
 
 Most of the time, you'll be working with image data that is stored in a higher-level container object, such as an `ofImage`. There are *two* ways to get the values of pixel data stored in such a container. In one method, we can ask the image for its array of unsigned char pixel data, using `.getPixels()`, and then fetch the value we want from this array. Many image containers, such as `ofVideoGrabber`, also support a `.getPixels()` function.
 
 ```cpp
-int arrayIndex = y*imgW + x;
+int arrayIndex = y*imgWidth + x;
 unsigned char* myImagePixelBuffer = myImage.getPixels();
 unsigned char pixelValueAtXY = myImagePixelBuffer[arrayIndex];
 ```
@@ -346,7 +351,7 @@ void ofApp::draw(){
 	ofDrawEllipse (maxBrightnessX, maxBrightnessY, 40,40);
 }
 ```
-Our application locates the bright spot of the laser (which, luckily for us, is the brightest part of the scene) and draws a circle around it. Of course, now that we know where the brightest (or darkest) spot is, we can can develop many interesting applications, such as sun trackers, turtle trackers...
+Our application locates the bright spot of the laser (which, luckily for us, is the brightest part of the scene) and draws a circle around it. Of course, now that we know where the brightest (or darkest) spot is, we can can develop many other interesting applications, such as sun trackers, turtle trackers...
 
 ![Laser Tag by GRL](images/laser_tag_result.jpg)
 
@@ -354,13 +359,13 @@ Being able to locate the brightest pixel in an image has other uses, too. For ex
 
 ![Not mine](images/kinect-forepoint.jpg)
 
-*The brightest pixel in a depth image corresponds to the nearest object to the camera. In the configuration shown here, the "nearest object" is almost certain to be the user's hand (or nose).*
+*The brightest pixel in a depth image corresponds to the nearest object to the camera. In the configuration shown here, the "nearest point" is almost certain to be the user's hand.*
 
 Unsurprisingly, tracking *more than one* bright point requires more sophisticated forms of processing. If you're able to design and control the tracking environment, one simple yet effective way to track up to three objects is to search for the reddest, greenest and bluest pixels in the scene. Zachary Lieberman used a technique similar to this in his [*IQ Font*](https://vimeo.com/5233789) collaboration with typographers Pierre & Damien et al., in which letterforms were created by tracking the movements of a specially-marked sports car.
 
 ![Not mine](images/iq_font.jpg)
 
-More generally, you can create a system that tracks a (single) spot with a *specific* color. A simple way to achieve this is to find the pixel whose color has the shortest Euclidean distance (in "RGB space") to the target color. Here is a code fragment which shows this.
+More generally, you can create a system that tracks a (single) spot with a *specific* color. A very simple way to achieve this is to find the pixel whose color has the shortest Euclidean distance (in "RGB space") to the target color. Here is a code fragment which shows this.
 
 ```
 // Our target color is CSS LightPink: #FFB6C1 or (255, 182, 193)
@@ -408,7 +413,7 @@ for (int y=0; y<h; y++) {
 
 ```
 
-This technique is often used with an "eyedropper-style" interaction, in which the user selects the target color interactively (by clicking). Note that there are more sophisticated ways of measuring "color distance", such as techniques that use other color spaces, that can be more robust to variations in lighting. The distance method used here is not particularly good at distinguishing among very dark colors.  
+This technique is often used with an "eyedropper-style" interaction, in which the user selects the target color interactively (by clicking). Note that there are more sophisticated ways of measuring "[color distance](http://en.wikipedia.org/wiki/Color_difference)", such as the Delta-E [calculation](http://colormine.org/delta-e-calculator/) in the CIE76 color space, that are much more robust to variations in lighting and also have a stronger basis in human color perception. 
 
 #### Three-Channel (RGB) Images.
 
@@ -441,7 +446,9 @@ unsigned char redValueAtXY   = buffer[rArrayIndex];
 unsigned char greenValueAtXY = buffer[gArrayIndex];
 unsigned char blueValueAtXY  = buffer[bArrayIndex];
 ```
-This is the RGB version of the elementary `index = y*width + x` pattern we used earlier to fetch pixel values from monochrome images.
+This is, then, the three-channel "RGB version" of the basic `index = y*width + x` pattern we used earlier to fetch pixel values from monochrome images.
+
+Note that you may occasionally encounter libraries or hardware which deliver RGB bytes in a different order, such as BGR. 
 
 #### Varieties of Image Formats
 
@@ -460,7 +467,7 @@ You'll also find:
 
 It gets even more exotic. ["Hyperspectral" imagery from the Landsat 8 satellite](https://www.mapbox.com/blog/putting-landsat-8-bands-to-work/), for example, has 11 channels, including bands for ultraviolet, near infrared, and thermal (deep) infrared!
 
-#### Varieties of Image Containers
+#### Varieties of OF Image Containers (Data Structures)
 
 In openFrameworks, images can be stored in a variety of different *container classes*, which allow their data to be used (captured, displayed, manipulated, and stored) in different ways and contexts. Some of the more common containers you may encounter are:
 
@@ -471,17 +478,24 @@ In openFrameworks, images can be stored in a variety of different *container cla
 - **ofTexture** This container stores image data in the texture memory of your computer's graphics card (GPU). Many other classes, like `ofImage`, `ofxCvImage`,`ofVideoPlayer`, `ofVideoGrabber`, `ofFbo`, and `ofKinect`, use one of these to render their data to the screen. 
 - **cv::Mat** This is the data structure used by OpenCV to store image information. It's not used in openFrameworks, but if you work a lot with OpenCV, you'll often find yourself placing and extracting data from this format.
 
-To the greatest extent possible, the designers of openFrameworks (and OF addons for image processing, like ofxOpenCV and ofxCv) have provided simple operators to help make it easy to exchange data between these containers. 
+To the greatest extent possible, the designers of openFrameworks (and OF addons for image processing, like ofxOpenCV and Kyle McDonald's ofxCv) have provided simple operators to help make it easy to exchange data between these containers. 
 
-It's important to point out that image data may be stored in very different parts of your computer's memory. Good ol' unsigned chars, and image data in container classes like `ofPixels` and `ofxCvImage`, are maintained in your computer's main RAM; that's handy for image processing operations by the CPU. By contrast, the `ofTexture` class, as indicated above, stores its data in GPU memory, which is ideal for rendering it quickly to the screen. 
+It's important to point out that image data may be stored in very different parts of your computer's memory. Good old-fashioned unsigned chars, and image data in container classes like `ofPixels` and `ofxCvImage`, are maintained in your computer's main RAM; that's handy for image processing operations by the CPU. By contrast, the `ofTexture` class, as indicated above, stores its data in GPU memory, which is ideal for rendering it quickly to the screen. 
 
-There's generally a performance penalty for moving image data back-and-forth between the CPU and GPU, such as the `ofImage::grabScreen()` method, which captures a portion of the screen from the GPU and stores it in an `ofImage`, or the `ofTexture::readToPixels()` method, which copies image data from an `ofTexture` to an `ofPixels`.
+It's helpful to know that there's generally a performance penalty for moving image data back-and-forth between the CPU and GPU, such as the `ofImage::grabScreen()` method, which captures a portion of the screen from the GPU and stores it in an `ofImage`, or the `ofTexture::readToPixels()` method, which copies image data from an `ofTexture` to an `ofPixels`.
 
-#### RGB, grayscale, and other color space conversions
+#### RGB, Grayscale, and other Color Space Conversions
 
-Many computer vision algorithms (though not all!) are commonly performed on grayscale or monochome images. Converting color images to grayscale can significantly improve the speed of many image processing routines, because it reduces both the number of calculations as well as the amount of memory required to process the data. Here's some simple code to convert a color image (e.g. captured from a webcam) into a grayscale version:
+Many computer vision algorithms (though not all!) are commonly performed on grayscale or monochome images. If color isn't important to your vision problem, working in grayscale can significantly improve the speed of image processing routines, because it reduces both the number of calculations as well as the amount of memory required to process the data. Assuming your source data is in color (as is common with webcams), depending on your application, you'll either clobber your color image to grayscale directly, or create a grayscale copy for subsequent processing. 
 
-`[Code to convert RGB to grayscale using openFrameworks] `
+The simplest method to convert a color image to grayscale is to clobber its data by changing its OF image type to `OF_IMAGE_GRAYSCALE`. Note that this causes the image to be reallocated and any ofTextures to be updated, so it can be an expensive operation if done frequently. It's also a "destructive operation", in the sense that the image's original color information is lost in the conversion.</p>
+
+```
+ofImage myImage; 
+myImage.loadImage ("colorful.jpg"); // Load a colorful image.
+myImage.setImageType (OF_IMAGE_GRAYSCALE); // Poof! It's grayscale. 
+```
+The ofxOpenCV addon library provides several methods for converting color imagery to grayscale. For example, the `convertToGrayscalePlanarImage()` and `setFromColorImage()` functions create or set an `ofxCvGrayscaleImage` from color image data stored in an `ofxCvColorImage`:
 
 `[Code to convert RGB to grayscale using ofxCV]`
 

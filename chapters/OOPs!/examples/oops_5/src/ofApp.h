@@ -1,10 +1,9 @@
 #pragma once
 
 #include "ofMain.h"
-#include "ofBall.h"
+#include "Ball.h"
 
-
-class testApp : public ofBaseApp{
+class ofApp : public ofBaseApp{
 	public:
 		void setup();
 		void update();
@@ -20,6 +19,6 @@ class testApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
     
-    ofBall * myBall;
+    vector <Ball> myBall;   // defining a vector of type Ball and naming it myBall
     
 };

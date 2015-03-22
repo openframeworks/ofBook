@@ -194,11 +194,9 @@ myBall3.draw();
 
 
 ##Make more Objects from your Class
-We've just created 3 objects but you can have already see how tedious it woud become if we wanted to created 10, 100 or maybe 1000's of them. Hardcoding them one by one would be a long and painful process that could be easily solved by automating the object creation and function calls. Just by using a couple for loops we'll make this process simpler and cleaner. Instead of declaring a list of objects one by one we'll create an array of objects of type 'Ball'. We'll also introduce another new element: a constant. Constants are set after any #includes as #define CONSTANT_NAME value. This is a way of setting a value that won't ever change in the program:
+We've just created 3 objects but you can have already see how tedious it woud become if we wanted to created 10, 100 or maybe 1000's of them. Hardcoding them one by one would be a long and painful process that could be easily solved by automating the object creation and function calls. Just by using a couple for loops we'll make this process simpler and cleaner. Instead of declaring a list of objects one by one we'll create an array of objects of type 'Ball'. We'll also introduce another new element: a constant. Constants are set after any #includes as #define CONSTANT_NAME value. This is a way of setting a value that won't ever change in the program.
 
-**[KL: The pseudo code-like explanation above is an effective approach. This is a good method to use before writing out the Ball class above, too. Also, I've been taking out words like "just" before steps and simplifying verb tenses for clarity. I'd keep that in mind as you continue writing this chapter. The more concise, the better.]** 
-**[KL: Restate which file this is happening in.]**
-in the ofApp class header file, where you define the balls objects also define the constant that we'll use for the number of objects:
+In the ofApp class header file, where you define the balls objects also define the constant that we'll use for the number of objects:
 
 ```cpp
 #define NBALLS 10
@@ -320,9 +318,9 @@ Now in the ofApp.cpp file we will need to run this newly implemented method righ
 ```cpp
 for(int i=0; i<NBALLS; i++){
 	
-	int size = (i+1)*10); // defining the size of each ball based o its place in the array
-	int randomX = ofRandom(0, ofGetWidth()); //generate a random value bigger than 0 and smaller than our application screen width
-	int randomY = ofRandom(0, ofGetHeight()); //generate a random value bigger than 0 and smaller than our application screen height
+	int size = (i+1) * 10; // defining the size of each ball based o its place in the array
+	int randomX = ofRandom( 0, ofGetWidth() ); //generate a random value bigger than 0 and smaller than our application screen width
+	int randomY = ofRandom( 0, ofGetHeight() ); //generate a random value bigger than 0 and smaller than our application screen height
 	
     myBall[i].setup(randomX, randomY, size);
 }
@@ -422,6 +420,8 @@ You're now discovering the power of OOP, making a class and creating as many obj
 This is also the power of OOP and inheritance: by allowing to use a base class and add some specific behaviors, overwriting some of the behaviors of a class, creating a subset of instances / objects with slightly different behaviors.
 The great thing about this is it's reusability, we're using the 'mother' class as a starting point, using all its capabilities but we overwrite one of its methods to give it more flexibility.
 Going back to the initial version of our Ball class (step 1) we'll build some 'daughter' classes based on its main characteristics (motion behaviors and shape) but we'll distinguish each inherited subClass by using a different color on its drawing method.
+We'll need to make some chages in our mother class, namely because we'll want to redefine the drawing method in each  derived class (daughter class) we'll make it a virtual method.
+
 Your Ball header file should look like this:
 
 ```cpp
@@ -434,9 +434,9 @@ class Ball {
     
 public: // place public functions or variables declarations here
     
-void setup();	    
+void setup(float _x, float _y, int _dim);	    
 void update();
-void draw(); 
+virtual void draw(); 
 
 // variables
 float x;      
@@ -455,29 +455,6 @@ private:
 #endif
 ```
 
-And let's make some slight changes on the implementation file:
-lets change the minimum and maximum values of the random size to larger values and set the position to the center of the screen. Make it look like this: 
-
-```cpp
-#include "Ball.h"
-
-Ball::Ball(){
-}
-
-Ball::setup(){
-
-    x = ofGetWidth()*.5;
-    y = ofGetHeight()*.5;
-    dim = ofRandom(200,250);
-    
-    speedX = ofRandom(-1, 1);
-    speedY = ofRandom(-1, 1);
-    
-    color.set(ofRandom(255), ofRandom(255), ofRandom(255));
-}
-```
-
-We can leave the update() and draw() functions as they were.
 Now, let's start making 'daughter' versions of this 'mother' class.
 Create a new Class set of files and name them 'BallBlue'. Feel free to copy the code below and
 it's '.h' should look like this:
@@ -492,7 +469,7 @@ class BallBlue : public Ball {     // we set the class to inherit from 'Ball'
 
 public: 
 
-    virtual void draw();             // this is the only methid we actually want to be different from the 'mother class'
+    void draw();             // this is the only method we actually want to be different from the 'mother class'
 
 };
 ```

@@ -132,6 +132,13 @@ a:active {
 }
 
 
+.MathJax_Display{
+  padding-top: 2em;         // add a bit of padding around math figures in the math secions
+  padding-bottom: 2em;
+}
+
+
+
 /*
 .of-logo {
   background-image: url('http://openframeworks.cc/images/of-logo.svg');
@@ -169,11 +176,11 @@ a:active {
 
 }
 
-#chapters, #toc {
+#chapters {
   display:none;
 }
 
-.chapter-content {
+.chapter-content, .toc {
   width: 734px;
   margin-top:70px;
   background-color: rgba(255,255,255,1);
@@ -367,6 +374,21 @@ a:active {
   }
 }
 
+.toc {
+  width: 980px;
+  margin-left: 0px;
+
+  .toc-wrapper {
+    column-count: 2;
+    -webkit-column-count: 2;
+    -moz-column-count: 2;
+
+    h3 {
+      margin-top: 0;
+    }
+  }
+
+}
 
 #help {
   font-family: 'fira';

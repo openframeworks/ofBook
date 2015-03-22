@@ -400,38 +400,49 @@ for idx, chapter in enumerate(chapterDicts):
 	#print html
 
 
-#----------------------------------------------------- make TOC
+#----------------------------------------------------- make TOC content
 
 soup = Soup()
-html = Tag(soup, None, "html")
-a = Tag(soup, None, "a")
-soup.append(html)
 
-for c in chapterDicts: 
-	ul = Tag(soup, None, "ul")
-	li = Tag(soup, None, "li")
-	a = Tag(soup, None, "a");
-	a['href'] = "chapters/" + c['path'] + ".html"
-	a.string = c['title']
-	li.append(a)
-	ul.append(li)
+wrapperDiv = Tag(soup, None, "div");
+wrapperDiv['class'] = "toc-wrapper"
 
-	#print c['title']
-	#print c['path']
-	if (len(c['sections'])):
-		ulInner = Tag(soup, None, "ul")
-		li.append(ulInner);
-		for tag in c['sections']: 
-			liInner = Tag(soup, None, "li")
-			ulInner.append(liInner)
-			a = Tag(soup, None, "a")
-			a['href'] = "chapters/" + c['path'] + ".html#" + tag[1]
-			a['target'] = "_top"
-			a.string = tag[0]
-			liInner.append(a);
-		#print "\t" + tag
 
-	html.append(ul);
+# Build the output like...
+# div[toc-wrapper]
+#   h3 Group name
+#   ul
+#     li Chapter name
+#     li Chapter name
+
+# Run through the chapter groups
+for group in chapterGroups:
+
+	h3 = Tag(soup, None, "h3")
+	h3.append(group['groupName'])
+	wrapperDiv.append(h3)
+
+	ul = Tag(soup, None, "ul");
+
+	# Run through the chapters of the group
+	for chap in group['chapters']:
+		c = returnChapterByCommonName(chap)
+		if (c != None):
+
+			a = Tag(soup, None, "a");
+			a['href'] =  c['href']
+			a.string = c['title']
+
+			li = Tag(soup, None, "li");
+			li.append(a)
+			ul.append(li)
+
+		else:
+			print chap
+
+	wrapperDiv.append(ul)
+
+soup.append(wrapperDiv)		
 
 htmlOut = soup.prettify("utf-8")
 tocPath = os.path.join(webBookPath, "toc.html")
@@ -439,18 +450,26 @@ with open(tocPath, "wb") as file:
     file.write(htmlOut)
 
 
+#----------------------------------------------------- run pandoc for TOC
 
+destTocPath = os.path.join(webBookPath, "chapters", "toc.html")
+sourceTocPath = os.path.join(webBookPath, "toc.html")
 
-# <ul>
-#   <li>Coffee</li>
-#   <li>Tea
-#     <ul>
-#     <li>Black tea</li>
-#     <li>Green tea</li>
-#     </ul>
-#   </li>
-#   <li>Milk</li>
-# </ul>
+print "Converting", sourceTocPath, "to", destTocPath, "..."
 
+subprocess.call(["pandoc", "-o", destTocPath, sourceTocPath,
+                                    "-s", "-p",
+                                    "--include-in-header=createWebBookTemplate/IncludeInHeader.html",
+                                    "--include-before-body=createWebBookTemplate/IncludeBeforeBodyTOC.html",
+                                    "--include-after-body=createWebBookTemplate/IncludeAfterBodyTOC.html"])
 
+print "Removing", sourceTocPath, "..."
+os.remove(sourceTocPath)
 
+#----------------------------------------------------- copy index redirect to TOC
+
+destPath = os.path.join(webBookPath, "index.html")
+sourcePath = os.path.join("createWebBookTemplate", "index.html")
+
+print "Copying", sourcePath, "to", destPath, "..."
+shutil.copyfile(sourcePath, destPath)

@@ -1,11 +1,12 @@
 #pragma once
 
 #include "ofMain.h"
-#include "ofBall.h"
+#include "Ball.h"
+#include "BallRed.h"
+#include "BallGreen.h"
+#include "BallBlue.h"
 
-#define NBALLS 100
-
-class testApp : public ofBaseApp{
+class ofApp : public ofBaseApp{
 	public:
 		void setup();
 		void update();
@@ -21,6 +22,9 @@ class testApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
     
-    ofBall myBall[NBALLS];
+
+    BallRed redBall;
+    BallGreen greenBall;
+    BallBlue blueBall;
     
 };
