@@ -460,7 +460,7 @@ You'll also find:
 
 It gets even more exotic. ["Hyperspectral" imagery from the Landsat 8 satellite](https://www.mapbox.com/blog/putting-landsat-8-bands-to-work/), for example, has 11 channels, including bands for ultraviolet, near infrared, and thermal (deep) infrared!
 
-#### Varieties of Image Containers
+#### Varieties of OF Image Containers (Data Structures)
 
 In openFrameworks, images can be stored in a variety of different *container classes*, which allow their data to be used (captured, displayed, manipulated, and stored) in different ways and contexts. Some of the more common containers you may encounter are:
 
@@ -471,17 +471,23 @@ In openFrameworks, images can be stored in a variety of different *container cla
 - **ofTexture** This container stores image data in the texture memory of your computer's graphics card (GPU). Many other classes, like `ofImage`, `ofxCvImage`,`ofVideoPlayer`, `ofVideoGrabber`, `ofFbo`, and `ofKinect`, use one of these to render their data to the screen. 
 - **cv::Mat** This is the data structure used by OpenCV to store image information. It's not used in openFrameworks, but if you work a lot with OpenCV, you'll often find yourself placing and extracting data from this format.
 
-To the greatest extent possible, the designers of openFrameworks (and OF addons for image processing, like ofxOpenCV and ofxCv) have provided simple operators to help make it easy to exchange data between these containers. 
+To the greatest extent possible, the designers of openFrameworks (and OF addons for image processing, like ofxOpenCV and Kyle McDonald's ofxCv) have provided simple operators to help make it easy to exchange data between these containers. 
 
-It's important to point out that image data may be stored in very different parts of your computer's memory. Good ol' unsigned chars, and image data in container classes like `ofPixels` and `ofxCvImage`, are maintained in your computer's main RAM; that's handy for image processing operations by the CPU. By contrast, the `ofTexture` class, as indicated above, stores its data in GPU memory, which is ideal for rendering it quickly to the screen. 
+It's important to point out that image data may be stored in very different parts of your computer's memory. Good old-fashioned unsigned chars, and image data in container classes like `ofPixels` and `ofxCvImage`, are maintained in your computer's main RAM; that's handy for image processing operations by the CPU. By contrast, the `ofTexture` class, as indicated above, stores its data in GPU memory, which is ideal for rendering it quickly to the screen. 
 
-There's generally a performance penalty for moving image data back-and-forth between the CPU and GPU, such as the `ofImage::grabScreen()` method, which captures a portion of the screen from the GPU and stores it in an `ofImage`, or the `ofTexture::readToPixels()` method, which copies image data from an `ofTexture` to an `ofPixels`.
+It's helpful to know that there's generally a performance penalty for moving image data back-and-forth between the CPU and GPU, such as the `ofImage::grabScreen()` method, which captures a portion of the screen from the GPU and stores it in an `ofImage`, or the `ofTexture::readToPixels()` method, which copies image data from an `ofTexture` to an `ofPixels`.
 
-#### RGB, grayscale, and other color space conversions
+#### RGB, Grayscale, and other Color Space Conversions
 
-Many computer vision algorithms (though not all!) are commonly performed on grayscale or monochome images. Converting color images to grayscale can significantly improve the speed of many image processing routines, because it reduces both the number of calculations as well as the amount of memory required to process the data. Here's some simple code to convert a color image (e.g. captured from a webcam) into a grayscale version:
+Many computer vision algorithms (though not all!) are commonly performed on grayscale or monochome images. If color isn't important to your vision problem, working in grayscale can significantly improve the speed of image processing routines, because it reduces both the number of calculations as well as the amount of memory required to process the data. Assuming your source data is in color (as is common with webcams), depending on your application, you'll either clobber your color image to grayscale directly, or create a grayscale copy for subsequent processing. 
 
-`[Code to convert RGB to grayscale using openFrameworks] `
+The simplest method to convert a color image to grayscale is to clobber its data by changing its OF image type to `OF_IMAGE_GRAYSCALE`. Note that this causes the image to be reallocated and any ofTextures to be updated, so it can be an expensive operation if done frequently. It's also a "destructive operation", in the sense that the color information is lost in the conversion.</p>
+
+```
+ofImage myImage; 
+myImage.loadImage ("colorful.jpg"); // Load a colorful image.
+myImage.setImageType (OF_IMAGE_GRAYSCALE); // Poof! I'm grayscale. 
+```
 
 `[Code to convert RGB to grayscale using ofxCV]`
 
