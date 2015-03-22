@@ -390,6 +390,7 @@ unsigned char redValueAtXY   = buffer[rArrayIndex];
 unsigned char greenValueAtXY = buffer[gArrayIndex];
 unsigned char blueValueAtXY  = buffer[bArrayIndex];
 ```
+This is the RGB version of the elementary `index = y*width + x` pattern we used earlier to fetch pixel values from monochrome images.
 
 #### Other Kinds of Image Formats and Containers
 
@@ -398,7 +399,7 @@ unsigned char blueValueAtXY  = buffer[bArrayIndex];
 - 16-bit (unsigned short) images, in which each channel uses *two* bytes to store each of the color values of each pixel, with a number that ranges from 0-65535;
 - 32-bit (float) images, in which each color channel's data is represented by floating point numbers.  
 
-For a practical example, consider Microsoft's popular Kinect sensor, which produces a depth image whose values range from 0 to 1090. Clearly, that's wider than the range of 8-bit data (from 0 to 255) one might typically encounter; in fact, it's approximately 11 bits of resolution. To accommodate this, the `ofxKinect` addon employs a 16-bit image to store this information without losing precision. Likewise, the precision of 32-bit floats is almost mandatory for computing high-quality video composites.
+For a practical example, consider once again Microsoft's popular Kinect sensor, whose 2011-era version produces a depth image whose values range from 0 to 1090. Clearly, that's wider than the range of 8-bit values (from 0 to 255) that one typically encounters in image data; in fact, it's approximately 11 bits of resolution. To accommodate this, the `ofxKinect` addon employs a 16-bit image to store this information without losing precision. Likewise, the precision of 32-bit floats is almost mandatory for computing high-quality video composites.
 
 You'll also find:
 - 2-channel images (commonly used for luminance plus transparency);
@@ -410,8 +411,8 @@ It gets even more exotic. ["Hyperspectral" imagery from the Landsat 8 satellite]
 
 In openFrameworks, images can be stored in a variety of different *container classes*, which allow their data to be used (captured, displayed, manipulated, and stored) in different ways and contexts. Some of the more common containers you may encounter are:
 
-- **unsigned char*** An array of unsigned chars, this is the raw format used for storing buffers of pixel data. It's not very smart, but it's often useful for exchanging data with different libraries. Many image processing textbooks will assume your data is stored this way.
-- **ofPixels** This is a container for pixel data which lives inside each ofImage, as well as other classes like ofVideoGrabber. It's a wrapper around a buffer that includes additional information like width and height.
+- **unsigned char*** An array of unsigned chars, this is the raw, old-school, C-style format used for storing buffers of pixel data. It's not very "smart"—it has no special functionality or metadata for managing *image* data—but it's often useful for exchanging data with different libraries. Many image processing textbooks will assume your data is stored this way.
+- **ofPixels** This is a openFrameworks container for pixel data which lives inside each ofImage, as well as other classes like ofVideoGrabber. It's a wrapper around a buffer that includes additional information like width and height.
 - **ofImage** The `ofImage` is the most common object for loading, saving and displaying static images in openFrameworks. Loading a file into the ofImage allocates an (internal) ofPixels object to store the image data. ofImage objects are not merely containers, but also support methods for displaying their pixel data.
 - **ofxCvImage** This is a container for image data used by the ofxOpenCV addon for openFrameworks, which supports certain functionality from the popular OpenCV library for filtering, thresholding, and other image manipulations.
 - **cv::Mat** This is the data structure used by OpenCV to store image information. It's not used in openFrameworks, but if you work a lot with OpenCV, you'll often find yourself placing and extracting data from this format.
@@ -420,7 +421,7 @@ To the greatest extent possible, the designers of openFrameworks (and OF addons 
 
 #### RGB, grayscale, and other color space conversions
 
-Many computer vision algorithms (though not all!) are commonly performed on grayscale or monochome images. Converting color images to grayscale can significantly improve the speed of many image processing routines, because it reduces both the number of calculations as well as the amount of memory required to process the data. Except where stated otherwise, *all of the examples in this chapter assume that you're working with monochrome images*. Here's some simple code to convert a color image (e.g. captured from a webcam) into a grayscale version:
+Many computer vision algorithms (though not all!) are commonly performed on grayscale or monochome images. Converting color images to grayscale can significantly improve the speed of many image processing routines, because it reduces both the number of calculations as well as the amount of memory required to process the data. Here's some simple code to convert a color image (e.g. captured from a webcam) into a grayscale version:
 
 `[Code to convert RGB to grayscale using openFrameworks] `
 
@@ -428,8 +429,9 @@ Many computer vision algorithms (though not all!) are commonly performed on gray
 
 `[Code to convert RGB to grayscale using OpenCV]`
 
-Of course, there are times when
+Even if your project is based around color imagery, you'll probably still use monochrome pixel data to represent and store many of the intermediate results in your image processing chain. For example, if you're calculating a "blob" to represent the location of a user's body, it's common to store that blob in a buffer of monochrome pixels. Typically, pixels containing 255 (white) are the foreground blob, and pixels containing 0 (black) are the background. 
 
+Except where stated otherwise, *all of the examples in this chapter assume that you're working with monochrome images*. 
 
 ### Image arithmetic: mathematical operations on images
 
@@ -445,7 +447,7 @@ When  assume that these operations are performed *pixelwise* -- meaning, for eve
 
 
 
-In the examples presented here, for the sake of simplicity, we'll assume that the images upon which we'll perform these operations are all the same size -- for example, 640x480 pixels, a typical capture size for many webcams. We'll also assume that these images are monochrome or grayscale.
+In the examples presented here, for the sake of simplicity, we'll assume that the images upon which we'll perform these operations are all the same size -- for example, 640x480 pixels, a typical capture size for many SD ("standard definition") webcams. We'll also assume that these images are monochrome or grayscale.
 
 - adding two images together
 - subtracting two images
