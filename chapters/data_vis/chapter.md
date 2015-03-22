@@ -18,8 +18,8 @@ Ben Fry is a data artist and the author of Visualizing Data (2008), a well-known
 *Acquire:  Obtain the data. 
 Data is commonly made available in files downloadable from online sources such as weather services, newspapers, census records and from social media platforms. However there are also times when you may need to compile and format data from hardware or sensors. Real-time data is often available via an Application Programming Interfaces (API), which is an interface or a set of rules that define the process of how other applications can communicate with it. Every API is designed differently and therefore can be communicated with in different ways. This chapter presents two examples of visualising a static dataset imported into OF from external files, and an example that reads data from the New York Times API.
 
-*Parse: Provide some structure for the data’s meaning, and order it into categories. 
-Once you have obtained your data, before you load it into OpenFrameworks it is important to parse the data. Parsing means checking the file’s format. Is the dataset tagged correctly? Check that each line of your data is broken up consistently across columns. This can be done in a number of ways such as, printing your file out in the terminal or opening your file in a text editor or spreadsheet program and checking for inconsistencies or gaps.
+*Parse: Provide some structure for the data's meaning, and order it into categories. 
+Once you have obtained your data, before you load it into OpenFrameworks it is important to parse the data. Parsing means checking the file's format. Is the dataset tagged correctly? Check that each line of your data is broken up consistently across columns. This can be done in a number of ways such as, printing your file out in the terminal or opening your file in a text editor or spreadsheet program and checking for inconsistencies or gaps.
 
 *Filter: Remove all but the data of interest. 
 Your dataset is likely to contain extra information not relevant to your visualisation. For example in the tab separated (.tsv) file shown in figure 1, the file has columns like station ID and latitude and longitude that are not relevant to the first visualisation example. As the data is from only one location, location information can be removed so that they do not interfere with the your visualisation process.
@@ -53,7 +53,7 @@ Data is available and stored in specific file types that have particular structu
 
 Reading an XML file in OF requires the use of an OF addon called ofXmlSettings.
 
-*JSON: JSON stands for ‘javascript object notation’. This is a human readable file that is built on two structures, a collection of name/value pairs which can be realised in OF as a struct and an ordered list of values, realised as a vector. Json files also are parsed using an OF addon called ofxJSON, see example 2.XX for how to implement this. 
+*JSON: JSON stands for 'javascript object notation'. This is a human readable file that is built on two structures, a collection of name/value pairs which can be realised in OF as a struct and an ordered list of values, realised as a vector. Json files also are parsed using an OF addon called ofxJSON, see example 2.XX for how to implement this. 
 
 
 ###Example - Visualising Time Series Plot
@@ -74,7 +74,7 @@ Save your file as a tsv file.
 
 
 Loading Your file into an OF Project
-Firstly generate a new project remembering to include the add-ons if your data is in csv or json format. Then save the parsed population data file to the ‘bin’ folder of your OF project. 
+Firstly generate a new project remembering to include the add-ons if your data is in csv or json format. Then save the parsed population data file to the 'bin' folder of your OF project. 
 
 Once your project file is set up, we will now work through writing the code.
 
@@ -203,7 +203,7 @@ We will now load the data file into OF using the ofBuffer class.
 
 ####ofBuffer Class
 ofBuffer will read the data into a buffer which is temporary storage for it as we write code to restructure and process it.
-ofBuffer is what is known as a convenience class, and provides easy methods for reading from and writing to files. A convenience class simply means that this is a class that doesn’t do anything by itself but wraps or allows access to the functionality of a group of other classes.
+ofBuffer is what is known as a convenience class, and provides easy methods for reading from and writing to files. A convenience class simply means that this is a class that doesn't do anything by itself but wraps or allows access to the functionality of a group of other classes.
 
 ####Buffer Functions
 ofBufferFromFile();  is a function that allows you to load your data file.
@@ -211,8 +211,8 @@ ofBufferFromFile();  is a function that allows you to load your data file.
 ofBuffer file = ofBufferFromFile(“population.tsv");
 cout << file.getText();
 ```
-This loads the population.tsv file into a variable called ‘file’.
-Then we have printed out the contents of the variable ‘file’ using getText() which allows us to check the file has loaded correctly.
+This loads the population.tsv file into a variable called 'file'.
+Then we have printed out the contents of the variable 'file' using getText() which allows us to check the file has loaded correctly.
 
 
 getFirstLine(); Returns all text up to the first new line which ends at the first carriage return.
@@ -221,7 +221,7 @@ getFirstLine(); Returns all text up to the first new line which ends at the firs
  string nameLine = file.getFirstLine();
 ```
 
-We have used getFirstLine(); to copy the first line of the file containing the labels into a string called ‘nameLine’.
+We have used getFirstLine(); to copy the first line of the file containing the labels into a string called 'nameLine'.
 
 
 getNextLine(); Returns the next row of the data file as marked by `\n` or `\r` (new line characters).
@@ -407,14 +407,14 @@ Here we have a for loop generating values for i that range from 0 to maxValue. S
 
 **Step 6 Interact.**
 
-Finally we can add interactivity by creating clickable tabs that will switch between the different datasets in our file. This section turns our code into a state machine, where we define a variable called ‘which’ which is toggled between the values 0,1 and 2. The value of ‘which’, dictates what dataset will be displayed.
+Finally we can add interactivity by creating clickable tabs that will switch between the different datasets in our file. This section turns our code into a state machine, where we define a variable called 'which' which is toggled between the values 0,1 and 2. The value of ‘which’, dictates what dataset will be displayed.
 
 In testApp.h, declare which:
 ```cpp
 int which;
 ```
 
-Then insert this block of code to the mousePressed part of the openFrameworks template. These conditionals define regions around the title labels and turns them into buttons. When the button is clicked, ‘which’ changes state to the value shown.
+Then insert this block of code to the mousePressed part of the openFrameworks template. These conditionals define regions around the title labels and turns them into buttons. When the button is clicked, 'which' changes state to the value shown.
 
 
 ```cpp
@@ -466,7 +466,7 @@ to this:
     }
 
 ```
-We have created a new float ‘value’ to hold each data point. Depending on the value of ‘which’, value is assigned data from one of the three data sets in the tsp file. 
+We have created a new float 'value' to hold each data point. Depending on the value of ‘which’, value is assigned data from one of the three data sets in the tsp file. 
 
 Finally the last step here is to draw the titles to the screen which is done by adding the last block of code underneath the for loop we just changed.
 
@@ -522,7 +522,7 @@ You can write programs in OpenFrameworks so that data an be pulled from an API a
 JSON validation tools like: http://jsonlint.com/ 
 
 ##References
-Fry, B. (2008). *Visualizing Data,* O’Reilly Media.
+Fry, B. (2008). *Visualizing Data,* O'Reilly Media.
 Ackoff, R. L. (1989). *From Data to Wisdom. Journal of Applied Systems Analysis,* 16, 3–9.
 
 

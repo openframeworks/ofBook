@@ -59,7 +59,7 @@ Here's what our game will have:
 
 ![Space Game in action!](images/game.png "Space Game in action!")   
 
-With all that written out, let’s use OSC to affect the following:
+With all that written out, let's use OSC to affect the following:
 
 * The horizontal movement of our enemies--whether they move in a more exaggerated sin wave, or whether they move in more of a straight line
 * The frequency with which our enemies shoot
@@ -68,11 +68,11 @@ With all that written out, let’s use OSC to affect the following:
 
 These three parameters will allow the developer to, second-by-second, tailor the difficulty of the game to the individual playing it.
 
-Let’s start with our testApp. There are a few things we definitely know we’ll want classes for, so make corresponding .h and .cpp files for Player, Bullet, Life, Enemy, and LevelController. Remember to `#include "ofMain.h"` in each of those classes, and to include the .h file of each of those classes in `testApp.h`.
+Let's start with our testApp. There are a few things we definitely know we’ll want classes for, so make corresponding .h and .cpp files for Player, Bullet, Life, Enemy, and LevelController. Remember to `#include "ofMain.h"` in each of those classes, and to include the .h file of each of those classes in `testApp.h`.
 
 ###Gamestates
 
-First let’s create the basic structure of our game. Games typically have at least three parts: a start screen, the game itself, and an end screen. We need to keep track of which section of the game we’re in, which we’ll do using a variable called a game state. In this example, our game state variable is a string, and the three parts of our game are `"start"`, `"game"`, and `"end"`. Let’s add a score and a player at this point as well.
+First let's create the basic structure of our game. Games typically have at least three parts: a start screen, the game itself, and an end screen. We need to keep track of which section of the game we’re in, which we’ll do using a variable called a game state. In this example, our game state variable is a string, and the three parts of our game are `"start"`, `"game"`, and `"end"`. Let’s add a score and a player at this point as well.
  
 ```cpp
 string game_state;
@@ -80,7 +80,7 @@ int score;
 Player player_1;
 ```
 
-We’ll then divide up `testApp`’s `update()` and `draw()` loops between those game states:
+We'll then divide up `testApp`’s `update()` and `draw()` loops between those game states:
 
 ```cpp
 //--------------------------------------------------------------
@@ -102,7 +102,7 @@ void testApp::draw(){
 }
 ```
 
-Let’s set the initial value of `game_state` to `"start"` right when the app begins.
+Let's set the initial value of `game_state` to `"start"` right when the app begins.
 
 ```cpp
 //--------------------------------------------------------------
@@ -112,7 +112,7 @@ void testApp::setup(){
 }
 ```
 
-Finally, let’s make sure that we can move forward from the start screen. In this example, when the player is on the start screen and releases the space key, they’ll be taken to the game.
+Finally, let's make sure that we can move forward from the start screen. In this example, when the player is on the start screen and releases the space key, they’ll be taken to the game.
 
 ```cpp
 //--------------------------------------------------------------
@@ -128,7 +128,7 @@ void testApp::keyReleased(int key){
 
 ###Player movement
 
-Great! Let’s move onto our player. Our player’s class looks like this:
+Great! Let's move onto our player. Our player’s class looks like this:
 
 ```cpp
 class Player {
@@ -155,19 +155,19 @@ public:
 
 Taking this one step at a time:
 
-* Our player’s position will be stored in an `ofPoint` called `pos`. ofPoints are handy datatypes that contain `x` and `y` values, letting us access our player’s position through `pos.x` and `pos.y`.
-* Our player will have `width`, `height`, and `speed` variables (which we’ll use for collision detection and movement, respectively).
-* Our player will have an integer number of lives (since it wouldn’t make any sense for them to have 4.33333333333 lives).
+* Our player's position will be stored in an `ofPoint` called `pos`. ofPoints are handy datatypes that contain `x` and `y` values, letting us access our player’s position through `pos.x` and `pos.y`.
+* Our player will have `width`, `height`, and `speed` variables (which we'll use for collision detection and movement, respectively).
+* Our player will have an integer number of lives (since it wouldn't make any sense for them to have 4.33333333333 lives).
 * Our player will keep track of what movement keys are currently pressed in separate booleans.
 * Our player will have `setup`, `update`, `draw`, `shoot`, and `calculate_movement` methods.
-* Finally, our player will have a pointer to the image we’re using for the player.
+* Finally, our player will have a pointer to the image we're using for the player.
 
-You may be wondering why we’re using all these booleans--why not just check and see which keys are pressed?
+You may be wondering why we're using all these booleans--why not just check and see which keys are pressed?
 
 The problem is that, in openFrameworks, `keyPressed()` does not return all the keys currently being pressed--just the last key that was pressed. That means that if the player presses up and left (intending to move diagonally), openFrameworks will only report one of the keys being pressed. You can try printing out the result of keyPressed to see this in action.
- What we’ll do to avoid this is instead base the player’s movement on the booleans we wrote earlier. If the player presses a certain key, that boolean will be true; if they release that key, that boolean will be false. That way, if the player presses up and left, we’ll report up and left as being true until those keys are released.
+ What we'll do to avoid this is instead base the player’s movement on the booleans we wrote earlier. If the player presses a certain key, that boolean will be true; if they release that key, that boolean will be false. That way, if the player presses up and left, we’ll report up and left as being true until those keys are released.
 
-Here’s what our new `keyPressed()` and `keyReleased()` functions look like:
+Here's what our new `keyPressed()` and `keyReleased()` functions look like:
 
 ```cpp
 //--------------------------------------------------------------
@@ -216,7 +216,7 @@ void testApp::keyReleased(int key){
 ```
 
 
-Add `ofImage player_image` to `testApp.h`, then load the player’s image and instantiate the player in `testApp`’s `setup()`:
+Add `ofImage player_image` to `testApp.h`, then load the player's image and instantiate the player in `testApp`’s `setup()`:
 
 ```cpp
 void testApp::setup(){
@@ -254,7 +254,7 @@ void testApp::draw(){
 You should have a player who moves around on-screen. Sweet! 
 ###Player bullets
 
-Let’s make our bullets next. In order to have a variable number of bullets on screen at a time, we need to add a `vector<Bullet> bullets;` to testApp.h. Let’s also create a `void update_bullets();` function, which will update our vector of bullets (and, shortly, trigger the check for bullet collisions). We also want our player and enemy bullets to look different, so we’ll add `ofImage enemy_bullet_image;` and `ofImage player_bullet_image;` to our `testApp.h` file.
+Let's make our bullets next. In order to have a variable number of bullets on screen at a time, we need to add a `vector<Bullet> bullets;` to testApp.h. Let’s also create a `void update_bullets();` function, which will update our vector of bullets (and, shortly, trigger the check for bullet collisions). We also want our player and enemy bullets to look different, so we’ll add `ofImage enemy_bullet_image;` and `ofImage player_bullet_image;` to our `testApp.h` file.
 
 Our bullet class will look a lot like the player class, having a position, speed, width, pointer to an image, and various functions. The big difference is that the bullets will keep track of who they came from (since that will affect who they can hurt and which direction they move).
 
@@ -301,7 +301,7 @@ void Bullet::draw() {
 Again, this is much like the code for the player. The two differences are: 
 
 * We keep track of where the bullet comes from, and alter the code based on that variable (meaning we can keep all the bullets in the same vector)
-* When instantiating a bullet, we check to see the position of the shooter, as well as the shooter’s current speed (so it will always move faster than the thing that shot it)
+* When instantiating a bullet, we check to see the position of the shooter, as well as the shooter's current speed (so it will always move faster than the thing that shot it)
 
 Now that our bullet class is implemented, we can go back to `testApp::setup()` and add in `enemy_bullet_image.loadImage("enemy_bullet.png");` and `player_bullet_image.loadImage("player_bullet.png");` right underneath where we loaded in our `player_image`.
  
@@ -316,7 +316,7 @@ void testApp::update_bullets() {
            bullets.erase(bullets.begin()+i);
        }
    }
-   // we’ll call a collision check function here shortly
+   // we'll call a collision check function here shortly
 }
 ```
 
@@ -349,7 +349,7 @@ void testApp::draw(){
 }
 ```
 
-Finally, let’s add an if-statement to our `keyPressed()` so that when we press the spacebar during the game, we spawn a player bullet: 
+Finally, let's add an if-statement to our `keyPressed()` so that when we press the spacebar during the game, we spawn a player bullet: 
 
 ```cpp
 //--------------------------------------------------------------
@@ -380,11 +380,11 @@ void testApp::keyPressed(int key){
 }
 ```
 
-Remember, the first parameter in the bullet’s setup is whether it comes from the player (which, in this case, is always true). Run your app and fly around shooting for a bit to see how it feels.
+Remember, the first parameter in the bullet's setup is whether it comes from the player (which, in this case, is always true). Run your app and fly around shooting for a bit to see how it feels.
 
 ###Adding adversaries
 
-Let’s move on to our enemy. This process should be familiar by now. Add an `ofImage enemy_image;` and a `vector<Enemy> enemies;` to `testApp.h`. Additionally, add `float max_enemy_amplitude;` and `float max_enemy_shoot_interval;` to `testApp.h`--these are two of the enemy parameters we’ll affect with OSC.
+Let's move on to our enemy. This process should be familiar by now. Add an `ofImage enemy_image;` and a `vector<Enemy> enemies;` to `testApp.h`. Additionally, add `float max_enemy_amplitude;` and `float max_enemy_shoot_interval;` to `testApp.h`--these are two of the enemy parameters we’ll affect with OSC.
  Your enemy class will look like this:
 
 ```cpp
@@ -407,7 +407,7 @@ public:
 };
 ```
 
-Our enemy’s horizontal movement will be shaped by the values fed to a sine wave (which we’ll see in a moment). We’ll keep track of our amplitude variable (so different enemies can have different amplitudes). We’ll also want to keep track of whether enough time has passed for this enemy to shoot again, necessitating the start_shoot and shoot_interval variables. Both of these variables will actually be set in our setup() function. Finally, we’ll have a boolean function that will tell us whether the enemy can shoot this frame or not.
+Our enemy's horizontal movement will be shaped by the values fed to a sine wave (which we’ll see in a moment). We’ll keep track of our amplitude variable (so different enemies can have different amplitudes). We’ll also want to keep track of whether enough time has passed for this enemy to shoot again, necessitating the start_shoot and shoot_interval variables. Both of these variables will actually be set in our setup() function. Finally, we’ll have a boolean function that will tell us whether the enemy can shoot this frame or not.
  Our enemy class will look like this:
 
 ```cpp
@@ -437,10 +437,10 @@ bool Enemy::time_to_shoot() {
 }
 ```
 
-In update, we’re using the current elapsed time in frames to give us a constantly increasing number to feed to the sine function, which in turn returns a value between -1 and 1. We multiply it by the amplitude of the wave, making this curve more or less exaggerated.
+In update, we're using the current elapsed time in frames to give us a constantly increasing number to feed to the sine function, which in turn returns a value between -1 and 1. We multiply it by the amplitude of the wave, making this curve more or less exaggerated.
 
-In `time_to_shoot()`, we check to see whether the difference between the current time and the time this enemy last shot is greater than the enemy’s shooting interval. If it is, we set `start_shoot` to the current time, and return true. If not, we return false.
- Let’s integrate our enemies into the rest of our `testApp.cpp`:
+In `time_to_shoot()`, we check to see whether the difference between the current time and the time this enemy last shot is greater than the enemy's shooting interval. If it is, we set `start_shoot` to the current time, and return true. If not, we return false.
+ Let's integrate our enemies into the rest of our `testApp.cpp`:
 
 ```cpp
 //--------------------------------------------------------------
@@ -495,7 +495,7 @@ void testApp::draw(){
 
 ###Collisions
 
-Let’s implement our bullet collision checks. Add a void `check_bullet_collisions();` to your `testApp.h`, then write the following function: 
+Let's implement our bullet collision checks. Add a void `check_bullet_collisions();` to your `testApp.h`, then write the following function: 
 
 ```cpp
 //--------------------------------------------------------------
@@ -523,10 +523,10 @@ void testApp::check_bullet_collisions() {
 }
 ```
 
-This code is a bit nested, but actually pretty simple. First, it goes through each bullet in the vector and checks to see whether it’s from the player. If it’s from the player, it starts a for-loop for all the enemies, so we can compare the player bullet position against all the enemy positions. We use `ofDist()` to see whether the distance between a given bullet and a given enemy is less than the sum of their radii--if it is, they’re overlapping.
- If a bullet is not from the player, the function does a distance calculation against the player, to see whether a given enemy bullet and the player are close enough to count it as a hit. If there is a hit, we subtract a player’s life and erase that bullet. If the player has less than or equal to 0 lives, we change the game state to the end.
+This code is a bit nested, but actually pretty simple. First, it goes through each bullet in the vector and checks to see whether it's from the player. If it’s from the player, it starts a for-loop for all the enemies, so we can compare the player bullet position against all the enemy positions. We use `ofDist()` to see whether the distance between a given bullet and a given enemy is less than the sum of their radii--if it is, they’re overlapping.
+ If a bullet is not from the player, the function does a distance calculation against the player, to see whether a given enemy bullet and the player are close enough to count it as a hit. If there is a hit, we subtract a player's life and erase that bullet. If the player has less than or equal to 0 lives, we change the game state to the end.
 
-Don’t forget to call `check_bullet_collisions()` as part of `update_bullets()`:
+Don't forget to call `check_bullet_collisions()` as part of `update_bullets()`:
 
 ```cpp
 //--------------------------------------------------------------
@@ -543,7 +543,7 @@ void testApp::update_bullets() {
 
 ###Our game's brain
 
-Great! Except… we don’t have any enemies yet! Definitely an oversight. This is where our level controller comes in. Add `LevelController level_controller;` to your `testApp.h`.
+Great! Except… we don't have any enemies yet! Definitely an oversight. This is where our level controller comes in. Add `LevelController level_controller;` to your `testApp.h`.
  Our level controller class is super-simple:
 
 ```cpp
@@ -557,7 +557,7 @@ public:
 };
 ```
 
-As you might guess, all it’ll really do is keep track of whether it’s time to spawn another enemy yet.
+As you might guess, all it'll really do is keep track of whether it’s time to spawn another enemy yet.
 
 Inside our `LevelController.cpp`:
 
@@ -575,9 +575,9 @@ bool LevelController::should_spawn() {
 }
 ```
 
-When we set up our level controller, we’ll give it a starting time. It’ll use this time as a baseline for the first enemy spawn. The should_spawn code should look familiar from the enemy bullet section.
+When we set up our level controller, we'll give it a starting time. It’ll use this time as a baseline for the first enemy spawn. The should_spawn code should look familiar from the enemy bullet section.
 
-We’ll wait to set up our level controller until the game actually starts--namely, when the game state changes from `"start"` to `"game"`.
+We'll wait to set up our level controller until the game actually starts--namely, when the game state changes from `"start"` to `"game"`.
 
 ```cpp
 void testApp::keyReleased(int key){
@@ -590,7 +590,7 @@ void testApp::keyReleased(int key){
 }
 ```
 
-Next we’ll integrate it into our `testApp::update()`:
+Next we'll integrate it into our `testApp::update()`:
 
 ```cpp
 //--------------------------------------------------------------
@@ -619,11 +619,11 @@ void testApp::update(){
 }
 ```
 
-Awesome! We’re close to done!
+Awesome! We're close to done!
 
 ###Bonus lives
 
-Before we finish, let’s add in our last OSC feature: the ability to throw in bonus lives on the fly. Add `vector<Life> bonuses;` and `ofImage life_image;` to your `testApp.h`. To keep our code modular, let’s also add `void update_bonuses();` in the same place. Don’t forget to `life_image.loadImage("life_image.png");` in `testApp::setup()`.
+Before we finish, let's add in our last OSC feature: the ability to throw in bonus lives on the fly. Add `vector<Life> bonuses;` and `ofImage life_image;` to your `testApp.h`. To keep our code modular, let’s also add `void update_bonuses();` in the same place. Don’t forget to `life_image.loadImage("life_image.png");` in `testApp::setup()`.
 
 `Life.h` should look like this:
 
@@ -642,7 +642,7 @@ public:
 };
 ```
 
-And it’ll function like this--a lot like the bullet:
+And it'll function like this--a lot like the bullet:
 
 ```cpp
 void Life::setup(ofImage * _img) {
@@ -679,7 +679,7 @@ void testApp::update_bonuses() {
 }
 ```
 
-All that’s left for our lives functionality is to alter `testApp::update()` and `testApp::draw()`.
+All that's left for our lives functionality is to alter `testApp::update()` and `testApp::draw()`.
 
 ```cpp
 //--------------------------------------------------------------
@@ -736,7 +736,7 @@ void testApp::draw(){
 ###Let's get visual
 
 
-Finally, we’ve been a bit stingy with visual feedback, so let’s add in a start screen, a score, a visual representation of the lives left, and an end screen. Add `ofImage start_screen;`, `ofImage end_screen;`, `void draw_lives();`, and `void draw_score();` to `testApp.h`.
+Finally, we've been a bit stingy with visual feedback, so let’s add in a start screen, a score, a visual representation of the lives left, and an end screen. Add `ofImage start_screen;`, `ofImage end_screen;`, `void draw_lives();`, and `void draw_score();` to `testApp.h`.
 
 Change `testApp::setup()` to load in those assets:
 
@@ -776,19 +776,19 @@ void testApp::draw_score() {
 
 By using `stringWidth()`, we can calculate the width of a string and shift the text over--handy for centering it.
 
-All that’s left after that is to call `draw_score();` and `draw_lives();` during the `testApp::draw()`’s game state, and to call `draw_score();` during the end state.
+All that's left after that is to call `draw_score();` and `draw_lives();` during the `testApp::draw()`’s game state, and to call `draw_score();` during the end state.
 
 Congrats--you made a game!
 
 ###Linking oF and OSC
-Now let’s add in the OSC functionality. We are going to set our application up to receive messages from our iPad and then make changes in real-time while our game is running to test some possible player scenarios. As mentioned before, this can trump going into your application and making manual changes because you skip the need to recompile your game and playtest live. In fact, you can use Touch OSC to even open up new ways to interact with your players. 
+Now let's add in the OSC functionality. We are going to set our application up to receive messages from our iPad and then make changes in real-time while our game is running to test some possible player scenarios. As mentioned before, this can trump going into your application and making manual changes because you skip the need to recompile your game and playtest live. In fact, you can use Touch OSC to even open up new ways to interact with your players. 
 
 ![Nightgame developer interface by Phoenix Perry](images/touchGame.png "Nightgame developer interface by Phoenix Perry")  
 
 *Touch OSC is used to switch game levels on the fly and to run challenges.* 
    
 To accomplish this we are going to create a new class that will contain our OSC functionality. Create a .cpp and .h file for this class now and name it LiveTesting. Open `LiveTesting.h`
-And let’s add the line to import the OSC at the top of your file after your preprocessor directives and also a line for using iostream for testing purposes. As we add the code we will explain in inline in the code comments. 
+And let's add the line to import the OSC at the top of your file after your preprocessor directives and also a line for using iostream for testing purposes. As we add the code we will explain in inline in the code comments. 
 
 Add the following: 	
 
@@ -797,7 +797,7 @@ Add the following:
 #include "ofxOsc.h"
 ```
 
-Next let’s set up all of our variables we are going to use to receive OSC data and map it to in game values. Add the following code into your class.
+Next let's set up all of our variables we are going to use to receive OSC data and map it to in game values. Add the following code into your class.
 
 ```cpp
 class LiveTesting
@@ -829,13 +829,13 @@ public:
 };
 ```
 
-Now let’s jump over to the `LiveTesting.cpp` file. In this file we are going to set up our network address and the ports we are sending and receiving data on as the first order of business. However, to go any further we are going to need to do some housekeeping and install additional software. For OSC to work it will need a local wifi network to send the messages across. Note this tactic may not work for a network outside of your own because often a sysadmin will stop this kind of traffic from being transmitted on a very public network. We suggest brining an Airport Express or similar with you so you can quickly and wirelessly establish a local network for playtesting. 
+Now let's jump over to the `LiveTesting.cpp` file. In this file we are going to set up our network address and the ports we are sending and receiving data on as the first order of business. However, to go any further we are going to need to do some housekeeping and install additional software. For OSC to work it will need a local wifi network to send the messages across. Note this tactic may not work for a network outside of your own because often a sysadmin will stop this kind of traffic from being transmitted on a very public network. We suggest brining an Airport Express or similar with you so you can quickly and wirelessly establish a local network for playtesting. 
 
 For the purpose of this chapter and to allow us to create an experience that will work on both Android and iOS we are going to use a piece of software called TouchOSC from this URL: http://hexler.net/software/touchosc
 
-The desktop editor software is free however the matching software for your device will be $4.99. Get both now. As a mater of principle, we endorse building your own tools and you could easily build a second oF project to be your OSC sender and receiver on your mobile device. With that said, nothing beats TouchOSC for speed, ease of use and complete, platform independent flexibility. If you are someone who often moves between an iOS and Android device on both Windows and Mac, this tool will become indispensible to you. As a games designer it can open up possibilities like changing levels on the fly, updating game variables, adjusting for player feedback and adding new features into and taking them out of your game as it’s running. We highly endorse using it and support the continued advancement of the tool. You can also use it with music production tools like Ableton Live and it comes with great presets for things like DJing and mixing music live.  Go to the app store of your device and purchase the mobile version now if you would like to continue down this route. 
+The desktop editor software is free however the matching software for your device will be $4.99. Get both now. As a mater of principle, we endorse building your own tools and you could easily build a second oF project to be your OSC sender and receiver on your mobile device. With that said, nothing beats TouchOSC for speed, ease of use and complete, platform independent flexibility. If you are someone who often moves between an iOS and Android device on both Windows and Mac, this tool will become indispensible to you. As a games designer it can open up possibilities like changing levels on the fly, updating game variables, adjusting for player feedback and adding new features into and taking them out of your game as it's running. We highly endorse using it and support the continued advancement of the tool. You can also use it with music production tools like Ableton Live and it comes with great presets for things like DJing and mixing music live.  Go to the app store of your device and purchase the mobile version now if you would like to continue down this route. 
 	
-After we get all of the tools downloaded and installed. Let’s start setting everything up. You are going to need two bits of information. You are going to need to know the IP address of your computer and the ip address of your laptop. If you are on a mac, just open up your System Preferences. Go to the Network setting and click on your wifi connection in the left sidebar. On the right side it will display your IP address. You can also get this setting by opening up Terminal and entering in the command ifconfig. Terminal will list of every network that’s a possible connection for your machine from the past, even if it’s not currently active. For example, if you have ever connected your phone, it will be in the list with some flag and listed as inactive. Look for the connection that’s currently active. It will look something like this: 
+After we get all of the tools downloaded and installed. Let's start setting everything up. You are going to need two bits of information. You are going to need to know the IP address of your computer and the ip address of your laptop. If you are on a mac, just open up your System Preferences. Go to the Network setting and click on your wifi connection in the left sidebar. On the right side it will display your IP address. You can also get this setting by opening up Terminal and entering in the command ifconfig. Terminal will list of every network that’s a possible connection for your machine from the past, even if it’s not currently active. For example, if you have ever connected your phone, it will be in the list with some flag and listed as inactive. Look for the connection that’s currently active. It will look something like this: 
 
 ```
 en1: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
@@ -847,7 +847,7 @@ en1: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
 ```
 
 The inet address is your current IP. 
-On windows, open the `charms` bar. In search type `cmd` and open the command prompt. Type in `ipconfig`. This information is much clearer than the data dump from terminal. The connected listed as your Wireless LAM adapter Wi-Fi will list your current IPV4 address. This is your IP address. Finally, obtain your mobile device’s IP address as well from your device settings. Make a note of your IPAddress for the next section. 
+On windows, open the `charms` bar. In search type `cmd` and open the command prompt. Type in `ipconfig`. This information is much clearer than the data dump from terminal. The connected listed as your Wireless LAM adapter Wi-Fi will list your current IPV4 address. This is your IP address. Finally, obtain your mobile device's IP address as well from your device settings. Make a note of your IPAddress for the next section. 
 
 At this point, go ahead and launch TouchOSC on your device and the Touch OSC desktop editor on your computer. If you are on Windows, you will need to make sure you have java installed first. Once the software is open, click the open icon in the top tool bar. In the file containing the code for this chapter you will see a file called `ofBook.touchosc`. 
 
@@ -863,11 +863,11 @@ bool triggerBonus;
 
 ![](images/controls.png)
 
-To build the app, let’s start by adding our first knob. Right click in the black empty space to the right. Choose to make a `rotaryH`. Next make two `labelH` objects. The first one will be the name of our knob. The second one will be for displaying the value of the current variable in our game. Place one label above the knob and one below. It should look like the below image:
+To build the app, let's start by adding our first knob. Right click in the black empty space to the right. Choose to make a `rotaryH`. Next make two `labelH` objects. The first one will be the name of our knob. The second one will be for displaying the value of the current variable in our game. Place one label above the knob and one below. It should look like the below image:
 
 ![](images/label1_label2.png)
 
-Now look to the left side of the app. At this point, it’s time to set all of the values this knob will be sending and what the labels will display. Let’s start with `label1`. We will name our knob on screen to make things easier to read. The first value in our game we want to control, level controller interval time, should be what this label reads onscreen. Changing the name field in the app interface will do little. However, note under the name field you can change the color of the label. For this example, use yellow. Next, jump down to the next to last field on screen called `Text`. You will want to set this to level controller interval time. 
+Now look to the left side of the app. At this point, it's time to set all of the values this knob will be sending and what the labels will display. Let’s start with `label1`. We will name our knob on screen to make things easier to read. The first value in our game we want to control, level controller interval time, should be what this label reads onscreen. Changing the name field in the app interface will do little. However, note under the name field you can change the color of the label. For this example, use yellow. Next, jump down to the next to last field on screen called `Text`. You will want to set this to level controller interval time. 
 
 Moving on, select the knob. This one will require more set up because it will actually be sending values to our game. Color it yellow first. In the dark grey OSC box set all of the values we need to receive for the game. If auto is checked, uncheck it. Now customize the text in that box to `/game/interval_time`. In the `From` fields set the parameters to a range of values to try out in the game during a playtest. We will use from 0 to 300. These two elements, the tag and the parameters will get packed up into a message and sent over our OSC network to our game when values change.
 
@@ -927,7 +927,7 @@ We are going to add one more but this one will be a Push Button verses a RotaryH
 	* Color: Pink 
 	* OSC: /updatedVals/triggerBouns
 
-Save your file to your hard drive desktop and name it `PlaytestInterface`. You are done building your interface for play testing. Now let’s deploy it. On your mobile device, launch Touch OSC. It will launch and open a settings screen. 
+Save your file to your hard drive desktop and name it `PlaytestInterface`. You are done building your interface for play testing. Now let's deploy it. On your mobile device, launch Touch OSC. It will launch and open a settings screen. 
 
 This is when we need the network address of your computer we retrieved earlier. Under Connections touch OSC: and set it to the IPAddress of your computer to link the two. This should be something like `192.165.0.3`
 
@@ -946,7 +946,7 @@ Now click on `Layout`. Then tap `Add`. It will start to search for your computer
 
 Switch back to your device. You should see your computer listed under FOUND HOSTS. Select it. It will pop back to the settings screen. Scroll down and find PlaytestInterface in the list of interfaces. Select it and it will take you back to the main menu. Press Done in the upper left corner and your interface will now launch. If you want to get back to the settings screen at any point the white dot in the upper right hand corner will return the user interface to that screen. 
 
-Finally, TouchOSC is set up. Let’s link it to our game and run our very first playtest. Go back to the programming IDE. Open up `LiveTesting.cpp`. In our default constructor, we will now set up our game to send and receive values over the network. To do this we will need to know which Ip address and port on our device we will send to as well as set up a port on our local computer’s network to receive incoming data. Your computer will have only one IP address but it can send and receive data on thousands of ports. While we aren’t going too deep into ports there, you can think of the IP address like a boat pier. Lots of boats can be docked at a single pier. This is no different. Your ports are your docks and your IP address is your pier. You can think of the data like the people departing and arriving. You’ll need a separate port for each activity in this scenario. If a port isn’t used by your operating system, you can send and receive data there. We are going to use `8000` and `8001`. The final thing to establish is the Address Pattern. It will look like a file path and it will allow us to specify the address pattern match our messages to their right values. Add this code: 
+Finally, TouchOSC is set up. Let's link it to our game and run our very first playtest. Go back to the programming IDE. Open up `LiveTesting.cpp`. In our default constructor, we will now set up our game to send and receive values over the network. To do this we will need to know which Ip address and port on our device we will send to as well as set up a port on our local computer’s network to receive incoming data. Your computer will have only one IP address but it can send and receive data on thousands of ports. While we aren’t going too deep into ports there, you can think of the IP address like a boat pier. Lots of boats can be docked at a single pier. This is no different. Your ports are your docks and your IP address is your pier. You can think of the data like the people departing and arriving. You’ll need a separate port for each activity in this scenario. If a port isn’t used by your operating system, you can send and receive data there. We are going to use `8000` and `8001`. The final thing to establish is the Address Pattern. It will look like a file path and it will allow us to specify the address pattern match our messages to their right values. Add this code: 
 
 ```cpp
 #include "LiveTesting.h"
@@ -972,9 +972,9 @@ LiveTesting::LiveTesting(){
 }
 ```
 
-In the above code we simply set up our network address, incoming and out going ports and created a default address pattern. From here we should be good to go to set up the messages we’d like to send and receive in our code. 
+In the above code we simply set up our network address, incoming and out going ports and created a default address pattern. From here we should be good to go to set up the messages we'd like to send and receive in our code. 
 
-Let’s move on to the next major function we want to write. We need to run an update function in this class to update every frame so we can make sure that if we move a slider on our ipad that change becomes reflected within the game. Also, we might want to send that value back out once we receive it so we can get some visual feedback on our tablet to let us know what our current settings are. 
+Let's move on to the next major function we want to write. We need to run an update function in this class to update every frame so we can make sure that if we move a slider on our ipad that change becomes reflected within the game. Also, we might want to send that value back out once we receive it so we can get some visual feedback on our tablet to let us know what our current settings are. 
 
 Each time we make a change on our device, it will send over the updates to our code via Touch OSC. We want to make sure we get all of the incoming messages that are being sent so we will create a simple while loop. We will loop through the whole list of messages that came into our game that frame and match it to the corresponding variable in our game via if statements. 
 
