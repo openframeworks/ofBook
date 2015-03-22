@@ -64,7 +64,7 @@ Let's start with our testApp. There are a few things we definitely know we'll wa
 
 ###Gamestates
 
-First let's create the basic structure of our game. Games typically have at least three parts: a start screen, the game itself, and an end screen. We need to keep track of which section of the game we're in, which we'll do using a variable called a game state. In this example, our game state variable is a string, and the three parts of our game are “start”, “game”, and “end”. Let’s add a score and a player at this point as well. 
+First let's create the basic structure of our game. Games typically have at least three parts: a start screen, the game itself, and an end screen. We need to keep track of which section of the game we're in, which we'll do using a variable called a game state. In this example, our game state variable is a string, and the three parts of our game are “start”, “game”, and “end”. Let's add a score and a player at this point as well. 
 ```
 string game_state;
 int score;
@@ -404,7 +404,7 @@ public:
 };
 ```
 
-Our enemy's horizontal position is shaped by the values fed to a sine wave (which we'll see in a moment). We'll keep track of each enemy's amplitude variable, so different enemies can have different amplitudes. We’ll also want to keep track of whether enough time has passed for this enemy to shoot again, necessitating the `start_shoot` and `shoot_interval `variables. Both of these variables will actually be set in our `setup()` function. Finally, we’ll have a boolean function that will tell us whether the enemy can shoot this frame or not.
+Our enemy's horizontal position is shaped by the values fed to a sine wave (which we'll see in a moment). We'll keep track of each enemy's amplitude variable, so different enemies can have different amplitudes. We'll also want to keep track of whether enough time has passed for this enemy to shoot again, necessitating the `start_shoot` and `shoot_interval `variables. Both of these variables will actually be set in our `setup()` function. Finally, we'll have a boolean function that will tell us whether the enemy can shoot this frame or not.
  Our enemy class will look like this:
 
 ```
@@ -933,7 +933,7 @@ Now click on Layout. Then tap Add. It will start to search for your computer. Sw
 
 Switch back to your device. You should see your computer listed under FOUND HOSTS. Select it. It will pop back to the settings screen. Scroll down and find PlaytestInterface in the list of interfaces. Select it and it will take you back to the main menu. Press Done in the upper left corner and your interface will now launch. If you want to get back to the settings screen at any point the white dot in the upper right hand corner will return the user interface to that screen. 
 
-Finally, TouchOSC is set up. Let's link it to our game and run our very first playtest. Go back to the programming IDE. Open up LiveTesting.cpp In our default constructor, we will now set up our game to send and receive values over the network. To do this we will need to know which Ip address and port on our device we will send to as well as set up a port on our local computer's network to receive incoming data. Your computer will have only one IP address but it can send and receive data on thousands of ports. While we aren't going too deep into ports there, you can think of the IP address like a boat pier. Lots of boats can be docked at a single pier. This is no different. Your ports are your docks and your IP address is your pier. You can think of the data like the people departing and arriving. You’ll need a separate port for each activity in this scenario. If a port isn’t used by your operating system, you can send and receive data there. We are going to use 8000 and 8001. The final thing to establish is the Address Pattern. It will look like a file path and it will allow us to specify the address pattern match our messages to their right values. Add this code: 
+Finally, TouchOSC is set up. Let's link it to our game and run our very first playtest. Go back to the programming IDE. Open up LiveTesting.cpp In our default constructor, we will now set up our game to send and receive values over the network. To do this we will need to know which Ip address and port on our device we will send to as well as set up a port on our local computer's network to receive incoming data. Your computer will have only one IP address but it can send and receive data on thousands of ports. While we aren't going too deep into ports there, you can think of the IP address like a boat pier. Lots of boats can be docked at a single pier. This is no different. Your ports are your docks and your IP address is your pier. You can think of the data like the people departing and arriving. You'll need a separate port for each activity in this scenario. If a port isn't used by your operating system, you can send and receive data there. We are going to use 8000 and 8001. The final thing to establish is the Address Pattern. It will look like a file path and it will allow us to specify the address pattern match our messages to their right values. Add this code: 
 
 #include "LiveTesting.h"
 
