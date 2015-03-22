@@ -1,9 +1,10 @@
 #pragma once
 
 #include "ofMain.h"
-#include "ofBall.h"
+#include "Ball.h"
 
-class testApp : public ofBaseApp{
+
+class ofApp : public ofBaseApp{
 	public:
 		void setup();
 		void update();
@@ -19,7 +20,7 @@ class testApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
     
-    ofBall myBall1;
-    ofBall myBall2;
-    ofBall myBall3;
+    Ball myBall1;
+    Ball myBall2;
+    Ball myBall3;
 };

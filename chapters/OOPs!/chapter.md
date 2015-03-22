@@ -201,7 +201,7 @@ We've just created 3 objects but you can have already see how tedious it woud be
 in the ofApp class header file, where you define the balls objects also define the constant that we'll use for the number of objects:
 
 ```cpp
-#define NBALLS 5
+#define NBALLS 10
 ```
 
 

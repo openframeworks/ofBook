@@ -1,6 +1,9 @@
-#include "ofBall.h"
+#include "Ball.h"
 
-ofBall::ofBall(){
+Ball::Ball(){
+};
+
+void Ball::setup(){
     x = ofRandom(0, ofGetWidth());      // give some random positioning
     y = ofRandom(0, ofGetHeight());
     
@@ -8,10 +11,13 @@ ofBall::ofBall(){
     speedY = ofRandom(-5, 5);
     
     dim = 20;
+    
+    color.set(ofRandom(255),ofRandom(255),ofRandom(255)); // one way of defining digital color is by adddressing its 3 components individually (Red, Green, Blue) in a value from 0-255, in this example we're setting each to a random value
+
+
 }
 
-
-void ofBall::update(){
+void Ball::update(){
     
     if(x < 0 ){
         x = 0;
@@ -34,8 +40,8 @@ void ofBall::update(){
     
 }
 
-void ofBall::draw(){
+void Ball::draw(){
     // set Color based on values for Red, Green and Blue
-    ofSetColor(120,120,120);
+    ofSetColor(color);
     ofCircle(x, y, dim);
 }
