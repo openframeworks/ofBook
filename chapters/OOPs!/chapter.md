@@ -340,44 +340,45 @@ myBall.draw();
 
 
 
-##Make and delete as you wish - using vectors
-
-In this part we'll look into more dynamic ways of creating and destroying objects from our class.
-Vectors are special arrays that don't need a pre-fixed number of elements, that's their magic: vectors are elastic! 
+##Make Objects on the fly
+While many times you'll already have a pre-defined number of objects you'll need to create and using arrays is the right choice, there are other ways to create multiple objects that offer other advantages: welcome vectors!
+Vectors are really great as they'll allow to create collections of objects without a predefined number of elements. They're quite dynamic and allow you to add objects on the fly but also to remove them when you need longer need the objects. Think of them as elastic arrays.
+So, let's use them!
 Note: You'll be hearing about two different types of vectors throughout this book. Please don't confuse stl::vectors (the elastic arrays type we're talking about) with math vectors (forces).
 
 Back to our beloved ofApp.h file, let's define a vector of Ball objects by typing:
-	
-```cpp
-vector <Ball*> myBall;
-```
 
+```cpp
+vector <Ball> myBall;
+```
 In this expression we're creating a type (vector) of type (Ball pointers) and naming it myBall.
 Now, let's head to our (.cpp) and start cooking!
-Ignore the setup, update and draw methods for now, let's jump to
+Ignore the setup, update and draw methods in the ofApp for now, let's jump to ofApp::mouseDragged method. This method constantly listens to the mouse drag action and if it has changed it reveals its values ( position and button state )to us.
 
 ```cpp
 void ofApp::mouseDragged(int x, int y, int button){
-    
 }
 ```
 
-In this method we're listening to the dragging activity of your mouse or trackpad and we'll use this simplicity to create interaction! So let's just create some code to create Balls and add them to our program when we drag the mouse.
+In this method we're listening to the dragging activity of your mouse or trackpad and we'll use this simplicity to create interaction! So let's just create some code to create ofBalls and add them to our program when we drag the mouse.
+The dragging activity of your mouse or trackpad is an ubiquitous, simple but also very gestural source of data and we'll use this simplicity to create interaction! Let's add some code to create Balls and add them to our program when we drag the mouse.
 
 ```cpp
 void ofApp::mouseDragged(int x, int y, int button){
-    Ball *tempBall;
-        tempBall = new Ball(x,y, ofRandom(10,40));
-        myBall.push_back(tempBall);
+    Ball tempBall;									// create the ball object
+    tempBall.setup(x,y, ofRandom(10,40));			// setup its initial state
+    myBall.push_back(tempBall);						// add it to the vector
 }
 ```
 
-A few new things in our code, first we declare a temporary object pointer, we them create it and assign 'x' and 'y' mouse coordinates to it's constructor variables. We later use this temporary object as a shortcut to add Ball objects to our vector.
-Back to our update and draw methods we can add the needed 'for loops' to iterate over the objects in the vector to update and draw them like we would do with arrays. This time though we didn't declare a variable that stores the maximum number of objects but instead we call a method of vectors that allows us to know their size. See code below for update:
-	
+A few new things in our code: we begin by declaring a temporary object, think of it as a placeholder for the real object - that will be inside the vector! - we them define its initial properties by assigning the 'x' and 'y' mouse drag coordinates to its setup variables. Afterwards, we  use this temporary object as a palceholder to add Ball objects to our vector.
+
+Back to our update and draw methods we can add the needed 'for loops' to iterate over the objects in the vector to update and draw them like we would do with arrays. This time though we didn't declare a variable that stores the maximum number of objects but instead, the vector object provides us with a handy method we can call to know their size ( myVector.size() ). 
+See code below for update() and draw():
+
 ```cpp
-for (int i = 0 ; i<myBall.size(); i++) {
-        myBall[i]->update();
+for (int i = 0; i<myBall.size(); i++) {
+        myBall[i].update();
     }
 ```
 
@@ -385,44 +386,29 @@ and for draw:
 
 ```cpp
 for (int i = 0 ; i<myBall.size(); i++) {
-    myBall[i]->draw();
+    myBall[i].draw();
 }
-
-
 ```
-<<<<<<< Updated upstream
 
-Now let's also implement a way to delete them before we have way too many Balls:
-On the ofApp::MousePressed call we will loop though our vector and check the distance between the coordinates of the mouse with the Ball position, if this distance is smaller than the Ball dimension then, we know that we're clicking inside it, we can delete it. Because we're using the vector.erase method we need to use an iterator ( myBall.begin() ), a shortcut that references to the first element of the vector as a starting point to access the vector element we really want to erase ( 'i' ).
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-'''
-On the ofApp::MousePressed() call we will loop though our vector and check the distance between the coordinates of the mouse with the Ball position, if this distance is smaller than the Ball dimension then, we know that we're clicking inside it, we can delete it. Because we're using the vector.erase method we need to use an iterator ( myBall.begin() ), a shortcut that references to the first element of the vector as a starting point to access the vector element we really want to erase ( 'i' ).
-=======
+##Making and delete as you wish - using vectors
 
-Now let's also implement a way to delete them before we have way too many Balls:
-On the ofApp::MousePressed call we will loop though our vector and check the distance between the coordinates of the mouse with the Ball position, if this distance is smaller than the Ball dimension then, we know that we're clicking inside it, we can delete it. Because we're using the vector.erase method we need to use an iterator ( myBall.begin() ), a shortcut that references to the first element of the vector as a starting point to access the vector element we really want to erase ( 'i' ).
->>>>>>> origin/master
-=======
+If you ran the previous code you'll see that in a very short time you'll not only create a huge amount of balls but at some point your system might become slugish because there are just way too many objects on screen. As we just mentioned Vectors are very special as we can add and remove elements dynamically, that's their magic: vectors are elastic! 
+So, let's also implement a way to delete them before we have way too many Balls.
 
-Now let's also implement a way to delete them before we have way too many Balls:
 On the ofApp::MousePressed call we will loop though our vector and check the distance between the coordinates of the mouse with the Ball position, if this distance is smaller than the Ball dimension then, we know that we're clicking inside it, we can delete it. Because we're using the vector.erase method we need to use an iterator ( myBall.begin() ), a shortcut that references to the first element of the vector as a starting point to access the vector element we really want to erase ( 'i' ).
->>>>>>> origin/master
->>>>>>> Stashed changes
 
 ```cpp
 for (int i =0; i < myBall.size(); i++) {
-    float distance = ofDist(x,y, myBall[i]->x, myBall[i]->y); // a method OF give us to check the distance between two coordinates
+    float distance = ofDist(x,y, myBall[i].x, myBall[i].y); // a method OF give us to check the distance between two coordinates
     
-    if (distance < myBall[i]->dim) {
+    if (distance < myBall[i].dim) {
         myBall.erase(myBall.begin()+i); // we need to use an iterator/ reference to the vector position we want to delete
     }
 }
 ```
 
 But because there's always a time you might just want to destroy them all, vectors also have a very handy method to help you: clear().
-Feel free to experiemnt and try using it yourself!
+Feel free to experiment and try using it yourself!
 
 ```cpp
 balls.clear();
