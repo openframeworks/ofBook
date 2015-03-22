@@ -420,6 +420,8 @@ You're now discovering the power of OOP, making a class and creating as many obj
 This is also the power of OOP and inheritance: by allowing to use a base class and add some specific behaviors, overwriting some of the behaviors of a class, creating a subset of instances / objects with slightly different behaviors.
 The great thing about this is it's reusability, we're using the 'mother' class as a starting point, using all its capabilities but we overwrite one of its methods to give it more flexibility.
 Going back to the initial version of our Ball class (step 1) we'll build some 'daughter' classes based on its main characteristics (motion behaviors and shape) but we'll distinguish each inherited subClass by using a different color on its drawing method.
+We'll need to make some chages in our mother class, namely because we'll want to redefine the drawing method in each  derived class (daughter class) we'll make it a virtual method.
+
 Your Ball header file should look like this:
 
 ```cpp
@@ -432,9 +434,9 @@ class Ball {
     
 public: // place public functions or variables declarations here
     
-void setup();	    
+void setup(float _x, float _y, int _dim);	    
 void update();
-void draw(); 
+virtual void draw(); 
 
 // variables
 float x;      
@@ -467,7 +469,7 @@ class BallBlue : public Ball {     // we set the class to inherit from 'Ball'
 
 public: 
 
-    virtual void draw();             // this is the only methid we actually want to be different from the 'mother class'
+    void draw();             // this is the only method we actually want to be different from the 'mother class'
 
 };
 ```

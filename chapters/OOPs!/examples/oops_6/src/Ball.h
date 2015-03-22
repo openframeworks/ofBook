@@ -17,8 +17,7 @@ class Ball {
         // methods, equivalent to specific functions of your class objects
         void setup(float _x, float _y, int _dim);   // setup method, used to define the initial state of the object: runs only once!
         void update();  // update method, used to refresh your objects properties: runs constantly
-        void draw();    // draw method, this where you'll do the object's drawing: runs constantly
-        
+        virtual void draw();    // we made this now a virtual because we'll redefine it in derived classes
         // variables
         float x;      // position
         float y;

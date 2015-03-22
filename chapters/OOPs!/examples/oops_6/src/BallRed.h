@@ -7,6 +7,6 @@ class BallRed : public Ball { 	// we set the class to inherit from 'ofBall'
     
 public:
     
-   virtual void draw(); 			// this is the only methid we actually want to be different from the 'mother class'
+   void draw(); 			// this is the only methid we actually want to be different from the 'mother class'
     
 };
