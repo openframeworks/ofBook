@@ -39,7 +39,7 @@ You will notice right away that there is an editor already containing some code,
 
 A menu drops down with a list of programming languages. Please choose C++14, shown in Figure 5.
 
-![Figure 5](images/choose-c11.png "Figure 5")
+![Figure 5](images/choose-c14.png "Figure 5")
 
 Notice that the code in the editor changed, and looks something like figure 6.
 
