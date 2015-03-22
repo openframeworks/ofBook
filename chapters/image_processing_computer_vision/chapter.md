@@ -66,13 +66,13 @@ If you're new to working with images in OF, it's worth pointing out that you sho
 
 In openFrameworks, raster images can come from a wide variety of sources, including (but not limited to):
 
-- an image file (stored in a commonly-used format like .JPEG, .PNG, .TIFF, or .GIF), loaded and decompressed from your hard drive into an `ofImage`;
-- a real-time image stream from a webcam or other video camera (using an `ofVideoGrabber`);
-- a sequence of frames loaded from a digital video file (using an `ofVideoPlayer`);
-- a buffer of pixels grabbed from whatever you've already displayed on your screen, captured with `ofImage::grabScreen()`;
-- a synthetic computer graphic rendering, perhaps obtained from an `ofFBO` or stored in an `ofPixels` or `ofTexture` object;
-- a real-time video from a more specialized variety of camera, such as a 1394b Firewire camera (via `ofxLibdc`), a networked Ethernet camera (via `ofxIpCamera`), a Canon DSLR (using `ofxCanonEOS`), or with the help of a variety of other community-contributed addons like `ofxQTKitVideoGrabber`, `ofxRPiCameraVideoGrabber`, etc.;
-- perhaps more exotically, a *depth image*, in which pixel values represent *distances* instead of colors. Depth images can be captured from real-world scenes with special cameras (such as a Microsoft Kinect via the `ofxKinect` addon), or extracted from synthetic CGI scenes using (for example) `ofFBO::getDepthTexture()`.
+- an image file (stored in a commonly-used format like .JPEG, .PNG, .TIFF, or .GIF), loaded and decompressed from your hard drive into an `ofImage`
+- a real-time image stream from a webcam or other video camera (using an `ofVideoGrabber`)
+- a sequence of frames loaded from a digital video file (using an `ofVideoPlayer`)
+- a buffer of pixels grabbed from whatever you've already displayed on your screen, captured with `ofImage::grabScreen()`
+- a generated computer graphic rendering, perhaps obtained from an `ofFBO` or stored in an `ofPixels` or `ofTexture` object
+- a real-time video from a more specialized variety of camera, such as a 1394b Firewire camera (via `ofxLibdc`), a networked Ethernet camera (via `ofxIpCamera`), a Canon DSLR (using `ofxCanonEOS`), or with the help of a variety of other community-contributed addons like `ofxQTKitVideoGrabber`, `ofxRPiCameraVideoGrabber`, etc.
+- perhaps more exotically, a *depth image*, in which pixel values represent *distances* instead of colors. Depth images can be captured from real-world scenes with special cameras (such as a Microsoft Kinect via the `ofxKinect` addon), or extracted from CGI scenes using (for example) `ofFBO::getDepthTexture()`.
 
 ![We don't have the rights to this image, it's just something I found on the internet. We need something similar](images/kinect_depth_image.png) 
 *An example of a depth image (left) and a corresponding RGB color image (right), captured simultaneously with a Microsoft Kinect. In the depth image, the brightness of a pixel represents its proximity to the camera. (Note that these two images, presented in a raw state, are not yet "calibrated" to each other, meaning that there is not an exact pixel-for-pixel correspondence between a pixel's color and its corresponding depth.)*
@@ -111,7 +111,7 @@ class ofApp : public ofBaseApp{
 };
 
 ```
-Does the `unsigned char*` declaration look unfamiliar? It's important to recognize and understand, because this is a nearly universal way of storing and exchanging image data. The `unsigned` keyword means that the values which describe the colors in our image are exclusively positive numbers. The `char` means that each color component of each pixel is stored in a single 8-bit number—a byte, with values ranging from 0 to 255—which for many years was also the data type in which *char*acters were stored. And the `*` means that the data named by this variable is not just a single unsigned char, but rather, an *array* of unsigned chars (or more accurately: a *pointer* to a buffer of unsigned chars). For more information about such datatypes, see Chapter 9, *Memory in C++*.
+Does the `unsigned char*` declaration look unfamiliar? It's important to recognize and understand, because this is a nearly universal way of storing and exchanging image data. The `unsigned` keyword means that the values which describe the colors in our image are exclusively positive numbers. The `char` means that each color component of each pixel is stored in a single 8-bit number—a byte, with values ranging from 0 to 255—which for many years was also the data type in which *char*acters were stored. And the asterisk (`*`) means that the data named by this variable is not just a single unsigned char, but rather, an *array* of unsigned chars (or more accurately, a *pointer* to a buffer of unsigned chars). For more information about such datatypes, see the *Memory in C++* chapter.
 
 Below is the complete code of our webcam-grabbing .cpp file. As you might expect, the `ofVideoGrabber` object provides many more methods and settings, not shown here. These allow you to do things like listing and selecting from available camera devices; setting your capture dimensions and framerate; and (depending on your hardware and drivers) adjusting parameters like camera exposure and contrast.
 
@@ -219,7 +219,7 @@ In point of fact, pixel values are almost universally stored, at the hardware le
 ```
 This way of storing image data may run counter to your expectations, since the data certainly *appears* to be two-dimensional when it is displayed. Yet, this is the case, since computer memory consists simply of an ever-increasing linear list of address spaces. 
 
-Note how this data includes no details about the image's width and height. Should this list of values be interpreted as a grayscale image which is 12 pixels wide and 16 pixels tall, or 8x24, or 3x64? Could it be interpreted as a color image? Such 'meta-data' is specified elsewhere — generally in a container object like an `ofImage`.
+Note how this data includes no details about the image's width and height. Should this list of values be interpreted as a grayscale image which is 12 pixels wide and 16 pixels tall, or 8x24, or 3x64? Could it be interpreted as a color image? Such 'meta-data' is specified elsewhere — generally in a container object like an `ofImage`. 
 
 #### Grayscale Pixels and Array Indices
 
@@ -402,7 +402,7 @@ for (int y=0; y<h; y++) {
 	}
 }
 
-// At this point we now know the location of the pixel 
+// At this point, we now know the location of the pixel 
 // whose color is closest to our target color: 
 // (xOfPixelWithClosestColor, yOfPixelWithClosestColor)
 
@@ -412,7 +412,7 @@ This technique is often used with an "eyedropper-style" interaction, in which th
 
 #### Three-Channel (RGB) Images.
 
-Our Lincoln portrait image shows an 8-bit, 1-channel image. Each pixel uses a single round number (technically, an unsigned char) to represent a single luminance value. But other data types and formats are possible.
+Our Lincoln portrait image shows an 8-bit, 1-channel, "[grayscale](http://en.wikipedia.org/wiki/Grayscale)" image. Each pixel uses a single round number (technically, an unsigned char) to represent a single luminance value. But other data types and formats are possible.
 
 For example, it is common for color images to be represented by 8-bit, *3-channel* images. In this case, each pixel brings together 3 bytes' worth of information: one byte each for red, green and blue intensities. In computer memory, it is common for these values to be interleaved R-G-B. As you can see, color images necessarily contain three times as much data.
 
@@ -443,9 +443,9 @@ unsigned char blueValueAtXY  = buffer[bArrayIndex];
 ```
 This is the RGB version of the elementary `index = y*width + x` pattern we used earlier to fetch pixel values from monochrome images.
 
-#### Other Kinds of Image Formats and Containers
+#### Varieties of Image Formats
 
-8-bit 1-channel and 8-bit 3-channel images are the most common image formats you'll find. In the wide world of image processing algorithms, however, you'll eventually encounter an exotic variety of other types of images, including:
+8-bit 1-channel (grayscale) and 8-bit 3-channel (RGB) images are the most common image formats you'll find. In the wide world of image processing algorithms, however, you'll eventually encounter an exotic variety of other types of images, including:
 - 8-bit *palettized* images, in which each pixel stores an index into an array of (up to) 256 possible colors;
 - 16-bit (unsigned short) images, in which each channel uses *two* bytes to store each of the color values of each pixel, with a number that ranges from 0-65535;
 - 32-bit (float) images, in which each color channel's data is represented by floating point numbers.  
@@ -460,15 +460,22 @@ You'll also find:
 
 It gets even more exotic. ["Hyperspectral" imagery from the Landsat 8 satellite](https://www.mapbox.com/blog/putting-landsat-8-bands-to-work/), for example, has 11 channels, including bands for ultraviolet, near infrared, and thermal (deep) infrared!
 
+#### Varieties of Image Containers
+
 In openFrameworks, images can be stored in a variety of different *container classes*, which allow their data to be used (captured, displayed, manipulated, and stored) in different ways and contexts. Some of the more common containers you may encounter are:
 
 - **unsigned char*** An array of unsigned chars, this is the raw, old-school, C-style format used for storing buffers of pixel data. It's not very "smart"—it has no special functionality or metadata for managing *image* data—but it's often useful for exchanging data with different libraries. Many image processing textbooks will assume your data is stored this way.
-- **ofPixels** This is a openFrameworks container for pixel data which lives inside each ofImage, as well as other classes like ofVideoGrabber. It's a wrapper around a buffer that includes additional information like width and height.
-- **ofImage** The `ofImage` is the most common object for loading, saving and displaying static images in openFrameworks. Loading a file into the ofImage allocates an (internal) ofPixels object to store the image data. ofImage objects are not merely containers, but also support methods for displaying their pixel data.
+- **ofPixels** This is an openFrameworks container for pixel data which lives inside each ofImage, as well as other classes like `ofVideoGrabber`. It's a wrapper around a buffer that includes additional information like width and height.
+- **ofImage** The `ofImage` is the most common object for loading, saving and displaying static images in openFrameworks. Loading a file into the ofImage allocates an internal `ofPixels` object (and often, an `ofTexture` as well) to store the image data. `ofImage` objects are not merely containers, but also support methods for displaying their pixel data.
 - **ofxCvImage** This is a container for image data used by the ofxOpenCV addon for openFrameworks, which supports certain functionality from the popular OpenCV library for filtering, thresholding, and other image manipulations.
+- **ofTexture** This container stores image data in the texture memory of your computer's graphics card (GPU). Many other classes, like `ofImage`, `ofxCvImage`,`ofVideoPlayer`, `ofVideoGrabber`, `ofFbo`, and `ofKinect`, use one of these to render their data to the screen. 
 - **cv::Mat** This is the data structure used by OpenCV to store image information. It's not used in openFrameworks, but if you work a lot with OpenCV, you'll often find yourself placing and extracting data from this format.
 
-To the greatest extent possible, the designers of openFrameworks (and OF addons for image processing, like ofxOpenCV and ofxCv) have provided simple operators to help make it easy to exchange data between these containers.
+To the greatest extent possible, the designers of openFrameworks (and OF addons for image processing, like ofxOpenCV and ofxCv) have provided simple operators to help make it easy to exchange data between these containers. 
+
+It's important to point out that image data may be stored in very different parts of your computer's memory. Good ol' unsigned chars, and image data in container classes like `ofPixels` and `ofxCvImage`, are maintained in your computer's main RAM; that's handy for image processing operations by the CPU. By contrast, the `ofTexture` class, as indicated above, stores its data in GPU memory, which is ideal for rendering it quickly to the screen. 
+
+There's generally a performance penalty for moving image data back-and-forth between the CPU and GPU, such as the `ofImage::grabScreen()` method, which captures a portion of the screen from the GPU and stores it in an `ofImage`, or the `ofTexture::readToPixels()` method, which copies image data from an `ofTexture` to an `ofPixels`.
 
 #### RGB, grayscale, and other color space conversions
 
