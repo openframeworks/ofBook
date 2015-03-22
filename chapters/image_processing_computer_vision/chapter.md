@@ -318,12 +318,13 @@ void ofApp::draw(){
 	int w = laserTagImage.getWidth();
 	int h = laserTagImage.getHeight();
 
-	float maxBrightness = 0;  // these are used in the search
+	float maxBrightness  = 0; // these are used in the search
 	int   maxBrightnessX = 0; // for the brightest location
 	int   maxBrightnessY = 0;
 
 	// Search through every pixel. If it is brighter than any
 	// we've seen before, store its brightness and coordinates.
+	// After testing every pixel, we'll know which is brightest!
 	for (int y=0; y<h; y++) {
 		for(int x=0; x<w; x++) {
 			ofColor colorAtXY = laserTagImage.getColor(x, y);
@@ -353,11 +354,61 @@ Being able to locate the brightest pixel in an image has other uses, too. For ex
 
 ![Not mine](images/kinect-forepoint.jpg)
 
-*The brightest pixel in a depth image corresponds to the nearest object to the camera. In the configuration shown here, the "nearest object" is almost certain to be the user's hand or nose.*
+*The brightest pixel in a depth image corresponds to the nearest object to the camera. In the configuration shown here, the "nearest object" is almost certain to be the user's hand (or nose).*
 
-Unsurprisingly, tracking *more than one* bright point requires more sophisticated forms of processing. If you're able to design and control the tracking environment, one simple yet effective way to track up to three objects is to search for the reddest, greenest and bluest pixels in the scene. Zachary Lieberman used a technique similar to this in his [*IQ Font*](https://vimeo.com/5233789) collaboration with typographers Pierre & Damien et al., in which letterforms were created by tracking the movements of a specially-marked sports car. 
+Unsurprisingly, tracking *more than one* bright point requires more sophisticated forms of processing. If you're able to design and control the tracking environment, one simple yet effective way to track up to three objects is to search for the reddest, greenest and bluest pixels in the scene. Zachary Lieberman used a technique similar to this in his [*IQ Font*](https://vimeo.com/5233789) collaboration with typographers Pierre & Damien et al., in which letterforms were created by tracking the movements of a specially-marked sports car.
 
 ![Not mine](images/iq_font.jpg)
+
+More generally, you can create a system that tracks a (single) spot with a *specific* color. A simple way to achieve this is to find the pixel whose color has the shortest Euclidean distance (in "RGB space") to the target color. Here is a code fragment which shows this.
+
+```
+// Our target color is CSS LightPink: #FFB6C1 or (255, 182, 193)
+float rTarget = 255; 
+float gTarget = 182;
+float bTarget = 193; 
+
+// these are used in the search for the location of the pixel 
+// whose color is the closest to our target color.
+float leastDistanceSoFar = 255; 
+int   xOfPixelWithClosestColor = 0; 
+int   yOfPixelWithClosestColor = 0;
+
+for (int y=0; y<h; y++) {
+	for (int x=0; x<w; x++) {
+	
+		// Extract the color components of the pixel at (x,y)
+		// from myVideoGrabber (or some other image source)
+		ofColor colorAtXY = myVideoGrabber.getColor(x, y);
+		float rAtXY = colorAtXY.r; 
+		float gAtXY = colorAtXY.g; 
+		float bAtXY = colorAtXY.b;
+		
+		// Compute the difference between those (r,g,b) values 
+		// and the (r,g,b) values of our target color
+		float rDif = rAtXY - rTarget; // difference in reds 
+		float gDif = gAtXY - gTarget; // difference in greens 
+		float bDif = bAtXY - bTarget; // difference in blues 
+		
+		// The Pythagorean theorem gives us the Euclidean distance.
+		float colorDistance = 
+			sqrt (rDif*rDif + gDif*gDif + bDif*bDif); 
+			
+		if (colorDistance < leastDistanceSoFar){
+			leastDistanceSoFar = colorDistance;
+			xOfPixelWithClosestColor = x;
+			yOfPixelWithClosestColor = y;
+		}
+	}
+}
+
+// At this point we now know the location of the pixel 
+// whose color is closest to our target color: 
+// (xOfPixelWithClosestColor, yOfPixelWithClosestColor)
+
+```
+
+This technique is often used with an "eyedropper-style" interaction, in which the user selects the target color interactively (by clicking). Note that there are more sophisticated ways of measuring "color distance", such as techniques that use other color spaces, that can be more robust to variations in lighting. The distance method used here is not particularly good at distinguishing among very dark colors. 
 
 #### Three-Channel (RGB) Images.
 
