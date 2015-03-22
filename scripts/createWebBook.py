@@ -400,18 +400,16 @@ for idx, chapter in enumerate(chapterDicts):
 	#print html
 
 
-#----------------------------------------------------- make TOC
+#----------------------------------------------------- make TOC content
 
 soup = Soup()
-html = Tag(soup, None, "html")
 a = Tag(soup, None, "a")
-soup.append(html)
 
 for c in chapterDicts: 
 	ul = Tag(soup, None, "ul")
 	li = Tag(soup, None, "li")
 	a = Tag(soup, None, "a");
-	a['href'] = "chapters/" + c['path'] + ".html"
+	a['href'] = c['path'] + ".html"
 	a.string = c['title']
 	li.append(a)
 	ul.append(li)
@@ -431,15 +429,12 @@ for c in chapterDicts:
 			liInner.append(a);
 		#print "\t" + tag
 
-	html.append(ul);
+	soup.append(ul);
 
 htmlOut = soup.prettify("utf-8")
 tocPath = os.path.join(webBookPath, "toc.html")
 with open(tocPath, "wb") as file:
     file.write(htmlOut)
-
-
-
 
 # <ul>
 #   <li>Coffee</li>
@@ -451,6 +446,25 @@ with open(tocPath, "wb") as file:
 #   </li>
 #   <li>Milk</li>
 # </ul>
+
+#----------------------------------------------------- run pandoc for TOC
+
+destTocPath = os.path.join(webBookPath, "chapters", "toc.html")
+sourceTocPath = os.path.join(webBookPath, "toc.html")
+
+print "Converting", sourceTocPath, "to", destTocPath, "..."
+
+subprocess.call(["pandoc", "-o", destTocPath, sourceTocPath,
+                                    "-s", "-p",
+                                    "--include-in-header=createWebBookTemplate/IncludeInHeader.html",
+                                    "--include-before-body=createWebBookTemplate/IncludeBeforeBodyTOC.html",
+                                    "--include-after-body=createWebBookTemplate/IncludeAfterBodyTOC.html"])
+
+print "Removing", sourceTocPath, "..."
+os.remove(sourceTocPath)
+
+
+
 
 
 
