@@ -60,7 +60,7 @@ Reading an XML file in OF requires the use of an OF addon called ofXmlSettings.
 
 **Step 1 Acquire:** This section works through an example of a data visualisation of US population data downloaded from the United States Census service here: http://www.nber.org/data/census-decennial-population.html
 
-**Step 2 Parse and Filter:** Open this file in a spreadsheet program and inspect its contents. You will see that there is an population data for all the regions of the USA from 1900-1990. This example visualises the total population data and data from New York, Louisiana and Alabama so we must construct the data file with only the data from those particular states. You will want to copy and past the selected data into a new spreadsheet so that you are working with a file structure that looks like Figure 1. If you are working in Excel to parse the data, this program has a useful way of transposing the table. Copy a row from the original spreadsheet, and then paste it into your new file by selecting the “Paste Special” option in the Edit menu and selecting “Transpose” before hitting ok.
+**Step 2 Parse and Filter:** Open this file in a spreadsheet program and inspect its contents. You will see that there is an population data for all the regions of the USA from 1900-1990. This example visualises the total population data and data from New York, Louisiana and Alabama so we must construct the data file with only the data from those particular states. You will want to copy and past the selected data into a new spreadsheet so that you are working with a file structure that looks like Figure 1. If you are working in Excel to parse the data, this program has a useful way of transposing the table. Copy a row from the original spreadsheet, and then paste it into your new file by selecting the "Paste Special" option in the Edit menu and selecting "Transpose" before hitting ok.
 
 IMAGE HERE.
 
@@ -208,7 +208,7 @@ ofBuffer is what is known as a convenience class, and provides easy methods for 
 ####Buffer Functions
 ofBufferFromFile();  is a function that allows you to load your data file.
 ```cpp	
-ofBuffer file = ofBufferFromFile(“population.tsv");
+ofBuffer file = ofBufferFromFile("population.tsv");
 cout << file.getText();
 ```
 This loads the population.tsv file into a variable called 'file'.
@@ -421,17 +421,17 @@ Then insert this block of code to the mousePressed part of the openFrameworks te
 void testApp::mousePressed(int x, int y, int button){
 
 
-ofRectangle rect = font.getStringBoundingBox(“NewYork”, dimensions.x, dimensions.y-15);
+ofRectangle rect = font.getStringBoundingBox("NewYork", dimensions.x, dimensions.y-15);
     if (rect.inside(ofPoint(x,y))){
         which = 0;
     }
     
-    rect = font.getStringBoundingBox(“Louisiana”, dimensions.x + 80, dimensions.y-15);
+    rect = font.getStringBoundingBox("Louisiana", dimensions.x + 80, dimensions.y-15);
     if (rect.inside(ofPoint(x,y))){
         which = 1;
     }
     
-    rect = font.getStringBoundingBox(“Alabama”, dimensions.x + 160, dimensions.y-15);
+    rect = font.getStringBoundingBox("Alabama", dimensions.x + 160, dimensions.y-15);
     if (rect.inside(ofPoint(x,y))){
         which = 2;
     }
@@ -492,7 +492,7 @@ Finally the last step here is to draw the titles to the screen which is done by 
 ###Conversion functions (ofSplitString, ofToString, ofToInt)
 Conversion functions enable the manipulation of each line of data in the buffer. They allow each line to be split and for parts of it to be placed into string or integer variables.
 ```cpp
-ofSplitString(line, “\t” );
+ofSplitString(line, "\t" );
 ```
 This function splits a string at a specified character. It has two arguments, the first is the name of the string to be split and the second is the character at which it is to be split. (\t indicates split at a tab)
 ```cpp

@@ -23,7 +23,7 @@ This chapter introduces some basic ways to work with data and visualise datasets
 
 ###1.2 Definition of terms and chapter structure 
 
-Data is produced from processes of observation. It is symbols or numerical interpretations that “represent the properties of objects, events or environments” (Ackoff, 1989). Information comes from understanding and analysing the context and descriptive qualities of the data, it relates to why the data was collected. Although these terms are often used loosely and interchangeably, in the field of information science data is generally thought of as a raw material from which information is produced through analytical processes.
+Data is produced from processes of observation. It is symbols or numerical interpretations that "represent the properties of objects, events or environments" (Ackoff, 1989). Information comes from understanding and analysing the context and descriptive qualities of the data, it relates to why the data was collected. Although these terms are often used loosely and interchangeably, in the field of information science data is generally thought of as a raw material from which information is produced through analytical processes.
 These definitions may need to be further refined.
 
 **[mh: the second to last sentence is quite nice, and I don't think these definitions need to be further refined.]**
@@ -151,7 +151,7 @@ Vectors are also an important data structure for storing lists of data in OF. In
 
 Conversion functions enable the manipulation of each line of data in the buffer. They allow each line to be split and for parts of it to be placed into string or integer variables.
 ```cpp
-ofSplitString(line, “\t” );
+ofSplitString(line, "\t" );
 ```
 This function splits a string at a specified character. It has two arguments, the first is the name of the string to be split and the second is the character at which it is to be split. (\t indicates split at a tab)
 ```cpp
@@ -199,7 +199,7 @@ vector < weatherData > dataPoints;
 IN THE TESTAPP FILE:
 We load the data into the buffer and then run through each line of the buffer, placing the values into the struct called data.
 ```cpp
-ofBuffer buffer = ofBufferFromFile(“weather.csv");
+ofBuffer buffer = ofBufferFromFile("weather.csv");
    
 	string temp = buffer.getNextLine();
    

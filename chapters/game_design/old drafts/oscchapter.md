@@ -64,7 +64,7 @@ Let's start with our testApp. There are a few things we definitely know we'll wa
 
 ###Gamestates
 
-First let's create the basic structure of our game. Games typically have at least three parts: a start screen, the game itself, and an end screen. We need to keep track of which section of the game we're in, which we'll do using a variable called a game state. In this example, our game state variable is a string, and the three parts of our game are “start”, “game”, and “end”. Let's add a score and a player at this point as well. 
+First let's create the basic structure of our game. Games typically have at least three parts: a start screen, the game itself, and an end screen. We need to keep track of which section of the game we're in, which we'll do using a variable called a game state. In this example, our game state variable is a string, and the three parts of our game are "start", "game", and "end". Let's add a score and a player at this point as well. 
 ```
 string game_state;
 int score;
@@ -80,7 +80,7 @@ void testApp::update(){
  
    } else if (game_state == "game") {
    
-   } else if (game_state == “end”) {
+   } else if (game_state == "end") {
  
    }
 }
@@ -90,7 +90,7 @@ void testApp::draw(){
    
    } else if (game_state == "game") {
    
-   } else if (game_state == “end”) {
+   } else if (game_state == "end") {
  
    }
 }
@@ -582,7 +582,7 @@ bool LevelController::should_spawn() {
 
 When we set up our level controller, we'll give it a starting time. It'll use this time as a baseline for the first enemy spawn. The `should_spawn` code should look familiar from the enemy bullet section.
 
-We'll wait to set up our level controller until the game actually starts--namely, when the game state changes from ` “start” ` to ` “game” `.
+We'll wait to set up our level controller until the game actually starts--namely, when the game state changes from ` "start" ` to ` "game" `.
 
 ```
 void testApp::keyReleased(int key){

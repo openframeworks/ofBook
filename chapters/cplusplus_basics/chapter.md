@@ -70,7 +70,7 @@ You will see a slightly different editing configuration but the same template co
 // your code goes here .
 ```
 
-A line beginning with a double forward slash is called a comment. You may type anything you need to in order to annotate your code in a way you understand. Sometimes a it's useful to “comment out code” by placing two forward-slashes before it, because that deactivates the C++ code without deleting it. Comments in C++ can also take up multiple lines, or insert like a tag. The syntax for beginning and ending comment-mode is different. Everything between the `/* and the */` becomes a comment:
+A line beginning with a double forward slash is called a comment. You may type anything you need to in order to annotate your code in a way you understand. Sometimes a it's useful to "comment out code" by placing two forward-slashes before it, because that deactivates the C++ code without deleting it. Comments in C++ can also take up multiple lines, or insert like a tag. The syntax for beginning and ending comment-mode is different. Everything between the `/* and the */` becomes a comment:
 
 
 ```cpp
@@ -104,7 +104,7 @@ int main(){
 }
 ```
 
-Now press the green *ideone it!* button at the bottom right corner and watch the output console, which is the bottom half of the code editor, just above that green button. You will see orange status messages saying things like “Waiting for compilation,” “Compilation,” and “Running”. Shortly after, the program will execute in the cloud and the standard output should show up on that web page. You should see the new message in Figure 8.
+Now press the green *ideone it!* button at the bottom right corner and watch the output console, which is the bottom half of the code editor, just above that green button. You will see orange status messages saying things like "Waiting for compilation," "Compilation," and "Running". Shortly after, the program will execute in the cloud and the standard output should show up on that web page. You should see the new message in Figure 8.
 
 ![Figure 8](images/hello-world.png "Figure 8: Hello World appears in output window")
 
@@ -303,7 +303,7 @@ There are a few advantages to using C++ over the other options (mostly scripting
 
 ## Variables (part 1)
 
-> A “thing” is a “think”, a unit of thought
+> A "thing" is a "think", a unit of thought
 > 
 > -- Alan Watts
 

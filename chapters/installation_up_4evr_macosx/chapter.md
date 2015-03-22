@@ -26,14 +26,14 @@ Nick Hardeman has made a utility application for setting all of these attributes
 
 In System Preferences:
 
- - **Desktop and Screensaver:** Disable your screensaver. Set it's time to “Never." I also suggest changing your desktop background to either black/a screenshot of your app/you client's logo - you can even set these to change automatically - remember - **it's not broken until someone notices** :)
- - **Energy Saver:** Turn Display Sleep and Computer Sleep to Never. Enable “Start up automatically after power failure” and “Restart automatically if the computer freezes” (these are only available in 10.7 and later)
+ - **Desktop and Screensaver:** Disable your screensaver. Set it's time to "Never." I also suggest changing your desktop background to either black/a screenshot of your app/you client's logo - you can even set these to change automatically - remember - **it's not broken until someone notices** :)
+ - **Energy Saver:** Turn Display Sleep and Computer Sleep to Never. Enable "Start up automatically after power failure" and "Restart automatically if the computer freezes" (these are only available in 10.7 and later)
  - **Users and Groups:** Go to Login Options (above the padlock) and enable "Automatic Login"
  - **Software update:** Disable automatic updates.
  - **Sharing:**  If you are running your main computer without a monitor or in an inaccessible area, don't forget to turn on File sharing and Screen sharing. This will allow you to access the computer and control it if you're on the same network (optional if you're concerned about security).
- - **Network:** If you don't need remote access or don't need Internet access for the installation, it's not a bad idea to disable the Wifi so the “please select a wireless network” window doesn't pop up when you least expect it. You can also turn off the option to ask you to join a new network if the proper one isn't found.
- - **Bluetooth** If running without a mouse or keyboard plugged in, sometimes you can get the annoying  ”Bluetooth keyboard/mouse setup” pop up over your application. You can temporality disable these by going to the advanced settings within the Bluetooth Preferences. See below for it's location in 10.6.
- - **Security:** I would make sure that "Disable Automatic Login" is unchecked so you don't hit any surprises on reboots. If you're really paranoid, you can even disable things like the IR remote receiver that still exists on some macs and definitely on Macbooks. This would keep pranksters with Apple TV remotes from “Front Rowing” your installation. To disable, go to Security->General->Advanced (in >10.8) and “Disable remote control IR receiver”.
+ - **Network:** If you don't need remote access or don't need Internet access for the installation, it's not a bad idea to disable the Wifi so the "please select a wireless network" window doesn't pop up when you least expect it. You can also turn off the option to ask you to join a new network if the proper one isn't found.
+ - **Bluetooth** If running without a mouse or keyboard plugged in, sometimes you can get the annoying  "Bluetooth keyboard/mouse setup" pop up over your application. You can temporality disable these by going to the advanced settings within the Bluetooth Preferences. See below for it's location in 10.6.
+ - **Security:** I would make sure that "Disable Automatic Login" is unchecked so you don't hit any surprises on reboots. If you're really paranoid, you can even disable things like the IR remote receiver that still exists on some macs and definitely on Macbooks. This would keep pranksters with Apple TV remotes from "Front Rowing" your installation. To disable, go to Security->General->Advanced (in >10.8) and "Disable remote control IR receiver".
  - **Notification Center:** You can either [disable Notification Center completely](http://www.tekrevue.com/tip/how-to-completely-disable-notification-center-in-mac-os-x/), or set your "Do Not Disturb" to basically on be on forever by setting it with overlapping times like the screenshot below
 
 ![BluetoothSettings](images/Bluetooth_settings.png)
@@ -72,7 +72,7 @@ defaults write com.apple.finder CreateDesktop -bool false
 **Step 2: Boot into your software**
 -------------------------------
 
-Things get unplugged, power goes out, not everyone has budget or space for a battery backup etc etc. Above, I covered how to have everything reboot automatically after power failures or freezes, but you'll also need your app to be ready to go from boot and not leave the desktop open to prying eyes. There are many ways to have your application load automatically - the simplest is using OSX's built in tools: In the System Preferences “Accounts” panel, select “Login Items” and drag your application into there to have it open automatically on launch.
+Things get unplugged, power goes out, not everyone has budget or space for a battery backup etc etc. Above, I covered how to have everything reboot automatically after power failures or freezes, but you'll also need your app to be ready to go from boot and not leave the desktop open to prying eyes. There are many ways to have your application load automatically - the simplest is using OSX's built in tools: In the System Preferences "Accounts" panel, select "Login Items" and drag your application into there to have it open automatically on launch.
 
 ![Login Items](images/Login_items.png)
 
@@ -100,14 +100,14 @@ In Lingon, hit the + to create a new launchd plist. Just make it a standard laun
 
 ![LingonSetup](images/LingonSetup.png)
 
-One additional/optional thing you can add to this is to put an additional key in the plist for a “Successful Exit”. By adding this, your app won't re-open when it has detected that it closed normally (ie You just hit escape intentionally, it didn't crash). Can be useful if you're trying to check something and OS X won't stop re-opening the app on you. To easily add this to the key, click the advanced tab and click the checkbox for "Successful exit" - or just add it manually as it in the above screenshot.
+One additional/optional thing you can add to this is to put an additional key in the plist for a "Successful Exit". By adding this, your app won't re-open when it has detected that it closed normally (ie You just hit escape intentionally, it didn't crash). Can be useful if you're trying to check something and OS X won't stop re-opening the app on you. To easily add this to the key, click the advanced tab and click the checkbox for "Successful exit" - or just add it manually as it in the above screenshot.
 
 **Shell script+Cron Job method**
 
 (I got the following super helpful tip from [Kyle McDonald](http://kylemcdonald.net/))
 )
 
-This method is sort of deprecated in relation to the launchd method - you can run shell scripts with Lingon and launchd in the same manner as what we've got here. Shell scripting is your best friend. With the help of the script below and an application called CronniX (or use Lingon) , you will be able to use a cronjob to check the system's list of currently running processes. If your app does not appear on the list, then the script will open it again, otherwise it won't do anything. Either download the script or type the following into a text editor, replacing Twitter.app with your app's name and filepath. Don't forget the “.app” extension in the if statement!:
+This method is sort of deprecated in relation to the launchd method - you can run shell scripts with Lingon and launchd in the same manner as what we've got here. Shell scripting is your best friend. With the help of the script below and an application called CronniX (or use Lingon) , you will be able to use a cronjob to check the system's list of currently running processes. If your app does not appear on the list, then the script will open it again, otherwise it won't do anything. Either download the script or type the following into a text editor, replacing Twitter.app with your app's name and filepath. Don't forget the ".app" extension in the if statement!:
 
 	\#!/bin/sh 
 		if [ $(ps ax | grep -v grep | grep "Twitter.app" | wc -l) -eq 0 ] then
@@ -116,9 +116,9 @@ This method is sort of deprecated in relation to the launchd method - you can ru
 		else
 		echo "Twitter running" fi
 
-Save that file as something like “KeepOpen.sh” and keep it next to your application or somewhere convenient.
+Save that file as something like "KeepOpen.sh" and keep it next to your application or somewhere convenient.
 
-After creating that file, you'll need to make it executable. To do this, open the Terminal and in a new window type “chmod +x ” and then enter the path to the shell script you just created (you can either drag the shell script into the terminal window or manually type it). It would look something like this:
+After creating that file, you'll need to make it executable. To do this, open the Terminal and in a new window type "chmod +x " and then enter the path to the shell script you just created (you can either drag the shell script into the terminal window or manually type it). It would look something like this:
 
     	
     4Evr-MacBook-Pro:~ Forever4Evr$ chmod +x /Users/Forever4Evr/Desktop/KeepOpen.sh
@@ -131,7 +131,7 @@ After downloading CronniX, open it up and create a new cronjob. In the window th
 
 ![Cronnix_link](images/Cronnix-settings.png)
 
-Now just hit “New” and then make sure to hit “Save” to save it into the system's crontab. Now if you just wait a minute then it should open your app every minute on the minute. Maybe save this one for the very end if you have more to do :)
+Now just hit "New" and then make sure to hit "Save" to save it into the system's crontab. Now if you just wait a minute then it should open your app every minute on the minute. Maybe save this one for the very end if you have more to do :)
 
 This is a great tool if there is an unintended crash because the app will never be down longer than a minute.
 
@@ -147,7 +147,7 @@ This is a great tool if there is an unintended crash because the app will never 
     sleep 10
     done
 
-Just type this into a plaintext document and save it as something like ”KeepMyAppAlivePlz.command” and then use chmod as above to make the file executable  and then drop this in your login items as  above. This one will just continuously try and open your app every 10ms, but if it is already open, the OS knows to not try opening it a second, third, fourth time.
+Just type this into a plaintext document and save it as something like "KeepMyAppAlivePlz.command" and then use chmod as above to make the file executable  and then drop this in your login items as  above. This one will just continuously try and open your app every 10ms, but if it is already open, the OS knows to not try opening it a second, third, fourth time.
 
 Make sure to check the Console.app for any errors that may have come through when no one caught them, whenever you check the installation in person or remotely. This is not a fix-all for buggy programming, just a helper to keep things running smooth. The more things you can do to leave yourself notes about why the crash happened, the faster you can address the core issue.
 
@@ -158,7 +158,7 @@ Applescript is also a very solid choice for doing some more OS specific work in 
 
 This one is a little more preventative, or maybe superstitious so hopefully someone can point out a concrete reason why this is a good idea. Depending on your app and the amount of stuff it reaches into, there could be some memory leaks or other OS bugs that you haven't accounted for. Rebooting every day or week is a good idea to keep everything tidy, system wise.
 
-The simplest option by far would be to go to System Preferences->Energy Saver and then click “Schedule…” and enter in some values if you need to turn the computer off to rest for a longer period of time to save it some stress when it might not be used at night time or something. Heat can do funny things sometimes, so if you have a chance to get your computer to rest and the time to test it, definitely give this a shot…saves some energy too which is nice.
+The simplest option by far would be to go to System Preferences->Energy Saver and then click "Schedule…" and enter in some values if you need to turn the computer off to rest for a longer period of time to save it some stress when it might not be used at night time or something. Heat can do funny things sometimes, so if you have a chance to get your computer to rest and the time to test it, definitely give this a shot…saves some energy too which is nice.
 
 ![Auto-reboot](images/Auto_reboot.png)
 
@@ -221,7 +221,7 @@ All that is left is to write this output to a text file, which you can do with a
 
 This line basically says - tell me the open processes (px aux) - only give me the lines that have "Tweetdeck" in them (grep Tweetdeck) - and then append them to a text file located at this location ( >> path_to_text_file)
 
-Now we just need to make this an executable shell script and set it up as a launch daemon or cron job – see above at Step 3 to learn how to run the shell script at a regular interval using Lingon and launchd. If the app isn't running, it will only return the “grep YourAppName” process which is a good thing to log because if your app isn't open you won't know how long it's been out (nothing will be logged), but having the grep process logged will at least tell you it was checking for it. Grep will also more accurately tell you what time it checked – the other app will only give you a start time and up time.
+Now we just need to make this an executable shell script and set it up as a launch daemon or cron job – see above at Step 3 to learn how to run the shell script at a regular interval using Lingon and launchd. If the app isn't running, it will only return the "grep YourAppName" process which is a good thing to log because if your app isn't open you won't know how long it's been out (nothing will be logged), but having the grep process logged will at least tell you it was checking for it. Grep will also more accurately tell you what time it checked – the other app will only give you a start time and up time.
 
 Let's also take this one step further and say, hypothetically, that the Triplehead2Go display adapter you have is fairly wonky and you don't always get the displays or projectors to connect after reboot – or maybe a projector is shutting itself off and disrupting things. Well we can log the currently available resolutions too! Try entering the line below in your own terminal:
 
@@ -233,7 +233,7 @@ Let's say you want to make sure you're running a resolution of 3840×720 at all 
 
     system_profiler SPDisplaysDataType | grep Resolution
 
-This will return “Resolution: 3840×720″ which you can combine with the above lines to write it all to a text file. So here would be your shell script file if you wanted to record the currently running processes and the current resolutions:
+This will return "Resolution: 3840×720″ which you can combine with the above lines to write it all to a text file. So here would be your shell script file if you wanted to record the currently running processes and the current resolutions:
 
         \#!/bin/bash
     ps aux | grep 'YourAppName' >> /Users/you/filepath/Install6ProcessLog.txt
@@ -259,7 +259,7 @@ If you were using a gmail account you would do:
 
 The line in the passwd file mentioned in the article would be: smtp.gmail.com:587 installationSupport@gmail.com:yourpassword
 
-Now send a test email to yourself by running: echo “Hello” | mail -s “test” “InstallationSupport@gmail.com”
+Now send a test email to yourself by running: echo "Hello" | mail -s "test" "InstallationSupport@gmail.com"
 
 Second step is to combine this new found ability to send emails from the Terminal with a process to check if your application is still running…something like the below would work with some tweaking for what you're looking to do:
 
@@ -286,7 +286,7 @@ Memory leak murderer
 
 See [this article](http://blairneal.com/blog/memory-leak-murderer/) about combining the above process with something that kills and restarts an app if it crosses a memory usage threshold
 
-Bonus – if using MadMapper – see [this link](http://blairneal.com/blog/applescript-to-automatically-fullscreen-madmapper-for-installations/) for an AppleScript that will open MadMapper and have it enter fullscreen – and enter “OK” on a pesky dialog box.
+Bonus – if using MadMapper – see [this link](http://blairneal.com/blog/applescript-to-automatically-fullscreen-madmapper-for-installations/) for an AppleScript that will open MadMapper and have it enter fullscreen – and enter "OK" on a pesky dialog box.
 
 Alternate resources:
 --------------------
