@@ -10,7 +10,7 @@ Here's a quick overview of the classes you can use to work with sound in openFra
 
 `ofSoundStream` gives you access to the computer's sound hardware, allowing you to generate your own sound as well as react to sound coming into your computer from something like a microphone or line-in jack.
 
-`ofSoundBuffer` is used to store a sequence of `float` values, and perform audio-related things on said values (like resampling).
+`ofSoundBuffer` is used to store a sequence of audio samples and perform audio-related things on said samples (like resampling). This is new in openFrameworks 0.9.0.
 
 ## Getting Started With Sound Files
 
@@ -74,7 +74,7 @@ void ofApp::setup() {
 }
 
 void ofApp::audioOut( float * output, int bufferSize, int nChannels ) {
-  for(int i = 0; i < bufferSize * nChannels; i+=2) {
+  for(int i = 0; i < bufferSize * nChannels; i += 2) {
     float sample = sin(phase); // generating a sine wave sample
     output[i] = sample; // writing to the left channel
     output[i+1] = sample; // writing to the right channel
@@ -97,23 +97,34 @@ This means you access individual sound channels in much the same way as accessin
 
 An important caveat to keep in mind when dealing with ofSoundStream is that audio callbacks like `audioIn()` and `audioOut()` will be called on a seperate *thread* from the standard `setup()`, `update()`, `draw()` functions. This means that if you'd like to share any data between (for example) `update()` and `audioOut()`, you need to make use of an `ofMutex` to keep both threads from getting in each others' way. You can see this in action a little later in this chapter, or check out the threads chapter for a more in-depth explanation.
 
+In openFrameworks 0.9.0, there's a new class *ofSoundBuffer* that can be used in `audioOut()` instead of the `float * output, int bufferSize, int channels` form. In this case, the `audioOut()` function above can be rewritten to the simpler form:
+
+```cpp
+void ofApp::audioOut(ofSoundBuffer &outBuffer) {
+	for(int i = 0; i < outBuffer.size(); i += 2) {
+		float sample = sin(phase); // generating a sine wave sample
+		outBuffer[i] = sample; // writing to the left channel
+		outBuffer[i + 1] = sample; // writing to the right channel
+		phase += 0.05;
+	}
+}
+```
+
 ## Why -1 to 1?
 
 In order to understand *why* openFrameworks chooses to represent sound as a continuous stream of `float` values ranging from -1 to 1, it'll be helpful to know how sound is created on a physical level.
 
 ![Speaker Mechanics](images/speaker.png "simplified diagram of a speaker, showing the push/pull dynamics of its magnet")
 
-At the most basic level, a speaker consists of a cone and an electromagnet. The electromagnet pushes and pulls the cone to create vibrations in air pressure. These vibrations make their way to your ears, where they are interpreted as sound. When the electromagnet is off, the cone is simply "at rest", neither pulled in or pushed out.
-
-[footnote] A basic microphone works much the same way: allowing air pressure to vibrate an object held in place by a magnet, thereby creating an electrical signal.
+At the most basic level, a speaker consists of a cone and an electromagnet. The electromagnet pushes and pulls the cone to create vibrations in air pressure. These vibrations make their way to your ears, where they are interpreted as sound. When the electromagnet is off, the cone is simply "at rest", neither pulled in or pushed out. A basic microphone works much the same way: allowing air pressure to vibrate an object held in place by a magnet, thereby creating an electrical signal.
 
 From the perspective of an openFrameworks app, it's not important what the sound hardware's specific voltages are. All that really matters is that the speaker cone is being driven between its "fully pushed out" and "fully pulled in" positions, which are represented as 1 and -1. This is similar to the notion of "1" as a representation of 100% as described in the animation chapter, though sound introduces the concept of -100%.
 
-[footnote] Some other systems use an integer-based representation, moving between something like -65535 and +65535 with 0 still being the representation of "at rest". The Web Audio API provides an unsigned 8-bit representation, which ranges between 0 and 255 with 127 being "at rest".
+Some other systems use an integer-based representation, moving between something like -65535 and +65535 with 0 still being the representation of "at rest". The Web Audio API provides an unsigned 8-bit representation, which ranges between 0 and 255 with 127 being "at rest".
 
 A major way that sound differs from visual content is that there isn't really a "static" representation of sound. For example, if you were dealing with an OpenGL texture which represents 0 as "black" and 1 as "white", you could fill the texture with all 0s or all 1s and end up with a static image of "black" or "white" respectively. This is not the case with sound. If you were to create a sound buffer of all 0s, all 1s, all -1s, or any single number, they would all sound like exactly the same thing: nothing at all.
 
-[footnote] Technically, you'd probably hear a pop right at the beginning as the speaker moves from the "at rest" position to whatever number your buffer is full of, but the remainder of your sound buffer would just be silence.
+> Technically, you'd probably hear a pop right at the beginning as the speaker moves from the "at rest" position to whatever number your buffer is full of, but the remainder of your sound buffer would just be silence.
 
 This is because what you actually hear is the *changes* in values over time. Any individual sample in a buffer doesn't really have a sound on its own. What you hear is the *difference* between the sample and the one before it. For instance, a sound's "loudness" isn't necessarily related to how "big" the individual numbers in a buffer are. A sine wave which oscillates between 0.9 and 1.0 is going to be much much quieter than one that oscillates between -0.5 and 0.5.
 
