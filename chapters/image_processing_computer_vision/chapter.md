@@ -408,7 +408,7 @@ for (int y=0; y<h; y++) {
 
 ```
 
-This technique is often used with an "eyedropper-style" interaction, in which the user selects the target color interactively (by clicking). Note that there are more sophisticated ways of measuring "color distance", such as techniques that use other color spaces, that can be more robust to variations in lighting. The distance method used here is not particularly good at distinguishing among very dark colors. 
+This technique is often used with an "eyedropper-style" interaction, in which the user selects the target color interactively (by clicking). Note that there are more sophisticated ways of measuring "color distance", such as techniques that use other color spaces, that can be more robust to variations in lighting. The distance method used here is not particularly good at distinguishing among very dark colors.  
 
 #### Three-Channel (RGB) Images.
 
