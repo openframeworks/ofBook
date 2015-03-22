@@ -68,7 +68,7 @@ You will see a slightly different editing configuration but the same template co
 // your code goes here .
 ```
 
-A line beginning with a double forward slash is called a comment. You may type anything you need to in order to annotate your code in a way you understand. Sometimes a it's useful to “comment out code” by placing two forward-slashes before it, because that deactivates the C++ code without deleting it. Comments in C++ can also take up multiple lines, or insert like a tag. The syntax for beginning and ending comment-mode is different. Everything between the `/* and the */` becomes a comment:
+A line beginning with a double forward slash is called a comment. You may type anything you need to in order to annotate your code in a way you understand. Sometimes a it's useful to "comment out code" by placing two forward-slashes before it, because that deactivates the C++ code without deleting it. Comments in C++ can also take up multiple lines, or insert like a tag. The syntax for beginning and ending comment-mode is different. Everything between the `/* and the */` becomes a comment:
 
 
 ```cpp
@@ -102,7 +102,7 @@ int main(){
 }
 ```
 
-Now press the green *ideone it!* button at the bottom right corner and watch the output console, which is the bottom half of the code editor, just above that green button. You will see orange status messages saying things like “Waiting for compilation,” “Compilation,” and “Running”. Shortly after, the program will execute in the cloud and the standard output should show up on that web page. You should see the new message in Figure 8.
+Now press the green *ideone it!* button at the bottom right corner and watch the output console, which is the bottom half of the code editor, just above that green button. You will see orange status messages saying things like "Waiting for compilation," "Compilation," and "Running". Shortly after, the program will execute in the cloud and the standard output should show up on that web page. You should see the new message in Figure 8.
 
 ![Figure 8](images/hello-world.png "Figure 8: Hello World appears in output window")
 
@@ -149,16 +149,16 @@ Let's do an experiment. In the code editor, please comment out the include direc
 The syntax coloring will change to all green, meaning it's now just a comment. Run the code by pressing the big green button at the bottom right, and you'll see something new in the output pane.
 
 ```
-prog.cpp: In function ‘int main()’:
-prog.cpp:5:2: error: ‘cout’ was not declared in this scope
+prog.cpp: In function 'int main()':
+prog.cpp:5:2: error: 'cout' was not declared in this scope
   cout << "Hello World" << endl;
   ^
-prog.cpp:5:27: error: ‘endl’ was not declared in this scope
+prog.cpp:5:27: error: 'endl' was not declared in this scope
   cout << "Hello World" << endl;
                            ^
 ```
 
-The compiler found an error and did not run the program. Instead, in attempt to help you fix it, the compiler is showing you where it got confused in attempt to help you fix it. The first part, *prog.cpp*: tells you the file that contains the error. In this case, ideone.com saved your code into that default file name. Next, it says `In function ‘int main()’`: file showing you the specific section of the code that contains the error, in this case, between the {curly brace} of a function called *main*. (We will talk about functions and curly braces later). On the next line, we see `prog.cpp:5:2:`. The 5 is how many lines from the top of the file, and 2 is how many characters rightward from the beginning of the line. Next, we see `error: ‘cout’ was not declared in this scope`. That is a message describing what it believes it wrong in the code. In this case, it's fairly correct. iostream.h is gone, and therefore no `cout` is provided to us, and so when we try to send "Hello World", the compile fails. On the next couple of lines, you see the line of code containing the fallacious `cout`, plus an extra little up-caret character on the line beneath it, and that is supposed to be an arrow pointing at a character in the code. In this case, the arrow should be sitting beneath the 'c' in `cout`. The system is showing you visually which token is at fault. A second error is shown, and this time, the compiler complains that there is no endl. Of course, we know that in order to fix the error, we need to include `<iostream.h>` so let us do that now. Please un-comment line 1 and re-run the code.
+The compiler found an error and did not run the program. Instead, in attempt to help you fix it, the compiler is showing you where it got confused in attempt to help you fix it. The first part, *prog.cpp*: tells you the file that contains the error. In this case, ideone.com saved your code into that default file name. Next, it says `In function 'int main()'`: file showing you the specific section of the code that contains the error, in this case, between the {curly brace} of a function called *main*. (We will talk about functions and curly braces later). On the next line, we see `prog.cpp:5:2:`. The 5 is how many lines from the top of the file, and 2 is how many characters rightward from the beginning of the line. Next, we see `error: 'cout' was not declared in this scope`. That is a message describing what it believes it wrong in the code. In this case, it's fairly correct. iostream.h is gone, and therefore no `cout` is provided to us, and so when we try to send "Hello World", the compile fails. On the next couple of lines, you see the line of code containing the fallacious `cout`, plus an extra little up-caret character on the line beneath it, and that is supposed to be an arrow pointing at a character in the code. In this case, the arrow should be sitting beneath the 'c' in `cout`. The system is showing you visually which token is at fault. A second error is shown, and this time, the compiler complains that there is no endl. Of course, we know that in order to fix the error, we need to include `<iostream.h>` so let us do that now. Please un-comment line 1 and re-run the code.
 
 ```cpp
 #include <iostream>
@@ -185,7 +185,7 @@ It's a very similar error as before, where it cannot find `cout` or `endl`, but 
 ```
 prog.cpp:5:2: note: suggested alternative:
 In file included from prog.cpp:1:0:
-/usr/include/c++/4.8/iostream:61:18: note:   ‘std::cout’
+/usr/include/c++/4.8/iostream:61:18: note:   'std::cout'
    extern ostream cout;  /// Linked to standard output
                   ^
 ```
@@ -334,7 +334,7 @@ Sometimes I say C, and sometimes I say C++. Since they are closely related, perh
 
 ## Variables (part 1)
 
-> A “thing” is a “think”, a unit of thought
+> A "thing" is a "think", a unit of thought
 > 
 > -- Alan Watts
 
@@ -2158,8 +2158,8 @@ int main() {
 The output is a compiler error.
 
 ```
-prog.cpp: In function ‘void addOne()’:
-prog.cpp:5:10: error: ‘i’ was not declared in this scope
+prog.cpp: In function 'void addOne()':
+prog.cpp:5:10: error: 'i' was not declared in this scope
   cout << i;
           ^
 ```

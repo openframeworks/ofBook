@@ -9,7 +9,7 @@ It is a very brief overview of dealing with data in OF. It overviews how to load
 
 **[mh: you can omit the second sentence from the title]**
 
-Computation has driven a huge increase in our capacity to collect, sort and store data. Yet our ability to perceive and understand this data remains limited by the human body’s sensory and cognitive abilities. Data visualisation aims to aid in the interpretation and presentation of data so it can be understood as information and potentially applied as knowledge. Spanning science, art, design, computation and (as some theorists argue) also philosophy, data visualisation is a way of presenting large and complex datasets graphically that can reveal trends and patterns that might otherwise remain invisible. 
+Computation has driven a huge increase in our capacity to collect, sort and store data. Yet our ability to perceive and understand this data remains limited by the human body's sensory and cognitive abilities. Data visualisation aims to aid in the interpretation and presentation of data so it can be understood as information and potentially applied as knowledge. Spanning science, art, design, computation and (as some theorists argue) also philosophy, data visualisation is a way of presenting large and complex datasets graphically that can reveal trends and patterns that might otherwise remain invisible. 
 
 **[mh: since you haven't defined data at this point, maybe you could start off with talking about recording observations rather than saying "data"]**
 
@@ -23,7 +23,7 @@ This chapter introduces some basic ways to work with data and visualise datasets
 
 ###1.2 Definition of terms and chapter structure 
 
-Data is produced from processes of observation. It is symbols or numerical interpretations that “represent the properties of objects, events or environments” (Ackoff, 1989). Information comes from understanding and analysing the context and descriptive qualities of the data, it relates to why the data was collected. Although these terms are often used loosely and interchangeably, in the field of information science data is generally thought of as a raw material from which information is produced through analytical processes.
+Data is produced from processes of observation. It is symbols or numerical interpretations that "represent the properties of objects, events or environments" (Ackoff, 1989). Information comes from understanding and analysing the context and descriptive qualities of the data, it relates to why the data was collected. Although these terms are often used loosely and interchangeably, in the field of information science data is generally thought of as a raw material from which information is produced through analytical processes.
 These definitions may need to be further refined.
 
 **[mh: the second to last sentence is quite nice, and I don't think these definitions need to be further refined.]**
@@ -33,7 +33,7 @@ These definitions may need to be further refined.
 Ben Fry is a data artist and the author of Visualizing Data (2008), a well-known text outlining data visualisation approaches for the Processing programming environment. This an excellent reference text for anyone who wishes to dive deeper into thinking and working with data visualisation techniques. In it, Fry describes seven stages for visualising data that are useful for structuring a general process of working with data. These steps are:
 
 * Acquire:  Obtain the data, whether from a file on a disk or a source over a network. 
-* Parse: Provide some structure for the data’s meaning, and order it into categories.
+* Parse: Provide some structure for the data's meaning, and order it into categories.
 * Filter: Remove all but the data of interest.
 * Mine: Apply methods from statistics or data mining as a way to discern patterns or place the data in mathematical context.
 * Represent: Choose a basic visual model, such as a bar graph, list, or tree.
@@ -59,7 +59,7 @@ Your dataset is likely to contain extra information not relevant to your visuali
 ###Mine
 As Fry (2008) outlines, the mining stage of visualising data involves applying statistical methods and math to your dataset to analyse patterns and trends within it. This might be as simple as identifying the minimum and maximum values so that you know the range of variation in your data. Depending on your data, you may wish to calculate an average or a median value.
 
-Once you have completed this step, it is now time to load and visualise your data in OF. We will return to the last three stages of Fry’s data visualisation steps following this example.
+Once you have completed this step, it is now time to load and visualise your data in OF. We will return to the last three stages of Fry's data visualisation steps following this example.
 
 ##2.1 Quick overview of some common file structures. tsv, csv, xml, json 
 Data is available and stored in specific file types that have particular structures and syntax. The following file types are some of the most common forms of structuring data.
@@ -78,7 +78,7 @@ Data is available and stored in specific file types that have particular structu
 
 Reading an XML file in OF requires the use of an OF addon called ofXmlSettings.  **[mh: your xml isn't being rendered in md]**
 
-* JSON: JSON stands for ‘javascript object notation’. This is a human readable file that is built on two structures, a collection of name/value pairs which can be realised in OF as a struct and an ordered list of values, realised as a vector. Json files also are parsed using an OF addon called ofxJSON, see example 2.XX for how to implement this. 
+* JSON: JSON stands for 'javascript object notation'. This is a human readable file that is built on two structures, a collection of name/value pairs which can be realised in OF as a struct and an ordered list of values, realised as a vector. Json files also are parsed using an OF addon called ofxJSON, see example 2.XX for how to implement this. 
 
 ##2.2 Loading and saving data 
 
@@ -88,7 +88,7 @@ FIGURE OF FILE STRUCTURE HERE
 ###2.2.2 ofBuffer
 
 Once you have done this you will load this file into your OF program using the ofBuffer class. ofBuffer will read the data into a buffer (a temporary storage for our data as we write code to restructure and process it).
-ofBuffer is what is known as a convenience class, and provides easy methods for reading from and writing to files. A convenience class simply means that this is a class that doesn’t do anything by itself but wraps or allows access to the functionality of a group of other classes.
+ofBuffer is what is known as a convenience class, and provides easy methods for reading from and writing to files. A convenience class simply means that this is a class that doesn't do anything by itself but wraps or allows access to the functionality of a group of other classes.
 
 ###2.2.2 Buffer Functions
 
@@ -96,7 +96,7 @@ ofBufferFromFile();  is a function that allows you to load your data file.
 	ofBuffer file = ofBufferFromFile("weather.tsv");
 	cout << buffer.getText();
 
-So here our weather tsv file has been loaded into a variable called ‘file’.
+So here our weather tsv file has been loaded into a variable called 'file'.
 
 ```cpp
 getFirstLine();
@@ -151,7 +151,7 @@ Vectors are also an important data structure for storing lists of data in OF. In
 
 Conversion functions enable the manipulation of each line of data in the buffer. They allow each line to be split and for parts of it to be placed into string or integer variables.
 ```cpp
-ofSplitString(line, “\t” );
+ofSplitString(line, "\t" );
 ```
 This function splits a string at a specified character. It has two arguments, the first is the name of the string to be split and the second is the character at which it is to be split. (\t indicates split at a tab)
 ```cpp
@@ -199,7 +199,7 @@ vector < weatherData > dataPoints;
 IN THE TESTAPP FILE:
 We load the data into the buffer and then run through each line of the buffer, placing the values into the struct called data.
 ```cpp
-ofBuffer buffer = ofBufferFromFile(“weather.csv");
+ofBuffer buffer = ofBufferFromFile("weather.csv");
    
 	string temp = buffer.getNextLine();
    
@@ -227,6 +227,6 @@ To finish this example here
 JSON validation tools like: http://jsonlint.com/ 
 
 ##References
-Fry, B. (2008). *Visualizing Data,* O’Reilly Media.
+Fry, B. (2008). *Visualizing Data,* O'Reilly Media.
 Ackoff, R. L. (1989). *From Data to Wisdom. Journal of Applied Systems Analysis,* 16, 3–9.
 

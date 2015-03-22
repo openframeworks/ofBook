@@ -9,11 +9,11 @@ This chapter will give you an introduction to working with openFrameworks outsid
 
 There are a number of ways of taking your openFrameworks app out of the frame of your own personal computer and getting it to interact with the outside world. Largely this involves some kind of communication from openFrameworks to whatever hardware you've decided to hook up to. The different types of computer based communications (or protocols) vary, but the most common is what's known as 'serial' communication, so called because each bit of data sent is transferred one after the other (as opposed to multiple bits being sent in parallel). 
 
-The first hardware that we’ll look at interfacing with is the excellent **Arduino** prototyping platform.  Arduino is, in its own words, an *“open-source electronics prototyping platform based on flexible, easy-to-use hardware and software… intended for artists, designers, hobbyists, and anyone interested in creating interactive objects or environments.*”  It’s easy to see why there’s a lot of overlap between communities of people interested in using openFrameworks and Arduino!  With Arduino, it’s quick to get your openFrameworks app hooked up to sensors (like light sensors, proximity sensors, or other methods of environmental input), actuators (like lights, motors, and other outputs), and real-time interaction.  You're free to move out of the realm of pixels and into the physical world.
+The first hardware that we'll look at interfacing with is the excellent **Arduino** prototyping platform.  Arduino is, in its own words, an *"open-source electronics prototyping platform based on flexible, easy-to-use hardware and software… intended for artists, designers, hobbyists, and anyone interested in creating interactive objects or environments.*"  It's easy to see why there's a lot of overlap between communities of people interested in using openFrameworks and Arduino!  With Arduino, it's quick to get your openFrameworks app hooked up to sensors (like light sensors, proximity sensors, or other methods of environmental input), actuators (like lights, motors, and other outputs), and real-time interaction.  You're free to move out of the realm of pixels and into the physical world.
 
 This chapter assumes that you have the Arduino IDE installed, in addition to the environment that you normally use for working with openFrameworks.  If not, you can download it from the Arduino website (arduino.cc) or the Arduino github (github.com/arduino).
 
-Additionally, following along with the examples in this chapter requires you to have a few pieces of basic hardware.  You’ll need an Arduino (any generation; an Uno, Leonardo, or Duemilanove will look the most like the graphics in this chapter but any USB-connected Arduino will work just fine) and the appropriate USB cable to connect to your computer.  
+Additionally, following along with the examples in this chapter requires you to have a few pieces of basic hardware.  You'll need an Arduino (any generation; an Uno, Leonardo, or Duemilanove will look the most like the graphics in this chapter but any USB-connected Arduino will work just fine) and the appropriate USB cable to connect to your computer.  
 
 [** Callout - The Leonardo differs from earlier boards in that it has built-in USB communication, eliminating the need for a secondary processor. This allows the Leonardo to appear to a connected computer as a mouse and keyboard, in addition to a virtual serial port. This makes setting up interactive applications a very simple procedure - in your openFrameworks app all you need to do is check for a key press! **]
 
@@ -22,7 +22,7 @@ Additionally, following along with the examples in this chapter requires you to 
 
 **SERIAL: ONE AFTER THE OTHER**
 
-Serial, in the most basic language sense, refers to things that come one after another; it’s a term often used to describe magazines, crimes, and television programs.  That meaning also applies when talking about serial data:  “serial communication” means that all information between two entities is being sent one piece at a time, following in a single stream.  One piece of data, or one bit, is just a binary piece of information: you’re either sending a 0 or a 1.  Using the terminology of digital electronics, these are frequently referred to as “high” and “low”; 0 is low (like turning a light off) and 1 is high (flipping it back on).  8 bits (for example the stream 01000001, which represents the letter A) are sometimes packaged together to create a single byte.
+Serial, in the most basic language sense, refers to things that come one after another; it's a term often used to describe magazines, crimes, and television programs.  That meaning also applies when talking about serial data:  "serial communication" means that all information between two entities is being sent one piece at a time, following in a single stream.  One piece of data, or one bit, is just a binary piece of information: you're either sending a 0 or a 1.  Using the terminology of digital electronics, these are frequently referred to as "high" and "low"; 0 is low (like turning a light off) and 1 is high (flipping it back on).  8 bits (for example the stream 01000001, which represents the letter A) are sometimes packaged together to create a single byte.
 
 Serial communication is actually a very broad topic and there are many serial protocols, including audio-visual protocols such as DMX (based on RS-485) and MIDI (serial at 31,250 bits per second) which we'll briefly cover in this chapter. The most common serial protocol is called RS-232 and computers used to be equipped with RS-232 serial ports (remember them?) but today they are rarely present, which is why serial communications involving a computer will typically require an RS-232 to USB adaptor (found on-line or at your local electronics store).
 
@@ -160,7 +160,7 @@ There's a good, heavily commented demonstration of this in the communications fo
 
 **USING FIRMATA AS A SERIAL PROTOCOL**
 
-Though it’s possible to navigate all serial communication manually, you’ll reach the limitations of what you’re able to do fairly quickly - as soon as you start wanting to address different devices or have multiple inputs, you’ll fall into a spiral of packet management and be much more prone to getting corrupt packets or inaccurate and scrambled data.  Rather than deal with this manually, it’s much simpler to use Firmata, an open source protocol for managing multiple Serial streams.
+Though it's possible to navigate all serial communication manually, you'll reach the limitations of what you're able to do fairly quickly - as soon as you start wanting to address different devices or have multiple inputs, you'll fall into a spiral of packet management and be much more prone to getting corrupt packets or inaccurate and scrambled data.  Rather than deal with this manually, it's much simpler to use Firmata, an open source protocol for managing multiple Serial streams.
 
 **OFARDUINO**
 
@@ -169,11 +169,11 @@ ofArduino, the built-in Arduino communication class for openFrameworks, is based
 **EXAMPLE**: Work through the same LED blink sketch as done previously with only Arduino, but with OF.
 
 
-The basic flow of what we’re going to do looks like this: (graphic missing)
+The basic flow of what we're going to do looks like this: (graphic missing)
 
 * Make an ofArduino object
 * Connect to the Arduino object at the correct port and baud rate
-* Set up an event listener to determine whether we’re successfully connected to the Arduino
+* Set up an event listener to determine whether we're successfully connected to the Arduino
 * Set up a pin to communicate with, and specify whether that communication is analog or digital
 * Poll for data from the serial port
 * Send HIGH and LOW (or analog value) arguments to that pin
@@ -200,7 +200,7 @@ In the setup() of testApp.cpp, use the ofArduino `connect()` function to set up 
 ard.connect("/dev/tty.usbserial-a700fiyD", 57600);
 ```
 
-**Set up an event listener to determine whether we’ve successfully connected to the Arduino**
+**Set up an event listener to determine whether we've successfully connected to the Arduino**
 
 If you're working only within the Arduino IDE, it's easy to have functions (like setting up the pin modes) called only once at the start of the program -- you can just call those functions from within `setup()` with the confidence that they'll always be run once when the device initializes.   When you're communicating with other software like openFrameworks, however, it's important to have a checking system to ensure that any setup functions only occur after a connection has been established.  openFrameworks uses the ofEventUtils class to make this easier, relying on the default `ofAddListener()` and `ofRemoveListener()` functions to check for the connection event.
 
@@ -220,7 +220,7 @@ void testApp::setupArduino(const int & version) {
 
 The argument that's being passed to the function, `const int & version`, is a default return from the listener we're about to set up, which always responds to a connection event by sending back an argument with the connected firmware version.  That can stay as it is.
 
-In the `setup()` of testApp.cpp, create a listener using `ofAddListener()`.  `ofAddListener()` is a function of ofEventUtils, which takes the arguments (event object, callback object, callback function).  When the event object happens (in this case, when the ofArduino EInitialized event is triggered), ofAddListener tells the callback object (here, a pointer to the testApp itself, referred to as “this”) to perform the setupArduino function that we created in the last step.
+In the `setup()` of testApp.cpp, create a listener using `ofAddListener()`.  `ofAddListener()` is a function of ofEventUtils, which takes the arguments (event object, callback object, callback function).  When the event object happens (in this case, when the ofArduino EInitialized event is triggered), ofAddListener tells the callback object (here, a pointer to the testApp itself, referred to as "this") to perform the setupArduino function that we created in the last step.
 
 ```cpp
 ofAddListener(myArduino.EInitialized, this, &testApp.setupArduino);
