@@ -247,14 +247,14 @@ for(int i=0; i<NBALLS; i++){
 As we've seen, each of the objects has a set of properties defined by its variables (position, speed, direction, and dimension). Another advantage of object oriented programming is that the objects created can have different values for each of their properties. For us to have better control of each object, we can have a method that allows us to define these characteristics and lets us access them. Because we want to do this right after creating the object and we're preparing it or setting it up, let's do this in the method called setup().  We will modify it to allow to pass in some of the objects properties, let's say its position and dimension. First let's do this in the Ball definitions file (*.h): 
 
 ```cpp
-void setup(float x, float y, int dim);
+void setup(float _x, float _y, int _dim);
 ```
 
 
 We'll need to update the Ball implementation (*.cpp) file to reflect these changes.
 
 ```cpp
-Ball::setup(float x, float y, int dim){
+Ball::setup(float _x, float _y, int _dim){
     x = _x;
     y = _y;
     dim = _dim;
@@ -272,7 +272,7 @@ Your Ball.cpp file should look like this by now:
 Ball::Ball(){
 };
 
-Ball::setup(float x, float y, int dim){
+Ball::setup(float _x, float _y, int _dim){
         x = _x;
         y = _y;
         dim = _dim;
@@ -339,47 +339,6 @@ myBall.draw();
 ```
 
 
-##Make even more Objects from your Class
-In this part of our OOPs! tutorial **[KL: I simplified two statements into one for concision.]** we'll demonstrate an automation process to create objects from our previously built class. We'll create more **[KL: "We'll create" works better than "we'll be creating." This is an example of verb tenses I've been changing. It's shorter and clearer.]**  objects by using arrays like we did in part 2.1 but this time we'll have to do some minor changes:
-
-```cpp
-Ball** myBall;   // an array of pointers of type Ball
-int nBalls;        //variable for the number of balls 
-```
-
-
-When creating an array of objects, instead of creating one pointer, we'll create an array of pointers. That's why we have two 'stars' and not one in the declarations(\*.h) file. We have created a pointer to an array of pointers. Let's see how we'll create and call these objects in the implementation (\*.cpp) file:
-
-```cpp
-nBalls = 5; // the number of ball objects we want to create
-
-myBall = new Ball*[nBalls]; // an array of pointers for the objects
-
-for (int i = 0; i < nBalls; i++){
-    float x = 20+(100*i); // using the value of the counter variable(i) to differentiate them
-    float y = 20+(100*i);
-    int dim = 10+(i*10);
-        
-    myBall[i] = new Ball(x,y,dim);  // create each object from the array
-}
-```
-
-
-similarly when we want to draw and update the objects we've created we'll need 'for' loops to run through the array.
-
-
-```cpp
-for (int i = 0; i < nBalls; i++){
-    myBall[i]->update();
-}
-
-
-for (int i = 0; i < nBalls; i++){
-    myBall[i]->draw();
-}
-```
-
-**[KL: Great tutorial so far. The organization works well. I'm eager to see the rest. The main thing so far would be focusing on concision in your writing.]**
 
 ##Make and delete as you wish - using vectors
 
