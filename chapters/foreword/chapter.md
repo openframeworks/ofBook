@@ -11,7 +11,9 @@ ACU as a library was great, but quite oriented to late 90s tech such as SGI mach
 
 In addition, I really wanted to share the code I was writing in my professional practice with my students.  I remember vividly having conversations with the administration of the department at Parsons where they said, "Art students don't want to learn C++."  I started teaching classes with OF in 2005, and I had students like Theo Watson, Christine Sugrue, and Evan Roth who created remarkably wild, experimental work with OF and that argument crumbled rapidly.   C++ provided low level access to the machine for things like computer vision, sound processing, access to hardware as well as access to a wide array of librarys that other folks had written.  It opened up doors to expressive uses of computation.
 
-Theo Watson, who was my student in 2005, joined the OF team to help produce an OSX version.  I'm not totally sure when our first official release was, but I remember vividly presenting openframeworks to the public in a sort of beta state at the 2006 OFFF festival where we had an advanced processing workshop held at Hangar. One of the participants of that workshop, Arturo Castro, joined the OF team to help produce a linux version.  Theo, Arturo and I have been joined by a huge group of people who use OF and help contribute to it. 
+Theo Watson, who was my student in 2005, joined the OF team to help produce an OSX version.  In the early days, we had openframeworks up online behind a cryptic "join the mailing list" front page and Theo and I would produce a single static HTML page with OF documentation.  It was not super public, but we had a small and dedicated group of people starting to use OF. I'm not totally sure when our first official release was, but I remember vividly presenting openframeworks to the public in a sort of beta state at the 2006 OFFF festival where we had an advanced processing workshop held at Hangar. One of the participants of that workshop, Arturo Castro, joined the OF team to help produce a linux version.  Theo, Arturo and I have been joined by a huge group of people who use OF and help contribute to it.  
+
+I think one of the most important things about code and any tool is joy, and I can't express how much joy I've had working with Theo and Arturo, joking about weird operating systems properties, having late night skype calls to figure out tough issues.  I think one of the strengths of OF is that it attracts really caring, helpful people who like to make things and share what they've learned. 
 
 In 2008, we won a prize at Ars Electronica and built a laboratory called OF lab which brought many of us who had been working remotely, face-to-face, often for the first time.  It was the first of many such world-wide meetings, labs, workshops, and developer conferences that have helped grow the community.  That year we also held an OF workshop in Japan at YCAM and discovered that there was a whole community of people across the world using this tool.  It was way more global then we had thought.  It was simultaneously heartening and also a little bit frightening, the realization that there were people around the world who were using this tool to make a living. 
 
@@ -38,11 +40,14 @@ A couple of notes,
 
 ## credits
 
-Countless thanks to Rachel Uwa for organizing this project, Tega Brain for helping edit it, Ishac Bertran and Andy Clymer for directing the design, and Arturo Castro, Christoph Buchner and Michael Hadley for developing the codebase for generating the book. **MORE MORE MORE MORE** 
+Countless thanks to Rachel Uwa for organizing this project, Tega Brain for helping edit it, Ishac Bertran and Andy Clymer for directing the design, and Arturo Castro, Christoph Buchner and Michael Hadley for developing the codebase for generating the book.   In addition, the following authors and editors have contributed to this book:  Rui Perria, Arturo Castro, Brannon Dorsey, Zach Lieberman, Kayla Lewis, Josh Nimoy, Phoenix Perry, Jane Friedhoff, Caitlin Morris, Pierre Proske, Golan Levin, Arturo Castro, Blair Neal, Michael Hadley, Abraham Avnisan, Christopher Baker, Lukasz Karluk, Omer Shapira, Mimi Son & Elliot Woods (Kimchi and Chips), Eva Schindling, Pierre Thirion, Joel Gethin Lewis, Roy Macdonald, Adam Carlucci, Christoph Buchner
 
-Editors: **MORE MORE MORE MORE**
+As well as countless others who have given feedback, submitted pull requests, offered advice, etc.  
 
-Chapter Authors: **MORE MORE MORE MORE**
+I think if there's one motto that openFrameworks (and open source generally) embodies, it is:
+
+*together we know more*
+
 
 
 
