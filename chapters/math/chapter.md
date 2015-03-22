@@ -68,7 +68,8 @@ However, when dealing with real world problems, programmers run into domains of 
 
 
 If we want to use the `lerp` function, we're aiming to get it to the range between 0 and 1. We can do that by knocking `inputMin` off the input `value` so that it starts at 0, then dividing by the size of the domain: $$x=\frac{\text{value}-\text{inputMin}}{\text{inputMax}-\text{inputMin}}$$
-Now that we've tamed the input domain to be between 0 and 1, we do the exact opposite to the output: `ofMap(value, inputMin, inputMax, outputMin, outputMax)` $=\frac{\text{value}-\text{inputMin}}{\text{inputMax}-\text{inputMin}}\cdot\left(\text{outputMax}-\text{outputMin}\right)+\text{outputMin}$
+Now that we've tamed the input domain to be between 0 and 1, we do the exact opposite to the output: `ofMap(value, inputMin, inputMax, outputMin, outputMax)`
+$$=\frac{\text{value}-\text{inputMin}}{\text{inputMax}-\text{inputMin}}\cdot\left(\text{outputMax}-\text{outputMin}\right)+\text{outputMin}$$
 
 Here's an example. Let's say we're given a dataset in Farenheit. Farenheit sets 0 to be the freezing point of brine and 100 to be the body temperature of a slightly ill British human (_duh?_). In order to do anything with that information, we first need to convert that to Celsius, which at least uses _The Same Damn Substance™_ for 0 and 100: Water. Now, we happen to know that water freezes at $32_{\text{f}}$ and boils at $212_{\text{f}}$, so we have the same exact objective range, now it's time to map. We'll use an array for this:
 
@@ -621,20 +622,21 @@ $$
 That last equality is due to trigonometric equalities.
 
 ###### 2D Rotation Matrices
-We now have all of the information we need to build a matrix that moves the vectors $\left\{ \left[\begin{array}{c}
+We now have all of the information we need to build a matrix that moves the vectors
+
+$$\left\{ \left[\begin{array}{c}
 1\\
 0
 \end{array}\right],\left[\begin{array}{c}
 0\\
 1
-\end{array}\right]\right\}$ to $\left\{ \left[\begin{array}{c}
+\end{array}\right]\right\} to \left\{ \left[\begin{array}{c}
 \cos\theta\\
 \sin\theta
 \end{array}\right],\left[\begin{array}{c}
 -\sin\theta\\
 \cos\theta
-\end{array}\right]\right\}$ :
-
+\end{array}\right]\right\} :$$
 $$R\left(\theta\right)= \begin{bmatrix} \cos \theta & -\sin \theta \\ \sin \theta & \cos \theta \end{bmatrix}$$
 
 Now, hold on. Check out what we did here: we placed the targets for the source vectors as _columns_ in the matrix, and then we took the resulting _rows_ of the matrix to do the rotation. Why did we do that? 
