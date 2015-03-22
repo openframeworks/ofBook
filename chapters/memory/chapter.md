@@ -175,7 +175,7 @@ As we see there's no value in that memory area yet. In other languages like proc
 
 ```java
 int i;
-println(i)
+println(i);
 ```
 
 is illegal, the compiler will tell us that we are trying to use a variable that is not initialized. In c++ though, that's perfectly legal but the contents of that variable are undefined. Most of the times we'll get 0 because the operating system will clear the memory before assigning it to our program, again, for security reasons. But if we are resuing memory that we had already assigned, then, that memory area will contain anything, and the results of our program will be undefined.
@@ -384,13 +384,13 @@ moveParticle(&p1);
 Now, here's something new, notice how to refer to the variables of a pointer to an object instead of using the dot, we use the `->` operator, everytime we want to access a variable in a pointer to an object instead of having to dereference it like:
 
 ```cpp
-(*p).x +=10
+(*p).x +=10;
 ```
 
 we can use the `->`
 
 ```cpp
-p->x += 10
+p->x += 10;
 ```
 
 So that solves our problem, using a pointer instead of passing a copy of the object, we are passing a reference to it, it's memory address, so the function will actually modify the original.
@@ -475,7 +475,7 @@ but trying to change the reference itself like in:
 ```cpp
 ofVec2f & pos = p.pos;
 pos.x = 5;
-pos = p2.pos  // error, a reference can only be asigned on it's declaration
+pos = p2.pos;  // error, a reference can only be asigned on it's declaration
 ```
 
 Also you can return a reference but depending on what that reference it's pointing to it can be a bad idea:
@@ -597,7 +597,7 @@ the same as with any other type, the previous declaration already reserves memor
 ```cpp
 int arr[10];
 arr[0] = 5;
-int a = arr[0]
+int a = arr[0];
 ```
 
 if we try to do:
@@ -638,10 +638,10 @@ cout << "a: " << a << " arr: " << arr << endl;
 will print the same value for both a and arr. So an array is just a pointer to a memory address with the only difference that, that memory address is the beginning of reserved memory enough to allocate, in our case, 10 ints. All those ints will be one after another, so when we do `arr[5]` we are just accessing the value that is in the memory address of our array + the size of 5 ints. If our array started in `0x0010`, and ints ocupy `4 bytes`, arr[5] would be `10 + 4 * 5 = 30` which in hexadecimal is `0x001E`. We can actually do this in our code:
 
 ```cpp
-int arr[10]
+int arr[10];
 arr[5] = 20;
-cout << "&arr[5]: " << &arr[5] << "arr+5: " << arr+5 << endl
-cout << "arr[5]: " << arr[5] << "*(arr+5): " << *(arr+5) << endl
+cout << "&arr[5]: " << &arr[5] << "arr+5: " << arr+5 << endl;
+cout << "arr[5]: " << arr[5] << "*(arr+5): " << *(arr+5) << endl;
 ```
 
 now, that's really weird and most of the time you won't use it, it's called pointer arithmetic. The first cout will print the address in memory of the int at position 5 in the array in the first case using the `&` operator to get the address of `arr[5]` and in the second directly by adding 5 to the first address of `arr` doing `arr+5`. In the second cout we print the value at that memory location, using `arr[5]` or dereferencing the address `arr+5` using the `*` operator.
@@ -649,19 +649,19 @@ now, that's really weird and most of the time you won't use it, it's called poin
 Note that when we add `5` to the adress of the array it's not bytes we are adding but the size in bytes of the type it contains, in this case `+5` actually means `+20` bytes, you can check it by doing:
 
 ```cpp
-int arr[10]
+int arr[10];
 arr[5] = 7;
-cout << "arr: " << arr << "arr+5: " << arr+5 << endl
+cout << "arr: " << arr << "arr+5: " << arr+5 << endl;
 ```
 
 and substracting the hexadecimal values in a calculator. If you try to substract them in your program like:
 
 
 ```cpp
-int arr[10]
+int arr[10];
 arr[5] = 20;
-cout << "arr: " << arr << "arr+5: " << arr+5 << endl
-cout << "(arr+5) - arr: " << (arr+5) - arr << endl
+cout << "arr: " << arr << "arr+5: " << arr+5 << endl;
+cout << "(arr+5) - arr: " << (arr+5) - arr << endl;
 ```
 
 You will end up with `5` again because as we've said pointer arithmetic works with the type size not bytes.
@@ -679,7 +679,7 @@ int arr[] = new int[10];
 or
 
 ```cpp
-int * arr = new int[10]
+int * arr = new int[10];
 ```
 
 As you can see this confirms what we've said before, an array variable is just a pointer, when we call `new int[10]` it allocates memory to store 10 integers and returns the memory address of the first byte of the first integer in the array, we can keep it in a pointer like in the second example or using `int arr[]` which declares an array of unkown size.
@@ -698,7 +698,7 @@ There's also some problems with the syntax of arrays, for example this:
 
 
 ```cpp
-int arr[10]
+int arr[10];
 int arrB[10];
 arrB = arr;
 ```
