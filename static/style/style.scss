@@ -377,6 +377,17 @@ a:active {
 .toc {
   width: 980px;
   margin-left: 0px;
+
+  .toc-wrapper {
+    column-count: 2;
+    -webkit-column-count: 2;
+    -moz-column-count: 2;
+
+    h3 {
+      margin-top: 0;
+    }
+  }
+
 }
 
 #help {
