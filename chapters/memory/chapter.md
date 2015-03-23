@@ -442,7 +442,7 @@ moveParticles(ps);
 
 Now we are passing a reference to the original object but instead of having to use pointer syntax we can still use it as if it was a normal object.
 
-> Advanced note: Some times we want to use references to avoid copies but still be sure that the function we pass our object to, won't modify it's contents, in that case it's recomendable to use `const` like:
+> Advanced note: Sometimes we want to use references to avoid copies but still be sure that the function we pass our object to won't modify it's contents, in that case it's recommendable to use the `const` keyword like:
 
 ```
     ofVec2f averagePosition(const vector<Particle> & ps){
@@ -457,9 +457,9 @@ Now we are passing a reference to the original object but instead of having to u
     ofVec2f averagePos = averagePosition(ps);
 
 ```
-> `const` makes it imposible to modify the variable, even if it's a reference. From a code readability standpoint, it and tells programmers using a function that the data passed into it woun't be changed. It also lets programmers modifying that function know that the particle system shouldn't be modified.
+> `const` makes it impossible to modify the variable, even if it's a reference. From a code readability standpoint, it tells programmers using a function that the data passed into it won't be changed. It also lets programmers modifying that function know that the particle system shouldn't be modified.
 
-**[BD: I would maybe move this whole Advanced note below mentioning it only once you have fully explained references]**
+**[BD: I would maybe move this Advanced note below mentioning it only once you have fully explained references]**
 
 Outside of parameters, references have a couple of special characteristics. First, we can't modify the content of a reference once it's created. For example we can do:
 
@@ -493,23 +493,23 @@ ofVec2f & averagePosition(const vector<Particle> & ps){
 }
 ```
 
-Will actually compile but will probably result in a segmentation fault at some point or even just work but we'll get weird values when calling this function. The problem is that we are creating the variable `average` in the stack so when the function returns it'll be *deleted* from memory, the reference we return will be pointing to a memory area that is not reserved anymore for average and as soon as it gets overwritten we'll get invalid values or a pointer to a memory area that doesn't belong to our program anymore.
+The above example will actually compile but will probably result in a segmentation fault at some point or we'll get weird values when calling this function. The problem is that we are creating the variable `average` in the stack and so when the function returns, `average` will be *deleted* from memory, and the reference we return will be pointing to a memory area that is no longer reserved for `average`. As soon as `average` falls out of scope we'll get invalid values or a pointer to a memory area that doesn't belong to our program anymore.
 
-This is one of the most annoying problems in C++. It's called dangling pointers or in this case references, and it's caused when we have a pointer or a reference that points to a memory area that is somehow freed.
+This is one of the most annoying problems in C++. It's called dangling pointers, or in this case dangling references, and it's caused when we have a pointer or a reference that points to a memory area that is already freed.
 
-More modern languages solve this with different strategies, for example Java won't let this happen because objects are only deleted once the last reference to them goes out of scope. It uses something called a garbage collector that, from time to time, goes through the memory looking for objects which have no more references pointing to them, and deletes them. This solves the problem but makes it hard to know when objects are going to get truly deleted. Latest versions of C++, and more modern languages, try to solve this using new kinds of pointers that define ownership of the object. We'll talk about it in the later section of this chapter, smart pointers.
+More modern languages solve this with different strategies, for example Java won't let this happen because objects are only deleted once the last reference to them goes out of scope. It uses something called a garbage collector that, from time to time, goes through the memory looking for objects which have no more references pointing to them, and deletes them. This solves the problem but makes it hard to know when objects are going to get truly deleted. Latest versions of C++, and more modern languages, try to solve this using new kinds of pointers that define ownership of the object. We'll talk about this soon in the Smart Pointers section of this chapter.
 
 ## Variables in the heap ##
 
-Now that we now the syntax and semantics of pointers, lets see how to use the heap. The heap is an area of memory common to all of our application. Any function can create variables in this space and share it with others, to use it we need to use the `new` keyword:
+Now that we know the syntax and semantics of pointers, lets see how to use the heap. The heap is an area of memory common to our entire application. Any function can create variables in this space and share it with others, to use it we need to use the `new` keyword:
 
 ```cpp
 Particle * p1 = new Particle;
 ```
 
-If you know Processing or Java, that looks a little bit like it, right? Indeed, this is exactly the same as a Java object: when we use `new` we are creating that variable in the heap instead of the stack. `new` returns  a pointer to a memory address in the heap, and in C++, we explicitly need to specify that the variable `p1` is a pointer by using the `*` in the declaration.
+If you know Processing or Java, that looks similar doesn't it? Indeed, this is exactly the same as a Java object: when we use `new` we are creating that variable in the heap instead of the stack. `new` returns a pointer to a memory address in the heap, and in C++, we explicitly need to specify that the variable `p1` is a pointer by using the `*` in the declaration.
 
-To access the variables or functions of a pointer to an object, as we've seen before, we use the `->` operator so we would do:
+To access the methods or properties of a pointer to an object, as we've seen before, we use the `->` operator. So we would do:
 
 ```cpp
 Particle * p1 = new Particle;
@@ -527,10 +527,10 @@ A pointer, like any variable, can be declared without initializing it. Be carefu
 
 ```cpp
 Particle * p1;
-p1->setup() // this will compile but fail when executing the application
+p1->setup() // this will compile but probably fail with a segmentation fault when executing the application
 ```
 
-We can imagine the heap as some kind of global memory as opposed to the stack being local memory. In the stack, only the block that owns a variable can access it, while things created in the heap outlive the scope in which they were created. Any function can access a variable stored in the heap as long as they have a reference (a pointer) to it. For example:
+We can imagine the heap as some kind of global memory as opposed to the stack being local memory. In the stack, only the block that owns a variable can access it. Variables created in the heap outlive the block scope in which they were created. Any function can access a variable stored in the heap as long as they have a reference (or a pointer) to it. For example:
 
 ```cpp
 Particle * createParticle(){
@@ -547,9 +547,9 @@ Particle * p = createParticle();
 modifyParticle(p);
 ```
 
-`createParticle` created a new `Particle` in the heap, so even when createParticle finishes, that `Particle` still exists. ~~To use it outside of the function, pass a reference to it to other functions...~~ **[BD: I don't think that you need this]**
+`createParticle` created a new `Particle` in the heap, so even when `createParticle` finishes, that `Particle` still exists. ~~To use it outside of the function, pass a reference to it to other functions...~~ **[BD: I don't think that you need this]**
 
-So how can we say that we don't want to use that variable anymore? we use the keyword `delete`:
+So how can we say that we don't want to use a pointer anymore? We use the keyword `delete`:
 
 ```cpp
 Particle * p1 = new Particle;
@@ -558,7 +558,7 @@ p1->setup();
 delete p1;
 ```
 
-Using `delete` is **very** important when using the heap. If we fail to do this we'll get with what is called a memory leak, memory that is not referenced by anyone **[BD: define "anyone"]** but continues to leave in the heap, making our application use more and more memory over time until it fills all of the available memory in our computer:
+Using `delete` is **very** important when using the heap. If we fail to do this we'll get with what is called a memory leak, memory that is not referenced by anyone **[BD: define "anyone"]** but continues to live in the heap, making our application use more and more memory over time until it fills all of the available memory in our computer:
 
 ```cpp
 void ofApp::draw(){
@@ -568,7 +568,7 @@ void ofApp::draw(){
 }
 ```
 
-Every time we call `draw`, it'll create a new particle. Once each `draw` call finishes, we loose the reference `*p1` to it but the memory we allocated using `new` is not freed when the function call ends so our program will slowly use more and more memory. You can watch this happen using the system monitor.
+Every time we call `draw`, we'll create a new particle. Once each `draw` call finishes, we loose the reference `*p1` to it but the memory we allocated using `new` is not freed when the function call ends so our program will slowly use more and more memory. You can watch this happen using the system monitor.
 
 As we've mentioned before, the stack memory is limited, so sometimes we need to use the heap. Trying to create 1 million particles in the stack will probably cause a stack overflow. In general, though, most of the time in C++ we don't need to use the heap, at least not directly. Classes like vector, ofPixels and other memory structures allow us to use heap memory but still have stack semantics, for example this:
 
@@ -584,17 +584,17 @@ void ofApp::draw(){
 }
 ```
 
-is actually using heap memory since the vector is internally using that, but the vector destructor will take care of freeing that memory for us as soon as the particles variable goes out of scope, when the current call to draw finishes.
+is actually using heap memory since the vector is internally allocating its memory on the heap, but the vector destructor will take care of freeing that memory for us as soon as the particles variable goes out of scope, in this case when the current call to draw finishes.
 
 ## Memory structures, arrays and vectors ##
 
-Arrays are the most simple way in C++ to create collections of objects. Just like any other C++ variable type, they can also be created in the stack or in the heap. Arrays in the stack have a limitation though, they need to have a predifined size that needs to be specified in it's declaration and can't change afterwards:
+Arrays are the simplest way to create collections of objects in C++. Just like any other C++ variable type, they can also be created in the stack or in the heap. Arrays in the stack have a limitation though, they need to have a predefined size that needs to be specified in their declaration. This size can't change once it has been declared:
 
 ```cpp
 int arr[10];
 ```
 
-The previous declaration reserves memory for 10 ints, we don't need to use new, and that memory will be uninitialized. To access them, as you might know from previous chapters, you can just do:
+The previous declaration reserves memory for 10 `int`s. We don't need to use new, and that memory will be uninitialized. To access these ints, as you might know from previous chapters, you can just do:
 
 ```cpp
 int arr[10];
@@ -609,27 +609,27 @@ int arr[10];
 int a = arr[5];
 ```
 
-the value of a will be undefined since the memory in the array is not initialized to any value when it's created. Also if we try to do:
+the value of `a` will be undefined since the memory in the array is not initialized to a default value when it's created. Also if we try to do:
 
 ```cpp
 int arr[10];
 int a = arr[25];
 ```
 
-Our application will probably crash if the memory address at arr + 25 is outside the memory that the operating system has assigned to our application.
+Our application will probably crash if the memory address at `arr + 25` is outside the memory that the operating system has assigned to our application.
 
-We've just said arr + 25? what does that mean? As we've seen before, a variable is just some place in memory. We can get it's memory address, which ~~is~~ holds the first byte that is assigned to that variable in memory **[BD: The memory address is not literal first byte of the variable assigned there. Rather it is hex of where the first byte is stored. Right?]**. Arrays are pretty much the same, for example, since we know that an int occupies 4 bytes in memory, an array of 10 ints will occupy 40 bytes and those bytes are contiguous:
+We've just said `arr + 25`? what does that mean? As we've seen before, a variable is just some place in memory. We can get it's memory address, which holds the first byte that is assigned to that variable in memory **[BD: The memory address is not literal first byte of the variable assigned there. Rather it is hex of where the first byte is stored. Right?]**. Arrays are pretty much the same. For example, since we know that an `int` occupies 4 bytes in memory, an array of 10 `int`s will occupy 40 bytes and those bytes are contiguous:
 
 ![Array](images/array.svg "")
 
-Remember that memory addresses are expressed as hexadecimal, so `40 == 0x0028`. Now, to get the address of an array, as with other variables, we might want to use the `&` operator and indeed we can do it like:
+Remember that memory addresses are expressed as hexadecimal numbers, so `40 == 0x0028`. Now, to get the address of an array, as with other variables, we might want to use the `&` operator and indeed we can do it like this:
 
 ```cpp
 int arr[0];
 int * a = &arr[0];
 ```
 
-That gives us the address of the first element of the array which is indeed that of the array, but with arrays, the same variable is actually a pointer itself:
+That gives us the address of the first element of the array, but with arrays, the same variable is actually a pointer itself: **[BD: This is a bit confusing...]**
 
 ```cpp
 int arr[10];
@@ -637,7 +637,7 @@ int * a = &arr[0];
 cout << "a: " << a << " arr: " << arr << endl;
 ```
 
-This will print the same value for both a and arr. So an array is just a pointer to a memory address with the only difference being, that the memory address is the beginning of reserved memory **[BD: Reserved memory section?]** enough to allocate, in our case, 10 ints. All those ints will be one after another, so when we do `arr[5]`, we are just accessing the value that is in the memory address of our array + the size of 5 ints. If our array started in the memory address `0x0010`, and ints occupy `4 bytes`, arr[5] would be `10 + 4 * 5 = 30` which in hexadecimal is `0x001E`. We can actually do this in our code:
+This will print the same value for both `a` and `arr`. So an array is just a pointer to a memory address with the only difference being, that the memory address is the beginning of reserved memory **[BD: Reserved memory section?]** enough to allocate, in our case, `10` `int`s. All those `int`s will be one after another, so when we do `arr[5]`, we are just accessing the value that is in the memory address of our array + the size that `5` `int`s take up in memory. If our array started in the memory address `0x0010`, and `int`s occupy `4 bytes` each, `arr[5]` would be `10 + 4 * 5 = 30` which in hexadecimal is `0x001E`. We can actually do this in our code:
 
 ```cpp
 int arr[10];
@@ -648,11 +648,11 @@ cout << "arr[5]: " << arr[5] << "*(arr+5): " << *(arr+5) << endl;
 
 **[BD: I think a sample console output would be nice here]**
 
-That's called pointer arithmetic. Its really weird and most of the time you won't use it. The first cout will print the address in memory of the int at position 5 in the array. The first case uses the `&` operator to get the address of `arr[5]` and the second directly adds 5 to the first address of `arr` doing `arr+5`. In the second cout we print the value at that memory location, using `arr[5]` or dereferencing the address `arr+5` using the `*` operator.
+That's called pointer arithmetic. Its really weird and most of the time you won't use it. The first `cout` will print the address in memory of the `int` at position `5` in the array. The first case uses the `&` operator to get the address of `arr[5]` and the second directly adds `5` to the first address of `arr` with `arr+5`. In the second `cout` statement we print the value at that memory location, using `arr[5]` or dereferencing the address `arr+5` using the `*` operator.
 
-**[BD: It is worth explicitly mentioning, or if you showed the example cout output like I mentioned above, that each cout statement prints the same pair of values]**
+**[BD: It is worth explicitly mentioning, unless you showed the example `cout` output like I mentioned above, that each `cout` statement prints the same pair of values]**
 
-Note that when we add `5` to the address of the array, it's not bytes we are adding, but the size in bytes of the type it contains. In this case `+5` actually means `+20` bytes. We can check it by doing:
+Note that when we add `5` to the address of the array, it's not bytes we are adding, but five of the size in bytes of the type it contains. In this case `+5` actually means `+20` bytes. We can check it by doing:
 
 ```cpp
 int arr[10];
@@ -671,7 +671,7 @@ cout << "(arr+5) - arr: " << (arr+5) - arr << endl;
 
 You will end up with `5` again because as we've said pointer arithmetic works with the type size not bytes.
 
-The syntax of pointer arithmetics is kind of complicated, and the idea of this part wasn't really to show pointer arithmetics itself but how arrays are just a bunch of values one after another in memory. Don't worry if you haven't fully understood the syntax, it is probably something you won't need to use. However, it is important to remember that an array variable acts as a pointer so when we refer to it without using the `[]` operator we end up with a memory address instead of the values it contains.
+The syntax of pointer arithmetics is kind of complicated, and the idea of this section wasn't really to show pointer arithmetics itself but how arrays are just a bunch of values placed contiguously one after another in memory. Don't worry if you haven't fully understood the syntax, it is probably something you won't need to use. However, it is important to remember that an array variable acts as a pointer so when we refer to it without using the `[]` operator we end up with a memory address instead of the values it contains.
 
 The arrays we've created until now were created in the stack. Be careful when using big arrays like this because it might be problematic.
 
@@ -689,7 +689,7 @@ int * arr = new int[10];
 
 As you can see this confirms what we've said before, an array variable is just a pointer. When we call `new int[10]` it allocates memory to store 10 integers and returns the memory address of the first byte of the first integer in the array. We then keep that address in a pointer like in the second example or use `int arr[]` which declares an array of unknown size.
 
-Like other variables created in the heap, we'll need to delete this array manually when we are done with it. We use the `delete` key word to deallocate that memory, in the case of arrays in the heap the syntax is slightly special:
+Like other variables created in the heap, we'll need to delete this array manually when we are done with it. We use the `delete` key word to deallocate that memory. In the case of arrays in the heap the syntax is slightly special:
 
 ```cpp
 int arr[] = new int[10];
@@ -717,15 +717,15 @@ int arrB[] = new int[10];
 arrB = arr;
 ```
 
-will actually compile, but as with other variables, we are not copying the values that arr points to into arrB, but instead its memory address. In this case, we'll end up with 2 pointers pointing to the same memory location: the one that we created when creating arr and loose memory that we allocated when initializing arrB **[BD: This sentence is confusing]**. Again, we have a memory leak as the memory allocated when doing `int arrB[] = new int[10];` is no longer referenced by any variable so we can't delete it. There are some **C** (not C++) functions for copying arrays like `memcpy` but their syntax is kind of complex. For the above reasons it is recomended to use vectors when working in C++.
+will actually compile, but as with other variables, we are not copying the values that `arr` points to into `arrB`, but instead its memory address. In this case, we'll end up with 2 pointers pointing to the same memory location: the one that we created when creating `arr` and loose memory that we allocated when initializing `arrB` **[BD: This sentence is confusing]**. Again, we have a memory leak as the memory allocated when doing `int arrB[] = new int[10];` is no longer referenced by any variable so we can't delete it. There are some **C** (not C++) functions for copying arrays like `memcpy` but their syntax is kind of complex. For the above reasons it is recommended to use vectors when working in C++.
 
-C++ vectors are very similar to arrays, indeed their layout in memory is the same as an array. They contain a bunch of values contiguous in memory and always allocated in the heap. The main difference is that we get a nicer syntax and [*stack semantics*](http://msdn.microsoft.com/en-us/library/ms177191.aspx). To allocate a vector to contain 10 ints we can do:
+C++ vectors are very similar to arrays, indeed their layout in memory is the same as an array. They contain a bunch of values contiguous in memory and always allocated in the heap. The main difference is that we get a nicer syntax and [*stack semantics*](http://msdn.microsoft.com/en-us/library/ms177191.aspx). To allocate a vector to contain `10` `int`s we can do:
 
 ```cpp
 vector<int> vec(10);
 ```
 
-We can even give an initial value to those 10 ints in the initialization like:
+We can even give an initial value to those `10` `int`s during their initialization like:
 
 ```cpp
 vector<int> vec(10,0);
@@ -738,7 +738,7 @@ vector<int> vec(10,0);
 vector<int> vecB = vec;
 ```
 
-This will create a copy of the contents of vec in vecB. Also, even if the memory that the vector uses is in the heap, when a vector goes out of scope (when the block in which it was declared ends), the vector is destroyed because the vector itself is created in the stack. Going out of scope, triggers it's destructor that takes care of deleting the memory that it has created in the heap:
+This will create a copy of the contents of `vec` into `vecB`. Also, even if the memory that the vector uses is in the heap, when a vector goes out of scope (when the block in which it was declared ends), the vector is destroyed because the vector itself is created in the stack. Going out of scope, triggers it's destructor that takes care of deleting the memory that it has created in the heap:
 
 ```cpp
 void ofApp::update(){
@@ -747,16 +747,17 @@ void ofApp::update(){
 }
 ```
 
-That makes vectors easier to use than arrays since they have easier syntax and we don't need to worry about deleting them, ending up with dangling pointers, or memory leaks...
+That makes vectors easier to use than arrays since they have simpler syntax and we don't need to worry about forgetting to delete them and ending up with dangling pointers, or memory leaks...
 
-Vectors have some more features but using them properly might be tricky mostly if we want to optimize for performance or use them in multithreaded applications, but that's beyond the scope of this chapter. You can find some tutorials about vectors on the openFrameworks site:
+Vectors have some more features and using them properly might be tricky mostly if we want to optimize for performance or use them in multithreaded applications, but that's beyond the scope of this chapter. You can find some tutorials about vectors on the openFrameworks site:
+
 - [Vectors Basics](http://openframeworks.cc/tutorials/c++%20concepts/001_stl_vectors_basic.html)
 - [std::vector](http://arturocastro.net/blog/2011/10/28/stl::vector/) (advanced concepts)
 
 
 ## Other memory structures, lists and maps ##
 
-Having objects in memory ordered one after another is what we want most of the time. The access is really fast no matter if we access each element sequentially or one randomly. Since a vector is just an array, accessing position 20 just means that internally it needs to get the memory address of the first position and add 20 to it. In some cases though, vectors are not the most optimal memory structure. For example, if we frequently want to add or remove elements in the middle of the vector, and we imagine the vector as a memory strip, that means that we need to move the rest of the vector over one position to the right and then insert the new element in the free location. In memory there's no such thing as move, moving contiguous memory means copying it and as we've said before, copying memory is a relatively slow operation.
+Having objects in memory ordered one after another is what we want most of the time. The access is really fast no matter if we access each element sequentially or one randomly. Since a vector is just an array, accessing position 20 just means that internally it needs to get the memory address of the first position and add 20 + the length of the data type to it. In some cases though, vectors are not the most optimal memory structure. For example, if we frequently want to add or remove elements in the middle of the vector, and we imagine the vector as a memory strip, that means that we need to move the rest of the vector over one position to the right and then insert the new element in the free location. In memory there's no such thing as move, moving contiguous memory means copying it and as we've said before, copying memory is a relatively slow operation.
 
 ![Vector inserting](images/vector_inserting.svg "")
 
@@ -766,9 +767,9 @@ Other memory structures exist to solve that problems like this. For example, in 
 
 ![List](images/list.svg "")
 
-Another problem of lists comes in trying to access an element in the middle of the list (what is called random access). This is slow since we always have to go through the entire list until we arrive to the desired element. Lists are used then, when we seldom need to randomly access a position of it and we need to add or remove elements in the middle frequently. For the specifics of the syntax of a list you can check the [C++ documentation on lists](http://www.cplusplus.com/reference/list/list/).
+Another problem with lists comes in trying to access an element in the middle of the list (what is called random access). This is slow since we always have to go through the entire list until we arrive to the desired element. Lists are used then, when we seldom need to randomly access a position of it and we need to add or remove elements in the middle frequently. For the specifics of the syntax of a list you can refer to the [C++ documentation on lists](http://www.cplusplus.com/reference/list/list/).
 
-There's several memory structures in the C++ standard library or other C++ libraries, apart from vectors and lists we are only going to breifly see maps.
+There are several memory structures in the C++ standard library or other C++ libraries, apart from vectors and lists we are only going to briefly discuss maps.
 
 Sometimes we don't want to access things by their position or have an ordered list of elements, but instead have something like an index or dictionary of elements that we can access by some key. That's what a map is. In a map we can store key => value pairs and lookup a value by it's key. For example, let's say we have a collection of objects which have a name. If that name is unique for all the objects, we can store them in a map to be able to look for them by their name:
 
@@ -782,7 +783,7 @@ o1.name = "object1";
 objectsMap[o1.name] = o1;
 ```
 
-Later on we can look for that object using it's name like:
+Later on we can look up that object using it's name like:
 
 ```cpp
 objectsMap["object1"].doSomething();
@@ -801,11 +802,11 @@ You can find the complete reference in the [C++ documentation for maps](http://w
 
 ## Smart pointers ##
 
-As we've said before, traditional C pointers, also now called *raw pointers*, are sometimes problematic. The most frequent problems are dangling pointers (pointers that were once probably valid but now point to an invalid memory location), trying to dereference a `NULL` pointer, and possible memory leaks if we fail to deallocate memory before loosing the reference to that memory address.
+As we've said before, traditional C pointers, also now called *raw pointers*, are sometimes problematic. The most frequent problems are dangling pointers (pointers that were once probably valid but now point to an invalid memory location), trying to dereference a `NULL` pointer, and possible memory leaks if we fail to deallocate memory before loosing the reference to that memory address when it goes out of scope.
 
-Smart pointers try to solve that by adding what we've been calling stack semantics to memory allocation. The correct term for this is RAII: [Resource Acquisition Is Initialization](http://en.wikipedia.org/wiki/Resource_Acquisition_Is_Initialization), and it means that the creation of an object in the stack allocates the resources that it'll use later. When it's destructor is called because the variable goes out of scope, the destructor of the object is triggered which takes care of deallocating all of the used resources. There's some more implications to RAII, but for this chapter, this is what matters to us most.
+Smart pointers try to solve that by adding what we've been calling stack semantics to memory allocation. The correct term for this is RAII: [Resource Acquisition Is Initialization](http://en.wikipedia.org/wiki/Resource_Acquisition_Is_Initialization), and it means that the creation of an object in the stack allocates the resources that it'll use later. When it's destructor is called because the variable goes out of scope, the destructor of the object is triggered which takes care of deallocating all of the used resources. There's some more implications to RAII, but for this chapter, this is what matters to us most. **[BD: Here it would be quite helpful to give an example of RAII using a class with a constructor that allocates heap memory and a destructor that frees that memory.]**
 
-Smart pointers use this technique to avoid all of the problems that we've seen with raw pointers. They do this by defining better who is the owner of some allocated memory or object. Until now, we've seen how things allocated in the stack belong to the function or block that creates them. We can return a copy of them (or in c++11 or later, move them) out of a function as a return value but their ownership is always clear.
+Smart pointers use this technique to avoid all of the problems that we've seen with raw pointers. They do this by defining better who **[Again "who" is somewhat ambiguous here]** is the owner of some allocated memory or object. Until now, we've seen how things allocated in the stack belong to the function or block that creates them. We can return a copy of them (or in c++11 or later, move them) out of a function as a return value but their ownership is always clear.
 
 With heap memory though, ownership becomes way more fuzzy, something might create a variable in the heap like:
 
@@ -817,7 +818,7 @@ int * createFive(){
 }
 ```
 
-Now, when someone calls that function, what owns `new int`?  Things can get even more complicated. What if we pass a pointer to that memory to another function or even an object?
+Now, when someone calls that function, what owns the data created with `new int`?  Things can get even more complicated. What if we pass a pointer to that memory to another function or even an object?
 
 
 ```cpp
@@ -832,9 +833,9 @@ void ofApp::setup(){
 }
 ```
 
-**[BD: Maybe it would be more wise to say "what owns" rather than "who owns". I left everything as "who" but I think it could be a bit confusing for the reader.]**
+**[BD: Maybe it would be more wise to say "what owns" rather than "who owns". I left everything as "who" but I think it could be a bit confusing for the reader. Unless "who owns" is a standard I am unfamiliar with.]**
 
-Who is now the owner of that memory? ofApp? object? The ownership defines. among other things, who is responsible for deleting that memory when it's not used anymore. Now both ofApp and object have a reference to it, if ofApp deletes it before object is done with it, object might try to access it and crash the application, or the other way around. In this case it seems logical that ofApp takes care of deleting it since it knows about both object and the pointer to int a, but what if we change the example to:
+Who is now the owner of that memory? `ofApp`? `object`? The ownership defines, among other things, who is responsible for deleting that memory when it's no longer used. Now both `ofApp` and `object` have a reference to it, if `ofApp` deletes it before `object` is done with it, `object` might try to access freed memory and crash the application, or the other way around. In this case it seems logical that `ofApp` takes care of deleting it since it knows about both object and the pointer to `int a`, but what if we change the example to:
 
 
 ```cpp
@@ -863,15 +864,15 @@ void ofApp::setup(){
 ```
 
 
-now ofApp doesn't know about the allocated memory, but both cases are possible, so we actually need to know details of the implementation of object to know if we need to keep a reference of that variable to destroy it later or not. That, among other things, breaks encapsulation (you might know from chapter 1). We shouldn't need to know how an object works internally to be able to use it. This makes the logic of our code really complicated and error prone.
+now `ofApp` doesn't know about the allocated memory, but both cases are possible, so we actually need to know details of the implementation of `object` to know if we need to keep a reference of that variable to destroy it later or not. That, among other things, breaks encapsulation (this may be familiar to you from chapter 1). We shouldn't need to know how an object works internally to be able to use it. This makes the logic of our code really complicated and error prone.
 
-Smart pointers solve this by clearly defining who owns and object and by automatically deleting the allocated memory when the owner is destroyed **[BD: What does this mean?]**. Sometimes we need to share an object among several owners. For those cases we have a special type of smart pointers called shared pointers that defined a shared ownership and free the allocated memory only when all the owners cease to use the variable.
+Smart pointers solve this by clearly defining who owns an object (pointer) and by automatically deleting the allocated memory when the owner is destroyed. Sometimes we need to share an object among several owners. For those cases we have a special type of smart pointers called shared pointers that defined a shared ownership and free the allocated memory only when all the owners cease to use the variable.
 
-We are only going to see this briefly as there's lots of examples on the web about how to use smart pointers and reference to their syntax. The most important thing is to understand the problems they solve and that they work by defining a pointer's ownership clearly compared to raw pointers.
+We are only going to see this briefly as there are lots of examples on the web about how to use smart pointers and reference to their syntax. The most important thing is to understand the problems they solve and that they work by defining a pointer's ownership clearly compared to raw pointers.
 
 ### unique_ptr
 
-A unique_ptr, as it's name suggests, is a pointer that defines a unique ownership for an object. We can move it around and the object or function that has it at any given point is the owner of it. No more than one reference at the same time is valid and when it goes out of scope it automatically deletes any memory that we might have allocated.
+A unique_ptr, as its name suggests, is a pointer that defines a unique ownership for an object. We can move it around and the object or function that has it at any given point is the owner of it. No more than one reference at the same time is valid and when it goes out of scope it automatically deletes any memory that we might have allocated.
 
 To allocate memory using a unique_ptr we do:
 
@@ -882,7 +883,7 @@ void ofApp::setup(){
 }
 ```
 
-As you can see, once it's created it's syntax is the same as a raw pointer. We can use the `*` operator to dereference it, access or modify it's value. If we are working with objects like:
+As you can see, once its created its syntax is the same as a raw pointer. We can use the `*` operator to dereference it, access it, or modify its value. If we are working with objects like:
 
 ```cpp
 void ofApp::setup(){
@@ -893,7 +894,7 @@ void ofApp::setup(){
 
 we can also use the `->` to access it's member variables and functions.
 
-When the function goes out of scope, being a unique_ptr an object, it's destructor will get called, which internally will call `delete` on the allocated memory so we don't need to call delete on unique_ptr at all.
+When the function goes out of scope, being a unique_ptr to an object, its destructor will get called, which internally will call `delete` on the allocated memory so we don't need to call `delete` on a unique_ptr at all.
 
 Now let's say we want to move a unique_ptr into a vector:
 
@@ -902,7 +903,7 @@ void ofApp::setup(){
 	unique_ptr<int> a(new int);
 	*a = 5;
 
-	vector<unique_ptr<int>> v;
+	vector<unique_ptr<int> > v;
 	v.push_back(a);  // error
 }
 ```
@@ -914,7 +915,7 @@ void ofApp::setup(){
 	unique_ptr<int> a(new int);
 	*a = 5;
 
-	vector<unique_ptr<int>> v;
+	vector<unique_ptr<int> > v;
 	v.push_back(move(a));
 }
 ```
@@ -934,12 +935,12 @@ void ofApp::setup(){
 }
 ```
 
-The compiler won't fail there but if we try to execute the application it'll crash since `a` is no longer owned by ofApp::setup. Having to explicitly use `move` tries to solve that problem by making the syntax clearer, however after using move, we can't use that variable anymore except through the vector. More modern langauages like [Rust](http://www.rust-lang.org/) completely solve this by making the compiler detect these kind of uses of moved variables and producing a compiler error. This will probably be solved at some point in C++, but for now you need to be careful to not use a moved variable.
+The compiler won't fail there but if we try to execute the application it'll crash since `a` is no longer owned by ofApp::setup. Having to explicitly use `move` tries to solve that problem by making the syntax clearer, however after using move, we can't use that variable anymore except through the vector. More modern languages like [Rust](http://www.rust-lang.org/) completely solve this by making the compiler detect these kind of uses of moved variables and producing a compiler error. This will probably be solved at some point in C++, but for now you need to be careful to not use a moved variable.
 
 
 ### shared_ptr
 
-As we've seen before, sometimes having unique ownership is not enough and we need to share a pointer among several owners. In C++11 or later, this is solved through `shared_ptr`. The usage is pretty similar to `unique_ptr`, we create it like:
+As we've seen before, sometimes having unique ownership is not enough and we need to share a pointer among several owners. In C++11 or later, this is solved using the `shared_ptr` data type. The usage is similar to `unique_ptr`, we create it like:
 
 ```cpp
 void ofApp::setup(){
@@ -966,9 +967,9 @@ void ofApp::setup(){
 }
 ```
 
-Is perfectly ok. The way a shared_ptr works is by keeping a count of how many references there are to it. Whenever we make a copy of it, it increases that counter by one, whenever a reference is destroyed it decreases that reference by one. When the reference count arrives to 0 it frees the allocated memory. That reference counting is done atomically, which means that we can share a shared_ptr across threads without having problems with the count. That doesn't mean that we can access the contained data safely in a multithreaded application, just that the reference count won't get messed up if we pass a shared_ptr across different threads.
+Is perfectly ok. The way a shared_ptr works internally is by keeping a count of how many references there are to it. Whenever we make a copy of it, it increases that counter by one, whenever a reference is destroyed it decreases that reference by one. When the reference count arrives to 0 it frees the allocated memory. That reference counting is done automatically, which means that we can share a shared_ptr across threads without having problems with the count. That doesn't mean that we can access the contained data safely in a multithreaded application, just that the reference count won't get messed up if we pass a shared_ptr across different threads.
 
-**[BD: This chapter covers a lot of material (in a very nice way :]), however it ends in a very specialized way (talking about shared_ptrs with threads). A small paragraph would be helpful.]**
+**[BD: This chapter covers a lot of material (in a very nice way :]), however it ends in a very abrupt and specialized way (talking about shared_ptrs with threads). A small conclusion paragraph or section would be helpful.]**
 
 <em style="font-size:0.8em; text-align:center; display:block;">This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.en_US">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.</em>
 
