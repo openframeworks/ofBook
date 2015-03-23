@@ -118,8 +118,6 @@ void Ball::draw(){
 
 ```
 
-**[MH: earlier you say every class has a .h and .cpp so what you are saying here will confuse beginners without you elaborating on what you mean.  Maybe you can ask the reader to imagine how they would do this without OOP:  They'd need to store a SEPARATE array of x values, y values, x speeds, y speeds, etc. and keep track of them all themselves.  OOP allows you to hide and organize that information.  Then you can also bring in the idea of extending your code.  Say you want to have a ball that is filled with helium and floats... now you need all those x/y/speed/etc arrays again, but you need to keep track of which ones are normal balls and which are helium etc etc...]**
-
 
 Now, this is such a simple program that we could have written it inside our ofApp(.h and .cpp) files and that would make sense if we didn't want to reuse this code elsewhere. One of the advantages of Object Oriented Programming is reuse. Imagine we want to create thousands of these balls. The code could easily get messy without OOP. By creating our own class we can later re-create as many objects as we need from it and just call the appropriate methods when needed keeping our code clean and efficient. In a more pragmatic example think of creating a class for each of your UI elements (button, slider, etc) and how easy it would be to then deploy them in your program but also to include and reuse them in future programs.
 
@@ -434,7 +432,7 @@ You're now discovering the power of OOP, making a class and creating as many obj
 This is also the power of OOP and inheritance: by allowing to use a base class and add some specific behaviors, overwriting some of the behaviors of a class, creating a subset of instances / objects with slightly different behaviors.
 The great thing about this is it's reusability, we're using the 'mother' class as a starting point, using all its capabilities but we overwrite one of its methods to give it more flexibility.
 Going back to the initial version of our Ball class (step 1) we'll build some 'daughter' classes based on its main characteristics (motion behaviors and shape) but we'll distinguish each inherited subClass by using a different color on its drawing method.
-**[MH: Give the reader an idea of what you are going to do.  E.g. why you are changing the Mother class, what the daughter class will be doing.  You could use a figure (tree diagram of some sort) here that gives the reader an idea of the class hierarchy you are building]**
+
 Your Ball header file should look like this:
 
 ```cpp
