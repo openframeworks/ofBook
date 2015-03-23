@@ -5,7 +5,7 @@
 This tutorial is a quick and practical introduction to Object Oriented Programming in openFrameworks and a how-to guide to build and use your own classes.
 By the end of this chapter you should understand how to create your own objects and have a lot of balls bouncing on your screen!
 
-**[MH: Add a picture here so that people can get excited about their goal]**
+![balls screenshot](balls_screenshot.png "balls screenshot")
 
 ##What is OOP
 Object Oriented Programming is a programming paradigm based on the use of objects and their interactions. A recurring analogy is to see a "Class" as a cookie cutter that can create many cookies, "the Objects". **[MH: I'd take a second to tell people unfamiliar with OOP why they should care.]** Some terms and definitions used within OOP are listed below:
