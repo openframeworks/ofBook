@@ -8,7 +8,8 @@ By the end of this chapter you should understand how to create your own objects 
 ![balls screenshot](images/balls_screenshot.png "balls screenshot")
 
 ##What is OOP
-Object Oriented Programming is a programming paradigm based on the use of objects and their interactions. A recurring analogy is to see a "Class" as a cookie cutter that can create many cookies, "the Objects". **[MH: I'd take a second to tell people unfamiliar with OOP why they should care.]** Some terms and definitions used within OOP are listed below:
+Object Oriented Programming is a programming paradigm based on the use of objects and their interactions. A recurring analogy is to see a "Class" as a cookie cutter that can create many cookies, "the Objects".
+Some terms and definitions used within OOP are listed below:
 
 -A Class defines the characteristics of a thing - the object - and its behaviors; it defines not only its properties and attributes but also what it can do.
 
@@ -22,7 +23,7 @@ Object Oriented Programming is a programming paradigm based on the use of object
 Classes and objects are similar to the concepts of movie clips and instances in Flash and are also a fundamental part of Java programming. 
 Because cooking, like coding, is fun and we tend to experiment in the kitchen let's continue with the classic metaphor of a cookie cutter as a class and cookies as the objects.
 Every class has two files: a header file, also known as a Declarations file with the termination '.h' and an implementation file, terminating in '.cpp'.
-A very easy way of knowing what these two files do is to think of the header file (.h) as a recipe, a list of the main ingredients of your cookie. The implementation file (.cpp) is what we're going to do with them, how you mix and work them to be the perfect cookie!  **[MH: I'd give an example here before you jump into the code; e.g. the header file would say that the ball has a color, but the implementation file say exactly which color it is (or how the color is determined).]**
+A very easy way of knowing what these two files do is to think of the header file (.h) as a recipe, a list of the main ingredients of your cookie. The implementation file (.cpp) is what we're going to do with them, how you mix and work them to be the perfect cookie!
 So let's see how it works:
 
 First of all let's create the two class files: 
@@ -31,8 +32,6 @@ Now let's edit your class header (.h) file. Feel free to delete all its contents
 Declare a class in the header file (.h). In this case, the file name should be Ball.h. 
 Follow the code below and type into your own Ball.h file, please note the comments I've included to guide you along.
 
-**[MH: I'd use radius instead of "dim".]**
-**[MH: Also, ofVec2fs were covered in the previous chapter (graphics) if you wanted to use that.]**
 
 ```cpp
 #ifndef _BALL // if this class hasn't been defined, the program can define it
@@ -126,7 +125,7 @@ Now, this is such a simple program that we could have written it inside our ofAp
 
 
 ##Make an Object from your Class 
-Now that we've created a class let's make the real object! In your ofApp.h (header file) we'll have to declare a new object ~~and get some free memory for it~~ **[MH: I'd drop that memory bit for now]**. But first we need to include (or give the instructions to do so) your Ball class in our program. To do this we need to write:
+Now that we've created a class let's make the real object! In your ofApp.h (header file) we'll have to declare a new object but first we need to include (or give the instructions to do so) your Ball class in our program. To do this we need to write:
 
 ```cpp
 #include "Ball.h"
@@ -408,9 +407,8 @@ for (int i = 0 ; i<myBall.size(); i++) {
 If you ran the previous code you'll see that in a very short time you'll not only create a huge amount of balls but at some point your system might become sluggish because there are just way too many objects on screen. As we just mentioned Vectors are very special as we can add and remove elements dynamically, that's their magic: vectors are elastic! 
 So, let's also implement a way to delete them before we have way too many Balls.
 
-On the ofApp::MousePressed call we will loop though our vector and check the distance between the coordinates of the mouse with the Ball position, if this distance is smaller than the Ball radius then, we know that we're clicking inside it, we can delete it. Because we're using the vector.erase method we need to use an iterator ( myBall.begin() ), a shortcut that references to the first element of the vector as a starting point to access the vector element we really want to erase ( 'i' ).
+On the ofApp::MousePressed call we will loop though our vector and check the distance between the coordinates of the mouse with the Ball position, if this distance is smaller than the Ball radius then, we know that we're clicking inside it, we can delete it. Because we're using the vector.erase method we need to use an iterator ( myBall.begin() ). Iterators are objects that, pointing to some element in a larger contained group and have the ability to iterate through the elements of that range. See them as paths, in this case as a a shortcut that references to the first element of the vector as a starting point to access the vector element we really want to erase ( 'i' ), thus myBall.begin()+i .
 
-**[MH: Needs an additional sentence explaining what an iterator is and why you use it here]**
 
 ```cpp
 for (int i =0; i < myBall.size(); i++) {
