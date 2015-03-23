@@ -928,7 +928,7 @@ void ofApp::setup(){
 	unique_ptr<int> a(new int);
 	*a = 5;
 
-	vector<unique_ptr<int>> v;
+	vector<unique_ptr<int> > v;
 	v.push_back(move(a));
 
 	cout << *a << endl;
@@ -947,7 +947,7 @@ void ofApp::setup(){
 	shared_ptr<int> a(new int);
 	*a = 5;
 
-	vector<shared_ptr<int>> v;
+	vector<shared_ptr<int> > v;
 	v.push_back(a);
 }
 ```
