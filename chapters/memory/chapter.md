@@ -4,25 +4,25 @@
 
 *corrections by [Brannon Dorsey](http://brannondorsey.com)*
 
-Using memory correctly is one of the trickest parts of working with C++. C++ memory management differs greatly from languages like Java, Python or anything else that works with a virtual machine. In C++, we can explicitly reserve and destroy objects while in other languages, an element called garbage collector does the work for us.
+Using memory correctly is one of the trickiest parts of working with C++. C++ memory management differs greatly from languages like Java, Python or anything else that works with a virtual machine. In C++, we can explicitly reserve and destroy objects. In other languages an element called a garbage collector does that work for us.
 
-There's also another important difference: In C++ we have two different memory areas, the heap and the stack, while in languages like Processing, Java, or Python we only have heap memory.
+Another important difference is that in C++ we have two different memory areas: the heap and the stack, while in languages like Processing, Java, or Python we only have heap memory.
 
-We'll see later what the main differences are, but first let's see what memory is and what happens when we create variables in our program.
+We'll see later what those main differences are, but first let's see what memory is and what happens with it when we create variables in our program.
 
 ## Computer memory and variables ##
 
 It's helpful to understand, at least at a high level, how computer memory works.
 
-A computer has different types of memory. In this section we are going to be talking about RAM (Random Access Memory) memory. RAM is the memory where the computer stores the code for the programs that are executing at every moment and the data those programs are using.
+A computer has different types of memory. In this section we are going to be talking about RAM (Random Access Memory) memory. RAM is the memory where the computer stores the code for the programs that are executing and the data those programs are using.
 
-Your computer probably has something like 4Gb of RAM. In C++, we can access most of that memory, and we create variables in order to do so. Memory is divided in bytes, which are the minimum memory size that we can usually use in a C++ application. Each data type like char, int, float... has a different size all measured in bytes. Those sizes can be different for different platforms but the most usual is something like:
+Your computer probably has something like 4Gb of RAM. In C++, we can access most of that memory, and we create variables in order to do so. Memory is divided in bytes, which are the minimum memory size that we can usually use in a C++ application. Each data type like `char`, `int`, `float`... has a different size all measured in bytes. Those sizes can be different for different platforms but they are commonly something like this:
 
-- char:  1 byte
-- short: 2 bytes
-- int:   4 bytes
-- float  4 bytes
-- double 8 bytes
+- `char`:  1 byte
+- `short`: 2 bytes
+- `int`:   4 bytes
+- `float`:  4 bytes
+- `double`: 8 bytes
 
 Other types might have variable sizes depending on their contents, like for example, an array or a string.
 
@@ -32,11 +32,11 @@ When we create a variable like:
 int i;
 ```
 
-we are reserving 4 bytes of those 4Gb to store an int. It doesn't really matter if we are storing ints or other types of data, the sizes might be different for an int a char, a float or a string, but the type of memory is always the same. **[BD: And what type of memory is this again?]**
+we are reserving 4 bytes of those 4Gb to store an int. It doesn't really matter if we are storing `int`s or other types of data, the sizes might be different for an `int`, a `char`, a `float` or a `string`, but the type of memory is always the same.
 
 Internally, the computer doesn't really now about that memory area as `i`, but rather as a memory address. A memory address is just a number that points to a specific byte in the 4Gg of memory.
 
-When we create a variable like `int i`, we are telling our program to reserve 4 bytes of memory, associate the address of the first byte of those 4 to the variable name `i` and restrict the type of data that we are going to store in those 4 bytes to only ints.
+When we create a variable like `int i`, we are telling our program to reserve 4 bytes of memory, associate the address of the first byte of those 4 to the variable name `i` and restrict the type of data that we are going to store in those 4 bytes to only `int`s.
 
 ![Int i](images/int_i.svg "")
 
@@ -46,7 +46,7 @@ Usually memory addresses are represented in [hexadecimal](http://en.wikipedia.or
 cout << &i << endl;
 ```
 
-The output of that cout is the memory address of the first byte of the variable `i` that we just created.
+The output of that `cout` is the memory address of the first byte of the variable `i` that we just created.
 
 Later on when we assign a value to that variable, we are storing that value in the memory area that we've just reserved by declaring it. So when we do:
 
@@ -58,23 +58,23 @@ Our memory will look like:
 
 ![Int i equals 0](images/int_i_equals_0.svg "")
 
-The order in which the bytes that form the int are layer out in the memory depends on the architecture of our computer, you might have seen probably [little endian and big endian](http://en.wikipedia.org/wiki/Endianness) mentioned sometime. Those terms refer to how the bytes of a data type are ordered in memory. ~~if the most significative bytes come first or last.~~ Most of the time we don't really need to know about this order but most modern computer architectures use little endian.
+The order in which the bytes that form the `int` are laid out in the memory depends on the architecture of our computer. Have you ever seen "[little endian vs big endian](http://en.wikipedia.org/wiki/Endianness)" mentioned in a programming text or tutorial? Those terms refer to how the bytes of a data type are ordered in memory. Most of the time we don't really need to know about this order but most modern computer architectures use little endian.
 
 If you've used C++ for a while you've probably had crashes in your programs because of bad memory accesses. Usually the message you'll see is something like `segmentation fault...`. What does that mean?
 
-When you create variables in a program, even in C++, you can't really access all the memory in the computer, for security reasons. Imagine you had your bank account opened in your browser, if any program could access all of the memory in the computer a malign application could just access the memory of the browser and get that information or even modify it. To avoid this, the operating system assigns chunks of memory to every program. When your application starts it's assigned a `segment` of memory. Later on as you create variables, if there's enough memory in that `segment` your variables will be create there. When there's not more memory available the application asks the operating system for another segment and starts using that. If you try to access a memory address that doesn't belong to a segment assigned to your application, the operating system just kills the application to avoid possible security risks. **[BD: This is a very nice description]**
+When you create variables in a program, even in C++, you can't really access all the memory in the computer. This is for security reasons. Imagine you had your bank account opened in your browser. If any program could access all of the memory in the computer a malign application could just access the memory of the browser and gain access to, and even modify, your private information. To avoid this, the operating system assigns chunks of memory to every program. When your application starts it's assigned a `segment` of memory. Later on as you create variables, if there's enough memory in that `segment` your variables will be create there. When there's not more memory available the application asks the operating system for another segment and starts using that. If you try to access a memory address that doesn't belong to a segment assigned to your application, the operating system just kills the application to avoid possible security risks.
 
-How does that happen usually? Well most of the time you just don't try to access memory addresses by their **[BD: Hexidecimal number?]** number, so how's it possible that sometimes you try to access a variable and you get a segmentation fault? Most of the time this happens because you try to access a variable that doesn't exist anymore, usually because you stored a pointer to a memory area and then free or move that memory somewhere else. We'll talk in more detail about this later.
+Most of the time you probably don't try to access memory addresses by their hexadecimal number, so then how is it possible that sometimes you try to access a variable and you get a segmentation fault? This usually happens because you try to access a variable that doesn't exist anymore, perhaps because you stored a pointer to a memory area and then free or move that memory somewhere else. We'll talk in more detail about this later.
 
-## Stack variables, variables in functions vs variables in objects
+## Stack variables: variables in functions vs variables in objects
 
-As we said at the beginning of the chapter, there's two types of memory in C++: the stack and the heap. Let's talk first about the stack since that's the easiest type of memory to use and what you'll use most frequently in openFrameworks.
+As we said at the beginning of the chapter, there's two types of memory in C++. Those two memory types are called the stack and the heap. Let's talk first about the stack since that's the easiest type of memory to use and what you'll use most frequently in openFrameworks.
 
-The stack is the type of memory that you use when creating variables inside a function or in the .h of your class as long as you don't use pointers and the `new` keyword.
+The stack is the type of memory that you use when creating variables inside a function or in the `.h` file of your class as long as you don't use pointers and the `new` keyword.
 
-It's called stack because it's organized like a [stack](http://en.wikipedia.org/wiki/Stack_%28abstract_data_type%29). When a function is called in our application, there's an area in memory assigned to that specific function **call** where it can create variables in that area.
+It's called stack because it's organized like a [stack](http://en.wikipedia.org/wiki/Stack_%28abstract_data_type%29). When a function is called in our application, there's an area in memory assigned to that specific function **call** where it can create variables inside of its own context.
 
-Those variables stop existing when the function call ends. So for example you can't do:
+Those variables cease to exist when the function call ends. So for example, you can't do:
 
 ```cpp
 void ofApp::setup(){
@@ -82,22 +82,22 @@ void ofApp::setup(){
 }
 
 void ofApp::update(){
-    a = 5; // error a doesn't exist outside setup
+    a = 5; // error: "a" doesn't exist outside of the setup function
 }
 ```
 
 Also, since we are talking about function calls, you can't store a value in a stack variable and expect it to be there when the function is called again.
 
-In general we can say that variables exist in the block where they've been defined. A block in C++ is defined by the `{}` inside which a variable was defined, so for example, doing this won't be valid either:
+In general we can say that variables in C++ have [block scope](http://en.wikipedia.org/wiki/Scope_%28computer_science%29#Block_scope). That is, they exist only in the block where they've been defined. A block in C++ is defined by the `{}` inside which a variable was defined, so for example, doing this won't be valid either:
 
 ```cpp
 for (int i=0;i<10;i++){
     int a = 5;
 }
-cout << a << endl; // error a doesn't exist outside the {} of the for
+cout << a << endl; // error a doesn't exist outside the for loop's {}
 ```
 
-We can even do this:
+However, we could do this:
 
 ```cpp
 void ofApp::setup(){
@@ -113,11 +113,11 @@ void ofApp::setup(){
 }
 ```
 
-The last example is not very common but is used sometimes to define the life of a variable inside a function. This occurs mostly when that variable is an object that holds resources and we want to only hold them for a specific duration.
+The last example is not very common but is used sometimes to define the life of a variable inside of a function. This occurs mostly when that variable is an object that holds resources and we want to only hold them for a specific duration.
 
-The life of a variable is called `scope`.
+The life of a variable is called its `scope`.
 
-Apart from creating variables inside functions, we can also create variables in the class declaration in our .h like:
+Apart from creating variables inside functions, we can also create variables in the class declaration in our `.h` file like:
 
 ```cpp
 class Ball{
@@ -128,14 +128,11 @@ public:
 }
 ```
 
-**[BD: Changed `pos_x` to `posX` to stick with camelCase standards]**
+These kind of variables are called `instance variables` because every instance or object of our class will get its own copy of these variables. The way they behave is more or less the same as the stack variables created in functions. They exist for the duration of the `{}` in which they were defined, in this case the `{}` of the Ball class to which they belong.
 
-These kind of variables are called `instance variables` because every instance or object of our class will get a copy of it. The way they behave is more or less the same as the stack variables created in functions. They exist for the duration of the {} in which they were defined, in this case the {} of the object to which they belong.
+~~These variables can be accessed from anywhere in the class. When we need to have data that is accessible from any function in an instance (object) of this class we create it like this.~~ **[BD: Is there a missing code block here?]**
 
-These variables can be accessed from anywhere in the class. When we need to have data that is accessible from any function in an instance (object) of this class we create it like this.
-
-
-The memory in the stack is limited, the exact size, depends on the architecture of our computer, the operating system and even the compiler we are using. In some systems it can even be changed during the runtime of the application, but most of the time we won't reach that limit.
+The memory in the stack is limited. The exact size depends on the architecture of our computer, the operating system and even the compiler we are using. In some systems the stack list can be changed during the runtime of the application, but most of the time we won't reach that limit.
 
 Even if we create all of our variables in the stack, usually the objects that consume most memory, like for example a vector or an ofPixels, will automatically create most of the memory that they use internally in the heap. The heap is limited only by the amount of memory available in the computer so we don't need to worry about it.
 
@@ -151,7 +148,7 @@ As we've seen before we can get the address of a variable by doing:
 cout << &i << endl;
 ```
 
-And that will give us the memory address of the first byte used by that variable no matter it's type. When we store that memory address in another variable that variable is called a pointer. The syntax is:
+That will give us the memory address of the first byte used by that variable no matter it's type. When we store that memory address in another variable that variable is called a pointer. The syntax is:
 
 ```cpp
 int i = 0;
@@ -162,11 +159,11 @@ And what we get in memory is something like:
 
 ![Pointer](images/pointer.svg "")
 
-A pointer usually occupies 4 or 8 bytes (depending if we are on a 32 or 64bits application), we are representing it as 1 byte only to make things easier to understand, but as you can see it's just another variable. Instead of containing a value, it contains a memory address that points to a value. That's why it's called pointer.
+A pointer usually occupies 4 or 8 bytes (depending if we are using a 32bit or 64bit application), we are representing it as 1 byte only to make things easier to understand, but as you can see it's just another variable. Instead of containing a value, it contains a memory address that points to a value. That's why it's called pointer.
 
 A pointer can point to heap or stack memory.
 
-Now, let's explain something that it's really important to take into account when programming in C++. As we've seen until now, when we declare a variable like:
+Now, let's explain something very important to take into account when programming in C++. As we've seen until now, when we declare a variable like:
 
 ```cpp
 int i;
@@ -186,9 +183,9 @@ is illegal. The compiler will tell us that we are trying to use a variable that 
 
 If for example, we have a variable that defines the position of something we are going to draw, and we fail to initialize that variable, it will lead to that object being drawn anywhere.
 
-Now, most objects have default constructors that will initialize their value to, for example 0, so in the case of objects it's usually not necessary to give them a value.
+Now, most objects have default constructors that will initialize their value to, for example `0`, so in the case of objects it's usually not necessary to give them a value.
 
-What happens when we use an uninitialized pointer? Well, since a pointer contains a memory address, if the value we get in that memory area points to an address that doesn't belong to our program and we try to retrieve or modify the value stored in that address, the OS will kill our application with a segmentation fault signal.
+What happens when we use an uninitialized pointer? Well, since a pointer contains a memory address, if the value we get in that memory area points to an address that doesn't belong to our program, and we try to retrieve or modify the value stored in that address, the OS will kill our application with a segmentation fault signal.
 
 Back to pointers. We've seen that we can create a pointer like:
 
@@ -216,11 +213,11 @@ int j = *p;
 cout << j << endl;
 ```
 
-and again will get the value 5 since we made a copy of the value pointed by p in j.
+and again will get the value 5 since we made a copy of the value pointed by `p` in `j`.
 
-The `&`operator is called the *reference operator* since it gives us a reference to a variable, it's memory address. The `*` operator is it's opposite, the *dereference operator* and it gives us the value pointed **[pointed at?]** by a pointer, it dereferences a reference so that we can access it's value instead of the address.
+The `&` operator is called the *reference operator* since it gives us a reference to a variable, or it's memory address. The `*` operator is its opposite, the *dereference operator* and it gives us the value pointed to by a pointer, it dereferences a reference so that we can access its value instead of its address.
 
-Until now, we've worked with primitive values, ints really, but the behavior will be the same for any other primitive value like float, short, char, unsigned int...  In C++ in fact, the behavior is also the same for objects.
+Until now, we've worked with `int` values, but the behavior will be the same for any other primitive value like `float`, `short`, `char`, `unsigned int`, etc... In fact, in C++, the behavior is also the same for objects.
 
 If you are used to Java, for example, you've probably noticed that while in Java and C++ this:
 
@@ -231,7 +228,7 @@ a = 7;
 cout << "a: " << a << " b: " << b << endl;
 ```
 
-will behave the same (of course changing cout for the equivalent in java). That is: `a` will end up being 7 and `b` will be 5. When we use objects, the behavior in C++ is different to that of Java. For example, let's say we have a class Ball:
+will behave the same (of course changing `cout` for its equivalent in java). That is: `a` will end up being 7 and `b` will be 5. When we use objects, the behavior in C++ is different to that of Java. For example, let's say we have a `Ball` class:
 
 ```cpp
 class Ball{
@@ -274,17 +271,17 @@ b2 = b1;
 b2.pos.set(30,30);
 ```
 
-Notice how, in the case of Java, we have used `new` for the first ball but not for the second. That's because in Java, everything that is an object is a pointer in the heap. So when we do `b2 = b1`we are actually turning b2 into a reference to b1, and when we later change b2, we are also changing b1.
+Notice how, in the case of Java, we have used `new` for the first ball but not for the second. That's because in Java, everything that is an object is a pointer in the heap. So when we do `b2 = b1` we are actually turning `b2` into a reference to `b1`, and therefore when we later change `b2`, we are also changing `b1`.
 
-In C++, instead when we do `b2 = b1`, we are actually copying the values of the variables of b1 into b2. Because of this, we still have 2 different variables instead of a reference. When we modify b2, b1 stays the same.
+In C++, instead when we do `b2 = b1`, we are actually copying the values of the variables of `b1` into `b2`. Because of this, we have two different variables instead of one variable and one reference. When we modify `b2`, `b1` stays the same.
 
-In both languages the `=` means copy the value of the right side into the variable on the left side of the `=`. The difference is that in Java, an object is really a pointer to an object. The contents of `b1` or `b2` are not the object itself, but it's memory address. In c++ b1 actually contains the object itself. **[BD: Most of this paragraph is redundant to what you've already said.]**
+In both languages the `=` means copy the value on the right side into the variable on the left side. The difference is that in Java, an object is really a pointer to an object. The contents of `b1` or `b2` are not the object itself, but it's memory address. In C++ b1 actually contains the object itself. **[BD: Most of this paragraph is redundant. You've already already said most of it in the paragraphs above.]**
 
 This is more or less what memory would look like in Java and C++:
 
 ![Objects Java C](images/objects_java_c.svg "")
 
-As you can see in C++, objects in memory are just all of their member variables one after another. When we make an object variable equal to another, by default, c++ copies all the object to the left side of the equal operator.
+As you can see in C++, objects in memory are just all of their member variables contiguously laid out one after another. When we make an object variable equal to another, by default, C++ copies the entire object to the left side of the equal operator.
 
 Now what would happen if we have a class like:
 
@@ -302,20 +299,20 @@ public:
 And we do:
 
 ```cpp
+ParticleSystem ps;
 Particle p1;
 Particle p2;
-ParticleSystem ps;
 
 p1.pos.set(20,20);
 p1.parent = &ps;
 p2 = p1;
 ```
 
-As before, C++ will copy the contents of p1 into p2. The contents of p1 are an ofVec2f, which consists of 2 floats, x and y, and then a pointer to a ParticleSystem, and that's what gets copied. The ParticleSystem itself won't get copied, only the pointer to it. P2 will end up having a copy of the pos of p1 and a pointer to the same ParticleSystem.
+As before, C++ will copy the contents of `p1` into `p2`. The contents of `p1` are an instance of an `ofVec2f`, which consists of two `float`s, `x` and `y`, and then a pointer to an instance of `ParticleSystem`, and that's what gets copied. The `ParticleSystem` itself won't get copied, only the pointer to it. P2 will end up having a copy of the `pos` of `p1` and a pointer to the same `ParticleSystem`.
 
 ![Object pointers](images/object_pointers.svg "")
 
-The fact that things are copied by default and that objects can be stored in the stack as opposed to being always a pointer has certain advantages. For example, in C++, a vector or an array of particles like the ones we've used in the last example will look like:
+The fact that variables are copied by default and that objects can be stored in the stack as opposed to always being a pointer has certain advantages. For example, in C++, a vector or an array of particles like the ones we've used in the last example will look like:
 
 ```cpp
 vector<Particle> particles;
@@ -323,7 +320,7 @@ vector<Particle> particles;
 
 In memory all the particles will be contiguous, among other things, that makes accessing them faster than if we had pointers to a different location in memory. It also makes it easier to translate C++ vectors to openGL memory structures, but that's the topic for a whole chapter.
 
-Among other things, we need to be aware of the fact that C++ copies things by default, when passing objects to functions as parameters. For example this:
+We need to remain aware of the fact that C++ copies things by default, when passing objects to functions as parameters. For example this:
 
 ```cpp
 void moveParticle(Particle p){
@@ -337,7 +334,7 @@ Particle p1;
 moveParticle(p1);
 ```
 
-Is perfectly valid code, but won't have any effect since the function will receive a copy of the particle and modify that copy instead of the original.
+Is perfectly valid code, but probably won't have the desired effect since the function will receive a copy of the particle `p` and modify that copy instead of the original.
 
 We can do this:
 
@@ -353,7 +350,7 @@ Particle p1;
 p1 = moveParticle(p1);
 ```
 
-So we pass a copy of our particle to the function which modifies it's values and returns a modified copy which we then copy into p1 again. See how many times we've mentioned copy in the previous sentence?  The compiler will optimize some of those **[BD: Those what? Copies?]** out, and for small objects it's perfectly ok to do that, but imagine we had something like this:
+So we pass a copy of our particle to the function which modifies it's values and returns a modified copy which we then copy into `p1` again. See how many times we've mentioned copy in the previous sentence? The compiler will optimize some of those copies out, and for small objects it's perfectly ok to do that, but imagine we had something like this:
 
 ```cpp
 vector<Particle> moveParticles(vector<Particle> ps){
@@ -370,7 +367,7 @@ vector<Particle> ps;
 ps = moveParticles(ps);
 ```
 
-If we have 1 million particles that would be awfully slow. Memory is really slow compared to the CPU **[BD: Perhaps a sentence here explaining why this is the case.]**, so anything that involves copying memory or allocating new memory should be usually avoided. So what can we do to avoid all those copies?
+If we have 1 million particles that would be awfully slow. Memory is really slow compared to the CPU **[BD: Perhaps add a sentence here explaining why this is the case.]**, so anything that involves copying memory or allocating new memory should be usually avoided. So what can we do to avoid all those copies?
 
 Well, we could use pointers right?
 
@@ -385,7 +382,7 @@ Particle p1;
 moveParticle(&p1);
 ```
 
-Now, here's something new. Notice that we refer to the variables of a pointer to an object with the `->` operator instead of using the dot? Every time we want to access a variable in a pointer to an object, instead of having to dereference it like:
+Now, here's something new. Notice that we refer to the variables of a pointer to an object with the `->` operator instead of using dot syntax? Every time we want to access a variable in a pointer to an object, instead of having to dereference it like:
 
 ```cpp
 (*p).x +=10;
