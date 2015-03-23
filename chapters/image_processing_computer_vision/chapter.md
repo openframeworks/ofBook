@@ -448,7 +448,7 @@ unsigned char blueValueAtXY  = buffer[bArrayIndex];
 ```
 This is, then, the three-channel "RGB version" of the basic `index = y*width + x` pattern we used earlier to fetch pixel values from monochrome images.
 
-Note that you may occasionally encounter libraries or hardware which deliver RGB bytes in a different order, such as BGR. 
+Note that you may occasionally encounter external libraries or imaging hardware which deliver RGB bytes in a different order, such as BGR. 
 
 #### Varieties of Image Formats
 
@@ -484,11 +484,15 @@ It's important to point out that image data may be stored in very different part
 
 It's helpful to know that there's generally a performance penalty for moving image data back-and-forth between the CPU and GPU, such as the `ofImage::grabScreen()` method, which captures a portion of the screen from the GPU and stores it in an `ofImage`, or the `ofTexture::readToPixels()` method, which copies image data from an `ofTexture` to an `ofPixels`.
 
-#### RGB, Grayscale, and other Color Space Conversions
+#### RGB to Grayscale Conversion, and its Role in Computer Vision
 
-Many computer vision algorithms (though not all!) are commonly performed on grayscale or monochome images. If color isn't important to your vision problem, working in grayscale can significantly improve the speed of image processing routines, because it reduces both the number of calculations as well as the amount of memory required to process the data. Assuming your source data is in color (as is common with webcams), depending on your application, you'll either clobber your color image to grayscale directly, or create a grayscale copy for subsequent processing. 
+Many computer vision algorithms (though not all!) are commonly performed on one-channel (i.e. grayscale or monochrome) images. Whether or not your project uses color imagery at some point, you'll almost certainly still use grayscale pixel data to represent and store many of the intermediate results in your image processing chain. The simple fact is that working in grayscale (whenever possible) can significantly improve the speed of image processing routines, because it reduces both the number of calculations as well as the amount of memory required to process the data. 
 
-The simplest method to convert a color image to grayscale is to clobber its data by changing its OF image type to `OF_IMAGE_GRAYSCALE`. Note that this causes the image to be reallocated and any ofTextures to be updated, so it can be an expensive operation if done frequently. It's also a "destructive operation", in the sense that the image's original color information is lost in the conversion.</p>
+For example, if you're calculating a "blob" to represent the location of a user's body, it's common to store that blob in a one-channel image; typically, pixels containing 255 (white) designate the foreground blob, while pixels containing 0 (black) are the background. Likewise, if you're using a special image to represent the amount of motion in different parts of the video frame, it's enough to store this information in a grayscale image (where 0 represents stillness and 255 represents lots of motion). We'll discuss these operations more in later sections; for now, it's sufficient to state this rule of thumb: if you're using a buffer of pixels to store and represent a one-dimensional quantity, do so in a one-channel image buffer. Thus, except where stated otherwise, *all of the examples in this chapter expect that you're working with monochrome images*. 
+
+Converting a color image to grayscale thus becomes our first order of business. Assuming your source data is in color (as is common with webcams), you'll either clobber your color image to grayscale directly, or create a grayscale copy for subsequent processing. 
+
+The simplest method to convert a color image to grayscale is to modify its data by changing its OF image type to `OF_IMAGE_GRAYSCALE`. Note that this causes the image to be reallocated and any ofTextures to be updated, so it can be an expensive operation if done frequently. It's also a "destructive operation", in the sense that the image's original color information is lost in the conversion.</p>
 
 ```
 ofImage myImage; 
@@ -505,12 +509,42 @@ Although OF provides the above utilities to convert color images to grayscale, i
 * **Taking the average of the R,G, and B color channels.** A slower but more perceptually accurate method approximates luminance (often written *Y*) as a straight average of the red, green and blue values for every pixel: `Y = (R+G+B)/3;`. This not only produces a better representation of the image's luminance across the visible color spectrum, but it also diminishes the influence of noise in any one color channel.
 * **Computing the luminance with colorimetric coefficients**. The most perceptually accurate methods for computing grayscale from color images employ a specially-weighted "colorimetric" average of the RGB color data. These methods are marginally more expensive to compute, as each color channel must be multiplied by its own weighting factor. The CCIR 601 imaging specification, which is used in the OpenCV [cvtColor](http://docs.opencv.org/modules/imgproc/doc/miscellaneous_transformations.html#cvtcolor) function, itself used in the ofxOpenCV addon, employs the formula `Y = 0.299*R + 0.587*G + 0.114*B` (with the assumption that the RGB values have been gamma-corrected). According to [Wikipedia](http://en.wikipedia.org/wiki/Luma_(video)), "these coefficients represent the measured intensity perception of typical trichromat humans; in particular, human vision is most sensitive to green and least sensitive to blue."
 
-The following code snippet 
-`[Code to convert RGB to grayscale using OpenCV]`
+Here's a code fragment for converting from color to grayscale, written "from scratch" in C/C++, using the averaging method described above. This code also shows, more generally, how the computation of a 1-channel image can be based on a 3-channel image. 
 
-Even if your project is based around color imagery, you'll probably still use monochrome pixel data to represent and store many of the intermediate results in your image processing chain. For example, if you're calculating a "blob" to represent the location of a user's body, it's common to store that blob in a buffer of monochrome pixels. Typically, pixels containing 255 (white) are the foreground blob, and pixels containing 0 (black) are the background. 
+```
+// Load a color image, fetch its dimensions, 
+// and get a pointer to its pixel data. 
+ofImage myImage; 
+myImage.loadImage ("colorful.jpg");
+int imageWidth = myImage.getWidth();
+int imageHeight = myImage.getHeight();
+unsigned char* rgbPixelData = myImage.getPixels(); 
 
-Except where stated otherwise, *all of the examples in this chapter assume that you're working with monochrome images*. 
+// Allocate memory for storing a grayscale version.
+// Since there's only 1 channel of data, it's just w*h. 
+int nBytesGrayscale = imageWidth * imageHeight; 
+unsigned char* grayPixelData = new unsigned char [nBytesGrayscale];
+
+// For every pixel in the grayscale destination image, 
+for (int indexGray=0; indexGray<nBytesGrayscale; indexGray++){
+
+	// Compute the index of the corresponding pixel in the color image,
+	// remembering that it has 3 times as much data as the gray one. 
+	int indexColor = (indexGray * 3); 
+
+	// Fetch the red, green and blue bytes for that color pixel. 
+	unsigned char R = rgbPixelData[indexColor  ]; 
+	unsigned char G = rgbPixelData[indexColor+1]; 
+	unsigned char B = rgbPixelData[indexColor+2]; 
+	
+	// Compute and assign the luminance (here, as an average of R,G,B).
+	// Alternatively, you could use colorimetric coefficients.  
+	unsigned char Y = (R+G+B)/3; 
+	grayPixelData[indexGray] = Y;
+}
+```
+
+
 
 ### Image arithmetic: mathematical operations on images
 
