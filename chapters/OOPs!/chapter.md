@@ -17,8 +17,6 @@ Object Oriented Programming is a programming paradigm based on the use of object
 -The Methods are the objects abilities
 
 
-**[MH: Josh's chapter does not cover OOP.]**
-~~Note: please see chapter (Josh Nimoy's) for a more detailed explanation of Objected Oriented languages.~~
 
 ##How to build your own Classes (simple Class)
 Classes and objects are similar to the concepts of movie clips and instances in Flash and are also a fundamental part of Java programming. 
@@ -70,10 +68,10 @@ The 'if statement' (#ifndef) is a way to prevent the repetition of header files 
 
 **[MH: might be useful to link to an external resource for include guards or a general resource on how compiling works.  It don't think that beginners will understand the explanation here and trying to explain it yourself it would make your chapter much longer.]**
 
+We will now create a class for a ball object. This ball will have color, speed and direction properties: it will move accross the screen and bounce against the wall. Some of these properties we will create with randomized attributes but we'll be carefull to create the righ logic for its motion behaviours. 
 
 Here's how you can write the class *.cpp file, the implementation file:
 
-**[MH: I'd add a quick overview of this code before diving into it.  E.g. explain that we are creating a ball that moves with a random speed, in a random direction, that bounces off of the walls.  And mention the concept behind the reflection.]**
 
 ```cpp
 #include "Ball.h"
@@ -123,9 +121,9 @@ void Ball::draw(){
 
 **[MH: earlier you say every class has a .h and .cpp so what you are saying here will confuse beginners without you elaborating on what you mean.  Maybe you can ask the reader to imagine how they would do this without OOP:  They'd need to store a SEPARATE array of x values, y values, x speeds, y speeds, etc. and keep track of them all themselves.  OOP allows you to hide and organize that information.  Then you can also bring in the idea of extending your code.  Say you want to have a ball that is filled with helium and floats... now you need all those x/y/speed/etc arrays again, but you need to keep track of which ones are normal balls and which are helium etc etc...]**
 
-**[MH: You might also want to save this paragraph until the next section when the readers have instantiated some objects.]**
 
 Now, this is such a simple program that we could have written it inside our ofApp(.h and .cpp) files and that would make sense if we didn't want to reuse this code elsewhere. One of the advantages of Object Oriented Programming is reuse. Imagine we want to create thousands of these balls. The code could easily get messy without OOP. By creating our own class we can later re-create as many objects as we need from it and just call the appropriate methods when needed keeping our code clean and efficient. In a more pragmatic example think of creating a class for each of your UI elements (button, slider, etc) and how easy it would be to then deploy them in your program but also to include and reuse them in future programs.
+
 
 ##Make an Object from your Class 
 Now that we've created a class let's make the real object! In your ofApp.h (header file) we'll have to declare a new object ~~and get some free memory for it~~ **[MH: I'd drop that memory bit for now]**. But first we need to include (or give the instructions to do so) your Ball class in our program. To do this we need to write:
@@ -165,6 +163,7 @@ Compile and run! At this point you should be seeing a bouncing ball on the scree
 
 
 ##Make objects from your Class
+
 By now, you're probably asking yourself why you went to so much trouble to create a bouncing ball. You could have done this (and probably have) without using classes. In fact one of the advantages of using classes is to be able to create multiple individual objects with the same characteristics. So, let's do that now! Go back to your ofApp.h file and create a couple of new objects:
 
 ```cpp
@@ -350,17 +349,18 @@ myBall.draw();
 
 
 ##Make Objects on the fly
-**[MH: Needs a little more intro.  E.g. You may have noticed that we had to define the number of balls before we could run our program, and we weren't able to add or remove balls once the program started running...]**While many times you'll already have a pre-defined number of objects you'll need to create and using arrays is the right choice, there are other ways to create multiple objects that offer other advantages: welcome vectors!
-Vectors are really great as they'll allow to create collections of objects without a predefined number of elements. They're quite dynamic and allow you to add objects on the fly but also to remove them when you need longer need the objects. Think of them as elastic arrays.
+
+While many times you'll already have a pre-defined number of objects you'll need to create and using arrays is the right choice, there are other ways to create multiple objects that offer other advantages: welcome vectors!
+Vectors are really great as they'll allow to create collections of objects without a predefined number of elements. They're quite dynamic and allow you to add objects on the fly (e.g. while your program is running) but also to remove them when you need longer need the objects. Think of them as elastic arrays.
 So, let's use them!
 Note: You'll be hearing about two different types of vectors throughout this book. Please don't confuse stl::vectors (the elastic arrays type we're talking about) with math vectors (forces).
 
-**[MH: Link to the oF std::vector tutorial here, rather than at the end.]**
+To learn more about stl::vector check xxx chapter or this short online tutorial : http://www.openframeworks.cc/tutorials/c++%20concepts/001_stl_vectors_basic.html
+
 
 Back to our beloved ofApp.h file, let's define a vector of Ball objects by typing:
 
 
-**[MH: Make this myBalls instead of myBall]**
 ```cpp
 vector <Ball> myBall;
 ```
@@ -408,7 +408,7 @@ for (int i = 0 ; i<myBall.size(); i++) {
 If you ran the previous code you'll see that in a very short time you'll not only create a huge amount of balls but at some point your system might become sluggish because there are just way too many objects on screen. As we just mentioned Vectors are very special as we can add and remove elements dynamically, that's their magic: vectors are elastic! 
 So, let's also implement a way to delete them before we have way too many Balls.
 
-On the ofApp::MousePressed call we will loop though our vector and check the distance between the coordinates of the mouse with the Ball position, if this distance is smaller than the Ball ~~dimension~~**[MH: radius]** then, we know that we're clicking inside it, we can delete it. Because we're using the vector.erase method we need to use an iterator ( myBall.begin() ), a shortcut that references to the first element of the vector as a starting point to access the vector element we really want to erase ( 'i' ).
+On the ofApp::MousePressed call we will loop though our vector and check the distance between the coordinates of the mouse with the Ball position, if this distance is smaller than the Ball radius then, we know that we're clicking inside it, we can delete it. Because we're using the vector.erase method we need to use an iterator ( myBall.begin() ), a shortcut that references to the first element of the vector as a starting point to access the vector element we really want to erase ( 'i' ).
 
 **[MH: Needs an additional sentence explaining what an iterator is and why you use it here]**
 
@@ -429,7 +429,6 @@ Feel free to experiment and try using it yourself!
 balls.clear();
 ```
 
-To learn more about stl::vector check xxx chapter or this short online tutorial : http://www.openframeworks.cc/tutorials/c++%20concepts/001_stl_vectors_basic.html
 
 
 ##Quick intro to polymorphism (inheritance)
