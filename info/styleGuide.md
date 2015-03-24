@@ -25,7 +25,7 @@ Please consider liberal and judicious use of the header tag.  Take a look at the
 
 Use fenced code markdown styling for code.  Use 4 spaces in place of tabs for indenting your code.
 
-Code lines should not exceed X characters (note: we need to decide on line width)
+Code lines should not exceed 70 characters.
 
 ```cpp
     float minArea = 1000000;
