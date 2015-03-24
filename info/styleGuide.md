@@ -80,4 +80,9 @@ The benifits of this is that it makes github changes significantly easier to rea
 
 If you have a specific need, such as latex equations, use a simply available tool (and common format) and write a note at the top of your chapter.  Omer's math chapter is a good example, to view the equations you need to use stackedit.io.  In general try to use as minimal a deviation from vanilla markdown as possible. 
 
+## comments /annotation for graphics ##
 
+If you have annotations for people involved in this book (*but not the reader/end user*), please use HTML comments. They start with a `<--` and end with `-->`.
+```html
+<!-- This is an comment example which can not be read by the reader of the book -->
+```
