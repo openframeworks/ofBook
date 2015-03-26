@@ -42,6 +42,9 @@ Scripts for building the web and pdf versions of the book are in `scripts/` dire
 5. Download and install [libsass](https://github.com/dahlia/libsass-python)
   - Using pip: `pip install libsass`
 
+## Debian (Linux)
+1. install packages: ```sudo apt-get install python-pip python2.7-dev git pandoc ruby-sass texlive```
+2. install [beauitful soup 4](http://www.crummy.com/software/BeautifulSoup/) and [libsass](https://github.com/dahlia/libsass-python): ```pip install beauitfulsoup4 libsass```
 
 
 #Mailing List
