@@ -2,7 +2,7 @@
 
 *by [Zach Lieberman](http://thesystemis.com)*
 
-The endavour of openFrameworks is guided by a number of goals: it should be collaborative, usable and simple, consistent and intuitive, cross-platform, powerful, and extensible. It is also driven by a "do it with others" (DIWO) philosophy.
+The endeavour of openFrameworks is guided by a number of goals: it should be collaborative, usable and simple, consistent and intuitive, cross-platform, powerful, and extensible. It is also driven by a "do it with others" (DIWO) philosophy.
 
 ### Collaborative
 
