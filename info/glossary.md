@@ -3,6 +3,8 @@
 
 ### API
 
+### C++
+
 ### Compiler
 
 ### Function
@@ -13,7 +15,13 @@
 
 ### pointer
 
+### Library
+
 ### Linker
+
+### OpenGL
+
+### Processing
 
 ### Compile Flags
 
