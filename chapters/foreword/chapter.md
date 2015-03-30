@@ -3,7 +3,7 @@
 *by [Zach Lieberman](http://thesystemis.com)*
 
 
-Openframeworks began around 2004 / 2005.  I was teaching at Parsons School of Design, and at the same time, making a living as an artist creating interactive projects with code.  
+OpenFrameworks began around 2004 / 2005.  I was teaching at Parsons School of Design, and at the same time, making a living as an artist creating interactive projects with code.  
 
 I had graduated a few years earlier from grad school in 2002, and we were using computational tools like Director / Lingo and Flash when I was there -- it was the heyday of flash experimentation.  In 2002, my professor, Golan Levin, invited me to collaborate with him on some projects after I graduated from school and he introduced me to ACU, a C++ library that had been developed at MIT under the Aesthetics and Computation Group, the group that John Maeda ran which had students like Elise Co, Peter Cho, Ben Fry, Casey Reas and Golan himself.   
 
@@ -11,7 +11,7 @@ ACU as a library was great, but quite oriented to late 90s tech such as SGI mach
 
 In addition, I really wanted to share the code I was writing in my professional practice with my students.  I remember vividly having conversations with the administration of the department at Parsons where they said, "Art students don't want to learn C++."  I started teaching classes with OF in 2005, and I had students like Theo Watson, Christine Sugrue, and Evan Roth who created remarkably wild, experimental work with OF and that argument crumbled rapidly.   C++ provided low level access to the machine for things like computer vision, sound processing, access to hardware as well as access to a wide array of librarys that other folks had written.  It opened up doors to expressive uses of computation.
 
-Theo Watson, who was my student in 2005, joined the OF team to help produce an OSX version.  In the early days, we had openframeworks up online behind a cryptic "join the mailing list" front page and Theo and I would produce a single static HTML page with OF documentation.  It was not super public, but we had a small and dedicated group of people starting to use OF. I'm not totally sure when our first official release was, but I remember vividly presenting openframeworks to the public in a sort of beta state at the 2006 OFFF festival where we had an advanced processing workshop held at Hangar. One of the participants of that workshop, Arturo Castro, joined the OF team to help produce a Linux version.  Theo, Arturo and I have been joined by a huge group of people who use OF and help contribute to it.
+Theo Watson, who was my student in 2005, joined the OF team to help produce an OSX version.  In the early days, we had openFrameworks up online behind a cryptic "join the mailing list" front page and Theo and I would produce a single static HTML page with OF documentation.  It was not super public, but we had a small and dedicated group of people starting to use OF. I'm not totally sure when our first official release was, but I remember vividly presenting openFrameworks to the public in a sort of beta state at the 2006 OFFF festival where we had an advanced processing workshop held at Hangar. One of the participants of that workshop, Arturo Castro, joined the OF team to help produce a Linux version.  Theo, Arturo and I have been joined by a huge group of people who use OF and help contribute to it.
 
 I think one of the most important things about code and any tool is joy, and I can't express how much joy I've had working with Theo and Arturo, joking about weird operating systems properties, having late night skype calls to figure out tough issues.  I think one of the strengths of OF is that it attracts really caring, helpful people who like to make things and share what they've learned. 
 
@@ -26,7 +26,7 @@ More than anything, we've tried as hard as we can to create a friendly atmospher
 
 ## about this book
 
-This book, much in the spirit of openframeworks, is a community driven affair and it's **very much a work in progress**.   It was a suggestion on the openframeworks developers mailing list which kicked this off and for a the past months we've been hacking away on it. 
+This book, much in the spirit of openFrameworks, is a community driven affair and it's **very much a work in progress**.   It was a suggestion on the openFrameworks developers mailing list which kicked this off and for a the past months we've been hacking away on it. 
 
 A couple of notes, 
 
