@@ -461,7 +461,8 @@ subprocess.call(["pandoc", "-o", destTocPath, sourceTocPath,
                                     "-s", "-p",
                                     "--include-in-header=createWebBookTemplate/IncludeInHeader.html",
                                     "--include-before-body=createWebBookTemplate/IncludeBeforeBodyTOC.html",
-                                    "--include-after-body=createWebBookTemplate/IncludeAfterBodyTOC.html"])
+                                    "--include-after-body=createWebBookTemplate/IncludeAfterBodyTOC.html",
+                                    "--template=createWebBookTemplate/default.html"])
 
 print "Removing", sourceTocPath, "..."
 os.remove(sourceTocPath)
