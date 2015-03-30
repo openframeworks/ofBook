@@ -3,7 +3,7 @@
 *by [Zach Lieberman](http://thesystemis.com)*
 
 
-OpenFrameworks began around 2004 / 2005.  I was teaching at Parsons School of Design, and at the same time, making a living as an artist creating interactive projects with code.
+openFrameworks began around 2004 / 2005.  I was teaching at Parsons School of Design, and at the same time, making a living as an artist creating interactive projects with code.
 
 I had graduated a few years earlier from grad school in 2002, and we were using computational tools like Director / Lingo and Flash when I was there -- it was the heyday of flash experimentation.  In 2002, my professor, Golan Levin, invited me to collaborate with him on some projects after I graduated from school and he introduced me to ACU, a C++ library that had been developed at MIT under the Aesthetics and Computation Group, the group that John Maeda ran which had students like Elise Co, Peter Cho, Ben Fry, Casey Reas and Golan himself.
 
