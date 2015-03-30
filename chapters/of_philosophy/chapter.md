@@ -46,7 +46,7 @@ One mental image of openFrameworks is a scaffolding, or shoulders to stand on, w
 
 An openFrameworks addon can be a snippet of code, or it might wrap much more complex libraries such as OpenNI, Tesseract, or Box2d. Addon names usually begin with the prefix "ofx", allowing you to easily see the difference between "core" code and non core code. In addition, we include "core addons", addons that we think people will probably want to use, such as ofxOpenCv, but aren't essential for every project.
 
-We try to organize and support the community developing addons through the http://ofxaddons.com site, which automatically collects addons from GitHub by looking for repos that contain the term "ofx" in the title. Right now there are more than 1,500 addons.
+We try to organize and support the community developing addons through the [http://ofxaddons.com](http://ofxaddons.com "ofxaddons, a collection of oF addons") site, which automatically collects addons from GitHub by looking for repos that contain the term "ofx" in the title. Right now there are more than 1,500 addons.
 
 ### Do it with others (DIWO)
 
