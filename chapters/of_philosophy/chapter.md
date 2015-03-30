@@ -32,11 +32,11 @@ The joy of a cross-platform library is that it's easy to port your ideas from pl
 
 ### Powerful
 
-openFrameworks is powerful: it allows you to leverage advanced libraries like OpenCV, use hardware like your graphics card efficiently, and connect peripherals like cameras and other devices.
+openFrameworks is powerful: it allows you to leverage advanced libraries like [OpenCV](http://opencv.org/ "OpenCV, a library for (real-time) computer vision"), use hardware like your graphics card efficiently, and connect peripherals like cameras and other devices.
 
 We chose C++ because it's a fairly low level language but can still be programmed in a high level way. Because C++ is an extension of the older C programming language, it's possible to write very low level, oldschool C code or higher level C++ code. In openFrameworks, we try to harness both approaches and present simple, clear, yet powerful ways of working with code. Using C++ also makes it easier to interface to the many libraries that have been written in C and C++ without needing to rely on a wrapper for another language.
 
-openFrameworks essentially wraps other libraries such as OpenGL, Cairo, FreeType, FreeImage, and OpenCV. You can think of openFrameworks as a layer of code between user code (the code you will write) and these libraries. The libraries have different styles, idioms, approaches, etc. and our job is to wrap them in a way which makes them more consistent and intuitive.
+openFrameworks essentially wraps other libraries such as OpenGL, [Cairo](http://cairographics.org/ "Cairo, a vector graphics library"), FreeType, FreeImage, and OpenCV. You can think of openFrameworks as a layer of code between user code (the code you will write) and these libraries. The libraries have different styles, idioms, approaches, etc. and our job is to wrap them in a way which makes them more consistent and intuitive.
 
 ### Extensible
 
