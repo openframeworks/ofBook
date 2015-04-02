@@ -110,7 +110,7 @@ Now press the green *ideone it!* button at the bottom right corner and watch the
 
 You made it this far. Now give yourself a pat on the back. You just wrote your first line of C++ code; you analyzed it, compiled it, ran it, and saw the output.
 
-##Beyond Hello World
+## Beyond Hello World
 
 Now that we've gotten our feet wet, let's go back and analyze the other parts of the code. The first line is an include statement:
 
