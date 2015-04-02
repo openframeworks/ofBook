@@ -1,4 +1,4 @@
-#C++ Language Basics#
+# C++ Language Basics
 
 *by [Josh Nimoy](http://jtnimoy.net)*
 
@@ -6,13 +6,13 @@
 >
 > **--Aleister Crowley, 1911**
 
-##Look Alive!
+## Look Alive!
 
 This chapter introduces you to writing small computer programs using the C++ language. Although I assume very little about your previous knowledge, the literacy you gain from this chapter will directly influence your comprehension in subsequent chapters of the book, as most other topics stand on the shoulders of this one. Furthermore, the lessons herein are cumulative, meaning you can't skip one of the topics or you will get lost. If you get stuck on one of the concepts, please seek help in understanding specifically the part that did not make sense before moving on to the next topic. Following the lessons with this sort of rigor ensure that not only will you get the most out of OpenFrameworks, but computers in general.
 
 
 
-##Iteration
+## Iteration
 
 
 I did most of my drawing and painting in the mid-nineties, a high school AP art student sporting a long black ponytail of hair shaved with a step, round eyeglasses, and never an article of clothing without spill, fling, smattering, or splotch of Liquitex Basics acrylic paint. Bored out of my mind in economics class, playing with my TI-82 graphing calculator, I discovered something that flipped a light bulb on in my heart. Unlike smaller calculators around my house growing up, the TI-82 had a thick instruction manual. Amidst sections in this manual about trig functions and other dry out-of-reach science, something caught my thirsty, young eye: a sexy black-on-white pyramid with smaller upside-down pyramids infinitely nested inside, shown in Figure 1.
@@ -29,7 +29,7 @@ The cycle illustrated in Figure 2 is an infinitely repeating loop that I have ha
 
 For those just now familiarizing themselves with what it means to write small programs, it is important to understand the iterative nature of the code writing process. The anecdote in Figure 3 shows what this process is *not*. Rarely would you ever enter some code into the editor just once, and expect to hit compile and see your finished outcome. It is natural, and commonly accepted for programs to start small, have plenty of mistakes (bugs), and evolve slowly toward a goal of desired outcome or behavior. In fact it is so commonplace that to make the former assumption is a downright programmer's mistake. Even in older days when programs were hand-written on paper, the author still needed to eyeball the code obsessively in order to work out the mistakes; therefore the process was iterative. In learning the C++ language, I will provide tiny code examples that you will be compiling on your machine. The abnormal part is typing the code from the book into the editor, and (provided your fingers do not slip) the program magically runs. I am deliberately removing the troubleshooting experience in order to isolate the subject matter of the C++ language itself. Later on, we will tackle the commonplace task of *debugging* (fixing errors) as a topic all its own.
 
-##Compiling My First App
+## Compiling My First App
 
 Let us start by making the smallest, most immediate C++ program possible, then use the convenient environment to test small snippets of C++ code throughout this chapter. In order to do that, we must have a *compiler*, which is a program that translates some code into an actual runnable app, sometimes referred to as the executable file. C++ compilers are mostly free of charge to download, and in a lot of cases, open source. The apps we generate will not automatically show up in places like Apple's App store, Google Play, Steam, Ubuntu Apps Directory, or Pi Store. Instead, they are your personal, private program files and you will be responsible for manually sharing them later on. In the following chapter *OF Setup and Project Structure*, the compiler will sit on your local computer, able to run offline. For now, we will be impatient and compile some casual C++ on the web using a convenient tool by Sphere Research Labs. Please open your web browser and go to [ideone](http://ideone.com) (http://ideone.com).
 
@@ -58,7 +58,7 @@ and this style encased in a block . . .
 
 . . . and that just means you are looking at some code.
 
-###Comments
+### Comments
 
 Now please press *Edit* (Figure 7) at the top left of the code editor.
 
@@ -168,7 +168,7 @@ The compiler found an error and did not run the program. Instead, in an attempt 
 
 When using OpenFrameworks, you have choice of tools and platforms. Each one shows you an error in a different way. Sometimes the editor will open up and highlight the code for you, placing an error talk bubble for more info. Other times, the editor will show nothing, but the compile output will show a raw error formatted similarly to the one above. While sometimes useful that we receive several errors from a compile, it can save a lot of grief if you focus on understanding and fixing the very first error that got reported. After fixing the top error, it is likely that all subsequent errors will elegantly disappear, having all been covered by your first fix.  By commenting out that single line of code at the top, we caused two errors.
 
-###Namespaces at First Glance
+### Namespaces at First Glance
 
 Moving on to line 2, we see:
 
@@ -204,7 +204,7 @@ Say I'm at a Scrabble party in Manhattan, and I am the only Josh. People can jus
 
 You will see more double-colon syntax (::) when I introduce classes.
 
-##Functions
+## Functions
 
 Moving on, let us take a look at line 4:
 
@@ -580,7 +580,7 @@ and after a variable name.
 
 The C++ language gets its name from being the C language plus one.
 
-##Conclusion
+## Conclusion
 
 Congratulations on getting through the first few pages of this introduction to C++.
 With these basic concepts, you should be able to explore plenty far on your own,
@@ -597,7 +597,7 @@ chapter before continuing in ofBook, so that you may understand what you are rea
 You will find those materials at
 https://github.com/openframeworks/ofBook/blob/master/chapters/cplusplus_basics/unabridged.md
 
-##PS.
+## PS.
 
 Stopping the chapter here is by no means intended to separate what is important to
 learn about C++ from what is not important. We have simply run out of paper. In lieu of
