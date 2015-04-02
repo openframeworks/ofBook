@@ -232,7 +232,7 @@ Next, we see an opening curly bracket. Sometimes this opening curly bracket is o
 
 In between this opening curly bracket and the closing one, we place our code statements that actually tell the computer to go do something. In this example, I only have one statement, and that is the required `return`. If you leave this out for a function whose return type is `int`, then the compiler will complain that you broke your promise to return an int. In this case, the operating system interprets a 0 as "nothing went wrong". Just for fun, see what happens when you change the 0 to a 1, and run the code.
 
-##Custom Functions
+## Custom Functions
 
 We will now define our own function and make use of it as a word template. Type the sample code into your editor and run it.
 
