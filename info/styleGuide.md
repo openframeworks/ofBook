@@ -13,7 +13,7 @@ Your chapter should be stored within the repository like this:
             - images/ (if you have images)
             - code/ (if you have code)
 
-Note: your chapter should actually be called `chapter.md`.  Images should not be fetched from the web - they should be uploaded to the iamges/ directory.
+Note: your chapter should actually be called `chapter.md`.  Images should not be fetched from the web - they should be uploaded to the images/ directory.
 
 ## header tags ##
 
@@ -51,7 +51,7 @@ The caption is what is used by the book rendering pipeline to generate a caption
 
 ## links ##
 
-Please use inline links and add titles to the links for more details explanation (helps for accessibility).  Don't repeate the link text in the title. 
+Please use inline links and add titles to the links for more details explanation (helps for accessibility).  Don't repeat the link text in the title. 
 
 for example this: 
 
@@ -67,14 +67,14 @@ Please also consider how you might want to link to other parts of the text.  Sin
 
 Between paragraphs include one empty line of whitespace, as per the markdown spec. 
 
-Feel free to experiment with newlines in a paragraph. If it makese sense for you, you can write your paragphs with a newline after every sentence.  Be careful to not have whitespace after the period, since two writespaces gets turned into a `<\br> tag. for example: 
+Feel free to experiment with newlines in a paragraph. If it makes sense for you, you can write your paragraphs with a newline after every sentence.  Be careful to not have whitespace after the period, since two whitespaces get turned into a `<\br> tag. for example: 
 
 	Feel free to experiment with newlines.
-	If it makese sense, you can write your paragphs with a newline after every sentence.
-	Be careful to not have whitespace after the period, since two writespaces gets turned into a `<\br> tag. 
+	If it makes sense, you can write your paragraphs with a newline after every sentence.
+	Be careful to not have whitespaces after the period, since two write spaces get turned into a `<\br> tag. 
 	for example: 
 
-The benifits of this is that it makes github changes significantly easier to read, and will help you identify long sentences.  The drawbacks is that it might be less intuitive to write and read.  Do what feels right. 
+The benefits of this is that it makes github changes significantly easier to read, and will help you identify long sentences.  The drawbacks is that it might be less intuitive to write and read.  Do what feels right. 
 
 ## non markdown / extensions ##
 
