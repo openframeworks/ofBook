@@ -126,7 +126,7 @@ Similar to *import* in Java and CSS, `#include` is like telling the compiler to 
 
 In openFrameworks, double quotes are used to include header files that are not part of the system installation.
 
-###What's with the # ?
+### What's with the # ?
 
 It's a whole story, but worth understanding conceptually. The include statement is not really C++ code (notice the absence of semicolon). It is part of a completely separate compiler pass called *preprocessor*. It happens before your actual programmatic instructions are dealt with. They are like instructions for the code compiler, as opposed to instructions for the computer to run after the compile. Using a pound/hash symbol before these *preprocessor directives*, one can clearly spot them in the file, and for good reason too. They should be seen as a different language, mixed in with the real C++ code. There aren't many C++ preprocessor directives — they are mostly concerned with herding other code. Here are some you might see.
 
