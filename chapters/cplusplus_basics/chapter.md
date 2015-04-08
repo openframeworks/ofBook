@@ -581,22 +581,13 @@ Congratulations on getting through the first few pages of this introduction to C
 
 ## PS.
 
-Stopping the chapter here is by no means intended to separate what is important to
-learn about C++ from what is not important. We have simply run out of paper. In lieu of
-how important the rest of this intro to C++ is, and based on ofZach's teaching experience,
-here is more of what you'll find in the unabridged version:
+Stopping the chapter here is by no means intended to separate what is important to learn about C++ from what is not important. We have simply run out of paper. In lieu of how important the rest of this intro to C++ is, and based on ofZach's teaching experience, here is more of what you'll find in the unabridged version:
 
-+ Variables exist for different periods of time - some for a long time,
-and some for a small blip in your program's lifecycle. This subject of *scope*
-is covered in the unabridged version of this book, entitled *Variables (part 2)*.
++ Variables exist for different periods of time - some for a long time, and some for a small blip in your program's lifecycle. This subject of *scope* is covered in the unabridged version of this book, entitled *Variables (part 2)*.
 
-+ Variables have a *data type*. For example, one holds a number while another holds some text.
-More about that in *Fundamental Types*.
++ Variables have a *data type*. For example, one holds a number while another holds some text. More about that in *Fundamental Types*.
 
-+ It's important to reiterate that unlike Processing, variables do not necessarily
-start with a zero value. You must initialize them with your desired value, and otherwise
-there's no telling what will be waiting there for you. You'll find additional discussion of this
-phenomenon in the introduction to arrays.
++ It's important to reiterate that unlike Processing, variables do not necessarily start with a zero value. You must initialize them with your desired value, and otherwise there's no telling what will be waiting there for you. You'll find additional discussion of this phenomenon in the introduction to arrays.
 
 > The best way to predict your future is to create it.
 >
