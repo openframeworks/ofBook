@@ -283,7 +283,7 @@ int main(){
 
 ```
 
-Getting back to the previous example, those five lines of code are all ***function calls***. They are telling `greet()` to execute, and passing it the one string argument so it can do its job. That one string argument is made available to `greet()`'s inner code via the argument called `person`. To see the order of how things happen, take a look at Figure 11.
+Getting back to the previous example, those five lines of code are all ***function calls***. They are telling `greet(...)` to execute, and passing it the one string argument so it can do its job. That one string argument is made available to `greet(...)`'s inner code via the argument called `person`. To see the order of how things happen, take a look at Figure 11.
 
 ![Figure 11. Function Call Flow](images/function-call.png "Figure 11. Function Call Flow")
 
