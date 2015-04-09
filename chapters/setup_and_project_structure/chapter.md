@@ -2,7 +2,7 @@
 
 *by [Roy Macdonald](http://github.com/roymacdonald/)*
 
-Let's get into openFrameworks (I'll refer to it as oF from now on). The philosophy chapter talks about oF in very abstract and conceptual manner, which is really useful for understanding the design of the oF environment.  Now, let's take a look at what the oF download looks like.
+Let's get into openFrameworks (I'll refer to it as oF from now on). The philosophy chapter talks about oF in a very abstract and conceptual manner, which is really useful for understanding the design of the oF environment.  Now, let's take a look at what the oF download looks like.
 
 I have found it very useful to explain oF by making analogies to cooking. Coding and cooking have a lot of things in common, and most people are familiar with the act of cooking. In this chapter, I'll be drawing connections between processes and terminology in cooking and oF.
 
