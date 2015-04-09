@@ -28,7 +28,7 @@ All IDEs have a similar interface:
 - Editing area: When you open a file in the project navigation area, usually by double clicking it, it should open in the editing area. This looks just like any regular text-editing software, and behaves much the same.
 - Console: This is where your app, when running, outputs messages. These messages are really useful for debugging. You can print text messages to the console using the `cout` comand  or [`ofLog(...)`](http://openframeworks.cc/documentation/utils/ofLog.html "ofLog Documentation Page") function.
 
-####Apple Xcode
+#### Apple Xcode
 
 Xcode is Apple's IDE. Used both for iOS apps and desktop apps.
 Even though there are other IDEs for OS X, Xcode is a pretty mature one with lots of nice and useful features, especially for dealing with iOS apps.
