@@ -11,9 +11,9 @@ You need to download the oF version and the IDE (Integrated Development Environm
 
 Go to [www.openframeworks.cc/downloads](www.openframeworks.cc/downloads "Download openFrameworks!") and download the version that you need. By the side of each available version you will find a link to download the matching IDE and how to install it. 
 
-##Welcome to your new kitchen
+## Welcome to your new kitchen
 
-###IDE:
+### IDE
 
 As said before, the *Integrated Development Environment*, IDE, is the application you will be using to build your oF projects. It will let you write code, compile (bake it), test it and debug it (find out what is giving you a problem, if there is any, and fix it).
 There are several different IDEs, at least one for each platform you might be utilizing.
