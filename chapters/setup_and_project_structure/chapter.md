@@ -45,7 +45,7 @@ This is Microsoft's IDE, it is aimed at Windows development. It's a commercial p
 Code::Blocks is a free IDE. It runs on several platforms, but oF supports it for Microsoft Windows and Linux. It is quite "light" in terms of downloading and we use it in workshops over Visual Studio, which can be a bit intimidating for beginners. For windows, follow the setup instructions (including step "e") carefully. There are scripts that help install dependencies and the Code::Blocks IDE for Linux.
 
 
-##Running examples
+## Running examples
 
 Find the oF version that you downloaded and decompress it. From now on we will refer to this folder as the oF root folder. You can place the oF root folder anywhere you like.   One thing to stress is that oF is designed to be self contained -- everything you need will stay in one folder and this folder can even be moved around on your drive if need be.  If you download another version of openframeworks, it should stay in it's own folder and don't try to merge them. 
 
