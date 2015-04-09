@@ -34,7 +34,7 @@ Xcode is Apple's IDE. Used both for iOS apps and desktop apps. Even though there
 
 Use the latest version of Xcode and read the setup guide. 
 
-####Microsoft Visual Studio 2012 Express
+#### Microsoft Visual Studio 2012 Express
 
 This is Microsoft's IDE, it is aimed at Windows development. It's a commercial product, but there's a free version you can download called "Express". 
 
