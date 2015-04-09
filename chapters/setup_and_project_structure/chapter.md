@@ -15,8 +15,7 @@ Go to [www.openframeworks.cc/downloads](www.openframeworks.cc/downloads "Downloa
 
 ### IDE
 
-As said before, the *Integrated Development Environment*, IDE, is the application you will be using to build your oF projects. It will let you write code, compile (bake it), test it and debug it (find out what is giving you a problem, if there is any, and fix it).
-There are several different IDEs, at least one for each platform you might be utilizing.
+As said before, the *Integrated Development Environment*, IDE, is the application you will be using to build your oF projects. It will let you write code, compile (bake it), test it and debug it (find out what is giving you a problem, if there is any, and fix it). There are several different IDEs, at least one for each platform you might be utilizing.
 
 The IDE is your new kitchen, where you'll find all the tools to cook incredible stuff. Yet there are a lot of different kitchen brands, just like IDEs. All do the same basic things but might be laid out and named in a slightly different way. If you know how to use one, you can use any other. For clarification, I will go through each IDE and show where you will find the most used commands, controls and settings. Only read for the IDE you are going to use.    
 
