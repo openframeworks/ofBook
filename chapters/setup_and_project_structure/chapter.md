@@ -1,4 +1,4 @@
-#oF structure
+# oF structure
 
 *by [Roy Macdonald](http://github.com/roymacdonald/)*
 
