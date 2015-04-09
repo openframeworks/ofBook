@@ -42,7 +42,7 @@ This is Microsoft's IDE, it is aimed at Windows development. It's a commercial p
 
 #### Code::Blocks
 
-Code::Blocks is a free IDE. It runs on several platforms, but oF supports it for Microsoft Windows and Linux. It is quite "light" in terms of downloading and we use it in workshops over VS, which can be a bit intimidating for beginners.  For windows, follow the setup instructions (including step "e") carefully.  For linux, there are scripts that help install dependencies and the codeblocks IDE. 
+Code::Blocks is a free IDE. It runs on several platforms, but oF supports it for Microsoft Windows and Linux. It is quite "light" in terms of downloading and we use it in workshops over VS, which can be a bit intimidating for beginners.  For windows, follow the setup instructions (including step "e") carefully.  For Linux, there are scripts that help install dependencies and the codeblocks IDE. 
 
 
 ##Running examples
