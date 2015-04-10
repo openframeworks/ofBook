@@ -165,7 +165,7 @@ Here you will find a lot of different things, from ingredients to tools, all ord
 
 ### Addons
 
-As mentioned before, addons extend oF core functionalities, and in each oF distribution there are several included addons, usually referred to as "core addons":
+As mentioned before, addons extend oF core functionalities. In each oF distribution there are several included addons, usually referred to as "core addons":
 
 - **ofx3DModelLoader**
 Used for loading 3D models into your oF project. It only works with .3ds files.
