@@ -150,8 +150,13 @@ Here you will find a lot of different things, from ingredients to tools, all ord
     - a lot of different base types for common elements used extensively within oF
     - mostly for folks that want to understand the architecture of oF,
 - **utils**
-    -  Utilities for file input and output, logging, threading, system dialogs (open, save, alert), URL file loader, reading and saving XML files (super useful for storing and reading your app's settings)
-    - [`ofDirectory`](http://openframeworks.cc/documentation/utils/ofDirectory.html "ofDirectory Documentation Page") which can help iterate through a directory
+    - utilities for
+      - file input and output (also via URLs)
+      - logging
+      - threading
+      - system dialogs (open, save, alert)
+      - reading and saving XML files (super useful for storing and reading your app's settings)
+    - e.g. [`ofDirectory`](http://openframeworks.cc/documentation/utils/ofDirectory.html "ofDirectory Documentation Page") can help iterate through a directory
 - **video**
     - Video Grabber and player, with behind-the-scenes implementations for all the supported platforms.
     - [`ofVideoGrabber`](http://openframeworks.cc/documentation/video/ofVideoGrabber.html "ofVideoGrabber Documentation Page") helps with grabbing from a webcam or attached camera
