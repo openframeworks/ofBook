@@ -155,7 +155,7 @@ Here you will find a lot of different things, from ingredients to tools, all ord
       - logging
       - threading
       - system dialogs (open, save, alert)
-      - reading and saving XML files (super useful for storing and reading your app's settings)
+      - reading and saving [XML](https://en.wikipedia.org/wiki/XML "wikipedia article on XML") files (super useful for storing and reading your app's settings)
     - e.g. [`ofDirectory`](http://openframeworks.cc/documentation/utils/ofDirectory.html "ofDirectory Documentation Page") can help iterate through a directory
 - **video**
     - Video Grabber and player, with behind-the-scenes implementations for all the supported platforms.
