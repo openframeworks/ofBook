@@ -73,7 +73,7 @@ Once done continue reading.
 
 Inside the oF root folder you will find several other folders, at least, the following:
 
-####Addons####
+### Addons
 The "addons" folder will contain the included "core" addons. Addons are extra pieces of code that extend oF's functionalities, allowing you to do almost anything with oF. Addons are usually written by third parties that have shared these. The "core" addons, the ones already included in your oF download, are addons that are used so frequently that it has been decided to include them as part of the official oF download. These are coded and maintained by oF's core developers.     
 Check the examples/addons folder in your oF root folder where you will find at least one example about how to use each of these addons.
 You can also go to [ofxAddons](http://ofxaddons.com/ "ofxaddons, a collection of oF addons") where you'll find a huge collection of additional addons from the community. 
