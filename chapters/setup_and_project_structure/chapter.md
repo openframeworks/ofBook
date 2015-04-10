@@ -182,7 +182,7 @@ This is oF's binding to one of the best and most used computer vision code libra
 - **ofxOsc**
 OSC (Open Sound Control) implementation for oF. OSC easily comunicates with other devices or applications within the same network. OSC is used to send messages and parameters from one app to another one. Several chapters in this book discuss OSC. 
 - **ofxSvg**
-Loads and displays [SVG](https://en.wikipedia.org/wiki/Scalable_Vector_Graphics "wikipedia article on SVG") files. These are vector graphics files, usually exported from vector drawing programs such as Adobe Illustrator.
+Loads and displays [SVG](https://en.wikipedia.org/wiki/Scalable_Vector_Graphics "wikipedia article on SVG") files. These are vector graphics files, usually exported from vector drawing programs such as Inkscape or Adobe Illustrator.
 - **ofxThreadedImageLoader**
 Loads images on a different thread, so your main thread (the one that draws to your screen) doesn't get stuck while loading images. Really useful when loading online images.
 - **ofxVectorGraphics**
