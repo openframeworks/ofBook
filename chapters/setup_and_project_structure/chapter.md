@@ -193,5 +193,3 @@ This is oF's simple XML implementation used mostly for loading and saving settin
 That's what's in the pantry.  What do you want to cook?
 
 ![pantry, image courtesy [http://resultsroom.co.nz/stock-pantry-fridge/](http://resultsroom.co.nz/stock-pantry-fridge/)](images/pantry.jpg)
-
-
