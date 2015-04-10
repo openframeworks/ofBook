@@ -147,7 +147,8 @@ Here you will find a lot of different things, from ingredients to tools, all ord
     - low level sound access directly on sound card, e.g. [`ofSoundStream`](http://openframeworks.cc/documentation/sound/ofSoundStream.html "ofSoundStream Documentation Page")
     - higher level code for playinf samples and sound effects, e.g. [`ofSoundPlayer`](http://openframeworks.cc/documentation/sound/ofSoundPlayer.html "ofSoundPlayer Documentation Page")
 - **base types**
-    - A lot of different base types used extensively within oF.  For folks that want to understand the architecture of oF, this is a useful place where you'll find base types for common elements. 
+    - a lot of different base types for common elements used extensively within oF
+    - mostly for folks that want to understand the architecture of oF,
 - **utils**
     -  Utilities for file input and output, logging, threading, system dialogs (open, save, alert), URL file loader, reading and saving XML files (super useful for storing and reading your app's settings)
     - [`ofDirectory`](http://openframeworks.cc/documentation/utils/ofDirectory.html "ofDirectory Documentation Page") which can help iterate through a directory
