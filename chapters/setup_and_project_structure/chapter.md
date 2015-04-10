@@ -1,6 +1,6 @@
 # oF structure
 
-*by [Roy Macdonald](http://github.com/roymacdonald/)*
+*by [Roy Macdonald](https://github.com/roymacdonald/)*
 
 Let's get into openFrameworks (I'll refer to it as oF from now on). The philosophy chapter talks about oF in a very abstract and conceptual manner, which is really useful for understanding the design of the oF environment. Now, let's take a look at what the oF download looks like.
 
