@@ -8,7 +8,7 @@ I have found it very useful to explain oF by making analogies to cooking. Coding
 
 ## First things first
 
-You need to download the oF version and the [IDE](https://en.wikipedia.org/wiki/Integrated_development_environment "wikipedia article on IDE") (Integrated Development Environment) that suits your platform. The IDE is a piece of software that will let you write, compile, run and debug the code you write. It is "integrated" because it uses other pieces of software to do each of the mentioned tasks. You can run your code without using the IDE, but the IDE will make your programming life much easier.
+You need to download the oF version and the [IDE](https://en.wikipedia.org/wiki/Integrated_development_environment "Wikipedia article on IDE") (Integrated Development Environment) that suits your platform. The IDE is a piece of software that will let you write, compile, run and debug the code you write. It is "integrated" because it uses other pieces of software to do each of the mentioned tasks. You can run your code without using the IDE, but the IDE will make your programming life much easier.
 
 Go to [www.openframeworks.cc/downloads](www.openframeworks.cc/downloads "Download openFrameworks!") and download the version that you need. By the side of each available version you will find a link to download the matching IDE and how to install it. 
 
@@ -120,7 +120,7 @@ Here you will find a lot of different things, from ingredients to tools, all ord
     - [`ofMesh`](http://openframeworks.cc/documentation/3d/ofMesh.html "ofMesh Documenation Page"), a primitive for batching points in 3D space that allows you to draw them in several different ways such as points, lines, line strips, triangles, triangle strips, and attach textures (images) to these. All of this is done very efficiently using your computer's GPU
     - functions to help load and save 3D objects
 - **app**
-    - tools for setting and getting properties of your app such as window size, position, different drawing modes, framerate, etc.
+    - tools for setting and getting properties of your app such as window size, position, different drawing modes, frame rate, etc.
     - different windowing systems, such as [`ofAppNoWindow`](http://openframeworks.cc/documentation/application/ofAppNoWindow.html "ofAppNoWindow Documenation Page") which sets up openFrameworks in a windowless context
 - **communication**
     - [`ofSerial`](http://openframeworks.cc/documentation/communication/ofSerial.html "ofSerial Documentation Page") provides simple serial port communication
@@ -128,15 +128,15 @@ Here you will find a lot of different things, from ingredients to tools, all ord
 - **events**
     - the oF event manager, allowing you to tap into app events if you need or even creating your own events
 - **gl** 
-    - [OpenGL](https://en.wikipedia.org/wiki/OpenGL "wikipedia article on OpenGL"), the library for using the computer's [GPU](https://en.wikipedia.org/wiki/Graphics_processing_unit "wikipedia article on the graphics processing unit")
+    - [OpenGL](https://en.wikipedia.org/wiki/OpenGL "Wikipedia article on OpenGL"), the library for using the computer's [GPU](https://en.wikipedia.org/wiki/Graphics_processing_unit "Wikipedia article on the graphics processing unit")
     - contains GL specific functionality such as VBOs (Vertex Buffer Object), FBOs (Frame Buffer Object), Renderers, Lights, Materials, Shaders, Textures, and several other GL utilities
-    - oF implements different rendering pipelines (fixed, programable & OpenGL ES (used on less powerful devices such as smartphones and the Raspberry Pi)) -- most of this code is found in the gl folder
+    - oF implements different rendering pipelines (fixed, programmable & OpenGL ES (used on less powerful devices such as smartphones and the Raspberry Pi)) -- most of this code is found in the gl folder
 - **graphics**
     - capabilities such as loading, drawing and saving images of almost any kind, e.g. via [`ofImage`](http://openframeworks.cc/documentation/graphics/ofImage.html "ofImage Documentation Page")
     - also allows you to render as PDF
     - several different methods for drawing in 2D, and exhibiting colors and styles
     - most of the drawing tools rely on OpenGL so these are usually very fast
-    - typography with several kinds of rendering options and utilities e.g. [`ofTrueTypeFont`](http://openframeworks.cc/documentation/graphics/ofTrueTypeFont.html "ofTrueTypeFont Documenation Page"), a library for loading and drawing [TrueType fonts](https://en.wikipedia.org/wiki/TrueType "wikipedia article on TrueType font format")
+    - typography with several kinds of rendering options and utilities e.g. [`ofTrueTypeFont`](http://openframeworks.cc/documentation/graphics/ofTrueTypeFont.html "ofTrueTypeFont Documenation Page"), a library for loading and drawing [TrueType fonts](https://en.wikipedia.org/wiki/TrueType "Wikipedia article on TrueType font format")
 - **math**
     - mostly math related tools
     - vectors (i.e. [`ofVec2f`](http://openframeworks.cc/documentation/math/ofVec2f.html "ofVec2f Documenation Page"), [`ofVec3f`](http://openframeworks.cc/documentation/math/ofVec3f.html "ofVec3f Documentation Page"))
@@ -145,7 +145,7 @@ Here you will find a lot of different things, from ingredients to tools, all ord
     - useful math help functions like [`ofRandom`](http://openframeworks.cc/documentation/math/ofMath.html#!show_ofRandom "ofRandom Documentation Page") and [`ofNoise`](http://openframeworks.cc/documentation/math/ofMath.html#!show_ofNoise "ofNoise Documentation Page").
 - **sound**
     - low level sound access directly on sound card, e.g. [`ofSoundStream`](http://openframeworks.cc/documentation/sound/ofSoundStream.html "ofSoundStream Documentation Page")
-    - higher level code for playinf samples and sound effects, e.g. [`ofSoundPlayer`](http://openframeworks.cc/documentation/sound/ofSoundPlayer.html "ofSoundPlayer Documentation Page")
+    - higher level code for playing samples and sound effects, e.g. [`ofSoundPlayer`](http://openframeworks.cc/documentation/sound/ofSoundPlayer.html "ofSoundPlayer Documentation Page")
 - **base types**
     - a lot of different base types for common elements used extensively within oF
     - mostly for folks that want to understand the architecture of oF,
@@ -155,7 +155,7 @@ Here you will find a lot of different things, from ingredients to tools, all ord
       - logging
       - threading
       - system dialogs (open, save, alert)
-      - reading and saving [XML](https://en.wikipedia.org/wiki/XML "wikipedia article on XML") files (super useful for storing and reading your app's settings)
+      - reading and saving [XML](https://en.wikipedia.org/wiki/XML "Wikipedia article on XML") files (super useful for storing and reading your app's settings)
     - e.g. [`ofDirectory`](http://openframeworks.cc/documentation/utils/ofDirectory.html "ofDirectory Documentation Page") can help iterate through a directory
 - **video**
     - video grabber and player, with behind-the-scenes implementations for all the supported platforms.
@@ -172,21 +172,21 @@ Used for loading 3D models into your oF project. It only works with .3ds files.
 - **ofxAssimpModelLoader**
 Also loads 3D models into your oF project, but it is done using the [assimp](http://assimp.sourceforge.net/) library, which supports a wide variety of 3D file formats, even animated 3D objects.
 - **ofxGui**
-This is the default GUI (Graphical User Interface) for oF. It lets you add sliders and buttons so you can easily modify parameters while your project is running. It relies heavilly on ofParameters and ofParameterGroup. It allows you to save and load the values for the parameters that you've adjusted.
+This is the default GUI (Graphical User Interface) for oF. It lets you add sliders and buttons so you can easily modify parameters while your project is running. It relies heavily on ofParameters and ofParameterGroup. It allows you to save and load the values for the parameters that you've adjusted.
 - **ofxKinect**
-As you probably infer, it's for using a [Microsoft XBox Kinect](https://en.wikipedia.org/wiki/Kinect) 3D sensor with your oF project. This addon relies on [libfreenect](http://openkinect.org/wiki/Main_Page), so you can only access the depth and rgb images that the Kinect reads and adjust some of its parameters, like tilt and light. It includes some handy functions that allow you to convert Kinect's data between several different kinds. Please note that ofxKinect doesn't perform skeleton tracking. For such thing you need to use ofxOpenNI.
+As you probably infer, it's for using a [Microsoft XBox Kinect](https://en.wikipedia.org/wiki/Kinect) 3D sensor with your oF project. This addon relies on [libfreenect](http://openkinect.org/wiki/Main_Page), so you can only access the depth and RGB images that the Kinect reads and adjust some of its parameters, like tilt and light. It includes some handy functions that allow you to convert Kinect's data between several different kinds. Please note that ofxKinect doesn't perform skeleton tracking. For such thing you need to use ofxOpenNI.
 - **ofxNetwork**
 Lets you deal with network protocols such as UDP and TCP. You can use it to communicate with other computers over the network. Check out the network chapter for more information.
 - **ofxOpenCv**
 This is oF's binding to one of the best and most used computer vision code library, [OpenCV](http://opencv.org/). Computer vision is a complete world in itself, and being able to use OpenCV right out-of-the-box is a super important and useful oF feature.
 - **ofxOsc**
-OSC (Open Sound Control) implementation for oF. OSC easily comunicates with other devices or applications within the same network. OSC is used to send messages and parameters from one app to another one. Several chapters in this book discuss OSC. 
+OSC (Open Sound Control) implementation for oF. OSC easily communicates with other devices or applications within the same network. OSC is used to send messages and parameters from one app to another one. Several chapters in this book discuss OSC. 
 - **ofxSvg**
-Loads and displays [SVG](https://en.wikipedia.org/wiki/Scalable_Vector_Graphics "wikipedia article on SVG") files. These are vector graphics files, usually exported from vector drawing programs such as Inkscape or Adobe Illustrator.
+Loads and displays [SVG](https://en.wikipedia.org/wiki/Scalable_Vector_Graphics "Wikipedia article on SVG") files. These are vector graphics files, usually exported from vector drawing programs such as Inkscape or Adobe Illustrator.
 - **ofxThreadedImageLoader**
 Loads images on a different thread, so your main thread (the one that draws to your screen) doesn't get stuck while loading images. Really useful when loading online images.
 - **ofxVectorGraphics**
-Used to write out [EPS](https://en.wikipedia.org/wiki/Encapsulated_PostScript "wikipedia article on encapsulated portscript (eps)") vector graphics files. It the same drawing syntax as oF's regular drawing syntax, so it is really easy to use. Check chapter **[add correct chapter number]** for more info about oF's drawing capabilities. 
+Used to write out [EPS](https://en.wikipedia.org/wiki/Encapsulated_PostScript "Wikipedia article on encapsulated portscript (eps)") vector graphics files. It the same drawing syntax as oF's regular drawing syntax, so it is really easy to use. Check chapter **[add correct chapter number]** for more info about oF's drawing capabilities. 
 - **ofxXmlSettings**
 This is oF's simple XML implementation used mostly for loading and saving settings. 
 
