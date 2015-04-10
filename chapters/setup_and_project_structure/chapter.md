@@ -63,7 +63,7 @@ If everything went well, a new window will pop up and display the example you ju
 - Code::Blocks: make sure you've opened the .workspace file. If you are opening up other projects, be sure to close the current workspace first, as Code::Blocks doesn't handle multiple open projects very well.   
 - all IDEs: the play button will compile and run the project, but sometimes you might need to hit the button twice if the window doesn't launch.
 
-If the graphics example works, spend some time going through the other oF examples and running them. Usually it's good practice to close the current project / workspace completely before you open another one.  Once the oF library is compiled, the projects should build quite quickly! 
+If the graphics example works, spend some time going through the other oF examples and running them. Usually it's good practice to close the current project / workspace completely before you open another one. Once the oF library is compiled, the projects should build quite quickly! 
 
 If you have trouble, please keep track of what errors you have, what platform you are on, and start using the [oF forum](http://forum.openframeworks.cc/) to find help.  There's years of experience there, and really helpful folks who can help answer questions.  First, try searching for a specific error and if you don't see it, post a question in the forum.  When you are beginning it can be quite frustrating, but the community is very good at helping each other out. 
 
