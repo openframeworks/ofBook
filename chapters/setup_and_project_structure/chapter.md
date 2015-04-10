@@ -49,7 +49,7 @@ Code::Blocks is a free IDE. It runs on several platforms, but oF supports it for
 
 Find the oF version that you downloaded and decompress it. From now on we will refer to this folder as the oF root folder. You can place the oF root folder anywhere you like. One thing to stress is that oF is designed to be self contained -- everything you need will stay in one folder and this folder can even be moved around on your drive if need be. If you download another version of openFrameworks, it should stay in it's own folder and don't try to merge them. 
 
-Open it. Inside of it you will find several folders which we will describe below in more detail. For now, navigate to the examples folder and let's try to compile examples/graphics/graphicsExample. If you are on OS X, click on the graphicsExample.xcodeproj. If you are using visual studio, choose the "sln" file. On code::blocks, choose the "workspace" file.
+Open it. Inside of it you will find several folders which we will describe below in more detail. For now, navigate to the examples folder and let's try to compile examples/graphics/graphicsExample. If you are on OS X, click on the graphicsExample.xcodeproj. If you are using visual studio, choose the "sln" file. On Code::Blocks, choose the "workspace" file.
 
 *As a quick side note, about workspace files, the reason we ask you to open those rather then the project file is that they contain a sub-project to build the oF library also.   If you have any doubts, please read the readme for your given platform.*
 
