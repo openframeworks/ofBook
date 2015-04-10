@@ -31,7 +31,7 @@ All IDEs have a similar interface:
 
 #### Apple Xcode
 
-Xcode is Apple's IDE. Used both for iOS apps and desktop apps. Even though there are other IDEs for OS X, Xcode is a pretty mature one with lots of nice and useful features, especially for dealing with iOS apps.
+[Xcode](https://developer.apple.com/xcode/ "Xcode website") is Apple's IDE. Used both for iOS apps and desktop apps. Even though there are other IDEs for OS X, Xcode is a pretty mature one with lots of nice and useful features, especially for dealing with iOS apps.
 
 Use the latest version of Xcode and read the setup guide. 
 
