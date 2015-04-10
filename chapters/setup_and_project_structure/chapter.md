@@ -37,7 +37,7 @@ Use the latest version of Xcode and read the setup guide.
 
 #### Microsoft Visual Studio 2012 Express
 
-This is Microsoft's IDE, it is aimed at Windows development. It's a commercial product, but there's a free version you can download called "Express". 
+[Visual Studio](http://visualstudio.com/ "Visual Studio website") is Microsoft's IDE, which is aimed at Windows development. It's a commercial product, but there's a free version you can download called "Express". 
 
 ![VS screenshot](images/VS_ScreenShot.jpg "VS screenshot")
 
