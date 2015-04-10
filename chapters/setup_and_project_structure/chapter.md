@@ -128,7 +128,7 @@ Here you will find a lot of different things, from ingredients to tools, all ord
 - **events**
     - this is code for the oF event manager, allowing you to tap into app events if you need or even creating your own events. 
 - **gl** 
-    - [OpenGL](https://en.wikipedia.org/wiki/OpenGL "wikipedia article on OpenGL") is the library for using the computer's GPU, this folder contains gl specific functionality such as VBOs (Vertex Buffer Object), FBOs (Frame Buffer Object), Renderers, Lights, Materials, Shaders, Textures, and several other GL utilities.
+    - [OpenGL](https://en.wikipedia.org/wiki/OpenGL "wikipedia article on OpenGL") is the library for using the computer's [GPU](https://en.wikipedia.org/wiki/Graphics_processing_unit "wikipedia article on the graphics processing unit"), this folder contains gl specific functionality such as VBOs (Vertex Buffer Object), FBOs (Frame Buffer Object), Renderers, Lights, Materials, Shaders, Textures, and several other GL utilities.
     - oF implements different rendering pipelines, Fixed and Programable rendering pipelines as well as OpenGL ES (used on less powerful devices such as smartphones and the Raspberry Pi) -- most of this code is found in the gl folder. 
 - **graphics**
     - There are a lot of capabilities here, such as loading and saving images of almost any kind, implementing several different methods for drawing in 2D, and exhibiting colors and styles. Most of the drawing tools rely on OpenGL so these are usually very fast. Graphics also allows you to render as PDF, and it features typography with several kinds of rendering options and utilities.
