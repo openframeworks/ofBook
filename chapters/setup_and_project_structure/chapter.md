@@ -88,7 +88,7 @@ A key thing to note is that your project files always have to live at this depth
 
 ### Examples
 
-This is a folder with examples, sorted by topic. There are a big bunch of examples that cover almost all of aspects oF. Each example is made with the idea of keeping it simple and focused on the particular aspect it tries to address, thus making it easily understandable and a good starting point when you want to do something similar in your project.
+This is a folder with examples, sorted by topic. There are a big bunch of examples that cover almost all of aspects oF. Each example is made with the idea of keeping it simple and focused on the particular aspect it tries to address. Therefore it should be easily understandable and a good starting point when you want to do something similar in your project.
 
 ####libs
 
