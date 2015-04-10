@@ -90,7 +90,7 @@ A key thing to note is that your project files always have to live at this depth
 
 This is a folder with examples, sorted by topic. There are a big bunch of examples that cover almost all of aspects oF. Each example is made with the idea of keeping it simple and focused on the particular aspect it tries to address. Therefore it should be easily understandable and a good starting point when you want to do something similar in your project.
 
-####libs
+### libs
 
 These are the libraries that openframeworks uses to compile your project.  They include things like freeType for typography support, freeImage for image loading, glfw for windowing, etc. Also the code for openframeworks is in libs, as well as the project files that help compile oF.  If you need to look at the source code, here's where to look. 
 
