@@ -83,7 +83,7 @@ This is the folder where you put your project files as you make new projects. Yo
 
 ![app position to root](images/projectPlacement.png)
 
-A key thing to note is that your project files always have to live at this depth from the root. If you alter their depth, they won't find the other pieces they need to compile.  This is a very common mistake for beginners, especially as you start to find example projects and bring them in oF to test, etc.   Please make sure you understand that projects are always setup relative to the root level.  This is what makes the whole oF folder able to be anywhere on your hard drive -- it's a self contained package.   This is probably the #1 issue beginners have, so it's worth emphasizing. 
+A key thing to note is that your project files always have to live at this depth from the root. If you alter their depth, they won't find the other pieces they need to compile. This is a very common mistake for beginners, especially as you start to find example projects and bring them in oF to test, etc.   Please make sure you understand that projects are always setup relative to the root level.  This is what makes the whole oF folder able to be anywhere on your hard drive -- it's a self contained package.   This is probably the #1 issue beginners have, so it's worth emphasizing. 
 
 
 ####Examples
