@@ -114,7 +114,7 @@ So, what happens when you have your pantry filled with oF's components? You will
 Here you will find a lot of different things, from ingredients to tools, all ordered according to use. This is a breakdown of how oF code is organized (as well as the examples) and should give you a sense of what oF contains: 
 
 - **3D**
-    - Tools for drawing basic 3D polygonal objects, such as spheres, cubes, pyramids, etc.
+    - tools for drawing basic 3D polygonal objects, such as spheres, cubes, pyramids, etc.
     - [`ofCamera`](http://openframeworks.cc/documentation/3d/ofCamera.html "ofCamera Documentation Page"), [`ofEasyCam`](http://openframeworks.cc/documentation/3d/ofEasyCam.html "ofEasyCam Documentation Page") 3D cameras for navigating and viewing your 3D scene, either interactively or not.
     - [`ofNode`](http://openframeworks.cc/documentation/3d/ofNode.html "ofNode Documentation Page") a 3D point in space, which is the base type for any 3D object, allowing it to be moved, rotated, scaled, nested and drawn.
     - [`ofMesh`](http://openframeworks.cc/documentation/3d/ofMesh.html "ofMesh Documenation Page") A primitive for batching points in 3D space that allows you to draw them in several different ways such as points, lines, line strips, triangles, triangle strips, and attach textures (images) to these. All of this is done very efficiently using your computer's GPU. 
