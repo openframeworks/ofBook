@@ -176,7 +176,7 @@ This is the default GUI (Graphical User Interface) for oF. It lets you add slide
 - **ofxKinect**
 As you probably infer, it's for using a [Microsoft XBox Kinect](https://en.wikipedia.org/wiki/Kinect) 3D sensor with your oF project. This addon relies on [libfreenect](http://openkinect.org/wiki/Main_Page), so you can only access the depth and rgb images that the Kinect reads and adjust some of its parameters, like tilt and light. It includes some handy functions that allow you to convert Kinect's data between several different kinds. Please note that ofxKinect doesn't perform skeleton tracking. For such thing you need to use ofxOpenNI. 
 - **ofxNetwork**
-Lets you deal with network protocols such as UDP and TCP. You can use it to communicate with other computers over the network. Check out the network chapter for more information. 
+Lets you deal with network protocols such as UDP and TCP. You can use it to communicate with other computers over the network. Check out the network chapter for more information.
 - **ofxOpenCv**
 This is oF's implementation of the best and most used Computer Vision code library, openCV. Computer Vision is a complete world in itself, and being able to use openCV right out-of-the-box is a super important and useful oF feature.
 - **ofxOsc**
