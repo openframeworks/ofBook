@@ -126,7 +126,7 @@ Here you will find a lot of different things, from ingredients to tools, all ord
     - [`ofSerial`](http://openframeworks.cc/documentation/communication/ofSerial.html "ofSerial Documentation Page") provides simple serial port communication
     - [`ofArduino`](http://openframeworks.cc/documentation/communication/ofArduino.html "ofArduino Documentation Page") allows openFrameworks to communicate via [Firmata](http://playground.arduino.cc/Interfacing/Firmata "Arduino reference for Firmata")
 - **events**
-    - This is code for the oF event manager, allowing you to tap into app events if you need or even creating your own events. 
+    - the oF event manager, allowing you to tap into app events if you need or even creating your own events
 - **gl** 
     - [OpenGL](https://en.wikipedia.org/wiki/OpenGL "wikipedia article on OpenGL") is the library for using the computer's [GPU](https://en.wikipedia.org/wiki/Graphics_processing_unit "wikipedia article on the graphics processing unit"). This folder contains GL specific functionality such as VBOs (Vertex Buffer Object), FBOs (Frame Buffer Object), Renderers, Lights, Materials, Shaders, Textures, and several other GL utilities.
     - oF implements different rendering pipelines, Fixed and Programable rendering pipelines as well as OpenGL ES (used on less powerful devices such as smartphones and the Raspberry Pi) -- most of this code is found in the gl folder. 
