@@ -158,7 +158,7 @@ Here you will find a lot of different things, from ingredients to tools, all ord
       - reading and saving [XML](https://en.wikipedia.org/wiki/XML "wikipedia article on XML") files (super useful for storing and reading your app's settings)
     - e.g. [`ofDirectory`](http://openframeworks.cc/documentation/utils/ofDirectory.html "ofDirectory Documentation Page") can help iterate through a directory
 - **video**
-    - Video Grabber and player, with behind-the-scenes implementations for all the supported platforms.
+    - video grabber and player, with behind-the-scenes implementations for all the supported platforms.
     - [`ofVideoGrabber`](http://openframeworks.cc/documentation/video/ofVideoGrabber.html "ofVideoGrabber Documentation Page") helps with grabbing from a webcam or attached camera
     - [`ofVideoPlayer`](http://openframeworks.cc/documentation/video/ofVideoPlayer.html "ofVideoPlayer Documentation Page") helps with playing video files
 
