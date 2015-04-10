@@ -124,7 +124,7 @@ Here you will find a lot of different things, from ingredients to tools, all ord
     - different windowing systems, such as [`ofAppNoWindow`](http://openframeworks.cc/documentation/application/ofAppNoWindow.html "ofAppNoWindow Documenation Page") which sets up openframeworks in a windowless context.
 - **communication**
     - [`ofSerial`](http://openframeworks.cc/documentation/communication/ofSerial.html "ofSerial Documentation Page") which provides simple serial port communication
-    - [`ofArduino`](http://openframeworks.cc/documentation/communication/ofArduino.html "ofArduino Documentation Page") which allows openframeworks to communicate via Firmata
+    - [`ofArduino`](http://openframeworks.cc/documentation/communication/ofArduino.html "ofArduino Documentation Page") which allows openFrameworks to communicate via Firmata
 - **events**
     - this is code for the oF event manager, allowing you to tap into app events if you need or even creating your own events. 
 - **gl** 
