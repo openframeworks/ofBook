@@ -132,9 +132,11 @@ Here you will find a lot of different things, from ingredients to tools, all ord
     - contains GL specific functionality such as VBOs (Vertex Buffer Object), FBOs (Frame Buffer Object), Renderers, Lights, Materials, Shaders, Textures, and several other GL utilities
     - oF implements different rendering pipelines (fixed, programable & OpenGL ES (used on less powerful devices such as smartphones and the Raspberry Pi)) -- most of this code is found in the gl folder
 - **graphics**
-    - There are a lot of capabilities here, such as loading and saving images of almost any kind, implementing several different methods for drawing in 2D, and exhibiting colors and styles. Most of the drawing tools rely on OpenGL so these are usually very fast. Graphics also allows you to render as PDF, and it features typography with several kinds of rendering options and utilities.
-    - There are useful objects like [`ofImage`](http://openframeworks.cc/documentation/graphics/ofImage.html "ofImage Documentation Page"), a class for loading, saving and drawing images.
-    - [`ofTrueTypeFont`](http://openframeworks.cc/documentation/graphics/ofTrueTypeFont.html "ofTrueTypeFont Documenation Page") is a library for loading and drawing true type fonts.
+    - capabilities such as loading, drawing and saving images of almost any kind, e.g. via [`ofImage`](http://openframeworks.cc/documentation/graphics/ofImage.html "ofImage Documentation Page")
+    - also allows you to render as PDF
+    - several different methods for drawing in 2D, and exhibiting colors and styles
+    - most of the drawing tools rely on OpenGL so these are usually very fast
+    - typography with several kinds of rendering options and utilities e.g. [`ofTrueTypeFont`](http://openframeworks.cc/documentation/graphics/ofTrueTypeFont.html "ofTrueTypeFont Documenation Page"), a library for loading and drawing true type fonts
 - **math**
     - in ofMath you'll find things like vectors (ie [`ofVec2f`](http://openframeworks.cc/documentation/math/ofVec2f.html "ofVec2f Documenation Page"), [`ofVec3f`](http://openframeworks.cc/documentation/math/ofVec3f.html "ofVec3f Documentation Page")) , matrices (ie [`ofMatrix3x3`](http://openframeworks.cc/documentation/math/ofMatrix3x3.html "ofMatrix3x3 Documenation Page"), [`ofMatrix4x4`](http://openframeworks.cc/documentation/math/ofMatrix4x4.html "ofMatrix4x4 Documenation Page")), quaternions (ie [`ofQuaternion`](http://openframeworks.cc/documentation/math/ofQuaternion.html "ofQuaternion Documentation Page")) and some really useful math help functions like [`ofRandom`](http://openframeworks.cc/documentation/math/ofMath.html#!show_ofRandom "ofRandom Documentation Page") and [`ofNoise`](http://openframeworks.cc/documentation/math/ofMath.html#!show_ofNoise "ofNoise Documentation Page").
 - **sound**
