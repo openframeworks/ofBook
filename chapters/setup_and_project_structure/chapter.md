@@ -27,7 +27,7 @@ All IDEs have a similar interface:
 - Toolbar and Run Button: In the tool bar you'll find several useful buttons, such as open, save, save all, et cetera. The "run" button is very important. Usually it is labeled with a triangle pointing to the right, like the "play" button. When you press it, your code will compile and if no problems are encountered it will automatically run your code. Hence this is a frequently used button.
 - File selector and project navigator area: Here you will see your project and the files associated with it. Usually it is displayed like a hierarchically ordered list of files. Here you'll find all the oF library files, as well as the files that are particular to your project.
 - Editing area: When you open a file in the project navigation area, usually by double clicking it, it should open in the editing area. This looks just like any regular text-editing software, and behaves much the same.
-- Console: This is where your app, when running, outputs messages. These messages are really useful for debugging. You can print text messages to the console using the `cout` comand  or [`ofLog(...)`](http://openframeworks.cc/documentation/utils/ofLog.html "ofLog Documentation Page") function.
+- Console: This is where your app, when running, outputs messages. These messages are really useful for debugging. You can print text messages to the console using the `cout` command  or [`ofLog(...)`](http://openframeworks.cc/documentation/utils/ofLog.html "ofLog Documentation Page") function.
 
 #### Apple Xcode
 
