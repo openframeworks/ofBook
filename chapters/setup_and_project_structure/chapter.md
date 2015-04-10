@@ -186,7 +186,7 @@ Loads and displays [SVG](https://en.wikipedia.org/wiki/Scalable_Vector_Graphics 
 - **ofxThreadedImageLoader**
 Loads images on a different thread, so your main thread (the one that draws to your screen) doesn't get stuck while loading images. Really useful when loading online images.
 - **ofxVectorGraphics**
-Used to write out EPS vector graphics files. It the same drawing syntax as oF's regular drawing syntax, so it is really easy to use. Check chapter **[add correct chapter numbre]** for more info about oF's drawing capabilities. 
+Used to write out [EPS](https://en.wikipedia.org/wiki/Encapsulated_PostScript "wikipedia article on encapsulated portscript (eps)") vector graphics files. It the same drawing syntax as oF's regular drawing syntax, so it is really easy to use. Check chapter **[add correct chapter numbre]** for more info about oF's drawing capabilities. 
 - **ofxXmlSettings**
 This is oF's simple XML implementation used mostly for loading and saving settings. 
 
