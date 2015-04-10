@@ -54,7 +54,7 @@ Open it. Inside of it you will find several folders which we will describe below
 
 *A quick side note about workspace files. The reason we ask you to open those rather then the project file is that they contain a sub-project to build the oF library also. If you have any doubts, please read the readme for your given platform.*
 
-Now your IDE should open and load this example. It should look like the IDE screenshots above. Locate the "Run" button or menu option and click on it. The example should compile (which might take a while, since the first time you compile you are also compiling the oF library).  You'll see a lot of files being compiled the first time -- don't worry, this will just happen once, when the oF library needs to be rebuilt.  Feel free to get a cup of coffee or stretch.   Long compile times are great moments to take a screen break. 
+Now your IDE should open and load this example. It should look like the IDE screenshots above. Locate the "Run" button or menu option and click on it. The example should compile (which might take a while, since the first time you compile you are also compiling the oF library). You'll see a lot of files being compiled the first time -- don't worry, this will just happen once, when the oF library needs to be rebuilt.  Feel free to get a cup of coffee or stretch.   Long compile times are great moments to take a screen break. 
 
 If everything went well, a new window will pop up and display the example you just compiled. If this happened, congrats! You just have installed and compiled openFrameworks successfully and you are ready to go on. If this didn't happen, the first rule is, don't panic! Check the notes below for each IDE and be sure to read the release notes that come with oF. 
 
