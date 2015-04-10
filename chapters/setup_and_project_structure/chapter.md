@@ -109,7 +109,7 @@ Imagine that you want to cook something but your kitchen has no pantry or if the
 
 So, what happens when you have your pantry filled with oF's components? You will be able to cook whatever you want because some really good ingredients are already there. Additionally, there are some really nice tools in there. This will let you complete recipes in a short amount of time, leaving you more time to get creative and try out new and more delicious recipes.
 
-####What is inside the oF pantry####
+### What is inside the oF pantry
 
 Here you will find a lot of different things, from ingredients to tools, all ordered according to use.  This is a breakdown of how oF code is organized (as well as the examples) and should give you a sense of what oF contains: 
 
