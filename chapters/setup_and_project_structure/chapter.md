@@ -92,7 +92,7 @@ This is a folder with examples, sorted by topic. There are a big bunch of exampl
 
 ### libs
 
-These are the libraries that openFrameworks uses to compile your project. They include things like [FreeType](http://freetype.org/ "FreeType website") for typography support, freeImage for image loading, glfw for windowing, etc. Also the code for openframeworks is in libs, as well as the project files that help compile oF.  If you need to look at the source code, here's where to look. 
+These are the libraries that openFrameworks uses to compile your project. They include things like [FreeType](http://freetype.org/ "FreeType website") for typography support, [FreeImage](http://freeimage.sourceforge.net/ "FreeImage project website") for image loading, glfw for windowing, etc. Also the code for openframeworks is in libs, as well as the project files that help compile oF.  If you need to look at the source code, here's where to look. 
 
 ####other
 Here you'll find an Arduino sketch for using with the serial example located at examples/communication/. This is handy to check that your serial communication with Arduino is set up correctly and working.
