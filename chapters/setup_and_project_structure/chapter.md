@@ -115,16 +115,16 @@ Here you will find a lot of different things, from ingredients to tools, all ord
 
 - **3D**
     - tools for drawing basic 3D polygonal objects, such as spheres, cubes, pyramids, etc.
-    - [`ofCamera`](http://openframeworks.cc/documentation/3d/ofCamera.html "ofCamera Documentation Page"), [`ofEasyCam`](http://openframeworks.cc/documentation/3d/ofEasyCam.html "ofEasyCam Documentation Page") 3D cameras for navigating and viewing your 3D scene, either interactively or not.
+    - [`ofCamera`](http://openframeworks.cc/documentation/3d/ofCamera.html "ofCamera Documentation Page"), [`ofEasyCam`](http://openframeworks.cc/documentation/3d/ofEasyCam.html "ofEasyCam Documentation Page"), 3D cameras for navigating and viewing your 3D scene, either interactively or not
     - [`ofNode`](http://openframeworks.cc/documentation/3d/ofNode.html "ofNode Documentation Page"), a 3D point in space, which is the base type for any 3D object, allowing it to be moved, rotated, scaled, nested and drawn
-    - [`ofMesh`](http://openframeworks.cc/documentation/3d/ofMesh.html "ofMesh Documenation Page"), a primitive for batching points in 3D space that allows you to draw them in several different ways such as points, lines, line strips, triangles, triangle strips, and attach textures (images) to these. All of this is done very efficiently using your computer's GPU.
-    - functions to help load and save 3D objects.
+    - [`ofMesh`](http://openframeworks.cc/documentation/3d/ofMesh.html "ofMesh Documenation Page"), a primitive for batching points in 3D space that allows you to draw them in several different ways such as points, lines, line strips, triangles, triangle strips, and attach textures (images) to these. All of this is done very efficiently using your computer's GPU
+    - functions to help load and save 3D objects
 - **app**
-    - Tools for setting and getting properties of your app such as window size, position, different drawing modes, framerate, et cetera.
-    - different windowing systems, such as [`ofAppNoWindow`](http://openframeworks.cc/documentation/application/ofAppNoWindow.html "ofAppNoWindow Documenation Page") which sets up openFrameworks in a windowless context.
+    - tools for setting and getting properties of your app such as window size, position, different drawing modes, framerate, etc.
+    - different windowing systems, such as [`ofAppNoWindow`](http://openframeworks.cc/documentation/application/ofAppNoWindow.html "ofAppNoWindow Documenation Page") which sets up openFrameworks in a windowless context
 - **communication**
-    - [`ofSerial`](http://openframeworks.cc/documentation/communication/ofSerial.html "ofSerial Documentation Page") which provides simple serial port communication.
-    - [`ofArduino`](http://openframeworks.cc/documentation/communication/ofArduino.html "ofArduino Documentation Page") which allows openFrameworks to communicate via [Firmata](http://playground.arduino.cc/Interfacing/Firmata "Arduino reference for Firmata").
+    - [`ofSerial`](http://openframeworks.cc/documentation/communication/ofSerial.html "ofSerial Documentation Page") provides simple serial port communication
+    - [`ofArduino`](http://openframeworks.cc/documentation/communication/ofArduino.html "ofArduino Documentation Page") allows openFrameworks to communicate via [Firmata](http://playground.arduino.cc/Interfacing/Firmata "Arduino reference for Firmata")
 - **events**
     - This is code for the oF event manager, allowing you to tap into app events if you need or even creating your own events. 
 - **gl** 
