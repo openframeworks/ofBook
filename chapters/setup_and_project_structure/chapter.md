@@ -39,7 +39,7 @@ Use the latest version of Xcode and read the setup guide.
 
 [Visual Studio](http://visualstudio.com/ "Visual Studio website") is Microsoft's IDE, which is aimed at Windows development. It's a commercial product, but there's a free version you can download called "Express". 
 
-![VS screenshot](images/VS_ScreenShot.jpg "VS screenshot")
+![Visual Studio screenshot](images/VS_ScreenShot.jpg "Visual Studio screenshot")
 
 #### Code::Blocks
 
