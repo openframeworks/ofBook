@@ -78,7 +78,7 @@ The "addons" folder will contain the included "core" addons. Addons are extra pi
 Check the examples/addons folder in your oF root folder where you will find at least one example about how to use each of these addons.
 You can also go to [ofxAddons](http://ofxaddons.com/ "ofxaddons, a collection of oF addons") where you'll find a huge collection of additional addons from the community. 
 
-####Apps####
+### Apps
 This is the folder where you put your project files as you make new projects. Your current oF download contains the folder named "myApps" inside of "apps", and this is where the project generator will default to when you make a new project.  One important thing to note is that the project is positioned relatively to the libs folder, ie, if you were to look inside the project file you'd see relative folder paths, ie `../../../libs`.  This image is showing how ../../../libs might work visually: 
 
 ![app position to root](images/projectPlacement.png)
