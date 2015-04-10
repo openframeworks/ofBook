@@ -111,7 +111,7 @@ So, what happens when you have your pantry filled with oF's components? You will
 
 ### What is inside the oF pantry
 
-Here you will find a lot of different things, from ingredients to tools, all ordered according to use.  This is a breakdown of how oF code is organized (as well as the examples) and should give you a sense of what oF contains: 
+Here you will find a lot of different things, from ingredients to tools, all ordered according to use. This is a breakdown of how oF code is organized (as well as the examples) and should give you a sense of what oF contains: 
 
 - **3D**
     - Tools for drawing basic 3D polygonal objects, such as spheres, cubes, pyramids, etc.
