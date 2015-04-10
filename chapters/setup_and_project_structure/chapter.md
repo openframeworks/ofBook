@@ -43,7 +43,7 @@ Use the latest version of Xcode and read the setup guide.
 
 #### Code::Blocks
 
-[Code::Blocks](http://codeblocks.org/ "Code::Blocks website") is a free/libre IDE. It runs on several platforms, but oF supports it for Microsoft Windows and Linux. It is quite "light" in terms of downloading and we use it in workshops over Visual Studio, which can be a bit intimidating for beginners. For Microsoft Windows, follow the setup instructions (including step "e") carefully. There are scripts that help install dependencies and the Code::Blocks IDE for Linux.
+[Code::Blocks](http://codeblocks.org/ "Code::Blocks website") is a free/libre IDE. It runs on several platforms, but oF supports it for Microsoft Windows and Linux. It is quite "light" in terms of downloading and we (the contributors to this book) use it in workshops over Visual Studio, which can be a bit intimidating for beginners. For Microsoft Windows, follow the setup instructions (including step "e") carefully. There are scripts that help install dependencies and the Code::Blocks IDE for Linux.
 
 
 ## Running examples
