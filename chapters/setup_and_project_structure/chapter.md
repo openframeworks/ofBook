@@ -144,7 +144,8 @@ Here you will find a lot of different things, from ingredients to tools, all ord
     - quaternions (i.e. [`ofQuaternion`](http://openframeworks.cc/documentation/math/ofQuaternion.html "ofQuaternion Documentation Page"))
     - useful math help functions like [`ofRandom`](http://openframeworks.cc/documentation/math/ofMath.html#!show_ofRandom "ofRandom Documentation Page") and [`ofNoise`](http://openframeworks.cc/documentation/math/ofMath.html#!show_ofNoise "ofNoise Documentation Page").
 - **sound**
-    - openframeworks has both low level sound, [`ofSoundStream`](http://openframeworks.cc/documentation/sound/ofSoundStream.html "ofSoundStream Documentation Page"), for direct access to the sound card, as well as higher level code [`ofSoundPlayer`](http://openframeworks.cc/documentation/sound/ofSoundPlayer.html "ofSoundPlayer Documentation Page") for playing samples and sound effects. 
+    - low level sound access directly on sound card, e.g. [`ofSoundStream`](http://openframeworks.cc/documentation/sound/ofSoundStream.html "ofSoundStream Documentation Page")
+    - higher level code for playinf samples and sound effects, e.g. [`ofSoundPlayer`](http://openframeworks.cc/documentation/sound/ofSoundPlayer.html "ofSoundPlayer Documentation Page")
 - **base types**
     - A lot of different base types used extensively within oF.  For folks that want to understand the architecture of oF, this is a useful place where you'll find base types for common elements. 
 - **utils**
