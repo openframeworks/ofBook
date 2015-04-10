@@ -163,7 +163,7 @@ Here you will find a lot of different things, from ingredients to tools, all ord
     - [`ofVideoPlayer`](http://openframeworks.cc/documentation/video/ofVideoPlayer.html "ofVideoPlayer Documentation Page") helps with playing video files
 
 
-####Addons
+### Addons
 
 As mentioned before, addons extend oF core functionalities, and in each oF distribution there are several included addons, usually referred to as "core addons":
 
