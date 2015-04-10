@@ -178,7 +178,7 @@ As you probably infer, it's for using a [Microsoft XBox Kinect](https://en.wikip
 - **ofxNetwork**
 Lets you deal with network protocols such as UDP and TCP. You can use it to communicate with other computers over the network. Check out the network chapter for more information.
 - **ofxOpenCv**
-This is oF's binding to one of the best and most used computer vision code library, [OpenCV](http://opencv.org/). Computer vision is a complete world in itself, and being able to use openCV right out-of-the-box is a super important and useful oF feature.
+This is oF's binding to one of the best and most used computer vision code library, [OpenCV](http://opencv.org/). Computer vision is a complete world in itself, and being able to use OpenCV right out-of-the-box is a super important and useful oF feature.
 - **ofxOsc**
 OSC (Open Sound Control) implementation for oF. OSC easily comunicates with other devices or applications within the same network. OSC is used to send messages and parameters from one app to another one.  Several chapters in this book discuss OSC. 
 - **ofxSvg**
