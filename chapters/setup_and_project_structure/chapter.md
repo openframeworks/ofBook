@@ -69,7 +69,7 @@ If you have trouble, please keep track of what errors you have, what platform yo
 
 Once done continue reading.
 
-##oF folder structure###
+## oF folder structure
 
 Inside the oF root folder you will find several other folders, at least, the following:
 
