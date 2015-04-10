@@ -8,7 +8,7 @@ I have found it very useful to explain oF by making analogies to cooking. Coding
 
 ## First things first
 
-You need to download the oF version and the IDE (Integrated Development Environment) that suits your platform. The IDE is a piece of software that will let you write, compile, run and debug the code you write. It is "integrated" because it uses other pieces of software to do each of the mentioned tasks. You can run your code without using the IDE, but the IDE will make your programming life much easier.
+You need to download the oF version and the [IDE](https://en.wikipedia.org/wiki/Integrated_development_environment "wikipedia article on IDE") (Integrated Development Environment) that suits your platform. The IDE is a piece of software that will let you write, compile, run and debug the code you write. It is "integrated" because it uses other pieces of software to do each of the mentioned tasks. You can run your code without using the IDE, but the IDE will make your programming life much easier.
 
 Go to [www.openframeworks.cc/downloads](www.openframeworks.cc/downloads "Download openFrameworks!") and download the version that you need. By the side of each available version you will find a link to download the matching IDE and how to install it. 
 
