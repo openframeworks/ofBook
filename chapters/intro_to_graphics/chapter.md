@@ -16,7 +16,7 @@ To create brushes, we need to define some basic building blocks of graphics.  We
 
 Before drawing any shape, we need to know how to specify locations on screen.  Computer graphics use the [Cartesian coordinate system](http://en.wikipedia.org/wiki/Cartesian_coordinate_system "Wikipedia on Cartesian coordinate system").  Remember figure 1 (left) from math class?  A pair of values `(x, y)` told us how far away we were from `(0, 0)`, the origin.  Computer graphics are based on this same system, but with two twists.  First, `(0, 0)` is the upper leftmost pixel of the screen.  Second, the y axis is flipped such that the positive y direction is located below the origin figure 1 (center).
 
-If we apply this to the top left of my screen figure 1 (right), which happens to be my browser.  We can see the pixels and identify their locations in our new coordinate system.  The top left pixel is `(0, 0)`.  The top left pixel of the blue calender icon (with the white "19") is `(58, 5)`.  
+If we apply this to the top left of my screen figure 1 (right), which happens to be my browser.  We can see the pixels and identify their locations in our new coordinate system.  The top left pixel is `(0, 0)`.  The top left pixel of the blue calender icon (with the white "19") is `(58, 5)`.
 
 ![Figure 1: 2D screen coordinates](images/Figure1_CoordSystemFigure.png "Figure 1: 2D screen coordinates")
 
