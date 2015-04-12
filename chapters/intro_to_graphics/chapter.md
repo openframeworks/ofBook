@@ -68,7 +68,7 @@ We survived the boring bits, but why draw one rectangle, when we can draw a mill
 
 ![Figure 3: Okay, not actually a million rectangles](images/Figure3_LotsOfRectangles.png "Figure 3: Okay, not actually a million rectangles")
 
-#### Single Rectangle Brush: Using the Mouse ####
+#### Single Rectangle Brush: Using the Mouse
 
 We are going to lay down the foundation for our brushes by making a simple one that draws a single rectangle when we hold down the mouse.  To get started, we are going to need to know 1) the mouse location and 2) if the left mouse button is pressed.
 
