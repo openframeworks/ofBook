@@ -369,12 +369,12 @@ We are now using `ofVec2f` for our offset.  We started with a vector that points
 **Extensions**
 
 1. Define some public variables to control brush parameters like `transparency`, `brushWidth`, `offsetDistance`, `numberOfShapes`, etc.
-2. Use the [`keyPressed(int key)`](http://www.openframeworks.cc/documentation/application/ofBaseApp.html#!show_keyPressed "keyPressed openFrameworks Documentation") function (in `.cpp`) to control those parameters at run time (e.g. increasing/decreasing `brushWidth` with the `+` and `-` keys).  If you are using ofSketch, see the next section for how to use that function.
+2. Use the [`keyPressed(int key)`](http://www.openframeworks.cc/documentation/application/ofBaseApp.html#!show_keyPressed "keyPressed Documentation Page") function (in `.cpp`) to control those parameters at run time (e.g. increasing/decreasing `brushWidth` with the `+` and `-` keys).  If you are using ofSketch, see the next section for how to use that function.
 3. Track the mouse position and use the distance it moves between frames to control those parameters (e.g. fast moving mouse draws a thicker brush).
 
 #### Raster Graphics: Taking a Snapshot ####
 
-Before we move on, let's save a snapshot of our canvas.  We'll want to use the [`keyPressed(int key)`](http://www.openframeworks.cc/documentation/application/ofBaseApp.html#!show_keyPressed "keyPressed openFrameworks Documentation") function.  This function is built into your application by default.  Any time a key is pressed, the code you put into this function is called.  The `key` variable is an integer that represents the key that was pressed.
+Before we move on, let's save a snapshot of our canvas.  We'll want to use the [`keyPressed(int key)`](http://www.openframeworks.cc/documentation/application/ofBaseApp.html#!show_keyPressed "keyPressed Documentation Page") function.  This function is built into your application by default.  Any time a key is pressed, the code you put into this function is called.  The `key` variable is an integer that represents the key that was pressed.
 
 If you are using project generator, you'll find `keyPressed(...)` in your `.cpp` file.  If you are using ofSketch, you might not see the function, but it is easy to add.  See the [ofSketch file](https://github.com/openframeworks/ofBook/blob/master/chapters/intro_to_graphics/code/1_ii_e_Triangle_Brush.sketch) for the last section.  
 
