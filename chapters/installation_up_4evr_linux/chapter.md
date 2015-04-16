@@ -15,7 +15,7 @@ sudo apt-get upgrade
 
 3. Install the propietary drivers if you are using nvidia or ati cards. In latest ubuntu versions you can install it through the "Software & Updates" tool in the Additional Drivers tab
 
-4. Ubuntu Unity, the default desktop is usually bloated with features that are not used in a computer running an installation, i've been recently using Openbox which also makes OpenGL slightly faster since the desktop is not composited and even solves some problems with vsync:
+4. Ubuntu Unity, the default desktop is usually bloated with features that are not used in a computer running an installation, i've been recently using Openbox which also makes OpenGL slihtly faster since the desktop is not composited and even solves some problems with vsync:
 
 ```bash
 sudo apt-get install openbox
@@ -87,7 +87,7 @@ export DISPLAY=:0
 ```bash
 cd ~/openFrameworks/apps/myapps/myapp/bin/
 ret=1
-while [ ret -neq 0 ]; do
+while [ $ret -ne 0 ]; do
     ./myapp
     ret=$?
 done
