@@ -86,3 +86,8 @@ If you have annotations for people involved in this book (*but not the reader/en
 ```html
 <!-- This is an comment example which can not be read by the reader of the book -->
 ```
+
+## chapter length ##
+
+This book currently aims at 20-25 pages per chapter. This includes images and code snippets.
+(See [issue 38](https://github.com/openframeworks/ofBook/issues/38) for discussion reference)
