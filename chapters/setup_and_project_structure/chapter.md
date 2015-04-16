@@ -22,7 +22,7 @@ The IDE is your new kitchen, where you'll find all the tools to cook incredible 
 
 All IDEs have a similar interface:
 
-![Abstract IDE interface](images/IDE_Interfase.jpg "Abstract IDE interface")
+![Abstract IDE interface](images/IDE_Interface.jpg "Abstract IDE interface")
 
 - Toolbar and Run Button: In the tool bar you'll find several useful buttons, such as open, save, save all, et cetera. The "run" button is very important. Usually it is labeled with a triangle pointing to the right, like the "play" button. When you press it, your code will compile and if no problems are encountered it will automatically run your code. Hence this is a frequently used button.
 - File selector and project navigator area: Here you will see your project and the files associated with it. Usually it is displayed like a hierarchically ordered list of files. Here you'll find all the oF library files, as well as the files that are particular to your project.
@@ -34,6 +34,8 @@ All IDEs have a similar interface:
 [Xcode](https://developer.apple.com/xcode/ "Xcode website") is Apple's IDE. It is used both for iOS apps and desktop apps. Even though there are other IDEs for OS X, Xcode is a pretty mature one with lots of nice and useful features, especially for dealing with iOS apps.
 
 Use the latest version of Xcode and read the setup guide. 
+
+![Xcode screenshot](images/XcodeScreenShot.jpg "XCode screenshot")
 
 #### Microsoft Visual Studio 2012 Express
 
