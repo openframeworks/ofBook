@@ -442,7 +442,7 @@ curvedSegmentPolyline.draw();  // Nice and easy, right?
 closedShapePolyline.draw();
 ```
 
-We created three different types of polylines (figure 11). `straightSegmentPolyline` is composed of a series points connected with straight lines.  `curvedSegmentPolyline` uses the same points but connects them with curved lines.  The curves that are created are [Catmull–Rom splines](https://en.wikipedia.org/wiki/Centripetal_Catmull%E2%80%93Rom_spline "Wiki on Catmull-Rom splines"), which use four points to define a curve: two define the start and end, while two control points determine the curvature.  These control points are the reason why we need to add the first and last vertex twice.  Lastly, `closedShapePolyline` uses straight line segments that are closed, connecting the first and last vertices.
+We created three different types of polylines (figure 11). `straightSegmentPolyline` is composed of a series points connected with straight lines.  `curvedSegmentPolyline` uses the same points but connects them with curved lines.  The curves that are created are [Catmull–Rom splines](https://en.wikipedia.org/wiki/Centripetal_Catmull%E2%80%93Rom_spline "Wikipedia on Catmull-Rom splines"), which use four points to define a curve: two define the start and end, while two control points determine the curvature.  These control points are the reason why we need to add the first and last vertex twice.  Lastly, `closedShapePolyline` uses straight line segments that are closed, connecting the first and last vertices.
 
 ![Figure 11: Examples of polylines - straight, curved and closed straight](images/Figure11_PolylineExamples.png "Figure 11: Examples of polylines - straight, curved and closed straight")
 
