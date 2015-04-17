@@ -190,6 +190,7 @@ int maxRadius = 100;  // Increase for a wider brush
 int radiusStepSize = 5;  // Decrease for more circles (i.e. a more opaque brush)
 int alpha = 3;  // Increase for a more opaque brush
 int maxOffsetDistance = 100;  // Increase for a larger spread of circles
+// draw smaller and smaller circles and layering (increasing) opaqueness
 for (int radius=maxRadius; radius>0; radius-=radiusStepSize) {
     float angle = ofRandom(ofDegToRad(360.0)); 
     float distance = ofRandom(maxOffsetDistance);
