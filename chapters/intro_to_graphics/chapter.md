@@ -514,7 +514,7 @@ if (leftMouseButtonPressed) {
     ofVec2f mousePos(ofGetMouseX(), ofGetMouseY());
     if (lastPoint.distance(mousePos) >= minDistance) {
         // a.distance(b) calculates the Euclidean distance between point a and b.  It's
-        // the straight line distance between the points.
+        // the length of the straight line distance between the points.
         currentPolyline.curveTo(mousePos);  // Here we are using an ofVec2f with curveTo(...)
         lastPoint = mousePos;
     }
