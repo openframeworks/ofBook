@@ -653,8 +653,8 @@ for (int p=0; p<500; p+=1) {
 **Extensions**
 
 1. Try drawing shapes other than `ofLine(...)` and `ofCircle(...)` along your polylines.  You could use your brush code from section 1.
-1. The density of tangents or normals drawn is dependent on the length of the brush stroke.  Try making it independent (hint: you may need to adjust your loop and use `getPerimeter()` to calculate the length).
-1. Check out how to draw polygons using `ofPath` and try drawing a brush stroke that is a giant, closed shape.
+2. The density of tangents or normals drawn is dependent on the length of the brush stroke.  Try making it independent (hint: you may need to adjust your loop and use `getPerimeter()` to calculate the length).
+3. Check out how to draw polygons using `ofPath` and try drawing a brush stroke that is a giant, closed shape.
 
 #### Vector Graphics: Taking a Snapshot (Part 2) ####
  
