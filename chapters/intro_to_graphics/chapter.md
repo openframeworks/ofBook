@@ -593,7 +593,6 @@ Now we have evenly spaced points (figure 13, right).  Let's try creating a brush
         ofVec3f normal = polyline.getNormalAtIndex(vertexIndex) * normalLength;  // Scale the normal
         ofLine(vertex-normal/2, vertex+normal/2);  // Center the scaled normal around the vertex
     }
-
 ```
 
 We are getting all of the vertices in our `ofPolyline`.  But here, we are also using [`getNormalAtIndex`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html#show_getNormalAtIndex "getNormalAtIndex Documentation Page") which takes an index and returns an `ofVec3f` that represents the normal vector for the vertex at that index.  We take that normal, scale it and then display it centered around the vertex.  So, we have something like figure 14 (left), but we can also sample normals, using the function [`getNormalAtIndexInterpolated(...)`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html#show_getNormalAtIndexInterpolated "getNormalAtIndexInterpolated Documentation Page").  So let's comment out the code we just wrote, and try sampling our normals evenly along the polyline:
