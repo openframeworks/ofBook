@@ -626,8 +626,8 @@ for (int vertexIndex=0; vertexIndex<vertices.size(); ++vertexIndex) {
     ofVec3f tangent = polyline.getTangentAtIndex(vertexIndex) * tangentLength;
     ofLine(vertex-tangent/2, vertex+tangent/2);
 }
-
 ```
+
 This should look very familiar except for [`getTangentAtIndex(...)`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html#show_getTangentAtIndex "getTangentAtIndex Documenation Page") which is the equivalent of `getNormalAtIndex(...)` but for tangents.  Not much happens for straight and slightly curved lines, however, sharply curved lines reveal the tangents figure 16 (left).
 
 ![Figure 16: Drawing tangents at vertices of polylines](images/Figure16_PolylineTangents.png "Figure 16: Drawing tangents at vertices of polylines")
