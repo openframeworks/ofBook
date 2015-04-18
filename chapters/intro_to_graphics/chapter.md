@@ -297,8 +297,8 @@ mousePos.y += yOffset;
 // But we can do what we just did above by adding or subtracting two vectors directly
 ofVec2f offset(10.0, 30.0);
 mousePos += offset;
-
 ```
+
 Let's start using it to build the triangle brush.  The first step is to draw a triangle (figure 8, right) at the mouse cursor.  It will become important later, but we are going to draw our triangle starting from the mouse cursor and pointing to the right.  Comment out the line brush, and add:
 
 ```cpp
