@@ -608,7 +608,6 @@ for (int p=0; p<100; p+=10) {
     ofVec3f normal = polyline.getNormalAtIndexInterpolated(floatIndex) * normalLength;
     ofLine(point-normal/2, point+normal/2);
 }
-
 ```
 
 We can get an evenly spaced point by using percents again, but `getNormalAtIndexInterpolated(...)` is asking for an index.  Specifically, it is asking for a `floatIndex` which means that we can pass in 1.5 and the polyline will return a normal that lives halfway between the point at index 1 and halfway between the point at index 2.  So we need to convert our percent, `p/100.0`, to a `floatIndex`.  All we need to do is to multiply the percent by the last index in our polyline (which we can get from subtracting one from the [`size()`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html#show_size "size Documentation Page") which tells us how many vertices are in our polyline), resulting in figure 14 (right).
