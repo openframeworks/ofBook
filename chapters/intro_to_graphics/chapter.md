@@ -560,7 +560,7 @@ Since we have the basic drawing in place, now we play with how we are rendering 
 
 ```cpp
 vector<ofVec3f> vertices = polyline.getVertices();
-for (int vertexIndex=0; vertexIndex<vertices.size(); ++vertexIndex) {
+for (int vertexIndex=0; vertexIndex<vertices.size(); vertexIndex++) {
     ofVec3f vertex = vertices[vertexIndex];  // ofVec3f is like ofVec2f, but with a third dimension, z
     ofCircle(vertex, 5);
 }
