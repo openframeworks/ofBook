@@ -339,7 +339,7 @@ int numTriangles = 10;
 int minOffset = 5;
 int maxOffset = 70;
 int alpha = 150;
-for (int t=0; t<numTriangles; ++t) {
+for (int t=0; t<numTriangles; t++) {
     float offsetDistance = ofRandom(minOffset, maxOffset);
 
     // Define a triangle at the origin (0,0) that points to the right (code omitted)
