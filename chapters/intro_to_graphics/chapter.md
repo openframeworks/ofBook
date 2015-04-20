@@ -588,7 +588,7 @@ Now we have evenly spaced points (figure 13, right).  Let's try creating a brush
 ```cpp
     vector<ofVec3f> vertices = polyline.getVertices();
     float normalLength = 50;
-    for (int vertexIndex=0; vertexIndex<vertices.size(); ++vertexIndex) {
+    for (int vertexIndex=0; vertexIndex<vertices.size(); vertexIndex++) {
         ofVec3f vertex = vertices[vertexIndex];  // Get the vertex
         ofVec3f normal = polyline.getNormalAtIndex(vertexIndex) * normalLength;  // Scale the normal
         ofLine(vertex-normal/2, vertex+normal/2);  // Center the scaled normal around the vertex
