@@ -621,7 +621,7 @@ We've just added some thickness to our polylines.  Now let's have a quick aside 
 ```cpp
 vector<ofVec3f> vertices = polyline.getVertices();
 float tangentLength = 80;
-for (int vertexIndex=0; vertexIndex<vertices.size(); ++vertexIndex) {
+for (int vertexIndex=0; vertexIndex<vertices.size(); vertexIndex++) {
     ofVec3f vertex = vertices[vertexIndex];
     ofVec3f tangent = polyline.getTangentAtIndex(vertexIndex) * tangentLength;
     ofLine(vertex-tangent/2, vertex+tangent/2);
