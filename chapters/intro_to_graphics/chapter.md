@@ -738,7 +738,7 @@ What if, after figuring out where to put our shapes, we needed to draw them at a
 
 ```cpp
 // Loop and draw a row
-for (int cols=0; cols<10; cols++) {
+for (int cols=0; cols<4; cols++) {
 
     // Draw the stick figure family (code omitted)
 
