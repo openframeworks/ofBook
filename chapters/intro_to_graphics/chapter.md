@@ -401,7 +401,7 @@ In this section, we are going to make a kind of vector graphics by using custom 
 
 ### Basic Polylines ###
 
-Create a new project called "Polylines," and say hello to [`ofPolyline`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html "ofPolyline Documentation Page"). `ofPolyline` is a data structure that allows us to store a series of sequential points and then connect them to draw a line.  Let's dive into some code.  In your header file, define three `ofPolylines`:
+Create a new project called "Polylines," and say hello to [`ofPolyline`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html "ofPolyline Documentation Page"). `ofPolyline` is a data structure that allows us to store a series of sequential points and then connect them to draw a line.  Let's dive into some code.  In your header file (inside "class ofApp" in "ofApp.h" to be precise), define three `ofPolylines`:
 
 ```cpp
 ofPolyline straightSegmentPolyline;
