@@ -75,7 +75,7 @@ Here's how you can write the class *.cpp file, the implementation file:
 Ball::Ball(){
 }
 
-Ball::setup(){
+void Ball::setup(){
     x = ofRandom(0, ofGetWidth());      // give some random positioning
     y = ofRandom(0, ofGetHeight());
     
