@@ -17,8 +17,6 @@ Some terms and definitions used within OOP are listed below:
 
 -The Methods are the objects abilities
 
-
-
 ##How to build your own Classes (simple Class)
 Classes and objects are similar to the concepts of movie clips and instances in Flash and are also a fundamental part of Java programming. 
 Because cooking, like coding, is fun and we tend to experiment in the kitchen let's continue with the classic metaphor of a cookie cutter as a class and cookies as the objects.
@@ -334,13 +332,12 @@ for(int i=0; i<NBALLS; i++){
 ```
 
 
-As you see it is now possible to directly control the objects properties on its creation. and now we'll just need to update and draw it.
+As you see it is now possible to directly control the objects properties on its creation. and now we'll just need to use the for loop from above to go through the balls to update and draw them.
 
 ```cpp
-myBall.update();
+myBall[i].update();
 
-
-myBall.draw();
+myBall[i].draw();
 ```
 
 
