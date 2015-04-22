@@ -2,7 +2,7 @@
 
 *by [Arturo Castro](http://arturocastro.net)*
 
-*corrections by [Brannon Dorsey](http://brannondorsey.com)*
+*corrections by Brannon Dorsey*
 
 ## 2D, immediate mode vs ofPolyline/ofPath
 
@@ -227,7 +227,7 @@ In openFrameworks, the classes that apply transformations still return the matri
 
 If you want to know more about how transformation matrices work you should check out the chapter on mathematics. The purpose of this chapter is not so much to show how they work, but rather the newest paradigms in the latest versions of openGL.
 
-In openFrameworks, there's a utility class called ofNode, that allows you to apply complex transformations like set an object to look to another, set a hierarchy of nodes... When working with 3D it's useful to keep an ofNode along with every mesh that represents it's transformations, so when you draw each mesh, instead of using ofTranslate, rotate, scale you can just apply the transformation of it's node using `node.transformGL()`. This will multiply the current matrix by the one in the node. When you are done you can use `node.restoreTransformGL()`to go back to the previous state.
+In openFrameworks, there's a utility class called ofNode, that allows you to apply complex transformations like set an object to look to another, set a hierarchy of nodes... When working with 3D it's useful to keep an ofNode along with every mesh that represents it's transformations, so when you draw each mesh, instead of using ofTranslate, rotate, scale you can just apply the transformation of it's node using `node.transformGL()`. This will multiply the current matrix by the one in the node. When you are done you can use `node.restoreTransformGL()`to go back to the previous state. 
 
 The most important idea of this section is that when working with complex transformations, instead of using ofTranslate/Rotate/Scale, it is usually easier to implement an ofNode associated to each mesh or shape that you draw. This is also much easier for readability. For meshes, there's a new class in openFrameworks since 0.8.0 called of3dPrimitive, that internally has an ofVboMesh and an ofNode so you can use this pattern in an easy way.
 
@@ -484,3 +484,5 @@ void ofApp::draw(){
 ```
 
 >Note: While the example above aims to show how to use of3dPrimitive to create custom geometries while being simple enough to fit in this context, usually is not a good idea to use of3dPrimitive for simple primitives like the one above. Calculating the transformations of an ofNode is kind of expensive in terms of CPU usage. For primitives with lots of vertices it's the way to go, but for something like the previous example it is usually just faster to recalculate all the points in their new position using an ofVboMesh
+
+
