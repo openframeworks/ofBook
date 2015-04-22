@@ -1,9 +1,9 @@
-# That Math Chapter: From 1D to 4D 
+# Math: From 1D to 4D 
+
 *by [Omer Shapira](http://omershapira.com)*
 
-**NOTE: This chapter is formatted with MD and LaTeX. Github won't render it properly. Try [stackedit.io](http://stackedit.io) instead**
 
-## How Artists Approach Math
+### How Artists Approach Math
 Math is a curious thing in arts. Many artists reference it directly as inspiration for their work, from Leonardo Da Vinci's _Vitruvian Man_, through Escher's different views of fields of numbers, and many other highlighted, topical representations in art. It is otherwise known as a tool for bringing order into most arts: musicians religiously follow Chromatic Circles (which are just cyclic groups of order 12, $\mathbb{Z}/12\mathbb{Z}$), Architects create rhythms in harmonic series, $\frac{1}{2^n}$ or $\frac{1}{3^n}$, and product designers train their loved ones to wake them up in the middle of the night and ask them questions about The Golden Ratio, $\frac{1 + \sqrt{5}}{2}$ (Seriously guys, stop it). But just as it is important for artists to appreciate the order that Mathematics can bring, it is significantly more important to observe the chaos Mathematics contains.
 
 
@@ -13,7 +13,7 @@ Randomness, events in large scales and unpredictabilty were Mathematical concept
 But just by picking up this book, any reader already knows better than to create this distinction. Math is everywhere in Art, just like Art is everywhere in Math. 
 When using a brush or pen or chisel, we're taking advantage of the hard work that nature is doing, calculating physics, rendering things perfectly for us, all in real time. In the computer world, none of that is true. Things like L-Systems had to be created for us to use, because our hands can't reach into the computer. If you're doing any bit of digital art, the math is happening somewhere, whether you control it or not. This chapter will try to expose basic inner-workings of the black arts of graphics programming. I wish I could make this chapter 5 times as long and include the really neat stuff, but that would make this book too heavy to put in a rucksack.
 
-## About this Chapter
+### About this Chapter
 A Math chapter for a book about graphics will always miss out on many ideas. In fact, there are entire books covering "math for graphics", mostly consisting of references to other books, focusing on a specific topic (like Linear Algebra, Multivariable Calculus, Differential Geometry, and many other words mysteriously connected to other words). This chapter must therefore be very concise about ideas. All topics here are explained in a friendly way, but please - never fear googling a thing for which you need better examples.
 
 This chapter will be divided into _'numbers of D's'_ : we'll start from one dimension, and slowly explore the possibilities enabled by the amount of dimensions we're operating in. We'll explore concepts of _scale_ and _change_ and learn how much can be described just with these two words. Depending on how you choose to read it, this chapter contains hundreds years of Mathematical research, or in other words, several classes of college math, so it's worth bookmarking.
@@ -27,8 +27,8 @@ That's pretty much the definition of a _dimension_. It's an infinite collection 
 
 **[GRAPHICS: The Number Line. Reference added]**
 
-### Interpolation
-#### Linear Interpolation: The `ofLerp`
+<!-- ### Interpolation -->
+### Linear Interpolation: The `ofLerp`
 ```cpp 
 float ofLerp(float start, float stop, float amt)
 ```
@@ -40,14 +40,14 @@ Those of you that have already done a little time-based or space-based work have
 With the `lerp` function, you can take any two quantities, in our case `start` and `stop`, and find any point between them, using amounts (`amt`) between 0 and 1. To be verbose: 
  $$\text{lerp}\left(a,b,t\right) = t\cdot b+\left(1-t\right)\cdot a$$ 
 
-##### Note: What does _linear_ really mean?
+#### Note: What does _linear_ really mean?
 Engineers, Programmers and English Speakers like to think of _linear_ as _anything you can put on a line_. Mathematicians, having to deal with all the conceptual mess the former group of people creates, define it _anything you can put on a line **that begins at (0,0)**_. There's  good reasoning behind that, which we will see in the discussion about Linear Algebra. In the meantime, think of it this way: 
 
-> A _Linear Transform_ takes any line that has a value 0 at the point 0 and returns a line with the same property, $f\left(x\right)=ax$. If it returns a line value different from 0 at $x=0$, $f\left(x\right)=ax + b$, it's an _Affine Transform_ instead. 
+> A _Linear Transform_ takes any line that has a value 0 at the point 0 and returns a line with the same property, $$f\left(x\right)=ax$$. If it returns a line value different from 0 at $x=0$, $$f\left(x\right)=ax + b$$, it's an _Affine Transform_ instead. 
 
 At this point you probably know, but it's worth repeating: Those two transformations may either change lines into lines, or in some degenerate cases, lines to points. For example, $f\left(x\right) = x^{2}$ is totally not linear.
 
-##### Exercise: Save NASA's Mars Lander 
+#### Exercise: Save NASA's Mars Lander 
 In 1999, an masterpiece of engineering was making its final approach to Mars. All instruments were showing that the approach distance matched the speed, and that it's just about to get there and do some science. But instead, it did something rather rude: it crashed into the red planet. An investigation made later by NASA revealed that while designing the lander, one team worked with their test equipment set to _centimetres_, while the other had theirs set to _inches_. **By the way, this is all true.**
 
 Help the NASA teams work together: write a function that converts centimetres to inches. For reference, $1_{\text{in}} = 2.54_{\text{cm}}$. Test your result against three different real-world values. 
@@ -55,10 +55,10 @@ Tip: Its much easier to start solving with pen and paper than it is with a keybo
 
 **Think:**
 
-1. Why can we use `lerp` outside the range of 0 and 1?
+1. Can we use `lerp` outside the range of 0 and 1? Why?
 2. What would it take to write a function that converts inches into centimetres?
 
-#### Affine Mapping: The `ofMap`
+### Affine Mapping: The `ofMap`
 ```cpp
 float ofMap(float value, float inputMin, float inputMax, float outputMin, float outputMax, bool clamp = false)
 ```
@@ -69,9 +69,10 @@ However, when dealing with real world problems, programmers run into domains of 
 
 
 If we want to use the `lerp` function, we're aiming to get it to the range between 0 and 1. We can do that by knocking `inputMin` off the input `value` so that it starts at 0, then dividing by the size of the domain: $$x=\frac{\text{value}-\text{inputMin}}{\text{inputMax}-\text{inputMin}}$$
-Now that we've tamed the input domain to be between 0 and 1, we do the exact opposite to the output: `ofMap(value, inputMin, inputMax, outputMin, outputMax)` $=\frac{\text{value}-\text{inputMin}}{\text{inputMax}-\text{inputMin}}\cdot\left(\text{outputMax}-\text{outputMin}\right)+\text{outputMin}$
+Now that we've tamed the input domain to be between 0 and 1, we do the exact opposite to the output: `ofMap(value, inputMin, inputMax, outputMin, outputMax)`
+$$=\frac{\text{value}-\text{inputMin}}{\text{inputMax}-\text{inputMin}}\cdot\left(\text{outputMax}-\text{outputMin}\right)+\text{outputMin}$$
 
-Here's an example. Let's say we're given a dataset in Farenheit. Farenheit sets 0 to be the freezing point of brine and 100 to be the body temperature of a slightly ill British human (duh?). In order to do _anything_ with that, we first need to convert that to Celsius, which at least uses *The Same Damn Substance™* for 0 and 100: Water. Now, we happen to know that water freezes at $32_{\text{f}}$ and boils at $212_{\text{f}}$, so we have the same exact objective range, now it's time to map. We'll use an array for this:
+Here's an example. Let's say we're given a dataset in Farenheit. Farenheit sets 0 to be the freezing point of brine and 100 to be the body temperature of a slightly ill British human (_duh?_). In order to do anything with that information, we first need to convert that to Celsius, which at least uses _The Same Damn Substance™_ for 0 and 100: Water. Now, we happen to know that water freezes at $32_{\text{f}}$ and boils at $212_{\text{f}}$, so we have the same exact objective range, now it's time to map. We'll use an array for this:
 
 ```cpp
 vector<float> farenheitValues;
@@ -81,17 +82,17 @@ for (int i = 0 ; i < farenheitValues.size() ; ++i){
 	celsiusValues.pushBack(ofMap(32, 212, 0, 100, farenheitValues[i]));
 }
 ```
-Watch what we did here. We took the _domain_ of 32 to 212 and converted it to a _range_ of 0 to 100. There are two things to note about that:
+Watch what we did here. We took a numerical range (let's call it the _domain_) of 32 to 212 and converted it to different one (we'l call this one the _range_) of 0 to 100. There are two things to note about that:
 
 * In Mathematics, we often use the words _domain_ and _range_ as origin and target. Using those terms allows us to introduce another concept we care about: _Separation of Concern_. If we know that every input a function takes is guaranteed to be in a certain _domain_, we can engineer it so it guarantees an output in a certain _range_, and make sure it doesn't fail. In fact, this is the mathematical definition of a function:
 
-> A Function is a Mathematical object that maps _every_ value of a certain domain to a _single_ value of a certain range.
+> A _Function_ is a Mathematical object that maps _every_ value of a certain domain to a _single_ corresponding value of a certain range.
 
 
 * We defined the range of 32 to 212 as two points we know on a line. The actual range of temperatures is -459.67 (the absolute zero, in Farenheits) to somewhere very, very large (known as the planck temperature) - it's not very conventient to calculate that. So instead of choosing the whoe range, we mapped a known area of it to a known area of it in the range. We are allowed to use an `ofMap()` for that, because the scale is linear. Some scales are not linear; For example, the decibel ($\text{dB}$), commonly used in sound measurement, is logarithmic, so converting between a range of $0_{\text{dB}}$ - $6_{\text{dB}}$ to $6_{\text{dB}}$-$15_{\text{dB}}$ would not convey any meaning. 
 
-#### Range Utilities
-##### Clamping
+### Range Utilities
+#### Clamping
 You'll notice that the previous explanation is missing the `clamp` parameter. This may not matter to us if we're using the `ofMap` function in the range that we defined, but suppose we select a `value` smaller than `inputMin`: would it be ok if the result was also smaller than `outputMin`? If our program is telling an elevator which floor to go to, that might be a problem. That's why we add `true` to the tail of this function whenever we need to be careful.
 
 Just in case, oF offers another specific clamp function: 
@@ -100,7 +101,7 @@ Just in case, oF offers another specific clamp function:
 float ofClamp(float value, float min, float max)
 ```
 
-##### Range Checking
+#### Range Checking
 
 Two important functions we unjustly left out of this chapter:
 
@@ -118,13 +119,12 @@ Returns the sign of a number, as `-1.0` or `1.0`. Simple, eh?
 
 ### Beyond Linear: Changing Change 
 
-**[mh: I recognize that you are trying to be general here by talking about change, but at least throwing the word motion around as a type of change would give readers something upon which to anchor the concept.]**
-
-So far we've discussed change that is bound to a line. But in Real Life™ there's more than just straight lines: For one, we can't even describe periodic events with straight lines If we need to describe the vibration of a guitar string [footnote: this example sounds kinda old. Of course I meant "the wobble of a dubstep instrument"] or the changing speed of a biliiard ball after impact, we're going to need to use higher orders of change. 
+So far we've discussed change that is bound to a line. But in Real Life™ there's more than just straight lines: For one, we can't even describe periodic events with straight lines If we need to describe the vibration of a guitar string [footnote: this example sounds kinda old. Of course I meant "the wobble of a dubstep instrument"] or the changing speed of a billiard ball after impact, we're going to need to use higher orders of change. 
 
 In this discussion, we're about to see how we can describe higher orders of complexity, via a cunning use of `lerp`s. You will see that some types of change can be reproduced this way (like that billiard ball) - while other types of motion, like harmonic motion, will need a separate mechanism. Keep in mind that some of the code here is conceptual, not necessarily efficient.
 
-#### Quadratic and Cubic Change Rates
+### Quadratic and Cubic Change Rates
+
 Consider this function:
 
 ```cpp
@@ -173,7 +173,7 @@ float cubic (float t){
 We'll skip the entire solution, and just reveal that the result will appear in the form of $$at^{3} + bt^{2} + ct + d$$
 See the pattern here? The highest exponent is the number of successive `ofLerp`s we applied, i.e. the number of times we nested the `lerp` function in itself.
 
-##### …And So On
+#### …And So On
 The general notion in Uni level Calculus is that _you can do anything if you have enough of something_. So fittingly, there's a curious little idea in Mathematics which allows us, with enough of these nested control points, to approximate any curve segment we can imagine. In the original formulation of that idea (called a _Taylor Series_), we only reach a good approximation if the amount of degrees (successive `lerp`s we applied) is close to infinity.
 
 In Computer Graphics, as you're about to see - 3 is close enough.
@@ -192,12 +192,12 @@ So instead of using polynomials the way they are, some mathematicians thought of
 
 In the illustration, we've taken a few parts of the same cubic (3rd degree) polynomial, moved it around and scaled it to taste, and added all of them together at each point (let's call it 'mixing'). 
 
-The resulting curve is seamless and easy to deal with. It also carries some sweet properties: using it, one can use the absolute minimum of direction changes to draw any cubic polynomial between any two points. **[mh: maybe add another sentence here to unpack this]** In other words, _it's smooth_.
+The resulting curve is seamless and easy to deal with. It also carries some sweet properties: turns out this flavor of curves promises the smallest amount of changes in direction needed to connect two adjacent points, emitting no extraneous motion. In other words, _it's smooth_.
 
 These properties make this way of creating curves pretty popular in computer graphics, and you may find its variants under different names, like _Beziér Curves_ or Spline Curves. The code for implementing this is a little long and tedious in C++, so this chapter won't go into it - but in case you were wondering, it's just the same code for making polynomials we discussed above, only with a lot of `if` statements to check if `t` is in the correct range.
 
 
-Using the curve functions in openFrameworks is pretty straightforward: All you have to do is start from a point, and then add a destination, along with the control points **[mh: worth defining a control point somewhere in here]** to reach it:
+Using the curve functions in openFrameworks is pretty straightforward: For each curve segment, all we need is a beginning point, a destination point, and two points in between (called _control points_) that mark where the tangents (coming out of the beginning and end points) are pointing:
 ```cpp
 //The beginning point
 line.addVertex(ofPoint(200, 400)); 
@@ -206,6 +206,7 @@ line.addVertex(ofPoint(200, 400));
 line.bezierTo(100, 100, 800, 100, 700, 400); 
 ```
 This generates this image:
+
 ![Beziér](images/bezier.png)
 
 This is just one example of use though. All of the different combinations are documented extensively in the _Advanced Graphics_ chapter. 
@@ -235,7 +236,7 @@ In this part you're going to learn many concepts in how to store and manipulate 
 ### The Vector
 You may have heard of vectors before when discussing directions or position, and after understanding that they can represent both, may have gotten a little confused. Here's the truth about Vectors™: 
 	
-> A vector is just an array that stores multiple pieces of the same type of information. 
+> A _vector_ is just an array that stores multiple pieces of the same type of information. 
 
 Seriously, that's all it is. Quit hiding.
 
@@ -245,10 +246,10 @@ It's up to the user of that mathematical object to choose what it is used as. Th
 
 Oh, but there's a catch. You see, everyone was taught what $a + b$ means. In order to go on with vectors, we need to define that.
 
-#### Vector Algebra
+### Vector Algebra
 Generally speaking, when dealing with Algebra of numerical structures that aren't numbers, we need to pay close attention to the _type_ of things we're cooking together. In the case of vectors, we'll make a distinction between _per-component_ and _per-vector_ operations.
 
-##### Scalar Multiplication
+#### Scalar Multiplication
 The product between a vector and a scalar is defined as: 
 
 $$a\left[\begin{array}{c}
@@ -269,7 +270,7 @@ cout << ofToString( a * 2 ) << endl;
 //prints (2,4,6)
 ```
 
-##### Vector Addition
+#### Vector Addition
 Adding vectors is pretty straightforward: it's a _per-component_ operation:
 
 $$\left[\begin{array}{c}
@@ -294,7 +295,7 @@ cout << ofToString( a + b ) << endl;
 //prints (14,25,36)
 ```
 
-###### Example: `ofVec2f` as position
+#### Example: `ofVec2f` as position
 
 Vector addition serves many simple roles. In this example, we're trying to track our friend Lars as he makes his way home from a pub. Trouble is, Lars is a little drunk. He knows he lives south of the pub, so he ventures south; But since he can't walk straight, he might end up somewhere else.
 
@@ -326,9 +327,7 @@ void testApp::draw(){
 }
 ```
 
-##### Note: C++ Operator Overloading
-
-**[mh: this proke the flor a bit for me, so I'd recommend pushing it later]**
+#### Note: C++ Operator Overloading
 
 Just like we had to define the meaning of a product of a scalar quantity and a vector, programming languages - working with abstract representations of mathematical objects, also need to have definitions of such an operation built in. C++ takes special care of these cases, using a feature called _Operator Overloading_: defining the `*` operation to accept a scalar quantity and a vector as left-hand side and right-hand side arguments:
 
@@ -354,7 +353,7 @@ Some excellent examples of operator overloading done right exist in the source f
 
 **Warning: Overloading operators will make you go blind.** Programmers use operators without checking what they do, so bugs resulting from bad overloads take a long time to catch. If the expression `a + b` returns a reference instead of a copy, a `null` instead of a value, or modifies one of the input values – someone will use it one day, and that someone will cry for many days. Unless the operator can do one arithmetic thing and that alone, do not overload it with a different meaning. openFrameworks may or may not have a feature that tweets for you whenever you've written a silly operator overload. [No one knows](https://code.google.com/p/keytweeter/).
 
-##### Distance Between Points
+#### Distance Between Points
 
 ```cpp
 float ofVec3f::distance( const ofVec3f& pnt) const
@@ -394,7 +393,7 @@ z
 
 And that's exactly what using `.length()` as a property of any `ofVec` will give you.
 
-##### Vector Products: There's More Than One
+#### Vector Products: There's More Than One
 So you're multiplying two numbers. Simple, right? Five million and seven times three equals something you know. Even if you need a calculator for the result, you still know _it's a number_ that's not the case with vectors. If we just want to resize vectors (the way we do with numbers), we multiply a vector by a scalar and it grows. But what does it mean, geometrically, to multiply by a vector?
 
 If we were to follow the _per-component_ convention that we created, we would get an operation like this:
@@ -408,7 +407,7 @@ It's also known as the _Hadamard product_. It's intuitive, but not particularly 
 
 In the next section we describe something more helpful.
 
-##### The Dot Product
+#### The Dot Product
 
 ```cpp
 float ofVec3f::dot( const ofVec3f& vec )
@@ -416,14 +415,14 @@ float ofVec3f::dot( const ofVec3f& vec )
 
 The dot product of two vectors has a definition that's not too clear at first. On one hand, the operation can be defined as $$v_{a}\bullet v_{b}=x_{a}\cdot x_{b}+y_{a}\cdot y_{b}+z_{a}\cdot z_{b}$$ which is really easy to implement (in fact, graphics cards have special circuitry for doing just that!). On the other hand, it can also bet defined as $$v_{a}\bullet v_{b}=\left\Vert v_{a}\right\Vert \cdot\left\Vert v_{b}\right\Vert \cdot\cos\theta$$ where $\theta$ is the angle between the two vectors. Soon you'll see that this is a rather lucky coincidence. In the meantime, here's how you _shoud_ remember dot products:
 
-> A dot product of $a$ and $b$ reflects how one vector projects in the other vector's direction.
+> A _dot product_ of $a$ and $b$ reflects how one vector projects in the other vector's direction.
 
 Hold it. That's not the end of the story. As you can see, the $\left\Vert v_{a}\right\Vert \cdot\left\Vert v_{b}\right\Vert$ part of $\left\Vert v_{a}\right\Vert \cdot\left\Vert v_{b}\right\Vert \cdot\cos\theta$ should tell you that both vectors' lengths have equal parts in determining the final size of the thing, but in most practical cases, you'll be using dot products to determine either vector length or angles between vectors.
 
 That's why dot products are such an amazing coincidence: If you know the lengths of $v_{a}$ and $v_{b}$, you're given $\cos\theta$ for free. If you know the plane on which $v_{a}$ and $v_{b}$ lie, one vector and the angle to the other, you get the other one for cheap, and so on. In typical use, if we were to take two vectors that each have length 1 (_normalized_ vectors, in Mathspeak), the dot product $a⋅b$ would basically a cosine of the angle between them. 
 That relationship, described by $\cos\theta$, is easy to think of as a projection: Imagine shining a light from the top of one axis, and observing the shadow on another axis. How long it is, and which direction it's going, is exactly consistent with the dot product (in fact, most lighting models use dot products for just about everything).
 
-##### Example: Finding out if a point is above or below a plane
+#### Example: Finding out if a point is above or below a plane
 
 This is a problem we'll often run into in 3D graphics: given a point $p$ and a plane, we need to figure out which side of the plane the point is on. This may be really useful if you're trying to decide what _not_ to render in a scene, in order to save processing time.
 
@@ -472,7 +471,7 @@ In the computer world, a program needs the two things to function: Algorithms an
 
 At the core of the heavy machinery built to control 3d space, a matrix is just a data structure, like a vector. However, the 'algorithms' applied to this data structure (operations, in Mathland) make it an extremely powerful one. All of the _affine_ operations we care about in 3D can be described in the form of a matrix: translation, rotation, scaling, inversion, squeezing, shearing, projection and more and more. Here's a simple way to remember this:
 
-> A Matrix is a mathematical object that stores a geometric transformation of points.
+> A _Matrix_ is a mathematical object which can store a geometric transformation of points.
 
 
 **Notation Convention:** When dealing with matrices, most authors usually mark vectors with lowercase letters and matrices with uppercase letters.
@@ -482,7 +481,7 @@ The easiest way to look at a matrix is to look at it as a bunch of vectors. Depe
 
 **//TODO: Draw 2x2 example**
 
-##### Identity
+#### Identity
 Let's start from the simplest case. Just like with numbers, it is a very important property of any algebraic structure to have a _neutral_ member for each operation. For example, in Numberland, multiplication of any $x$ by 1 returns $x$, same goes for addition to 0.
 In Matrixland, that identity element is a matrix with 1s along the diagonal zeroes elsewhere. For example, the identity matrix for 3 dimensions is:
 
@@ -496,7 +495,7 @@ So for any matrix $M$, $$MI = IM = M$$.
 
 **Note:** You may have noticed that we're very careful right now with the order of multiplications, like when we took extra care to describe that $MI = IM$. There's a good reason for that, and you'll discover it in a few pages.
 
-##### Scale
+#### Scale
 You might remember that when scaling a vector (i.e point in space and/or velocity and/or force and/or brightness value for a colour, etc), we may choose to scale it uniformly by scalar multiplication:
 
 ```cpp
@@ -569,7 +568,7 @@ Making the $x$ component of the resulting vector be $a\cdot v_{x}$, just as prom
 
 Scalar multiplication of any matrix $M$ becomes really easy, then: it's essentially right multiplication by a diagonal matrix full of $a$'s: $$a\cdot M = a \cdot I \cdot M$$
 
-##### Skew matrices
+#### Skew matrices
 
 **[mh: this could use an image]** 
 
@@ -597,7 +596,7 @@ y\end{array}\right]$$
 Pretty neat, right? Try to remember this trick, as we're going to use it quite a lot when we move stuff around in the fourth dimension. I'm not even joking.
 
  
-##### Rotation matrices
+#### Rotation matrices
 We now see that any operation in Matrixland can really be expressed in a collection of vectors. We also know that dot products of vectors express _the angle between two vectors times their magnitude_. A slightly surprising fact is that those two properties are enough to describe any rotation.
 
 In order to comprehend this last statement, let's first explain how rotating one vector works. Let's take the vector $$v_0 = \left[\begin{array}{c}
@@ -623,34 +622,35 @@ $$
 
 That last equality is due to trigonometric equalities.
 
-###### 2D Rotation Matrices
-We now have all of the information we need to build a matrix that moves the vectors $\left\{ \left[\begin{array}{c}
+#### 2D Rotation Matrices
+We now have all of the information we need to build a matrix that moves the vectors
+
+$$\left\{ \left[\begin{array}{c}
 1\\
 0
 \end{array}\right],\left[\begin{array}{c}
 0\\
 1
-\end{array}\right]\right\}$ to $\left\{ \left[\begin{array}{c}
+\end{array}\right]\right\} to \left\{ \left[\begin{array}{c}
 \cos\theta\\
 \sin\theta
 \end{array}\right],\left[\begin{array}{c}
 -\sin\theta\\
 \cos\theta
-\end{array}\right]\right\}$ :
-
+\end{array}\right]\right\} :$$
 $$R\left(\theta\right)= \begin{bmatrix} \cos \theta & -\sin \theta \\ \sin \theta & \cos \theta \end{bmatrix}$$
 
 Now, hold on. Check out what we did here: we placed the targets for the source vectors as _columns_ in the matrix, and then we took the resulting _rows_ of the matrix to do the rotation. Why did we do that? 
 
 Recall that a matrix is just a stack of dot products. How did we construct these dot products?  We just aligned all of the entries that should be affecting the _resulting_ entry in one row of the matrix. That means that when considering the resulting $y$ entry, our vectors defined _the mixture of $y$ components_ from the target vectors that we would like to see in the resulting operation. This makes sense: Think of the vectors that compose the matrix as a new coordinate system, and what we're calculating is how the 'natural' coordinate system is projected onto them.
 
-##### 3D Rotation Matrices
+#### 3D Rotation Matrices
 
 In _Flatland_, Edwin A. Abbott describes a land in which two-dimensional beings live obliviously and happily, until one of them encounters a three-dimensional thing. His mind is boggled – he quickly understands the implications; When he tries to explain it to the other squares living in his world, they are apalled and he is cast away as a heretic. 
 
 Rotation in three dimensions is more complex to understand than rotations in two dimensions. There are much more cases, and in order to understand nontrivial rotations, one has to actually look at things in four dimensions. This seems to anger many people who don't normally think in 4 dimensions. After all we've been through, please stick around for this one too.
 
-###### Euler Angles
+#### Euler Angles
 
 The easiest way to think about rotations in 3D is to just think about them as a series of 2D-rotations. Let's called that _nesting a dimension_.
 
@@ -679,7 +679,7 @@ And this is indeed a useful way for rotating about one axis. Leonhard Euler, a f
 
 Noting that, we know that when rotating things in more than 2 dimensions, we need to know not only the angles of the rotations, but the order in which to apply them. The rotation matrices  $R_{zx}\left(\theta\right) = R_{z}\left(\theta\right)⋅R_{x}\left(\theta\right)$ and $R_{xz}\left(\theta\right) = R_{x}\left(\theta\right)⋅R_{z}\left(\theta\right)$ are not the same. The reason for the difference will be explained in the next section. 
 
-###### Other Methods of Rotation: Axis-Angles and Quaternions
+#### Other Methods of Rotation: _Axis-Angles_ and _Quaternions_
 We can only end this one-page section with a defeating note: rotations in 3D are a big subject. Even though one matrix can only mean one thing, there are multiple ways of getting to it. Euler Angles demonstrated above are one common and easy-to-comprehend way; A slightly more general way is given by defining an arbitrary axis and rotating around it, called _Axis-Angle Rotation_.
 
 **//TODO: Draw difference between angle-axis and normal-axis euler rotations **
@@ -689,15 +689,15 @@ Constructing the matrix for that kind of rotation is slightly hairy, which is wh
 As far as usage goes, it's important to note that Quaternions are sometimes more efficient (and actually easier to think with) than Matrices, but their Mathematical underpinnings are far beyond the scope of a basic math chapter.
 
 	
-#### Matrix Algebra
+### Matrix Algebra
 This chapter introduced a different kind of math from what you were used to. But while introducing _a new thing to do things with_ we opened up a lot of unexplored dangers. Notice that we always multiplied vectors by matrices in a certain order: It's always the vector _after_ the matrix, the vector is always transposed, and any new operation applied to an existing situation always happens with a matrix to the left of our result. There's a reason for all of that: _Commutativity_.
 
-##### Commmumamitativiwha?
+#### _Commmumamitativiwha?_
 In high school Algebra, we used to think that $a\cdot b=b\cdot a$. No reason not to think that: The amount of uranium rods that you have times the amount of specially trained monkeys that I have equals the same amount of casualties, no matter the order of multiplication. That's because quantities are _commutative_, the order in which they apply operations to each other doesn't matter. 
 
 But, in matrixland we're not talking about things we counted - instead, we're talking about operations, and here's the deal: 
 
-> Operations (like Rotation, Translation and Scaling) are generally not commutative.
+> Operations (like Rotation, Translation and Scaling) may describe different outcomes if applied at different orders.
 
 There's a difference between scaling a square by x and then rotating it by 90 degrees and doing it the other way around:
 
@@ -705,7 +705,7 @@ There's a difference between scaling a square by x and then rotating it by 90 de
 
 What's more, doing it the other way around is not always defined. Matrices and vectors with unequal sizes have very special conditions in which they could be multiplied. We're not dealing with them now, so I'll let you read about it in Wikipedia, but it's important to know that whenever using matrices for manipulating a space, order of operands is really important.
 
-##### What else is weird?
+#### What else is weird?
 **Nothing.** We can still multiply the matrices and vectors in any order that we want to: $$M_{1}⋅M_{2}⋅v = \left(M_{1}⋅M_{2}\right)⋅v = M_{1}⋅\left(M_{2}⋅v\right)$$ as long as we don't change the order in which they appear. That property is called _Associativity_, and it's one of the defining properties of algebraic structures that describe geometric operations, structures which mathematicians call _Groups_. _Commutativity_ is an optional property for groups, it just happens to be a given when dealing with operations between numbers, which is why you've never been told that you need it. There's a lesson here: simulations take a lot of properties for granted. It's sometimes good to ask why.
 
 Now grab a pack of ice, place it on your head for 15 minutes and go on reading the next part.
@@ -721,7 +721,7 @@ The reason for this is that these are all operations that can be done in n dimen
 
 If the entire shape lifts itself magically and moves away from the origin - it can't be done with a matrix, therefore it's not linear. This presents a problem to people who want to use matrices as an algebraic system for controlling 3d: in real life we need to move some stuff around.
 
-##### Homogenous coordinates: Hacking 3d in 4d
+#### Homogenous coordinates: Hacking 3d in 4d
 This problem has caused hundreds of years of agony to the openFrameworks community, until in 1827 a hacker called Möbius pushed an update to the ofMäth SVN repo: use the matrix in 4 dimensions to control a 3 dimensional shape. Here's the shtick: a 3d operation can be described as a 4d operation which doesn't do anything to the 4th dimension. Written as a matrix, we can describe it like this:
 
 $$ A _{4\times 4} = \left[\begin{array}{ccc|c}
@@ -763,17 +763,15 @@ Now all we need to do is discard the 4th dimension to get our translated point. 
 
 Notice that because we placed a 1 at the $w$ (4th) dimension, all of the multiplication operations went through that component transparently. This trick became the standard of most computer geometry systems. Möbius actually has a lot more going in this theory: if we change that 1 into something else, we're able to simulate a projection into a camera pinhole. This chapter won't cover that fascinating part of math, but when you get to building cameras in OpenGL, keep this amazing hack in mind.
 
-#### SRT (Scale-Rotate-Translate) operations
+#### _SRT_ (Scale-Rotate-Translate) operations
 Now we've defined the operations we like the most to describe (sort-of) real world objects moved around in space. Let's spend a few paragraphs talking about how to combine all of the operations together.
 
-If you recall, geometric operations are _non-commutative_, which means that if we defined them in a specific order, there's no guarantee that changing the order will provide us with similar results. ~~That means that when building a graphics system we need to exercise systematic vigilance when executing human stuff like "Turn that spindle around so I
-may see its refractions of the sun" without accidentally turning the sun around its' axis, incinerating the good people of Uranus.~~ **[mh: this felt distracting]**
+If you recall, geometric operations are _non-commutative_, which means that if we defined them in a specific order, there's no guarantee that changing the order will provide us with similar results. Therefore, when building a graphics system we must exercise systematic vigilance, so implementing human thoughts like "Turn this globe around its axis, it glows so nicely in the sunlight" without accidentally turning the sun around the same axis, resulting in a very confusing, very short year.
 
 The way we execute that vigilance is by a predefined order for handling objects. If you grab a pen and paper it won't take too long to figure that order out:
-1. Modify the scale (if need be).
-2. Modify the orientation (if need be).
-3. Modify the position (if need be).
-4. Rejoice.
+1. Modify the **scale** (if need be, otherwise apply the _identity scale_).
+2. Modify the **orientation** (if need be, otherwise apply the _identity rotation_).
+3. Modify the **position** (if need be, otherwise apply the _identity translation_).
 
 Any other order will cause weird effects, like things growing and spinning off their axes (anchor point / pivot, if animation is your jam). This may seem like common sense, but Ken Perlin notes that it was only the late 80s when that system became a standard for 3d. 
 
@@ -784,7 +782,7 @@ If you recall, we can multiply all of these matrices to get one matrix represent
 
 We call this matrix $M$, because it places objects we give it in their place in the _Model_. Whenever you call `ofTranslate()`, `ofRotate()`, `ofScale()` (or equivalent) on an object, that operation is applied to the **currently active _Model_ matrix**. Whenever you execute `ofPushMatrix()`, a copy of that matrix is saved in _the matrix stack_, so that you can go back to it when necessary. And when necessary, you will then use `ofPopMatrix()`, which will cause the current matrix $M$ to be deleted and replace it with a matrix from the top of the matrix stack. That is the entire mystery about matrices. That's it. 
 
-#### Using Matrices and Quaternions in openFrameworks
+### Using Matrices and Quaternions in openFrameworks
 While this chapter was supposed to show the underlying representation of grpahics operations, it did intentionally avoid showing matrix examples in code. Now that you know how matrices look on the inside, it'll be a lot easier for you to figure out how to debug your 3d code, but most of the time using matrices in raw form won't be necessary.
 
 While you could construct a matrix via `ofMatrix4x4`, using:
@@ -794,7 +792,7 @@ ofMatrix4x4( const ofQuaternion& quat ) {
 	makeRotationMatrix(quat);
 }
 
-ofMatrix4x4(	float a00, float a01, float a02, float a03,
+ofMatrix4x4(  float a00, float a01, float a02, float a03,
               float a10, float a11, float a12, float a13,
               float a20, float a21, float a22, float a23,
               float a30, float a31, float a32, float a33);
@@ -841,12 +839,12 @@ cout << ofToString(myRotatedVector) << endl;
 //prints out (0,1,0)
 ```
 
-###### Ok, Now What?
+#### Ok, Now What?
 This chapter is just the tip of the iceberg in what math can do for graphics. 
 
 In the 'Advanced Graphics' chapter you'll learn about two similar matrices: 
 * The _View_ matrix tramsforms the result of the _Model_ matrix to simulate where our camera is supposed to be at.
 * The _Projection_ matrix applies the optical properties of the camera we defined and turns the result of the _View_ matrix from a 3D space to a 2D image. The Projection matrix is built slightly different than the _Model-View_ matrix, but if you've made it this far, you won't have trouble reading about it in a special Graphics topic.
 
-###### Also, Thanks
+#### Also, Thanks
 Learning Math is hard. Teaching Math is therefore excruciating: having so many ideas you want to put in someone else's head, and the slow and sticky nature of it all. I'd like to thank Prof. Bo'az Klartag and Prof. Ken Perlin and for giving me ideas on how to teach mathematics intuitively.

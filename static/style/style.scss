@@ -1,0 +1,434 @@
+
+/*
+    @font-face styling for fira borrowed from: http://www.carrois.com/en/fira-3-1/
+*/
+@import '_navbar.scss';
+
+@mixin box-shadow($left:1px, $top:3px, $blur:13px, $color:rgba(100,100,100,0.6), $inset:"") {
+  -webkit-box-shadow:$left $top $blur $color #{$inset};
+  -moz-box-shadow:$left $top $blur $color #{$inset};
+  box-shadow:$left $top $blur $color #{$inset};
+}
+
+@font-face {
+  font-family: 'firaMono';
+  src: url('fonts/eot/FiraMono-Regular.eot'); /* IE9 Compat Modes */
+  src: url('fonts/eot/FiraMono-Regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('fonts/woff/FiraMono-Regular.woff') format('woff'), /* Modern Browsers */
+  url('fonts/ttf/FiraMono-Regular.ttf') format('truetype'); /* Safari, Android, iOS */
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'firaMono';
+  src: url('fonts/eot/FiraMono-Bold.eot'); /* IE9 Compat Modes */
+  src: url('fonts/eot/FiraMono-Bold.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('fonts/woff/FiraMono-Bold.woff') format('woff'), /* Modern Browsers */
+  url('fonts/ttf/FiraMono-Bold.ttf') format('truetype'); /* Safari, Android, iOS */
+  font-weight: bold;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'fira';
+  src: url('fonts/eot/FiraSans-Light.eot'); /* IE9 Compat Modes */
+  src: url('fonts/eot/FiraSans-Light.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('fonts/woff/FiraSans-Light.woff') format('woff'), /* Modern Browsers */
+  url('fonts/ttf/FiraSans-Light.ttf') format('truetype'); /* Safari, Android, iOS */
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'fira';
+  src: url('fonts/eot/FiraSans-LightItalic.eot'); /* IE9 Compat Modes */
+  src: url('fonts/eot/FiraSans-LightItalic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('fonts/woff/FiraSans-LightItalic.woff') format('woff'), /* Modern Browsers */
+  url('fonts/ttf/FiraSans-LightItalic.ttf') format('truetype'); /* Safari, Android, iOS */
+  font-weight: normal;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'fira';
+  src: url('fonts/eot/FiraSans-Bold.eot'); /* IE9 Compat Modes */
+  src: url('fonts/eot/FiraSans-Bold.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('fonts/woff/FiraSans-Bold.woff') format('woff'), /* Modern Browsers */
+  url('fonts/ttf/FiraSans-Bold.ttf') format('truetype'); /* Safari, Android, iOS */
+  font-weight: bold;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'fira';
+  src: url('fonts/eot/FiraSans-BoldItalic.eot'); /* IE9 Compat Modes */
+  src: url('fonts/eot/FiraSans-BoldItalic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('fonts/woff/FiraSans-BoldItalic.woff') format('woff'), /* Modern Browsers */
+  url('fonts/ttf/FiraSans-BoldItalic.ttf') format('truetype'); /* Safari, Android, iOS */
+  font-weight: bold;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'firaRegular';
+  src: url('fonts/eot/FiraSans-Regular.eot'); /* IE9 Compat Modes */
+  src: url('fonts/eot/FiraSans-Regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('fonts/woff/FiraSans-Regular.woff') format('woff'), /* Modern Browsers */
+  url('fonts/ttf/FiraSans-Regular.ttf') format('truetype'); /* Safari, Android, iOS */
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'firaRegular';
+  src: url('fonts/eot/FiraSans-RegularItalic.eot'); /* IE9 Compat Modes */
+  src: url('fonts/eot/FiraSans-RegularItalic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('fonts/woff/FiraSans-RegularItalic.woff') format('woff'), /* Modern Browsers */
+  url('fonts/ttf/FiraSans-RegularItalic.ttf') format('truetype'); /* Safari, Android, iOS */
+  font-weight: normal;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'firaMedium';
+  src: url('fonts/eot/FiraSans-Medium.eot'); /* IE9 Compat Modes */
+  src: url('fonts/eot/FiraSans-Medium.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('fonts/woff/FiraSans-Medium.woff') format('woff'), /* Modern Browsers */
+  url('fonts/ttf/FiraSans-Medium.ttf') format('truetype'); /* Safari, Android, iOS */
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'firaMedium';
+  src: url('fonts/eot/FiraSans-MediumItalic.eot'); /* IE9 Compat Modes */
+  src: url('fonts/eot/FiraSans-MediumItalic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('fonts/woff/FiraSans-MediumItalic.woff') format('woff'), /* Modern Browsers */
+  url('fonts/ttf/FiraSans-MediumItalic.ttf') format('truetype'); /* Safari, Android, iOS */
+  font-weight: normal;
+  font-style: italic;
+}
+
+body {
+  background-color:#e3e3e3
+}
+
+a:link {
+  color: #d14;
+  text-decoration: none;
+}
+
+a:visited {
+  color: #d14;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #d14;
+  text-decoration: underline;
+}
+
+a:active {
+  color: #d14;
+  text-decoration: none;
+}
+
+
+.content-wrapper {
+  margin: 0 auto;
+  width: 980px;
+}
+
+
+.MathJax_Display{
+  padding-top: 2em;         // add a bit of padding around math figures in the math secions
+  padding-bottom: 2em;
+}
+
+
+
+/*
+.of-logo {
+  background-image: url('http://openframeworks.cc/images/of-logo.svg');
+  background-repeat: no-repeat;
+  width:100px;
+  height: 100px;
+  position:fixed;
+  top: 8px;
+}*/
+
+.banner {
+  position:fixed;
+  background-color: rgba(200,120,120,0.9);
+  width:100%;
+  left:0px;
+  top:0px;
+  z-index: 200;
+
+  color: white;
+
+  padding: 8px 0px;
+  font-size:16px;
+
+
+  font-family: 'fira';
+  b {
+    font-family: 'firaMedium';
+  }
+  a {
+    color: white;
+    text-decoration: underline;
+  }
+
+  @include box-shadow();
+
+}
+
+#chapters {
+  display:none;
+}
+
+.chapter-content, .toc {
+  width: 734px;
+  margin-top:70px;
+  background-color: rgba(255,255,255,1);
+  // border: 1px solid rgba(233,233,233,1);
+  // box-shadow: 0 0 1px rgba(0,0,0,.07);
+  display: block;
+  margin-left: 246px;
+  padding:15px 25px 30px;
+  text-rendering: optimizeLegibility;
+
+  p {
+    font-family: 'fira';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 15px;
+
+    letter-spacing:0.02em;
+    line-height: 1.6em;
+  }
+
+  ul, li {
+    font-family: 'fira';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+
+    letter-spacing:0.02em;
+    line-height: 1.5em;
+    padding-bottom: 5px
+  }
+
+  h1, h2, h3, h4 {
+    font-family: 'firaMedium';
+    font-style: normal;
+    font-weight: normal;
+  }
+
+  h1 {
+    font-weight: 300;
+    font-size: 50px;
+    margin-top: 1.5em;
+    margin-bottom: 1.9em;
+  }
+
+  h2 {
+    font-style: italic;
+    font-size: 32px;
+    margin-top:2.6em;
+    margin-bottom:0.7em;
+    border-color: #cccccc;
+
+  }
+
+  h2 + h3 {
+    //If the h3 comes right after the h2
+    margin-top:-20px;
+  }
+
+
+  h3 {
+    font-size: 20px;
+    margin-top:2em;
+    margin-bottom:0px;
+    letter-spacing: 0.025em;
+  }
+
+  h4 {
+    font-family: 'fira';
+    font-style: italic;
+    font-size: 20px;
+    margin-top: 2.8em;
+  }
+
+  h1 + p {
+    margin-top:-38px;
+  }
+
+  h2 + blockquote {
+    margin-top:-26px;
+  }
+
+  code {
+    // background-color: #f6f6f6;
+    border: none;
+    color: #EC6A88;
+    font-family: 'firaMono';
+    font-size: 12px;
+    font-style: normal;
+    line-height: inherit;
+    padding: 3px 5px 3px 5px;
+    margin-right: 2px;
+    margin-left: 1px;
+    text-rendering: normal;
+    white-space: nowrap;
+    border-radius: 3px;
+    background-color: rgba(0,0,0,0.06);
+  }
+
+  /* a code {
+     color:black;
+   }*/
+
+  /*
+      Fenced off code block look like this: <pre><code></code></pre>
+      Fenced code inherits styling from code styling above, as well as
+      from pre styling (both below and in bootstrap).
+  */
+
+  pre {
+    /*font-family: Menlo, Consolas, "Courier New", Monaco, monospace;
+    font-size: 13px;*/
+    tab-size: 4;
+    border: none !important;
+    border-radius:0px !important;
+    white-space: pre-wrap;
+    margin-top: -10px;
+    padding: 13px 0;
+    font-size: 11px;
+
+    code {
+      border-left: 6px solid rgba(197, 213, 229, 0.65);
+      position: relative;
+      background-color: rgba(0,0,0,0.03);
+      width: 650px;
+      left: 0px;
+      padding: 6px 20px !important;
+      color: inherit;
+      display: inherit; /* required so that pad effects all of the block */
+      line-height: inherit;
+      text-rendering: normal;
+      white-space: inherit;
+    }
+  }
+
+  blockquote {
+
+    text-align: left;
+    margin: 50px;
+    background-color: rgba(0,0,0, 0.03);
+    padding:10px 10px 10px 20px;
+    border-radius: 3px;
+
+  }
+
+  .figure {
+    padding: 13px 0;
+    text-align: center;
+    width:100%;
+
+    .inner{
+      padding-bottom: 1em;
+      padding-top: 1em;
+      display: inline-block;
+      max-width: 100%;
+    }
+
+  }
+
+
+  .figure img {
+    max-width: 100%; max-height: 100%;
+    @include box-shadow();
+  }
+
+
+  .caption {
+
+    color: #CCCCCC;
+    font-family: "fira";
+    font-size: 12px;
+    font-style: italic;
+    line-height: 2em;
+    text-align: center;
+    float:right;
+    /*float:right;
+    padding-right:10px;*/
+    padding-top:8px;
+  }
+
+  .footer {
+    font-family: "fira";
+    margin-top:50px;
+    padding:15px 0px;
+
+    #prev_chapter {
+      float:left;
+    }
+    #next_chapter {
+      float:right;
+    }
+  }
+}
+
+.toc {
+  width: 980px;
+  margin-left: 0px;
+
+  .toc-wrapper {
+    column-count: 2;
+    -webkit-column-count: 2;
+    -moz-column-count: 2;
+
+    h3 {
+      margin-top: 0;
+    }
+  }
+
+}
+
+#help {
+  font-family: 'fira';
+  color: #FFF;
+  background-color: rgba(120,120,120,0.4);
+  margin-top:50px;
+  padding:10px;
+}
+
+
+
+code {
+  span.dv {
+    color: #3A00DC;
+  }
+  span.kw {
+    color: #C800A4;
+    font-weight: normal;
+  }
+  span.dt {
+    color: #C800A4;
+  }
+  span.co {
+    color: #008E00;
+  }
+  span.ot {
+    color:  #902000;
+  }
+  span.st {
+    color: #DF0002;
+  }
+}
+
+/* Styling for bash fenced code blocks */
+code.sourceCode.bash {
+  span.kw {
+    color: inherit;
+    font-weight:normal;
+  }
+  span.co {
+    font-style: normal;
+  }
+}

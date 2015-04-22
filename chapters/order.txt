@@ -1,24 +1,33 @@
-intro
-cplusplus_basics
-setup_and_project_structure
-OOPs!
-animation
-intro_to_graphics
-data_vis
-hardware
-sound
-ios
-c++11
-memory
-threads
-version_control_with_git
-advanced_graphics
-network
-math
-ofSketch
-project_elliot
-project_eva
-project_joel
-project_memo
-installation_up_4evr_macosx
-installation_up_4evr_linux
+Foreword
+	foreword
+Basics
+	of_philosophy
+	cplusplus_basics
+	setup_and_project_structure
+	intro_to_graphics
+	OOPs!
+Approaches
+	animation
+	data_vis
+	game_design
+	image_processing_computer_vision 
+I/O
+	hardware
+	sound
+	network	
+Advanced topics
+	advanced_graphics
+	math
+	memory
+	threads
+	ios	
+	c++11
+Tools
+	version_control_with_git
+	ofSketch
+	installation_up_4evr_macosx
+	installation_up_4evr_linux
+Case studies
+	project_elliot
+	project_eva
+	project_joel

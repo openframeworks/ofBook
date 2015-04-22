@@ -87,7 +87,7 @@ export DISPLAY=:0
 ```bash
 cd ~/openFrameworks/apps/myapps/myapp/bin/
 ret=1
-while [ ret -neq 0 ]; do
+while [ $ret -ne 0 ]; do
     ./myapp
     ret=$?
 done

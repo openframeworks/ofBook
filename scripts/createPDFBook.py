@@ -45,26 +45,36 @@ with open(chapterOrderPath) as fh:
 
 	# For each chapter
 	for line in fh:
-		chapterName = line.rstrip()
-		chapterPath = os.path.join("..", "chapters", chapterName, "chapter.md")
 
-		# If a chapter.md exists
-		if os.path.exists(chapterPath): 
+		# [zach] -- this is checking for tabs to organzing groups for chapters 
+		# http://stackoverflow.com/questions/13241399/python-check-string-indentation
 
-			# Process the chapter:
-			# 	1. Make all images relative to the current directory, i.e. preappend
-			# 		../chapters/CHAPTER_NAME/ to each chapter.  This uses python's 
-			#		sub function of the regular expression module.  It looks for the
-			# 		markdown formatted "![image title](" and adds the path at the end.		
-			with open(chapterPath, "r") as originalChapter:
-				fileString = originalChapter.read()
-				imgPattern = r'(\!\[(.*)\]\()'
-				subPattern = r'\1../chapters/{0}/'.format(chapterName)
-				modifiedChapterString = re.sub(imgPattern, subPattern, fileString)
-				modifiedChapterPath = os.path.join("..", "chapters", chapterName, "chapter_modified_for_print.md")
-				with open(modifiedChapterPath, "w") as modifiedChapter:
-					modifiedChapter.write(modifiedChapterString)			
-			chapterPaths.append(modifiedChapterPath)
+		leading_spaces = len(line) - len(line.lstrip())
+
+		if (leading_spaces):
+		
+			chapters = []
+
+			chapterName = line.lstrip().rstrip()
+			chapterPath = os.path.join("..", "chapters", chapterName, "chapter.md")
+
+			# If a chapter.md exists
+			if os.path.exists(chapterPath): 
+
+				# Process the chapter:
+				# 	1. Make all images relative to the current directory, i.e. preappend
+				# 		../chapters/CHAPTER_NAME/ to each chapter.  This uses python's 
+				#		sub function of the regular expression module.  It looks for the
+				# 		markdown formatted "![image title](" and adds the path at the end.		
+				with open(chapterPath, "r") as originalChapter:
+					fileString = originalChapter.read()
+					imgPattern = r'(\!\[(.*)\]\()'
+					subPattern = r'\1../chapters/{0}/'.format(chapterName)
+					modifiedChapterString = re.sub(imgPattern, subPattern, fileString)
+					modifiedChapterPath = os.path.join("..", "chapters", chapterName, "chapter_modified_for_print.md")
+					with open(modifiedChapterPath, "w") as modifiedChapter:
+						modifiedChapter.write(modifiedChapterString)			
+				chapterPaths.append(modifiedChapterPath)
 
 
 # Set up the appropriate options for the pandoc command
