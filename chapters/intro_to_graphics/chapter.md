@@ -408,6 +408,7 @@ ofPolyline straightSegmentPolyline;
 ofPolyline curvedSegmentPolyline;
 ofPolyline closedShapePolyline;
 ```
+
 We can fill those `ofPolylines` with points in `setup()`:
 
 ```cpp
