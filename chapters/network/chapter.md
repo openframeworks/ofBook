@@ -8,7 +8,7 @@
 
 ## TCP vs UDP
 
-TCP and UDP are 2 of the most used protocols to comunicate through a network. Indeed TCP is so common that the suite of protocols on which internet is based is usually called TCP/IP. The network protocols are classified in layers by something called the [OSI model](https://en.wikipedia.org/wiki/OSI_model "Wikipedia on the OSI model") TCP and UDP belong to layer 4, the transport layer, and are usually the most used in OF along with protocols from layer 7, the application protocol, like HTTP, FTP or OSC that actually work on top of the other layers, for example HTTP and FTP on top of TCP and OSC usually on top of UDP.
+TCP and UDP are 2 of the most used protocols to comunicate through a network. Indeed TCP is so common that the suite of protocols on which internet is based is usually called TCP/IP. The network protocols are classified in layers by something called the [OSI model](https://en.wikipedia.org/wiki/OSI_model "Wikipedia on the OSI model"). TCP and UDP belong to layer 4, the transport layer, and are usually the most used in OF along with protocols from layer 7, the application protocol, like HTTP, FTP or OSC that actually work on top of the other layers, for example HTTP and FTP on top of TCP and OSC usually on top of UDP.
 
 ### TCP
 
