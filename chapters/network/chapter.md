@@ -12,7 +12,7 @@ TCP and UDP are 2 of the most used protocols to comunicate through a network. In
 
 ### TCP
 
-**Transmission Control Protocol**, is without doubt the most used network protocol on the Internet, it is a protocol based on a connection, stream based and resistant to errors, package reordering and package lose. Let's see what all that means.
+The **Transmission Control Protocol** is without doubt the most used network protocol on the Internet. It is a protocol based on a connection, stream based and resistant to errors, package reordering and package lose. Let's see what all that means.
 
 To understand all that we might need to know a bit about how a TCP/IP network works. First of all we need to know that when we send something it's usually divided in packages, each segment of the network might support a different package size so it might subdivide our packages into smaller packages. A package is just a segment of the information we are trying to send plus some headers depending on the protocol we are using. This division in packages is used among other things so it's easier to recover from errors. For example if we are sending a file and we sent it in one go, if some parts of it get corrupted we'll need to resend the full file again. Dividing it in packages and adding some headers to them allows us to detect errors per package so we only need to resend the corrupted packages instead of the whole thing.
 
