@@ -47,6 +47,9 @@ Scripts for building the web and pdf versions of the book are in `scripts/` dire
 2. install [beauitful soup 4](http://www.crummy.com/software/BeautifulSoup/) and [libsass](https://github.com/dahlia/libsass-python): ```pip install beauitfulsoup4 libsass```
 
 
+# contribution workflow
+Since [git](http://git-scm.com/) is at the heart of the management of this endavour, please check the [git best practices](https://sethrobertson.github.io/GitBestPractices/). If you do not agree with all of them, please at least stick to the "Do commit early and often" paradign. This will make doing reviews, picking the good stuff from your contributions and polishing the rest a lot easier. Github itself also offers [a lot of help](https://help.github.com/) on common issues. So sign up, [fork the repo](https://help.github.com/articles/fork-a-repo/) and [send your pull requests](https://help.github.com/articles/creating-a-pull-request/) along our way.
+
 #Mailing List
 
 [openFrameworks Book discussion](http://dev.openframeworks.cc/listinfo.cgi/ofbook-openframeworks.cc).
