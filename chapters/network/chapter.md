@@ -22,7 +22,7 @@ Another problem is that packets might get corrupted on their way to the destinat
 
 With all that let's say we send packets ABCD in that order, it might be that at the other end we get something like GCB: packet A got corrupted and turned into G, packets B and C arrived ok but in the wrong order, and packet D was totally lost.
 
-TCP is able to solve all of those problems. when TCP sends packets it numbers them so that they can be correctly ordered when the other computer recieves them. It also adds something called a CRC to each packet that allows the other computer to know if that packet is corrupt.
+TCP is able to solve all of those problems. When TCP sends packets it numbers them so that they can be correctly ordered when the other computer recieves them. It also adds something called a CRC to each packet that allows the other computer to know if that packet is corrupt.
 
 When the destination receives a packet and that packet is correct, it sends a confirmation, also called an ACK. If after some time the sender hasn't received that confirmation, it sends the packet again. Whic solves the problem of corrupted and lost packets.
 
