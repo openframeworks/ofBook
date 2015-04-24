@@ -46,7 +46,7 @@ The application using TCP in the other side may receive it like:
         "twork mess"
         "age"
 
-We can't even be sure of which size those packets are going to have. There's tricks to send full messages, like adding a delimiter to them, for example openFrameworks when doing:
+We can't even be sure of which size those packets are going to have. There are tricks to send full messages, like adding a delimiter to them, for example openFrameworks when doing:
 
 ```cpp
 tcpClient.send("Hello world!! this is an openFrameworks network message");
