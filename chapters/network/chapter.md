@@ -30,7 +30,7 @@ This ~~ACKs~~signalling **[t: TCP uses sliding windows and congestion control to
 
 As we see, using a TCP connection ensures that everything we send is received correctly on the other side.
 
-So why not just always use TCP?  Well TCP has some limitations, for example TCP is connection oriented, that means that in order to communicate with another machine we need to open a connection explicitly to that machine and that machine only.
+So why not just always use TCP?  Well TCP has some limitations, for example TCP is connection oriented. That means that in order to communicate with another machine we need to open a connection explicitly to that machine and that machine only.
 
 TCP is also stream oriented. That means that we cannot send individual messages and expect them to arrive in one piece, they will arrive eventually but not exactly as we sent them. For example if we send something like:
 
