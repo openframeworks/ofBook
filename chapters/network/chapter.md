@@ -24,7 +24,7 @@ With all that let's say we send packets ABCD in that order, it might be that at 
 
 TCP is able to solve all of those problems. When TCP sends packets it numbers them so that they can be correctly ordered when the other computer recieves them. It also adds something called a [CRC](https://en.wikipedia.org/wiki/Cyclic_redundancy_check "Wikipedia on Cyclic Redundancy Check" to each packet that allows the other computer to know if that packet is corrupt.
 
-When the destination receives a packet and that packet is correct, it sends a confirmation, also called an ACK. If after some time the sender hasn't received that confirmation, it sends the packet again. Whic solves the problem of corrupted and lost packets.
+When the destination receives a packet and that packet is correct, it sends a confirmation, also called an ACK. If after some time the sender hasn't received that confirmation, it sends the packet again. That solves the problem of corrupted and lost packets.
 
 This ACKs also allows to regulate the speed with which packets are sent so if the clienthas less bandwith than the server, the server can slow down sending packets till it arrives to the speed at which the client can receive them
 
