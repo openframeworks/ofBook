@@ -36,7 +36,7 @@ TCP is also stream oriented. That means that we cannot send individual messages 
 
         "Hello world!! this is an openFrameworks network message"
 
-On the other side, the application using TCP, we may receive it like:
+The application using TCP in the other side may receive it like:
 
         "Hello w"
         "orld!"
