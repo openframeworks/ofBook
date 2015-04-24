@@ -6,6 +6,15 @@
 *corrections by Brannon Dorsey*
 
 
+## IP and NAT
+
+Something important that you might know already: in order to connect applications through a TCP/IP transport network protocol, you usually need, an IP address and a port, the IP address is specific to each machine, the port to each application. So with an IP/port pair we can define an application running in a specific address along all Internet, almost. For example an application that is running a web server usually runs on port 80, if the machine is being executed in has the IP 15.6.8.2, 15.6.8.2:80 defines that web server among any other application running in any other machine in all the Internet. So if we want to connect two machines, usually all we need to know is the IP and port of the application running in the server and use it in the client to connect to it.
+
+There's an exception though. In most internal networks, like your home network for example, there's a router that connects the machines in that network to the Internet. These routers usually do something called NAT: Network Address Translation. NAT was invented because the IPv4 protocol has a limited number of IP addresses. Internally, the network uses a reserved range of addresses: 192.168.x.x/24 or 10.x.x.x/32, which are addresses that won't be found directly on the internet. When we try to connect to an external address it acts as a kind of proxy between your computer and the server that we want to connect. The router has it's own external address, and when it receives a response it translates the address and port in which it has received it to an internal one, the one from our computer and sends the packets back to us.
+
+While this is really practical, it means that if we have 2 computers behind NAT routers, it's impossible to open a connection between them (in principle) . There's ways to configure a router to send any packet sent to a specific port to the same internal address. There's also libraries like [ofxNice](https://github.com/arturoc/ofxNice) that allow you to do NAT transversal, but that will only work using UDP.
+
+
 ## TCP vs. UDP
 
 TCP and UDP are 2 of the most used protocols to communicate through a network. Indeed TCP is so common that the suite of protocols on which internet is based is usually called TCP/IP. The network protocols are classified in layers by something called the [OSI model](https://en.wikipedia.org/wiki/OSI_model "Wikipedia on the OSI model"). TCP and UDP belong to layer 4, the transport layer, and are usually the most used in OF along with protocols from layer 7, the application protocol, like HTTP, FTP or OSC that actually work on top of the other layers, for example HTTP and FTP on top of TCP and OSC usually on top of UDP.
@@ -69,12 +78,6 @@ If the protocol you are working with uses TCP and a delimiter, chances are you m
 ```cpp
 tcpClient.setMessageDelimiter(myDelimiter);
 ```
-
-Something important that you might know already: in order to connect applications through a TCP/IP transport network protocol, you usually need, an IP address and a port, the IP address is specific to each machine, the port to each application. So with an IP/port pair we can define an application running in a specific address along all Internet, almost. For example an application that is running a web server usually runs on port 80, if the machine is being executed in has the IP 15.6.8.2, 15.6.8.2:80 defines that web server among any other application running in any other machine in all the Internet. So if we want to connect two machines, usually all we need to know is the IP and port of the application running in the server and use it in the client to connect to it.
-
-There's an exception though. In most internal networks, like your home network for example, there's a router that connects the machines in that network to the Internet. These routers usually do something called NAT: Network Address Translation. NAT was invented because the IPv4 protocol has a limited number of IP addresses. Internally, the network uses a reserved range of addresses: 192.168.x.x/24 or 10.x.x.x/32, which are addresses that won't be found directly on the internet. When we try to connect to an external address it acts as a kind of proxy between your computer and the server that we want to connect. The router has it's own external address, and when it receives a response it translates the address and port in which it has received it to an internal one, the one from our computer and sends the packets back to us.
-
-While this is really practical, it means that if we have 2 computers behind NAT routers, it's impossible to open a connection between them (in principle) . There's ways to configure a router to send any packet sent to a specific port to the same internal address. There's also libraries like [ofxNice](https://github.com/arturoc/ofxNice) that allow you to do NAT transversal, but that will only work using UDP.
 
 ### UDP
 
