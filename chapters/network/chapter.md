@@ -56,7 +56,7 @@ actually (internally) sends:
 
         "Hello world!! this is an openFrameworks network message[/TCP]\0"
 
-The last `\0` is actually added for compatibility reasons with old versions of flash! The `[\TCP]` allows the other side to read the stream until it receives the full message. So when you use:
+The last `\0` is actually added for compatibility reasons with old versions of flash! The `[/TCP]` allows the other side to read the stream until it receives the full message. So when you use:
 
 ```cpp
 string message = tcpServer.receive();
