@@ -62,7 +62,7 @@ The last `\0` is actually added for compatibility reasons with old versions of f
 string message = tcpServer.receive();
 ```
 
-Internally ofxTCPCLient/Server will read the stream, keep the partial messages in memory, and wait until it gets the delimiter before returning a full message. This is done transparently, but if you are interfacing with some other protocol coming from a non OF application you might need to do this your self by using `sendRaw()` `sendRawMsg()` `receiveRaw()` and `receiveRawMsg()` which don't send or expect a terminator.
+The ofxTCPCLient/Server will internally read the stream, keep the partial messages in memory, and wait until it gets the delimiter before returning a full message. This is done transparently, but if you are interfacing with some other protocol coming from a non OF application you might need to do this your self by using `sendRaw()` `sendRawMsg()` `receiveRaw()` and `receiveRawMsg()` which don't send or expect a terminator.
 
 If the protocol you are working with uses TCP and a delimiter, chances are you might be able to use this same trick by using:
 
