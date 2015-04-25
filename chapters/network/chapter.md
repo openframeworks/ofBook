@@ -87,7 +87,7 @@ While this is really practical, it means that if we have 2 computers behind NAT 
 
 ### UDP
 
-UDP or **User Datagram Protocol**, is a non-connection datagram oriented, non error resistant protocol. It is more or less the total opposite to TCP. We don't need to establish a connection, instead we just send messages to a specific address and port. As long as there's a process listening in that machine and that port it will receive the message.
+UDP or **User Datagram Protocol**, is a ~~non-connection datagram oriented, non error resistant protocol~~ protocol oriented towards single individual messages and can not easily recover from transmission errors **[t: rephrasing for easier understanding & to avoid negations]**. It is more or less the total opposite to TCP. We don't need to establish a connection, instead we just send messages to a specific address and port. As long as there's a process listening in that machine and that port it will receive the message.
 
 Datagram oriented means that whatever we send, that fits in the packet size supported by the network, by all the sub-networks in the path from one computer to another, will arrive in one piece on the other side. In openFrameworks, if we do:
 
