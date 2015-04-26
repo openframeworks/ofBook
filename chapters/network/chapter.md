@@ -122,4 +122,3 @@ Another advantage of using OSC is that there are lots of commercial and open sou
 
 As well as OSC there are other application level protocols for specific applications and it's usually easier to use those than trying to use transport protocols like TCP or UDP. For example streaming video is a really complex problem to solve but there are protocols like RTP that already solve or at least mitigate all the complications that it involves. Using a library that implements RTP will be easier than trying to send video directly using TCP or UDP.
 
-
