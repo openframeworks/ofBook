@@ -110,7 +110,7 @@ A case where UDP might be preferable over TCP is in very time critical applicati
 
 Another possibility is implementing part of the error recovery in TCP while using UDP. For example we might not mind loosing some packets or getting some of them corrupt but we care about the order in which they arrive. In those cases we can implement packet reordering in UDP simply by using a sequence number in each message and reorder the packets in the destination by having a buffer. With this approach we can wait a little before actually processing a message to see if any other message that might arrive later needs to be processed before.
 
-In general use TCP if you need your messages to arrive no matter what, when loosing even one packet might be critical and UDP if you need some of the most advanced uses like broadcasting, multicasting, NAT transversal, or when waiting for lost packets to be resent, even a few milliseconds, might make be critical for the application while loosing some packets is ok.
+In general use TCP if you need your messages to arrive no matter what, when loosing even one packet might be critical. Use UDP if you need some of the most advanced uses like broadcasting, multicasting, NAT transversal, or when waiting for lost packets to be resent, even a few milliseconds, might make be critical for the application while loosing some packets is ok.
 
 ## OSC
 
