@@ -120,6 +120,6 @@ It's usage in openFrameworks is really simple, so just check the examples in the
 
 Another advantage of using OSC is that there are lots of commercial and open source projects that support OSC. Using OSC you might be able to easily control some other software or receive results from it. You can, for example, have a Pure Data patch to generate audio and control it's parameters from openFrameworks by sending OSC messages to it.
 
-As well as OSC there are other application level protocols for specific applications and it's usually easier to use those than trying to use transport protocols like TCP or UDP. For example streaming video is a really complex problem to solve but there's protocols like RTP that already solve or at least mitigate all the complications that it involves so using a library that implements RTP will be easier than trying to send video directly using TCP or UDP.
+As well as OSC there are other application level protocols for specific applications and it's usually easier to use those than trying to use transport protocols like TCP or UDP. For example streaming video is a really complex problem to solve but there are protocols like RTP that already solve or at least mitigate all the complications that it involves so using a library that implements RTP will be easier than trying to send video directly using TCP or UDP.
 
 
