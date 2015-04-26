@@ -114,7 +114,7 @@ In general use TCP if you need your messages to arrive no matter what, when loos
 
 ## OSC
 
-Open Sound Control (OSC) is an application level protocol. It is of a higher level than UDP or TCP. It's main characteristic is that it allows to send types like int, float, string... without worrying about the underlying architecture of the sender and receiving machine. It's usually based on UDP so it has some of the same problems.
+Open Sound Control (OSC) is an application level protocol. It is of a higher level than UDP or TCP. It's main characteristic is that it allows to send types like int, float, string to specific endpoints. This is done without worrying about the underlying architecture of the sender and receiving machine. It's usually based on UDP so it has some of the same problems.
 
 It's usage in openFrameworks is really simple, so just check the examples in the examples/addons folder to know how it works.
 
