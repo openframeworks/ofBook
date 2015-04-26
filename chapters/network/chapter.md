@@ -98,7 +98,7 @@ udpManager.SendAll(message, message.size());
 
 The other side will receive that message in one piece. That is, if it receives it at all.
 
-As we've said before, UDP is not resistant to errors so the packet may not arrive. It may get corrupted and there's no way to recover it. If we send several packets they may arrive in a different order then they were sent. UDP also doesn't adjust for bandwidth, so if one side is sending faster than what the other side can receive, or even if it fills the local buffers while sending, some packets will get lost. What's worse, we won't receive any advice that they got lost, nor in the sender nor in the receiver.
+As we've said before, UDP is not resistant to errors so the packet may not arrive. It may get corrupted and there's no way to recover it. If we send several packets they may arrive in a different order then they were sent. UDP also doesn't adjust for bandwidth, so if one side is sending faster than what the other side can receive, or even if it fills the local buffers while sending, some packets will get lost. What's worse, we won't receive any notice that they got lost, nor in the sender nor in the receiver.
 
 UDP might seem not useful but it has some advantages. Sometimes, we don't mind some packets being lost. For example, if we are sending a packet every few frames with the state of our application we don't mind if sometimes we don't receive one of them. It's also really hard to loose a packet on a local network, but if you need total reliability don't trust UDP, just use TCP.
 
