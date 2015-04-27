@@ -98,7 +98,6 @@ udpManager.SendAll(message, message.size());
 
 the other side will receive that message in one piece -- that is -- if it receives the datagram at all.
 
-<<<<<<< HEAD
 As we've said before, UDP is not resistant to errors so the packet may not arrive. It may get corrupted and there's no way to recover it. If we send several packets they may arrive in a different order then they were sent. UDP also doesn't adjust for bandwidth, so if one side is sending faster than what the other side can receive, or even if it fills the local buffers while sending, some packets will get lost. What's worse, neither sender or receiver will receive any feedback that packets were lost.
 
 UDP might seem not useful but it has some advantages. First, it is fast! Since UDP doesn't require feedback (e.g. ACKs) and only minimal header information, there are less bytes to send. In many cases, this speed is more important than reliability.  For example, if we are sending a packet every few frames with the state of our application we don't mind if one or two frames is lost because the destination will be updated with the next packet it receives. It's also really rare to loose UDP packets on a local network. Thus, if you need to send your packets very quickly (also known as low-latency) and you don't mind if a few packets are lost, UDP may be right for you.  If your application requires confirmation that each and every byte arrived at its destination, you'll need to use TCP.
