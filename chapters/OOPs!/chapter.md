@@ -15,7 +15,7 @@ Some terms and definitions used within OOP are listed below:
 
 -An Object is an instance of a class.
 
--The Methods are the objects abilities
+-The Methods are the objects abilities.
 
 ## How to build your own Classes (simple Class)
 Classes and objects are similar to the concepts of movie clips and instances in Flash and are also a fundamental part of Java programming. 
