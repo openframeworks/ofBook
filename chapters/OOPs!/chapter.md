@@ -25,7 +25,7 @@ A very easy way of knowing what these two files do is to think of the header fil
 So let's see how it works:
 
 First of all let's create the two class files: 
-If you're using Xcode as your IDE (it stands for: Integrated Development Environment), select the src folder and left Click (or CTRL + click), on the popup menu select 'New File' and you'll be taken to a new window menu, choose the appropriate platform you're developing for (OS X or iOS) and select C++ class and finally choose a name (we used 'Ball'). You'll automatically see the two files in your 'src' folder: Ball.h and Ball.cpp.
+If you're using Xcode as your IDE (it stands for: Integrated Development Environment), select the src folder and left Click (or CTRL + click), on the popup menu select 'New File' and you'll be taken to a new window menu, choose the appropriate platform you're developing for (OS X or iOS) and select C++ class and finally choose a name (we used 'Ball'). You'll automatically see the two files in your 'src' folder: 'Ball.h' and 'Ball.cpp'.
 Now let's edit your class header (.h) file. Feel free to delete all its contents and let's start from scratch:
 Declare a class in the header file (.h). In this case, the file name should be Ball.h. 
 Follow the code below and type into your own Ball.h file, please note the comments I've included to guide you along.
