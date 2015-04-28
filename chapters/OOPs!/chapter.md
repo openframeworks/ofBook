@@ -65,7 +65,6 @@ We will now create a class for a ball object. This ball will have color, speed a
 
 Here's how you can write the class *.cpp file, the implementation file:
 
-
 ```cpp
 #include "Ball.h"
 Ball::Ball(){
