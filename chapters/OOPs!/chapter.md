@@ -1,13 +1,13 @@
 # Ooops! = Object Oriented Programming + Classes
 
 
-##Overview
+## Overview
 This tutorial is a quick and practical introduction to Object Oriented Programming in openFrameworks and a how-to guide to build and use your own classes.
 By the end of this chapter you should understand how to create your own objects and have a lot of balls bouncing on your screen!
 
 ![balls screenshot](images/balls_screenshot.png "balls screenshot")
 
-##What is OOP
+## What is OOP
 Object Oriented Programming is a programming paradigm based on the use of objects and their interactions. A recurring analogy is to see a "Class" as a cookie cutter that can create many cookies, "the Objects".
 Some terms and definitions used within OOP are listed below:
 
@@ -17,7 +17,7 @@ Some terms and definitions used within OOP are listed below:
 
 -The Methods are the objects abilities
 
-##How to build your own Classes (simple Class)
+## How to build your own Classes (simple Class)
 Classes and objects are similar to the concepts of movie clips and instances in Flash and are also a fundamental part of Java programming. 
 Because cooking, like coding, is fun and we tend to experiment in the kitchen let's continue with the classic metaphor of a cookie cutter as a class and cookies as the objects.
 Every class has two files: a header file, also known as a Declarations file with the termination '.h' and an implementation file, terminating in '.cpp'.
@@ -197,7 +197,7 @@ myBall3.draw();
 
 
 
-##Make more Objects from your Class
+## Make more Objects from your Class
 We've just created 3 objects but you can have already see how tedious it would be to create 10, 100 or maybe 1000's of them. Hardcoding them one by one would be a long and painful process that could be easily solved by automating the object creation and function calls. Just by using a couple for loops we'll make this process simpler and cleaner. Instead of declaring a list of objects one by one, we'll create an array of objects of type 'Ball'. We'll also introduce another new element: a constant. Constants are set after any #includes as #define CONSTANT_NAME value. This is a way of setting a value that won't ever change in the program. 
 **[MH: I think Josh mentions these, maybe drop a ref to his chapter here.]**
 **[MH: I don't think arrays have been covered at this point in the book.  But Josh covers them in his unabridged chapter, maybe drop a ref in to that as well.]**
@@ -245,7 +245,7 @@ for(int i=0; i<NBALLS; i++){
 
 
 
-##Make even more Objects from your Class: properties and constructors
+## Make even more Objects from your Class: properties and constructors
 
 As we've seen, each of the objects has a set of properties defined by its variables (position, speed, direction, and dimension). Another advantage of object oriented programming is that the objects created can have different values for each of their properties. For us to have better control of each object, we can have a method that allows us to define these characteristics and lets us access them. Because we want to do this right after creating the object, let's do this in the method called setup().  We will modify it to allow to pass in some of the objects properties, let's say its position and dimension. First, let's do this in the Ball definitions file (*.h): 
 
@@ -342,7 +342,7 @@ myBall[i].draw();
 
 
 
-##Make Objects on the fly
+## Make Objects on the fly
 
 While many times you'll already have a pre-defined number of objects you'll need to create and using arrays is the right choice, there are other ways to create multiple objects that offer other advantages: welcome vectors!
 Vectors are really great as they'll allow to create collections of objects without a predefined number of elements. They're quite dynamic and allow you to add objects on the fly (e.g. while your program is running) but also to remove them when you need longer need the objects. Think of them as elastic arrays.
@@ -397,7 +397,7 @@ for (int i = 0 ; i<myBall.size(); i++) {
 }
 ```
 
-##Making and delete as you wish - using vectors
+## Making and delete as you wish - using vectors
 
 If you ran the previous code you'll see that in a very short time you'll not only create a huge amount of balls but at some point your system might become sluggish because there are just way too many objects on screen. As we just mentioned Vectors are very special as we can add and remove elements dynamically, that's their magic: vectors are elastic! 
 So, let's also implement a way to delete them before we have way too many Balls.
@@ -424,7 +424,7 @@ balls.clear();
 
 
 
-##Quick intro to polymorphism (inheritance)
+## Quick intro to polymorphism (inheritance)
 You're now discovering the power of OOP, making a class and creating as many objects from that in an instant, adding and deleting by your application needs. Now, for a second let's go back to our cooking metaphor (yummy!) and imagine that your cookies, even though sharing the same cookie cutter and dough, are using some different sprinkles on each to add some desired variation to our cookie jar selection!
 This is also the power of OOP and inheritance: by allowing to use a base class and add some specific behaviors, overwriting some of the behaviors of a class, creating a subset of instances / objects with slightly different behaviors.
 The great thing about this is it's reusability, we're using the 'mother' class as a starting point, using all its capabilities but we overwrite one of its methods to give it more flexibility.
