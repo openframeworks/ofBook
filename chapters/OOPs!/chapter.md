@@ -520,7 +520,7 @@ void BallBlue::draw(){
 ```
 Now, on your own, create two new classes: BallRed and BallGreen based on Ball class like BallBlue is.
 Back to your ofApp.h, include the newly made classes and create one instance of each and in your ofApp.cpp file initialize them and call their update() and draw() methods. A quick trick! Right before you call the draw method, make this call:
-	
+
 ```cpp
 ofEnableBlendMode(OF_BLENDMODE_ADD);
 ```
