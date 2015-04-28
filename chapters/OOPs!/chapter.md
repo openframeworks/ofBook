@@ -110,7 +110,6 @@ void Ball::draw(){
 }
 ```
 
-
 Now, this is such a simple program that we could have written it inside our ofApp(.h and .cpp) files and that would make sense if we didn't want to reuse this code elsewhere. One of the advantages of Object Oriented Programming is reuse. Imagine we want to create thousands of these balls. The code could easily get messy without OOP. By creating our own class we can later re-create as many objects as we need from it and just call the appropriate methods when needed keeping our code clean and efficient. In a more pragmatic example think of creating a class for each of your UI elements (button, slider, etc) and how easy it would be to then deploy them in your program but also to include and reuse them in future programs.
 
 
