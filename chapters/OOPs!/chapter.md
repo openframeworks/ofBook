@@ -1,4 +1,4 @@
-#Ooops! = Object Oriented Programming + Classes#
+# Ooops! = Object Oriented Programming + Classes
 
 
 ##Overview
