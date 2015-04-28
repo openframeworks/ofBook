@@ -529,6 +529,3 @@ This will make your application drawing methods have an Additive Blending Mode. 
 
 Hope you enjoyed this short tutorial!
 Have fun!
-
-
-	
