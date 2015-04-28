@@ -11,11 +11,11 @@ By the end of this chapter you should understand how to create your own objects 
 Object Oriented Programming (OOP) is a programming paradigm based on the use of objects and their interactions. A recurring analogy is to see a "Class" as a cookie cutter that can create many cookies, "the Objects".
 Some terms and definitions used within OOP are listed below:
 
--A Class defines the characteristics of a thing - the object - and its behaviors; it defines not only its properties and attributes but also what it can do.
+- A Class defines the characteristics of a thing - the object - and its behaviors; it defines not only its properties and attributes but also what it can do.
 
--An Object is an instance of a class.
+- An Object is an instance of a class.
 
--The Methods are the objects abilities.
+- The Methods are the objects abilities.
 
 ## How to build your own Classes (simple Class)
 Classes and objects are similar to the concepts of movie clips and instances in Flash and are also a fundamental part of Java programming. 
