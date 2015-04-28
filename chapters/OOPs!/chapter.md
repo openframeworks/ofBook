@@ -58,7 +58,7 @@ class Ball {
 ```
 
 We have declared the Ball class header file (the list of ingredients) and now lets get to the cooking part to see what these ingredients can do!
-Please notice the '#include' tag. This is a way to tell the [compiler](https://en.wikipedia.org/wiki/Compiler "Wikipedia on compilers") about any files to include in the implementation file. When the program is compiled these '#include' tags will be replaced by the original file they're referring to. 
+Please notice the '#include' tag. This is a way to tell the [compiler](http://www.cplusplus.com/doc/tutorial/introduction/ "Compiler introduction on cplusplus.com") ([wikipedia](https://en.wikipedia.org/wiki/Compiler "Wikipedia on compilers")) about any files to include in the implementation file. When the program is compiled these '#include' tags will be replaced by the original file they're referring to.
 The 'if statement' (#ifndef) is a way to prevent the repetition of header files which could easily occur. This is called an [include guard](https://en.wikipedia.org/wiki/Include_guard "Wikipedia on inlcude guards"). Using this pattern helps the compiler to only include the file once and avoid repetition. Don't worry about this now, we'll talk about it later on!
 
 **[MH: might be useful to link to an external resource for include guards or a general resource on how compiling works.  It don't think that beginners will understand the explanation here and trying to explain it yourself it would make your chapter much longer.]**
