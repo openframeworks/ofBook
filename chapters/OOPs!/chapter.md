@@ -7,8 +7,8 @@ By the end of this chapter you should understand how to create your own objects 
 
 ![balls screenshot](images/balls_screenshot.png "balls screenshot")
 
-## What is OOP
-Object Oriented Programming is a programming paradigm based on the use of objects and their interactions. A recurring analogy is to see a "Class" as a cookie cutter that can create many cookies, "the Objects".
+## What is Object Oriented Programming
+Object Oriented Programming (OOP) is a programming paradigm based on the use of objects and their interactions. A recurring analogy is to see a "Class" as a cookie cutter that can create many cookies, "the Objects".
 Some terms and definitions used within OOP are listed below:
 
 -A Class defines the characteristics of a thing - the object - and its behaviors; it defines not only its properties and attributes but also what it can do.
