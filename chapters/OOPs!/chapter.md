@@ -30,7 +30,6 @@ Now let's edit your class header (.h) file. Feel free to delete all its contents
 Declare a class in the header file (.h). In this case, the file name should be Ball.h. 
 Follow the code below and type into your own Ball.h file, please note the comments I've included to guide you along.
 
-
 ```cpp
 #ifndef _BALL // if this class hasn't been defined, the program can define it
 #define _BALL // by using this if statement you prevent the class to be called more than once which would confuse the compiler
