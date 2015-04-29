@@ -176,7 +176,6 @@ myBall2.update();
 myBall3.update();
 ```
 
-
 and also in the draw() function:
 
 ```cpp
