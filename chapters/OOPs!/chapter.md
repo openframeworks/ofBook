@@ -488,7 +488,6 @@ public:
 };
 ```
 
-
 On the '.cpp' file we'll need to then specify what we want the new 'draw()' method to do uniquely.
 
 ```cpp
