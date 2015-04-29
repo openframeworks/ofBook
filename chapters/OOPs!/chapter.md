@@ -149,7 +149,7 @@ myBall.draw(); // call the draw method to draw the object
 Compile and run! At this point you should be seeing a bouncing ball on the screen! Great!
 
 
-##Make objects from your Class
+## Make objects from your Class
 
 By now, you're probably asking yourself why you went to so much trouble to create a bouncing ball. You could have done this (and probably have) without using classes. In fact one of the advantages of using classes is to be able to create multiple individual objects with the same characteristics. So, let's do that now! Go back to your ofApp.h file and create a couple of new objects:
 
