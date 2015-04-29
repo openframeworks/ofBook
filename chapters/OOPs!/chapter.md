@@ -239,7 +239,6 @@ As we've seen, each of the objects has a set of properties defined by its variab
 void setup(float _x, float _y, int _dim);
 ```
 
-
 We'll need to update the Ball implementation (*.cpp) file to reflect these changes.
 
 ```cpp
