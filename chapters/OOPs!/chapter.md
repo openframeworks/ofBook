@@ -143,7 +143,7 @@ myBall.update(); // calling the object's update method
 and in the draw() function lets add:
 
 ```cpp
-myBall.draw();  // call the draw method to draw the object
+myBall.draw(); // call the draw method to draw the object
 ```
 
 Compile and run! At this point you should be seeing a bouncing ball on the screen! Great!
