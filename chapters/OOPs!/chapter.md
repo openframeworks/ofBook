@@ -160,7 +160,6 @@ Ball myBall3;
 ```
 
 In the implementation file (ofApp.cpp), call the corresponding methods for each of the objects
-
 in the ofApp's setup() function:
 
 ```cpp
