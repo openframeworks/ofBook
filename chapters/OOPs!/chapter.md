@@ -131,7 +131,7 @@ Now let's get that ball bouncing on screen! Go to your project ofApp.cpp (implem
 In the setup() function, add the following code:
 
 ```cpp
-myBall.setup();  // calling the object's setup method
+myBall.setup(); // calling the object's setup method
 ```
 
 In the update() function, add:
