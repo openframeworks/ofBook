@@ -140,7 +140,6 @@ In the update() function, add:
 myBall.update(); // calling the object's update method
 ```
 
-
 and in the draw() function lets add:
 
 ```cpp
