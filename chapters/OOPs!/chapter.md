@@ -334,9 +334,7 @@ Note: You'll be hearing about two different types of vectors throughout this boo
 
 To learn more about stl::vector check xxx chapter or this short online tutorial : http://www.openframeworks.cc/tutorials/c++%20concepts/001_stl_vectors_basic.html
 
-
 Back to our beloved ofApp.h file, let's define a vector of Ball objects by typing:
-
 
 ```cpp
 vector <Ball> myBall;
