@@ -220,7 +220,6 @@ for(int i=0; i<NBALLS; i++){
 }
 ```
 
-
 in the draw() function:
 
 ```cpp
