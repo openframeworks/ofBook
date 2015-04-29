@@ -137,7 +137,7 @@ myBall.setup(); // calling the object's setup method
 In the update() function, add:
 
 ```cpp
-myBall.update();  // calling the object's update method
+myBall.update(); // calling the object's update method
 ```
 
 
