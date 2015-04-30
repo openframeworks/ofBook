@@ -200,7 +200,6 @@ We'll now use the CONSTANT value to define the size of our array of objects:
 Ball myBall[NBALLS];
 ```
 
-
 back to our implementation file we'll just need to create an array of objects and call their methods through 'for' loops.
 
 in the setup() function:
