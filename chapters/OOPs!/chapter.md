@@ -268,7 +268,6 @@ Ball::setup(float _x, float _y, int _dim){
 
 
 void Ball::update(){
-    
     if(x < 0 ){
         x = 0;
         speedX *= -1;
