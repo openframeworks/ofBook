@@ -459,7 +459,7 @@ Ball::setup(){
 
 We can leave the `update()` and `draw()` functions as they were.
 Now, let's start making child versions of this parent class.
-Create a new Class set of files and name them `BallBlue`. Feel free to copy the code below.
+Create a new class set of files and name them `BallBlue`. Feel free to copy the code below.
 It's '.h' should look like this:
 
 ```cpp
