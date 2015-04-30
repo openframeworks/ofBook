@@ -293,7 +293,7 @@ void Ball::draw(){
 }
 ```
 
-Now in the ofApp.cpp file we will need to run this newly implemented method right when we start our application so it will reflect the different settings on each object as they are created. So, in the  ofApp::setup()
+Now in the ofApp.cpp file we will need to run this newly implemented method right when we start our application so it will reflect the different settings on each object as they are created. So, in the `ofApp::setup()`
 
 ```cpp
 for(int i=0; i<NBALLS; i++){
