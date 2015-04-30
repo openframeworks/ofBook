@@ -134,7 +134,7 @@ In the `setup()` function of ofApp.cpp add the following code:
 myBall.setup(); // calling the object's setup method
 ```
 
-In the `update()` function, add:
+In the `update()` function add:
 
 ```cpp
 myBall.update(); // calling the object's update method
