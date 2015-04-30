@@ -17,7 +17,7 @@ Some terms and definitions used within OOP are listed below:
 
 - The methods are the objects abilities.
 
-## How to build your own Classes (simple Class)
+## How to build your own classes (simple class)
 ~~Classes and objects are similar to the concepts of movie clips and instances in Flash and are also a fundamental part of Java programming.~~ **[t: What value does this sentence add? (I ask because I doubt beginning oF coders know the details of Flash. The statement about Java is also true for Python etc.)]**
 Because cooking, like coding, is fun and we tend to experiment in the kitchen let's continue with the classic metaphor of a cookie cutter as a class and cookies as the objects.
 Every class has two files: a header file, also known as a declarations file with the termination '.h' and an implementation file, terminating in '.cpp'.
