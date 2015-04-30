@@ -340,7 +340,7 @@ void ofApp::mouseDragged(int x, int y, int button){
 ```
 
 In this method we're listening to the dragging activity of your mouse, and we'll use this to create interaction! So let's just create some code to create `Ball`s and add them to our program when we drag the mouse.
-The dragging activity of your mouse or trackpad is an ubiquitous, simple but also very gestural source of data and we'll use this simplicity to create interaction! Let's add some code to create Balls and add them to our program when we drag the mouse.
+The dragging activity of your mouse or trackpad is an ubiquitous, simple but also very gestural source of data and we'll use this simplicity to create interaction! Let's add some code to create `Ball`s and add them to our program when we drag the mouse.
 
 ```cpp
 void ofApp::mouseDragged(int x, int y, int button){
