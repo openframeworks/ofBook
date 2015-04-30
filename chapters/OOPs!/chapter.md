@@ -493,7 +493,7 @@ Back to your 'ofApp.h'. Include the newly made classes and create one instance o
 ofEnableBlendMode(OF_BLENDMODE_ADD);
 ```
 
-This will make your application drawing methods have an additive blending mode. For more on this check Chapter??.
+This will make your application drawing methods have an additive blending mode. For more on this check the "Graphics" chapter.
 
 Hope you enjoyed this short tutorial!
 Have fun!
