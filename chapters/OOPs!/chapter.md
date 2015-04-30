@@ -99,7 +99,7 @@ void Ball::update(){
     } else if(y > ofGetHeight()){
         y = ofGetHeight();
         speedY *= -1;
-    } 
+    }
 
     x+=speedX;
     y+=speedY;
