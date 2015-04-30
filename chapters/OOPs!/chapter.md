@@ -484,7 +484,6 @@ void BallBlue::draw(){
     ofSetColor(ofColor::blue);    // this is a shortcut for full blue color ;)
     ofCircle(x, y, dim);    
 }
-
 ```
 
 Now create two new classes on your own: `BallRed` and `BallGreen` based on the `Ball` class like `BallBlue`.
