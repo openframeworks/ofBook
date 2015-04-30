@@ -306,7 +306,6 @@ for(int i=0; i<NBALLS; i++){
 }
 ```
 
-
 As you see it is now possible to directly control the objects properties on its creation. and now we'll just need to use the for loop from above to go through the balls to update and draw them.
 
 ```cpp
