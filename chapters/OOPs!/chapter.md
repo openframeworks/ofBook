@@ -196,7 +196,6 @@ In the ofApp class header file, where you define the balls objects also define t
 
 We'll now use the CONSTANT value to define the size of our array of objects:
 
-
 ```cpp
 Ball myBall[NBALLS];
 ```
