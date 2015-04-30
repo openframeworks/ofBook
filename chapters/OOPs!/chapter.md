@@ -320,7 +320,7 @@ myBall[i].draw();
 While many times you'll already have a pre-defined number of objects you'll need to create and using arrays is the right choice, there are other ways to create multiple objects that offer other advantages: welcome vectors!
 Vectors are really great as they'll allow to create collections of objects without a predefined number of elements. They're quite dynamic and allow you to add objects on the fly (e.g. while your program is running) but also to remove them when you need longer need the objects. Think of them as elastic arrays.
 So, let's use them!
-Note: You'll be hearing about two different types of vectors throughout this book. Please don't confuse stl::vectors (the elastic arrays type we're talking about) with math vectors (forces).
+Note: You'll be hearing about two different types of vectors throughout this book. Please don't confuse stl::vectors (the elastic arrays type we're talking about) with mathematical vectors (e.g. forces).
 
 To learn more about stl::vector check xxx chapter or this short online tutorial : http://www.openframeworks.cc/tutorials/c++%20concepts/001_stl_vectors_basic.html
 
