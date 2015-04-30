@@ -390,7 +390,7 @@ for (int i =0; i < myBall.size(); i++) {
 }
 ```
 
-But because there's always a time you might just want to destroy them all, vectors also have a very handy method to help you: clear().
+But because there's always a time you might just want to destroy them all, vectors also have a very handy method to help you: `clear()`.
 Feel free to experiment and try using it yourself!
 
 ```cpp
