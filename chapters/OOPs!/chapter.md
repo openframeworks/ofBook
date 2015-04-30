@@ -167,7 +167,7 @@ myBall2.setup();
 myBall3.setup();
 ```
 
-in the ofApp's update() function:
+in the ofApp's `update()` function:
 
 ```cpp
 myBall1.update();
@@ -175,7 +175,7 @@ myBall2.update();
 myBall3.update();
 ```
 
-and also in the draw() function:
+and also in the `draw()` function:
 
 ```cpp
 myBall1.draw();
