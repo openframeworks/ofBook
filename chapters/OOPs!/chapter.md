@@ -315,7 +315,6 @@ myBall[i].draw();
 ```
 
 
-
 ## Make Objects on the fly
 
 While many times you'll already have a pre-defined number of objects you'll need to create and using arrays is the right choice, there are other ways to create multiple objects that offer other advantages: welcome vectors!
