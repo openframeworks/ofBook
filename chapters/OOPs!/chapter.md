@@ -228,7 +228,7 @@ By using the for loop, the `setup()`, the `update()` and the `draw()` method is 
 
 ## Make even more Objects from your Class: properties and constructors
 
-As we've seen, each of the objects has a set of properties defined by its variables (position, speed, direction and dimension). Another advantage of object oriented programming is that the objects created can have different values for each of their properties. For us to have better control of each object, we can have a method that allows us to define these characteristics and lets us access them. Because we want to do this right after creating the object, let's do this in the method called `setup()`.  We will modify it to allow to pass in some of the objects properties, let's say its position and dimension. First, let's do this in the Ball definitions file (*.h): 
+As we've seen, each of the objects has a set of properties defined by its variables (position, speed, direction and dimension). Another advantage of object oriented programming is that the objects created can have different values for each of their properties. For us to have better control of each object, we can have a method that allows us to define these characteristics and lets us access them. Because we want to do this right after creating the object, let's do this in the method called `setup()`.  We will modify it to pass in some of the objects properties, let's say its position and dimension. First, let's do this in the Ball definitions file (*.h): 
 
 ```cpp
 void setup(float _x, float _y, int _dim);
