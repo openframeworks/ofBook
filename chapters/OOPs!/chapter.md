@@ -241,7 +241,7 @@ Ball::setup(float _x, float _y, int _dim){
     x = _x;
     y = _y;
     dim = _dim;
-    
+
     speedX = ofRandom(-1, 1);
     speedY = ofRandom(-1, 1);
 }
