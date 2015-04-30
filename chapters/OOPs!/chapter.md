@@ -51,7 +51,7 @@ class Ball {
     float speedX;
     int dim;        // size
     ofColor color;  // color using ofColor type
-    
+
     Ball();  // constructor - used to initialize an object, if no properties are passed the program sets them to the default value
     private: // place private functions or variables declarations here
 }; // don't forget the semicolon!
