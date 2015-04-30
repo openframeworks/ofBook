@@ -266,7 +266,6 @@ Ball::setup(float _x, float _y, int _dim){
     color.set(ofRandom(255), ofRandom(255), ofRandom(255));
 }
 
-
 void Ball::update(){
     if(x < 0 ){
         x = 0;
