@@ -436,7 +436,7 @@ class Ball {
 #endif
 ```
 
-Let's make some slight changes on the implementation file. Lets change the minimum and maximum values of the random size to larger values and set the position to the center of the screen. Make it look like this: 
+Let's make some slight changes on the implementation file. Lets change the minimum and maximum values of the random size to larger values and set the position to the center of the screen. Make the source code look like this:
 
 ```cpp
 #include "Ball.h"
