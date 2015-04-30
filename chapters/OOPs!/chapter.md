@@ -369,6 +369,9 @@ for (int i = 0 ; i<myBall.size(); i++) {
 }
 ```
 
+Now the 'for' loop iterates over all objects in the vector without us needing to specify the exact number of items beforehand. It gets adjusted on the fly thanks to `size()`.
+
+
 ## Making and delete as you wish - using vectors
 
 If you ran the previous code you'll see that in a very short time you'll not only create a huge amount of balls but at some point your system might become sluggish because there are just way too many objects on screen. As we just mentioned Vectors are very special as we can add and remove elements dynamically, that's their magic: vectors are elastic! 
