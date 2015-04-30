@@ -1,4 +1,4 @@
-#Animation
+# Animation
 
 *by [Zach Lieberman](http://thesystemis.com)* 
 
