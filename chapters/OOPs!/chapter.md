@@ -414,26 +414,24 @@ Your Ball header file should look like this:
 
 
 class Ball {
-    
-public: // place public functions or variables declarations here
-    
-void setup();	    
-void update();
-void draw(); 
+    public: // place public functions or variables declarations here
 
-// variables
-float x;      
-float y;
-float speedY; 
-float speedX;
-int dim;      
+    void setup();
+    void update();
+    void draw();
 
-ofColor color;
-    
-Ball();
+    // variables
+    float x;
+    float y;
+    float speedY;
+    float speedX;
+    int dim;
 
-private: 
+    ofColor color;
 
+    Ball();
+
+    private:
 };
 #endif
 ```
