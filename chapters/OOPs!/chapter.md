@@ -185,7 +185,7 @@ myBall3.draw();
 
 ## Make more Objects from your Class
 We've just created 3 objects but you can have already see how tedious it would be to create 10, 100 or maybe 1000's of them. Hardcoding them one by one would be a long and painful process that could be easily solved by automating the object creation and function calls. Just by using a couple for loops we'll make this process simpler and cleaner. Instead of declaring a list of objects one by one, we'll create an array of objects of type 'Ball'. We'll also introduce another new element: a constant. Constants are set after any #includes as #define CONSTANT_NAME value. This is a way of setting a value that won't ever change in the program. 
-In the ofApp class header file, where you define the balls objects also define the constant that we'll use for the number of objects:
+In the ofApp class header file, where you define the balls objects, you also define the constant that we'll use for the number of objects:
 
 ```cpp
 #define NBALLS 10
