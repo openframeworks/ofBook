@@ -11,7 +11,7 @@ By the end of this chapter you should understand how to create your own objects 
 Object Oriented Programming (OOP) is a programming paradigm based on the use of objects and their interactions. A recurring analogy is to see a "class" as a cookie cutter that can create many cookies, the "objects".
 Some terms and definitions used within OOP are listed below:
 
-- A class defines the characteristics of a thing - the object - and its behaviors; it defines not only its properties and attributes but also what it can do.
+- A class defines the characteristics of a thing - the object - and its behaviours; it defines not only its properties and attributes but also what it can do.
 
 - An object is an instance of a class.
 
@@ -25,7 +25,7 @@ A very easy way of knowing what these two files do is to think of the header fil
 So let's see how it works:
 
 First of all let's create the two class files: 
-If you're using Xcode as your IDE (it stands for: Integrated Development Environment), select the src folder and left Click (or CTRL + click), on the popup menu select 'New File' and you'll be taken to a new window menu, choose the appropriate platform you're developing for (OS X or iOS) and select C++ class and finally choose a name (we used 'Ball'). You'll automatically see the two files in your 'src' folder: 'Ball.h' and 'Ball.cpp'.
+If you're using Xcode as your IDE (it stands for: Integrated Development Environment), select the src folder and left Click (or CTRL + click), on the pop-up menu select 'New File' and you'll be taken to a new window menu, choose the appropriate platform you're developing for (OS X or iOS) and select C++ class and finally choose a name (we used 'Ball'). You'll automatically see the two files in your 'src' folder: 'Ball.h' and 'Ball.cpp'.
 If you are using Code::Blocks create a new project from empty one given inside the "examples" directory (or check out the ProjectGenerator). Copy the folder "empty" and rename it to "OOP". Change into this new directory, copy the "emptyExample" and rename it to "ball1". Inside the "ball1" directory rename "emptyExample.workspace" to "ball1.workspace" and "emptyExample.cbp" to "ball1.cbp". Now you have a dedicated directory and a dedicated project to play around with. Open "ball1.cbp" with Code::Blocks , right-click on the "emptyExample" workspace, select "Properties" (last entry in the list) and change the title of the project. The "src" directory in your project contains all the files you need to edit in this chapter. Add two new files inside the 'src' directory by either using 'File'->'New'->'Empty File' or pressing Tab+Ctrl+N. One file should be named 'Ball.h' and the other 'Ball.cpp'.
 Now let's edit your class header (.h) file. Feel free to delete all its contents and let's start from scratch:
 Declare a class in the header file (.h). In this case, the file name should be Ball.h. 
@@ -62,7 +62,7 @@ We have declared the Ball class header file (the list of ingredients) and now le
 Please notice the '#include' tag. This is a way to tell the [compiler](http://www.cplusplus.com/doc/tutorial/introduction/ "Compiler introduction on cplusplus.com") ([wikipedia](https://en.wikipedia.org/wiki/Compiler "Wikipedia on compilers")) about any files to include in the implementation file. When the program is compiled these '#include' tags will be replaced by the original file they're referring to.
 The 'if statement' (#ifndef) is a way to prevent the repetition of header files which could easily occur. This is called an [include guard](https://en.wikipedia.org/wiki/Include_guard "Wikipedia on include guards"). Using this pattern helps the compiler to only include the file once and avoid repetition. Don't worry about this now, we'll talk about it later on!
 
-We will now create a class for a ball object. This ball will have color, speed and direction properties: it will move accross the screen and bounce against the wall. Some of these properties we will create with randomized attributes but we'll be carefull to create the righ logic for its motion behaviours.
+We will now create a class for a ball object. This ball will have color, speed and direction properties: it will move across the screen and bounce against the wall. Some of these properties we will create with randomized attributes but we'll be careful to create the right logic for its motion behaviours.
 
 Here's how you can write the class *.cpp file, the implementation file:
 
@@ -80,7 +80,7 @@ void Ball::setup(){
 
     dim = 20;
 
-    color.set(ofRandom(255),ofRandom(255),ofRandom(255)); // one way of defining digital color is by adddressing its 3 components individually (Red, Green, Blue) in a value from 0-255, in this example we're setting each to a random value
+    color.set(ofRandom(255),ofRandom(255),ofRandom(255)); // one way of defining digital color is by addressing its 3 components individually (Red, Green, Blue) in a value from 0-255, in this example we're setting each to a random value
 }
 
 void Ball::update(){
@@ -184,7 +184,7 @@ myBall3.draw();
 ```
 
 ## Make more Objects from your Class
-We've just created 3 objects but you can have already see how tedious it would be to create 10, 100 or maybe 1000's of them. Hardcoding them one by one would be a long and painful process that could be easily solved by automating the object creation and function calls. Just by using a couple for loops we'll make this process simpler and cleaner. Instead of declaring a list of objects one by one, we'll create an array of objects of type `Ball`. We'll also introduce another new element: a constant. Constants are set after any #includes as #define CONSTANT_NAME value. This is a way of setting a value that won't ever change in the program. 
+We've just created 3 objects but you can have already see how tedious it would be to create 10, 100 or maybe 1000's of them. Hard-coding them one by one would be a long and painful process that could be easily solved by automating the object creation and function calls. Just by using a couple for loops we'll make this process simpler and cleaner. Instead of declaring a list of objects one by one, we'll create an array of objects of type `Ball`. We'll also introduce another new element: a constant. Constants are set after any #includes as #define CONSTANT_NAME value. This is a way of setting a value that won't ever change in the program. 
 In the ofApp class header file, where you define the balls objects, you also define the constant that we'll use for the number of objects:
 
 ```cpp
@@ -401,9 +401,9 @@ balls.clear();
 ## Quick intro to polymorphism (inheritance)
 
 You're now discovering the power of OOP: making a class and creating as many objects from that in an instant, adding and deleting by your application needs. Now, for a second let's go back to our cooking metaphor (yummy!) and imagine that your cookies, even though sharing the same cookie cutter and dough, are using some different sprinkles on each to add some desired variation to our cookie jar selection!
-This is also the power of OOP and inheritance. It allows us to use a base class and add some specific behaviors, overwriting some of the behaviors of a class, creating a subset of instances / objects with slightly different behaviors.
+This is also the power of OOP and inheritance. It allows us to use a base class and add some specific behaviours, overwriting some of the behaviours of a class, creating a subset of instances / objects with slightly different behaviours.
 The great thing about this is it's reusability. We're using the parent class as a starting point, using all its capabilities but we overwrite one of its methods to give it more flexibility.
-Going back to the initial version of our `Ball` class we'll build some child classes based on its main characteristics (motion behaviors and shape) but we'll distinguish each inherited sub-class by using a different color in its drawing method.
+Going back to the initial version of our `Ball` class we'll build some child classes based on its main characteristics (motion behaviours and shape) but we'll distinguish each inherited sub-class by using a different color in its drawing method.
 
 Your Ball header file should look like this:
 
@@ -470,7 +470,7 @@ It's '.h' should look like this:
 
 class BallBlue : public Ball {     // we set the class to inherit from 'Ball'
     public:
-        virtual void draw();             // this is the only methid we actually want to be different from the parent class
+        virtual void draw();             // this is the only method we actually want to be different from the parent class
 };
 ```
 
