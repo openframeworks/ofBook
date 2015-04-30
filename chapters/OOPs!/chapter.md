@@ -403,7 +403,7 @@ balls.clear();
 You're now discovering the power of OOP: making a class and creating as many objects from that in an instant, adding and deleting by your application needs. Now, for a second let's go back to our cooking metaphor (yummy!) and imagine that your cookies, even though sharing the same cookie cutter and dough, are using some different sprinkles on each to add some desired variation to our cookie jar selection!
 This is also the power of OOP and inheritance. It allows us to use a base class and add some specific behaviors, overwriting some of the behaviors of a class, creating a subset of instances / objects with slightly different behaviors.
 The great thing about this is it's reusability. We're using the 'mother' class as a starting point, using all its capabilities but we overwrite one of its methods to give it more flexibility.
-Going back to the initial version of our `Ball` class we'll build some 'daughter' classes based on its main characteristics (motion behaviors and shape) but we'll distinguish each inherited sub-class by using a different color in its drawing method.
+Going back to the initial version of our `Ball` class we'll build some child classes based on its main characteristics (motion behaviors and shape) but we'll distinguish each inherited sub-class by using a different color in its drawing method.
 
 Your Ball header file should look like this:
 
@@ -458,7 +458,7 @@ Ball::setup(){
 ```
 
 We can leave the `update()` and `draw()` functions as they were.
-Now, let's start making 'daughter' versions of this 'mother' class.
+Now, let's start making child versions of this 'mother' class.
 Create a new Class set of files and name them 'BallBlue'. Feel free to copy the code below.
 It's '.h' should look like this:
 
