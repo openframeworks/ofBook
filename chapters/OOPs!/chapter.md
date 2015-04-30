@@ -357,8 +357,8 @@ See code below for `update()` and `draw()`:
 
 ```cpp
 for (int i = 0; i<myBall.size(); i++) {
-        myBall[i].update();
-    }
+    myBall[i].update();
+}
 ```
 
 and for draw:
