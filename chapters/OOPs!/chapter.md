@@ -283,7 +283,7 @@ void Ball::update(){
         y = ofGetHeight();
         speedY *= -1;
     }
-     
+
     x+=speedX;
     y+=speedY;
     
