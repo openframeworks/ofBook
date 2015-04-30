@@ -199,7 +199,7 @@ Ball myBall[NBALLS];
 
 An array is an indexed list of items of the same type. The index is used to access a particular item in the list. This index usually starts with 0, so the first `Ball` (object) is found at myBall[0]. Only a handful of programming languages start the index of an array with 1. If you try to access an invalid index (either larger than the size of the array or a negative one), you get an error. Check the 'C++ basics' chapter for more information on arrays. In our implementation file we create an array of objects and call their methods through 'for' loops.
 
-In the setup() function add:
+In the `setup()` function add:
 
 ```cpp
 for(int i=0; i<NBALLS; i++){
@@ -207,7 +207,7 @@ for(int i=0; i<NBALLS; i++){
 }
 ```
 
-In the update() function add:
+In the `update()` function add:
 
 ```cpp
 for(int i=0; i<NBALLS; i++){
@@ -215,7 +215,7 @@ for(int i=0; i<NBALLS; i++){
 }
 ```
 
-In the draw() function add:
+In the `draw()` function add:
 
 ```cpp
 for(int i=0; i<NBALLS; i++){
