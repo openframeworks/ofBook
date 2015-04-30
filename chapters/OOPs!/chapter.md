@@ -128,7 +128,7 @@ Ball myBall;
 
 Now let's get that ball bouncing on screen! Go to your project ofApp.cpp (implementation) file. Now that we've created the object, we just need to set it up and then update its values and draw it by calling its methods. 
 
-In the `setup()` function, add the following code:
+In the `setup()` function of ofApp.cpp add the following code:
 
 ```cpp
 myBall.setup(); // calling the object's setup method
