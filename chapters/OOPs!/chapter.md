@@ -223,6 +223,8 @@ for(int i=0; i<NBALLS; i++){
 }
 ```
 
+By using the for loop, the `setup()`, the `update()` and the `draw()` method is called for each `Ball` object in the `myBall`-array and no object has to be touched manually.
+
 
 ## Make even more Objects from your Class: properties and constructors
 
