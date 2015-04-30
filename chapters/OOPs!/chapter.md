@@ -474,7 +474,7 @@ class BallBlue : public Ball {     // we set the class to inherit from 'Ball'
 };
 ```
 
-In the '.cpp' file we'll need to then specify what we want the new `draw()` method to do uniquely.
+In the '.cpp' file we'll need to then specify what we want the new `draw()` method to behave differently from the one in the parent class.
 
 ```cpp
 #include "BallBlue.h"
