@@ -469,11 +469,8 @@ It's '.h' should look like this:
 #include "Ball.h"            // we need to include the 'mother' class, the compiler will include the mother/base class so we have access to all the methods inherited
 
 class BallBlue : public Ball {     // we set the class to inherit from 'Ball'
-
-public: 
-
-    virtual void draw();             // this is the only methid we actually want to be different from the 'mother class'
-
+    public:
+        virtual void draw();             // this is the only methid we actually want to be different from the 'mother class'
 };
 ```
 
