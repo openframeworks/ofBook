@@ -286,7 +286,6 @@ void Ball::update(){
 
     x+=speedX;
     y+=speedY;
-    
 }
 
 void Ball::draw(){
