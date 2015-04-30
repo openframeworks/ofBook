@@ -185,8 +185,6 @@ myBall3.draw();
 
 ## Make more Objects from your Class
 We've just created 3 objects but you can have already see how tedious it would be to create 10, 100 or maybe 1000's of them. Hardcoding them one by one would be a long and painful process that could be easily solved by automating the object creation and function calls. Just by using a couple for loops we'll make this process simpler and cleaner. Instead of declaring a list of objects one by one, we'll create an array of objects of type 'Ball'. We'll also introduce another new element: a constant. Constants are set after any #includes as #define CONSTANT_NAME value. This is a way of setting a value that won't ever change in the program. 
-**[MH: I think Josh mentions these, maybe drop a ref to his chapter here.]**
-**[MH: I don't think arrays have been covered at this point in the book.  But Josh covers them in his unabridged chapter, maybe drop a ref in to that as well.]**
 
 In the ofApp class header file, where you define the balls objects also define the constant that we'll use for the number of objects:
 
