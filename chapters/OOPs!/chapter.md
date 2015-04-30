@@ -459,8 +459,8 @@ Ball::setup(){
 
 We can leave the `update()` and `draw()` functions as they were.
 Now, let's start making 'daughter' versions of this 'mother' class.
-Create a new Class set of files and name them 'BallBlue'. Feel free to copy the code below and
-it's '.h' should look like this:
+Create a new Class set of files and name them 'BallBlue'. Feel free to copy the code below.
+It's '.h' should look like this:
 
 ```cpp
 #pragma once                // another and more modern way to prevent the compiler from including this file more than once
