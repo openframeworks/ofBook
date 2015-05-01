@@ -1,8 +1,8 @@
 # Animation
 
 *by [Zach Lieberman](http://thesystemis.com)* 
-
 *with edits from Kayla Lewis*
+*extensions by tpltnt*
 
 ## Background 
 
@@ -29,9 +29,28 @@ The `setup()` function gets called once, right at the start of an oF apps lifecy
 
 ### Variables
 
-The second point to make about animation is that it requires variables. A variable is a placeholder for a value, which means that you can put the value in and you can also get the value out. Variables are essential for animation since they "hold" value from frame to frame – e.g., if you put a value into a variable in the `setup()` function or `update()` function, you can also get it out from memory in the `draw()` function. Take this example:
+The second point to make about animation is that it requires variables. A variable is a placeholder for a value, which means that you can put the value in and you can also get the value out. Variables are essential for animation since they "hold" value from frame to frame – e.g., if you put a value into a variable in the `setup()` function or `update()` function, you can also get it out from memory in the `draw()` function. Take this example where `xpos` (int) is already defined in the header:
 
-**[note: simple animation example here]**
+```cpp
+void ofApp::setup(){
+    xpos = 5;  // vertical start position
+    ofBackground(ofColor::black);  // black background
+}
+
+void ofApp::update(){
+    xpos += 2;
+    if(ofGetWitdth()<xPos){  // if vertical position is off the screen (width)
+        xPos = 5             // reset vertical position
+    }
+}
+
+void ofApp::draw(){
+    ofSetColor(ofColor::red);  // draw everything in red
+    ofCircle(xpos, 100, 10);   // draw a circle at the (variable) vertical position, 100 pixels from the top with a 10 pixel diameter
+}
+```
+
+In this example a red circle moves from the left to the right on the screen. The vertical position (`xpos`) is an integer and gets set to 5 as the inital value in `setup()`. The `update()` function always adds 2 to the `xPos` variable and stores the new value until it becomes larger than the screen width (`ofGetWidth()`), then the vertical position gets reset. The `draw()` function reads the value stored in the variable `xpos` and draws the red circle accordingly.
 
 ### Frame rate
 
