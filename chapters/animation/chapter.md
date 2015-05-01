@@ -120,7 +120,7 @@ One of the most important things to think about when it comes to animation is an
 
 In this chapter we will look at animating movement (changing position over time) but we could very well be animating any other numeric property, such as color, the width or height of a drawn shape, radius of a circle, etc.  
 
-The first and probably most important lesson of animation is that we **love** numbers between 0 and 1. 
+The first and probably most important lesson of animation is that we **love** numbers between 0 and 1.
 
 **[note: love picture here]**
 
