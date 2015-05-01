@@ -85,7 +85,7 @@ void testApp::draw(){
 }
 ```
 
-This kind of animation works fine, but it assumes that your frame rate is constant. If your app runs faster, say by jumping from 30fps to 60fps, the object will appear to go twice as fast, since there will be 2x the number of update and draw functions called per second.  Typically more complex animation will be written to take this into account, either by using functions like time (explained below) or mixing the frame rate or elapsed time into your update. For example, a solution might be something like:
+This kind of animation works fine, but it assumes that your frame rate is constant. If your app runs faster, say by jumping from 30fps to 60fps, the object will appear to go twice as fast, since there will be 2x the number of update and draw functions called per second.  Typically more complex animations will be written to take this into account, either by using functions like time (explained below) or mixing the frame rate or elapsed time into your update. For example, a solution might be something like:
 
 ```cpp
 void testApp::update(){
