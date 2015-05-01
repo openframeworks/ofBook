@@ -10,7 +10,7 @@ The word animation is a medieval term stemming from the Latin animare, which mea
 
 As a side note, I studied fine arts, painting and printmaking, and it was accidental that I started using computers. The moment I saw how you could write code to move something across the screen, even as simple as silly rectangle, I was hooked. I began during the first dot-com era working with flash / actionscript and lingo / director and have never looked back.
 
-This chapter will first explain some basic principles that are useful to understanding animation in OF, then attempt to show a few entrypoints to interesting approaches. 
+This chapter will first explain some basic principles that are useful to understanding animation in oF, then attempt to show a few entrypoints to interesting approaches. 
 
 ## Animation in OF / useful concepts: 
 
