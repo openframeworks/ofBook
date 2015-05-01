@@ -186,7 +186,7 @@ Raising percent to a power is one of a whole host of functions that are called "
 ### Zeno
 **[TNT This section begins with Zeno and then changes to Xeno for the code samples and images. Suggest this be made consistent. ]**
 
-A small twist on the linear interpolation is a technique that I call "Zeno" based on Zeno the greek philosopher's *dichotomy paradox*: 
+A small twist on the linear interpolation is a technique that I call "Zeno" based on [Zeno of Elea](https://en.wikipedia.org/wiki/Zeno_of_Elea "Wikipedia on Zeno of Elea") the greek philosopher's *dichotomy paradox*: 
 
 > Imagine there is a runner in a race and the runner covers 1/2 of the distance in a certain amount of time, and then they run 1/2 of the remaining distance in the same amount of time, and run 1/2 of that remaining distance, etc. Do they finish the race?  There is always some portion of the distance left remaining to run one half of.  The idea is that you can always keep splitting the distance.
 
