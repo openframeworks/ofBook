@@ -29,7 +29,7 @@ The `setup()` function gets called once, right at the start of an oF apps lifecy
 
 ### Variables
 
-The second point to make about animation is that it requires variables. A variable is a placeholder for a value, which means that you can put the value in and you can also get the value out. Variables are essential for animation since they "hold" value from frame to frame–e.g., if you put a value into a variable in the setup function or update function, you can also get it out from memory in the draw function. Take this example: 
+The second point to make about animation is that it requires variables. A variable is a placeholder for a value, which means that you can put the value in and you can also get the value out. Variables are essential for animation since they "hold" value from frame to frame – e.g., if you put a value into a variable in the setup function or update function, you can also get it out from memory in the draw function. Take this example: 
 
 **[note: simple animation example here]**
 
