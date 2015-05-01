@@ -21,7 +21,7 @@ The first point to make about animation is that it's based on successive still f
 - `setup()`
 - `update()`
 - `draw()`
-- `update()` 
+- `update()`
 - `draw()`
 - ...
 
