@@ -97,7 +97,7 @@ If `ofGetFrameRate()` returns 30, we multiply 0.5 by 1, if `ofGetFrameRate()` re
 
 ### Time functions
 
-Finally, there are a few other functions that are useful for animation timing: 
+Finally, there are a few other functions that are useful for animation timing:
 
 - [`ofGetElapsedTimef()`](http://openframeworks.cc/documentation/utils/ofUtils.html#!show_ofGetElapsedTimef "ofGetElapsedTimef Documentation Page") returns the elapsed time in floating point numbers, starting from 0 when the app starts. 
 - [`ofGetElapsedTimeMillis()`](http://openframeworks.cc/documentation/utils/ofUtils.html#!show_ofGetElapsedTimeMillis "ofGetElapsedTimeMillis Documentation Page") similarly returns the elapsed time starting from 0 in milliseconds.
