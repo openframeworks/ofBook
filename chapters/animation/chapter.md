@@ -54,7 +54,7 @@ In this example a red circle moves from the left to the right on the screen. The
 
 ### Frame rate
 
-The third point to make about oF and animation is frame rate.  We animate in openFrameworks using successive frames.  Frame rate refers to how quickly frames get drawn.  In oF there are several important functions to know about.
+The third point to make about oF and animation is frame rate. We animate in openFrameworks using successive frames. Frame rate refers to how quickly frames get drawn. In oF there are several important functions to know about.
 
 - [`ofGetFrameRate()`](http://openframeworks.cc/documentation/application/ofAppRunner.html#!show_ofGetFrameRate "ofGetFrameRate Documentation Page") returns the current frame rate (in frames per second). 
 - [`ofSetFrameRate( float targetFrameRate )`](http://openframeworks.cc/documentation/application/ofAppRunner.html#!show_ofSetFrameRate "ofSetFrameRate Documentation Page") sets the maximum frame rate. If the software is animating faster than this, `ofSetFrameRate` will slow it down. Think of it like a speed limit. It doesn't make you go faster, but it prevents you from going too fast. Set the value to 0 to run as fast as possible.
