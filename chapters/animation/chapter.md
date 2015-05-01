@@ -93,7 +93,7 @@ void testApp::update(){
 }
 ```
 
-If `ofGetFrameRate()` returns 30, we multiply 0.5 by 1, if `ofGetFrameRate()` returns 60, we multiply it by 1/2, so although we are animating twice as fast, we take half sized steps, therefore effectively moving at the same speed regardless of frame rate.  Frame rate independence is fairly important to think about once you get the hang of things. As observers of animation, we really do feel objects speeding up or slowwing down even slightly, but in this chapter I will skip it for the sake of simplicity in the code. 
+If `ofGetFrameRate()` returns 30, we multiply 0.5 by 1, if `ofGetFrameRate()` returns 60, we multiply it by 1/2, so although we are animating twice as fast, we take half sized steps, therefore effectively moving at the same speed regardless of frame rate.  Frame rate independence is fairly important to think about once you get the hang of things. As observers of animation, we really do feel objects speeding up or slowwing down even slightly, but in this chapter I will skip it for the sake of simplicity in the code.
 
 ### Time functions
 
