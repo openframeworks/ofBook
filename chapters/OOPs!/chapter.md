@@ -237,7 +237,7 @@ void setup(float _x, float _y, int _dim);
 We'll need to update the Ball implementation (*.cpp) file to reflect these changes.
 
 ```cpp
-Ball::setup(float _x, float _y, int _dim){
+void Ball::setup(float _x, float _y, int _dim){
     x = _x;
     y = _y;
     dim = _dim;
@@ -255,7 +255,7 @@ Your Ball.cpp file should look like this by now:
 Ball::Ball(){
 };
 
-Ball::setup(float _x, float _y, int _dim){
+void Ball::setup(float _x, float _y, int _dim){
     x = _x;
     y = _y;
     dim = _dim;
@@ -444,7 +444,7 @@ Let's make some slight changes on the implementation file. Lets change the minim
 Ball::Ball(){
 }
 
-Ball::setup(){
+void Ball::setup(){
 
     x = ofGetWidth()*.5;
     y = ofGetHeight()*.5;
