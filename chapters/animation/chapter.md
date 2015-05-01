@@ -50,7 +50,7 @@ void ofApp::draw(){
 }
 ```
 
-In this example a red circle moves from the left to the right on the screen. The vertical position (`xpos`) is an integer and gets set to 5 as the inital value in `setup()`. The `update()` function always adds 2 to the `xPos` variable and stores the new value until it becomes larger than the screen width (`ofGetWidth()`), then the vertical position gets reset. The `draw()` function reads the value stored in the variable `xpos` and draws the red circle accordingly.
+In this example a red circle moves from the left to the right on the screen. The vertical position (`xpos`) is an integer and gets set to 5 as the inital value in `setup()`. The `update()` function always adds 2 to the `xpos` variable and stores the new value until it becomes larger than the screen width (`ofGetWidth()`), then the vertical position gets reset. The `draw()` function reads the value stored in the variable `xpos` and draws the red circle accordingly.
 
 ### Frame rate
 
