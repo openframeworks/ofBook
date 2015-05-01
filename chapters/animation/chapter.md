@@ -14,7 +14,7 @@ This chapter will first explain some basic principles that are useful to underst
 
 ## Animation in oF / useful concepts: 
 
-### Draw cycle 
+### Draw a cycle 
 The first point to make about animation is that it's based on successive still frames. In openFrameworks we have a certain loop cycle that's based roughly on game programming paradigms. It goes like this: 
 
 - setup()
