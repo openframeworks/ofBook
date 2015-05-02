@@ -144,6 +144,21 @@ which simplifies to `(1*A + 0*B)` or A. If we are 25 percent of the way, it look
 
 which is 75% of A + 25% of B. Essentially by taking a mix, you get from one to the other. The first example shows how this is done.
 
+```cpp
+void ofApp::setup(){
+     pct = 0;
+}
+
+void ofApp::draw(){
+}
+
+void ofApp::update(){
+     if(100 == pct){
+         pct = 0;
+     }
+     pct += 1;
+}
+```
 **[note: linear example code here]**
 
 *As a side note, the function `ofMap`, which maps between an input range, uses pct internally. It takes a value, converts it into a percentage based on the input range, and then uses that pct to find the point between the output range.*  **[note: see omer's chapter]**
