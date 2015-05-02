@@ -7,12 +7,15 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   height="71.875"
-   width="77.3125"
+   height="148.65182"
+   width="159.89766"
    id="svg3037"
    version="1.1"
    inkscape:version="0.48.5 r10040"
-   sodipodi:docname="01heart.svg">
+   sodipodi:docname="01heart.svg"
+   inkscape:export-filename="/usr/home/user/code/ofBook/chapters/animation/images/01heart.png"
+   inkscape:export-xdpi="300"
+   inkscape:export-ydpi="300">
   <metadata
      id="metadata3049">
     <rdf:RDF>
@@ -41,8 +44,8 @@
      id="namedview3045"
      showgrid="false"
      inkscape:zoom="5.7623926"
-     inkscape:cx="24.968727"
-     inkscape:cy="42.077129"
+     inkscape:cx="64.650111"
+     inkscape:cy="28.9397"
      inkscape:window-x="0"
      inkscape:window-y="18"
      inkscape:window-maximized="0"
@@ -51,27 +54,33 @@
      fit-margin-left="0"
      fit-margin-right="0"
      fit-margin-bottom="0" />
-  <path
-     style="fill:#ff0000;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none"
-     inkscape:connector-curvature="0"
-     id="path3043"
-     d="m 20.504771,0.492027 c -10.9999994,0 -20,8.9999995 -20,20 0,22.5 22.7,28.3 38.2,50.499998 14.6,-21.999998 38.100001,-28.799998 38.100001,-50.499998 0,-11.0000005 -9.000001,-20 -20.000001,-20 -8,0 -14.8,4.7 -18.1,11.5 -3.2,-6.7 -10,-11.5 -18.2,-11.5" />
-  <text
-     xml:space="preserve"
-     style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-     x="38.658203"
-     y="35.365055"
-     id="text3840"
-     sodipodi:linespacing="125%"><tspan
-       sodipodi:role="line"
-       id="tspan3842"
-       x="38.658203"
+  <g
+     id="g3852"
+     transform="scale(2.0681994,2.0681994)"
+     inkscape:export-xdpi="300"
+     inkscape:export-ydpi="300">
+    <path
+       d="m 20.504771,0.492027 c -10.9999994,0 -20,8.9999995 -20,20 0,22.5 22.7,28.3 38.2,50.499998 14.6,-21.999998 38.100001,-28.799998 38.100001,-50.499998 0,-11.0000005 -9.000001,-20 -20.000001,-20 -8,0 -14.8,4.7 -18.1,11.5 -3.2,-6.7 -10,-11.5 -18.2,-11.5"
+       id="path3043"
+       inkscape:connector-curvature="0"
+       style="fill:#ff0000;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none" />
+    <text
+       sodipodi:linespacing="125%"
+       id="text3840"
        y="35.365055"
-       style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;text-anchor:middle;font-family:Luxi Mono;-inkscape-font-specification:Luxi Mono"><tspan
-         style="font-size:22px"
-         id="tspan3848">0</tspan><tspan
-         style="font-size:14px"
-         id="tspan3844">...</tspan><tspan
-         style="font-size:22px"
-         id="tspan3850">1</tspan></tspan></text>
+       x="38.658203"
+       style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       xml:space="preserve"><tspan
+         style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;text-anchor:middle;font-family:Luxi Mono;-inkscape-font-specification:Luxi Mono"
+         y="35.365055"
+         x="38.658203"
+         id="tspan3842"
+         sodipodi:role="line"><tspan
+           id="tspan3848"
+           style="font-size:22px">0</tspan><tspan
+           id="tspan3844"
+           style="font-size:14px">...</tspan><tspan
+           id="tspan3850"
+           style="font-size:22px">1</tspan></tspan></text>
+  </g>
 </svg>
