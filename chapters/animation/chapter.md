@@ -116,7 +116,7 @@ You will also see objects that have basic functionality and internal variables. 
 
 One of the most important things to think about when it comes to animation is answering the simple question:
 
-*How do you get from point A to point B?*  
+*How do you get from point A to point B?*
 
 In this chapter we will look at animating movement (changing position over time) but we could very well be animating any other numeric property, such as color, the width or height of a drawn shape, radius of a circle, etc.  
 
