@@ -130,7 +130,7 @@ The thing about numbers between 0 and 1 is that they are super easy to use in in
 ((1-pct) * A) + (pct * B)
 ```
 
-To add some detail if we are 0 pct of the way from A to B, we calculate 
+To add some detail if we are 0 pct of the way from A to B, we calculate
 
 ```cpp
 ((1-0) * A) + (0 * B)
