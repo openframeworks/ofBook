@@ -160,6 +160,8 @@ class ofApp : public ofBaseApp{
     private:
         // variables not to be accessed from the outside
         int pct;  // percent of movement
+        ofPoint ptA;
+        ofPoint ptB;
 };
 ```
 
