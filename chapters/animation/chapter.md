@@ -666,5 +666,7 @@ We don't have time to get into it in this chapter, but there's different approac
 
 ## Where to go further
 
+* [ofxAddons: animation](http://www.ofxaddons.com/categories/7-animation "ofxAddons for animation")
+
 ### Physics and animation libraries
 
