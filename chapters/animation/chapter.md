@@ -143,8 +143,31 @@ which simplifies to `(1*A + 0*B)` or A. If we are 25 percent of the way, it look
 ```
 
 which is 75% of A + 25% of B. Essentially by taking a mix, you get from one to the other. The first example shows how this is done.
+Describe a new object in the header (ofApp.h):
 
 ```cpp
+#pragma once
+
+#include "ofMain.h"
+
+class ofApp : public ofBaseApp{
+	public:
+        // minimal set of methods needed
+		void setup();
+		void update();
+		void draw();
+
+    private:
+        // variables not to be accessed from the outside
+        int pct;  // percent of movement
+};
+```
+
+Fill the implementation file (ofApp.cpp):
+
+```cpp
+#include "ofApp.h"
+
 void ofApp::setup(){
      pct = 0;
 }
