@@ -162,6 +162,7 @@ class ofApp : public ofBaseApp{
         int pct;  // percent of movement
         ofPoint ptA;
         ofPoint ptB;
+        ofpoint newPos;
 };
 ```
 
@@ -175,6 +176,8 @@ void ofApp::setup(){
 }
 
 void ofApp::draw(){
+     ofSetColor(ofColor::red);
+     ofCircle(newPos);
 }
 
 void ofApp::update(){
@@ -182,6 +185,7 @@ void ofApp::update(){
          pct = 0;
      }
      pct += 1;
+     newPos = ((1-pct) * ptA) + (pct * ptB)
 }
 ```
 **[note: linear example code here]**
