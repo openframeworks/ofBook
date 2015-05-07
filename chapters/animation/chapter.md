@@ -236,9 +236,6 @@ https://en.wikipedia.org/wiki/12_basic_principles_of_animation#Slow_in_and_slow_
 
 Raising percent to a power is one of a whole host of functions that are called "shaping functions" or "easing equations." Robert Penner wrote about and derived many of these functions so they are also commonly referred to as "Penner Easing Equations."  [Easings.net](http://easings.net/) is a good resource, as well there are several openFrameworks addons for easing. 
 
-- http://sol.gfxile.net/interpolation/#c1
-- http://easings.net/
-
 ### Zeno
 **[TNT This section begins with Zeno and then changes to Xeno for the code samples and images. Suggest this be made consistent. ]**
 
@@ -709,6 +706,8 @@ We don't have time to get into it in this chapter, but there's different approac
 
 * [OpenFrameworks / Animation by Code](https://github.com/bschorr/OFAnimation_Spring2015 "OpenFrameworks / Animation by Code course at Parsons The New School for Design, Spring 2015") (course at Parsons The New School for Design, Spring 2015)
 * [ofxAddons: animation](http://www.ofxaddons.com/categories/7-animation "ofxAddons for animation")
+* [easings.net](http://easings.net/) resource for shaping/easing functions
+* http://sol.gfxile.net/interpolation/#c1 another resource for shaping/easing functions
 
 ### Physics and animation libraries
 
