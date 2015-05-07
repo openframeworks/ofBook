@@ -63,7 +63,7 @@ The third point to make about oF and animation is frame rate. We animate in open
 
 In addition, OpenGL works with an output display and will attempt to synchronize with the refresh rate of the monitor -- sometimes called vertical-sync or vertical blanking. If you don't synchronize with the refresh rate, you can get something called frame tearing, where the non-synchronization can mean frames get drawn before and after a change. This leads to horizontal lines of discontinuity called [screen tearing](https://en.wikipedia.org/wiki/Screen_tearing "Wikipedia on screen tearing").
 
-![simulated screen tearing](images/638px-Tearing__simulated_.jpg)
+![simulated screen tearing](images/638px-Tearing_simulated.jpg)
 
 The image above it from [Vanessaezekowitz](https://commons.wikimedia.org/wiki/User:Vanessaezekowitz "Vanessaezekowitz user page"), licensed under [CC-BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/deed.en "link to CC-BY-SA 3.0 license text").
 
