@@ -1,7 +1,9 @@
 # Animation
 
 *by [Zach Lieberman](http://thesystemis.com)* 
+
 *with edits from Kayla Lewis*
+
 *extensions by tpltnt*
 
 ## Background 
