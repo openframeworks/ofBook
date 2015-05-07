@@ -165,7 +165,7 @@ class ofApp : public ofBaseApp{
         float radius;
         ofPoint ptA;
         ofPoint ptB;
-        ofpoint newPos;
+        ofPoint newPos;
 };
 ```
 
