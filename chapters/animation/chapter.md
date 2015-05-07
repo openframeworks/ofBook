@@ -65,7 +65,7 @@ In addition, OpenGL works with an output display and will attempt to synchronize
 
 ![simulated screen tearing](images/638px-Tearing_simulated.jpg)
 
-The image above it from [Vanessaezekowitz](https://commons.wikimedia.org/wiki/User:Vanessaezekowitz "Vanessaezekowitz user page"), licensed under [CC-BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/deed.en "link to CC-BY-SA 3.0 license text").
+The image above is from [Vanessaezekowitz](https://commons.wikimedia.org/wiki/User:Vanessaezekowitz "Vanessaezekowitz user page"), licensed under [CC-BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/deed.en "link to CC-BY-SA 3.0 license text").
 
 We have a function in oF for controlling this. Some graphics card drivers (see for example Nvidia's PC drivers) have settings that override application settings, so please be sure to check your driver options.
 
