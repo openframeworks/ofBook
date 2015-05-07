@@ -234,7 +234,7 @@ https://en.wikipedia.org/wiki/12_basic_principles_of_animation#Slow_in_and_slow_
 
 **[note: can we get rights for a screenshot of masahiko sato curves DVD ? ]**
 
-Raising percent to a power is one of a whole host of functions that are called "shaping functions" or "easing equations." Robert Penner wrote about and derived many of these functions so they are also commonly referred to as "Penner Easing Equations."  [Easings.net](http://easings.net/) is a good resource, as well there are several openFrameworks addons for easing (e.g. [ofxEasingFunc](https://github.com/satoruhiga/ofxEasingFunc "ofxEasingFunc github repository"). 
+Raising percent to a power is one of a whole host of functions that are called "shaping functions" or "easing equations." Robert Penner wrote about and derived many of these functions so they are also commonly referred to as "Penner Easing Equations."  [Easings.net](http://easings.net/) is a good resource, as well there are several openFrameworks addons for easing (e.g. [ofxEasingFunc](https://github.com/satoruhiga/ofxEasingFunc "ofxEasingFunc github repository")).
 
 ### Zeno
 **[TNT This section begins with Zeno and then changes to Xeno for the code samples and images. Suggest this be made consistent. ]**
