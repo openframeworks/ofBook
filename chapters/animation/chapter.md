@@ -162,6 +162,7 @@ class ofApp : public ofBaseApp{
     private:
         // variables not to be accessed from the outside
         int pct;  // percent of movement
+        float radius;
         ofPoint ptA;
         ofPoint ptB;
         ofpoint newPos;
@@ -178,8 +179,11 @@ void ofApp::setup(){
 }
 
 void ofApp::draw(){
+     ofBackground(ofColor::black);
      ofSetColor(ofColor::red);
-     ofCircle(newPos);
+     ofCircle(&ptA, radius);
+     ofCircle(&ptB, radius);
+     ofCircle(&newPos, radius);
 }
 
 void ofApp::update(){
