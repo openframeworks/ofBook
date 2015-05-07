@@ -161,7 +161,7 @@ class ofApp : public ofBaseApp{
 
     private:
         // variables not to be accessed from the outside
-        int pct;  // percent of movement
+        float pct;  // percent of movement
         float radius;
         ofPoint ptA;
         ofPoint ptB;
@@ -175,26 +175,31 @@ Fill the implementation file (ofApp.cpp):
 #include "ofApp.h"
 
 void ofApp::setup(){
-     pct = 0;
+     ofSetFrameRate(1.0);  // have one frame per second for easier observation
+     radius = 10.0;        // draw 20px large circles
+     ptA.set(100, 100, 0);
+     ptB.set(200, 400, 0);
+     pct = 0.0;            // start from ptA -> 0.0 = 0%
 }
 
 void ofApp::draw(){
      ofBackground(ofColor::black);
-     ofSetColor(ofColor::red);
-     ofCircle(&ptA, radius);
-     ofCircle(&ptB, radius);
-     ofCircle(&newPos, radius);
+     ofSetColor(ofColor::red);   // mark beginning and end
+     ofCircle(ptA, radius);
+     ofCircle(ptB, radius);
+     ofSetColor(ofColor::white); // make current position stand out
+     ofCircle(newPos, radius);
 }
 
 void ofApp::update(){
-     if(100 == pct){
-         pct = 0;
+     if(1.0 <== pct){
+         pct = 0.0;  // reset if at 1.0 = 100%
+     } else {
+       pct += 0.1;   // otherwise change by 0.1 = 10%
      }
-     pct += 1;
      newPos = ((1-pct) * ptA) + (pct * ptB)
 }
 ```
-**[note: linear example code here]**
 
 *As a side note, the function `ofMap`, which maps between an input range, uses pct internally. It takes a value, converts it into a percentage based on the input range, and then uses that pct to find the point between the output range.*  **[note: see omer's chapter]**
 
