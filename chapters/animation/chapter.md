@@ -226,7 +226,7 @@ If you raise the incoming number between 0 and 1 to a larger power it looks more
 The second example shows an animation that uses pct again to get from A to B, but in this case, pct is raised to a power: 
 
 
-In the 4th example (**4_rectangleInterpolatePowfMultiple**), you can see a variety of these rectangles, all moving with different shaping functions.  They take the same amount of time to get from A to B, but do it in very different ways. I usually ask my students to guess which one is moving linearly -- see if you can figure it out without looking at the code: 
+In the 4th example (**4_rectangleInterpolatePowfMultiple**), you can see a variety of these rectangles, all moving with different shaping functions. They take the same amount of time to get from A to B, but do it in very different ways. I usually ask my students to guess which one is moving linearly -- see if you can figure it out without looking at the code: 
 
 ![xeno diagram](images/multiCurved.png)
 
