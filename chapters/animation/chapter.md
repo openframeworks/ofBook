@@ -706,6 +706,8 @@ We don't have time to get into it in this chapter, but there's different approac
 
 * [OpenFrameworks / Animation by Code](https://github.com/bschorr/OFAnimation_Spring2015 "OpenFrameworks / Animation by Code course at Parsons The New School for Design, Spring 2015") (course at Parsons The New School for Design, Spring 2015)
 * [ofxAddons: animation](http://www.ofxaddons.com/categories/7-animation "ofxAddons for animation")
+* [Wikipedia animations portal](https://en.wikipedia.org/wiki/Portal:Animation)
+* [Wikipedia book: Animation](https://en.wikipedia.org/wiki/Book:Animation)
 * [easings.net](http://easings.net/) resource for shaping/easing functions
 * http://sol.gfxile.net/interpolation/#c1 another resource for shaping/easing functions
 
