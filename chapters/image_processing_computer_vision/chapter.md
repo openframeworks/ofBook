@@ -619,14 +619,15 @@ void ofApp::draw(){
 }
 ```
 
-#### Heads Up! A Warning about Numeric Overflow
+#### Heads Up! A Warning about Integer Overflow
 
-An important question arises concerning the fate of the specially-marked pixel in the bottom row of the illustration above. Its initial value is 251—but the largest number we can store in an unsigned char is 255! What should the resulting value be when we add 10? More generally, what happens if we attempt to create a pixel value that is too large to be represented?
+Just like regular arithmetic, image arithmetic is simple! But there's a lurking peril: *[integer overflow](http://en.wikipedia.org/wiki/Integer_overflow)*.
 
-The answer is: it depends which tools you're using, and it can have significant consequences! Some libraries, like OpenCV, will clamp or constrain all results (sometimes known as "saturation") to the data's desired range; adding 10 to 251 will result in a maxed-out 255. In other situations, such as with our direct editing of unsigned chars, we risk something called
-*[integer overflow](http://en.wikipedia.org/wiki/Integer_overflow)*. This can cause values to wrap. Without the ability to carry, only the least significant bits are retained. In the land of unsigned chars, adding 10 to 251 gives... 6!
+Consider the fate of the specially-marked pixel in the bottom row of the illustration above. Its initial value is 251—but the largest number we can store in an unsigned char is 255! What should the resulting value be when we add 10? More generally, what happens if we attempt to create a pixel value that's too large to be represented by our pixel's data type?
 
-The perils of integer overflow are readily apparent in the illustration below. I have added 25 gray-levels to a source image of Abraham Lincoln; without any preventative measures, many of the light-colored pixels have wrapped around into dark values. 
+The answer is: it depends which tools you're using, and it can have significant consequences! Some libraries, like OpenCV, will clamp or constrain all arithmetic to the data's desired range; adding 10 to 251 will result in a maxed-out value of 255 (a solution sometimes known as "saturation"). In other situations, such as with our direct editing of unsigned chars in the code above, we risk "rolling over" the data, wrapping around zero like a car's odometer. Without the ability to carry, only the least significant bits are retained. In the land of unsigned chars, adding 10 to 251 gives... 6!
+
+The perils of integer overflow are readily apparent in the illustration below. I have boosted a source image of Abraham Lincoln, adding 25 to all pixel values; without any preventative measures, many of the light-colored pixels have wrapped around and become dark. 
 
 ![Numeric overflow](images/numeric_overflow.png)
 
