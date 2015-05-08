@@ -15,7 +15,7 @@ void rectangle::draw() {
 }
 
 //------------------------------------------------------------------
-void rectangle::xenoToPoint(float catchX, float catchY){
+void rectangle::zenoToPoint(float catchX, float catchY){
 	pos.x = catchUpSpeed * catchX + (1-catchUpSpeed) * pos.x; 
 	pos.y = catchUpSpeed * catchY + (1-catchUpSpeed) * pos.y; 
 }

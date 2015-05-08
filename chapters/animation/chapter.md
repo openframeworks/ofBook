@@ -237,7 +237,6 @@ https://en.wikipedia.org/wiki/12_basic_principles_of_animation#Slow_in_and_slow_
 Raising percent to a power is one of a whole host of functions that are called "shaping functions" or "easing equations." Robert Penner wrote about and derived many of these functions so they are also commonly referred to as "Penner Easing Equations."  [Easings.net](http://easings.net/) is a good resource, as well there are several openFrameworks addons for easing (e.g. [ofxEasingFunc](https://github.com/satoruhiga/ofxEasingFunc "ofxEasingFunc github repository")).
 
 ### Zeno
-**[TNT This section begins with Zeno and then changes to Xeno for the code samples and images. Suggest this be made consistent. ]**
 
 A small twist on the linear interpolation is a technique that I call "Zeno" based on [Zeno of Elea's](https://en.wikipedia.org/wiki/Zeno_of_Elea "Wikipedia on Zeno of Elea") *dichotomy paradox*:
 
@@ -251,7 +250,7 @@ If we take the linear interpolation code but always alter our own position inste
 4. Move 50% closer.
 5. Go to (3).
 
-![xeno diagram](images/xeno.png)
+![zeno diagram](images/zeno.png)
 
 In code, that's basically the same as saying 
 
@@ -275,10 +274,10 @@ This is a form of smoothing: you take some percentage of your current value and 
 
 In Zeno's paradox, you never actually get to the target, since there's always some remaining distance to go. On the computer, since we are dealing with pixel positions on the screen and floating point numbers at a specific range, the object appears to stop.  
 
-In the 5th example **(5_rectangleXeno)**, we add a function to the rectangle that uses xeno to catch up to a point: 
+In the 5th example **(5_rectangleZeno)**, we add a function to the rectangle that uses zeno to catch up to a point: 
 
 ```cpp
-void rectangle::xenoToPoint(float catchX, float catchY){
+void rectangle::zenoToPoint(float catchX, float catchY){
     pos.x = catchUpSpeed * catchX + (1-catchUpSpeed) * pos.x; 
     pos.y = catchUpSpeed * catchY + (1-catchUpSpeed) * pos.y; 
 }
@@ -286,7 +285,7 @@ void rectangle::xenoToPoint(float catchX, float catchY){
 
 Here, we have a value, `catchUpSpeed`,  that represents how fast we catch up to the object we are trying to get to.   It's set to 0.01 (1%) in this example code, which means take 99% of my own postion, 1% of the target position and move to their sum.  If you alter this number you'll see the rectangle catch up to the mouse faster or slower.  0.001 means it will run 10 times slower, 0.1 means ten times faster. 
 
-This technique is very useful if you are working with noisy data -- a sensor for example.  You can create a variable that catches up to it using xeno and smoothes out the result.  I use this quite often when I'm working with hardware sensors / physical computing, or when I have noisy data.  The nice thing is that the catch up speed becomes a knob that you can adjust between more real-time (and more noisy data) and less real-time (and more smooth) data.  Having that kind of control comes in handy!
+This technique is very useful if you are working with noisy data -- a sensor for example.  You can create a variable that catches up to it using zeno and smoothes out the result.  I use this quite often when I'm working with hardware sensors / physical computing, or when I have noisy data.  The nice thing is that the catch up speed becomes a knob that you can adjust between more real-time (and more noisy data) and less real-time (and more smooth) data.  Having that kind of control comes in handy!
 
 ## Function based movement
 

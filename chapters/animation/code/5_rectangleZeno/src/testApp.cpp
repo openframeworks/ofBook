@@ -25,7 +25,7 @@ void testApp::setup(){
 
 //--------------------------------------------------------------
 void testApp::update(){
-	myRectangle.xenoToPoint(mouseX, mouseY);
+	myRectangle.zenoToPoint(mouseX, mouseY);
 }
 
 //--------------------------------------------------------------
