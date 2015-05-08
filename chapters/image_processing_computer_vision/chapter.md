@@ -509,7 +509,7 @@ Although OF provides the above utilities to convert color images to grayscale, i
 * **Taking the average of the R,G, and B color channels.** A slower but more perceptually accurate method approximates luminance (often written *Y*) as a straight average of the red, green and blue values for every pixel: `Y = (R+G+B)/3;`. This not only produces a better representation of the image's luminance across the visible color spectrum, but it also diminishes the influence of noise in any one color channel.
 * **Computing the luminance with colorimetric coefficients**. The most perceptually accurate methods for computing grayscale from color images employ a specially-weighted "colorimetric" average of the RGB color data. These methods are marginally more expensive to compute, as each color channel must be multiplied by its own weighting factor. The CCIR 601 imaging specification, which is used in the OpenCV [cvtColor](http://docs.opencv.org/modules/imgproc/doc/miscellaneous_transformations.html#cvtcolor) function, itself used in the ofxOpenCV addon, employs the formula `Y = 0.299*R + 0.587*G + 0.114*B` (with the assumption that the RGB values have been gamma-corrected). According to [Wikipedia](http://en.wikipedia.org/wiki/Luma_(video)), "these coefficients represent the measured intensity perception of typical trichromat humans; in particular, human vision is most sensitive to green and least sensitive to blue."
 
-Here's a code fragment for converting from color to grayscale, written "from scratch" in C/C++, using the averaging method described above. This code also shows, more generally, how the computation of a 1-channel image can be based on a 3-channel image. 
+Here's a code fragment for converting from color to grayscale, written "from scratch" in C/C++, using the averaging method described above. This code also shows, more generally, how the pixelwise computation of a 1-channel image can be based on a 3-channel image. 
 
 ```
 // Load a color image, fetch its dimensions, 
@@ -545,25 +545,106 @@ for (int indexGray=0; indexGray<nBytesGrayscale; indexGray++){
 ```
 
 
-
 ### Image arithmetic: mathematical operations on images
 
-A core part of the workflow of computer vision is *image arithmetic*. These are the basic mathematical operations we all know -- addition, subtraction, multiplication, and division -- but interpreted in the image domain. Here are two very simple examples:
+A core part of the workflow of computer vision is *image arithmetic*. These are the basic mathematical operations we all know—addition, subtraction, multiplication, and division—but interpreted in the image domain. The key to image arithmetic is that these operations are performed *pixelwise*—meaning, for every pixel in an image.
 
-`[Code to add a constant value to an image]`
+In the example below, we add the constant value, 10, to an 8-bit monochrome image. Observe how the value is added pixelwise: each pixel in the resulting ("destination") image is 10 gray-levels brighter than its corresponding one in the source image:
 
-`[Code to multiply an image by a constant]`
+![Pixelwise image arithmetic](images/image_arithmetic_2.png)
 
-TIP: Watch out for blowing out the range of your data types.
+Adding a constant makes an image uniformly brighter, while subtracting a constant makes it uniformly darker. The code below shows one method of performing such arithmetic in openFrameworks. Here, we perform simple image arithmetic "from scratch", by directly manipulating the contents of pixel buffers.   
 
-When  assume that these operations are performed *pixelwise* -- meaning, for every pixel in an image. When
+```
+// This is ofApp.h
+#pragma once
+#include "ofMain.h"
+
+class ofApp : public ofBaseApp{
+	public:
+	void setup();
+	void draw();
+	
+	ofImage lincolnImage;
+	ofImage lincolnImageModified;
+};
+```
+
+
+```
+// This is ofApp.cpp
+#include "ofApp.h"
+
+void ofApp::setup(){
+	
+	// Load the image and ensure we're working in monochrome.
+	// This is our source ("src") image. 
+	lincolnImage.loadImage("images/lincoln_120x160.png");
+	lincolnImage.setImageType(OF_IMAGE_GRAYSCALE);
+	
+	// Construct and allocate a new image with the same dimensions. 
+	// This will store our destination ("dst") image. 
+	int imgW = lincolnImage.width;
+	int imgH = lincolnImage.height;
+	lincolnImageModified.allocate(imgW, imgH, OF_IMAGE_GRAYSCALE);
+	
+	// Acquire pointers to the pixel buffers of both images. 
+	// These images use 8-bit unsigned chars to store gray values. 
+	// Note the convention 'src' and 'dst' -- this is very common.
+	unsigned char* srcArray = lincolnImage.getPixels();
+	unsigned char* dstArray = lincolnImageModified.getPixels();
+	
+	// Loop over all of the pixels. 
+	// Each dst pixel will be 10 gray-levels brighter
+	// than its corresponding src pixel.
+	int nPixels = imgW * imgH; 
+	for (int i = 0; i < nPixels; i++) {
+		unsigned char srcValue = srcArray[i];
+		dstArray[i] = srcValue + 10; 
+	}
+	
+	// Don't forget this!
+	// We tell the ofImage to refresh its texture (stored on the GPU)
+	// from its pixel buffer (stored on the CPU), which we have modified.
+	lincolnImageModified.update();
+}
+
+//---------------------
+void ofApp::draw(){
+	ofBackground(255);
+	ofSetColor(255);
+
+	lincolnImage.draw         (20, 20, 120,160);
+	lincolnImageModified.draw (160,20, 120,160);
+}
+```
+
+#### Heads Up! A Warning about Numeric Overflow
+
+An important question arises concerning the fate of the specially-marked pixel in the bottom row of the illustration above. Its initial value is 251—but the largest number we can store in an unsigned char is 255! What should the resulting value be when we add 10? More generally, what happens if we attempt to create a pixel value that is too large to be represented?
+
+The answer is: it depends which tools you're using, and it can have significant consequences! Some libraries, like OpenCV, will clamp or constrain all results (sometimes known as "saturation") to the data's desired range; adding 10 to 251 will result in a maxed-out 255. In other situations, such as with our direct editing of unsigned chars, we risk something called
+*[integer overflow](http://en.wikipedia.org/wiki/Integer_overflow)*. This can cause values to wrap. Without the ability to carry, only the least significant bits are retained. In the land of unsigned chars, adding 10 to 251 gives... 6!
+
+The perils of integer overflow are readily apparent in the illustration below. I have added 25 gray-levels to a source image of Abraham Lincoln; without any preventative measures, many of the light-colored pixels have wrapped around into dark values. 
+
+![Numeric overflow](images/numeric_overflow.png)
+
+This could be avoided by changing the arithmetic, in the code above, to include a saturating constraint:
+```
+dstArray[index] = min(255, srcValue + 25);
+```
+
+Integer overflow is also an issue with other arithmetic operations, such as multiplication and subtraction (when values go negative). Be careful!
+
+
 
 
 
 In the examples presented here, for the sake of simplicity, we'll assume that the images upon which we'll perform these operations are all the same size -- for example, 640x480 pixels, a typical capture size for many SD ("standard definition") webcams. We'll also assume that these images are monochrome or grayscale.
 
 - adding two images together
-- subtracting two images
+- subtracting one image from another image
 - multiplying an image by a constant
 - mentioning ROI
 - Example: creating an average of several images (e.g. Jason Salavon)
