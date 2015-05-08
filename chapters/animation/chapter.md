@@ -711,3 +711,4 @@ We don't have time to get into it in this chapter, but there's different approac
 
 ### Physics and animation libraries
 
+* [Bullet Physics Library](http://www.bulletphysics.org/ "Bullet Physics Library website")
