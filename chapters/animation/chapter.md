@@ -712,3 +712,11 @@ We don't have time to get into it in this chapter, but there's different approac
 ### Physics and animation libraries
 
 * [Bullet Physics Library](http://www.bulletphysics.org/ "Bullet Physics Library website")
+* [Box2D](http://www.box2d.org/ "Box2D website")
+* [Chipmunk2D](http://chipmunk-physics.net/ "Chipmunk2D website")
+* [Newton Game Dynamics](http://www.newtondynamics.com/ "Newton Game Dynamics website")
+* [Open Dynamics Engine](http://www.ode.org/ "Open Dynamics Engine website")
+* [Physics Abstraction Layer](http://www.adrianboeing.com/pal/index.html "Physics Abstraction Layer website")
+* [SICONOS - SImulation and COntrol of NOnsmooth Systems](http://siconos.gforge.inria.fr/ "SICONOS webiste")
+* [Tokamak Game Physics SDK](http://www.tokamakphysics.com/ "Tokamak Game Physics SDK website")
+* [SOFA - Simulation Open Framework Architecture](http://www.sofa-framework.org/ "SOFA website")
