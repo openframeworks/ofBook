@@ -213,7 +213,7 @@ The easiest way to see this is by raising the number to a power.  A power, as yo
 
 Let's look at a plot of pct raised to the second power: 
 
-**[note: plot graphic here]**
+![pct raised to second power](images/x_squared_plot.png)
 
 The plot shows the graph of a [mathematical function](https://en.wikipedia.org/wiki/Function_%28mathematics%29#Notation "Wikipedia on (the notation of) mathematical functions"), namely `f(x) = y = x²`. Think about the x value of the plot as the input and y value as the output. If put in 0, we get out a y value of 0, if we put in 0.1, we get out a y value of 0.01, all the way to putting in a value of 1 and getting out a value of 1. Depending on the mathematical function, you can have different curves and therefore different mapping behaviour.
 
