@@ -551,11 +551,11 @@ A core part of the workflow of computer vision is *image arithmetic*. These are 
 
 ### Image Arithmetic with Constants
 
-The simplest forms of image arithmetic transform the values in an image by a constant. In the example below, we add the constant value, **10**, to an 8-bit monochrome image. Observe how the value is added pixelwise: each pixel in the resulting destination image stores a number which is 10 more (i.e. 10 gray-levels brighter) than its corresponding pixel in the source image:
+Some of the simplest operations in image arithmetic transform the values in an image by a constant. In the example below, we add the constant value, **10**, to an 8-bit monochrome image. Observe how the value is added pixelwise: each pixel in the resulting destination image stores a number which is 10 more (i.e. 10 gray-levels brighter) than its corresponding pixel in the source image:
 
 ![Pixelwise image arithmetic](images/image_arithmetic_2.png)
 
-Adding a constant makes an image uniformly brighter, while subtracting a constant makes it uniformly darker. In the code below, we implement simple image arithmetic "from scratch", by directly manipulating the contents of pixel buffers. Although practical computer vision projects will often make use of higher-level libraries (such as OpenCV), it's important to understand what's going on underneath. 
+Adding a constant makes an image uniformly brighter, while subtracting a constant makes it uniformly darker. In the code below, we implement simple image arithmetic "from scratch", by directly manipulating the contents of pixel buffers. Although practical computer vision projects will often accomplish this with higher-level libraries (such as OpenCV), we do this here to show what's going on underneath. 
 
 ```cpp
 // Example 4: Add a constant value to an image, from "scratch".
@@ -568,11 +568,10 @@ class ofApp : public ofBaseApp{
 	void setup();
 	void draw();
 	
-	ofImage lincolnImage;
-	ofImage lincolnImageModified;
+	ofImage lincolnOfImageSrc;
+	ofImage lincolnOfImageDst;
 };
 ```
-
 
 ```cpp
 // This is ofApp.cpp
@@ -582,24 +581,24 @@ void ofApp::setup(){
 	
 	// Load the image and ensure we're working in monochrome.
 	// This is our source ("src") image. 
-	lincolnImage.loadImage("images/lincoln_120x160.png");
-	lincolnImage.setImageType(OF_IMAGE_GRAYSCALE);
+	lincolnOfImageSrc.loadImage("images/lincoln_120x160.png");
+	lincolnOfImageSrc.setImageType(OF_IMAGE_GRAYSCALE);
 	
 	// Construct and allocate a new image with the same dimensions. 
 	// This will store our destination ("dst") image. 
-	int imgW = lincolnImage.width;
-	int imgH = lincolnImage.height;
-	lincolnImageModified.allocate(imgW, imgH, OF_IMAGE_GRAYSCALE);
+	int imgW = lincolnOfImageSrc.width;
+	int imgH = lincolnOfImageSrc.height;
+	lincolnOfImageDst.allocate(imgW, imgH, OF_IMAGE_GRAYSCALE);
 	
 	// Acquire pointers to the pixel buffers of both images. 
 	// These images use 8-bit unsigned chars to store gray values. 
 	// Note the convention 'src' and 'dst' -- this is very common.
-	unsigned char* srcArray = lincolnImage.getPixels();
-	unsigned char* dstArray = lincolnImageModified.getPixels();
+	unsigned char* srcArray = lincolnOfImageSrc.getPixels();
+	unsigned char* dstArray = lincolnOfImageDst.getPixels();
 	
-	// Loop over all of the pixels. 
-	// Each dst pixel will be 10 gray-levels brighter
-	// than its corresponding src pixel.
+	// Loop over all of the destination image's pixels. 
+	// Each destination pixel will be 10 gray-levels brighter
+	// than its corresponding source pixel.
 	int nPixels = imgW * imgH; 
 	for (int i = 0; i < nPixels; i++) {
 		unsigned char srcValue = srcArray[i];
@@ -609,7 +608,7 @@ void ofApp::setup(){
 	// Don't forget this!
 	// We tell the ofImage to refresh its texture (stored on the GPU)
 	// from its pixel buffer (stored on the CPU), which we have modified.
-	lincolnImageModified.update();
+	lincolnOfImageDst.update();
 }
 
 //---------------------
@@ -617,8 +616,8 @@ void ofApp::draw(){
 	ofBackground(255);
 	ofSetColor(255);
 
-	lincolnImage.draw         (20, 20, 120,160);
-	lincolnImageModified.draw (160,20, 120,160);
+	lincolnOfImageSrc.draw ( 20,20, 120,160);
+	lincolnOfImageDst.draw (160,20, 120,160);
 }
 ```
 
@@ -697,7 +696,7 @@ void ofApp::draw(){
 	ofBackground(255);
 	ofSetColor(255);
 	
-	lincolnCvImageSrc.draw (20,20,  120,160);
+	lincolnCvImageSrc.draw ( 20,20, 120,160);
 	lincolnCvImageDst.draw (160,20, 120,160);
 }
 ```
