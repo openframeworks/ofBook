@@ -242,7 +242,7 @@ A small twist on the linear interpolation is a technique that I call "Zeno" base
 
 > Imagine there is a runner in a race and the runner covers 1/2 of the distance in a certain amount of time, and then they run 1/2 of the remaining distance in the same amount of time, and run 1/2 of that remaining distance, etc. Do they finish the race?  There is always some portion of the distance left remaining to run one half of. The idea is that you can always keep splitting the distance.
 
-If we take the linear interpolation code but always alter our own position instead (e.g., take 50% of our current position + 50% of our target position), we can animate our way from one value to another. I usually explain the algorithm in class by asking someone to do this: 
+If we take the linear interpolation code but always alter our own position instead (e.g., take 50% of our current position + 50% of our target position), we can animate our way from one value to another. I usually explain the algorithm in class by asking someone to do this:
 
 1. Start at one position in your room.
 2. Pick a point to move to.
@@ -252,19 +252,19 @@ If we take the linear interpolation code but always alter our own position inste
 
 ![zeno diagram](images/zeno.png)
 
-In code, that's basically the same as saying 
+In code, that's basically the same as saying
 
 ```cpp
 currentValue = currentValue + ( targetValue - currentValue ) * 0.5.
 ```
 
-In this case `targetValue - currentValue` is the distance. You could also change the size of the step you make every time, for example, taking steps of 10% instead of 50%: 
+In this case `targetValue - currentValue` is the distance. You could also change the size of the step you make every time, for example, taking steps of 10% instead of 50%:
 
 ```cpp
 currentValue = currentValue + ( targetValue - currentValue ) * 0.1.
 ```
 
-If you expand the expression, you can write the same thing this way: 
+If you expand the expression, you can write the same thing this way:
 
 ```cpp
 currentValue = currentValue * 0.9 + targetValue * 0.1.
