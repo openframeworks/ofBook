@@ -367,7 +367,7 @@ Unsurprisingly, tracking *more than one* bright point requires more sophisticate
 
 More generally, you can create a system that tracks a (single) spot with a *specific* color. A very simple way to achieve this is to find the pixel whose color has the shortest Euclidean distance (in "RGB space") to the target color. Here is a code fragment which shows this.
 
-```
+```cpp
 // Our target color is CSS LightPink: #FFB6C1 or (255, 182, 193)
 float rTarget = 255; 
 float gTarget = 182;
