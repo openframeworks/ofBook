@@ -558,6 +558,7 @@ The simplest forms of image arithmetic transform the values in an image by a con
 Adding a constant makes an image uniformly brighter, while subtracting a constant makes it uniformly darker. In the code below, we implement simple image arithmetic "from scratch", by directly manipulating the contents of pixel buffers. Although practical computer vision projects will often make use of higher-level libraries (such as OpenCV), it's important to understand what's going on underneath. 
 
 ```
+// Example 4: Add a constant value to an image, from "scratch".
 // This is ofApp.h
 #pragma once
 #include "ofMain.h"
@@ -650,6 +651,7 @@ Here's the same example as above, re-written using the ofxOpenCV addon library, 
 * ofxOpenCv does not currently provide methods for loading images, so we employ an `ofImage` as an intermediary for doing so.  
 
 ```
+// Example 5: Add a constant value to an image, with ofxOpenCv.
 // This is ofApp.h
 #pragma once
 
@@ -704,34 +706,39 @@ Here's the result. Note how the values have saturated instead of overflowed.
 
 ### Arithmetic with *Two* Images
 
-Image arithmetic becomes truly useful when applied to two images. It is possible to add two images, multiply two images, subtract one image from another, and divide one image by another. When performing an operation (such as addition) on two images, *A* and *B*, the first pixel of *A* is added to the first pixel of *B*, the second pixel of *A* is added to the second pixel of *B*, and so forth. 
+Image arithmetic becomes truly useful when applied to two images. It is possible to add two images, multiply two images, subtract one image from another, and divide one image by another. When performing an operation (such as addition) on two images, *A* and *B*, the first pixel of *A* is added to the first pixel of *B*, the second pixel of *A* is added to the second pixel of *B*, and so forth. For the purposes of this discussion, we'll assume that *A* and *B* are both monochromatic, and have the same dimensions. 
 
-One of the most useful operations is the *absolute difference* of two images, illustrated below. This operation is equivalent to taking the absolute value of *A-B*. Absolute differencing is a key step in workflows like frame-differencing and background subtraction, as discussed in the next section.  
+One of the most useful two-image operations is *absolute differencing*, illustrated below. This operation is equivalent to taking the absolute value of *A-B*. Absolute differencing is a key step in workflows like frame-differencing and background subtraction, as discussed in the next section.  
 
 ![Absolute Difference](images/absolute-difference.png)
 
-In the examples presented here, for the sake of simplicity, we'll assume that the images upon which we'll perform these operations are all the same size -- for example, 640x480 pixels, a typical capture size for many SD ("standard definition") webcams. We'll also assume that these images are monochrome or grayscale.
 
-- adding two images together
-- subtracting one image from another image
-- multiplying an image by a constant
 - mentioning ROI
 - Example: creating an average of several images (e.g. Jason Salavon)
 - Example: creating a running average
-- Example: creating a circular alpha-mask from a computed Blinn spot
+
+Recap: A Person Detection Pipeline
 
 ![Absolute Difference](images/full_pipeline.png)
+
+Here's a recap of a simple pipeline for detecting people in video:
+
+1. Live video is captured and (often) converted to grayscale. 
+2. A "background" image is acquired, at a time when nobody is in the scene. Sometimes, a running average of the camera feed is used as the background. 
+3. The live video image is compared with the background image. Their absolute difference is computed. 
+4. The absolute difference is thresholded. 
 
 
 ### Filtering and Noise Removal Convolution Filtering
 
 - Blurring an image
 - Edge detection
-- Median filtering
-- Advanced sidebar: dealing with boundary conditions
 
-========================================================
-3. Scenario I. Basic Blobs (e.g. Manual Input Sessions)
+1. Scenario I. Basic Blobs (e.g. Manual Input Sessions)
+1. Scenario I. Basic Blobs (e.g. Manual Input Sessions)
+
+
+
 
 3.1. The Why
 - Some examples of projects that use blob-tracking
@@ -751,10 +758,12 @@ sfdflkj
 ### 3.3. Image Processing Refinements
 #### 3.3.1. Using a running average of background
 #### 3.3.2. Erosion, dilation, median to remove noise after binarization
-#### 3.3.3. Combining presence and motion in a weighted average
+
+Motion detection (from frame-differencing) and presence detection (from background subtraction) can be combined to create a generalized detector. A simple trick for doing so is to take a weighted average of their results, and use that as the basis for further thresholding. Such a solution combines the best of both approaches. 
+
 #### 3.3.4. Compensating for perspectival distortion and lens distortion
 
-### 3.4. Thresholding Refinements
+3.4. Thresholding Refinements
    - Some techniques for automatic threshold detection
    - Dynamic thresholding (per-pixel thresholding)
 
@@ -769,7 +778,6 @@ sfdflkj
    - Finding the "fore-point" (foremost point)
    - Background subtraction with depth images
    - Hole-filling in depth images
-   - Computing normals from depth gradients
 
 3.7. Suggestions for further experimentation:
    - Tracking multiple blobs with ofxCv.tracker
@@ -815,7 +823,7 @@ Now that you can locate faces in images and video, consider using the following 
 
 
 
-### Suggestions for Further Experimentation
+## Suggestions for Further Experimentation
 
 I sometimes assign my students the project of copying a well-known work of interactive new-media art. Reimplementing projects such as the ones below can be highly instructive, and test the limits of your attention to detail. As Gerald King [writes](http://www.geraldking.com/Copying.htm), such copying "provides insights which cannot be learned from any other source." *I recommend you build...*
 
@@ -824,7 +832,7 @@ I sometimes assign my students the project of copying a well-known work of inter
 
 ![Daniel Rozin, Time Scan Mirror (2004)](images/rozin_timescan.jpg)
 
-#### Text Rain by Camille Utterback and Romy Achituv (1999).
+#### *Text Rain* by Camille Utterback and Romy Achituv (1999).
 
 *[Text Rain](http://camilleutterback.com/projects/text-rain/)* is a now-classic work of interactive art in which virtual letters appear to "fall" on the visitor's "silhouette". Utterback writes: "In the Text Rain installation, participants stand or move in front of a large projection screen. On the screen they see a mirrored video projection of themselves in black and white, combined with a color animation of falling letters. Like rain or snow, the letters appears to land on participants’ heads and arms. The letters respond to the participants’ motions and can be caught, lifted, and then let fall again. The falling text will 'land' on anything darker than a certain threshold, and 'fall' whenever that obstacle is removed."
 
