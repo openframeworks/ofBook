@@ -285,7 +285,7 @@ void rectangle::zenoToPoint(float catchX, float catchY){
 
 Here, we have a value, `catchUpSpeed`, that represents how fast we catch up to the object we are trying to get to. It's set to 0.01 (1%) in this example code, which means take 99% of my own postion, 1% of the target position and move to their sum. If you alter this number you'll see the rectangle catch up to the mouse faster or slower. A value of 0.001 means it will run 10 times slower, a value of 0.1 means ten times faster.
 
-This technique is very useful if you are working with noisy data -- a sensor for example.  You can create a variable that catches up to it using zeno and smoothes out the result.  I use this quite often when I'm working with hardware sensors / physical computing, or when I have noisy data.  The nice thing is that the catch up speed becomes a knob that you can adjust between more real-time (and more noisy data) and less real-time (and more smooth) data.  Having that kind of control comes in handy!
+This technique is very useful if you are working with noisy data -- a sensor for example. You can create a variable that catches up to it using zeno and smoothes out the result. I use this quite often when I'm working with hardware sensors / physical computing, or when I have noisy data. The nice thing is that the catch up speed becomes a knob that you can adjust between more real-time (and more noisy data) and less real-time (and more smooth) data. Having that kind of control comes in handy!
 
 ## Function based movement
 
