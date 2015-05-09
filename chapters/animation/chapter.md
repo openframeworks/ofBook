@@ -274,7 +274,7 @@ This is a form of smoothing: you take some percentage of your current value and 
 
 In Zeno's paradox, you never actually get to the target, since there's always some remaining distance to go. On the computer, since we are dealing with pixel positions on the screen and floating point numbers at a specific range, the object appears to stop.
 
-In the 5th example **(5_rectangleZeno)**, we add a function to the rectangle that uses zeno to catch up to a point: 
+In the 5th example **(5_rectangleZeno)**, we add a function to the rectangle that uses zeno to catch up to a point:
 
 ```cpp
 void rectangle::zenoToPoint(float catchX, float catchY){
@@ -283,7 +283,7 @@ void rectangle::zenoToPoint(float catchX, float catchY){
 }
 ```
 
-Here, we have a value, `catchUpSpeed`,  that represents how fast we catch up to the object we are trying to get to.   It's set to 0.01 (1%) in this example code, which means take 99% of my own postion, 1% of the target position and move to their sum.  If you alter this number you'll see the rectangle catch up to the mouse faster or slower.  0.001 means it will run 10 times slower, 0.1 means ten times faster. 
+Here, we have a value, `catchUpSpeed`, that represents how fast we catch up to the object we are trying to get to. It's set to 0.01 (1%) in this example code, which means take 99% of my own postion, 1% of the target position and move to their sum. If you alter this number you'll see the rectangle catch up to the mouse faster or slower. 0.001 means it will run 10 times slower, 0.1 means ten times faster.
 
 This technique is very useful if you are working with noisy data -- a sensor for example.  You can create a variable that catches up to it using zeno and smoothes out the result.  I use this quite often when I'm working with hardware sensors / physical computing, or when I have noisy data.  The nice thing is that the catch up speed becomes a knob that you can adjust between more real-time (and more noisy data) and less real-time (and more smooth) data.  Having that kind of control comes in handy!
 
