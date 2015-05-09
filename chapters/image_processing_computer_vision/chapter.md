@@ -547,11 +547,11 @@ for (int indexGray=0; indexGray<nBytesGrayscale; indexGray++){
 
 ## Image Arithmetic: Math Operations on Images
 
-A core part of the workflow of computer vision is *image arithmetic*. These are the basic mathematical operations we all know—addition, subtraction, multiplication, and division—but as these are applied to images. Developers use such operations ubiquitously, and for a wide range of reasons. The key to understanding image arithmetic is that these operations are performed *pixelwise*—meaning, atomically, for every pixel in an image.
+A core part of the workflow of computer vision is *image arithmetic*. These are the basic mathematical operations we all know—addition, subtraction, multiplication, and division—but as these are applied to images. Developers use such operations constantly, and for a wide range of reasons. 
 
 ### Image Arithmetic with Constants
 
-Some of the simplest operations in image arithmetic transform the values in an image by a constant. In the example below, we add the constant value, **10**, to an 8-bit monochrome image. Observe how the value is added pixelwise: each pixel in the resulting destination image stores a number which is 10 more (i.e. 10 gray-levels brighter) than its corresponding pixel in the source image:
+Some of the simplest operations in image arithmetic transform the values in an image by a constant. In the example below, we add the constant value, **10**, to an 8-bit monochrome image. Observe how the value is added *pixelwise*: each pixel in the resulting destination image stores a number which is 10 more (i.e. 10 gray-levels brighter) than its corresponding pixel in the source image:
 
 ![Pixelwise image arithmetic](images/image_arithmetic_2.png)
 
@@ -643,7 +643,7 @@ Integer overflow can also present problems with other arithmetic operations, suc
 
 Here's the same example as above, re-written using the ofxOpenCV addon library, which comes with the openFrameworks core download. Note the following: 
 
-* As with all addons, it's important to include the ofxOpenCV addon properly in your project. The ProjectGenerator can help with this. 
+* As with all addons, it's important to include the ofxOpenCV addon properly in your project. The openFrameworks ProjectGenerator can help with this. 
 * ofxOpenCv provides convenient methods for copying data between images.
 * ofxOpenCv provides convenient operators for performing image arithmetic.
 * ofxOpenCv's arithmetic operations saturate, so integer overflow is not a concern.
@@ -700,14 +700,14 @@ void ofApp::draw(){
 	lincolnCvImageDst.draw (160,20, 120,160);
 }
 ```
-Here's the result. Note how the values have saturated instead of overflowed. 
+Here's the result. Note how the high values have saturated instead of overflowed. 
 ![Numeric overflow](images/image_lightening.png)
 
 ### Arithmetic with *Two* Images
 
-Image arithmetic becomes especially useful when applied to two images. It is possible to add two images, multiply two images, subtract one image from another, and divide one image by another. When performing an operation (such as addition) on two images, *A* and *B*, the first pixel of *A* is added to the first pixel of *B*, the second pixel of *A* is added to the second pixel of *B*, and so forth. For the purposes of this discussion, we'll assume that *A* and *B* are both monochromatic, and have the same dimensions. 
+Image arithmetic is especially useful when applied to two images. As you would expect, it is possible to add two images, multiply two images, subtract one image from another, and divide one image by another. When performing an operation (such as addition) on two images, the first pixel of image *A* is added to the first pixel of image *B*, the second pixel of *A* is added to the second pixel of *B*, and so forth. For the purposes of this discussion, we'll assume that *A* and *B* are both monochromatic, and have the same dimensions. 
 
-Many computer vision applications depend on being able to compare two images. At the basis of doing so is the arithmetic operation of *absolute differencing*, illustrated below. This operation is equivalent to taking the absolute value, *|A-B|*. As we shall see, absolute differencing is a key step in common workflows like frame-differencing and background subtraction.  
+Many computer vision applications depend on being able to compare two images. At the basis of doing so is the arithmetic operation of *absolute differencing*, illustrated below. This operation is equivalent to taking the absolute value of one image subtracted from the other, *|A-B|*, for each pair of corresponding pixels. As we shall see, absolute differencing is a key step in common workflows like frame-differencing and background subtraction.  
 
 ![Absolute Difference](images/absolute-difference.png)
 
