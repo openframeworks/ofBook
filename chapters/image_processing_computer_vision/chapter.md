@@ -623,17 +623,17 @@ void ofApp::draw(){
 
 Just like regular arithmetic, image arithmetic is simple! But there's a lurking peril: *[integer overflow](http://en.wikipedia.org/wiki/Integer_overflow)*.
 
-Consider the fate of the specially-marked pixel in the bottom row of the illustration above. Its initial value is 251—but the largest number we can store in an unsigned char is 255! What should the resulting value be when we add 10? More generally, what happens if we attempt to create a pixel value that's too large to be represented by our pixel's data type?
+Consider what happens when we add 10 to the specially-marked pixel in the bottom row of the illustration above. Its initial value is 251—but the largest number we can store in an unsigned char is 255! What should the resulting value be? More generally, what happens if we attempt to assign a pixel value that's too large to be represented by our pixel's data type?
 
-The answer is: it depends which tools you're using, and it can have significant consequences! Some libraries, like OpenCV, will clamp or constrain all arithmetic to the data's desired range; adding 10 to 251 will result in a maxed-out value of 255 (a solution sometimes known as "saturation"). In other situations, such as with our direct editing of unsigned chars in the code above, we risk "rolling over" the data, wrapping around zero like a car's odometer. Without the ability to carry, only the least significant bits are retained. In the land of unsigned chars, adding 10 to 251 gives... 6!
+The answer is: it depends which tools you're using, and it can have significant consequences! Some libraries, like OpenCV, will clamp or constrain all arithmetic to the data's desired range; thus, adding 10 to 251 will result in a maxed-out value of 255 (a solution sometimes known as "saturation"). In other situations, such as with our direct editing of unsigned chars in the code above, we risk "rolling over" the data, wrapping around zero like a car's odometer. Without the ability to carry, only the least significant bits are retained. In the land of unsigned chars, adding 10 to 251 gives... 6!
 
 The perils of integer overflow are readily apparent in the illustration below. I have boosted a source image of Abraham Lincoln, adding 25 to all pixel values; without any preventative measures, many of the light-colored pixels have wrapped around and become dark. 
 
 ![Numeric overflow](images/numeric_overflow.png)
 
-This could be avoided by changing the arithmetic, in the code above, to include a saturating constraint:
+Integer overflow in the example above can be avoided by promoting the added numbers to integers, and including a saturating constraint:
 ```
-dstArray[index] = min(255, srcValue + 25);
+dstArray[index] = min(255, (int)srcValue + 25);
 ```
 
 Integer overflow is also an issue with other arithmetic operations, such as multiplication and subtraction (when values go negative). Be careful!
