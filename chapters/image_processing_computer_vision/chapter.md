@@ -547,7 +547,9 @@ for (int indexGray=0; indexGray<nBytesGrayscale; indexGray++){
 
 ## Image Arithmetic: Math Operations on Images
 
-A core part of the workflow of computer vision is *image arithmetic*. These are the basic mathematical operations we all know—addition, subtraction, multiplication, and division—but as these are applied to images. Developers use such operations constantly, and for a wide range of reasons. 
+In this section, we consider image processing operations that are precursors to a wide range of further decision-making. We will look at image arithmetic, thresholding, convolution filtering, and morphological filters. 
+
+We begin with *image arithmetic*, a core part of the workflow of computer vision. These are the basic mathematical operations we all know—addition, subtraction, multiplication, and division—but as these are applied to images. Developers use such operations constantly, and for a wide range of reasons. 
 
 ### Image Arithmetic with Constants
 
@@ -703,15 +705,86 @@ void ofApp::draw(){
 Here's the result. Note how the high values have saturated instead of overflowed. 
 ![Numeric overflow](images/image_lightening.png)
 
-### Arithmetic with *Two* Images
+### Arithmetic with Two Images: Absolute Differencing
 
 Image arithmetic is especially useful when applied to two images. As you would expect, it is possible to add two images, multiply two images, subtract one image from another, and divide one image by another. When performing an operation (such as addition) on two images, the first pixel of image *A* is added to the first pixel of image *B*, the second pixel of *A* is added to the second pixel of *B*, and so forth. For the purposes of this discussion, we'll assume that *A* and *B* are both monochromatic, and have the same dimensions. 
 
-Many computer vision applications depend on being able to compare two images. At the basis of doing so is the arithmetic operation of *absolute differencing*, illustrated below. This operation is equivalent to taking the absolute value of one image subtracted from the other, *|A-B|*, for each pair of corresponding pixels. As we shall see, absolute differencing is a key step in common workflows like frame-differencing and background subtraction.  
+Many computer vision applications depend on being able to compare two images. At the basis of doing so is the arithmetic operation of *absolute differencing*, illustrated below. This operation is equivalent to taking the absolute value of the results when one image is subtracted from the other: *|A-B|*. As we shall see, absolute differencing is a key step in common workflows like frame-differencing and background subtraction.  
 
 ![Absolute Difference](images/absolute-difference.png)
 
-Absolute differencing is accomplished in just a line or two of code, using the ofxOpenCv addon:
+Absolute differencing is accomplished in just a line of code, using the ofxOpenCv addon:
+
+```cpp
+// Given: 
+// ofxCvGrayscaleImage myCvImageA;    // the minuend
+// ofxCvGrayscaleImage myCvImageB;    // the subtrahend
+// ofxCvGrayscaleImage myCvImageDiff; // the difference
+
+// The absolute difference of A and B is placed into myCvImageDiff:
+myCvImageDiff.absDiff (myCvImageA, myCvImageB);
+```
+
+### Thresholding
+
+In computer vision programs, we frequently have the task of determining which pixels represent something of interest, and which do not. Key to building such discriminators is the operation of *thresholding*. 
+
+Thresholding poses a *pixelwise conditional test*—that is, it asks  whether each pixel (x,y) in a source image meets a certain criterion, generally of brightness. In return, thresholding produces a destination image, which represents whether or not the criterion is met in the original's corresponding pixels. In monochrome 8-bit images, pixels which satisfy the criterion are conventionally assigned 255 (white), while those which don't are assigned 0 (black). 
+
+Here's an example, an image (left) of light-colored cells. We'd like to know which pixels represent a cell, and which do not. For our criterion, we identify pixels whose grayscale brightness is greater than some constant (for this illustration: 127, the middle of the 0-255 range):
+
+![Absolute Difference](images/thresholded_cells.png)
+
+And here is the complete openFrameworks code. Instead of using a constant (127), we link the threshold to the `mouseX`, placing it under interactive user control. 
+
+```cpp
+// Example 5. Thresholding. 
+// This is ofApp.h
+#pragma once
+
+#include "ofMain.h"
+#include "ofxOpenCv.h"
+
+class ofApp : public ofBaseApp{
+	public:
+		void setup();
+		void draw();
+		ofxCvGrayscaleImage myCvImageSrc;
+		ofxCvGrayscaleImage myCvImageDst;
+};
+```
+
+```cpp
+// This is ofApp.cpp
+#include "ofApp.h"
+
+void ofApp::setup(){
+	
+	// Load the cells image
+	ofImage cellsOfImage;
+	cellsOfImage.loadImage("cells.jpg");
+	cellsOfImage.setImageType(OF_IMAGE_GRAYSCALE);
+	
+	// Set the myCvImageSrc from the pixels of this ofImage.
+	int imgW = cellsOfImage.getWidth();
+	int imgH = cellsOfImage.getHeight();
+	unsigned char *cellsPixels = cellsOfImage.getPixels();
+	myCvImageSrc.setFromPixels (cellsPixels, imgW, imgH);
+}
+
+//---------------------
+void ofApp::draw(){
+	ofBackground(255);
+	ofSetColor(255);
+	
+	myCvImageDst = myCvImageSrc;
+	myCvImageDst.threshold (mouseX); // mouseX or 127
+	
+	myCvImageSrc.draw ( 20,20,  320,240);
+	myCvImageDst.draw (360,20,  320,240);
+}
+```
+
 
 
 
