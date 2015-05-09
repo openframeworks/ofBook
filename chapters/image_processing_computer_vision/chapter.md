@@ -494,7 +494,7 @@ Let's suppose that your raw source data is color video (as is common with webcam
 
 The simplest method to convert a color image to grayscale is to modify its data by changing its OF image type to `OF_IMAGE_GRAYSCALE`. Note that this causes the image to be reallocated and any ofTextures to be updated, so it can be an expensive operation if done frequently. It's also a "destructive operation", in the sense that the image's original color information is lost in the conversion.</p>
 
-```
+```cpp
 ofImage myImage; 
 myImage.loadImage ("colorful.jpg"); // Load a colorful image.
 myImage.setImageType (OF_IMAGE_GRAYSCALE); // Poof! It's grayscale. 
@@ -511,7 +511,7 @@ Although OF provides the above utilities to convert color images to grayscale, i
 
 Here's a code fragment for converting from color to grayscale, written "from scratch" in C/C++, using the averaging method described above. This code also shows, more generally, how the pixelwise computation of a 1-channel image can be based on a 3-channel image. 
 
-```
+```cpp
 // Load a color image, fetch its dimensions, 
 // and get a pointer to its pixel data. 
 ofImage myImage; 
@@ -557,7 +557,7 @@ The simplest forms of image arithmetic transform the values in an image by a con
 
 Adding a constant makes an image uniformly brighter, while subtracting a constant makes it uniformly darker. In the code below, we implement simple image arithmetic "from scratch", by directly manipulating the contents of pixel buffers. Although practical computer vision projects will often make use of higher-level libraries (such as OpenCV), it's important to understand what's going on underneath. 
 
-```
+```cpp
 // Example 4: Add a constant value to an image, from "scratch".
 // This is ofApp.h
 #pragma once
@@ -574,7 +574,7 @@ class ofApp : public ofBaseApp{
 ```
 
 
-```
+```cpp
 // This is ofApp.cpp
 #include "ofApp.h"
 
@@ -635,7 +635,7 @@ The perils of integer overflow are readily apparent in the illustration below. I
 ![Numeric overflow](images/numeric_overflow.png)
 
 In the example above, integer overflow can be avoided by promoting the added numbers to integers, and including a saturating constraint:
-```
+```cpp
 dstArray[index] = min(255, (int)srcValue + 10);
 ```
 Integer overflow can also present problems with other arithmetic operations, such as multiplication and subtraction (when values go negative). 
@@ -650,7 +650,7 @@ Here's the same example as above, re-written using the ofxOpenCV addon library, 
 * ofxOpenCv's arithmetic operations saturate, so integer overflow is not a concern.
 * ofxOpenCv does not currently provide methods for loading images, so we employ an `ofImage` as an intermediary for doing so.  
 
-```
+```cpp
 // Example 5: Add a constant value to an image, with ofxOpenCv.
 // This is ofApp.h
 #pragma once
@@ -667,7 +667,7 @@ class ofApp : public ofBaseApp{
 };
 ```
 
-```
+```cpp
 // This is ofApp.cpp
 #include "ofApp.h"
 
@@ -706,11 +706,14 @@ Here's the result. Note how the values have saturated instead of overflowed.
 
 ### Arithmetic with *Two* Images
 
-Image arithmetic becomes truly useful when applied to two images. It is possible to add two images, multiply two images, subtract one image from another, and divide one image by another. When performing an operation (such as addition) on two images, *A* and *B*, the first pixel of *A* is added to the first pixel of *B*, the second pixel of *A* is added to the second pixel of *B*, and so forth. For the purposes of this discussion, we'll assume that *A* and *B* are both monochromatic, and have the same dimensions. 
+Image arithmetic becomes especially useful when applied to two images. It is possible to add two images, multiply two images, subtract one image from another, and divide one image by another. When performing an operation (such as addition) on two images, *A* and *B*, the first pixel of *A* is added to the first pixel of *B*, the second pixel of *A* is added to the second pixel of *B*, and so forth. For the purposes of this discussion, we'll assume that *A* and *B* are both monochromatic, and have the same dimensions. 
 
-One of the most useful two-image operations is *absolute differencing*, illustrated below. This operation is equivalent to taking the absolute value of *A-B*. Absolute differencing is a key step in workflows like frame-differencing and background subtraction, as discussed in the next section.  
+Many computer vision applications depend on being able to compare two images. At the basis of doing so is the arithmetic operation of *absolute differencing*, illustrated below. This operation is equivalent to taking the absolute value, *|A-B|*. As we shall see, absolute differencing is a key step in common workflows like frame-differencing and background subtraction.  
 
 ![Absolute Difference](images/absolute-difference.png)
+
+Absolute differencing is accomplished in just a line or two of code, using the ofxOpenCv addon:
+
 
 
 - mentioning ROI
