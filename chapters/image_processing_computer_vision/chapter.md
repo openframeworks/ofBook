@@ -545,15 +545,17 @@ for (int indexGray=0; indexGray<nBytesGrayscale; indexGray++){
 ```
 
 
-### Image arithmetic: mathematical operations on images
+### Image arithmetic: Mathematical Operations on Images
 
-A core part of the workflow of computer vision is *image arithmetic*. These are the basic mathematical operations we all know—addition, subtraction, multiplication, and division—but interpreted in the image domain. The key to image arithmetic is that these operations are performed *pixelwise*—meaning, for every pixel in an image.
+A core part of the workflow of computer vision is *image arithmetic*. These are the basic mathematical operations we all know—addition, subtraction, multiplication, and division—but translated to the image domain. The key to image arithmetic is that these operations are performed *pixelwise*—meaning, for every pixel in an image.
 
-In the example below, we add the constant value, 10, to an 8-bit monochrome image. Observe how the value is added pixelwise: each pixel in the resulting ("destination") image is 10 gray-levels brighter than its corresponding one in the source image:
+#### Image Arithmetic with Constants
+
+The simplest forms of image arithmetic alter the values in an image by a constant. In the example below, we add the constant value, 10, to an 8-bit monochrome image. Observe how the value is added pixelwise: each pixel in the resulting ("destination") image is 10 gray-levels brighter than its corresponding pixel in the source image:
 
 ![Pixelwise image arithmetic](images/image_arithmetic_2.png)
 
-Adding a constant makes an image uniformly brighter, while subtracting a constant makes it uniformly darker. The code below shows one method of performing such arithmetic in openFrameworks. Here, we perform simple image arithmetic "from scratch", by directly manipulating the contents of pixel buffers.   
+*Adding* a constant makes an image uniformly brighter, while *subtracting* a constant makes it uniformly darker. The code below shows one method of performing such arithmetic in openFrameworks. Here, we perform simple image arithmetic "from scratch", by directly manipulating the contents of pixel buffers.   
 
 ```
 // This is ofApp.h
@@ -627,7 +629,7 @@ Consider what happens when we add 10 to the specially-marked pixel in the bottom
 
 The answer is: it depends which tools you're using, and it can have significant consequences! Some libraries, like OpenCV, will clamp or constrain all arithmetic to the data's desired range; thus, adding 10 to 251 will result in a maxed-out value of 255 (a solution sometimes known as "saturation"). In other situations, such as with our direct editing of unsigned chars in the code above, we risk "rolling over" the data, wrapping around zero like a car's odometer. Without the ability to carry, only the least significant bits are retained. In the land of unsigned chars, adding 10 to 251 gives... 6!
 
-The perils of integer overflow are readily apparent in the illustration below. I have boosted a source image of Abraham Lincoln, adding 25 to all pixel values; without any preventative measures, many of the light-colored pixels have wrapped around and become dark. 
+The perils of integer overflow are readily apparent in the illustration below. I have lightend a source image of Abraham Lincoln, by adding 25 to all of its pixel values; without any preventative measures in place, many of the light-colored pixels have wrapped around and become dark. 
 
 ![Numeric overflow](images/numeric_overflow.png)
 
