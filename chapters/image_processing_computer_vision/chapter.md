@@ -545,17 +545,17 @@ for (int indexGray=0; indexGray<nBytesGrayscale; indexGray++){
 ```
 
 
-### Image arithmetic: Mathematical Operations on Images
+## Image Arithmetic: Math Operations on Images
 
-A core part of the workflow of computer vision is *image arithmetic*. These are the basic mathematical operations we all know—addition, subtraction, multiplication, and division—but translated to the image domain. The key to image arithmetic is that these operations are performed *pixelwise*—meaning, for every pixel in an image.
+A core part of the workflow of computer vision is *image arithmetic*. These are the basic mathematical operations we all know—addition, subtraction, multiplication, and division—but as these are applied to images. Developers use such operations ubiquitously, and for a wide range of reasons. The key to understanding image arithmetic is that these operations are performed *pixelwise*—meaning, atomically, for every pixel in an image.
 
-#### Image Arithmetic with Constants
+### Image Arithmetic with Constants
 
-The simplest forms of image arithmetic alter the values in an image by a constant. In the example below, we add the constant value, 10, to an 8-bit monochrome image. Observe how the value is added pixelwise: each pixel in the resulting ("destination") image is 10 gray-levels brighter than its corresponding pixel in the source image:
+The simplest forms of image arithmetic transform the values in an image by a constant. In the example below, we add the constant value, **10**, to an 8-bit monochrome image. Observe how the value is added pixelwise: each pixel in the resulting destination image stores a number which is 10 more (i.e. 10 gray-levels brighter) than its corresponding pixel in the source image:
 
 ![Pixelwise image arithmetic](images/image_arithmetic_2.png)
 
-*Adding* a constant makes an image uniformly brighter, while *subtracting* a constant makes it uniformly darker. The code below shows one method of performing such arithmetic in openFrameworks. Here, we perform simple image arithmetic "from scratch", by directly manipulating the contents of pixel buffers.   
+Adding a constant makes an image uniformly brighter, while subtracting a constant makes it uniformly darker. In the code below, we implement simple image arithmetic "from scratch", by directly manipulating the contents of pixel buffers. Although practical computer vision projects will often make use of higher-level libraries (such as OpenCV), it's important to understand what's going on underneath. 
 
 ```
 // This is ofApp.h
@@ -621,28 +621,94 @@ void ofApp::draw(){
 }
 ```
 
-#### Heads Up! A Warning about Integer Overflow
+### A Warning about Integer Overflow
 
-Just like regular arithmetic, image arithmetic is simple! But there's a lurking peril: *[integer overflow](http://en.wikipedia.org/wiki/Integer_overflow)*.
+Image arithmetic is simple! But there's a lurking peril when arithmetic operations are applied to the values stored in pixels: *[integer overflow](http://en.wikipedia.org/wiki/Integer_overflow)*.
 
 Consider what happens when we add 10 to the specially-marked pixel in the bottom row of the illustration above. Its initial value is 251—but the largest number we can store in an unsigned char is 255! What should the resulting value be? More generally, what happens if we attempt to assign a pixel value that's too large to be represented by our pixel's data type?
 
-The answer is: it depends which tools you're using, and it can have significant consequences! Some libraries, like OpenCV, will clamp or constrain all arithmetic to the data's desired range; thus, adding 10 to 251 will result in a maxed-out value of 255 (a solution sometimes known as "saturation"). In other situations, such as with our direct editing of unsigned chars in the code above, we risk "rolling over" the data, wrapping around zero like a car's odometer. Without the ability to carry, only the least significant bits are retained. In the land of unsigned chars, adding 10 to 251 gives... 6!
+The answer is: it depends which libraries or programming techniques you're using, and it can have significant consequences! Some image-processing libraries, like OpenCV, will clamp or constrain all arithmetic to the data's desired range; thus, adding 10 to 251 will result in a maxed-out value of 255 (a solution sometimes known as "saturation"). In other situations, such as with our direct editing of unsigned chars in the code above, we risk "rolling over" the data, wrapping around zero like a car's odometer. Without the ability to carry, only the least significant bits are retained. In the land of unsigned chars, adding 10 to 251 gives... 6!
 
-The perils of integer overflow are readily apparent in the illustration below. I have lightend a source image of Abraham Lincoln, by adding 25 to all of its pixel values; without any preventative measures in place, many of the light-colored pixels have wrapped around and become dark. 
+The perils of integer overflow are readily apparent in the illustration below. I have lightend a source image of Abraham Lincoln, by adding a constant to all of its pixel values; without any preventative measures in place, many of the light-colored pixels have "wrapped around" and become dark. 
 
 ![Numeric overflow](images/numeric_overflow.png)
 
-Integer overflow in the example above can be avoided by promoting the added numbers to integers, and including a saturating constraint:
+In the example above, integer overflow can be avoided by promoting the added numbers to integers, and including a saturating constraint:
 ```
-dstArray[index] = min(255, (int)srcValue + 25);
+dstArray[index] = min(255, (int)srcValue + 10);
+```
+Integer overflow can also present problems with other arithmetic operations, such as multiplication and subtraction (when values go negative). 
+
+### Image Arithmetic with the ofxOpenCv Addon
+
+Here's the same example as above, re-written using the ofxOpenCV addon library, which comes with the openFrameworks core download. Note the following: 
+
+* As with all addons, it's important to include the ofxOpenCV addon properly in your project. The ProjectGenerator can help with this. 
+* ofxOpenCv provides convenient methods for copying data between images.
+* ofxOpenCv provides convenient operators for performing image arithmetic.
+* ofxOpenCv's arithmetic operations saturate, so integer overflow is not a concern.
+* ofxOpenCv does not currently provide methods for loading images, so we employ an `ofImage` as an intermediary for doing so.  
+
+```
+// This is ofApp.h
+#pragma once
+
+#include "ofMain.h"
+#include "ofxOpenCv.h"
+
+class ofApp : public ofBaseApp{
+	public:
+		void setup();
+		void draw();
+		ofxCvGrayscaleImage lincolnCvImageSrc;
+		ofxCvGrayscaleImage lincolnCvImageDst;
+};
 ```
 
-Integer overflow is also an issue with other arithmetic operations, such as multiplication and subtraction (when values go negative). Be careful!
+```
+// This is ofApp.cpp
+#include "ofApp.h"
 
+void ofApp::setup(){
+	
+	// ofxOpenCV doesn't have image loading.
+	// So first, load the .png file into a temporary ofImage.
+	ofImage lincolnOfImage;
+	lincolnOfImage.loadImage("lincoln_120x160.png");
+	lincolnOfImage.setImageType(OF_IMAGE_GRAYSCALE);
+	
+	// Set the lincolnCvImage from the pixels of this ofImage.
+	int imgW = lincolnOfImage.getWidth();
+	int imgH = lincolnOfImage.getHeight();
+	unsigned char *lincolnPixels = lincolnOfImage.getPixels();
+	lincolnCvImageSrc.setFromPixels( lincolnPixels, imgW, imgH);
+	
+	// Make a copy of the source image into the destination.
+	lincolnCvImageDst = lincolnCvImageSrc;
+	
+	// ofxOpenCV has handy operators for in-place image arithmetic.
+	lincolnCvImageDst += 60;
+}
 
+//---------------------
+void ofApp::draw(){
+	ofBackground(255);
+	ofSetColor(255);
+	
+	lincolnCvImageSrc.draw (20,20,  120,160);
+	lincolnCvImageDst.draw (160,20, 120,160);
+}
+```
+Here's the result. Note how the values have saturated instead of overflowed. 
+![Numeric overflow](images/image_lightening.png)
 
+### Arithmetic with *Two* Images
 
+Image arithmetic becomes truly useful when applied to two images. It is possible to add two images, multiply two images, subtract one image from another, and divide one image by another. When performing an operation (such as addition) on two images, *A* and *B*, the first pixel of *A* is added to the first pixel of *B*, the second pixel of *A* is added to the second pixel of *B*, and so forth. 
+
+One of the most useful operations is the *absolute difference* of two images, illustrated below. This operation is equivalent to taking the absolute value of *A-B*. Absolute differencing is a key step in workflows like frame-differencing and background subtraction, as discussed in the next section.  
+
+![Absolute Difference](images/absolute-difference.png)
 
 In the examples presented here, for the sake of simplicity, we'll assume that the images upon which we'll perform these operations are all the same size -- for example, 640x480 pixels, a typical capture size for many SD ("standard definition") webcams. We'll also assume that these images are monochrome or grayscale.
 
@@ -653,6 +719,8 @@ In the examples presented here, for the sake of simplicity, we'll assume that th
 - Example: creating an average of several images (e.g. Jason Salavon)
 - Example: creating a running average
 - Example: creating a circular alpha-mask from a computed Blinn spot
+
+![Absolute Difference](images/full_pipeline.png)
 
 
 ### Filtering and Noise Removal Convolution Filtering
