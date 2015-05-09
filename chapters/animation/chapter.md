@@ -240,7 +240,7 @@ Raising percent to a power is one of a whole host of functions that are called "
 
 A small twist on the linear interpolation is a technique that I call "Zeno" based on [Zeno of Elea's](https://en.wikipedia.org/wiki/Zeno_of_Elea "Wikipedia on Zeno of Elea") *dichotomy paradox*:
 
-> Imagine there is a runner in a race and the runner covers 1/2 of the distance in a certain amount of time, and then they run 1/2 of the remaining distance in the same amount of time, and run 1/2 of that remaining distance, etc. Do they finish the race?  There is always some portion of the distance left remaining to run one half of.  The idea is that you can always keep splitting the distance.
+> Imagine there is a runner in a race and the runner covers 1/2 of the distance in a certain amount of time, and then they run 1/2 of the remaining distance in the same amount of time, and run 1/2 of that remaining distance, etc. Do they finish the race?  There is always some portion of the distance left remaining to run one half of. The idea is that you can always keep splitting the distance.
 
 If we take the linear interpolation code but always alter our own position instead (e.g., take 50% of our current position + 50% of our target position), we can animate our way from one value to another. I usually explain the algorithm in class by asking someone to do this: 
 
