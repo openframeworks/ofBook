@@ -272,7 +272,7 @@ currentValue = currentValue * 0.9 + targetValue * 0.1.
 
 This is a form of smoothing: you take some percentage of your current value and another percentage of the target and add them together. Those percentages have to add up to 100%, so if you take 95% of the current position, you need to take 5% of the target (e.g., currentValue * 0.95 + target * 0.05).
 
-In Zeno's paradox, you never actually get to the target, since there's always some remaining distance to go. On the computer, since we are dealing with pixel positions on the screen and floating point numbers at a specific range, the object appears to stop.  
+In Zeno's paradox, you never actually get to the target, since there's always some remaining distance to go. On the computer, since we are dealing with pixel positions on the screen and floating point numbers at a specific range, the object appears to stop.
 
 In the 5th example **(5_rectangleZeno)**, we add a function to the rectangle that uses zeno to catch up to a point: 
 
