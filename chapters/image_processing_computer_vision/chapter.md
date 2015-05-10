@@ -547,17 +547,21 @@ for (int indexGray=0; indexGray<nBytesGrayscale; indexGray++){
 
 ## Operations on Images
 
-In this section, we consider image processing operations that are precursors to a wide range of further decision-making. We will look at image arithmetic, thresholding, morphological filters, and convolution filtering. 
+In this section, we consider image processing operations that are precursors to a wide range of further decision-making. In particular, we will look at 
+- *point processing* operations (image arithmetic, thresholding), and 
+- *neighborhood processing* operations (morphological filters, convolution filtering).
 
 We begin with *image arithmetic*, a core part of the workflow of computer vision. These are the basic mathematical operations we all know—addition, subtraction, multiplication, and division—but applied to images. Developers use such operations constantly, and for a wide range of reasons. 
 
 ### Image Arithmetic with Constants
 
-Some of the simplest operations in image arithmetic transform the values in an image by a constant. In the example below, we add the constant value, **10**, to an 8-bit monochrome image. Observe how the value is added *pixelwise*: each pixel in the resulting destination image stores a number which is 10 more (i.e. 10 gray-levels brighter) than its corresponding pixel in the source image:
+Some of the simplest operations in image arithmetic transform the values in an image by a constant. In the example below, we add the constant value, **10**, to an 8-bit monochrome image. Observe how the value is added *pixelwise*: each pixel in the resulting destination image stores a number which is 10 more (i.e. 10 gray-levels brighter) than its corresponding pixel in the source image. Because each pixel is processed in isolation, without regard to its neighbors, this kind of image math is sometimes called *point processing*.
 
-![Pixelwise image arithmetic](images/image_arithmetic_2.png)
+![Pixelwise image arithmetic](images/image_arithmetic_1b.png)
 
-Adding a constant makes an image uniformly brighter, while subtracting a constant makes it uniformly darker. In the code below, we implement simple image arithmetic "from scratch", by directly manipulating the contents of pixel buffers. Although practical computer vision projects will often accomplish this with higher-level libraries (such as OpenCV), we do this here to show what's going on underneath. 
+Adding a constant makes an image uniformly brighter, while subtracting a constant makes it uniformly darker.  
+
+In the code below, we implement point processing "from scratch", by directly manipulating the contents of pixel buffers. Although practical computer vision projects will often accomplish this with higher-level libraries (such as OpenCV), we do this here to show what's going on underneath. 
 
 ```cpp
 // Example 4: Add a constant value to an image.
@@ -739,7 +743,7 @@ Here's an example, a photomicrograph (left) of light-colored cells. We'd like to
 
 ![Absolute Difference](images/thresholded_cells.png)
 
-And below is the complete openFrameworks code—although here, instead of using a constant (127), we instead use the `mouseX` as the threshold value. This has the effect of placing the thresholding operation under interactive user control. 
+And below is the complete openFrameworks program for thresholding the image—although here, instead of using a constant (127), we instead use the `mouseX` as the threshold value. This has the effect of placing the thresholding operation under interactive user control. 
 
 ```cpp
 // Example 5: Thresholding 
@@ -952,3 +956,14 @@ Sometimes people lack the terminology to know what to google for.
 
 -- Camera calibration.
 -- Homography transforms and re-projection.
+
+- Cardoso, Jorge. [Computer vision techniques for interactive art](http://www.slideshare.net/jorgecardoso/computer-vision-techniques-for-interactive-art)
+- [Introduction to Video and Image Processing](http://what-when-how.com/category/introduction-to-video-and-image-processing/)
+- Fisher, Robert, et. al. [HIPR2, The Hypertext Image Processing Reference](http://homepages.inf.ed.ac.uk/rbf/HIPR2/index.htm)
+
+- Levin, Golan. [Computer Vision for Artists and Designers](http://www.flong.com/texts/essays/essay_cvad/)
+
+
+
+
+
