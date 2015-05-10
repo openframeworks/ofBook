@@ -952,20 +952,14 @@ I sometimes assign my students the project of copying a well-known work of inter
 ## A Computer-Vision lexicon, and where to find out more information
 
 Cutting the Crap with OSC: Apps that send you interesting analysis
-	•	FaceOSC Templates: https://github.com/kylemcdonald/FaceOSC-Templates
-	•	FaceOSC https://github.com/kylemcdonald/ofxFaceTracker/downloads/
-	•	FaceOSC for Mac OSX that can play local movie files here: https://github.com/CreativeInquiry/FaceOSC-Templates/downloads 
-	•	FaceOSC message specification: https://github.com/kylemcdonald/ofxFaceTracker/wiki/Osc-message-specification 
 
-Other apps that can send interesting information over OSC:
-	•	Synapse: Kinect skeleton to P5: https://github.com/CreativeInquiry/Synapse-Templates
-	•	OpenTSPS for standard CV tasks http://opentsps.com/ 
-	•	Reactivision TUIO: http://reactivision.sourceforge.net/ 
-	•	Community Core Vision http://ccv.nuigroup.com/
-	•	EyeOSC https://github.com/downloads/kylemcdonald/AppropriatingNewTechnologies/EyeOSC.zip 
-	•	Theo made that arm tracker https://github.com/ofTheo/kinectArmTracker
-	
-
+- [FaceOSC](https://github.com/kylemcdonald/ofxFaceTracker/downloads/)
+- [Synapse for Kinect](http://synapsekinect.tumblr.com/post/6610177302/synapse)
+- [OpenTSPS](http://opentsps.com/)
+- [Reactivision TUIO](http://reactivision.sourceforge.net/)
+- [Community Core Vision](http://ccv.nuigroup.com/)
+- [EyeOSC](https://github.com/downloads/kylemcdonald/AppropriatingNewTechnologies/EyeOSC.zip)
+- [DesignIO kinectArmTracker](https://github.com/ofTheo/kinectArmTracker)
 
 
 Computer vision is a huge field and we can't possibly cover all useful examples here.
