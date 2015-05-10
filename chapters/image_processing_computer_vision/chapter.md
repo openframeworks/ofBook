@@ -421,7 +421,7 @@ Our Lincoln portrait image shows an 8-bit, 1-channel, "[grayscale](http://en.wik
 
 For example, it is common for color images to be represented by 8-bit, *3-channel* images. In this case, each pixel brings together 3 bytes' worth of information: one byte each for red, green and blue intensities. In computer memory, it is common for these values to be interleaved R-G-B. As you can see, color images necessarily contain three times as much data.
 
-![Not mine](images/interleaved.jpg)
+![Not mine](images/interleaved_1.png)
 
 Take a very close look at your LCD screen, and you'll see how this way of storing the data is directly motivated by the layout of your display's phosphors:
 
@@ -545,7 +545,7 @@ for (int indexGray=0; indexGray<nBytesGrayscale; indexGray++){
 ```
 
 
-## Image Arithmetic and Related Operations
+## Operations on Images
 
 In this section, we consider image processing operations that are precursors to a wide range of further decision-making. We will look at image arithmetic, thresholding, morphological filters, and convolution filtering. 
 
@@ -638,6 +638,7 @@ The perils of integer overflow are readily apparent in the illustration below. I
 
 In the example above, integer overflow can be avoided by promoting the added numbers to integers, and including a saturating constraint, before assigning the new pixel value:
 ```cpp
+// The 'min' prevents values from exceeding 255, avoiding overflow.
 dstArray[index] = min(255, (int)srcValue + 10);
 ```
 Integer overflow can also present problems with other arithmetic operations, such as multiplication and subtraction (when values go negative). 
@@ -714,13 +715,15 @@ Many computer vision applications depend on being able to compare two images. At
 
 ![Absolute Difference](images/absolute-difference.png)
 
+In this illustration, we used absolute differencing to compare two 5x5 pixel images. From this, it's clear that the greatest difference occurs in their lower-right pixels. 
+
 Absolute differencing is accomplished in just a line of code, using the ofxOpenCv addon:
 
 ```cpp
 // Given: 
-// ofxCvGrayscaleImage myCvImageA;    // the minuend
-// ofxCvGrayscaleImage myCvImageB;    // the subtrahend
-// ofxCvGrayscaleImage myCvImageDiff; // the difference
+// ofxCvGrayscaleImage myCvImageA;    // the minuend image
+// ofxCvGrayscaleImage myCvImageB;    // the subtrahend image
+// ofxCvGrayscaleImage myCvImageDiff; // their absolute difference
 
 // The absolute difference of A and B is placed into myCvImageDiff:
 myCvImageDiff.absDiff (myCvImageA, myCvImageB);
@@ -730,13 +733,13 @@ myCvImageDiff.absDiff (myCvImageA, myCvImageB);
 
 In computer vision programs, we frequently have the task of determining which pixels represent something of interest, and which do not. Key to building such discriminators is the operation of *thresholding*. 
 
-Thresholding poses a *pixelwise conditional test*—that is, it asks "`if`" the value stored in each pixel *(x,y)* of a source image meets a certain criterion. In return, thresholding produces a destination image, which represents where and how the criterion is (or isn't) met in the original's corresponding pixels. As we stated earlier, pixels which satisfy the criterion are conventionally assigned 255 (white), while those which don't are assigned 0 (black). The white blobs which result from such thresholding are the ideal input for further analysis by contour tracers.
+Thresholding poses a *pixelwise conditional test*—that is, it asks "`if`" the value stored in each pixel *(x,y)* of a source image meets a certain criterion. In return, thresholding produces a destination image, which represents where and how the criterion is (or isn't) met in the original's corresponding pixels. As we stated earlier, pixels which satisfy the criterion are conventionally assigned 255 (white), while those which don't are assigned 0 (black). And as we shall see, the white blobs which result from such thresholding are ideally suited for further analysis by contour tracers.
 
-Here's an example, a photomicrograph (left) of light-colored cells. We'd like to know which pixels represent a cell, and which do not. For our criterion, we identify pixels whose grayscale brightness is greater than some constant (for this illustration: 127, the middle of the 0-255 range): 
+Here's an example, a photomicrograph (left) of light-colored cells. We'd like to know which pixels represent a cell, and which do not. For our criterion, we test for pixels whose grayscale brightness is greater than some constant, the *threshold value*. In this illustration, we test against a threshold value of 127, the middle of the 0-255 range: 
 
 ![Absolute Difference](images/thresholded_cells.png)
 
-And below is the complete openFrameworks code—though here, instead of using a constant (127), we instead use the `mouseX` as the threshold value. This has the effect of placing the thresholding operation under interactive user control. 
+And below is the complete openFrameworks code—although here, instead of using a constant (127), we instead use the `mouseX` as the threshold value. This has the effect of placing the thresholding operation under interactive user control. 
 
 ```cpp
 // Example 5: Thresholding 
@@ -780,8 +783,13 @@ void ofApp::draw(){
 	ofBackground(255);
 	ofSetColor(255);
 	
+	// Copy the source image into the destination:
 	myCvImageDst = myCvImageSrc;
-	myCvImageDst.threshold (mouseX); // mouseX or 127
+	
+	// Threshold the destination image. 
+	// Our threshold value is the mouseX, 
+	// but it could be a constant, like 127.
+	myCvImageDst.threshold (mouseX); 
 	
 	myCvImageSrc.draw ( 20,20,  320,240);
 	myCvImageDst.draw (360,20,  320,240);
