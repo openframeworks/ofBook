@@ -280,7 +280,7 @@ float brightnessOfColorAtXY = colorAtXY.getBrightness();
 
 #### Finding the Brightest Pixel in an Image
 
-Using what we know now, we can write a simple computer-vision program that locates the brightest pixel in an image. This elementary concept was used to great artistic effect by the artist collective, Graffiti Research Lab (GRL), in the openFrameworks application they built for their 2007 project [*L.A.S.E.R Tag*](http://www.graffitiresearchlab.com/blog/projects/laser-tag/). The concept of *L.A.S.E.R Tag* was to allow people to draw projected graffiti on a large building facade, using a laser pointer. The bright spot from the laser pointer was tracked by code similar to that shown below, and used as the basis for creating projected graphics.
+Using what we know now, we can write a simple program that locates the brightest pixel in an image. This elementary concept was used to great artistic effect by the artist collective, Graffiti Research Lab (GRL), in the openFrameworks application they built for their 2007 project [*L.A.S.E.R Tag*](http://www.graffitiresearchlab.com/blog/projects/laser-tag/). The concept of *L.A.S.E.R Tag* was to allow people to draw projected graffiti onto a large building facade, by means of a laser pointer. The bright spot from the laser pointer was tracked by code similar to that shown below, and used as the basis for creating interactive, projected graphics.
 
 ![Laser Tag by GRL](images/laser_tag.jpg)
 
@@ -298,8 +298,8 @@ class ofApp : public ofBaseApp{
 		void setup();
 		void draw();
 		
+		// Replace this ofImage with live video, eventually
 		ofImage laserTagImage;
-		// replace this ofImage with live video, eventually
 };
 ```
 
@@ -351,11 +351,11 @@ void ofApp::draw(){
 	ofDrawEllipse (maxBrightnessX, maxBrightnessY, 40,40);
 }
 ```
-Our application locates the bright spot of the laser (which, luckily for us, is the brightest part of the scene) and draws a circle around it. Of course, now that we know where the brightest (or darkest) spot is, we can can develop many other interesting applications, such as sun trackers, turtle trackers...
+Our little application locates the bright spot of the laser (which, luckily for us, is the brightest part of the scene) and draws a circle around it. To reproduce *L.A.S.E.R Tag*, we would store the location of these points and render a light-colored trail, suitable for projection. Of course, now that we know where the brightest (or darkest) spot is, we can can develop many other interesting applications, such as sun trackers, turtle trackers...
 
 ![Laser Tag by GRL](images/laser_tag_result.jpg)
 
-Being able to locate the brightest pixel in an image has other uses, too. For example, in a depth image (such as produced by a Kinect sensor), the brightest pixel corresponds to the *foremost point*—or the nearest object to the camera. Depending on your installation geometry, this can be extremely useful if you're making an interactive installation that tracks a user's hand.
+Being able to locate the brightest pixel in an image has other uses, too. For example, in a depth image (such as produced by a Kinect sensor), the brightest pixel corresponds to the *foremost point*—or the nearest object to the camera. This can be extremely useful if you're making an interactive installation that tracks a user's hand.
 
 ![Not mine](images/kinect-forepoint.jpg)
 
@@ -427,7 +427,7 @@ Take a very close look at your LCD screen, and you'll see how this way of storin
 
 ![Not mine](images/rgb-screen.jpg)
 
-Because the color data are interleaved, accessing pixel values in buffers containing RGB data is slightly more complex. Here's how you can retrieve the values representing the individual red, green and blue components of pixel at a given (x,y) location:
+Because the color data are interleaved, accessing pixel values in buffers containing RGB data is slightly more complex. Here's how you can retrieve the values representing the individual red, green and blue components of an RGB pixel at a given *(x,y)* location:
 
 ```cpp
 // Given:
@@ -446,7 +446,7 @@ unsigned char redValueAtXY   = buffer[rArrayIndex];
 unsigned char greenValueAtXY = buffer[gArrayIndex];
 unsigned char blueValueAtXY  = buffer[bArrayIndex];
 ```
-This is, then, the three-channel "RGB version" of the basic `index = y*width + x` pattern we used earlier to fetch pixel values from monochrome images.
+This is, then, the three-channel "RGB version" of the basic `index = y*width + x` pattern we employed earlier to fetch pixel values from monochrome images.
 
 Note that you may occasionally encounter external libraries or imaging hardware which deliver RGB bytes in a different order, such as BGR. 
 
@@ -457,7 +457,7 @@ Note that you may occasionally encounter external libraries or imaging hardware 
 - 16-bit (unsigned short) images, in which each channel uses *two* bytes to store each of the color values of each pixel, with a number that ranges from 0-65535;
 - 32-bit (float) images, in which each color channel's data is represented by floating point numbers.  
 
-For a practical example, consider once again Microsoft's popular Kinect sensor, whose 2011-era version produces a depth image whose values range from 0 to 1090. Clearly, that's wider than the range of 8-bit values (from 0 to 255) that one typically encounters in image data; in fact, it's approximately 11 bits of resolution. To accommodate this, the `ofxKinect` addon employs a 16-bit image to store this information without losing precision. Likewise, the precision of 32-bit floats is almost mandatory for computing high-quality video composites.
+For a practical example, consider once again Microsoft's popular Kinect sensor, whose XBox 360 version produces a depth image whose values range from 0 to 1090. Clearly, that's wider than the range of 8-bit values (from 0 to 255) that one typically encounters in image data; in fact, it's approximately 11 bits of resolution. To accommodate this, the `ofxKinect` addon employs a 16-bit image to store this information without losing precision. Likewise, the precision of 32-bit floats is almost mandatory for computing high-quality video composites.
 
 You'll also find:
 - 2-channel images (commonly used for luminance plus transparency);
@@ -486,7 +486,7 @@ It's helpful to know that there's generally a performance penalty for moving ima
 
 #### RGB to Grayscale Conversion, and its Role in Computer Vision
 
-Many computer vision algorithms (though not all!) are commonly performed on one-channel (i.e. grayscale or monochrome) images. Whether or not your project uses color imagery at some point, you'll almost certainly still use grayscale pixel data to represent and store many of the intermediate results in your image processing chain. The simple fact is that working with one-channel image buffers (whenever possible) can significantly improve the speed of image processing routines, because it reduces both the number of calculations as well as the amount of memory required to process the data. 
+Many computer vision algorithms (though not all) are commonly performed on one-channel (i.e. grayscale or monochrome) images. Whether or not your project uses color imagery at some point, you'll almost certainly still use grayscale pixel data to represent and store many of the intermediate results in your image processing chain. The simple fact is that working with one-channel image buffers (whenever possible) can significantly improve the speed of image processing routines, because it reduces both the number of calculations as well as the amount of memory required to process the data. 
 
 For example, if you're calculating a "blob" to represent the location of a user's body, it's common to store that blob in a one-channel image; typically, pixels containing 255 (white) designate the foreground blob, while pixels containing 0 (black) are the background. Likewise, if you're using a special image to represent the amount of motion in different parts of the video frame, it's enough to store this information in a grayscale image (where 0 represents stillness and 255 represents lots of motion). We'll discuss these operations more in later sections; for now, it's sufficient to state this rule of thumb: if you're using a buffer of pixels to store and represent a one-dimensional quantity, do so in a one-channel image buffer. Thus, except where stated otherwise, *all of the examples in this chapter expect that you're working with monochrome images*. 
 
@@ -512,7 +512,7 @@ Although OF provides the above utilities to convert color images to grayscale, i
 Here's a code fragment for converting from color to grayscale, written "from scratch" in C/C++, using the averaging method described above. This code also shows, more generally, how the pixelwise computation of a 1-channel image can be based on a 3-channel image. 
 
 ```cpp
-// Load a color image, fetch its dimensions, 
+// Conde fragment to load a color image, fetch its dimensions, 
 // and get a pointer to its pixel data. 
 ofImage myImage; 
 myImage.loadImage ("colorful.jpg");
@@ -549,7 +549,7 @@ for (int indexGray=0; indexGray<nBytesGrayscale; indexGray++){
 
 In this section, we consider image processing operations that are precursors to a wide range of further decision-making. We will look at image arithmetic, thresholding, convolution filtering, and morphological filters. 
 
-We begin with *image arithmetic*, a core part of the workflow of computer vision. These are the basic mathematical operations we all know—addition, subtraction, multiplication, and division—but as these are applied to images. Developers use such operations constantly, and for a wide range of reasons. 
+We begin with *image arithmetic*, a core part of the workflow of computer vision. These are the basic mathematical operations we all know—addition, subtraction, multiplication, and division—but applied to images. Developers use such operations constantly, and for a wide range of reasons. 
 
 ### Image Arithmetic with Constants
 
@@ -560,7 +560,8 @@ Some of the simplest operations in image arithmetic transform the values in an i
 Adding a constant makes an image uniformly brighter, while subtracting a constant makes it uniformly darker. In the code below, we implement simple image arithmetic "from scratch", by directly manipulating the contents of pixel buffers. Although practical computer vision projects will often accomplish this with higher-level libraries (such as OpenCV), we do this here to show what's going on underneath. 
 
 ```cpp
-// Example 4: Add a constant value to an image, from "scratch".
+// Example 4: Add a constant value to an image.
+// This is done from "scratch", without OpenCV.
 // This is ofApp.h
 #pragma once
 #include "ofMain.h"
@@ -631,11 +632,11 @@ Consider what happens when we add 10 to the specially-marked pixel in the bottom
 
 The answer is: it depends which libraries or programming techniques you're using, and it can have significant consequences! Some image-processing libraries, like OpenCV, will clamp or constrain all arithmetic to the data's desired range; thus, adding 10 to 251 will result in a maxed-out value of 255 (a solution sometimes known as "saturation"). In other situations, such as with our direct editing of unsigned chars in the code above, we risk "rolling over" the data, wrapping around zero like a car's odometer. Without the ability to carry, only the least significant bits are retained. In the land of unsigned chars, adding 10 to 251 gives... 6!
 
-The perils of integer overflow are readily apparent in the illustration below. I have lightend a source image of Abraham Lincoln, by adding a constant to all of its pixel values; without any preventative measures in place, many of the light-colored pixels have "wrapped around" and become dark. 
+The perils of integer overflow are readily apparent in the illustration below. I have used the code above to lighten a source image of Abraham Lincoln, by adding a constant to all of its pixel values. Without any preventative measures in place, many of the light-colored pixels have "wrapped around" and become dark. 
 
 ![Numeric overflow](images/numeric_overflow.png)
 
-In the example above, integer overflow can be avoided by promoting the added numbers to integers, and including a saturating constraint:
+In the example above, integer overflow can be avoided by promoting the added numbers to integers, and including a saturating constraint, before assigning the new pixel value:
 ```cpp
 dstArray[index] = min(255, (int)srcValue + 10);
 ```
@@ -643,7 +644,7 @@ Integer overflow can also present problems with other arithmetic operations, suc
 
 ### Image Arithmetic with the ofxOpenCv Addon
 
-Here's the same example as above, re-written using the ofxOpenCV addon library, which comes with the openFrameworks core download. Note the following: 
+The OpenCV computer vision library offers fast, easy-to-use and high-level implementations of image arithmetic. Here's the same example as above, re-written using the ofxOpenCV addon library, which comes with the openFrameworks core download. Note the following: 
 
 * As with all addons, it's important to include the ofxOpenCV addon properly in your project. The openFrameworks ProjectGenerator can help with this. 
 * ofxOpenCv provides convenient methods for copying data between images.
@@ -702,7 +703,7 @@ void ofApp::draw(){
 	lincolnCvImageDst.draw (160,20, 120,160);
 }
 ```
-Here's the result. Note how the high values have saturated instead of overflowed. 
+Here's the result. Note how the high values (light areas) have saturated instead of overflowed. 
 ![Numeric overflow](images/image_lightening.png)
 
 ### Arithmetic with Two Images: Absolute Differencing
@@ -729,16 +730,16 @@ myCvImageDiff.absDiff (myCvImageA, myCvImageB);
 
 In computer vision programs, we frequently have the task of determining which pixels represent something of interest, and which do not. Key to building such discriminators is the operation of *thresholding*. 
 
-Thresholding poses a *pixelwise conditional test*—that is, it asks  whether each pixel (x,y) in a source image meets a certain criterion, generally of brightness. In return, thresholding produces a destination image, which represents whether or not the criterion is met in the original's corresponding pixels. In monochrome 8-bit images, pixels which satisfy the criterion are conventionally assigned 255 (white), while those which don't are assigned 0 (black). 
+Thresholding poses a *pixelwise conditional test*—that is, it asks "`if`" the value stored in each pixel *(x,y)* of a source image meets a certain criterion. In return, thresholding produces a destination image, which represents where and how the criterion is (or isn't) met in the original's corresponding pixels. As we stated earlier, pixels which satisfy the criterion are conventionally assigned 255 (white), while those which don't are assigned 0 (black). 
 
-Here's an example, an image (left) of light-colored cells. We'd like to know which pixels represent a cell, and which do not. For our criterion, we identify pixels whose grayscale brightness is greater than some constant (for this illustration: 127, the middle of the 0-255 range):
+Here's an example, a photomicrograph (left) of light-colored cells. We'd like to know which pixels represent a cell, and which do not. For our criterion, we identify pixels whose grayscale brightness is greater than some constant (for this illustration: 127, the middle of the 0-255 range):
 
 ![Absolute Difference](images/thresholded_cells.png)
 
-And here is the complete openFrameworks code. Instead of using a constant (127), we link the threshold to the `mouseX`, placing it under interactive user control. 
+And below is the complete openFrameworks code—though here, instead of using a constant (127), we instead use the `mouseX` as the threshold value. This has the effect of placing the thresholding operation under interactive user control. 
 
 ```cpp
-// Example 5. Thresholding. 
+// Example 5: Thresholding 
 // This is ofApp.h
 #pragma once
 
@@ -755,9 +756,11 @@ class ofApp : public ofBaseApp{
 ```
 
 ```cpp
+// Example 5. 
 // This is ofApp.cpp
 #include "ofApp.h"
 
+//---------------------
 void ofApp::setup(){
 	
 	// Load the cells image
