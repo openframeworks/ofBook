@@ -5,6 +5,18 @@ By [Golan Levin](http://www.flong.com/)
 
 Edited by [Brannon Dorsey](http://brannondorsey.com)
 
+## Hold on! Maybe there's a shortcut!
+
+Computer vision and related processing techniques allow can allow you to make assertions about what's going on in images and video. But it's possible that you don't need to implement such techniques yourself. Many of the most common and desirable computer vision workflows have been encapsulated into apps that can detect the stuff you want, and transmit the results over OSC. Sketching a prototype with one of the tools below could save 
+
+- [Toolkit for Sensing People in Spaces (TSPS)](http://opentsps.com/): A powerful toolkit for tracking bodies in video.
+- [Community Core Vision](http://ccv.nuigroup.com/): Another full-featured toolkit for a wide range of tracking tasks
+- [FaceOSC](https://github.com/kylemcdonald/ofxFaceTracker/downloads/): An app which tracks faces (and face parts, like eyes and noses) in video.
+- [Synapse for Kinect](http://synapsekinect.tumblr.com/post/6610177302/synapse): 
+- [Reactivision TUIO](http://reactivision.sourceforge.net/):
+- [EyeOSC](https://github.com/downloads/kylemcdonald/AppropriatingNewTechnologies/EyeOSC.zip):
+- [DesignIO kinectArmTracker](https://github.com/ofTheo/kinectArmTracker):
+
 ## Preliminaries to Image Processing
 
 ### Digital image acquisition and data structures
@@ -955,7 +967,7 @@ Cutting the Crap with OSC: Apps that send you interesting analysis
 
 - [FaceOSC](https://github.com/kylemcdonald/ofxFaceTracker/downloads/)
 - [Synapse for Kinect](http://synapsekinect.tumblr.com/post/6610177302/synapse)
-- [OpenTSPS](http://opentsps.com/)
+- [Toolkit for Sensing People in Spaces (TSPS)](http://opentsps.com/)
 - [Reactivision TUIO](http://reactivision.sourceforge.net/)
 - [Community Core Vision](http://ccv.nuigroup.com/)
 - [EyeOSC](https://github.com/downloads/kylemcdonald/AppropriatingNewTechnologies/EyeOSC.zip)
