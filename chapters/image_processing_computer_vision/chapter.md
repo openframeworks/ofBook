@@ -545,9 +545,9 @@ for (int indexGray=0; indexGray<nBytesGrayscale; indexGray++){
 ```
 
 
-## Image Arithmetic: Math Operations on Images
+## Image Arithmetic and Related Operations
 
-In this section, we consider image processing operations that are precursors to a wide range of further decision-making. We will look at image arithmetic, thresholding, convolution filtering, and morphological filters. 
+In this section, we consider image processing operations that are precursors to a wide range of further decision-making. We will look at image arithmetic, thresholding, morphological filters, and convolution filtering. 
 
 We begin with *image arithmetic*, a core part of the workflow of computer vision. These are the basic mathematical operations we all know—addition, subtraction, multiplication, and division—but applied to images. Developers use such operations constantly, and for a wide range of reasons. 
 
@@ -730,9 +730,9 @@ myCvImageDiff.absDiff (myCvImageA, myCvImageB);
 
 In computer vision programs, we frequently have the task of determining which pixels represent something of interest, and which do not. Key to building such discriminators is the operation of *thresholding*. 
 
-Thresholding poses a *pixelwise conditional test*—that is, it asks "`if`" the value stored in each pixel *(x,y)* of a source image meets a certain criterion. In return, thresholding produces a destination image, which represents where and how the criterion is (or isn't) met in the original's corresponding pixels. As we stated earlier, pixels which satisfy the criterion are conventionally assigned 255 (white), while those which don't are assigned 0 (black). 
+Thresholding poses a *pixelwise conditional test*—that is, it asks "`if`" the value stored in each pixel *(x,y)* of a source image meets a certain criterion. In return, thresholding produces a destination image, which represents where and how the criterion is (or isn't) met in the original's corresponding pixels. As we stated earlier, pixels which satisfy the criterion are conventionally assigned 255 (white), while those which don't are assigned 0 (black). The white blobs which result from such thresholding are the ideal input for further analysis by contour tracers.
 
-Here's an example, a photomicrograph (left) of light-colored cells. We'd like to know which pixels represent a cell, and which do not. For our criterion, we identify pixels whose grayscale brightness is greater than some constant (for this illustration: 127, the middle of the 0-255 range):
+Here's an example, a photomicrograph (left) of light-colored cells. We'd like to know which pixels represent a cell, and which do not. For our criterion, we identify pixels whose grayscale brightness is greater than some constant (for this illustration: 127, the middle of the 0-255 range): 
 
 ![Absolute Difference](images/thresholded_cells.png)
 
@@ -788,12 +788,18 @@ void ofApp::draw(){
 }
 ```
 
+### Cleaning Up Thresholded Images: Erosion & Dilation
+
+Sometimes thresholding leaves noise. 
+
+![Absolute Difference](images/erosion_in_use.png)
 
 
 
-- mentioning ROI
-- Example: creating an average of several images (e.g. Jason Salavon)
-- Example: creating a running average
+
+The above example uses thresholding to distinguish light objects from a dark background. But thresholding can be applied to any image whose brightness quantifies a variable of interest. 
+
+
 
 Recap: A Person Detection Pipeline
 
@@ -805,6 +811,17 @@ Here's a recap of a simple pipeline for detecting people in video:
 2. A "background" image is acquired, at a time when nobody is in the scene. Sometimes, a running average of the camera feed is used as the background. 
 3. The live video image is compared with the background image. Their absolute difference is computed. 
 4. The absolute difference is thresholded. 
+
+
+
+
+## Other Stuff
+
+- mentioning ROI
+- Example: creating an average of several images (e.g. Jason Salavon)
+- Example: creating a running average
+
+
 
 
 ### Filtering and Noise Removal Convolution Filtering
