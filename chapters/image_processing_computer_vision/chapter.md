@@ -7,15 +7,15 @@ Edited by [Brannon Dorsey](http://brannondorsey.com)
 
 ## Hold on! Maybe there's a shortcut!
 
-Computer vision and related processing techniques allow can allow you to make assertions about what's going on in images and video. But it's possible that you don't need to implement such techniques yourself. Many of the most common and desirable computer vision workflows have been encapsulated into apps that can detect the stuff you want, and transmit the results over OSC. Sketching a prototype with one of the tools below could save 
+Computer vision allows you to make assertions about what's going on in images and video. But you may not need to implement such techniques yourself. Many of the most common and desirable computer vision workflows have been encapsulated into apps that can detect the stuff you want, and transmit the results over OSC. Sketching a prototype with one of the tools below could save you a lot of time. 
 
-- [Toolkit for Sensing People in Spaces (TSPS)](http://opentsps.com/): A powerful toolkit for tracking bodies in video.
+- [Toolkit for Sensing People in Spaces (TSPS)](http://opentsps.com/): A powerful toolkit for tracking bodies in video
 - [Community Core Vision](http://ccv.nuigroup.com/): Another full-featured toolkit for a wide range of tracking tasks
-- [FaceOSC](https://github.com/kylemcdonald/ofxFaceTracker/downloads/): An app which tracks faces (and face parts, like eyes and noses) in video.
-- [Synapse for Kinect](http://synapsekinect.tumblr.com/post/6610177302/synapse): 
-- [Reactivision TUIO](http://reactivision.sourceforge.net/):
+- [FaceOSC](https://github.com/kylemcdonald/ofxFaceTracker/downloads/): An app which tracks faces (and face parts, like eyes and noses) in video
+- [Reactivision TUIO](http://reactivision.sourceforge.net/): A system which uses fiducial markers to track the positions and orientations of objects
 - [EyeOSC](https://github.com/downloads/kylemcdonald/AppropriatingNewTechnologies/EyeOSC.zip):
-- [DesignIO kinectArmTracker](https://github.com/ofTheo/kinectArmTracker):
+- [Synapse for Kinect](http://synapsekinect.tumblr.com/post/6610177302/synapse): 
+- [DesignIO kinectArmTracker](https://github.com/ofTheo/kinectArmTracker): A lightweight app for tracking arm movements with the Kinect.
 
 ## Preliminaries to Image Processing
 
