@@ -126,7 +126,7 @@ auto & x = rectangle.x;
 * You can't use `auto` in function arguments, return types and a few other places.
 * Use `const auto` for a const type, and `auto &` for a reference type
 
-## for (thing : things)
+## `for (thing : things)`
 Consider the following common pattern:
 
 ```cpp
@@ -268,7 +268,7 @@ public:
     std::function<void()> whatToDraw;
 };
 
-class ofApp {
+class ofApp : ofBaseApp {
 /*
 .. all the usual stuff
 */
@@ -342,7 +342,112 @@ std::function<return type(arguments)>
 
 You can use multiple arguments (like you can with normal functions).
 
-### Worker threads
-### Callbacks
+### Scope
 
-### Summary
+Finally, we often need to introduce a 'scope' to the lambda function. The scope means what variables from outside the function can be seen inside the function. We define the scope in-between the `[]`s in the lambda function definition, for example:
+
+```c++
+float multiplier = 4.0f;
+auto multiplyByOurMultiplier = [multiplier](float x) { // (1)
+	return x * multiplier;
+}
+cout << multiplyByOurMultiplier(2.0f); // prints 8
+```
+
+By putting the variable name `multiplier` within the `[]`s of the lambda function definition at `(1)`, we now can use the variable `multiplier` within the function definition. A really handy thing to put there is `[this]` which puts `this` within the scope of the function, i.e. makes all the members of the current class available from within the function.
+
+You can:
+* Add multiple variables to the scope, e.g. `[this, multiplier]`
+* Add variables as references (rather than copies) to the scope, e.g.: `[&multiplier]`
+* Automatically add any variables to the scope which you use inside the function using `[=]` (make a copy of the variable at the function definition) or `[&]` (use a reference to the variable).
+
+
+### Summary so far
+* Lambda functions let you define functions in your code which are stored in variables
+* Lambda functions can be passed around between functions, classes, stored variables and `vector`s, etc. Basically, anything you can do with a variable you can do with a lambda function.
+* You can return variables from lambda functions and specify arguments for the function
+* You can define what is available inside the scope of the function using `[=]`, `[&]`, `[this]`, `[myVariableName]`, `[&myVariableName]`, etc.
+
+### Worker thread example
+
+Now let's go for a more down-deep example of how you might use lambda functions to save <s>the world</s> you from getting bogged down. In this example we have a class which talks to a camera device. The particular thing about this camera device is that the camera must run in its own thread, and all operations on the camera must run in that thread.
+
+Imagine our ofApp looks like:
+
+```c++
+class ofApp : public ofBaseApp {
+	/*
+	the usual stuff
+	*/
+	
+	CameraClass camera;
+	ofParameter<float> exposure;
+}
+
+class CameraClass : public ofThread {
+protected:
+	void threadedFunction() override {
+		while (this->isCameraRunning()) {
+			this->device.getFrame();
+			this->pixelsLock.lock();
+			this->pixels.setFromExternalPixels(this->device->getData(), 640, 480, 3);
+			this->pixelsLock.unlock();
+			// (1)
+		}
+	}
+	
+	CameraDriver device;
+	ofPixels pixels;
+	ofMutex pixelsLock;
+}
+```
+
+Now if we want a way to set the exposure on the camera from our `ofApp` we need to signal this to the `CameraClass`, and have it set the exposure in the right thread (e.g. at (1) which happens between grabbing frames from the camera). 
+
+One way of doing this would be to store some data saying that we needed to change the exposure, and what that new exposure value is. Then at (1) we would need to check for that data and have the code to act on it appropriately. The problem with that is that it's really laborious and introduces lots of special cases (e.g. what if something had to read the gain and then change the exposure accordingly?).
+
+A nice workaround is to use lambda functions for this purpose, e.g. :
+
+```
+class CameraClass : public ofThread {
+protected:
+	void threadedFunction() override {
+		while (this->isCameraRunning()) {
+			this->device.getFrame();
+			this->pixelsLock.lock();
+			this->pixels.setFromExternalPixels(this->device->getData(), 640, 480, 3);
+			this->pixelsLock.unlock();
+			
+			this->actionsLock.lock();
+			for(auto & action : this->actions) {
+				action(this->device);
+			}
+			this->actions.clear();
+			this->actionsLock.unlock();
+		}
+	}
+	
+	void performInThread(std::function<void(CameraDriver&)> action) {
+		this->actionsLock.lock();
+		this->actions.push_back(action);
+		this->actionsLock.unlock();
+	}
+	
+	CameraDriver device;
+	ofPixels pixels;
+	ofMutex pixelsLock;
+	
+	vector<std::function<void(CameraDriver&)> > actions;
+	ofMutex actionsLock;
+}
+```
+
+```c++
+//somewhere in ofApp
+
+this->camera->performInThread([this](CameraDriver & device) {
+	device.setExposure(this->exposure);
+});
+```
+
+This will then push the instruction into CameraClass, so that at the right time this function is called within the thread managing the camera, taking the `this->exposure` variable from the `ofApp` and acting on the `CameraDriver` defined in `CameraClass`.
