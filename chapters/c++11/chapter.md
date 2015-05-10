@@ -450,4 +450,4 @@ this->camera->performInThread([this](CameraDriver & device) {
 });
 ```
 
-This will then push the instruction into CameraClass, so that at the right time this function is called within the thread managing the camera, taking the `this->exposure` variable from the `ofApp` and acting on the `CameraDriver` defined in `CameraClass`.
+This will then push the instruction into CameraClass, so that at the right time this function is called within the thread managing the camera, taking the `this->exposure` variable from the `ofApp` and acting on the `CameraDriver` defined in `CameraClass`. All this happens without having to pass lots of variables around, in a really flexible way. To see how this is implemented in ofxMachineVision, check out the `ofxMachineVision::Utils::ActionQueueThread` at https://github.com/elliotwoods/ofxMachineVision/blob/master/src/ofxMachineVision/Utils/ActionQueueThread.cpp .
