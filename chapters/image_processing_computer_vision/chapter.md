@@ -957,11 +957,14 @@ Sometimes people lack the terminology to know what to google for.
 -- Camera calibration.
 -- Homography transforms and re-projection.
 
+- Bradski, Gary. [Learning OpenCV](http://cs.haifa.ac.il/~dkeren/ip/OReilly-LearningOpenCV.pdf) (PDF)
 - Cardoso, Jorge. [Computer vision techniques for interactive art](http://www.slideshare.net/jorgecardoso/computer-vision-techniques-for-interactive-art)
-- [Introduction to Video and Image Processing](http://what-when-how.com/category/introduction-to-video-and-image-processing/)
 - Fisher, Robert, et. al. [HIPR2, The Hypertext Image Processing Reference](http://homepages.inf.ed.ac.uk/rbf/HIPR2/index.htm)
-
+- [Introduction to Video and Image Processing](http://what-when-how.com/category/introduction-to-video-and-image-processing/)
 - Levin, Golan. [Computer Vision for Artists and Designers](http://www.flong.com/texts/essays/essay_cvad/)
+- Szeliski & Zisserman. [20 techniques that every computer vision researcher should know](http://www.frontiersincomputervision.com/slides/FCV_Core_Szeliski_Zisserman.pdf) (PDF)
+- Szeliski, Richard. [Computer Vision: Algorithms and Applications](http://szeliski.org/Book/)
+- [The OpenCV Reference Manual](http://docs.opencv.org/opencv2refman.pdf) (PDF)
 
 
 
