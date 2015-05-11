@@ -299,7 +299,7 @@ Sin and cos (sine and cosine) are trigonometric functions, which means they are 
 
 *As a side note, sometimes it can be confusing that some functions in oF take degrees where others take radians. Sin and cos are part of the math library, so they take radians, whereas most openGL rotation takes degrees. We have some helper constants such as `DEG_TO_RAD` and `RAD_TO_DEG`, which can help you convert one to the other.*
 
-Here's a simple drawing that helps explain sin and cos. 
+Here's a simple drawing that helps explain sin and cos.
 
 ![sin](images/atob_circle.png)
 
