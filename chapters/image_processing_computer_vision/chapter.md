@@ -7,7 +7,7 @@ Edited by [Brannon Dorsey](http://brannondorsey.com)
 
 ## Hold On! Perhaps There is a Magic Bullet
 
-Computer vision allows you to make assertions about what's going on in images and video. It's fun (and hugely educational) to create your own vision software, but it's not always *necessary* to implement such techniques yourself. Many of the most common and desirable computer vision workflows have been encapsulated into apps that can detect the stuff you want—and transmit the results over OSC to your openFrameworks app! Before you dig in to this chapter, consider whether you can instead sketch a prototype with one of these time-saving vision tools.
+Computer vision allows you to make assertions about what's going on in images, video, and camera feeds. It's fun (and hugely educational) to create your own vision software, but it's not always *necessary* to implement such techniques yourself. Many of the most common computer vision workflows have been encapsulated into apps that can detect the stuff you want—and transmit the results over OSC to your openFrameworks app! Before you dig in to this chapter, consider whether you can instead sketch a prototype with one of these time-saving vision tools.
 
 ![TSPS (left) and Community Core Vision (right)](images/tsps_ccv.png)
 *TSPS (left) and Community Core Vision (right) are richly-featured toolkits for performing computer vision tasks that are common in interactive installations. They transmit summaries of their analyses over OSC, a signalling protocol that is widely used in the media arts.*
@@ -982,24 +982,9 @@ I sometimes assign my students the project of copying a well-known work of inter
 
 
 ========================================================  
-## A Computer-Vision lexicon, and where to find out more information
+## Bibliography
 
-Cutting the Crap with OSC: Apps that send you interesting analysis
-
-- [FaceOSC](https://github.com/kylemcdonald/ofxFaceTracker/downloads/)
-- [Synapse for Kinect](http://synapsekinect.tumblr.com/post/6610177302/synapse)
-- [Toolkit for Sensing People in Spaces (TSPS)](http://opentsps.com/)
-- [Reactivision TUIO](http://reactivision.sourceforge.net/)
-- [Community Core Vision](http://ccv.nuigroup.com/)
-- [EyeOSC](https://github.com/downloads/kylemcdonald/AppropriatingNewTechnologies/EyeOSC.zip)
-- [DesignIO kinectArmTracker](https://github.com/ofTheo/kinectArmTracker)
-
-
-Computer vision is a huge field and we can't possibly cover all useful examples here.
-Sometimes people lack the terminology to know what to google for.
-
--- Camera calibration.
--- Homography transforms and re-projection.
+Computer vision is a huge field. For more information, we highly recommend the following books and online resources.
 
 - Bradski, Gary. [Learning OpenCV](http://cs.haifa.ac.il/~dkeren/ip/OReilly-LearningOpenCV.pdf) (PDF)
 - Cardoso, Jorge. [Computer vision techniques for interactive art](http://www.slideshare.net/jorgecardoso/computer-vision-techniques-for-interactive-art)
