@@ -7,7 +7,7 @@ Edited by [Brannon Dorsey](http://brannondorsey.com)
 
 ## Wait! Perhaps There is a Magic Bullet
 
-Computer vision allows you to make assertions about what's going on in images and video. It's fun to create image processing software, but it's not always *necessary* to implement such techniques yourself. Many of the most common and desirable computer vision workflows have been encapsulated into apps that can detect the stuff you want, and transmit the results over OSC. Before you dig in to this chapter, consider whether you can instead sketch a prototype with one of the time-saving tools listed here: 
+Computer vision allows you to make assertions about what's going on in images and video. It's fun to create image processing software, but it's not always *necessary* to implement such techniques yourself. Many of the most common and desirable computer vision workflows have been encapsulated into apps that can detect the stuff you want—and transmit the results over OSC to your openFrameworks app! Before you dig in to this chapter, consider whether you can instead sketch a prototype with one of these time-saving vision tools: 
 
 - [Toolkit for Sensing People in Spaces (TSPS)](http://opentsps.com/): A powerful toolkit for tracking bodies in video
 - [Community Core Vision](http://ccv.nuigroup.com/): Another full-featured toolkit for a wide range of tracking tasks
