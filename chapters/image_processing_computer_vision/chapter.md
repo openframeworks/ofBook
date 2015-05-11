@@ -27,11 +27,11 @@ This chapter introduces techniques for manipulating (and extracting certain kind
 
 #### Loading and Displaying an Image
 
-Image processing begins with, well, *an image*. Happily, loading and displaying an image is very straightforward in OF. Let's start with this tiny, low-resolution (12x16 pixel) grayscale portrait of Abraham Lincoln:
+Image processing begins with, well, *an image*. Happily, loading and displaying an image is very straightforward in oF. Let's start with this tiny, low-resolution (12x16 pixel) grayscale portrait of Abraham Lincoln:
 
 ![Small Lincoln image](images/lincoln.png)
 
-Below is a simple application for loading and displaying an image, very similar to the *imageLoaderExample* in the OF examples collection. The header file for our program, *ofApp.h*, declares an instance of an `ofImage` object, *myImage*:
+Below is a simple application for loading and displaying an image, very similar to the *imageLoaderExample* in the oF examples collection. The header file for our program, *ofApp.h*, declares an instance of an `ofImage` object, *myImage*:
 
 ```cpp
 // Example 1: Load and display an image.
@@ -74,7 +74,7 @@ Compiling and running the above program displays the following canvas, in which 
 
 ![Pixel data diagram](images/lincoln-displayed.jpg)
 
-If you're new to working with images in OF, it's worth pointing out that you should try to avoid loading images in the `draw()` or `update()` functions, if possible. Why? Well, reading data from disk is one of the slowest things you can ask a computer to do. In many circumstances, you can simply load all the images you'll need just once, when your program is first initialized, in `setup()`. By contrast, if you're repeatedly loading an image in your `draw()` loop — the same image, again and again, sixty times per second — you're hurting the performance of your app, and potentially even risking damage to your hard disk.  
+If you're new to working with images in oF, it's worth pointing out that you should try to avoid loading images in the `draw()` or `update()` functions, if possible. Why? Well, reading data from disk is one of the slowest things you can ask a computer to do. In many circumstances, you can simply load all the images you'll need just once, when your program is first initialized, in `setup()`. By contrast, if you're repeatedly loading an image in your `draw()` loop — the same image, again and again, sixty times per second — you're hurting the performance of your app, and potentially even risking damage to your hard disk.  
 
 #### Where (Else) Images Come From
 
@@ -91,13 +91,13 @@ In openFrameworks, raster images can come from a wide variety of sources, includ
 ![We don't have the rights to this image, it's just something I found on the internet. We need something similar](images/kinect_depth_image.png) 
 *An example of a depth image (left) and a corresponding RGB color image (right), captured simultaneously with a Microsoft Kinect. In the depth image, the brightness of a pixel represents its proximity to the camera. (Note that these two images, presented in a raw state, are not yet "calibrated" to each other, meaning that there is not an exact pixel-for-pixel correspondence between a pixel's color and its corresponding depth.)*
 
-Incidentally, OF makes it easy to **load images directly from the Internet**, by using a URL as the filename argument, as in `myImage.loadImage("http://en.wikipedia.org/wiki/File:Example.jpg");`. Keep in mind that doing this will load the remotely-stored image *synchronously*, meaning your program will "block" (or freeze) while it waits for all of the data to download from the web. For an improved user experience, you can also load Internet images *asynchronously* (in a background thread), using the response provided by `ofLoadURLAsync()`; a  sample implementation of this can be found in the openFrameworks *imageLoaderWebExample* graphics example. Now that you can load images stored on the Internet, you can fetch images *computationally* using fun APIs (like those of [Temboo](https://temboo.com/library/), [Instagram](http://instagram.com/developer/) or [Flickr](https://www.flickr.com/services/api/)), or from dynamic online sources such as live traffic cameras.
+Incidentally, oF makes it easy to **load images directly from the Internet**, by using a URL as the filename argument, as in `myImage.loadImage("http://en.wikipedia.org/wiki/File:Example.jpg");`. Keep in mind that doing this will load the remotely-stored image *synchronously*, meaning your program will "block" (or freeze) while it waits for all of the data to download from the web. For an improved user experience, you can also load Internet images *asynchronously* (in a background thread), using the response provided by `ofLoadURLAsync()`; a  sample implementation of this can be found in the openFrameworks *imageLoaderWebExample* graphics example. Now that you can load images stored on the Internet, you can fetch images *computationally* using fun APIs (like those of [Temboo](https://temboo.com/library/), [Instagram](http://instagram.com/developer/) or [Flickr](https://www.flickr.com/services/api/)), or from dynamic online sources such as live traffic cameras.
 
 #### Acquiring and Displaying a Webcam Image
 
 The procedure for **acquiring a video stream** from a live webcam or digital movie file is no more difficult than loading an `ofImage`. The main conceptual difference is that the image data contained within an `ofVideoGrabber` or `ofVideoPlayer` object happens to be continually refreshed, usually about 30 times per second (or at the framerate of the footage). Each time you ask this object to render its data to the screen, as in `myVideoGrabber.draw()` below, the pixels will contain freshly updated values. 
 
-The following program (which you can find elaborated in the OF *videoGrabberExample*) shows the basic procedure. In this example below, for some added fun, we also retrieve the buffer of data that contains the `ofVideoGrabber`'s pixels, then arithmetically "invert" this data (to produce a "photographic negative") and display it with an `ofTexture`.
+The following program (which you can find elaborated in the oF *videoGrabberExample*) shows the basic procedure. In this example below, for some added fun, we also retrieve the buffer of data that contains the `ofVideoGrabber`'s pixels, then arithmetically "invert" this data (to produce a "photographic negative") and display it with an `ofTexture`.
 
 The header file for our app declares an `ofVideoGrabber`, which we will use to acquire video data from our computer's default webcam. We also declare a buffer of unsigned chars to store the inverted video frame, and the `ofTexture` which we'll use to display it:
 
@@ -481,7 +481,7 @@ You'll also find:
 
 It gets even more exotic. ["Hyperspectral" imagery from the Landsat 8 satellite](https://www.mapbox.com/blog/putting-landsat-8-bands-to-work/), for example, has 11 channels, including bands for ultraviolet, near infrared, and thermal (deep) infrared!
 
-#### Varieties of OF Image Containers (Data Structures)
+#### Varieties of oF Image Containers (Data Structures)
 
 In openFrameworks, images can be stored in a variety of different *container classes*, which allow their data to be used (captured, displayed, manipulated, and stored) in different ways and contexts. Some of the more common containers you may encounter are:
 
