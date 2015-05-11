@@ -64,7 +64,7 @@ void ofApp::draw(){
 	ofBackground(255);
 	ofSetColor(255);
 
-	int imgWidth  = myImage.width;
+	int imgWidth = myImage.width;
 	int imgHeight = myImage.height;
 	myImage.draw(10, 10, imgWidth * 10, imgHeight * 10);
 }
@@ -116,12 +116,12 @@ class ofApp : public ofBaseApp{
 		void update();
 		void draw();
 
-		ofVideoGrabber  	myVideoGrabber;
-		ofTexture           myTexture;
+		ofVideoGrabber myVideoGrabber;
+		ofTexture myTexture;
 
-		unsigned char*      invertedVideoData;
-		int 				camWidth;
-		int 				camHeight;
+		unsigned char* invertedVideoData;
+		int camWidth;
+		int camHeight;
 };
 
 ```
@@ -141,7 +141,7 @@ Note that the example segregates our heavy computation into the `update()` metho
 void ofApp::setup(){
 
 	// Set capture dimensions of 320x240, a common video size.
-	camWidth  = 320;
+	camWidth = 320;
 	camHeight = 240;
 
 	// Open an ofVideoGrabber for the default camera
@@ -158,7 +158,7 @@ void ofApp::update(){
 	myVideoGrabber.update();
 
 	// If the grabber indeed has fresh data,
-	if (myVideoGrabber.isFrameNew()){
+	if(myVideoGrabber.isFrameNew()){
 
 		// Obtain a pointer to the grabber's image data.
 		unsigned char* pixelData = myVideoGrabber.getPixels();
@@ -170,7 +170,7 @@ void ofApp::update(){
 		int nTotalBytes = camWidth*camHeight*3;
 		
 		// For every byte of the RGB image data,
-		for (int i=0; i<nTotalBytes; i++){
+		for(int i=0; i<nTotalBytes; i++){
 
 			// pixelData[i] is the i'th byte of the image;
 			// subtract it from 255, to make a "photo negative"
@@ -337,18 +337,18 @@ void ofApp::draw(){
 	int w = laserTagImage.getWidth();
 	int h = laserTagImage.getHeight();
 
-	float maxBrightness  = 0; // these are used in the search
-	int   maxBrightnessX = 0; // for the brightest location
-	int   maxBrightnessY = 0;
+	float maxBrightness = 0; // these are used in the search
+	int maxBrightnessX = 0; // for the brightest location
+	int maxBrightnessY = 0;
 
 	// Search through every pixel. If it is brighter than any
 	// we've seen before, store its brightness and coordinates.
 	// After testing every pixel, we'll know which is brightest!
-	for (int y=0; y<h; y++) {
+	for(int y=0; y<h; y++) {
 		for(int x=0; x<w; x++) {
 			ofColor colorAtXY = laserTagImage.getColor(x, y);
 			float brightnessOfColorAtXY = colorAtXY.getBrightness();
-			if (brightnessOfColorAtXY > maxBrightness){
+			if(brightnessOfColorAtXY > maxBrightness){
 				maxBrightness = brightnessOfColorAtXY;
 				maxBrightnessX = x;
 				maxBrightnessY = y;
@@ -390,8 +390,8 @@ float bTarget = 193;
 // these are used in the search for the location of the pixel 
 // whose color is the closest to our target color.
 float leastDistanceSoFar = 255; 
-int   xOfPixelWithClosestColor = 0; 
-int   yOfPixelWithClosestColor = 0;
+int xOfPixelWithClosestColor = 0; 
+int yOfPixelWithClosestColor = 0;
 
 for (int y=0; y<h; y++) {
 	for (int x=0; x<w; x++) {
@@ -413,7 +413,7 @@ for (int y=0; y<h; y++) {
 		float colorDistance = 
 			sqrt (rDif*rDif + gDif*gDif + bDif*bDif); 
 			
-		if (colorDistance < leastDistanceSoFar){
+		if(colorDistance < leastDistanceSoFar){
 			leastDistanceSoFar = colorDistance;
 			xOfPixelWithClosestColor = x;
 			yOfPixelWithClosestColor = y;
@@ -549,7 +549,7 @@ int nBytesGrayscale = imageWidth * imageHeight;
 unsigned char* grayPixelData = new unsigned char [nBytesGrayscale];
 
 // For every pixel in the grayscale destination image, 
-for (int indexGray=0; indexGray<nBytesGrayscale; indexGray++){
+for(int indexGray=0; indexGray<nBytesGrayscale; indexGray++){
 
 	// Compute the index of the corresponding pixel in the color image,
 	// remembering that it has 3 times as much data as the gray one. 
@@ -590,6 +590,7 @@ In the code below, we implement point processing "from scratch", by directly man
 // Example 4: Add a constant value to an image.
 // This is done from "scratch", without OpenCV.
 // This is ofApp.h
+
 #pragma once
 #include "ofMain.h"
 
@@ -630,7 +631,7 @@ void ofApp::setup(){
 	// Each destination pixel will be 10 gray-levels brighter
 	// than its corresponding source pixel.
 	int nPixels = imgW * imgH; 
-	for (int i = 0; i < nPixels; i++) {
+	for(int i=0; i<nPixels; i++) {
 		unsigned char srcValue = srcArray[i];
 		dstArray[i] = srcValue + 10; 
 	}
