@@ -5,20 +5,20 @@ By [Golan Levin](http://www.flong.com/)
 
 Edited by [Brannon Dorsey](http://brannondorsey.com)
 
-## Wait! Perhaps There is a Magic Bullet
+## Hold On! Perhaps There is a Magic Bullet
 
-Computer vision allows you to make assertions about what's going on in images and video. It's fun to create image processing software, but it's not always *necessary* to implement such techniques yourself. Many of the most common and desirable computer vision workflows have been encapsulated into apps that can detect the stuff you want—and transmit the results over OSC to your openFrameworks app! Before you dig in to this chapter, consider whether you can instead sketch a prototype with one of these time-saving vision tools.
+Computer vision allows you to make assertions about what's going on in images and video. It's fun (and hugely educational) to create your own vision software, but it's not always *necessary* to implement such techniques yourself. Many of the most common and desirable computer vision workflows have been encapsulated into apps that can detect the stuff you want—and transmit the results over OSC to your openFrameworks app! Before you dig in to this chapter, consider whether you can instead sketch a prototype with one of these time-saving vision tools.
 
 ![TSPS (left) and Community Core Vision (right)](images/tsps_ccv.png)
-*TSPS (left) and Community Core Vision (right)*
+*TSPS (left) and Community Core Vision (right) are richly-featured toolkits for performing computer vision tasks that are common in interactive installations. They transmit summaries of their analyses over OSC, a signalling protocol that is widely used in the media arts.*
 
-- [Toolkit for Sensing People in Spaces (TSPS)](http://opentsps.com/): A powerful toolkit for tracking bodies in video
-- [Community Core Vision](http://ccv.nuigroup.com/): Another full-featured toolkit for a wide range of tracking tasks
-- [FaceOSC](https://github.com/kylemcdonald/ofxFaceTracker/downloads/): An app which tracks faces (and face parts, like eyes and noses) in video
-- [Reactivision TUIO](http://reactivision.sourceforge.net/): A system which uses fiducial markers to track the positions and orientations of objects
-- [EyeOSC](https://github.com/downloads/kylemcdonald/AppropriatingNewTechnologies/EyeOSC.zip): An experimental, webcam-based eyetracker (.zip)
-- [Synapse for Kinect](http://synapsekinect.tumblr.com/post/6610177302/synapse): A Kinect-based skeleton tracker
-- [DesignIO kinectArmTracker](https://github.com/ofTheo/kinectArmTracker): A lightweight app for tracking arm movements with the Kinect.
+- [Toolkit for Sensing People in Spaces (TSPS)](http://opentsps.com/): A powerful toolkit for tracking bodies in video.
+- [Community Core Vision](http://ccv.nuigroup.com/): Another full-featured toolkit for a wide range of tracking tasks.
+- [FaceOSC](https://github.com/kylemcdonald/ofxFaceTracker/downloads/): An app which tracks faces (and face parts, like eyes and noses) in video, and transmits this data over OSC.
+- [Reactivision TUIO](http://reactivision.sourceforge.net/): A system which uses fiducial markers to track the positions and orientations of objects, and transmits this data over OSC.
+- [EyeOSC](https://github.com/downloads/kylemcdonald/AppropriatingNewTechnologies/EyeOSC.zip) (.zip): An experimental, webcam-based eyetracker that transmits the viewer's fixation point over OSC.
+- [Synapse for Kinect](http://synapsekinect.tumblr.com/post/6610177302/synapse): A Kinect-based skeleton tracker with OSC.
+- [DesignIO kinectArmTracker](https://github.com/ofTheo/kinectArmTracker): A lightweight OSC app for tracking arm movements with the Kinect.
 
 
 
@@ -49,6 +49,8 @@ class ofApp : public ofBaseApp{
 	public:
 		void setup();
 		void draw();
+		
+		// Here in the header (.h) file, we declare an ofImage:
 		ofImage myImage;
 };
 ```
@@ -61,6 +63,7 @@ Below is our complete *ofApp.cpp* file. The Lincoln image is *loaded* from our h
 #include "ofApp.h"
 
 void ofApp::setup(){
+	// We load an image from our "data" folder into the ofImage:
 	myImage.loadImage("lincoln.png");
 	myImage.setImageType(OF_IMAGE_GRAYSCALE);
 }
@@ -69,6 +72,7 @@ void ofApp::draw(){
 	ofBackground(255);
 	ofSetColor(255);
 
+	// We fetch the ofImage's dimensions and display it 10x larger.  
 	int imgWidth = myImage.width;
 	int imgHeight = myImage.height;
 	myImage.draw(10, 10, imgWidth * 10, imgHeight * 10);
@@ -153,7 +157,7 @@ void ofApp::setup(){
 	myVideoGrabber.initGrabber (camWidth,camHeight);
 
 	// Create resources to store and display another copy of the data
-	invertedVideoData = new unsigned char [camWidth*camHeight*3];
+	invertedVideoData = new unsigned char [camWidth * camHeight * 3];
 	myTexture.allocate (camWidth,camHeight, GL_RGB);
 }
 
@@ -172,7 +176,7 @@ void ofApp::update(){
 		// This is the image's width times its height,
 		// times 3 -- because each pixel requires 3 bytes
 		// to store its R, G, and B color components.  
-		int nTotalBytes = camWidth*camHeight*3;
+		int nTotalBytes = camWidth * camHeight * 3;
 		
 		// For every byte of the RGB image data,
 		for(int i=0; i<nTotalBytes; i++){
@@ -249,7 +253,7 @@ Note how this data includes no details about the image's width and height. Shoul
 
 It's important to understand how pixel data is stored in computer memory. Each pixel has an *address*, indicated by a number (whose counting begins with zero):
 
-![Based on Shiffman's image in the Processing tutorial](images/pixels_in_memory.png)
+![How pixels are stored in memory.](images/pixels_in_memory.png)
 
 Observe how a one-dimensional list of values in memory can be arranged into successive rows of a two-dimensional grid of pixels, and vice versa.
 
@@ -285,7 +289,7 @@ int x = arrayIndex % imgWidth; // The friendly modulus operator.
 Most of the time, you'll be working with image data that is stored in a higher-level container object, such as an `ofImage`. There are *two* ways to get the values of pixel data stored in such a container. In one method, we can ask the image for its array of unsigned char pixel data, using `.getPixels()`, and then fetch the value we want from this array. Many image containers, such as `ofVideoGrabber`, also support a `.getPixels()` function.
 
 ```cpp
-int arrayIndex = y*imgWidth + x;
+int arrayIndex = (y * imgWidth) + x;
 unsigned char* myImagePixelBuffer = myImage.getPixels();
 unsigned char pixelValueAtXY = myImagePixelBuffer[arrayIndex];
 ```
@@ -522,13 +526,13 @@ The ofxOpenCV addon library provides several methods for converting color imager
 
 ```
 // Given a color ofxOpenCv image, already filled with RGB data:
-// ofxCvColorImage kittyCvImgColor; 
+// ofxCvColorImage kittenCvImgColor; 
 
 // And given a declared ofxCvGrayscaleImage:
 ofxCvGrayscaleImage kittenCvImgGray;
 	
 // Then the color-to-gray conversion is performed by this assignment: 
-kittenCvImgGray = kittyCvImgColor;
+kittenCvImgGray = kittenCvImgColor;
 ```
 
 Although OF provides the above utilities to convert color images to grayscale, it's worth taking a moment to understand the subtleties of the conversion process. There are three common techniques for performing the conversion: 
@@ -604,8 +608,8 @@ class ofApp : public ofBaseApp{
 	void setup();
 	void draw();
 	
-	ofImage lincolnOfImageSrc;
-	ofImage lincolnOfImageDst;
+	ofImage lincolnOfImageSrc; // The source image
+	ofImage lincolnOfImageDst; // The destination image
 };
 ```
 
