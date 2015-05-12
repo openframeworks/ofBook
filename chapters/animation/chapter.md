@@ -289,7 +289,7 @@ This technique is very useful if you are working with noisy data -- a sensor for
 
 ## Function based movement
 
-In this section of the book we'll look at a few examples that show function based movement, which means using a function that takes some input and returns an output that we'll use for animation. For input, we'll be passing in counters, elapsed time, position, and the output we'll use to control position. 
+In this section of the book we'll look at a few examples that show function based movement, which means using a function that takes some input and returns an output that we'll use for animation. For input, we'll be passing in counters, elapsed time, position, and the output we'll use to control position.
 
 ### Sine and Cosine
 
