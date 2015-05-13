@@ -18,7 +18,7 @@ void rectangle::draw() {
 
 //------------------------------------------------------------------
 void rectangle::interpolateByPct(float myPct){
-	// powf (2, 3) = 8
+	// raise to power: powf (2, 3) = 8
 	pct = powf(myPct, shaper);
 	pos.x = (1-pct) * posa.x + (pct) * posb.x;
 	pos.y = (1-pct) * posa.y + (pct) * posb.y;
