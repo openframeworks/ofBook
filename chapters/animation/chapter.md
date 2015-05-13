@@ -349,7 +349,7 @@ As a side note, it's important to be aware that things in the world often don't 
 
 If you raise the incoming number between 0 and 1 to a larger power it looks more extreme. Interestingly, if you raise this value between 0 and 1 to a fractional (rational) power (i.e., a power that's less than 1 and greater than 0), it curves in the other direction.  
 
-The second example (**2_rectangleInterpolate2**) shows an animation that uses pct again to get from A to B, but in this case, pct is raised to a power: 
+The second example (**3_rectangleInterpolatePowf**) shows an animation that uses pct again to get from A to B, but in this case, pct is raised to a power: 
 
 
 In the 4th example (**4_rectangleInterpolatePowfMultiple**), you can see a variety of these rectangles, all moving with different shaping functions. They take the same amount of time to get from A to B, but do it in very different ways. I usually ask my students to guess which one is moving linearly -- see if you can figure it out without looking at the code: 
