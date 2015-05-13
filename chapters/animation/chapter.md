@@ -179,7 +179,6 @@ Fill the implementation file (rectangle.cpp):
 ```cpp
 #include "rectangle.h"
 
-
 //------------------------------------------------------------------
 rectangle::rectangle(){
 }
