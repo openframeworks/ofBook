@@ -239,7 +239,90 @@ class testApp : public ofSimpleApp{
 and "testApp.cpp"
 
 ```cpp
+#include "testApp.h"
+#include "ofMain.h"
 
+//--------------------------------------------------------------
+void testApp::setup(){
+	// macs by default run on non vertical sync, which can make animation very, very fast
+	// this fixes that:
+	ofSetVerticalSync(true);
+
+	// set background:
+	ofBackground(30,30,30);
+
+	// set the "a" and "b" positions of the rectangle...
+	myRectangle.posa.x = 10;
+	myRectangle.posa.y = 10;
+	myRectangle.posb.x = 590;
+	myRectangle.posb.y = 590;
+	myRectangle.interpolateByPct(0);	// start at 0 pct
+	pct = 0;				// a variable we can alter...
+}
+
+//--------------------------------------------------------------
+void testApp::update(){
+	// to see pct in the console
+	//printf("%f \n", pct);
+
+	pct += 0.01f;		// increase by a certain amount
+	if (pct > 1) {
+		pct = 0;	// just between 0 and 1 (0% and 100%)
+	}
+	myRectangle.interpolateByPct(pct);	// go between pta and ptb
+}
+
+//--------------------------------------------------------------
+void testApp::draw(){
+	myRectangle.draw();
+}
+
+//--------------------------------------------------------------
+void testApp::keyPressed  (int key){
+}
+
+//--------------------------------------------------------------
+void testApp::keyReleased  (int key){
+}
+
+//--------------------------------------------------------------
+void testApp::mouseMoved(int x, int y ){
+}
+
+//--------------------------------------------------------------
+void testApp::mouseDragged(int x, int y, int button){
+}
+
+//--------------------------------------------------------------
+void testApp::mousePressed(int x, int y, int button){
+	//myRectangle.posa.x = x;
+	//myRectangle.posa.y = y;
+}
+
+//--------------------------------------------------------------
+void testApp::mouseReleased(){
+}
+```
+
+All this is tied together and into openFrameworks via the "main.cpp" file.
+
+```cpp
+#include "ofMain.h"
+#include "testApp.h"
+#include "ofAppGlutWindow.h"
+
+//========================================================================
+int main( ){
+
+    ofAppGlutWindow window;
+	ofSetupOpenGL(&window, 600,600, OF_WINDOW);			// <-------- setup the GL context
+
+	// this kicks off the running of my app
+	// can be OF_WINDOW or OF_FULLSCREEN
+	// pass in width and height too:
+	ofRunApp( new testApp());
+
+}
 ```
 
 As a side note, the function `ofMap`, which maps between an input range, uses pct internally. It takes a value, converts it into a percentage based on the input range, and then uses that pct to find the point between the output range. You have seen `ofMap` in the "Graphics" chapter already. More details can be found in the "Math: From 1D to 4D" chapter.
