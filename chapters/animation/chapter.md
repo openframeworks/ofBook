@@ -147,28 +147,31 @@ which simplifies to `(1*A + 0*B)` or A. If we are 25 percent of the way, it look
 ```
 
 which is 75% of A + 25% of B. Essentially by taking a mix, you get from one to the other. The first example (**1_rectangleInterpolate**) shows how this is done.
-Describe a new object in the header (ofApp.h):
+Describe a new object in the header (rectangle.h):
 
 ```cpp
-#pragma once
+#ifndef RECTANGLE_H
+#define RECTANGLE_H
 
 #include "ofMain.h"
 
-class ofApp : public ofBaseApp{
-	public:
-        // minimal set of methods needed
-		void setup();
-		void update();
-		void draw();
+class rectangle {
 
-    private:
-        // variables not to be accessed from the outside
-        float pct;  // percent of movement
-        float radius;
-        ofPoint ptA;
-        ofPoint ptB;
-        ofPoint newPos;
+	public:
+
+	rectangle();
+	void draw();
+	void interpolateByPct(float myPct);
+
+	ofPoint pos;
+
+	ofPoint posa;
+	ofPoint	posb;
+
+	float pct;	// what pct are we between "a" and "b"
 };
+
+#endif // RECTANGLE_H
 ```
 
 Fill the implementation file (ofApp.cpp):
