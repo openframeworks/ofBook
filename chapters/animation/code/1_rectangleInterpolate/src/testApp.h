@@ -23,8 +23,6 @@ class testApp : public ofSimpleApp{
 		rectangle	myRectangle;
 		
 		float		pct;
-	
-	
 };
 
 #endif
