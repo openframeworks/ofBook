@@ -174,35 +174,33 @@ class rectangle {
 #endif // RECTANGLE_H
 ```
 
-Fill the implementation file (ofApp.cpp):
+Fill the implementation file (rectangle.cpp):
 
 ```cpp
-#include "ofApp.h"
+#include "rectangle.h"
 
-void ofApp::setup(){
-     ofSetFrameRate(1.0);  // have one frame per second for easier observation
-     radius = 10.0;        // draw 20px large circles
-     ptA.set(100, 100, 0);
-     ptB.set(200, 400, 0);
-     pct = 0.0;            // start from ptA -> 0.0 = 0%
+
+//------------------------------------------------------------------
+rectangle::rectangle(){
 }
 
-void ofApp::draw(){
-     ofBackground(ofColor::black);
-     ofSetColor(ofColor::red);   // mark beginning and end
-     ofCircle(ptA, radius);
-     ofCircle(ptB, radius);
-     ofSetColor(ofColor::white); // make current position stand out
-     ofCircle(newPos, radius);
+//------------------------------------------------------------------
+void rectangle::draw() {
+    ofFill();
+    ofSetRectMode(OF_RECTMODE_CENTER); // center around the position
+    ofSetColor(198,246,55);
+    ofRect(pos.x, pos.y, 20,20);
 }
 
-void ofApp::update(){
-     if(1.0 <== pct){
-         pct = 0.0;  // reset if at 1.0 = 100%
-     } else {
-       pct += 0.1;   // otherwise change by 0.1 = 10%
-     }
-     newPos = ((1-pct) * ptA) + (pct * ptB)
+//------------------------------------------------------------------
+void rectangle::interpolateByPct(float myPct){
+    pct = myPct;
+    pos.x = (1-pct) * posa.x + (pct) * posb.x;
+    pos.y = (1-pct) * posa.y + (pct) * posb.y;
+
+    // this is an alternative way to write above..
+    // differe style, but the same mathematically.
+    //pos.x = posa.x + (pct) * (posb.x-posa.x);
 }
 ```
 
