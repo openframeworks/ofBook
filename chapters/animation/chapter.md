@@ -203,6 +203,45 @@ void rectangle::interpolateByPct(float myPct){
 }
 ```
 
+The `rectangle` class is used in "testApp.h"
+
+```cpp
+#ifndef _TEST_APP
+#define _TEST_APP
+
+#include "ofMain.h"
+#include "rectangle.h"
+
+class testApp : public ofSimpleApp{
+
+	public:
+
+		void setup();
+		void update();
+		void draw();
+
+		void keyPressed  (int key);
+		void keyReleased (int key);
+
+		void mouseMoved(int x, int y );
+		void mouseDragged(int x, int y, int button);
+		void mousePressed(int x, int y, int button);
+		void mouseReleased();
+
+		rectangle	myRectangle;
+
+		float		pct;
+};
+
+#endif
+```
+
+and "testApp.cpp"
+
+```cpp
+
+```
+
 As a side note, the function `ofMap`, which maps between an input range, uses pct internally. It takes a value, converts it into a percentage based on the input range, and then uses that pct to find the point between the output range. You have seen `ofMap` in the "Graphics" chapter already. More details can be found in the "Math: From 1D to 4D" chapter.
 
 ### Curves
