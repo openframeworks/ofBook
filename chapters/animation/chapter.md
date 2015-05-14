@@ -355,7 +355,7 @@ The next example (**3_rectangleInterpolatePowf**) shows an animation that uses p
 
 In **4_rectangleInterpolatePowfMultiple**, you can see a variety of these rectangles, all moving with different shaping functions. They take the same amount of time to get from A to B, but do it in very different ways. I usually ask my students to guess which one is moving linearly -- see if you can figure it out without looking at the code:
 
-![xeno diagram](images/multiCurved.png)
+![zeno diagram](images/multiCurved.png)
 
 https://en.wikipedia.org/wiki/12_basic_principles_of_animation#Slow_in_and_slow_out
 
