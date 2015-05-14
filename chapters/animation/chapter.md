@@ -359,8 +359,6 @@ In **4_rectangleInterpolatePowfMultiple**, you can see a variety of these rectan
 
 Using curves to control change is a very important principle in animation. It is called ["Slow In and Slow Out"](https://en.wikipedia.org/wiki/12_basic_principles_of_animation#Slow_In_and_slow_Out) and is explicitly mentioned as one of the famous "Twelve Basic Principles of Animation" described in the "The Illusion of Life: Disney Animation" book written by Ollie Johnston and Frank Thomas in 1981. It basically says that bodies naturally need time to change their speed and therefore the movement around extreme positions (where change happens) is slower than in the middle of said movement (where no/less change happens).
 
-**[note: can we get rights for a screenshot of masahiko sato curves DVD ? ]**
-
 Raising percent to a power is one of a whole host of functions that are called "shaping functions" or "easing equations." Robert Penner wrote about and derived many of these functions so they are also commonly referred to as "Penner Easing Equations."  [Easings.net](http://easings.net/) is a good resource, as well there are several openFrameworks addons for easing (e.g. [ofxEasingFunc](https://github.com/satoruhiga/ofxEasingFunc "ofxEasingFunc github repository")).
 
 ### Zeno
