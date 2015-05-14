@@ -357,7 +357,7 @@ In **4_rectangleInterpolatePowfMultiple**, you can see a variety of these rectan
 
 ![zeno diagram](images/multiCurved.png)
 
-https://en.wikipedia.org/wiki/12_basic_principles_of_animation#Slow_in_and_slow_out
+Using curves to control change is a very important principle in animation. It is called ["Slow In and Slow Out"](https://en.wikipedia.org/wiki/12_basic_principles_of_animation#Slow_In_and_slow_Out) and is explicitly mentioned as one of the famous "Twelve Basic Principles of Animation" described in the "The Illusion of Life: Disney Animation" book written by Ollie Johnston and Frank Thomas in 1981. It basically says that bodies naturally need time to change their speed and therefore the movement around extreme positions (where change happens) is slower than in the middle of said movement (where no/less change happens).
 
 **[note: can we get rights for a screenshot of masahiko sato curves DVD ? ]**
 
@@ -836,6 +836,8 @@ We don't have time to get into it in this chapter, but there's different approac
 * [Wikipedia book: Animation](https://en.wikipedia.org/wiki/Book:Animation)
 * [easings.net](http://easings.net/) resource for shaping/easing functions
 * http://sol.gfxile.net/interpolation/#c1 another resource for shaping/easing functions
+* [Blender](http://blender.org/) animation tutorial: [Principles of Animation](http://wiki.blender.org/index.php/Doc:2.4/Tutorials/Animation/BSoD/Principles_of_Animation)
+* Thomas, Frank; Ollie Johnston, The Illusion of Life: Disney Animation, Hyperion, ISBN 978-0-7868-6070-8
 
 ### Physics and animation libraries
 
