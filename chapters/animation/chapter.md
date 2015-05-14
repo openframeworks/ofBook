@@ -835,7 +835,7 @@ We don't have time to get into it in this chapter, but there's different approac
 * [Wikipedia animations portal](https://en.wikipedia.org/wiki/Portal:Animation)
 * [Wikipedia book: Animation](https://en.wikipedia.org/wiki/Book:Animation)
 * [easings.net](http://easings.net/) resource for shaping/easing functions
-* [Interpolation Tricks or How I Learned to Stop Worrying and Love the 0..1 Range](http://sol.gfxile.net/interpolation/) another resource for shaping/easing functions
+* ["Interpolation Tricks or How I Learned to Stop Worrying and Love the 0..1 Range"](http://sol.gfxile.net/interpolation/) is another resource for shaping/easing functions
 * [Blender](http://blender.org/) animation tutorial: [Principles of Animation](http://wiki.blender.org/index.php/Doc:2.4/Tutorials/Animation/BSoD/Principles_of_Animation)
 * Thomas, Frank; Ollie Johnston, The Illusion of Life: Disney Animation, Hyperion, ISBN 978-0-7868-6070-8
 * Sato Masahiko Laboratory, [Mathematical Curves Hidden Around Us](http://www.masahicom.com/blog/index.cgi/books/20100817mathematicalcurves_dvdbook.htm)
