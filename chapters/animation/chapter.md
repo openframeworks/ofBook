@@ -450,12 +450,12 @@ You can do simple things with offsets to the phase (how shifted over the sin wav
 //--------------------------------------------------------------
 void testApp::draw(){
     float sinOfTime                = sin( ofGetElapsedTimef() );
-    float sinOfTimeMapped        = ofMap( sinOfTime, -1, 1, 0, 255);
+    float sinOfTimeMapped          = ofMap(sinOfTime, -1, 1, 0, 255);
 
     ofBackground(sinOfTimeMapped, sinOfTimeMapped, sinOfTimeMapped);
 
-    float sinOfTime2            = sin( ofGetElapsedTimef() + PI);
-    float sinOfTimeMapped2        = ofMap( sinOfTime2, -1, 1, 0, 255);
+    float sinOfTime2              = sin( ofGetElapsedTimef() + PI);
+    float sinOfTimeMapped2        = ofMap(sinOfTime2, -1, 1, 0, 255);
 
     ofSetColor(sinOfTimeMapped2, sinOfTimeMapped2, sinOfTimeMapped2);
     ofRect(100,100,ofGetWidth()-200, ofGetHeight()-200);
