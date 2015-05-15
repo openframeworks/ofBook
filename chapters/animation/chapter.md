@@ -420,7 +420,7 @@ In this section of the book we'll look at a few examples that show function base
 
 Another interesting and simple system to experiment with motion in openFrameworks is using [`sin(...)`](http://www.cplusplus.com/reference/cmath/sin/ "C++ sin() documentation page") and [`cos(...)`](http://www.cplusplus.com/reference/cmath/cos/ "C++ cos() documentation page)").
 
-`Sin(...)` and `cos(...)` (sine and cosine) are [trigonometric functions](https://en.wikipedia.org/wiki/Trigonometric_functions "Wikipedia on trigonometric functions"), which means they are based on angles. They are the x and y position of a point moving with a constant radius around a circle. The circle is a unit circle with a radius (r) of 1, which means the diameter is `2*r*PI` or `2*PI`.  In oF you'll see this constant as `TWO_PI`, which is 6.28318... 
+`Sin(...)` and `cos(...)` (sine and cosine) are [trigonometric functions](https://en.wikipedia.org/wiki/Trigonometric_functions "Wikipedia on trigonometric functions"), which means they are based on angles. They are the x and y position of a point moving with a constant radius around a circle. The circle is a unit circle with a radius (r) of 1, which means the diameter is `2*r*PI` or `2*PI`. In oF you'll see this constant as `TWO_PI`, which is 6.28318... 
 
 *As a side note, sometimes it can be confusing that some functions in oF take degrees where others take radians. `Sin(...)` and `cos(...)` are part of the math library, so they take radians, whereas most OpenGL rotation takes degrees. We have some helper constants such as `DEG_TO_RAD` and `RAD_TO_DEG`, which can help you convert one to the other.*
 
@@ -428,7 +428,7 @@ Here's a simple drawing that helps explain `sin(...)` and `cos(...)`.
 
 ![sin](images/atob_circle.png)
 
-All you have to do is imagine a unit circle, which has a radius of 1 and a center position of 0,0.  Now, imagine a point moving counterclockwise around that point at a constant speed.  If you look at the height of that point, it goes from 0 at the far right (3 o'clock position), up to 1 at the top (12 o'clock), back at 0 at the left (9 o'clock) and down to -1 at the bottom (6 o'clock).  So it's a smooth, curving line that moves between -1 and 1.  That's it.  Sin is the height of this dot and cos is the horizontal position of this dot.  At the far right, where the height of this dot is 0, the horizontal position is 1.  When sin is 1, cos is 0, etc.   They are in sync, but shifted. 
+All you have to do is imagine a unit circle, which has a radius of 1 and a center position of 0,0. Now, imagine a point moving counterclockwise around that point at a constant speed. If you look at the height of that point, it goes from 0 at the far right (3 o'clock position), up to 1 at the top (12 o'clock), back at 0 at the left (9 o'clock) and down to -1 at the bottom (6 o'clock).  So it's a smooth, curving line that moves between -1 and 1. That's it.  Sin is the height of this dot and cos is the horizontal position of this dot. At the far right, where the height of this dot is 0, the horizontal position is 1.  When sin is 1, cos is 0, etc. They are in sync, but shifted.
 
 #### Simple examples
 
