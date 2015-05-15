@@ -418,7 +418,7 @@ In this section of the book we'll look at a few examples that show function base
 
 ### Sine and Cosine
 
-Another interesting and simple system to experiment with motion in openFrameworks is using sin and cos.
+Another interesting and simple system to experiment with motion in openFrameworks is using [`sin(...)`](http://www.cplusplus.com/reference/cmath/sin/ "C++ sin() documentation page") and [`cos(...)`](http://www.cplusplus.com/reference/cmath/cos/ "C++ cos() documentation page)").
 
 Sin and cos (sine and cosine) are [trigonometric functions](https://en.wikipedia.org/wiki/Trigonometric_functions "Wikipedia on trigonometric functions"), which means they are based on angles. They are the x and y position of a point moving with a constant radius around a circle. The circle is a unit circle with a radius (r) of 1, which means the diameter is `2*r*PI` or `2*PI`.  In oF you'll see this constant as `TWO_PI`, which is 6.28318... 
 
