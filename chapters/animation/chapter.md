@@ -428,7 +428,7 @@ Here's a simple drawing that helps explain `sin(...)` and `cos(...)`.
 
 ![sin](images/atob_circle.png)
 
-All you have to do is imagine a unit circle, which has a radius of 1 and a center position of 0,0. Now, imagine a point moving counterclockwise around that point at a constant speed and distance. If you look at the height of that point, it goes from 0 at the far right (3 o'clock position), up to 1 at the top (12 o'clock), back at 0 at the left (9 o'clock) and down to -1 at the bottom (6 o'clock). So it's a smooth, curving line that moves between -1 and 1. That's it. Sin is the height of this dot and cos is the horizontal position of this dot. At the far right, where the height of this dot is 0, the horizontal position is 1. When sin is 1, cos is 0, etc. They are in sync, but shifted.
+All you have to do is imagine a unit circle, which has a radius of 1 and a center position of 0,0. Now, imagine a point moving counterclockwise around that point at a constant speed and distance. If you look at the height of that point, it goes from 0 at the far right (3 o'clock position), up to 1 at the top (12 o'clock), back at 0 at the left (9 o'clock) and down to -1 at the bottom (6 o'clock). So it's a smooth, curving line that moves between -1 and 1. That's it. The sine is the height of this dot and the cosine is the horizontal position of this dot. At the far right, where the height of this dot is 0, the horizontal position is 1. When the sine is 1, the cosine is 0, etc. They are in sync, but shifted.
 
 #### Simple examples
 
