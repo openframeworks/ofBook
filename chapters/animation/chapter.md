@@ -444,7 +444,7 @@ void ofApp::draw(){
 
 This draws a rectangle which moves sinusoidally across the screen, back and forth every 6.28 seconds. 
 
-You can do simple things with offsets to the phase (how shifted over the sin wave is).  In example 7 **(7_sinExample_phase)**, we calculate the sin of time twice, but the second time, we add PI: `ofGetElapsedTimef() + PI`.  This means the two values will be offset from each other by 180 degrees on the circle (imagining our dot, when one is far right, the other will be far left.  When one is up, the other is down).  Here we set the background color and the color of a rectangle using these offset values.  It's useful if you start playing with sin and cos to manipulate phase. 
+You can do simple things with offsets to the phase (how shifted over the sin wave is). In example 7 **(7_sinExample_phase)**, we calculate the sin of time twice, but the second time, we add PI: `ofGetElapsedTimef() + PI`. This means the two values will be offset from each other by 180 degrees on the circle (imagining our dot, when one is far right, the other will be far left. When one is up, the other is down). Here we set the background color and the color of a rectangle using these offset values. It's useful if you start playing with sin and cos to manipulate phase. 
 
 ```cpp
 //--------------------------------------------------------------
