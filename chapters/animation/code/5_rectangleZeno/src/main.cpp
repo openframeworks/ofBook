@@ -4,7 +4,6 @@
 
 //========================================================================
 int main( ){
-
     ofAppGlutWindow window;
 	ofSetupOpenGL(&window, 400,200, OF_WINDOW);			// <-------- setup the GL context
 
@@ -12,5 +11,4 @@ int main( ){
 	// can be OF_WINDOW or OF_FULLSCREEN
 	// pass in width and height too:
 	ofRunApp( new testApp());
-
 }

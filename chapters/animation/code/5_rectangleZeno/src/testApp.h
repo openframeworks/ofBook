@@ -24,4 +24,3 @@ class testApp : public ofSimpleApp{
 };
 
 #endif
-
