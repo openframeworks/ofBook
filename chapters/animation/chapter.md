@@ -462,7 +462,7 @@ void testApp::draw(){
 }
 ```
 
-*As a nerdy detail, floating point numbers are not linearly precise, e.g., there's a different number of floating point numbers between 0.0 and 1.0 than 100.0 and 101.0. You actually lose precision the larger a floating point number gets, so taking sin of elapsed time can start looking crunchy after some time. For long running installations I will sometimes write code that looks like* `sin((ofGetElapsedTimeMillis() % 6283) / 6283.0)` *or something similar, to account for this. Even though ofGetElapsedTimef() gets larger over time, it's a worse and worse input to sin() as it grows.  ofGetElapsedTimeMillis() doesn't suffer from this problem since it's an integer number and the number of integers between 0 and 10 is the same as between 1000 and 1010.*
+*As a nerdy detail, floating point numbers are not linearly precise, e.g., there's a different number of floating point numbers between 0.0 and 1.0 than 100.0 and 101.0. You actually lose precision the larger a floating point number gets, so taking the sine of elapsed time can start looking crunchy after some time. For long running installations I will sometimes write code that looks like *`sin((ofGetElapsedTimeMillis() % 6283) / 6283.0)`* or something similar, to account for this. Even though `ofGetElapsedTimef()` gets larger over time, it's a worse and worse input to `sin(...)` as it grows. `ofGetElapsedTimeMillis()` doesn't suffer from this problem since it's an integer number and the number of integers between 0 and 10 is the same as between 1000 and 1010.*
 
 #### Circular movement
 
