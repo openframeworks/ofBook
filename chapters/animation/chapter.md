@@ -449,8 +449,8 @@ You can do simple things with offsets to the phase (how shifted over the sin wav
 ```cpp
 //--------------------------------------------------------------
 void testApp::draw(){
-    float sinOfTime                = sin( ofGetElapsedTimef() );
-    float sinOfTimeMapped          = ofMap(sinOfTime, -1, 1, 0, 255);
+    float sinOfTime               = sin( ofGetElapsedTimef() );
+    float sinOfTimeMapped         = ofMap(sinOfTime, -1, 1, 0, 255);
 
     ofBackground(sinOfTimeMapped, sinOfTimeMapped, sinOfTimeMapped);
 
