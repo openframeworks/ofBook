@@ -479,7 +479,7 @@ xPos = xOrig + radius * cos(angle);
 yPos = yOrig + radius * sin(angle);
 ```
 
-This allows us to create something moving in a circular way. In the circle example, I will animate using this approach.  
+This allows us to create something moving in a circular way. In the circle example (**12_sinExample_circlePlusPath**), I will animate using this approach.  
 
 ```cpp
 float xorig = 500;
