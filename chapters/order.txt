@@ -17,6 +17,7 @@ I/O
 	network	
 Advanced topics
 	advanced_graphics
+	math
 	memory
 	threads
 	ios	
