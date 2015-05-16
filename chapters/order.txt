@@ -13,9 +13,11 @@ Approaches
 	image_processing_computer_vision 
 I/O
 	hardware
+	sound
 	network	
 Advanced topics
 	advanced_graphics
+	memory
 	threads
 	ios	
 	c++11
