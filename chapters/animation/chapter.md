@@ -468,9 +468,9 @@ void testApp::draw(){
 
 Since sine and cosine are derived from the circle, we can use them to move things in a circular way. We have four variables we need to know: 
 
-- the origin of the circle (xOrig, yOrig)
-- the radius of the circle (radius)
-- the angle around the circle (angle)
+- the origin of the circle (`xOrig`, `yOrig`)
+- the radius of the circle (`radius`)
+- the angle around the circle (`angle`)
 
 The formula is fairly simple: 
 
