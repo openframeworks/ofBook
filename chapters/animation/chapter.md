@@ -505,7 +505,7 @@ we get spirals.
 
 #### Lissajous figures
 
-Finally, if we alter the angles we pass in to x and y for this formula at different rates, we can get interesting figures, called ["Lissajous" figures](https://en.wikipedia.org/wiki/Lissajous_curve "Wikipedia on Lissajouse figures"), named after the French mathematician, Jules Antoine Lissajous. These formulas look cool.   Oftentimes I joke with my students in algorithm class about how this is really a course to make cool screen savers. 
+Finally, if we alter the angles we pass in to x and y for this formula at different rates, we can get interesting figures, called ["Lissajous" figures](https://en.wikipedia.org/wiki/Lissajous_curve "Wikipedia on Lissajouse figures"), named after the French mathematician, Jules Antoine Lissajous. These formulas look cool. Oftentimes I joke with my students in algorithm class about how this is really a course to make cool screen savers. 
 
 ### Noise
 
