@@ -479,7 +479,7 @@ xPos = xOrig + radius * cos(angle);
 yPos = yOrig + radius * sin(angle);
 ```
 
-This allows us to create something moving in a circular way.  In the circle example, I will animate using this approach.  
+This allows us to create something moving in a circular way. In the circle example, I will animate using this approach.  
 
 ```cpp
 float xorig = 500;
@@ -489,7 +489,7 @@ float x = xorig + radius * cos(angle);
 float y = yorig + radius * sin(angle);
 ```
 
-*Note: In oF, the top left corner is 0,0 (y axis is increasing as you go down) so you'll notice that the point travels clockwise instead of counterclockwise.  If this bugs you (since above, I asked you imagine it moving counterclockwise) you can modify this line `float y = yorig + radius * sin(angle)` to `float y = yorig + radius * -sin(angle)` and see the circle go in the counterclockwise direction.*
+*Note: In oF, the top left corner is 0,0 (y axis is increasing as you go down) so you'll notice that the point travels clockwise instead of counterclockwise. If this bugs you (since above, I asked you imagine it moving counterclockwise) you can modify this line `float y = yorig + radius * sin(angle)` to `float y = yorig + radius * -sin(angle)` and see the circle go in the counterclockwise direction.*
 
 For these examples, I start to add a "trail" to the object by using the [ofPolyline](http://openframeworks.cc/documentation/graphics/ofPolyline.html "ofPolyline Documentation Page") object. I keep adding points, and once I have a certain number I delete the oldest one. This helps us better see the motion of the object. 
 
