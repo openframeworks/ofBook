@@ -466,7 +466,7 @@ void testApp::draw(){
 
 #### Circular movement
 
-Since sin and cos are derived from the circle, if we want to move things in a circular way, we can figure this out via sin and cos. We have four variables we need to know: 
+Since sine and cosine are derived from the circle, we can use them to move things in a circular way. We have four variables we need to know: 
 
 - the origin of the circle (xOrig, yOrig)
 - the radius of the circle (radius)
