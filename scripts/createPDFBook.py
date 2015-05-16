@@ -110,3 +110,7 @@ if returnCode == 0:
 	print "Successful building of {0}".format(pdfBookPath)
 else:
 	print "Error in building of {0}".format(pdfBookPath)
+
+# Cleanup - remove the modified chapters
+for modifiedChapterPath in chapterPaths:
+	os.remove(modifiedChapterPath)
