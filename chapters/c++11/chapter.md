@@ -4,7 +4,7 @@
 C++ is a pretty old language, it's been around since 1983, and perhaps because of that (but certainly for many other reasons), it is often seen as archaic, obtuse, or perhaps just plain out of touch by today's standards. Contrary to this, many people believe that it is still offers the best balance of performance and clarity on the coding high street, and (in part thanks to the success of Unix and its mates) has an incredibly strong ecosystem of 3rd party libraries, device support and general acceptance, even up to the point where current shader languages and CUDA use C++ as their language of choice.
 
 Some more modern languages (such as JavaScript and C#) make programs which run in a very different way to C/C++. They have a 'virtual machine', which is a very different type of computer than the one which crunches electronic signals on a circuit board. The virtual machine receives and processes program instructions like a real machine, but allows for all sorts of ideas which don't directly translate to silicon electronics, such as dynamic typing and reflection. The virtual machine abstracts the constraints of the processor away from the thinking of the programmer.
- 
+
 C/C++ does not have a virtual machine, which (for the time being) often gives it a performance edge over these newer languages. It is quite strict in that ultimately the C code itself (somewhere down the chain) translates 1:1 with physical processor instructions, the design of the language is inflexible in this way, but clinging to this is the achievement of C++, that code can be both understood naturally by a human, and clearly translate to machine code.
 
 In this chapter we'll look at some of the new patterns in the C++ language introduced in C++11, which retain this promise whilst offering new ways of writing code.
@@ -26,7 +26,7 @@ In this code block, we are declaring 3 variables:
 On each line of code we are:
 
 1. Getting a variable on the right hand side. which is of a certain type (`ofRectangle`, `ofVec2f`, `float` respectively)
-2. Declaring a new variable which is explicitly typed to match the value on the right
+2. Declaring a new variabl****e which is explicitly typed to match the value on the right
 3. Assigning the value to the variable
 
 What we may notice, is that the type of data on the right and left side of the `=` is the same. Since C++ is strictly typed (e.g. a function which returns a `float` will always return a `float` no matter what), it is impossible for the value on the right hand side to ever be anything different. The compiler __knows__ what type of value the right hand will give, e.g. it knows that on line 1 that on the right hand side of the `=` is an `ofRectangle`. So perhaps if we were to write something like:
@@ -136,9 +136,9 @@ take some lovely snaps
 */
 
 //oh dear, my photos are all in portrait
-for(int i=0; i<mySelfies.size(); i++) { 
+for(int i=0; i<mySelfies.size(); i++) {
 	//rotate them from landscape to portrait
-	mySelfies[i].rotate90(1); 
+	mySelfies[i].rotate90(1);
 }
 
 vector<ofxSnapChat::Friend> myFriends = snapChatClient.getFriends();
@@ -146,7 +146,7 @@ vector<ofxSnapChat::Friend> myFriends = snapChatClient.getFriends();
 //now let's send them to all my friends
 for(int i=0; i<myFriends.size(); i++) {
 	if (myFriends[i].isSingle()) {
-		for(int i=0; i<mySelfies.size(); i++) { 
+		for(int i=0; i<mySelfies.size(); i++) {
 			myFriends[i].sendImage(mySelfies[i]);
 		}
 	}
@@ -162,7 +162,7 @@ take some lovely snaps
 */
 
 //oh dear, my photos are all in portrait
-for(auto & mySelfie : mySelfies) { 
+for(auto & mySelfie : mySelfies) {
 	//rotate them from landscape to portrait
 	mySelfie.rotate90(1); // (1)
 }
@@ -170,7 +170,7 @@ for(auto & mySelfie : mySelfies) {
 auto myFriends = snapChatClient.getFriends();
 
 //now let's send them to all my friends
-for(auto & myFriend : myFriends) { 
+for(auto & myFriend : myFriends) {
 	if (myFriend.isSingle()) {
 		for(auto & mySelfie : mySelfies) {
 			myFriend.sendImage(mySelfie); // (2)
@@ -227,7 +227,7 @@ This one is a little more complex. Rather than making things quicker or safer to
 
 Lambda functions are very common in JavaScript, C# and other modern languages, and can be very liberating to use. They can seem more scary than they really are, so I suggest just getting on with some examples to start with. Let's make a simple example:
 
-```c++
+```cpp
 void kateBushFunction() {
 	cout << "Heathcliff, it's me Cathy." << endl;
 }
@@ -259,12 +259,12 @@ That second one is where the lambda function really comes into its own. Because 
 
 When we want to pass a lambda function as a variable, we need to introduce a type which can hold that data (since we can't use `auto` in function arguments or when defining members of classes). A common type which can store a lambda function is `std::function<void()>`. I understand that `void()` looks a bit funny at first, but it will make sense when we do a bit more with lambdas later on.
 
-```c++
+```cpp
 class Graphic {
 public:
     void draw() {
     }
-    
+
     std::function<void()> whatToDraw;
 };
 
@@ -277,14 +277,14 @@ protected:
 };
 ```
 
-```c++
+```cpp
 void ofApp::setup() {
 	Graphic circle;
 	circle.whatToDraw = []() {
 		ofCircle(50,50,20);
 	};
 	this->graphicElements.push_back(circle);
-	
+
 	Graphic rectangle;
 	rectangle.whatToDraw = []() {
 		ofRect(50,50,200,200);
@@ -304,7 +304,7 @@ We could do this by creating classes which inherit from `Graphic` and override t
 ### Arguments, scope and return types
 Now how about getting variables in and out of the function? A common pattern with normal functions is using function arguments to get variables into the function, and returning variables to get values out again. Let's see how that works with lambdas.
 
-```c++
+```cpp
 float multiplyByTwoFunction(float x) {
 	return x * 2.0f;
 }
@@ -313,7 +313,7 @@ void test() {
 	auto multiplyByTwoLambda = [](float x) {
 		return x * 2.0f;
 	};
-	
+
 	cout << multiplyByTwoFunction(2.0f) << endl;
 	cout << multiplyByTwoLambda(2.0f) << endl;
 }
@@ -328,7 +328,7 @@ This would of course print out:
 
 That's great! But we also have to be careful that because this function now has a float return type and a float argument, it is a different type of function to `kateBushLambdaFunction`. Note that if we want to pass this function as an argument we'd need to do like:
 
-```c++
+```cpp
 void performActionOnFloat(float & x, std::function<float(float)> action) {
 	x = action(x);
 }
@@ -336,9 +336,9 @@ void performActionOnFloat(float & x, std::function<float(float)> action) {
 
 Specifically, the type which can hold a lambda function is:
 
-```c++
+```cpp
 std::function<return type(arguments)>
-```c++
+```
 
 You can use multiple arguments (like you can with normal functions).
 
@@ -346,7 +346,7 @@ You can use multiple arguments (like you can with normal functions).
 
 Finally, we often need to introduce a 'scope' to the lambda function. The scope means what variables from outside the function can be seen inside the function. We define the scope in-between the `[]`s in the lambda function definition, for example:
 
-```c++
+```cpp
 float multiplier = 4.0f;
 auto multiplyByOurMultiplier = [multiplier](float x) { // (1)
 	return x * multiplier;
@@ -374,12 +374,12 @@ Now let's go for a more down-deep example of how you might use lambda functions 
 
 Imagine our ofApp looks like:
 
-```c++
+```cpp
 class ofApp : public ofBaseApp {
 	/*
 	the usual stuff
 	*/
-	
+
 	CameraClass camera;
 	ofParameter<float> exposure;
 }
@@ -395,14 +395,14 @@ protected:
 			// (1)
 		}
 	}
-	
+
 	CameraDriver device;
 	ofPixels pixels;
 	ofMutex pixelsLock;
 }
 ```
 
-Now if we want a way to set the exposure on the camera from our `ofApp` we need to signal this to the `CameraClass`, and have it set the exposure in the right thread (e.g. at (1) which happens between grabbing frames from the camera). 
+Now if we want a way to set the exposure on the camera from our `ofApp` we need to signal this to the `CameraClass`, and have it set the exposure in the right thread (e.g. at (1) which happens between grabbing frames from the camera).
 
 One way of doing this would be to store some data saying that we needed to change the exposure, and what that new exposure value is. Then at (1) we would need to check for that data and have the code to act on it appropriately. The problem with that is that it's really laborious and introduces lots of special cases (e.g. what if something had to read the gain and then change the exposure accordingly?).
 
@@ -417,7 +417,7 @@ protected:
 			this->pixelsLock.lock();
 			this->pixels.setFromExternalPixels(this->device->getData(), 640, 480, 3);
 			this->pixelsLock.unlock();
-			
+
 			this->actionsLock.lock();
 			for(auto & action : this->actions) {
 				action(this->device);
@@ -426,23 +426,23 @@ protected:
 			this->actionsLock.unlock();
 		}
 	}
-	
+
 	void performInThread(std::function<void(CameraDriver&)> action) {
 		this->actionsLock.lock();
 		this->actions.push_back(action);
 		this->actionsLock.unlock();
 	}
-	
+
 	CameraDriver device;
 	ofPixels pixels;
 	ofMutex pixelsLock;
-	
+
 	vector<std::function<void(CameraDriver&)> > actions;
 	ofMutex actionsLock;
 }
 ```
 
-```c++
+```cpp
 //somewhere in ofApp
 
 this->camera->performInThread([this](CameraDriver & device) {
