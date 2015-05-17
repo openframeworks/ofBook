@@ -10,13 +10,12 @@ this is a collaboratively written openFrameworks book.
 
 Dependencies
 
+- [LaTeX](http://www.latex-project.org/) 
 - [pandoc](http://johnmacfarlane.net/pandoc/)
 - [python 2.7+](https://www.python.org/)
 - [beauitful soup 4](http://www.crummy.com/software/BeautifulSoup/) 
 - [sass](http://sass-lang.com/)
 - [libsass](https://github.com/dahlia/libsass-python)
-- LaTeX 
-  - Windows: [MiKTeX](http://miktex.org/) is recommended 
 
 Scripts for building the web and pdf versions of the book are in `scripts/` directory: `createWebBook.py` and `createPDFBook.py`.  You must run them from the `scripts/` directory, so either double-click the script or run it from command line.
 - When building the web book, the website is stored in the `output/webBook` directory.  Opening up `output/webBook/toc.html` will open up the table of contents.
