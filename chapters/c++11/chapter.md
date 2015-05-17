@@ -26,7 +26,7 @@ In this code block, we are declaring 3 variables:
 On each line of code we are:
 
 1. Getting a variable on the right hand side. which is of a certain type (`ofRectangle`, `ofVec2f`, `float` respectively)
-2. Declaring a new variabl****e which is explicitly typed to match the value on the right
+2. Declaring a new variable which is explicitly typed to match the value on the right
 3. Assigning the value to the variable
 
 What we may notice, is that the type of data on the right and left side of the `=` is the same. Since C++ is strictly typed (e.g. a function which returns a `float` will always return a `float` no matter what), it is impossible for the value on the right hand side to ever be anything different. The compiler __knows__ what type of value the right hand will give, e.g. it knows that on line 1 that on the right hand side of the `=` is an `ofRectangle`. So perhaps if we were to write something like:
