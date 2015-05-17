@@ -2,11 +2,6 @@
 
 *by [Blair Neal](http://blairneal.com/)*
 
-The original version of the article is [here](http://blairneal.com/blog/installation-up-4evr/) - I wanted to post it here to more easily/consistently update it and open it up to other people's modifications tips and suggestions - a Linux/Windows version would be great to build out too!
-
-Edited the article with https://stackedit.io/# for help with rendering Github Flavored Markup
-
----------
 At work I recently had to set up a four installations of different configurations that would need to run all day, every day, 24 hours a day for a couple months with as few crashes or glitches as possible and without anyone going to check on them. This is something that a lot of media artists need to do all the time, and there are a bunch of different tricks and tips to keeping things up for an extended period, I figured I'd share my findings. There are alternate ways to do many of these tasks and this is only one road so please share some tips you've picked up out in the field down in the comments box below.
 
 I had to do several searches in a couple different places to find all the information I needed to keep everything consistently up and bug free. Luckily most of the installations I was dealing with this time were fairly light in terms of resources and complications, but it's always best practices to have a safety net.
@@ -15,8 +10,7 @@ I usually run these off brand new, unboxed computers so this is sort of starting
 
 Tip: if you're doing multiple computers, do these prep steps on one of them and just boot the others into target disk mode and use something like [Carbon Copy Cloner](http://www.bombich.com/) to mirror the first one on the next so everything is as consistent as possible.
 
-**Step 1: Prep your software and the computer**
------------------------------------------------
+##Step 1: Prep your software and the computer
 
 When building your software or whatever it might be, always keep the long running installation in mind. Plan which things will need to be adjusted by whoever is watching over the installation from the beginning (or at least don't save it for the end). In my experience, keep it as simple as possible, so that it's easy for the caretaker to get in there to fix or adjust what they need without opening Xcode and compiling or even exiting out of your app. Time you spend now to make things simple will save you hours of remote debugging when something breaks.
 
@@ -56,7 +50,7 @@ You can also disable the "This Application Unexpectedly Quit" and the subsequent
 sudo chmod 000 /System/Library/CoreServices/Problem\ Reporter.app
 ```
 
-Another useful tool for modifying certain OSX .plists for disable or enabling certain things is [Tinkertool](http://www.bresink.com/osx/TinkerTool.html) You can use this to disable or enable certain things that System Preferences doesn't cover. 
+Another useful tool for modifying certain OSX .plists for disable or enabling certain things is [Tinkertool](http://www.bresink.com/osx/TinkerTool.html) You can use this to disable or enable certain things that System Preferences doesn't cover.
 
 I would also look at this filepath and you can rename files in here to temporarily disable them on the computer you're using: /System/Library/CoreServices
 
@@ -69,19 +63,17 @@ defaults write com.apple.finder CreateDesktop -bool false
 ```
 
 
-**Step 2: Boot into your software**
--------------------------------
+##Step 2: Boot into your software
 
 Things get unplugged, power goes out, not everyone has budget or space for a battery backup etc etc. Above, I covered how to have everything reboot automatically after power failures or freezes, but you'll also need your app to be ready to go from boot and not leave the desktop open to prying eyes. There are many ways to have your application load automatically - the simplest is using OSX's built in tools: In the System Preferences "Accounts" panel, select "Login Items" and drag your application into there to have it open automatically on launch.
 
 ![Login Items](images/Login_items.png)
 
-**Step 3: Keep it up (champ!)**
----------------------------
+##Step 3: Keep it up (champ!)
 
-There are several ways to make sure your application goes up and stays up - 
+There are several ways to make sure your application goes up and stays up -
 
-**Launchd**
+###Launchd
 
 Using Launch Daemons is an alternate way to get apps to load on boot and to continuously re-open them if they go down. Launchd plists are very useful alternatives to cron jobs and can be used to run things on a periodic basis or on calendar days. You could achieve similar results with a combination of automator and iCal, but it depends on what you're comfortable with.
 
@@ -93,8 +85,8 @@ Also note (!) that you may need to point your launch daemon to a file within you
 
 A launchd example from [admsyn](https://gist.github.com/4140204)
 
-Of course you could make the launchd plist yourself for free from a template like above. You can read all about them with the command "man launchd.plist" typed into terminal to get an idea of what each toggle controls. One quick method to setting up Launchd is to use Lingon ($4.99 in the App Store) or [Lingon X](http://www.peterborgapps.com/lingon/) 
- 
+Of course you could make the launchd plist yourself for free from a template like above. You can read all about them with the command "man launchd.plist" typed into terminal to get an idea of what each toggle controls. One quick method to setting up Launchd is to use Lingon ($4.99 in the App Store) or [Lingon X](http://www.peterborgapps.com/lingon/)
+
 
 In Lingon, hit the + to create a new launchd plist. Just make it a standard launch agent. Now Set up your plist like so:
 
@@ -102,17 +94,17 @@ In Lingon, hit the + to create a new launchd plist. Just make it a standard laun
 
 One additional/optional thing you can add to this is to put an additional key in the plist for a "Successful Exit". By adding this, your app won't re-open when it has detected that it closed normally (ie You just hit escape intentionally, it didn't crash). Can be useful if you're trying to check something and OS X won't stop re-opening the app on you. To easily add this to the key, click the advanced tab and click the checkbox for "Successful exit" - or just add it manually as it in the above screenshot.
 
-**Shell script+Cron Job method**
+###Shell script+Cron Job method
 
 (I got the following super helpful tip from [Kyle McDonald](http://kylemcdonald.net/))
 )
 
 This method is sort of deprecated in relation to the launchd method - you can run shell scripts with Lingon and launchd in the same manner as what we've got here. Shell scripting is your best friend. With the help of the script below and an application called CronniX (or use Lingon) , you will be able to use a cronjob to check the system's list of currently running processes. If your app does not appear on the list, then the script will open it again, otherwise it won't do anything. Either download the script or type the following into a text editor, replacing Twitter.app with your app's name and filepath. Don't forget the ".app" extension in the if statement!:
 
-	\#!/bin/sh 
+	\#!/bin/sh
 		if [ $(ps ax | grep -v grep | grep "Twitter.app" | wc -l) -eq 0 ] then
 		echo "Twitter not running. opening..."
-		open /Applications/Twitter.app 
+		open /Applications/Twitter.app
 		else
 		echo "Twitter running" fi
 
@@ -120,7 +112,7 @@ Save that file as something like "KeepOpen.sh" and keep it next to your applicat
 
 After creating that file, you'll need to make it executable. To do this, open the Terminal and in a new window type "chmod +x " and then enter the path to the shell script you just created (you can either drag the shell script into the terminal window or manually type it). It would look something like this:
 
-    	
+
     4Evr-MacBook-Pro:~ Forever4Evr$ chmod +x /Users/Forever4Evr/Desktop/KeepOpen.sh
 
 After you have made it executable, you're now ready to set it up as a cronjob. Tip: to test the script, you can change the extension at the end to KeepOpen.command as an alternative to opening it with Terminal, but the same thing gets done.
@@ -135,10 +127,10 @@ Now just hit "New" and then make sure to hit "Save" to save it into the system's
 
 This is a great tool if there is an unintended crash because the app will never be down longer than a minute.
 
-**Non-Cronjob - Shell Script Method**
+###Non-Cronjob - Shell Script Method
 
     \#!/bin/bash
-     
+
     while true
     do
     #using open to get focus
@@ -153,8 +145,7 @@ Make sure to check the Console.app for any errors that may have come through whe
 
 Applescript is also a very solid choice for doing some more OS specific work in terms of having odd menus clicked or keypresses sent in some order.
 
-**Step 4: Reboot periodically**
----------------------------
+##Step 4: Reboot periodically
 
 This one is a little more preventative, or maybe superstitious so hopefully someone can point out a concrete reason why this is a good idea. Depending on your app and the amount of stuff it reaches into, there could be some memory leaks or other OS bugs that you haven't accounted for. Rebooting every day or week is a good idea to keep everything tidy, system wise.
 
@@ -174,8 +165,7 @@ If you'd like to just close your programs and re-open them and there is a backgr
 
 ![AutomatorPause](images/Automator_example.png)
 
-**Step 5: Check in on it from afar.**
----------------------------------
+##Step 5: Check in on it from afar.
 
 There are a bunch of options here from various paid web services (like [Logmein](http://www.logmein.com/) or [Teamviewer](http://teamviewer.com/)), to VNC (many options for this: [RealVNC](http://realvnc.com/) and Chicken of the VNC tend to come up a bunch) to [SSHing](http://www.mactricksandtips.com/2009/06/ssh-into-your-mac.html). The choice here depends on your comfort level and how much you need to do to perform maintenance from far away. Also - see below for tips on logging the status of your app as an alternative way
 
@@ -183,17 +173,15 @@ Leaving a Dropbox connected to the computer and your own is super useful for fil
 
 Determining the IP of the machine on a dynamically allocated network can be a pain, especially in screenless/headless installations. To make this a little easier, Robb Godshaw wrote a little Automator Script that says the IP aloud using Text-to-Speech 30 seconds after the computer boots. [Download link on Instructables.](http://www.instructables.com/id/Configuring-a-Mac-for-an-always-on-operation/steps/9)
 
-Step 6: Test, test, test.
--------------------------
+##Step 6: Test, test, test.
 
- 
+
 You've already tested and perfected your software for the installation, so make sure to test all of the above methods and automatic scripts in as realistic manner as you can before you leave it alone for the first day at school.
 
 You can't account for everything, so don't beat yourself up if something does eventually happen, but this list will hopefully alleviate a little bit of frustration. Good luck!
 
 
-Additional Tips: Logging
-------------------------
+##Additional Tips: Logging
 
 If you have an installation that runs for weeks or months, you might want a way to keep tabs on it that doesn't involve remotely logging in and checking on it. A good thing to have would be to have something on the system that writes certain info to a text file (kept on a linked Dropbox), or better write that file to a web server that you can then check.
 
@@ -206,7 +194,7 @@ There is a terminal command you can use to get a list of all of the currently ru
 (more info above ps commands [here](https://developer.apple.com/library/mac/documentation/Darwin/Reference/ManPages/man1/ps.1.html))) – Further more you can filter this list to only return applications you're interested in learning about:
 
     ps aux | grep "TweetDeck"
-    
+
 This will return a line like this:
 
     USER             PID  %CPU %MEM      VSZ    RSS   TT  STAT STARTED      TIME COMMAND
@@ -226,7 +214,7 @@ Now we just need to make this an executable shell script and set it up as a laun
 Let's also take this one step further and say, hypothetically, that the Triplehead2Go display adapter you have is fairly wonky and you don't always get the displays or projectors to connect after reboot – or maybe a projector is shutting itself off and disrupting things. Well we can log the currently available resolutions too! Try entering the line below in your own terminal:
 
     system_profiler SPDisplaysDataType
-    
+
 This will return a list of connected displays and some metadata about them including resolution and names.
 
 Let's say you want to make sure you're running a resolution of 3840×720 at all times…or you want a log of resolution changes. You would do something like:
@@ -264,16 +252,16 @@ Now send a test email to yourself by running: echo "Hello" | mail -s "test" "Ins
 Second step is to combine this new found ability to send emails from the Terminal with a process to check if your application is still running…something like the below would work with some tweaking for what you're looking to do:
 
     \#!/bin/sh
-    if [ $(ps ax | grep -v grep | grep "YourApp.app" | wc -l) -eq 0 ] ; #Replace YourApp.app with your own app's name     
+    if [ $(ps ax | grep -v grep | grep "YourApp.app" | wc -l) -eq 0 ] ; #Replace YourApp.app with your own app's name
     then
             SUBJECT="Shit broke"
             EMAIL="InstallationSupport" #this is the receiver
          EMAILMESSAGE="This could be for adding an attachment/logfile"
          echo "The program isn't open - trying to re-open">$SUBJECT
          date | mail -s "$SUBJECT" "$EMAIL"  "$EMAILMESSAGE"
-     
+
             echo "YourApp not running. Opening..."
-     
+
         open /Applications/YourApp.app #reopen the app - set this to an exact filepath
     else
         echo "YourApp is running"
@@ -281,17 +269,15 @@ Second step is to combine this new found ability to send emails from the Termina
 
 Now you just need to follow the instructions from Step 3 above to set this shell script up to run with launchd – you can check it every 5 minutes and have it email you if it crashed. You could also adapt the If statement to email you if the resolution isn't right or some other process condition.
 
-Memory leak murderer
---------------------
+##Memory leak murderer
 
 See [this article](http://blairneal.com/blog/memory-leak-murderer/) about combining the above process with something that kills and restarts an app if it crosses a memory usage threshold
 
 Bonus – if using MadMapper – see [this link](http://blairneal.com/blog/applescript-to-automatically-fullscreen-madmapper-for-installations/) for an AppleScript that will open MadMapper and have it enter fullscreen – and enter "OK" on a pesky dialog box.
 
-Alternate resources:
---------------------
+##Alternate resources:
 
-**MAC OS X**
+###MAC OS X
 This is an amazing addon for openFrameworks apps that keeps your application open even after a large range of failures: [ofxWatchdog](https://github.com/toolbits/ofxWatchdog
 )
 [http://vormplus.be/blog/article/configuring-mac-os-x-for-interactive-installations](http://vormplus.be/blog/article/configuring-mac-os-x-for-interactive-installations
@@ -301,16 +287,15 @@ This is an amazing addon for openFrameworks apps that keeps your application ope
 
 Nick Hardeman's [ofxMacUtils](https://github.com/NickHardeman/ofxMacUtils)
 
-**LINUX**
+###LINUX
 
 [https://github.com/openframeworks/ofBook/blob/master/chapters/installation_up_4evr_linux/chapter.md](https://github.com/openframeworks/ofBook/blob/master/chapters/installation_up_4evr_linux/chapter.md)
 
-**RASPBERRY PI**
+###RASPBERRY PI
 
 [https://sfpc.hackpad.com/rPi-run-4-ever-qFgafqYPM54](https://sfpc.hackpad.com/rPi-run-4-ever-qFgafqYPM54)
 
-**WINDOWS:** 
-If you're looking for help with this task with Windows, check out this awesome script [StayUp](http://www.bantherewind.com/stayup) from Stephen Schieberl. Also for Windows: http://www.softpedia.com/get/System/File-Management/Restart-on-Crash.shtml and this tool for scripting OS operations on windows http://www.nirsoft.net/utils/nircmd.html 
+###WINDOWS:
+If you're looking for help with this task with Windows, check out this awesome script [StayUp](http://www.bantherewind.com/stayup) from Stephen Schieberl. Also for Windows: http://www.softpedia.com/get/System/File-Management/Restart-on-Crash.shtml and this tool for scripting OS operations on windows http://www.nirsoft.net/utils/nircmd.html
 
 Check out this great step by step from EVSC: http://www.evsc.net/home/prep-windows-machine-for-fulltime-exhibition-setup
-
