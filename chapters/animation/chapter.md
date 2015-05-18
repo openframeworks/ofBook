@@ -398,7 +398,7 @@ This is a form of smoothing: you take some percentage of your current value and 
 
 In Zeno's paradox, you never actually get to the target, since there's always some remaining distance to go. On the computer, since we are dealing with pixel positions on the screen and floating point numbers at a specific range, the object appears to stop.
 
-In the 5th example **(5_rectangleZeno)**, we add a function to the rectangle that uses zeno to catch up to a point:
+In the 5th example (**5_rectangleZeno**), we add a function to the rectangle that uses zeno to catch up to a point:
 
 ```cpp
 void rectangle::zenoToPoint(float catchX, float catchY){
