@@ -524,7 +524,6 @@ ofSetColor(255);
 ofNoFill();
 ofBeginShape();
 for (int i = 0; i < 500; i++){
-    
     float x = i;
     float noise = ofNoise(i/10.0);
     float y = ofMap(noise, 0,1, 0, 100);
