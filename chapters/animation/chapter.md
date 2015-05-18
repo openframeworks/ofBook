@@ -553,7 +553,7 @@ float y = ofMap( ofNoise( 1000.0+ ofGetElapsedTimef()), 0, 1, 0, ofGetHeight());
 ofCircle(x,y,30);
 ```
 
-Alternatively, ofNoise takes multiple dimensions. Here's a quick sketch moving something in a path via ofNoise using the 2d dimensions
+Alternatively, ofNoise takes multiple dimensions. Here's a quick sketch moving something in a path via ofNoise using the 2d dimensions:
 
 ![noise via 2d](images/noise2d.png)
 
