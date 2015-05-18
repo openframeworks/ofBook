@@ -537,15 +537,15 @@ If you alter the i/10.0, you can adjust the scale of the noise, either zooming i
 ![noise with i divided by 100](images/noise_i_d_100.png)
 
 ![noise with i divided by 5](images/noise_i_d_5.png)
-   
-We can use noise to animate. Here, for example, we move an object on screen using noise: 
+
+We can use noise to animate. Here, for example, we move an object on screen using noise:
 
 ```cpp
 float x = ofMap( ofNoise( ofGetElapsedTimef()), 0, 1, 0, ofGetWidth());
 ofCircle(x,200,30);
 ```
-  
-If we move y via noise, we can take a noise input value somewhere "away" from the x value, ie further down the curved line: 
+
+If we move y via noise, we can take a noise input value somewhere "away" from the x value, ie further down the curved line:
 
 ```cpp
 float x = ofMap( ofNoise( ofGetElapsedTimef()), 0, 1, 0, ofGetWidth());
@@ -553,11 +553,11 @@ float y = ofMap( ofNoise( 1000.0+ ofGetElapsedTimef()), 0, 1, 0, ofGetHeight());
 ofCircle(x,y,30);
 ```
 
-Alternatively, ofNoise takes multiple dimensions.  Here's a quick sketch moving something in a path via ofNoise using the 2d dimensions
+Alternatively, ofNoise takes multiple dimensions. Here's a quick sketch moving something in a path via ofNoise using the 2d dimensions
 
 ![noise via 2d](images/noise2d.png)
- 
- The code for this example (note the 2 inputs into ofNoise, this is a 2-dimensional noise call.  It allows us to use the same value for time, but get different results):
+
+The code for this example (note the 2 inputs into ofNoise, this is a 2-dimensional noise call. It allows us to use the same value for time, but get different results):
 
 ```cpp
 //--------------------------------------------------------------
