@@ -47,7 +47,7 @@ cout << &i << endl;
 
 The output of that cout is the memory address of the first byte of the variable `i` we just created.
 
-Later on, when we asign a value to that variable, what its happening is that we are storing that value in the memory area that we've just reserved by declaring the variable, so when we do:
+Later on, when we assign a value to that variable, what is happening is that we are storing that value in the memory area that we've just reserved by declaring the variable, so when we do:
 
 ```cpp
 i = 0;
