@@ -1,20 +1,15 @@
 #include "testApp.h"
 
-
 //--------------------------------------------------------------
 void testApp::setup(){	
-	
 	ofSetVerticalSync(true);
-	ofSetFrameRate(60);
-	
+	ofSetFrameRate(60);	
 	ofBackground(255, 255, 255);
-	
 	p.setInitialCondition(300,300,ofRandom(-1,1), ofRandom(-1,1));
 }
 
 //--------------------------------------------------------------
 void testApp::update(){
-
 	// on every frame 
 	// we reset the forces
 	// add in any forces on the particle
@@ -25,15 +20,12 @@ void testApp::update(){
 	p.addForce(0, 0.1);
 	p.addDampingForce();
 	p.update();
-
 }
 
 //--------------------------------------------------------------
 void testApp::draw(){
-
 	ofSetColor(0);
 	p.draw();
-
 }
 
 //--------------------------------------------------------------
