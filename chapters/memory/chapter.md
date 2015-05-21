@@ -47,7 +47,7 @@ cout << &i << endl;
 
 The output of that cout is the memory address of the first byte of the variable `i` we just created.
 
-Later on, when we asign a value to that variable, what it's happening is that we are storing that value in the memory area that we've just reserved by declaring the variable, so when we do:
+Later on, when we assign a value to that variable, what is happening is that we are storing that value in the memory area that we've just reserved by declaring the variable, so when we do:
 
 ```cpp
 i = 0;
@@ -61,7 +61,7 @@ The order in which the bytes that form the int are layed out in the memory depen
 
 If you've used c++ for a while you've probably had crashes in your programs because of bad memory accesses. Usually the message you'll see is something like `segmentation fault...`. What does that mean?
 
-When you create variables in a program, even in c++, you can't really access all the memory in the computer, for security reasons. Imagine you had your bank account opened in your browser, if any program could access all the memory in the computer a malign application could just access the memory of the browser and get that information or even modify it. To avoid it the operating system asigns chuncks of memory to every program. When your application starts it's asigned a `segment` of memory, later on as you create variables if there's enough memory in that `segment` your variables will be created there. When there's not more memory available in that segment the operating system asigns the application a new one and the application starts using that. If you try to access a memory address that doesn't belong to a segment asigned to your application, the operating system just kills the application to avoid possible security risks.
+When you create variables in a program, even in c++, you can't really access all the memory in the computer, for security reasons. Imagine you had your bank account opened in your browser, if any program could access all the memory in the computer a malign application could just access the memory of the browser and get that information or even modify it. To avoid it the operating system assigns chuncks of memory to every program. When your application starts it's assigned a `segment` of memory, later on as you create variables if there's enough memory in that `segment` your variables will be created there. When there's not more memory available in that segment the operating system asigns the application a new one and the application starts using that. If you try to access a memory address that doesn't belong to a segment assigned to your application, the operating system just kills the application to avoid possible security risks.
 
 How does that happen usually? Well most of the time you just don't try to access memory addresses by their number, so how's it possible that sometimes you try to access a variable and you get a segmentation fault. Most of the time this happens because you try to access a varible that doesn't exist anymore, usually because you stored a pointer to a memory area and then free or move that memory somewhere else. We'll talk in more detail about this later
 
@@ -147,7 +147,7 @@ As we've seen before we can get the address of a variable by doing:
 cout << &i << endl;
 ```
 
-And that will give us the memory address of the first byte used by that variable no matter it's type. When we store that memory address in another variable that's what we call in c++ a pointer. The syntax is:
+And that will give us the memory address of the first byte used by that variable no matter its type. When we store that memory address in another variable that's what we call in c++ a pointer. The syntax is:
 
 ```cpp
 int i = 0;
@@ -214,7 +214,7 @@ cout << j << endl;
 
 and again will get the value 5 since we made a copy of the value pointed by p in j.
 
-The `&`operator is called the *reference operator* since it gives us a reference to a variable, it's memory address. The `*` operator is it's opposite, the *dereference operator* and it gives us the value pointed by a pointer, it dereferences a reference, a memory address, so we can access it's value instead of the address.
+The `&`operator is called the *reference operator* since it gives us a reference to a variable, its memory address. The `*` operator is its opposite, the *dereference operator* and it gives us the value pointed by a pointer, it dereferences a reference, a memory address, so we can access its value instead of the address.
 
 Till now, we've work with primitive values, ints really, but the behaviour will be the same for any other primitive value, like float, short, char, unsigned int...  In c++ in fact, the behaviour is also the same for objects.
 
@@ -274,7 +274,7 @@ Notice how in the case of Java we have made new for the first ball but not for t
 
 In c++, instead when we do `b2 = b1` we are actually copying the values of the variables of b1 into b2 so we still have 2 different variables instead of a reference. When we modify b2, b1 stays the same.
 
-In both languages the `=` means copy the value of the right side into the variable on the left side of the `=`. The difference is that in Java an object is really a pointer to an object the contents of `b1` or `b2` are not the object itself but it's memory address, while in c++ b1 actually contains the object itself.
+In both languages the `=` means copy the value of the right side into the variable on the left side of the `=`. The difference is that in Java an object is really a pointer to an object the contents of `b1` or `b2` are not the object itself but its memory address, while in c++ b1 actually contains the object itself.
 
 This is more or less what memory would look like in Java and C++:
 
@@ -349,7 +349,7 @@ Particle p1;
 p1 = moveParticle(p1);
 ```
 
-So we pass a copy of our particle to the function which modifies it's values and returns a modified copy which we then copy into p1 again. See how many times we've mentiponed copy in the previous sentence?  The compiler will optimize some of those out and for small objects it's perfectly ok to do that but imagine we had something like this:
+So we pass a copy of our particle to the function which modifies its values and returns a modified copy which we then copy into p1 again. See how many times we've mentioned copy in the previous sentence?  The compiler will optimize some of those out and for small objects it's perfectly ok to do that but imagine we had something like this:
 
 ```cpp
 vector<Particle> moveParticles(vector<Particle> ps){
