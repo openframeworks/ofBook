@@ -611,7 +611,7 @@ position = position + 50 * 2;   // for two hours driving
 
 The key expression -- position = position + velocity -- in shorthand would be `p=p+v`.
 
-*Note that the elapsed time part is important. When we animate we'll be doing `p=p+v` quite regularly and you may see us drop this to simplify things (assume every frame has an elapsed time of one). This isn't entirely accurate but it keeps things simple. See the previous section on frame rate (and frame rate independence) for more details* 
+*Note that the elapsed time part is important. When we animate we'll be doing `p=p+v` quite regularly and you may see us drop this to simplify things (assume every frame has an elapsed time of one). This isn't entirely accurate but it keeps things simple. See the previous section on frame rate (and frame rate independence) for more details.*
 
 In addition, if you are traveling at 50 miles per hour (apologies to everyone who thinks in km!) and you accelerate by 5 miles per hour, how fast are you driving in 1 hr? The answer is 55 mph. In 2 hrs, you'd be traveling 60 mph.  In these examples, you are doing the following: 
 
