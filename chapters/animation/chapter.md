@@ -644,21 +644,21 @@ The particle class in all of the examples is designed to be pretty straight forw
 
 ```cpp
 class particle{
-    
+
     public:
 
         ofPoint pos;
         ofPoint vel;
         ofPoint frc;  
         float damping;
-                        
+
         particle();
         void setInitialCondition(float px, float py, float vx, float vy);
-           
+
         void resetForce();
         void addForce(float x, float y);
         void addDampingForce();
-        
+
         void update();
         void draw();    
 };
