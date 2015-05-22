@@ -647,11 +647,6 @@ class particle{
 
     public:
 
-        ofPoint pos;
-        ofPoint vel;
-        ofPoint frc;  
-        float damping;
-
         particle();
         void setInitialCondition(float px, float py, float vx, float vy);
 
@@ -660,7 +655,12 @@ class particle{
         void addDampingForce();
 
         void update();
-        void draw();    
+        void draw();
+
+        ofPoint pos;
+        ofPoint vel;
+        ofPoint frc;  
+        float damping;
 };
 ```
 
