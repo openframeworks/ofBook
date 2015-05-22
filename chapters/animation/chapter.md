@@ -640,7 +640,7 @@ I have several particle examples that use this approach, and while I won't go de
 
 ### Particle class
 
-The particle class in all of the examples is designed to be pretty straight forward.  Let's take a look at the H file: 
+The particle class in all of the examples is designed to be pretty straight forward.  Let's take a look at the H file:
 
 ```cpp
 class particle{
