@@ -668,7 +668,7 @@ For variables, it has [ofPoint](http://openframeworks.cc/documentation/types/ofP
 
 In terms of functions, it has a [constructor](https://en.wikipedia.org/wiki/Constructor_%28object-oriented_programming%29 "Wikipedia on Constructors") which sets some internal variables like `damping` and a `setInitialCondition(...)` that allows you to set the position and velocity of the particle. Think about this as setting up its initial state, and from here you let the particle play out. The next three functions are about forces (we'll see more) -- the first one, `resetForce()`, clears all the internal force variable `frc`. Forces are not cumulative across frames, so at the start of every frame we clear it. `addForce(...)` adds a force in a given direction, useful for constant forces, like gravity. `addDampingForce()` adds a force opposite velocity (damping is a force felt opposite the direction of travel). Finally, update takes force and adds it to velocity, and takes velocity and adds it to position. Draw just draws a dot where position is.
 
-The particle class is really simple, and throughout these examples, we add complexity to it. In general, the formula you will see in all the examples is:
+The particle class is really simple, and throughout these examples, we add complexity to it. In general, the formula you will see in all the examples is
 
 ```cpp
 for (int i = 0; i < particles.size(); i++){
