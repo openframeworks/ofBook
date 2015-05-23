@@ -701,7 +701,7 @@ They essentially add forces the move towards or away from a point that you pass 
 
 ![sin](images/particle.png)
 
-The calculation of these forces is fairly straightforward - first, we figure out how far away a point is from the center of the force.  If it's outside of the radius of interaction, we disregard it.  If it's inside, we figure out its percentage, i.e., the distance between the force and the particle divided by the radius of interaction.  This gives us a number that's close to 1 when we are towards the far edge of the circle and 0 as we get towards the center.  If we invert this, by taking 1 - percent, we get a number that's small on the outside, and larger as we get closer to the center. 
+The calculation of these forces is fairly straightforward - first, we figure out how far away a point is from the center of the force. If it's outside of the radius of interaction, we disregard it. If it's inside, we figure out its percentage, i.e., the distance between the force and the particle divided by the radius of interaction. This gives us a number that's close to 1 when we are towards the far edge of the circle and 0 as we get towards the center. If we invert this, by taking 1 - percent, we get a number that's small on the outside, and larger as we get closer to the center.
 
 This is useful because oftentimes forces are proportional to distance.  For example, a magnetic force will have a radius at which it works, and the closer you get to the magnet the stronger the force. 
 
