@@ -6,6 +6,9 @@
 class particle{
 
     public:
+        ofVec2f pos;
+        ofVec2f vel;
+        ofVec2f frc;
 
         particle();
 
@@ -16,9 +19,6 @@ class particle{
         void update();
         void draw();
 
-        ofVec2f pos;
-        ofVec2f vel;
-        ofVec2f frc;   // frc is also know as acceleration (newton says "f=ma")
 		float damping;
 };
 

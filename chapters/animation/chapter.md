@@ -646,7 +646,10 @@ The particle class in all of the examples is designed to be pretty straight forw
 class particle{
 
     public:
-
+        ofVec2f pos;
+        ofVec2f vel;
+        ofVec2f frc;
+        
         particle();
         void setInitialCondition(float px, float py, float vx, float vy);
 
@@ -657,9 +660,6 @@ class particle{
         void update();
         void draw();
 
-        ofPoint pos;
-        ofPoint vel;
-        ofPoint frc;  
         float damping;
 };
 ```
