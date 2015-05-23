@@ -801,7 +801,7 @@ for (int i = 0; i < particles.size(); i++){
 }
 ```
 
-You'll notice in this 2D for loop, the inner loop counts up to the outer loop, so when `i` is 0, we don't even do the inner loop.  When `i` is 1, we compare it to 0 (1 vs. 0).  When i is 2, we compare it to 0 and 1 (2 vs. 0, 2 vs. 1).  This way we never compare a particle with itself, as that would make no sense (although we might know some people in our lives that have a strong self attraction or repulsion).
+You'll notice in this 2D for loop, the inner loop counts up to the outer loop, so when `i` is 0, we don't even do the inner loop. When `i` is 1, we compare it to 0 (1 vs. 0). When i is 2, we compare it to 0 and 1 (2 vs. 0, 2 vs. 1). This way we never compare a particle with itself, as that would make no sense (although we might know some people in our lives that have a strong self attraction or repulsion).
 
 **[note: maybe a diagram to clarify]**
 
