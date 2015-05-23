@@ -740,7 +740,7 @@ We just move in the opposite direction. For the clockwise and counterclockwise f
 
 Now that we have particles interacting with forces, the next step is to give them more understanding of each other. For example, if you have a broad attraction force, they will all converge on the same point without any respect for their neighbors. The trick is to add a function that allows the particle to feel a force based on their neighbor.
 
-We've added new functions to the particle object (looking in the h file):
+We've added new functions to the particle object (looking in the header file):
 
 ```cpp
 void addRepulsionForce(particle &p, float radius, float scale);
