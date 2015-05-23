@@ -813,7 +813,6 @@ We don't have time to get into it in this chapter, but there are different appro
 
 ![sin](images/multiForces.png)
 
-
 ## Where to go further
 
 * [OpenFrameworks / Animation by Code](https://github.com/bschorr/OFAnimation_Spring2015 "OpenFrameworks / Animation by Code course at Parsons The New School for Design, Spring 2015") (course at Parsons The New School for Design, Spring 2015)
