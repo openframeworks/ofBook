@@ -747,8 +747,8 @@ void addRepulsionForce(particle &p, float radius, float scale);
 void addAttractionForce(particle &p, float radius, float scale);
 ```
 
-This looks really similar to the code before, except here we pass in a particle instead of an x and y position. You'll notice that we pass by reference (using &) as opposed to passing by copy. This is because internally we'll alter both the particle which has this function called as well as particle `p` -- ie, if you calculate A vs B, you don't need to calculate B vs A.
-	
+This looks really similar to the code before, except here we pass in a particle instead of an x and y position. You'll notice that we pass by reference (using &) as opposed to passing by copy. This is because internally we'll alter both the particle which has this function called as well as particle `p` -- i.e., if you calculate A vs B, you don't need to calculate B vs A.
+
 ```cpp
 void particle::addRepulsionForce(particle &p, float radius, float scale){
     
