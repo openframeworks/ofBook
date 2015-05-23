@@ -787,8 +787,8 @@ frc.x = frc.x + diff.x * scale * pct;
 frc.y = frc.y + diff.y * scale * pct;
 p.frc.x = p.frc.x - diff.x * scale * pct;
 p.frc.y = p.frc.y - diff.y * scale * pct;
-
 ```
+
 This is modifying both the particle you are calling this on and the particle that is passed in.  
 
 This means we can cut down on the number of particle interactions we need to calculate: 
