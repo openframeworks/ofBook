@@ -707,14 +707,13 @@ This is useful because oftentimes forces are proportional to distance.  For exam
 
 Here's a quick look at one of the functions for adding force: 
 
-
 ```cpp
 void particle::addAttractionForce( float px, float py, float radius, float strength){
 
     ofVec2f posOfForce;
     posOfForce.set(px, py);
     ofVec2f diff = pos - posOfForce;
-    
+
     if (diff.length() < radius){ 
         float pct = 1 - (diff.length() / radius);
         diff.normalize();
