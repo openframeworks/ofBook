@@ -723,16 +723,16 @@ void particle::addAttractionForce( float px, float py, float radius, float stren
 } 
 ```
 
-`diff` is a line between the particle and the position of the force.  If the length of diff is less than the radius, we calculate the pct as a number that goes between 0 and 1 (0 on the outside of the radius of interaction, 1 as we get to the center of the force).  We take the line `diff` and normalize it to get a "directional" vector, its magnitude (distance) is one, but the angle is still there.  We then multiply that by pct * strength to get a line that tells us how to move.  This gets added to our force. 
+`diff` is a line between the particle and the position of the force. If the length of diff is less than the radius, we calculate the pct as a number that goes between 0 and 1 (0 on the outside of the radius of interaction, 1 as we get to the center of the force). We take the line `diff` and normalize it to get a "directional" vector, its magnitude (distance) is one, but the angle is still there. We then multiply that by pct * strength to get a line that tells us how to move. This gets added to our force.
 
-You'll notice that all the code is relatively similar, but with different additions to force.  For example, repulsion is just the opposite of attraction: 
+You'll notice that all the code is relatively similar, but with different additions to force. For example, repulsion is just the opposite of attraction:
 
 ```cpp
-        frc.x += diff.x * pct * strength;
-        frc.y += diff.y * pct * strength;
+frc.x += diff.x * pct * strength;
+frc.y += diff.y * pct * strength;
 ```
 
-We just move in the opposite direction.  For the clockwise and counterclockwise forces we add the perpendicular of the diff line.  The perpendicular of a 2d vector is just simply switching x and y and making one of them negative.
+We just move in the opposite direction. For the clockwise and counterclockwise forces we add the perpendicular of the diff line. The perpendicular of a 2d vector is just simply switching x and y and making one of them negative.
 
 **[more: show example]**
 
