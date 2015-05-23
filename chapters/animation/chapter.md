@@ -751,27 +751,24 @@ This looks really similar to the code before, except here we pass in a particle 
 
 ```cpp
 void particle::addRepulsionForce(particle &p, float radius, float scale){
-    
+
     // ----------- (1) make a vector of where this particle p is: 
     ofVec2f posOfForce;
     posOfForce.set(p.pos.x,p.pos.y);
-    
-    // ----------- (2) calculate the difference & length 
-    
+
+    // ----------- (2) calculate the difference & length
     ofVec2f diff    = pos - posOfForce;
     float length    = diff.length();
-    
+
     // ----------- (3) check close enough
-    
     bool bAmCloseEnough = true;
     if (radius > 0){
         if (length > radius){
             bAmCloseEnough = false;
         }
     }
-    
+
     // ----------- (4) if so, update force
-    
     if (bAmCloseEnough == true){
         float pct = 1 - (length / radius);  // stronger on the inside
         diff.normalize();
