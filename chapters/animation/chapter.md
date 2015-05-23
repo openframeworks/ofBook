@@ -688,7 +688,7 @@ where the magic is happening between the `resetForce()` and `update()`. Although
 
 ### Simple forces, repulsion and attraction
 
-In the next few examples, I added a few functions to the particle object: 
+In the next few examples, I added a few functions to the particle object:
 
 ```cpp
 void addRepulsionForce( float px, float py, float radius, float strength);
