@@ -780,7 +780,7 @@ void particle::addRepulsionForce(particle &p, float radius, float scale){
 }
 ```
 
-The code should look very similar to before, except with these added lines: 
+The code should look very similar to before, except with these added lines:
 
 ```cpp
 frc.x = frc.x + diff.x * scale * pct;
