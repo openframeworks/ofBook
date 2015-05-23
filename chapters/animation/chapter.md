@@ -682,7 +682,7 @@ for (int i = 0; i < particles.size(); i++){
 }
 ```
 
-where the magic is happening between the resetForce and update. Although these examples increase in complexity, they do so simply by adding new functions to the particle class, and adding more things between reset and update.
+where the magic is happening between the `resetForce()` and `update()`. Although these examples increase in complexity, they do so simply by adding new functions to the particle class, and adding more things between reset and update.
 
 **[note: add screenshot of simple particle examples]**
 
