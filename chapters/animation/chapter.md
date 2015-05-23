@@ -821,13 +821,13 @@ We don't have time to get into it in this chapter, but there are different appro
 * [ofxAddons: animation](http://www.ofxaddons.com/categories/7-animation "ofxAddons for animation")
 * [Wikipedia animations portal](https://en.wikipedia.org/wiki/Portal:Animation)
 * [Wikipedia book: Animation](https://en.wikipedia.org/wiki/Book:Animation)
-* [easings.net](http://easings.net/) resource for shaping/easing functions
-* ["Interpolation Tricks or How I Learned to Stop Worrying and Love the 0..1 Range"](http://sol.gfxile.net/interpolation/) is another resource for shaping/easing functions
 * [Blender](http://blender.org/) animation tutorial: [Principles of Animation](http://wiki.blender.org/index.php/Doc:2.4/Tutorials/Animation/BSoD/Principles_of_Animation)
 * Thomas, Frank; Ollie Johnston, The Illusion of Life: Disney Animation, Hyperion, ISBN 978-0-7868-6070-8
 
 ### Mathematical concepts
 
+* [easings.net](http://easings.net/) resource for shaping/easing functions
+* ["Interpolation Tricks or How I Learned to Stop Worrying and Love the 0..1 Range"](http://sol.gfxile.net/interpolation/) is another resource for shaping/easing functions
 * Sato Masahiko Laboratory, [Mathematical Curves Hidden Around Us](http://www.masahicom.com/blog/index.cgi/books/20100817mathematicalcurves_dvdbook.htm)
 * [Tristam MacDonald](http://www.gamedev.net/user/6-dave-astle), [Spatial Hashing](http://www.gamedev.net/page/resources/_/technical/game-programming/spatial-hashing-r2697)
 * [Sylvain Lefebvre](http://www-sop.inria.fr/reves/personnel/Sylvain.Lefebvre/), [Hugues Hoppe](http://research.microsoft.com/~hoppe/): [Perfect spatial hashing](http://research.microsoft.com/en-us/um/people/hoppe/proj/perfecthash/), ACM Trans. Graphics (SIGGRAPH), 25(3), 2006.
