@@ -825,6 +825,9 @@ We don't have time to get into it in this chapter, but there are different appro
 * [Blender](http://blender.org/) animation tutorial: [Principles of Animation](http://wiki.blender.org/index.php/Doc:2.4/Tutorials/Animation/BSoD/Principles_of_Animation)
 * Thomas, Frank; Ollie Johnston, The Illusion of Life: Disney Animation, Hyperion, ISBN 978-0-7868-6070-8
 * Sato Masahiko Laboratory, [Mathematical Curves Hidden Around Us](http://www.masahicom.com/blog/index.cgi/books/20100817mathematicalcurves_dvdbook.htm)
+* [Tristam MacDonald](http://www.gamedev.net/user/6-dave-astle), [Spatial Hashing](http://www.gamedev.net/page/resources/_/technical/game-programming/spatial-hashing-r2697)
+* [Sylvain Lefebvre](http://www-sop.inria.fr/reves/personnel/Sylvain.Lefebvre/), [Hugues Hoppe](http://research.microsoft.com/~hoppe/): [Perfect spatial hashing](http://research.microsoft.com/en-us/um/people/hoppe/proj/perfecthash/), ACM Trans. Graphics (SIGGRAPH), 25(3), 2006.
+* [Simon Wittber](http://entitycrisis.blogspot.com/), [Spatial Hashing](http://entitycrisis.blogspot.de/2007/11/spatial-hashing.html)
 
 ### Physics and animation libraries
 
