@@ -71,7 +71,7 @@ We have a function in oF for controlling this. Some graphics card drivers (see f
 
 - [`ofSetVerticalSync (bool bUseSync)`](http://openframeworks.cc/documentation/application/ofAppRunner.html#!show_ofSetVerticalSync "ofSetVerticalSync Documentation Page") set this true if you want to synchronized vertically, false if you want to draw as fast as possible.
 
-By default, oF enables vertical sync and sets a frame rate of 60FPS. You can adjust the VSYNC and frame rate settings if you want to animate faster, but please note that by default oF wants to run as fast as possible. It's not uncommon if you are drawing a simple scene to see frame rates of 800 FPS if you don't have VSYNC enabled (and the frame rate cap set really high or disabled).
+By default, oF enables vertical sync and sets a frame rate of 60 FPS. You can adjust the VSYNC and frame rate settings if you want to animate faster, but please note that by default oF wants to run as fast as possible. It's not uncommon if you are drawing a simple scene to see frame rates of 800 FPS if you don't have VSYNC enabled (and the frame rate cap set really high or disabled).
 
 Another important point which is a bit hard to cover deeply in this chapter is frame rate independence. If you animate using a simple model -- say for example, you create a variable called `xPos`, increase it by a certain amount every frame and draw it.
 
@@ -89,7 +89,7 @@ void testApp::draw(){
 }
 ```
 
-This kind of animation works fine, but it assumes that your frame rate is constant. If your app runs faster, say by jumping from 30fps to 60fps, the object will appear to go twice as fast, since there will be 2x the number of update and draw functions called per second.  Typically more complex animations will be written to take this into account, either by using functions like time (explained below) or mixing the frame rate or elapsed time into your update. For example, a solution might be something like:
+This kind of animation works fine, but it assumes that your frame rate is constant. If your app runs faster, say by jumping from 30 FPS to 60 FPS, the object will appear to go twice as fast, since there will be 2x the number of update and draw functions called per second.  Typically more complex animations will be written to take this into account, either by using functions like time (explained below) or mixing the frame rate or elapsed time into your update. For example, a solution might be something like:
 
 ```cpp
 void testApp::update(){
@@ -97,7 +97,7 @@ void testApp::update(){
 }
 ```
 
-If `ofGetFrameRate()` returns 30, we multiply 0.5 by 1, if `ofGetFrameRate()` returns 60, we multiply it by 1/2, so although we are animating twice as fast, we take half sized steps, therefore effectively moving at the same speed regardless of frame rate.  Frame rate independence is fairly important to think about once you get the hang of things. As observers of animation, we really do feel objects speeding up or slowwing down even slightly, but in this chapter I will skip it for the sake of simplicity in the code.
+If `ofGetFrameRate()` returns 30, we multiply 0.5 by 1, if `ofGetFrameRate()` returns 60, we multiply it by 1/2, so although we are animating twice as fast, we take half sized steps, therefore effectively moving at the same speed regardless of frame rate.  Frame rate independence is fairly important to think about once you get the hang of things. As observers of animation, we really do feel objects speeding up or slowing down even slightly, but in this chapter I will skip it for the sake of simplicity in the code.
 
 ### Time functions
 
@@ -198,7 +198,7 @@ void rectangle::interpolateByPct(float myPct){
     pos.y = (1-pct) * posa.y + (pct) * posb.y;
 
     // this is an alternative way to write above..
-    // differe style, but the same mathematically.
+    // different style, but the same mathematically.
     //pos.x = posa.x + (pct) * (posb.x-posa.x);
 }
 ```
@@ -407,7 +407,7 @@ void rectangle::zenoToPoint(float catchX, float catchY){
 }
 ```
 
-Here, we have a value, `catchUpSpeed`, that represents how fast we catch up to the object we are trying to get to. It's set to 0.01 (1%) in this example code, which means take 99% of my own postion, 1% of the target position and move to their sum. If you alter this number you'll see the rectangle catch up to the mouse faster or slower. A value of 0.001 means it will run 10 times slower, a value of 0.1 means ten times faster.
+Here, we have a value, `catchUpSpeed`, that represents how fast we catch up to the object we are trying to get to. It's set to 0.01 (1%) in this example code, which means take 99% of my own position, 1% of the target position and move to their sum. If you alter this number you'll see the rectangle catch up to the mouse faster or slower. A value of 0.001 means it will run 10 times slower, a value of 0.1 means ten times faster.
 
 This technique is very useful if you are working with noisy data -- a sensor for example. You can create a variable that catches up to it using zeno and smoothes out the result. I use this quite often when I'm working with hardware sensors / physical computing, or when I have noisy data. The nice thing is that the catch up speed becomes a knob that you can adjust between more real-time (and more noisy data) and less real-time (and more smooth) data. Having that kind of control comes in handy!
 
@@ -444,7 +444,7 @@ void ofApp::draw(){
 
 This draws a rectangle which moves sinusoidally across the screen, back and forth every 6.28 seconds. 
 
-You can do simple things with offsets to the phase (how shifted over the sine wave is). In example 7 (**7_sinExample_phase**), we calculate the sine of the time twice, but at the second instance, we add PI: `ofGetElapsedTimef() + PI`. This means the two values will be offset from each other by 180 degrees on the circle (imagining our dot, when one is far right, the other will be far left. When one is up, the other is down). Here we set the background color and the color of a rectangle using these offset values. It's useful if you start playing with sine and cose to manipulate phase.
+You can do simple things with offsets to the phase (how shifted over the sine wave is). In example 7 (**7_sinExample_phase**), we calculate the sine of the time twice, but at the second instance, we add PI: `ofGetElapsedTimef() + PI`. This means the two values will be offset from each other by 180 degrees on the circle (imagining our dot, when one is far right, the other will be far left. When one is up, the other is down). Here we set the background color and the color of a rectangle using these offset values. It's useful if you start playing with sine and cosine to manipulate phase.
 
 ```cpp
 //--------------------------------------------------------------
@@ -505,7 +505,7 @@ we get spirals.
 
 #### Lissajous figures
 
-Finally, if we alter the angles we pass in to x and y for this formula at different rates, we can get interesting figures, called ["Lissajous" figures](https://en.wikipedia.org/wiki/Lissajous_curve "Wikipedia on Lissajouse figures"), named after the French mathematician, Jules Antoine Lissajous. These formulas look cool. Oftentimes I joke with my students in algorithm class about how this is really a course to make cool screen savers. 
+Finally, if we alter the angles we pass in to x and y for this formula at different rates, we can get interesting figures, called ["Lissajous" figures](https://en.wikipedia.org/wiki/Lissajous_curve "Wikipedia on Lissajous figures"), named after the French mathematician, Jules Antoine Lissajous. These formulas look cool. Oftentimes I joke with my students in algorithm class about how this is really a course to make cool screen savers. 
 
 ### Noise
 
@@ -532,7 +532,7 @@ for (int i = 0; i < 500; i++){
 ofEndShape();
 ```
 
-If you alter the i/10.0, you can adjust the scale of the noise, either zooming in (ie, i/100.0), so you see more details, or zooming out (ie, i/5.0) so you see more variation. 
+If you alter the i/10.0, you can adjust the scale of the noise, either zooming in (i.e., i/100.0), so you see more details, or zooming out (i.e., i/5.0) so you see more variation. 
 
 ![noise with i divided by 100](images/noise_i_d_100.png)
 
@@ -545,7 +545,7 @@ float x = ofMap( ofNoise( ofGetElapsedTimef()), 0, 1, 0, ofGetWidth());
 ofCircle(x,200,30);
 ```
 
-If we move y via noise, we can take a noise input value somewhere "away" from the x value, ie further down the curved line:
+If we move y via noise, we can take a noise input value somewhere "away" from the x value, i.e. further down the curved line:
 
 ```cpp
 float x = ofMap( ofNoise( ofGetElapsedTimef()), 0, 1, 0, ofGetWidth());
@@ -553,9 +553,9 @@ float y = ofMap( ofNoise( 1000.0+ ofGetElapsedTimef()), 0, 1, 0, ofGetHeight());
 ofCircle(x,y,30);
 ```
 
-Alternatively, ofNoise takes multiple dimensions. Here's a quick sketch moving something in a path via ofNoise using the 2d dimensions:
+Alternatively, ofNoise takes multiple dimensions. Here's a quick sketch moving something in a path via ofNoise using the 2D dimensions:
 
-![noise via 2d](images/noise2d.png)
+![noise via 2D](images/noise2d.png)
 
 The code for this example (note the 2 inputs into ofNoise, this is a 2-dimensional noise call. It allows us to use the same value for time, but get different results):
 
@@ -801,7 +801,7 @@ for (int i = 0; i < particles.size(); i++){
 }
 ```
 
-You'll notice in this 2D for loop, the inner loop counts up to the outer loop, so when `i` is 0, we don't even do the inner loop. When `i` is 1, we compare it to 0 (1 vs. 0). When i is 2, we compare it to 0 and 1 (2 vs. 0, 2 vs. 1). This way we never compare a particle with itself, as that would make no sense (although we might know some people in our lives that have a strong self attraction or repulsion). This also prevents the unnecessary reverse comparision, e.g. particle 3 to particle 42 vs. particle 42 to particle 3, since both yield the same result.
+You'll notice in this 2D for loop, the inner loop counts up to the outer loop, so when `i` is 0, we don't even do the inner loop. When `i` is 1, we compare it to 0 (1 vs. 0). When i is 2, we compare it to 0 and 1 (2 vs. 0, 2 vs. 1). This way we never compare a particle with itself, as that would make no sense (although we might know some people in our lives that have a strong self attraction or repulsion). This also prevents the unnecessary reverse comparison, e.g. particle 3 to particle 42 vs. particle 42 to particle 3, since both yield the same result.
 
 One thing to note is that even though we've cut down the number of calculations, it's still quite a lot! This is a problem that doesn't scale linearly. In computer science, you talk about a problem using "O" notation, i.e. [big O notation](https://en.wikipedia.org/wiki/Big_O_notation "Wikipedia on big O notation"). This is a bit more like O^2 / 2 -- the complexity is approximately 1/2 of a square. If you have 100 particles, you are doing almost 5000 calculations (100 * 100 / 2). If you have 1000 particles, it's almost half a million. Needless to say, lots of particles can get slow...
 
@@ -839,6 +839,6 @@ We don't have time to get into it in this chapter, but there are different appro
 * [Newton Game Dynamics](http://www.newtondynamics.com/ "Newton Game Dynamics website")
 * [Open Dynamics Engine](http://www.ode.org/ "Open Dynamics Engine website")
 * [Physics Abstraction Layer](http://www.adrianboeing.com/pal/index.html "Physics Abstraction Layer website")
-* [SICONOS - SImulation and COntrol of NOnsmooth Systems](http://siconos.gforge.inria.fr/ "SICONOS webiste")
+* [SICONOS - SImulation and COntrol of NOnsmooth Systems](http://siconos.gforge.inria.fr/ "SICONOS website")
 * [Tokamak Game Physics SDK](http://www.tokamakphysics.com/ "Tokamak Game Physics SDK website")
 * [SOFA - Simulation Open Framework Architecture](http://www.sofa-framework.org/ "SOFA website")
