@@ -626,7 +626,7 @@ p = p + v;   // position = position + velocity
 v = v + a;   // velocity = velocity + acceleration
 ```
 
-The amazing thing is that we've just described a system that can use acceleration to control position. Why is this useful? It's useful–if you remember from physics class–because Newton had very simple laws of motion, the second of which says
+The amazing thing is that we've just described a system that can use acceleration to control position. Why is this useful? It's useful - if you remember from physics class - because Newton had very simple laws of motion, the second of which says
 
 ```
 Force = Mass x Acceleration
