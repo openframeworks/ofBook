@@ -12,7 +12,7 @@ The word animation is a medieval term stemming from the Latin animare, which mea
 
 As a side note, I studied fine arts, painting and printmaking, and it was accidental that I started using computers. The moment I saw how you could write code to move something across the screen, even as simple as silly rectangle, I was hooked. I began during the first dot-com era working with Flash / ActionScript and Lingo / Macromedia Director and have never looked back.
 
-This chapter will first explain some basic principles that are useful to understanding animation in oF, then attempt to show a few entrypoints to interesting approaches. 
+This chapter will first explain some basic principles that are useful to understanding animation in oF, then attempt to show a few entry-points to interesting approaches.
 
 ## Animation in oF / useful concepts: 
 
@@ -52,7 +52,7 @@ void ofApp::draw(){
 }
 ```
 
-In this example a red circle moves from the left to the right on the screen. The vertical position (`xpos`) is an integer and gets set to 5 as the inital value in `setup()`. The `update()` function always adds 2 to the `xpos` variable and stores the new value until it becomes larger than the screen width (`ofGetWidth()`), then the vertical position gets reset. The `draw()` function reads the value stored in the variable `xpos` and draws the red circle accordingly.
+In this example a red circle moves from the left to the right on the screen. The vertical position (`xpos`) is an integer and gets set to 5 as the initial value in `setup()`. The `update()` function always adds 2 to the `xpos` variable and stores the new value until it becomes larger than the screen width (`ofGetWidth()`), then the vertical position gets reset. The `draw()` function reads the value stored in the variable `xpos` and draws the red circle accordingly.
 
 ### Frame rate
 
