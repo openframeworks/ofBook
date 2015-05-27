@@ -801,9 +801,7 @@ for (int i = 0; i < particles.size(); i++){
 }
 ```
 
-You'll notice in this 2D for loop, the inner loop counts up to the outer loop, so when `i` is 0, we don't even do the inner loop. When `i` is 1, we compare it to 0 (1 vs. 0). When i is 2, we compare it to 0 and 1 (2 vs. 0, 2 vs. 1). This way we never compare a particle with itself, as that would make no sense (although we might know some people in our lives that have a strong self attraction or repulsion).
-
-**[note: maybe a diagram to clarify]**
+You'll notice in this 2D for loop, the inner loop counts up to the outer loop, so when `i` is 0, we don't even do the inner loop. When `i` is 1, we compare it to 0 (1 vs. 0). When i is 2, we compare it to 0 and 1 (2 vs. 0, 2 vs. 1). This way we never compare a particle with itself, as that would make no sense (although we might know some people in our lives that have a strong self attraction or repulsion). This also prevents the unnecessary reverse comparision, e.g. particle 3 to particle 42 vs. particle 42 to particle 3, since both yield the same result.
 
 One thing to note is that even though we've cut down the number of calculations, it's still quite a lot! This is a problem that doesn't scale linearly. In computer science, you talk about a problem using "O" notation, i.e. [big O notation](https://en.wikipedia.org/wiki/Big_O_notation "Wikipedia on big O notation"). This is a bit more like O^2 / 2 -- the complexity is approximately 1/2 of a square. If you have 100 particles, you are doing almost 5000 calculations (100 * 100 / 2). If you have 1000 particles, it's almost half a million. Needless to say, lots of particles can get slow...
 
