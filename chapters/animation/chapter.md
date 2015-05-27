@@ -2,9 +2,10 @@
 
 *by [Zach Lieberman](http://thesystemis.com)* 
 
+*extensions by tpltnt*
+
 *with edits from Kayla Lewis*
 
-*extensions by tpltnt*
 
 ## Background 
 
