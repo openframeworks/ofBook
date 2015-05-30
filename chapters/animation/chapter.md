@@ -144,7 +144,7 @@ To add some detail if we are 0 pct of the way from A to B, we calculate
 which simplifies to `(1*A + 0*B)` or A. If we are 25 percent of the way, it looks like
 
 ```cpp
-((1-0.75) * A) + (0.25 * B)
+((1-0.25) * A) + (0.25 * B)
 ```
 
 which is 75% of A + 25% of B. Essentially by taking a mix, you get from one to the other. The first example (**1_rectangleInterpolate**) shows how this is done.
