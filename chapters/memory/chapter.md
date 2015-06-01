@@ -61,7 +61,7 @@ The order in which the bytes that form the int are layed out in the memory depen
 
 If you've used c++ for a while you've probably had crashes in your programs because of bad memory accesses. Usually the message you'll see is something like `segmentation fault...`. What does that mean?
 
-When you create variables in a program, even in c++, you can't really access all the memory in the computer, for security reasons. Imagine you had your bank account opened in your browser, if any program could access all the memory in the computer a malign application could just access the memory of the browser and get that information or even modify it. To avoid it the operating system assigns chuncks of memory to every program. When your application starts it's assigned a `segment` of memory, later on as you create variables if there's enough memory in that `segment` your variables will be created there. When there's not more memory available in that segment the operating system asigns the application a new one and the application starts using that. If you try to access a memory address that doesn't belong to a segment assigned to your application, the operating system just kills the application to avoid possible security risks.
+When you create variables in a program, even in c++, you can't really access all the memory in the computer, for security reasons. Imagine you had your bank account opened in your browser, if any program could access all the memory in the computer a malign application could just access the memory of the browser and get that information or even modify it. To avoid it the operating system assigns chunks of memory to every program. When your application starts it's assigned a `segment` of memory. Later on as you create variables if there's enough memory in that `segment` your variables will be created there. When there's not more memory available in that segment the operating system assigns the application a new one and the application starts using that. If you try to access a memory address that doesn't belong to a segment assigned to your application, the operating system just kills the application to avoid possible security risks.
 
 How does that happen usually? Well most of the time you just don't try to access memory addresses by their number, so how's it possible that sometimes you try to access a variable and you get a segmentation fault. Most of the time this happens because you try to access a varible that doesn't exist anymore, usually because you stored a pointer to a memory area and then free or move that memory somewhere else. We'll talk in more detail about this later
 
@@ -71,7 +71,7 @@ As we said at the beginning of the chapter there's two types of memory in c++ th
 
 The stack is the type of memory that you use when creating variables inside a function or in the .h of your class as long as you don't use pointers and the keyword new.
 
-It's called stack because it's organized like a [stack](http://en.wikipedia.org/wiki/Stack_%28abstract_data_type%29). When in our application we call a function, there's an area in memory asigned to that function **call**. That specific function **call**, and only it, during the time it lasts can create variables in that area.
+It's called stack because it's organized like a [stack](http://en.wikipedia.org/wiki/Stack_%28abstract_data_type%29). When in our application we call a function, there's an area in memory assigned to that function **call**. That specific function **call**, and only it, during the time it lasts can create variables in that area.
 
 Those variables stop existing when the function call ends. So for example you can't do:
 
@@ -475,7 +475,7 @@ but trying to change the reference itself like in:
 ```cpp
 ofVec2f & pos = p.pos;
 pos.x = 5;
-pos = p2.pos;  // error, a reference can only be asigned on it's declaration
+pos = p2.pos;  // error, a reference can only be assigned on it's declaration
 ```
 
 Also you can return a reference but depending on what that reference it's pointing to it can be a bad idea:
@@ -614,9 +614,9 @@ int arr[10];
 int a = arr[25];
 ```
 
-most probably our application will crash if the memory address at arr + 25 is outside the memory that the operating system has asigned to our application.
+most probably our application will crash if the memory address at arr + 25 is outside the memory that the operating system has assigned to our application.
 
-We've just sayd arr + 25? what does that mean? As we've seen before a variable is just some place in memmory, we can get it's memory address which is the first byte that is asigned to that variable in memory. With arrays is pretty much the same, for example since we know that an int occupies 4 bytes in memory, an array of 10 ints will occupy 40 bytes and those bytes are contiguous:
+We've just sayd arr + 25? what does that mean? As we've seen before a variable is just some place in memmory, we can get it's memory address which is the first byte that is assigned to that variable in memory. With arrays is pretty much the same, for example since we know that an int occupies 4 bytes in memory, an array of 10 ints will occupy 40 bytes and those bytes are contiguous:
 
 ![Array](images/array "")
 
