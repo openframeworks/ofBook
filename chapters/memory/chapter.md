@@ -178,7 +178,7 @@ int i;
 println(i);
 ```
 
-is illegal, the compiler will tell us that we are trying to use a variable that is not initialized. In c++ though, that's perfectly legal but the contents of that variable are undefined. Most of the times we'll get 0 because the operating system will clear the memory before assigning it to our program, again, for security reasons. But if we are resuing memory that we had already assigned, then, that memory area will contain anything, and the results of our program will be undefined.
+is illegal, the compiler will tell us that we are trying to use a variable that is not initialized. In c++ though, that's perfectly legal but the contents of that variable are undefined. Most of the times we'll get 0 because the operating system will clear the memory before assigning it to our program, again, for security reasons. But if we are reusing memory that we had already assigned, then, that memory area will contain anything, and the results of our program will be undefined.
 
 If for example we have a variable that defines the position of something we are going to draw, failing to initialize it will lead to that object being drawn anywhere.
 
@@ -307,7 +307,7 @@ p1.parent = &ps;
 p2 = p1;
 ```
 
-Well as before c++ will copy the contents of p1 on p2, the contents of p1 are an ofVec2f which consits of 2 floats x and y and then a pointer to a ParticleSystem, and that'w what gets copied, the ParticleSystem itself won't get copied only the pointer to it, so p2 will end up having a copy of the position of p2 and a pointer to the same ParticleSystem but we'll have only 1 particle system.
+Well as before c++ will copy the contents of p1 on p2, the contents of p1 are an ofVec2f which consits of 2 floats x and y and then a pointer to a ParticleSystem, and that's what gets copied, the ParticleSystem itself won't get copied only the pointer to it, so p2 will end up having a copy of the position of p2 and a pointer to the same ParticleSystem but we'll have only 1 particle system.
 
 ![Object pointers](images/object_pointers "")
 
@@ -349,7 +349,7 @@ Particle p1;
 p1 = moveParticle(p1);
 ```
 
-So we pass a copy of our particle to the function which modifies its values and returns a modified copy which we then copy into p1 again. See how many times we've mentioned copy in the previous sentence?  The compiler will optimize some of those out and for small objects it's perfectly ok to do that but imagine we had something like this:
+So we pass a copy of our particle to the function which modifies its values and returns a modified copy which we then copy into p1 again. See how many times we've mentioned copy in the previous sentence?  The compiler will optimize some of those out and for small objects it's perfectly okay to do that but imagine we had something like this:
 
 ```cpp
 vector<Particle> moveParticles(vector<Particle> ps){
@@ -393,7 +393,7 @@ we can use the `->`
 p->x += 10;
 ```
 
-So that solves our problem, using a pointer instead of passing a copy of the object, we are passing a reference to it, it's memory address, so the function will actually modify the original.
+So that solves our problem, using a pointer instead of passing a copy of the object, we are passing a reference to it, its memory address, so the function will actually modify the original.
 
 The main problem with this is that the syntax is kind of weird, imagine how would look like if we passed a pointer for the second example, the one with the vector:
 
@@ -426,7 +426,7 @@ ps[i].x += 10;
 
 would actually compile but would mostly sure give as a memory access error, a segmentation fault. ps is now a pointer and when using pointers the `[]' behaves like if we had an array of vectors!
 
-We'll explain this in more depth in the section about memory structures, but let's see how to pass a reference that doens't have pointer syntax. In c++ is called a reference and it looks like:
+We'll explain this in more depth in the section about memory structures, but let's see how to pass a reference that doesn't have pointer syntax. In c++ is called a reference and it looks like:
 
 ```cpp
 void moveParticles(vector<Particle> & ps){
@@ -443,7 +443,7 @@ moveParticles(ps);
 
 Now we are passing a reference to the original object but instead of having to use pointer syntax we can still use it as if it was a normal object.
 
-> Advanced note: Some times we want to use references to avoid copies but still be sure that the function we pass our object to, won't modify it's contents, in that case it's recomendable to use const like:
+> Advanced note: Some times we want to use references to avoid copies but still be sure that the function we pass our object to, won't modify its contents, in that case it's recommendable to use const like:
 
 >
     ofVec2f averagePosition(const vector<Particle> & ps){
@@ -475,7 +475,7 @@ but trying to change the reference itself like in:
 ```cpp
 ofVec2f & pos = p.pos;
 pos.x = 5;
-pos = p2.pos;  // error, a reference can only be assigned on it's declaration
+pos = p2.pos;  // error, a reference can only be assigned on its declaration
 ```
 
 Also you can return a reference but depending on what that reference it's pointing to it can be a bad idea:
@@ -495,11 +495,11 @@ Will actually compile but will probably result in a segmentation fault at some p
 
 This is one of the most annoying problems in c++ it's called dangling pointers or in this case references and it's caused when we have a pointer or a reference that points to a memory area that is later freed somehow.
 
-More modern langauges solve this with diferent strategies, for example Java won't let this happen since objects are only deleted once the last reference to them goes out of scope, it uses something called a garbage collector that from time to time goes through the memory looking for objects which have no more references pointing to them, and deletes them. This solves the problem but makes it hard to know when objects are going to get really deleted. c++ in it's latest versions, and more modern languages try to solve this using new kinds of pointers that define ownership of the object, we'll talk about it in the latest section of this chpater, smart pointers.
+More modern langauges solve this with diferent strategies, for example Java won't let this happen since objects are only deleted once the last reference to them goes out of scope, it uses something called a garbage collector that from time to time goes through the memory looking for objects which have no more references pointing to them, and deletes them. This solves the problem but makes it hard to know when objects are going to get really deleted. c++ in its latest versions, and more modern languages try to solve this using new kinds of pointers that define ownership of the object, we'll talk about it in the latest section of this chapter, smart pointers.
 
 ## Variables in the heap ##
 
-Now that we now the syntax and semantics of pointers lets see how to use the heap. The heap is an area of memory common to all of our application, any function can create variables in this space and share it with others, to use it we need a new keyword `new`:
+Now that we know the syntax and semantics of pointers lets see how to use the heap. The heap is an area of memory common to all of our application, any function can create variables in this space and share it with others, to use it we need a new keyword `new`:
 
 ```cpp
 Particle * p1 = new Particle;
@@ -586,13 +586,13 @@ is actually using heap memory since the vector is internally using that, but the
 
 ## Memory structures, arrays and vectors ##
 
-Arrays are the most simple way in c++ to create collections of objects, as any other type in c++ they can also be created in the stack or in the heap. Arrays in the stack have a limitation though, they need to have a predifined size that needs to be specified in it's declaration and can't change afterwards:
+Arrays are the most simple way in c++ to create collections of objects, as any other type in c++ they can also be created in the stack or in the heap. Arrays in the stack have a limitation though, they need to have a predifined size that needs to be specified in its declaration and can't change afterwards:
 
 ```cpp
 int arr[10];
 ```
 
-the same as with any other type, the previous declaration already reserves memory for 10 ints, we don't need to use new, and that memory will be uninitialized. To access them, as you might now from previous chapters you can just do:
+the same as with any other type, the previous declaration already reserves memory for 10 ints, we don't need to use new, and that memory will be uninitialized. To access them, as you might know from previous chapters you can just do:
 
 ```cpp
 int arr[10];
@@ -616,7 +616,7 @@ int a = arr[25];
 
 most probably our application will crash if the memory address at arr + 25 is outside the memory that the operating system has assigned to our application.
 
-We've just sayd arr + 25? what does that mean? As we've seen before a variable is just some place in memmory, we can get it's memory address which is the first byte that is assigned to that variable in memory. With arrays is pretty much the same, for example since we know that an int occupies 4 bytes in memory, an array of 10 ints will occupy 40 bytes and those bytes are contiguous:
+We've just said arr + 25? what does that mean? As we've seen before a variable is just some place in memory, we can get its memory address which is the first byte that is assigned to that variable in memory. With arrays is pretty much the same, for example since we know that an int occupies 4 bytes in memory, an array of 10 ints will occupy 40 bytes and those bytes are contiguous:
 
 ![Array](images/array "")
 
@@ -666,7 +666,7 @@ cout << "(arr+5) - arr: " << (arr+5) - arr << endl;
 
 You will end up with `5` again because as we've said pointer arithmetic works with the type size not bytes.
 
-The syntax of pointer arithmetics is kind of complicated, and the idea of this part wasn't really to show pointer arithmetics itself but how arrays are just a bunch of values one after another in memory, so don't worry if you haven't understood fully the syntax, is probably something you won't need to use. It is also important to remember that an array variable acts as a pointer so when we refer to it without using the `[]` operator we end up with a memory address not with the values it contains.
+The syntax of pointer arithmetics is kind of complicated, and the idea of this part wasn't really to show pointer arithmetics itself but how arrays are just a bunch of values one after another in memory, so don't worry if you haven't fully understood the syntax, it's probably something you won't need to use. It is also important to remember that an array variable acts as a pointer so when we refer to it without using the `[]` operator we end up with a memory address not with the values it contains.
 
 The arrays we've created till now are created in the stack so be careful when using big arrays like this cause it might be problematic.
 
@@ -712,7 +712,7 @@ int arrB[] = new int[10];
 arrB = arr;
 ```
 
-will actually compile but as with other variables we are not copying the values that arr points to into arrB but instead the memory address. In this case will end up with 2 pointers pointing to the same memory location, the one that we created when creating arr and loose the memory that we allocated when initializing arrB. Again we have a memory leak, the memory allocated when doing `int arrB[] = new int[10];` is not referenced by any variable anymore so we can't delete it anymore. To copy arrays there's some **c** (not c++) functions liek memcpy but their syntax is kind of complex, that's why when working with c++ is recomended to use vectors.
+will actually compile but as with other variables we are not copying the values that arr points to into arrB but instead the memory address. In this case will end up with 2 pointers pointing to the same memory location, the one that we created when creating arr and lose the memory that we allocated when initializing arrB. Again we have a memory leak, the memory allocated when doing `int arrB[] = new int[10];` is not referenced by any variable anymore so we can't delete it anymore. To copy arrays there's some **c** (not c++) functions like memcpy but their syntax is kind of complex, that's why when working with c++ is recommended to use vectors.
 
 C++ vectors are very similar to arrays, indeed their layout in memory is the same as an array, they contain a bunch of values contiguous in memory and always allocated in the heap. The main difference is that we get a nicer syntax and *stack semantics*. To allocate a vector to contain 10 ints we can do:
 
@@ -733,7 +733,7 @@ vector<int> vec(10,0);
 vector<int> vecB = vec;
 ```
 
-Will create a copy of the contents of vec in vecB. Also even if the memory that the vector uses is in the heap, when a vector goes out of scope, when the block in which it was declared ends, the vector is destroyed cause the vector itself is created in the stack, so going out of scope, triggers it's destructor that takes care of deleting the memory that it has created in the heap:
+Will create a copy of the contents of vec in vecB. Also even if the memory that the vector uses is in the heap, when a vector goes out of scope, when the block in which it was declared ends, the vector is destroyed cause the vector itself is created in the stack, so going out of scope, triggers its destructor that takes care of deleting the memory that it has created in the heap:
 
 ```cpp
 void ofApp::update(){
