@@ -31,9 +31,9 @@ For example when we create a variable like:
 int i;
 ```
 
-what we are doing is reserving 4 bytes of those 4Gb to store an int, it doesn't really matter if we are storing ints or other types of data, the sizes will be different for and int a char, a float or a string but the type of memory is always the same.
+What we are doing is reserving 4 bytes of those 4Gb to store an int, it doesn't really matter if we are storing ints or other types of data, the sizes will be different for an int, a char, a float, or a string but the type of memory is always the same.
 
-Internally the computer doens't really now about that memory area as `i` but as a memory address. A memory address is just a number that points to a specific byte in the 4Gb of memory.
+Internally the computer doesn't really know about that memory area as `i` but as a memory address. A memory address is just a number that points to a specific byte in the 4Gb of memory.
 
 When we create a variable like `int i` we are telling our program to reserve 4 bytes of memory, associate the address of the first byte of those 4 to the variable name `i` and restrict the type of data that we are going to store in those 4 bytes to only ints.
 
