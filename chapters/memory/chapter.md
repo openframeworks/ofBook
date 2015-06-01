@@ -151,7 +151,7 @@ And that will give us the memory address of the first byte used by that variable
 
 ```cpp
 int i = 0;
-int * p = &i;
+int * a = &i;
 ```
 
 And what we get in memory is something like:
