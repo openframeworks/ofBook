@@ -2,6 +2,8 @@
 
 *by [Phoenix Perry](http://www.phoenixperry.com) and [Jane Friedhoff](janefriedhoff.com)*
 
+*additional edits by [Kayla Lewis](http://kaylalewis.net/)*
+
 Game developers are, in greater and greater numbers, turning to openFrameworks' creative coding toolkit to develop their games. Unlike platforms such as Unity, GameMaker, and Construct2, OF was not specifically developed for game makers. However, OF's ability to port to mobile, manipulate video, utilize camera input, support generative graphics, and hook in with devices like Arduino and Kinect (among other features) makes it a very attractive option for developers who want to be able to rapidly produce compelling, unique games.
 
 ###Popular games made with openFrameworks 
