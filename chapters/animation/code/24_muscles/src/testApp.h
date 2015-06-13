@@ -6,6 +6,7 @@
 #include "spring.h"
 
 class testApp : public ofSimpleApp{
+	using ofBaseApp::mouseReleased;
 	public:
 		// let's make a vector of them
 		vector <particle> particles;
