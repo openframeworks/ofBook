@@ -45,30 +45,10 @@ void testApp::draw(){
 }
 
 //--------------------------------------------------------------
-void testApp::keyPressed  (int key){ 
-}
-
-//--------------------------------------------------------------
-void testApp::keyReleased  (int key){ 
-}
-
-//--------------------------------------------------------------
-void testApp::mouseMoved(int x, int y ){
-}
-
-//--------------------------------------------------------------
-void testApp::mouseDragged(int x, int y, int button){
-}
-
-//--------------------------------------------------------------
 void testApp::mousePressed(int x, int y, int button){
 	for (int i = 0; i < particles.size(); i++){
 		float vx = ofRandom(-4,4);
 		float vy = ofRandom(-4,4);
 		particles[i].setInitialCondition(mouseX,mouseY,vx, vy);	
 	}
-}
-
-//--------------------------------------------------------------
-void testApp::mouseReleased(){
 }
