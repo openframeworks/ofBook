@@ -4,6 +4,8 @@
 spring::spring(){
 	particleA = NULL;
 	particleB = NULL;
+	distance = 0;
+	springiness = 1;
 }
 
 //---------------------------------------------------------------------
