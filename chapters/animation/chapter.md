@@ -656,7 +656,9 @@ for (int i = 0; i < particles.size(); i++){
 
 where the magic is happening between the `resetForce()` and `update()`. Although these examples increase in complexity, they do so simply by adding new functions to the particle class, and adding more things between reset and update.
 
-![example 22 in action](images/example_22_small.gif)
+![example **19_multiParticles** in action](images/19_multiParticles_small.gif)
+
+*This is **19_multiParticles** in action.*
 
 ### Simple forces, repulsion and attraction
 
@@ -706,7 +708,9 @@ frc.y += diff.y * pct * strength;
 
 We just move in the opposite direction. For the clockwise and counterclockwise forces we add the perpendicular of the diff line. The perpendicular of a 2D vector is just simply switching x and y and making one of them negative.
 
-**[more: show example]**
+![example **22_particle_particle** in action](images/example_22_small.gif)
+
+*This is **22_particle_particle** in action.*
 
 ### Particle interaction
 
