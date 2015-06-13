@@ -73,7 +73,7 @@ void testApp::draw(){
 }
 
 //--------------------------------------------------------------
-void testApp::keyPressed  (int key){ 
+void testApp::keyPressed(int key){ 
     switch (key){
     case ' ':
         // reposition everything: 
