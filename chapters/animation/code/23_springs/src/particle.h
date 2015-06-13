@@ -20,8 +20,8 @@ class particle
 	void addClockwiseForce(particle &p, float radius, float scale);
 	void addCounterClockwiseForce(particle &p, float radius, float scale);
 	void addDampingForce();
+	void bounceOffWalls();
 	void setInitialCondition(float px, float py, float vx, float vy);
-        void update();
 
 	ofVec2f pos;
         ofVec2f vel;
