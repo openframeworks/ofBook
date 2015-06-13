@@ -54,7 +54,7 @@ void testApp::update(){
 
 //--------------------------------------------------------------
 void testApp::draw(){
-    ofSetColor(0xffffff);
+    ofSetColor(255);
 
     for (int i = 0; i < particles.size(); i++){
         particles[i].draw();
