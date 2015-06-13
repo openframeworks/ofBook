@@ -221,16 +221,7 @@ class testApp : public ofSimpleApp{
 		void update();
 		void draw();
 
-		void keyPressed  (int key);
-		void keyReleased (int key);
-
-		void mouseMoved(int x, int y );
-		void mouseDragged(int x, int y, int button);
-		void mousePressed(int x, int y, int button);
-		void mouseReleased();
-
 		rectangle	myRectangle;
-
 		float		pct;
 };
 
@@ -279,29 +270,9 @@ void testApp::draw(){
 }
 
 //--------------------------------------------------------------
-void testApp::keyPressed  (int key){
-}
-
-//--------------------------------------------------------------
-void testApp::keyReleased  (int key){
-}
-
-//--------------------------------------------------------------
-void testApp::mouseMoved(int x, int y ){
-}
-
-//--------------------------------------------------------------
-void testApp::mouseDragged(int x, int y, int button){
-}
-
-//--------------------------------------------------------------
 void testApp::mousePressed(int x, int y, int button){
 	//myRectangle.posa.x = x;
 	//myRectangle.posa.y = y;
-}
-
-//--------------------------------------------------------------
-void testApp::mouseReleased(){
 }
 ```
 
