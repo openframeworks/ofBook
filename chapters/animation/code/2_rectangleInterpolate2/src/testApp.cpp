@@ -37,27 +37,3 @@ void testApp::draw(){
 	ofSetColor(255,255,255);
 	ofDrawBitmapString("mouse height controls interpolation (pct = " + ofToString(pct) + ")", 20, 20);
 }
-
-//--------------------------------------------------------------
-void testApp::keyPressed  (int key){
-}
-
-//--------------------------------------------------------------
-void testApp::keyReleased  (int key){
-}
-
-//--------------------------------------------------------------
-void testApp::mouseMoved(int x, int y ){
-}
-
-//--------------------------------------------------------------
-void testApp::mouseDragged(int x, int y, int button){
-}
-
-//--------------------------------------------------------------
-void testApp::mousePressed(int x, int y, int button){
-}
-
-//--------------------------------------------------------------
-void testApp::mouseReleased(){
-}
