@@ -708,7 +708,7 @@ frc.y += diff.y * pct * strength;
 
 We just move in the opposite direction. For the clockwise and counterclockwise forces we add the perpendicular of the diff line. The perpendicular of a 2D vector is just simply switching x and y and making one of them negative.
 
-![example **22_particle_particle** in action](images/example_22_small.gif)
+![example **22_particle_particle** in action](images/22_particle_particle_small.gif)
 
 *This is '22_particle_particle' in action.*
 
