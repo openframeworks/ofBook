@@ -54,9 +54,9 @@ void testApp::draw(){
 		particles[i].draw();
 	}
 
-	string reportString =	"(space) = reset\n(a/s) strength = " + ofToString(strength) + 
-							"\n(z/x) radius = " + ofToString(radius) + 
-							"\n(r) toggle mode = " + (bRepel ? "repelling" : "attracting");
+	string reportString = "(space) = reset\n(a/s) strength = " + ofToString(strength) + 
+	                      "\n(z/x) radius = " + ofToString(radius) + 
+	                      "\n(r) toggle mode = " + (bRepel ? "repelling" : "attracting");
 
 	ofSetColor(40,40,0);
 	ofRect(10,10,300,80);
