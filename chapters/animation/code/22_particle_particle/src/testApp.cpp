@@ -93,21 +93,9 @@ void testApp::keyPressed  (int key){
 }
 
 //--------------------------------------------------------------
-void testApp::keyReleased  (int key){ 
-}
-
-//--------------------------------------------------------------
-void testApp::mouseMoved(int x, int y ){
-}
-
-//--------------------------------------------------------------
 void testApp::mouseDragged(int x, int y, int button){
 	particles.erase(particles.begin());
 	particle myParticle;
 	myParticle.setInitialCondition(x,y,0,0);
 	particles.push_back(myParticle);
-}
-
-//--------------------------------------------------------------
-void testApp::mousePressed(int x, int y, int button){
 }
