@@ -27,20 +27,20 @@ void testApp::update(){
 	// then update
 
 	for (int i = 0; i < particles.size(); i++){
-		particles[i].resetForce();
+	    particles[i].resetForce();
 	}
 
 	for (int i = 0; i < particles.size(); i++){
 		particles[i].addAttractionForce(mouseX, mouseY, 1000, 0.1);
-        for (int j = 0; j < i; j++){
-            particles[i].addRepulsionForce(particles[j], 10, 0.4);
-            particles[i].addAttractionForce(particles[j], 500, 0.005);
-        }
+		for (int j = 0; j < i; j++){
+		    particles[i].addRepulsionForce(particles[j], 10, 0.4);
+		    particles[i].addAttractionForce(particles[j], 500, 0.005);
+		}
 	}
 
 	for (int i = 0; i < particles.size(); i++){
-		particles[i].addDampingForce();
-		particles[i].update();
+	    particles[i].addDampingForce();
+	    particles[i].update();
 	}
 }
 
