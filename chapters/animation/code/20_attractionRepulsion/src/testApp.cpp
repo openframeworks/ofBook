@@ -1,5 +1,5 @@
+/* Repell particles from current mouse position. */
 #include "testApp.h"
-
 
 //--------------------------------------------------------------
 void testApp::setup(){
@@ -42,36 +42,9 @@ void testApp::update(){
 
 //--------------------------------------------------------------
 void testApp::draw(){
-
 	ofSetColor(0);
 
 	for (int i = 0; i < particles.size(); i++){
 		particles[i].draw();
 	}
-
-}
-
-//--------------------------------------------------------------
-void testApp::keyPressed  (int key){ 
-}
-
-//--------------------------------------------------------------
-void testApp::keyReleased  (int key){ 
-}
-
-//--------------------------------------------------------------
-void testApp::mouseMoved(int x, int y ){
-}
-
-//--------------------------------------------------------------
-void testApp::mouseDragged(int x, int y, int button){
-}
-
-//--------------------------------------------------------------
-void testApp::mousePressed(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-void testApp::mouseReleased(){
 }
