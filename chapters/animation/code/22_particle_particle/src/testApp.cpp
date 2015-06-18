@@ -1,3 +1,4 @@
+/* Have randomly placed particles be attracted to the mouse cursor. (Toggleing not implemented yet.) */
 #include "testApp.h"
 
 
