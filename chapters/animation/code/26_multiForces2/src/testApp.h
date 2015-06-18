@@ -6,7 +6,8 @@
 #include "spring.h"
 
 class testApp : public ofSimpleApp{
-   public:
+    using ofBaseApp::mouseReleased;
+    public:
 
         void setup();
         void update();
