@@ -1,3 +1,4 @@
+/* Have an explosion of particles by clicking on the screen. */
 #include "testApp.h"
 
 //--------------------------------------------------------------
