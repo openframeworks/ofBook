@@ -12,7 +12,6 @@ void testApp::setup(){
 void testApp::draw(){
 	ofEnableAlphaBlending();
 	ofSetColor(255,255,255, 100);
-
 	ofSeedRandom(0); // always pick the same random numbers.
 
 	for (int i = 0; i < mouseX*3; i++){
