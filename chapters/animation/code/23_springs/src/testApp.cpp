@@ -1,3 +1,6 @@
+/* Have three particles connected by two virtual springs.
+   Move them with the mouse cursor and reset the system by
+   pressing the space bar. */
 #include "testApp.h"
 
 
