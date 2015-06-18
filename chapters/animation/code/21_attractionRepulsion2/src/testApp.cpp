@@ -1,10 +1,11 @@
+/* Repell particle from current mouse position up to a certain distance. */
 #include "testApp.h"
 
 
 //--------------------------------------------------------------
 void testApp::setup(){
-	ofSetVerticalSync(true);
-	ofSetFrameRate(60);
+    ofSetVerticalSync(true);
+    ofSetFrameRate(60);
 
     nPtsW = 20;
     nPtsH = 20;
@@ -28,15 +29,15 @@ void testApp::setup(){
 //--------------------------------------------------------------
 void testApp::update(){
 
-	// on every frame 
-	// we reset the forces
-	// add in any forces on the particle
-	// perfom damping and
-	// then update
+    // on every frame 
+    // we reset the forces
+    // add in any forces on the particle
+    // perfom damping and
+    // then update
 
     int count = 0;
 
-	for (int i = 0; i < nPtsW; i++){
+    for (int i = 0; i < nPtsW; i++){
         for (int j = 0; j < nPtsH; j++){
             float x = ofMap(i,0,nPtsW, 0,ofGetWidth());
             float y = ofMap(j,0,nPtsH, 0,ofGetHeight());    
@@ -50,40 +51,15 @@ void testApp::update(){
 
             count++;
         }
-	}
+    }
 }
 
 
 //--------------------------------------------------------------
 void testApp::draw(){
-
     ofSetColor(0);
 
-	for (int i = 0; i < particles.size(); i++){
-		particles[i].draw();
-	}
-}
-
-//--------------------------------------------------------------
-void testApp::keyPressed  (int key){ 
-}
-
-//--------------------------------------------------------------
-void testApp::keyReleased  (int key){ 
-}
-
-//--------------------------------------------------------------
-void testApp::mouseMoved(int x, int y ){
-}
-
-//--------------------------------------------------------------
-void testApp::mouseDragged(int x, int y, int button){
-}
-
-//--------------------------------------------------------------
-void testApp::mousePressed(int x, int y, int button){
-}
-
-//--------------------------------------------------------------
-void testApp::mouseReleased(){
+    for (int i = 0; i < particles.size(); i++){
+        particles[i].draw();
+    }
 }
