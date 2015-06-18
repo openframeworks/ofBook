@@ -13,7 +13,7 @@ void testApp::setup(){
         float y = 500 + 100 * sin ( (i / 100.0) * TWO_PI);
         myParticle.setInitialCondition(x,y ,0,0);
         particles.push_back(myParticle);
-	}
+    }
 
     // change this to
     // for (int i = 0; i < 10; i++){
@@ -25,7 +25,7 @@ void testApp::setup(){
         mySpring.particleA = & (particles[i  ]);
         mySpring.particleB = & (particles[(i+1) % particles.size()]);
         springs.push_back(mySpring);
-	}
+    }
 }
 
 //--------------------------------------------------------------
@@ -37,24 +37,24 @@ void testApp::update(){
     // then update
     for (int i = 0; i < particles.size(); i++){
         particles[i].resetForce();
-	}
+    }
 
     for (int i = 0; i < particles.size(); i++){
-		particles[i].addRepulsionForce(mouseX, mouseY, 200, 0.3f);
-		for (int j = 0; j < i; j++){
-			particles[i].addRepulsionForce(particles[j], 20, 0.3);
-		}
+        particles[i].addRepulsionForce(mouseX, mouseY, 200, 0.3f);
+	for (int j = 0; j < i; j++){
+	    particles[i].addRepulsionForce(particles[j], 20, 0.3);
 	}
+    }
 
-	for (int i = 0; i < springs.size(); i++){
-		springs[i].update();
-	}
+    for (int i = 0; i < springs.size(); i++){
+        springs[i].update();
+    }
 
-	for (int i = 0; i < particles.size(); i++){
-		particles[i].bounceOffWalls();
-		particles[i].addDampingForce();
-		particles[i].update();
-	}
+    for (int i = 0; i < particles.size(); i++){
+        particles[i].bounceOffWalls();
+	particles[i].addDampingForce();
+	particles[i].update();
+    }
 }
 
 
@@ -74,14 +74,14 @@ void testApp::draw(){
 
 //--------------------------------------------------------------
 void testApp::keyPressed(int key){ 
-	switch (key){
-		case ' ':
-			// reposition everything: 
-			for (int i = 0; i < particles.size(); i++){
-				particles[i].setInitialCondition(ofRandom(0,ofGetWidth()),ofRandom(0,ofGetHeight()),0,0);
-			}
-			break;
-	}
+    switch (key){
+    case ' ':
+        // reposition everything: 
+      for (int i = 0; i < particles.size(); i++){
+	  particles[i].setInitialCondition(ofRandom(0,ofGetWidth()),ofRandom(0,ofGetHeight()),0,0);
+      }
+      break;
+    }
 }
 
 
@@ -97,21 +97,21 @@ void testApp::mouseMoved(int x, int y ){
 
 //--------------------------------------------------------------
 void testApp::mouseDragged(int x, int y, int button){
-	particles[0].pos.set(mouseX, mouseY);
-	/*particles.erase(particles.begin());
-	particle myParticle;
-	myParticle.setInitialCondition(x,y,0,0);
-	particles.push_back(myParticle);*/
+    particles[0].pos.set(mouseX, mouseY);
+    /*particles.erase(particles.begin());
+      particle myParticle;
+      myParticle.setInitialCondition(x,y,0,0);
+      particles.push_back(myParticle);*/
 }
 
 
 //--------------------------------------------------------------
 void testApp::mousePressed(int x, int y, int button){
-	particles[0].bFixed = true;
+    particles[0].bFixed = true;
 }
 
 
 //--------------------------------------------------------------
 void testApp::mouseReleased(){
-	particles[0].bFixed = false;
+    particles[0].bFixed = false;
 }
