@@ -177,7 +177,8 @@ for chapter in chapters:
                                         "--include-in-header=createWebBookTemplate/IncludeInHeader.html",
                                         "--include-before-body=createWebBookTemplate/IncludeBeforeBody.html",
                                         "--include-after-body=createWebBookTemplate/IncludeAfterBody.html",
-                                        "--template=createWebBookTemplate/default.html"])
+                                        "--template=createWebBookTemplate/default.html",
+                                        "--default-image-extension=svg"])
 	
 
 
