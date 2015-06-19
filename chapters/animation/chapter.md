@@ -158,7 +158,7 @@ Describe a new object in the header (rectangle.h):
 
 class rectangle {
 
-	public:
+    public:
 
 	rectangle();
 	void draw();
