@@ -781,9 +781,6 @@ One thing to note is that even though we've cut down the number of calculations,
 
 We don't have time to get into it in this chapter, but there are different approaches to avoiding that many calculations. Many of them have to deal with spatial hashing, ways of quickly identifying which particles are far away enough to not even consider (thus avoiding a distance calculation).
 
-### local interactions lead to global behavior
-
-![sin](images/multiForces.png)
 
 ## Where to go further
 
