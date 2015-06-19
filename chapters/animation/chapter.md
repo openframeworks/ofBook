@@ -658,7 +658,7 @@ where the magic is happening between the `resetForce()` and `update()`. Although
 
 ![example **19_multiParticles** in action](images/19_multiParticles_small.gif)
 
-*This is '19_multiParticles' in action.*
+*This is the '19_multiParticles' example in action.*
 
 ### Simple forces, repulsion and attraction
 
@@ -710,7 +710,7 @@ We just move in the opposite direction. For the clockwise and counterclockwise f
 
 ![example **22_particle_particle** in action](images/22_particle_particle_small.gif)
 
-*This is '22_particle_particle' in action.*
+*This is the '22_particle_particle' example in action.*
 
 ### Particle interaction
 
