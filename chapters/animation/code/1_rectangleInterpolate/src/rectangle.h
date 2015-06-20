@@ -3,20 +3,19 @@
 
 #include "ofMain.h"
 
-class rectangle {
+class rectangle{
 
-	public:
+    public:
 
-        rectangle();
+	rectangle();
 	void draw();
 	void interpolateByPct(float myPct);
 
 	ofPoint pos;
-
 	ofPoint posa;
-	ofPoint	posb;
-
-	float pct;	// what pct are we between "a" and "b"
+	ofPoint posb;
+	// what pct are we between "a" and "b"
+	float pct;
 };
 
 #endif // RECTANGLE_H

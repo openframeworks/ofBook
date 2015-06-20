@@ -3,19 +3,16 @@
 
 #include "ofMain.h"
 #include "rectangle.h"
+class testApp:public ofSimpleApp{
 
-class testApp : public ofSimpleApp{
+    public:
+        void setup();
+	void update();
+	void draw();
+	void mousePressed(int x, int y, int button);
 
-	public:
-
-		void setup();
-		void update();
-		void draw();
-		void mousePressed(int x, int y, int button);
-
-		rectangle	myRectangle;
-		float		pct;
+	rectangle myRectangle;
+	float pct;
 };
 
 #endif
-
