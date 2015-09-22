@@ -66,7 +66,7 @@ class ofApp : public ofBaseApp {
   ...
   void audioOut( float * output, int bufferSize, int nChannels );
   double phase;
-}
+};
 
 void ofApp::setup() {
   phase = 0;
@@ -195,7 +195,7 @@ class ofApp : public ofBaseApp {
     float threshold;
     float minimumThreshold;
     float decayRate;
-}
+};
 
 void ofApp::setup() {
     ...
@@ -378,7 +378,7 @@ class ofApp : public ofBaseApp {
     ...
     void keyPressed(int key);
     float frequencyTarget;
-}
+};
 
 void ofApp::setup() {
     ...
