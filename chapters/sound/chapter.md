@@ -190,7 +190,7 @@ Onset detection algorithms attempt to locate moments in an audio stream where an
 A simple realtime onset detection algorithm can be built on top of the RMS calculation above.
 
 ```cpp
-class class ofApp : public ofBaseApp {
+class ofApp : public ofBaseApp {
     ...
     float threshold;
     float minimumThreshold;
