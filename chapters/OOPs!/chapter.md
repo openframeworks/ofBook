@@ -120,7 +120,7 @@ Now that we've created a class let's make the real object! In your ofApp.h (head
 #include "Ball.h"
 ```
 
-on the top of your ofApp.h file. Then we can finally declare an instance of the class in our program:
+on the top of your ofApp.h file. Then we can finally declare an instance of the class in our program. Add the following line inside the `ofApp` class, just above the final "};".
 
 ```cpp
 Ball myBall;

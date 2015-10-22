@@ -22,16 +22,16 @@ First let's see how to create a thread in openFrameworks.
 
 Every application has at least one thread, the main thread (also called the GL thread), when it's using openGL.
 
-But as we've said we can create auxiliary threads to do certain tasks that would take too long to run in the main thread. In openFrameworks we can do that using the ofThread class. ofThread is not meant to be used directly, instead we inherit from it and mplement a `threadedFunction` which will later get called from the auxiliary thread once we start it:
+But as we've said we can create auxiliary threads to do certain tasks that would take too long to run in the main thread. In openFrameworks we can do that using the ofThread class. ofThread is not meant to be used directly, instead we inherit from it and implement a `threadedFunction` which will later get called from the auxiliary thread once we start it:
 
 ```cpp
 class ImageLoader: public ofThread{
     void setup(string imagePath){
-        this->imagePath = imagePath;
+        this->path = imagePath;
     }
 
     void threadedFunction(){
-        ofLoadImage(path,image);
+        ofLoadImage(image, path);
     }
 
     ofPixels image;
@@ -63,11 +63,11 @@ As we see in the image the duration of loading of the image and thus the duratio
 ```cpp
 class ImageLoader: public ofThread{
     void setup(string imagePath){
-        this->imagePath = imagePath;
+        this->path = imagePath;
     }
 
     void threadedFunction(){
-        ofLoadImage(path,image);
+        ofLoadImage(image, path);
     }
 
     ofPixels image;
@@ -86,14 +86,16 @@ void ofApp::setup(){
 
 void ofApp::update(){
     if(loading==true && !imgLoader.isThreadRunning()){
-        img.getPixelsRef() = imgLoader.img;
+        img.getPixelsRef() = imgLoader.image;
         img.update();
         loading = false;
     }
 }
 
 void ofApp::draw(){
-    img.draw(0,0);
+    if (img.isAllocated()) {
+        img.draw(0, 0);
+    }
 }
 
 void ofApp::keyPressed(int key){
@@ -115,7 +117,7 @@ class ImageLoader: public ofThread{
     }
 
     void load(string imagePath){
-        this->imagePath = imagePath;
+        this->path = imagePath;
         loading = true;
         startThread();
     }
@@ -145,7 +147,7 @@ void ofApp::update(){
         if(imgLoaders[i].loaded){
             if(imgs.size()<=i) imgs.resize(i+1);
 
-            imgs[i].getPixelsRef() = imgLoaders[i].img;
+            imgs[i].getPixelsRef() = imgLoaders[i].image;
             imgs[i].update();
             imgLoaders[i].loaded = false;
         }
@@ -190,11 +192,11 @@ class ImageLoader: public ofThread{
         loaded = false;
     }
     void setup(string imagePath){
-        this->imagePath = imagePath;
+        this->path = imagePath;
     }
 
     void threadedFunction(){
-        ofLoadImage(path,image);
+        ofLoadImage(image, path);
         loaded = true;
     }
 
@@ -214,14 +216,16 @@ void ofApp::setup(){
 
 void ofApp::update(){
     if(imgLoader.loaded){
-        img.getPixelsRef() = imgLoader.img;
+        img.getPixelsRef() = imgLoader.image;
         img.update();
         imgLoader.loaded = false;
     }
 }
 
 void ofApp::draw(){
-    img.draw(0,0);
+    if (img.isAllocated()) {
+        img.draw(0, 0);
+    }
 }
 
 void ofApp::keyPressed(int key){
@@ -250,7 +254,7 @@ class ImageLoader: public ofThread{
     }
     void setup(string imagePath){
         image.setUseTexture(false);
-        this->imagePath = imagePath;
+        this->path = imagePath;
     }
 
     void threadedFunction(){
@@ -280,7 +284,9 @@ void ofApp::update(){
 }
 
 void ofApp::draw(){
-    imageLoader.image.draw(0,0);
+    if (imgLoader.image.isAllocated()){
+        imgLoader.image.draw(0,0);
+    }
 }
 
 void ofApp::keyPressed(int key){
@@ -356,9 +362,9 @@ void ofApp::setup(){
 
 void ofApp::update(){
     numberGenerator.lock();
-    while(!numberGenerator.empty()){
-        cout << numberGenerator.front() << endl;
-        numberGenerator.pop_front();
+    while(!numberGenerator.numbers.empty()){
+        cout << numberGenerator.numbers.front() << endl;
+        numberGenerator.numbers.pop_front();
     }
     numberGenerator.unlock();
 }
@@ -500,7 +506,7 @@ Sometimes we need to lock a function until it returns, or lock for the duration 
 For example, the previous example could be turned into:
 
 ```cpp
-class VideoReader{
+class VideoRenderer{
 public:
     void setup(){
         pixelsBack.allocate(640,480,3);
@@ -626,7 +632,7 @@ public:
 
 private:
     queue<string> queueUrls;
-}
+};
 ```
 
 That alleviates the problem slightly but not completely. The thread won't consume as much CPU now, but it sleeps for an unnecesarily while when there's still urls to load. It also continues to run in the background even when there's no more urls to ping. Specially in small devices powered by batteries, like a phone, this pattern would drain the battery in a few hours.
@@ -645,7 +651,7 @@ class ThreadedHTTPPing: public ofThread{
     void threadedFunction(){
         while(isThreadRunning()){
             mutex.lock();
-            if (queue.empty()){
+            if (queueUrls.empty()){
                 condition.wait(mutex);
             }
             string url = queueUrls.front();
@@ -659,7 +665,7 @@ class ThreadedHTTPPing: public ofThread{
 private:
     Poco::Condition condition;
     queue<string> queueUrls;
-}
+};
 ```
 
 Before we call `condition.wait(mutex)` the mutex needs to be locked, then the condition unlocks the mutex and blocks the execution of that thread until `condition.signal()` is called. When the condition awakens the thread because it's been signaled, it locks the mutex again and continues the execution. We can read the queue without problem because we know that the other thread won't be able to access it. We copy the next url to ping and unlock the mutex to keep the lock time to a minimum. Then outside the lock we ping the server and start the process again.

@@ -81,7 +81,7 @@ with open(chapterOrderPath) as fh:
 inputOptions = chapterPaths
 generalOptions = ["-N", "--smart", "--no-tex-ligatures", "--toc", "--toc-depth=4", "--standalone", "--preserve-tabs"]
 latexOptions = ["--template=ofBookTemplate.tex", "--latex-engine=xelatex", "--variable=papersize:a4", 
-				"--variable=documentclass:scrbook",	"--listings", "--variable=links-as-notes"]
+				"--variable=documentclass:scrbook",	"--listings", "--variable=links-as-notes", "--default-image-extension=PDF"]
 outputOptions = ["--output={0}".format(pdfBookPath)]
 pandocCommand = ["pandoc"] + outputOptions + inputOptions + generalOptions + latexOptions
 
@@ -110,3 +110,7 @@ if returnCode == 0:
 	print "Successful building of {0}".format(pdfBookPath)
 else:
 	print "Error in building of {0}".format(pdfBookPath)
+
+# Cleanup - remove the modified chapters
+for modifiedChapterPath in chapterPaths:
+	os.remove(modifiedChapterPath)
