@@ -18,7 +18,7 @@ Not all IP addresses can be reached. There is a [range of IPv4 addressed](https:
 
 ## TCP vs. UDP
 
-TCP and UDP are 2 of the most used protocols to communicate through a network. Indeed TCP is so common that the suite of protocols on which internet is based is usually called TCP/IP. The network protocols are classified in layers by something called the [OSI model](https://en.wikipedia.org/wiki/OSI_model "Wikipedia on the OSI model"). TCP and UDP belong to layer 4, the transport layer, and are usually the most used in oF along with protocols from layer 7, the application protocol, like HTTP, FTP or OSC that actually work on top of the other layers, for example HTTP and FTP on top of TCP and OSC usually on top of UDP.
+TCP and UDP are 2 of the most used protocols to communicate through a network. Indeed TCP is so common that the suite of protocols on which internet is based is usually called TCP/IP. The network protocols are classified in layers by something called the [OSI model](https://en.wikipedia.org/wiki/OSI_model "Wikipedia on the OSI model"). TCP and UDP belong to layer 4, the transport layer, and are usually the most used in oF along with protocols from layer 7, the application protocol, like the Hypertext Transfer Protocol ([HTTP](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol "Wikipedia on the Hypertext Transfer Protocol")), the File Transfer Protocol ([FTP](https://en.wikipedia.org/wiki/File_Transfer_Protocol "Wikipedia on the File Transfer Protocol")) or Open Sound Control ([OSC](https://en.wikipedia.org/wiki/Open_Sound_Control "Wikipedia on Open Sound Control")) that actually work on top of the other layers, for example HTTP and FTP on top of TCP and OSC usually on top of UDP.
 
 ### TCP
 
