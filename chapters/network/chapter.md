@@ -2,7 +2,9 @@
 
 
 *by [Arturo Castro](http://arturocastro.net)*
+
 *extensions by tpltnt*
+
 *corrections by Brannon Dorsey*
 
 This chapter gives a brief overview over the things you need to know to use computer networks with openFrameworks. Do not be afraid if you do not understand all the concepts. The idea is more to give you a basic understanding, some terminology and references so you can explore this topic and go deeper when you want (or need) to.
