@@ -34,7 +34,7 @@ TCP is able to solve all of those problems. When TCP sends packets it numbers th
 
 When the destination receives a packet and that packet is correct, it sends a confirmation, also called an ACK. If after some time the sender hasn't received that confirmation, it sends the packet again. That solves the problem of corrupted and lost packets.
 
-This ~~ACKs~~signalling **[t: TCP uses sliding windows and congestion control to regulate the flow. The ACK only acknowledges the reception of a packet]** also allows to regulate the speed with which packets are sent. If the client has less bandwidth than the server, the server can slow down sending packets until it arrives at a speed at which the client can receive them.
+This internal signalling also allows to regulate the speed with which packets are sent. If the client has less bandwidth than the server, the server can slow down sending packets until it arrives at a speed at which the client can receive them.
 
 As we see, using a TCP connection ensures that everything we send is received correctly on the other side.
 
