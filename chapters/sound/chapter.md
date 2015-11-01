@@ -18,7 +18,7 @@ Playing a sound file is only a couple lines of code in openFrameworks. Just poin
 
 ```cpp
 class ofApp : public ofBaseApp {
-  ...
+  // ... other things ...
   ofSoundPlayer soundPlayer;
 };
 
@@ -63,10 +63,10 @@ You may never have to use the ofSoundStream directly, but it's the object that m
 
 ```cpp
 class ofApp : public ofBaseApp {
-  ...
+  // ... other things ...
   void audioOut( float * output, int bufferSize, int nChannels );
   double phase;
-}
+};
 
 void ofApp::setup() {
   phase = 0;
@@ -190,22 +190,25 @@ Onset detection algorithms attempt to locate moments in an audio stream where an
 A simple realtime onset detection algorithm can be built on top of the RMS calculation above.
 
 ```cpp
-class class ofApp : public ofBaseApp {
-    ...
+class ofApp : public ofBaseApp {
+    // ... other members from audioInputExample ...
+
     float threshold;
     float minimumThreshold;
     float decayRate;
-}
+};
 
 void ofApp::setup() {
-    ...
+    // ... the contents of setup() from audioInputExample ...
+
     decayRate = 0.05;
     minimumThreshold = 0.1;
     threshold = minimumThreshold;
 }
 
 void ofApp::audioIn(float * input, int bufferSize, int nChannels) {
-    ...
+    // ... the contents of audioIn() from audioInputExample ...
+    
     threshold = ofLerp(threshold, minimumThreshold, decayRate);
 
     if(rms > threshold) {
@@ -333,17 +336,20 @@ We can create a simple (but effective) envelope with `ofLerp(...)` by adding the
 
 ```cpp
 class ofApp : public ofBaseApp {
-    ...
+    // ... the same members as the earlier app ...
+    
     float volume;
 };
 
 void ofApp::setup() {
-    ...
+    // ... the rest of setup() from before ...
+    
     volume = 0;
 }
 
 void ofApp::update() {
-    ...
+    // ... the rest of update() from before ...
+    
     if(ofGetKeyPressed()) {
         volume = ofLerp(volume, 1, 0.8); // jump quickly to 1
     } else {
@@ -352,9 +358,9 @@ void ofApp::update() {
 }
 
 void ofApp::audioOut(float * output, int bufferSize, int nChannels) {
-    ...
+    // ... change the "output[i] = " line from before into this:
+
     output[i] = waveform[waveformIndex] * volume;
-    ...
 }
 ```
 
@@ -375,20 +381,21 @@ You can probably tell where we're going, here. Now that the app is responding to
 
 ```cpp
 class ofApp : public ofBaseApp {
-    ...
+    // ... the same members as the earlier app ...
+    
     void keyPressed(int key);
     float frequencyTarget;
-}
+};
 
 void ofApp::setup() {
-    ...
+    // ... the rest of setup() from before ...
+    
     frequency = 0;
     frequencyTarget = frequency;
 }
 
 void ofApp::update() {
-    ...
-    // replace the "frequency = " line from earlier with this
+    // ... replace the "frequency = " line from earlier with this:
     frequency = ofLerp(frequency, frequencyTarget, 0.4);
 }
 
