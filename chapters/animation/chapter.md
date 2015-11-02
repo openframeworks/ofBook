@@ -408,7 +408,7 @@ Here, we'll take the sine of the elapsed time `sin(ofGetElpasedTimef())`. This r
 ```cpp
 void ofApp::draw(){
     float xPos = ofMap(sin(ofGetElpasedTimef()), -1, 1, 0, ofGetWidth());
-    ofRect(xPos, ofGetHeight/2, 10,10);
+    ofRect(xPos, ofGetHeight()/2, 10,10);
 }
 ```
 
