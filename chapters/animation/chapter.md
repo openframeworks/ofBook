@@ -94,7 +94,7 @@ This kind of animation works fine, but it assumes that your frame rate is consta
 
 ```cpp
 void testApp::update(){
-    xPos += ofGetTimeLastFrame() * speed;
+    xPos += ofGetLastFrameTime() * speed;
 }
 ```
 
