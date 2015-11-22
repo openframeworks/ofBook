@@ -457,7 +457,16 @@ void Ball::setup(){
 }
 ```
 
-We can leave the `update()` and `draw()` functions as they were.
+We can leave the `update()` and `draw()` functions as they were, but `mouseDragged(...)` inside ofApp.cpp needs to be adjusted to the new `setup()` function by removing the three arguments:
+
+```cpp
+void ofApp::mouseDragged(int x, int y, int button){
+    Ball tempBall;				// create the ball object
+    tempBall.setup();			// setup its initial state
+    myBall.push_back(tempBall);	// add it to the vector
+}
+```
+
 Now, let's start making child versions of this parent class.
 Create a new class set of files and name them `BallBlue`. Feel free to copy the code below.
 It's '.h' should look like this:
