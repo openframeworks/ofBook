@@ -479,7 +479,6 @@ In the '.cpp' file we'll need to then specify what we want the new `draw()` meth
 ```cpp
 #include "BallBlue.h"
 
-
 void BallBlue::draw(){
     ofSetColor(ofColor::blue);    // this is a shortcut for full blue color ;)
     ofCircle(x, y, dim);    
