@@ -64,7 +64,7 @@ The 'if statement' (#ifndef) is a way to prevent the repetition of header files 
 
 We will now create a class for a ball object. This ball will have color, speed and direction properties: it will move across the screen and bounce against the wall. Some of these properties we will create with randomized attributes but we'll be careful to create the right logic for its motion behaviours.
 
-Here's how you can write the class *.cpp file, the implementation file:
+Here's how you can write the class Ball.cpp file, the implementation file:
 
 ```cpp
 #include "Ball.h"
