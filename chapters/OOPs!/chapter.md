@@ -331,7 +331,7 @@ vector <Ball> myBall;
 ```
 
 In this expression we're creating a type (vector) of type (Ball pointers) and naming it myBall.
-Now, let's head to our (.cpp) and start cooking!
+Now, let's head to our ofApp.cpp and start cooking!
 Ignore the `setup()`, `update()` and `draw()` methods in the ofApp for now, let's jump to `ofApp::mouseDragged(...)` method. This method constantly listens to the mouse drag action and if it has changed it reveals its values (position and button state) to us.
 
 ```cpp
