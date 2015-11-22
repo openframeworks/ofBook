@@ -409,7 +409,7 @@ Your Ball header file should look like this:
 
 ```cpp
 #ifndef _BALL // if this class hasn't been defined, the program can define it
-#define _BALL // by using this if statement you prevent the class to be called more than once which would         confuse the compiler
+#define _BALL // by using this if statement you prevent the class to be called more than once which would confuse the compiler
 #include "ofMain.h"
 
 
