@@ -344,9 +344,9 @@ The dragging activity of your mouse or trackpad is an ubiquitous, simple but als
 
 ```cpp
 void ofApp::mouseDragged(int x, int y, int button){
-    Ball tempBall;									// create the ball object
-    tempBall.setup(x,y, ofRandom(10,40));			// setup its initial state
-    myBall.push_back(tempBall);						// add it to the vector
+    Ball tempBall;							// create the ball object
+    tempBall.setup(x,y, ofRandom(10,40));	// setup its initial state
+    myBall.push_back(tempBall);				// add it to the vector
 }
 ```
 
