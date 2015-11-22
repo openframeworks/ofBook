@@ -470,7 +470,7 @@ It's '.h' should look like this:
 
 class BallBlue : public Ball {     // we set the class to inherit from 'Ball'
     public:
-        virtual void draw();             // this is the only method we actually want to be different from the parent class
+        virtual void draw();       // this is the only method we actually want to be different from the parent class
 };
 ```
 
