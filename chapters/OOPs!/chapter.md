@@ -40,7 +40,7 @@ class Ball {
     public: // place public functions or variables declarations here
 
     // methods, equivalent to specific functions of your class objects
-    void setup();	//setup method, use this to setup your object's initial state
+    void setup();	// setup method, use this to setup your object's initial state
     void update();  // update method, used to refresh your objects properties
     void draw();    // draw method, this where you'll do the object's drawing 
 
@@ -64,7 +64,7 @@ The 'if statement' (#ifndef) is a way to prevent the repetition of header files 
 
 We will now create a class for a ball object. This ball will have color, speed and direction properties: it will move across the screen and bounce against the wall. Some of these properties we will create with randomized attributes but we'll be careful to create the right logic for its motion behaviours.
 
-Here's how you can write the class *.cpp file, the implementation file:
+Here's how you can write the class Ball.cpp file, the implementation file:
 
 ```cpp
 #include "Ball.h"
@@ -199,7 +199,15 @@ Ball myBall[NBALLS];
 
 An array is an indexed list of items of the same type. The index is used to access a particular item in the list. This index usually starts with 0, so the first `Ball` (object) is found at myBall[0]. Only a handful of programming languages start the index of an array with 1. If you try to access an invalid index (either larger than the size of the array or a negative one), you get an error. Check the 'C++ basics' chapter for more information on arrays. In our implementation file we create an array of objects and call their methods through 'for' loops.
 
-In the `setup()` function add:
+In the `setup()` function remove:
+
+```cpp
+myBall1.setup();
+myBall2.setup();
+myBall3.setup();
+```
+
+and add
 
 ```cpp
 for(int i=0; i<NBALLS; i++){
@@ -207,7 +215,17 @@ for(int i=0; i<NBALLS; i++){
 }
 ```
 
-In the `update()` function add:
+instead.
+
+In the `update()` function remove
+
+```cpp
+myBall1.update();
+myBall2.update();
+myBall3.update();
+```
+
+and write
 
 ```cpp
 for(int i=0; i<NBALLS; i++){
@@ -215,7 +233,15 @@ for(int i=0; i<NBALLS; i++){
 }
 ```
 
-In the `draw()` function add:
+In the `draw()` function replace
+
+```cpp
+myBall1.draw();
+myBall2.draw();
+myBall3.draw();
+```
+
+with
 
 ```cpp
 for(int i=0; i<NBALLS; i++){
@@ -322,7 +348,7 @@ Vectors are really great as they'll allow to create collections of objects witho
 So, let's use them!
 Note: You'll be hearing about two different types of vectors throughout this book. Please don't confuse stl::vectors (the elastic arrays type we're talking about) with mathematical vectors (e.g. forces).
 
-To learn more about stl::vector check the "C++ basics" chapter or this short online tutorial: http://www.openframeworks.cc/tutorials/c++%20concepts/001_stl_vectors_basic.html
+To learn more about stl::vector check the "C++ basics" chapter or the [short online tutorial on the openFrameworks website](http://www.openframeworks.cc/tutorials/c++%20concepts/001_stl_vectors_basic.html).
 
 Back to our beloved ofApp.h file, let's define a vector of `Ball` objects by typing:
 
@@ -331,7 +357,7 @@ vector <Ball> myBall;
 ```
 
 In this expression we're creating a type (vector) of type (Ball pointers) and naming it myBall.
-Now, let's head to our (.cpp) and start cooking!
+Now, let's head to our ofApp.cpp and start cooking!
 Ignore the `setup()`, `update()` and `draw()` methods in the ofApp for now, let's jump to `ofApp::mouseDragged(...)` method. This method constantly listens to the mouse drag action and if it has changed it reveals its values (position and button state) to us.
 
 ```cpp
@@ -344,9 +370,9 @@ The dragging activity of your mouse or trackpad is an ubiquitous, simple but als
 
 ```cpp
 void ofApp::mouseDragged(int x, int y, int button){
-    Ball tempBall;									// create the ball object
-    tempBall.setup(x,y, ofRandom(10,40));			// setup its initial state
-    myBall.push_back(tempBall);						// add it to the vector
+    Ball tempBall;							// create the ball object
+    tempBall.setup(x,y, ofRandom(10,40));	// setup its initial state
+    myBall.push_back(tempBall);				// add it to the vector
 }
 ```
 
