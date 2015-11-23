@@ -446,6 +446,8 @@ soup.append(wrapperDiv)
 
 htmlOut = soup.prettify("utf-8")
 tocPath = os.path.join(webBookPath, "toc.html")
+print "toc path" 
+print tocPath
 with open(tocPath, "wb") as file:
     file.write(htmlOut)
 
