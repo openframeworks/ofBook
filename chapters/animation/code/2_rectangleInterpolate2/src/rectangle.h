@@ -16,14 +16,11 @@ class rectangle {
 		ofPoint		posa;
 		ofPoint		posb;
 		float		pct;	// what pct are we between "a" and "b"
-	
-	
-		float		radius;
-	
-		float		radiusa;
-		float		radiusb;
-	
 
+		float		radius; // current radius
+
+		float		radiusa; // radius at "a"
+		float		radiusb; // radius at "b"
 };
 
 #endif // RECTANGLE_H
