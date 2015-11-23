@@ -151,7 +151,7 @@ a:active {
 
 .banner {
   position:fixed;
-  background-color: rgba(200,120,120,0.9);
+  background-color: rgba(237, 177, 64,0.9);
   width:100%;
   left:0px;
   top:0px;
@@ -182,13 +182,13 @@ a:active {
 
 .chapter-content, .toc {
   width: 734px;
-  margin-top:70px;
+  margin-top:90px;
   background-color: rgba(255,255,255,1);
   // border: 1px solid rgba(233,233,233,1);
   // box-shadow: 0 0 1px rgba(0,0,0,.07);
   display: block;
-  margin-left: 246px;
-  padding:15px 25px 30px;
+  margin-left: 260px;
+  padding: 1.5em 3.5em 1.5em 3.5em; 
   text-rendering: optimizeLegibility;
 
   p {
@@ -221,14 +221,14 @@ a:active {
   h1 {
     font-weight: 300;
     font-size: 50px;
-    margin-top: 1.5em;
-    margin-bottom: 1.9em;
+    margin-top: 0.2em;
+    margin-bottom: 1.2em;
   }
 
   h2 {
     font-style: italic;
     font-size: 32px;
-    margin-top:2.6em;
+    margin-top:1.6em;
     margin-bottom:0.7em;
     border-color: #cccccc;
 
@@ -270,9 +270,10 @@ a:active {
     font-size: 12px;
     font-style: normal;
     line-height: inherit;
-    padding: 3px 5px 3px 5px;
+    padding: 3px 2px 3px  2px;
     margin-right: 2px;
     margin-left: 1px;
+    font-weight:bold;
     text-rendering: normal;
     white-space: nowrap;
     border-radius: 3px;
@@ -293,20 +294,22 @@ a:active {
     /*font-family: Menlo, Consolas, "Courier New", Monaco, monospace;
     font-size: 13px;*/
     tab-size: 4;
+
     border: none !important;
     border-radius:0px !important;
     white-space: pre-wrap;
     margin-top: -10px;
-    padding: 13px 0;
+    padding: 2em 0;
     font-size: 11px;
 
     code {
+    font-weight: normal !important;
       border-left: 6px solid rgba(197, 213, 229, 0.65);
       position: relative;
       background-color: rgba(0,0,0,0.03);
       width: 650px;
       left: 0px;
-      padding: 6px 20px !important;
+      padding: 1.5em 1.5em !important;
       color: inherit;
       display: inherit; /* required so that pad effects all of the block */
       line-height: inherit;
@@ -378,13 +381,29 @@ a:active {
   width: 980px;
   margin-left: 0px;
 
+
+
+  p {
+  padding-left:6em;
+  padding-right:6em;
+  }
+
+
+  .info {
+  padding-top:3em;
+  padding-bottom:3em;
+  }
+
   .toc-wrapper {
     column-count: 2;
     -webkit-column-count: 2;
     -moz-column-count: 2;
-
+    padding-left:6em;
     h3 {
       margin-top: 0;
+    }
+    ol,ul {
+    list-style:none;
     }
   }
 
