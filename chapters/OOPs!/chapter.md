@@ -435,7 +435,7 @@ Your Ball header file should look like this:
 
 ```cpp
 #ifndef _BALL // if this class hasn't been defined, the program can define it
-#define _BALL // by using this if statement you prevent the class to be called more than once which would         confuse the compiler
+#define _BALL // by using this if statement you prevent the class to be called more than once which would confuse the compiler
 #include "ofMain.h"
 
 
@@ -483,7 +483,16 @@ void Ball::setup(){
 }
 ```
 
-We can leave the `update()` and `draw()` functions as they were.
+We can leave the `update()` and `draw()` functions as they were, but `mouseDragged(...)` inside ofApp.cpp needs to be adjusted to the new `setup()` function by removing the three arguments:
+
+```cpp
+void ofApp::mouseDragged(int x, int y, int button){
+    Ball tempBall;				// create the ball object
+    tempBall.setup();			// setup its initial state
+    myBall.push_back(tempBall);	// add it to the vector
+}
+```
+
 Now, let's start making child versions of this parent class.
 Create a new class set of files and name them `BallBlue`. Feel free to copy the code below.
 It's '.h' should look like this:
@@ -496,7 +505,7 @@ It's '.h' should look like this:
 
 class BallBlue : public Ball {     // we set the class to inherit from 'Ball'
     public:
-        virtual void draw();             // this is the only method we actually want to be different from the parent class
+        virtual void draw();       // this is the only method we actually want to be different from the parent class
 };
 ```
 
@@ -504,7 +513,6 @@ In the '.cpp' file we'll need to then specify what we want the new `draw()` meth
 
 ```cpp
 #include "BallBlue.h"
-
 
 void BallBlue::draw(){
     ofSetColor(ofColor::blue);    // this is a shortcut for full blue color ;)
