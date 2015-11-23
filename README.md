@@ -51,3 +51,8 @@ Since [git](http://git-scm.com/) is at the heart of the management of this endea
 [openFrameworks Book discussion](http://dev.openframeworks.cc/listinfo.cgi/ofbook-openframeworks.cc).
 
 Older Book discussions can be checked at [ofBook Archives](http://dev.openframeworks.cc/private.cgi/ofbook-openframeworks.cc/)
+
+# gulp
+
+In addition to the python routines to build the book, there is also an optional gulp file for use in style development.  It requires gulp, browser-sync and gulp sass and can be used primarily to see changes to CSS reflect live on the static pages.  You have to run the python createWebBook script first. 
+
