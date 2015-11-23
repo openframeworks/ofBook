@@ -177,7 +177,8 @@ for chapter in chapters:
                                         "--include-in-header=createWebBookTemplate/IncludeInHeader.html",
                                         "--include-before-body=createWebBookTemplate/IncludeBeforeBody.html",
                                         "--include-after-body=createWebBookTemplate/IncludeAfterBody.html",
-                                        "--template=createWebBookTemplate/default.html"])
+                                        "--template=createWebBookTemplate/default.html",
+                                        "--default-image-extension=svg"])
 	
 
 
@@ -463,7 +464,8 @@ subprocess.call(["pandoc", "-o", destTocPath, sourceTocPath,
                                     "-s", "-p",
                                     "--include-in-header=createWebBookTemplate/IncludeInHeader.html",
                                     "--include-before-body=createWebBookTemplate/IncludeBeforeBodyTOC.html",
-                                    "--include-after-body=createWebBookTemplate/IncludeAfterBodyTOC.html"])
+                                    "--include-after-body=createWebBookTemplate/IncludeAfterBodyTOC.html",
+                                    "--template=createWebBookTemplate/default.html"])
 
 print "Removing", sourceTocPath, "..."
 os.remove(sourceTocPath)

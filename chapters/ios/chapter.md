@@ -115,7 +115,7 @@ Now that we have defined our variables and methods in the class interface, lets 
 @end
 ```
 
-In terms of structure, the methods look almost exactly the same as the in the class interface, only now each method has curly braces on the end `{` and `}` which symbolise the begining and end of the method code. The two getter methods (`getFirstName` and `getLastName`) are pretty straight forward and simply return a pointer to a `NSString` variable. The setter methods (`setFirstName` and `setLastName`) contain code which is more specific to Obj-C and here is where we first touch upon the topic of memory managemen in Obj-C. 
+In terms of structure, the methods look almost exactly the same as the in the class interface, only now each method has curly braces on the end `{` and `}` which symbolise the begining and end of the method code. The two getter methods (`getFirstName` and `getLastName`) are pretty straight forward and simply return a pointer to a `NSString` variable. The setter methods (`setFirstName` and `setLastName`) contain code which is more specific to Obj-C and here is where we first touch upon the topic of memory managemen in Obj-C.
 
 ###Memory Management
 
@@ -281,7 +281,7 @@ When ARC is turned on, it is possible to specify which Obj-C class should use AR
 
 Since both the Obj-C and C++ languages are a subset of the C language, it is possible to mix the two together. First of all before you start typing C++ code into your Obj-C classes or vise versa you need to rename your implementation file extension from `(*.m)` => `(*.mm)`. This lets the XCode compiler know that the file is a combination of Obj-C and C++.
 
-`ofApp.mm` by default is already to setup this way so you can start using Obj-C code inside your app. One example of this might be that you would like to use UIKit to add some kind of user interface over the top of your ofApp. There are many very useful possibilities of mixing Obj-C with C++ and we'll go into more detail later in this chapter. 
+`ofApp.mm` by default is already to setup this way so you can start using Obj-C code inside your app. One example of this might be that you would like to use UIKit to add some kind of user interface over the top of your ofApp. There are many very useful possibilities of mixing Obj-C with C++ and we'll go into more detail later in this chapter.
 
 
 ###TODO
@@ -296,7 +296,7 @@ good reference => http://cocoadevcentral.com/d/learn_objectivec/
 
 ##Under the Hood
 
-UIKit is the backbone of all iOS apps. It is a collection of classes or framework that provide a standardised structure for creating and running applications. UIKit provides the skeleton structure into which you can insert your custom application code and makes it easy to receive system events like device orientation changes or memory warning as two examples amongst many. 
+UIKit is the backbone of all iOS apps. It is a collection of classes or framework that provide a standardised structure for creating and running applications. UIKit provides the skeleton structure into which you can insert your custom application code and makes it easy to receive system events like device orientation changes or memory warning as two examples amongst many.
 
 UIKit organises its classes using the MVC (model-view-controller) design pattern. When you get into iOS programming you will see the MVC patterns everywhere, especially when working with UIViewControllers. MVC breaks up code into one of the three categories and makes the code more extensible and reusable.
 
@@ -304,7 +304,7 @@ When you run a iOS app, it always begins with the UIApplication class which list
 
 (explain UIViews)
 
-So that's the super compressed summary which is only skiming the surface of iOS development. It can be a very steap learning curve and this is where ofxiOS comes to the rescue as an elevator that takes you straight to the top of that curve. ofxiOS allows you to make native iOS apps using OpenFrameworks without knowing anything about UIKit or Obj-C at all. 
+So that's the super compressed summary which is only skiming the surface of iOS development. It can be a very steap learning curve and this is where ofxiOS comes to the rescue as an elevator that takes you straight to the top of that curve. ofxiOS allows you to make native iOS apps using OpenFrameworks without knowing anything about UIKit or Obj-C at all.
 
 Inside ofxiOS are classes which extend UIKit and take care of creating the iOS application structure. The three core classes are ofxiOSAppDelegate which extends the application delegate, ofxiOSViewController which extends a UIViewController and is the root view controller for an OF application, and ofxiOSEAGLView which extends a UIView and is the view to which OpenGL content is drawn to.
 
@@ -383,7 +383,7 @@ http://www.creativeapplications.net/iphone/integrating-native-uikit-to-your-exis
 
 A large chunk of ofxiOS support is media playback and capture. ofxiOS has good support for video playback, sound playback, camera capature and sound input. All Obj-C code that makes these features possible is wrapped and abstracted so a regular OF user can continue using the OF API the same way across all supported platforms.
 
-For example, lets say you have a very simple ofApp that plays a video. To achieve this you would use the `ofVideoPlayer` class, create a object instance of the class, call the `loadMovie()` method to load the video file and then call the `play()` method to begin playback of the video. Now to do this across desktop OF apps or iOS OF apps, the code is exactly the same. This is because we are using the `ofVideoPlayer` API which is common across all supported OF platforms. Although the thing to know here is that even though the code works the same way across the different platforms, the actual code used to play a video on OSX and iOS (for example) is very different. 
+For example, lets say you have a very simple ofApp that plays a video. To achieve this you would use the `ofVideoPlayer` class, create a object instance of the class, call the `loadMovie()` method to load the video file and then call the `play()` method to begin playback of the video. Now to do this across desktop OF apps or iOS OF apps, the code is exactly the same. This is because we are using the `ofVideoPlayer` API which is common across all supported OF platforms. Although the thing to know here is that even though the code works the same way across the different platforms, the actual code used to play a video on OSX and iOS (for example) is very different.
 
 ###ofxiOSVideoPlayer
 

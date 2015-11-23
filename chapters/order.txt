@@ -28,6 +28,5 @@ Tools
 	installation_up_4evr_macosx
 	installation_up_4evr_linux
 Case studies
-	project_elliot
 	project_eva
 	project_joel

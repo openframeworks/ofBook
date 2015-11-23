@@ -1,1 +1,0 @@
-pandoc chapter.md -N --smart --toc --toc-depth=4 -s -p --latex-engine=xelatex -V papersize=a4 -V documentclass=scrbook -V links-as-notes -o chapter.pdf
