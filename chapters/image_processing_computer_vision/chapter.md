@@ -520,7 +520,7 @@ For example, if you're calculating a "blob" to represent the location of a user'
 
 Let's suppose that your raw source data is color video (as is common with webcams). For many image processing and computer vision applications, your first step will involve *converting this to monochrome*. Depending on your application, you'll either clobber your color data to grayscale directly, or create a grayscale copy for subsequent processing. 
 
-The simplest method to convert a color image to grayscale is to modify its data by changing its OF image type to `OF_IMAGE_GRAYSCALE`. Note that this causes the image to be reallocated and any ofTextures to be updated, so it can be an expensive operation if done frequently. It's also a "destructive operation", in the sense that the image's original color information is lost in the conversion.</p>
+The simplest method to convert a color image to grayscale is to modify its data by changing its OF image type to `OF_IMAGE_GRAYSCALE`. Note that this causes the image to be reallocated and any ofTextures to be updated, so it can be an expensive operation if done frequently. It's also a "destructive operation", in the sense that the image's original color information is lost in the conversion.
 
 ```cpp
 ofImage myImage; 
