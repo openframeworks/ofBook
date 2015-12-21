@@ -409,7 +409,7 @@ public:
 };
 ```
 
-Our enemy’s horizontal movement will be shaped by the values fed to a sine wave (which we’ll see in a moment). We’ll keep track of our amplitude variable so different enemies can have different amplitudes. We’ll also want to keep track of whether enough time has passed for this enemy to shoot again, which utilizes the start_shoot and shoot_interval variables. Both of these variables will actually be set in our setup() function. Finally, we’ll have a boolean function that will tell us whether the enemy can shoot this frame or not.
+Our enemy's horizontal movement will be shaped by the values fed to a sine wave (which we'll see in a moment). We'll keep track of our amplitude variable so different enemies can have different amplitudes. We'll also want to keep track of whether enough time has passed for this enemy to shoot again, which utilizes the start_shoot and shoot_interval variables. Both of these variables will actually be set in our setup() function. Finally, we'll have a boolean function that will tell us whether the enemy can shoot this frame or not.
  Our enemy class will look like this:
 
 ```cpp
@@ -545,7 +545,7 @@ void testApp::update_bullets() {
 
 ###Our game's brain
 
-Great! Except… we don’t have any enemies yet! Definitely an oversight. This is where our level controller comes in. Add `LevelController level_controller;` to your `testApp.h`.
+Great! Except… we don't have any enemies yet! Definitely an oversight. This is where our level controller comes in. Add `LevelController level_controller;` to your `testApp.h`.
  Our level controller class is super simple:
 
 ```cpp
@@ -579,7 +579,7 @@ bool LevelController::should_spawn() {
 
 When we set up our level controller, we'll give it a starting time. It'll use this time as a baseline for the first enemy spawn. The `should_spawn` code should look familiar from the enemy bullet section.
 
-We’ll wait to set up our level controller until the game actually starts, namely, when the game state changes from `“start”` to `“game”`.
+We'll wait to set up our level controller until the game actually starts, namely, when the game state changes from `"start"` to `"game"`.
 
 ```cpp
 void testApp::keyReleased(int key){
@@ -644,7 +644,7 @@ public:
 };
 ```
 
-It’ll function like this (a lot like the bullet):
+It'll function like this (a lot like the bullet):
 
 ```cpp
 void Life::setup(ofImage * _img) {
@@ -737,7 +737,7 @@ void testApp::draw(){
 
 ###Let's get visual
 
-Finally! We’ve been a bit stingy with visual feedback, so let’s add in a start screen, a score, a visual representation of the lives left, and an end screen. Add `ofImage start_screen;`, `ofImage end_screen;`, `void draw_lives();`, and `void draw_score();` to `testApp.h`.
+Finally! We've been a bit stingy with visual feedback, so let's add in a start screen, a score, a visual representation of the lives left, and an end screen. Add `ofImage start_screen;`, `ofImage end_screen;`, `void draw_lives();`, and `void draw_score();` to `testApp.h`.
 
 Change `testApp::setup()` to load in those assets:
 
@@ -782,14 +782,14 @@ All that's left after that is to call `draw_score()` and `draw_lives()` during t
 Congrats–you made a game!
 
 ###Linking oF and OSC
-Now let’s add in the OSC functionality. We are going to set our application up to receive messages from our iPad and then make changes in real-time while our game is running to test some possible player scenarios. As mentioned before, this can trump going into your application and making manual changes because you skip the need to recompile your game and playtest live. In fact, you can even use TouchOSC to open up new ways to interact with your players. 
+Now let's add in the OSC functionality. We are going to set our application up to receive messages from our iPad and then make changes in real-time while our game is running to test some possible player scenarios. As mentioned before, this can trump going into your application and making manual changes because you skip the need to recompile your game and playtest live. In fact, you can even use TouchOSC to open up new ways to interact with your players. 
 
 ![Nightgame developer interface by Phoenix Perry](images/touchGame.png "Nightgame developer interface by Phoenix Perry")
 
 *TouchOSC is used to switch game levels on the fly and to run challenges.* 
    
 To accomplish this we are going to create a new class that will contain our OSC functionality. Create a .cpp and .h file for this class now and name it LiveTesting. Open `LiveTesting.h`
-And let’s add the line to import the OSC at the top of your file after your preprocessor directives and also a line for using iostream for testing purposes. As we add the code we will explain inline in code comments. 
+And let's add the line to import the OSC at the top of your file after your preprocessor directives and also a line for using iostream for testing purposes. As we add the code we will explain inline in code comments. 
 
 Add the following: 	
 
@@ -798,7 +798,7 @@ Add the following:
 #include "ofxOsc.h"
 ```
 
-Next let’s set up all of the variables we are going to use to receive OSC data and map it to game values.
+Next let's set up all of the variables we are going to use to receive OSC data and map it to game values.
 Add the following code into your class:
 
 ```cpp
@@ -831,13 +831,13 @@ public:
 };
 ```
 
-Now let’s jump over to the `LiveTesting.cpp` file. In this file we are going to set up our network address and the ports we are sending and receiving data on as the first order of business. However, to go any further we are going to need to do some housekeeping and install additional software. For OSC to work it will need a local wifi network to send the messages across. (Note this tactic may not work for a network outside of your own because often a sysadmin will stop this kind of traffic from being transmitted on a very public network. We suggest bringing an Airport Express or something similar with you so you can quickly and wirelessly establish a local network for play testing.) 
+Now let's jump over to the `LiveTesting.cpp` file. In this file we are going to set up our network address and the ports we are sending and receiving data on as the first order of business. However, to go any further we are going to need to do some housekeeping and install additional software. For OSC to work it will need a local wifi network to send the messages across. (Note this tactic may not work for a network outside of your own because often a sysadmin will stop this kind of traffic from being transmitted on a very public network. We suggest bringing an Airport Express or something similar with you so you can quickly and wirelessly establish a local network for play testing.) 
 
 For the purpose of this chapter and to allow us to create an experience that will work on both Android and iOS, we are going to use a piece of software called TouchOSC from this URL: http://hexler.net/software/touchosc
 
-The desktop editor software is free, however, the matching software for your device will be $4.99. Get both now. As a matter of principle, we endorse building your own tools and you could easily build a second oF project to be your OSC sender and receiver on your mobile device. With that said, nothing beats TouchOSC for speed, ease of use, and complete, platform independent flexibility. If you are someone who often moves between an iOS and Android device on both Windows and Mac, this tool will become indispensible to you. As a game's designer it can open up possibilities like changing levels on the fly, updating game variables, adjusting for-player feedback, and adding new features into and taking them out of your game as it’s running. We highly endorse using it and support the continued advancement of the tool. You can also use it with music production tools like Ableton Live and it comes with great presets for things like DJing and mixing music live. Go to the app store of your device and purchase the mobile version now if you would like to continue down this route. 
+The desktop editor software is free, however, the matching software for your device will be $4.99. Get both now. As a matter of principle, we endorse building your own tools and you could easily build a second oF project to be your OSC sender and receiver on your mobile device. With that said, nothing beats TouchOSC for speed, ease of use, and complete, platform independent flexibility. If you are someone who often moves between an iOS and Android device on both Windows and Mac, this tool will become indispensible to you. As a game's designer it can open up possibilities like changing levels on the fly, updating game variables, adjusting for-player feedback, and adding new features into and taking them out of your game as it's running. We highly endorse using it and support the continued advancement of the tool. You can also use it with music production tools like Ableton Live and it comes with great presets for things like DJing and mixing music live. Go to the app store of your device and purchase the mobile version now if you would like to continue down this route. 
 	
-After we get all of the tools downloaded and installed, let’s start setting everything up. You are going to need two bits of information. You are going to need to know the IP address of your computer and the IP address of your laptop. If you are on a Mac, just open up your System Preferences. Go to the Network setting and click on your WiFi connection in the left sidebar. On the right side it will display your IP address. You can also get this setting by opening up Terminal and entering in the command "ifconfig." Terminal will list every network that’s a possible connection for your machine from the past, even if it’s not currently active. For example, if you have ever connected your phone, it will be in the list with some flag and listed as inactive. Look for the connection that’s currently active. It will look something like this: 
+After we get all of the tools downloaded and installed, let's start setting everything up. You are going to need two bits of information. You are going to need to know the IP address of your computer and the IP address of your laptop. If you are on a Mac, just open up your System Preferences. Go to the Network setting and click on your WiFi connection in the left sidebar. On the right side it will display your IP address. You can also get this setting by opening up Terminal and entering in the command "ifconfig." Terminal will list every network that's a possible connection for your machine from the past, even if it's not currently active. For example, if you have ever connected your phone, it will be in the list with some flag and listed as inactive. Look for the connection that's currently active. It will look something like this: 
 
 ```
 en1: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
@@ -850,7 +850,7 @@ en1: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
 
 The inet address is your current IP. 
 
-On Windows, open the `charms` bar. In search type `cmd` and open the command prompt. Type in `ipconfig`. This information is much clearer than the data dump from terminal. The connected listed as your Wireless LAM adapter Wi-Fi will list your current IPv4 address. This is your IP address. Finally, obtain your mobile device’s IP address as well from your device settings. Make a note of your IP address for the next section. 
+On Windows, open the `charms` bar. In search type `cmd` and open the command prompt. Type in `ipconfig`. This information is much clearer than the data dump from terminal. The connected listed as your Wireless LAM adapter Wi-Fi will list your current IPv4 address. This is your IP address. Finally, obtain your mobile device's IP address as well from your device settings. Make a note of your IP address for the next section. 
 
 At this point, go ahead and launch TouchOSC on your device and the TouchOSC desktop editor on your computer. If you are on Windows, you will need to make sure you have Java installed first. Once the software is open, click the open icon in the top tool bar. In the file containing the code for this chapter you will see a file called `ofBook.touchosc`. 
 
@@ -866,7 +866,7 @@ bool triggerBonus;
 
 ![](images/controls.png)
 
-To build the app, let’s start by adding our first knob. Right click in the black empty space to the right. Choose to make a `rotaryH`. Next make two `labelH` objects. The first one will be the name of our knob. The second one will be for displaying the value of the current variable in our game. Place one label above the knob and one below. It should look like this:
+To build the app, let's start by adding our first knob. Right click in the black empty space to the right. Choose to make a `rotaryH`. Next make two `labelH` objects. The first one will be the name of our knob. The second one will be for displaying the value of the current variable in our game. Place one label above the knob and one below. It should look like this:
 
 ![](images/label1_label2.png)
 
@@ -932,7 +932,7 @@ We are going to add one more but this one will be a Push Button instead of a Rot
 
 Save your file to your hard drive desktop and name it `PlaytestInterface`. 
 
-You are done building your interface for play testing. Now let’s deploy it! On your mobile device, launch TouchOSC. It will launch and open a settings screen.
+You are done building your interface for play testing. Now let's deploy it! On your mobile device, launch TouchOSC. It will launch and open a settings screen.
 
 This is when we need the network address of your computer we retrieved earlier. Under Connections, touch OSC: **[KL: Is this colon intentional? Unfortunately I can't follow this part of the tutorial right now to know for sure.]**  and set it to the IP address of your computer to link the two. It should look something like `192.165.0.3`.
 
@@ -951,7 +951,7 @@ Now click on `Layout`. Then tap `Add`. It will start to search for your computer
 
 Switch back to your device. You should see your computer listed under FOUND HOSTS. Select it. It will pop back to the settings screen. Scroll down and find PlaytestInterface in the list of interfaces. Select it and it will take you back to the main menu. Press Done in the upper left corner and your interface will now launch. If you want to get back to the settings screen at any point, the white dot in the upper right-hand corner will return the user interface to that screen. 
 
-Finally, TouchOSC is set up! Let’s link it to our game and run our very first playtest. Go back to the programming IDE. Open `LiveTesting.cpp`. In our default constructor, we will now set up our game to send and receive values over the network. To do this we will need to know which IP address and port on our device we will send to as well as set up a port on our local computer's network to receive incoming data. Your computer will have only one IP address but it can send and receive data on thousands of ports. We aren't going into too much detail about ports, but you can think of the IP address like a boat pier. Lots of boats can be docked at a single pier. This is no different. Your ports are your docks and your IP address is your pier. You can think of the data like the people departing and arriving. You’ll need a separate port for each activity in this scenario. If a port isn't used by your operating system, you can send and receive data there. **[KL: since IP addresses were mentioned earlier, maybe this analogy should also be introduced earlier.]** We are going to use `8000` and `8001`. The final thing to establish is the address pattern. It will look like a file path and allow us to specify that our messages match to their right values. Add this code:
+Finally, TouchOSC is set up! Let's link it to our game and run our very first playtest. Go back to the programming IDE. Open `LiveTesting.cpp`. In our default constructor, we will now set up our game to send and receive values over the network. To do this we will need to know which IP address and port on our device we will send to as well as set up a port on our local computer's network to receive incoming data. Your computer will have only one IP address but it can send and receive data on thousands of ports. We aren't going into too much detail about ports, but you can think of the IP address like a boat pier. Lots of boats can be docked at a single pier. This is no different. Your ports are your docks and your IP address is your pier. You can think of the data like the people departing and arriving. You'll need a separate port for each activity in this scenario. If a port isn't used by your operating system, you can send and receive data there. **[KL: since IP addresses were mentioned earlier, maybe this analogy should also be introduced earlier.]** We are going to use `8000` and `8001`. The final thing to establish is the address pattern. It will look like a file path and allow us to specify that our messages match to their right values. Add this code:
 
 ```cpp
 #include "LiveTesting.h"
