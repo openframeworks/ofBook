@@ -6,11 +6,9 @@ rm /home/ofadmin/hooks/.regenerate_book
 cd /home/ofadmin/ofBook/
 git pull origin master 
 cd scripts
-python createWebBook.py > logweb.log
+./create_book_linux.sh > logweb.log
 retWeb=$?
-python createPDFBook.py > logpdf.log
-retPDF=$?
-if [ $retWeb -ne 0 ] || [ $retPDF -ne 0 ]
+if [ $retWeb -ne 0 ] 
 then
 	SUBJECT="Failed building book"
 	# Email To ?
@@ -28,7 +26,7 @@ cd /home/ofadmin/ofBook
 rm -rf /home/ofadmin/openFrameworks.cc/ofBook
 mv output/webBook /home/ofadmin/openFrameworks.cc/ofBook
 mv output/ofBook.pdf /home/ofadmin/openFrameworks.cc/ofBook/
-mv  /home/ofadmin/openFrameworks.cc/ofBook/toc.html  /home/ofadmin/openFrameworks.cc/ofBook/index.html
+mv /home/ofadmin/openFrameworks.cc/ofBook/toc.html  /home/ofadmin/openFrameworks.cc/ofBook/index.html
 mv scripts/logweb.log /home/ofadmin/openFrameworks.cc/ofBook/
 mv scripts/logpdf.log /home/ofadmin/openFrameworks.cc/ofBook/
 rm /home/ofadmin/ofBook/web/.lock
