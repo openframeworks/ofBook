@@ -196,7 +196,7 @@ for chapter in chapters:
 	# ----------- now let's alter the HTML that's produced:
 
 	if os.path.exists(destChapterPath):
-		soup = Soup(open(destChapterPath, "rb").read())
+		soup = Soup(open(destChapterPath, "rb").read(), "html.parser")
 
 		# --- grab the title from h1
 
@@ -296,7 +296,7 @@ def returnChapterByCommonName( commonName ):
 for idx, chapter in enumerate(chapterDicts):
 	soup = Soup()
 
-	soupFromFile = Soup(open(chapter['destChapterPath'], "rb").read())
+	soupFromFile = Soup(open(chapter['destChapterPath'], "rb").read(), "html.parser")
 
 	# Create previous/next links in the footer
 	nextChapterDiv = soupFromFile.find(id='next_chapter')
