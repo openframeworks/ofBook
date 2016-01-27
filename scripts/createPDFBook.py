@@ -26,6 +26,7 @@
 		Pandoc
 """
 from __future__ import print_function
+from io import open
 
 import os
 import re

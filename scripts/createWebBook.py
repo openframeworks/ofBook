@@ -42,7 +42,7 @@
 	Dependencies:
 		BeautifulSoup4, install using "sudo pip install BeautifulSoup4"
 """
-
+from __future__ import print_function
 
 import os
 import subprocess
