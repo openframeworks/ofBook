@@ -58,16 +58,16 @@ void ofApp::draw(){
 
                 // Draw the stick figure family
                 ofSetColor(blueColor);
-                ofCircle(30, 30, 30);
+                ofDrawCircle(30, 30, 30);
                 ofRect(5, 70, 50, 100);
                 ofSetColor(blueColor);
-                ofCircle(95, 30, 30);
+                ofDrawCircle(95, 30, 30);
                 ofRect(70, 70, 50, 100);
                 ofSetColor(purpleColor);
-                ofCircle(45, 90, 15);
+                ofDrawCircle(45, 90, 15);
                 ofRect(30, 110, 30, 60);
                 ofSetColor(purpleColor);
-                ofCircle(80, 90, 15);
+                ofDrawCircle(80, 90, 15);
                 ofRect(65, 110, 30, 60);
 
                 ofTranslate(150, 0); // Shift horizontally

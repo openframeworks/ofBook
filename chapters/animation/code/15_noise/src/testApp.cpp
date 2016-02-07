@@ -10,7 +10,7 @@ void testApp::setup(){
 //--------------------------------------------------------------
 void testApp::draw(){
 	ofSetColor(255,0,127);
-	ofCircle(ofNoise(ofGetElapsedTimef()) * ofGetWidth(),
-             ofNoise(ofGetElapsedTimef()+1000) * ofGetHeight(),
-             20);
+	ofDrawCircle(ofNoise(ofGetElapsedTimef()) * ofGetWidth(),
+				 ofNoise(ofGetElapsedTimef()+1000) * ofGetHeight(),
+				 20);
 }

@@ -21,7 +21,7 @@ void testApp::draw(){
 						ofMap(y,0,ofGetHeight(), 0, colorScheme.height));
 		col.a = 85;	// set some alpha. 
 		ofSetColor(col);
-		ofCircle(x,y,ofRandom(4,40));
+		ofDrawCircle(x,y,ofRandom(4,40));
 	}
 }
 
