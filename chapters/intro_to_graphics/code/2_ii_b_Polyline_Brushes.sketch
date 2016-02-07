@@ -66,7 +66,7 @@ void draw() {
 //        vector<ofVec3f> vertices = polyline.getVertices();  // If you haven't seen a vector < >, before
 //        for (int p=0; p<100; p+=10) {
 //            ofVec3f point = polyline.getPointAtPercent(p/100.0);  // Returns a point at a percentage along the polyline
-//            ofCircle(point, 5);
+//            ofDrawCircle(point, 5);
 //        }
 
         // Drawing evenly spaced normals along the polyline

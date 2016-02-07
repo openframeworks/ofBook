@@ -157,7 +157,7 @@ public:
         
         ofFill();
         ofSetColor(color);
-        ofCircle(location.x, location.y, radius); 
+        ofDrawCircle(location.x, location.y, radius);
     }
 
 // etc...

@@ -106,7 +106,7 @@ void Ball::update(){
 
 void Ball::draw(){
     ofSetColor(color);
-    ofCircle(x, y, dim);
+    ofDrawCircle(x, y, dim);
 }
 ```
 
@@ -315,7 +315,7 @@ void Ball::update(){
 
 void Ball::draw(){
     ofSetColor(color);
-    ofCircle(x, y, dim);
+    ofDrawCircle(x, y, dim);
 }
 ```
 
@@ -516,7 +516,7 @@ In the '.cpp' file we'll need to then specify what we want the new `draw()` meth
 
 void BallBlue::draw(){
     ofSetColor(ofColor::blue);    // this is a shortcut for full blue color ;)
-    ofCircle(x, y, dim);    
+    ofDrawCircle(x, y, dim);
 }
 ```
 

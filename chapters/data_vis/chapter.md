@@ -329,7 +329,7 @@ The `draw()` part of the code incorporates a for loop that maps the full range o
         float x = dimensions.x + ofMap( dataPoints[i].year, minYear, maxYear, 0,dimensions.width);
         float y = dimensions.y + ofMap( dataPoints[i].ny, 0, maxValue, dimensions.height, 0);
 
-        ofCircle(x,y, 2);
+        ofDrawCircle(x,y, 2);
     }
 
 }
@@ -442,7 +442,7 @@ Finally we must return to void ofApp::draw() and make some changes. In the for l
         float x = dimensions.x + ofMap( dataPoints[i].year, minYear, maxYear, 0,dimensions.width);
         float y = dimensions.y + ofMap( dataPoints[i].ny, 0, maxValue, dimensions.height, 0);
 
-        ofCircle(x,y, 2);
+        ofDrawCircle(x,y, 2);
     }
 
 ```
@@ -459,7 +459,7 @@ to this:
         float y = dimensions.y + ofMap( value, 0, maxValue, dimensions.height, 0);
 
 
-        ofCircle(x,y, 2);
+        ofDrawCircle(x,y, 2);
     }
 
 ```

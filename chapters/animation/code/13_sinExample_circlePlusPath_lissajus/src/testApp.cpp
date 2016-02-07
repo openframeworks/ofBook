@@ -28,7 +28,7 @@ void testApp::draw(){
 	ofSetRectMode(OF_RECTMODE_CENTER);
 	ofSetColor(255,0,127);
 	ofFill();
-	ofCircle(x,y,10);
+	ofDrawCircle(x,y,10);
 
 	ofSetColor(255,255,255);
 

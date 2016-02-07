@@ -281,7 +281,7 @@ protected:
 void ofApp::setup() {
 	Graphic circle;
 	circle.whatToDraw = []() {
-		ofCircle(50,50,20);
+		ofDrawCircle(50,50,20);
 	};
 	this->graphicElements.push_back(circle);
 

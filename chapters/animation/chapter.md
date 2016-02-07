@@ -49,7 +49,7 @@ void ofApp::update(){
 
 void ofApp::draw(){
     ofSetColor(ofColor::red);  // draw everything in red
-    ofCircle(xpos, 100, 10);   // draw a circle at the (variable) vertical position, 100 pixels from the top with a 10 pixel diameter
+    ofDrawCircle(xpos, 100, 10);   // draw a circle at the (variable) vertical position, 100 pixels from the top with a 10 pixel diameter
 }
 ```
 
@@ -512,7 +512,7 @@ We can use noise to animate. Here, for example, we move an object on screen usin
 
 ```cpp
 float x = ofMap( ofNoise( ofGetElapsedTimef()), 0, 1, 0, ofGetWidth());
-ofCircle(x,200,30);
+ofDrawCircle(x,200,30);
 ```
 
 If we move y via noise, we can take a noise input value somewhere "away" from the x value, i.e. further down the curved line:
@@ -520,7 +520,7 @@ If we move y via noise, we can take a noise input value somewhere "away" from th
 ```cpp
 float x = ofMap( ofNoise( ofGetElapsedTimef()), 0, 1, 0, ofGetWidth());
 float y = ofMap( ofNoise( 1000.0+ ofGetElapsedTimef()), 0, 1, 0, ofGetHeight());
-ofCircle(x,y,30);
+ofDrawCircle(x,y,30);
 ```
 
 Alternatively, ofNoise takes multiple dimensions. Here's a quick sketch moving something in a path via ofNoise using the 2D dimensions:
@@ -546,7 +546,7 @@ void ofApp::draw(){
     float x = ofMap( ofNoise( ofGetElapsedTimef()/2.0, -1000), 0, 1, 0, ofGetWidth());
     float y = ofMap( ofNoise( ofGetElapsedTimef()/2.0, 1000), 0, 1, 0, ofGetHeight());
     ofNoFill();
-    ofCircle(x,y,3);
+    ofDrawCircle(x,y,3);
 
 }
 ```

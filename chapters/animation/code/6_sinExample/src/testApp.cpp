@@ -12,5 +12,5 @@ void testApp::draw(){
     float sinOfTime = sin( ofGetElapsedTimef() );
     float xpos = ofMap(sinOfTime, -1, 1, 0, ofGetWidth());
 	ofSetColor(255, 255, 255);
-	ofCircle(xpos, 400, 10);
+	ofDrawCircle(xpos, 400, 10);
 }

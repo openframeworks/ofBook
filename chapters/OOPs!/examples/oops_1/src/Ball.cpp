@@ -43,5 +43,5 @@ void Ball::update(){
 void Ball::draw(){
     // set Color based on values for Red, Green and Blue
     ofSetColor(color);
-    ofCircle(x, y, dim);
+    ofDrawCircle(x, y, dim);
 }

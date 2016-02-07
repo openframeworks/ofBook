@@ -28,13 +28,13 @@ ofSetColor(255);  // Set the drawing color to white
 
 // Draw some shapes
 ofRect(50, 50, 100, 100); // Top left corner at (50, 50), 100 wide x 100 high
-ofCircle(250, 100, 50); // Centered at (250, 100), radius of 50
+ofDrawCircle(250, 100, 50); // Centered at (250, 100), radius of 50
 ofEllipse(400, 100, 80, 100); // Centered at (400 100), 80 wide x 100 high
 ofTriangle(500, 150, 550, 50, 600, 150); // Three corners: (500, 150), (550, 50), (600, 150)
 ofLine(700, 50, 700, 150); // Line from (700, 50) to (700, 150)
 ```
 
-When we run the code, we see white shapes on a black background.  Success!  Each time our `draw()` function executes, three things happen.  First, we clear the screen by drawing a solid black background using [`ofBackground(...)`](http://www.openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofBackground "ofBackground Documentation Page").  The `0` represents a grayscale color where `0` is completely black and `255` is completely white. Second, we specify what color should be used for drawing with [`ofSetColor(...)`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofSetColor "ofColor Documentation Page").  We can think of this code as telling openFrameworks to pull out a specific colored marker.  When we draw, we will draw in that color until we specify that we want another color.  Third, we draw our basic shapes with [`ofRect(...)`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#!show_ofRect "ofRect Documentation Page"), [`ofCircle(...)`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#!show_ofCircle "ofCircle Documentation Page"), [`ofEllipse(...)`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#!show_ofEllipse "ofEllipse Documentation Page"), [`ofTriangle(...)`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#!show_ofTriangle "ofTriangle Documentation Page") and [`ofLine(...)`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#!show_ofLine "ofLine Documentation Page").  Check out the comments in the example to better understand how we are using the drawing functions.  The functions can be used in other ways as well, so check out the openFrameworks documentation if you are curious.
+When we run the code, we see white shapes on a black background.  Success!  Each time our `draw()` function executes, three things happen.  First, we clear the screen by drawing a solid black background using [`ofBackground(...)`](http://www.openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofBackground "ofBackground Documentation Page").  The `0` represents a grayscale color where `0` is completely black and `255` is completely white. Second, we specify what color should be used for drawing with [`ofSetColor(...)`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofSetColor "ofColor Documentation Page").  We can think of this code as telling openFrameworks to pull out a specific colored marker.  When we draw, we will draw in that color until we specify that we want another color.  Third, we draw our basic shapes with [`ofRect(...)`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#!show_ofRect "ofRect Documentation Page"), [`ofDrawCircle(...)`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#!show_ofDrawCircle "ofDrawCircle Documentation Page"), [`ofEllipse(...)`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#!show_ofEllipse "ofEllipse Documentation Page"), [`ofTriangle(...)`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#!show_ofTriangle "ofTriangle Documentation Page") and [`ofLine(...)`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#!show_ofLine "ofLine Documentation Page").  Check out the comments in the example to better understand how we are using the drawing functions.  The functions can be used in other ways as well, so check out the openFrameworks documentation if you are curious.
 
 [`ofFill()`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#!show_ofFill "ofFill Documentation Page") and [`ofNoFill()`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#!show_ofFill "ofNoFill Documentation Page") toggle between drawing filled shapes and drawing outlines.  The colored marker analogy doesn't fit, but the concept still applies.  `ofFill()` tells openFrameworks to draw filled shapes until told otherwise.  `ofNoFill()` does the same but with outlines.  So we can draw two rows of shapes on our screen (figure 2) - one filled and one outlines - if we modify our `draw()` function to look like:
 
@@ -197,7 +197,7 @@ for (int radius=maxRadius; radius>0; radius-=radiusStepSize) {
     float xOffset = cos(angle) * distance;
     float yOffset = sin(angle) * distance;
     ofSetColor(255, alpha);
-    ofCircle(ofGetMouseX()+xOffset, ofGetMouseY()+yOffset, radius);
+    ofDrawCircle(ofGetMouseX()+xOffset, ofGetMouseY()+yOffset, radius);
 }
 ```
 
@@ -563,7 +563,7 @@ Since we have the basic drawing in place, now we play with how we are rendering 
 vector<ofVec3f> vertices = polyline.getVertices();
 for (int vertexIndex=0; vertexIndex<vertices.size(); vertexIndex++) {
     ofVec3f vertex = vertices[vertexIndex];  // ofVec3f is like ofVec2f, but with a third dimension, z
-    ofCircle(vertex, 5);
+    ofDrawCircle(vertex, 5);
 }
 ```
 
@@ -580,7 +580,7 @@ We can also sample points along the polyline using [`getPointAtPercent(...)`](ht
 ```cpp
     for (int p=0; p<100; p+=10) {
         ofVec3f point = polyline.getPointAtPercent(p/100.0);  // Returns a point at a percentage along the polyline
-        ofCircle(point, 5);
+        ofDrawCircle(point, 5);
     }
 ```
 
@@ -653,7 +653,7 @@ for (int p=0; p<500; p+=1) {
 
 **Extensions**
 
-1. Try drawing shapes other than `ofLine(...)` and `ofCircle(...)` along your polylines.  You could use your brush code from section 1.
+1. Try drawing shapes other than `ofLine(...)` and `ofDrawCircle(...)` along your polylines.  You could use your brush code from section 1.
 2. The density of tangents or normals drawn is dependent on the length of the brush stroke.  Try making it independent (hint: you may need to adjust your loop and use `getPerimeter()` to calculate the length).
 3. Check out how to draw polygons using `ofPath` and try drawing a brush stroke that is a giant, closed shape.
 
@@ -721,13 +721,13 @@ Imagine that we have a piece of graphing paper in front of us.  How would we dra
 
 ```cpp
 // Draw the stick figure family
-ofCircle(30, 30, 30);
+ofDrawCircle(30, 30, 30);
 ofRect(5, 70, 50, 100);
-ofCircle(95, 30, 30);
+ofDrawCircle(95, 30, 30);
 ofRect(70, 70, 50, 100);
-ofCircle(45, 90, 15);
+ofDrawCircle(45, 90, 15);
 ofRect(30, 110, 30, 60);
-ofCircle(80, 90, 15);
+ofDrawCircle(80, 90, 15);
 ofRect(65, 110, 30, 60);
 ```
 
