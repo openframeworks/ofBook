@@ -69,7 +69,7 @@ void ofApp::draw(){
             ofColor inBetween = myOrange.getLerped(myRed, ofRandom(1.0));
             ofSetColor(inBetween);
 
-            ofDrawCircle(ofGetMouseX()+xOffset, ofGetMouseY()+yOffset, radius);
+            ofCircle(ofGetMouseX()+xOffset, ofGetMouseY()+yOffset, radius);
         }
     }
 
