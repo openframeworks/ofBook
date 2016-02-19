@@ -3,10 +3,10 @@ if [ -f /home/ofadmin/ofBook/web/.lock ] || [ ! -f /home/ofadmin/hooks/.regenera
 fi
 touch /home/ofadmin/ofBook/web/.lock
 rm /home/ofadmin/hooks/.regenerate_book
+date
 cd /home/ofadmin/ofBook/
 git pull origin master 
 cd scripts
-date
 ./create_book_linux.sh
 retWeb=$?
 if [ $retWeb -ne 0 ] 
