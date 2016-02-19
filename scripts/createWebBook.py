@@ -451,16 +451,25 @@ for group in chapterGroups:
 
 soup.append(wrapperDiv)
 
-print(soup.prettify("utf-8"));
+#print(soup.prettify("utf-8"));
 
 htmlOut = soup.prettify("utf-8")
+
+tocPathTemp = os.path.join(webBookPath, "tocTemp.html")
 tocPath = os.path.join(webBookPath, "toc.html")
 print("toc path")
 print(tocPath)
-with open(tocPath, "wb") as file:
+with open(tocPathTemp, "wb") as file:
     file.write(htmlOut)
 
 
+filenames = ['createWebBookTemplate/IncludeBeforeBodyTOC.html', tocPathTemp, 'createWebBookTemplate/IncludeAfterBodyTOC.html']
+with open(tocPath, 'w') as outfile:
+    for fname in filenames:
+        with open(fname) as infile:
+            outfile.write(infile.read())
+
+os.remove(tocPathTemp);
 #----------------------------------------------------- run pandoc for TOC
 
 destTocPath = os.path.join(webBookPath, "chapters", "toc.html")
@@ -468,12 +477,12 @@ sourceTocPath = os.path.join(webBookPath, "toc.html")
 
 print("Converting", sourceTocPath, "to", destTocPath, "...")
 
-subprocess.call(["pandoc", "-o", destTocPath, sourceTocPath,
-                                    "-s", "-p",
-                                    "--include-in-header=createWebBookTemplate/IncludeInHeader.html",
-                                    "--include-before-body=createWebBookTemplate/IncludeBeforeBodyTOC.html",
-                                    "--include-after-body=createWebBookTemplate/IncludeAfterBodyTOC.html",
-                                    "--template=createWebBookTemplate/default.html"])
+# subprocess.call(["pandoc", "-o", destTocPath, sourceTocPath,
+#                                     "-s", "-p",
+#                                     "--include-in-header=createWebBookTemplate/IncludeInHeader.html",
+#                                     "--include-before-body=createWebBookTemplate/IncludeBeforeBodyTOC.html",
+#                                     "--include-after-body=createWebBookTemplate/IncludeAfterBodyTOC.html",
+#                                     "--template=createWebBookTemplate/default.html"])
 
 print("Removing", sourceTocPath, "...")
 os.remove(sourceTocPath)
