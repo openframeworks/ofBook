@@ -456,7 +456,7 @@ soup.append(wrapperDiv)
 htmlOut = soup.prettify("utf-8")
 
 tocPathTemp = os.path.join(webBookPath, "tocTemp.html")
-tocPath = os.path.join(webBookPath, "toc.html")
+tocPath = os.path.join(os.path.join(webBookPath, "chapters"), "toc.html")
 print("toc path")
 print(tocPath)
 with open(tocPathTemp, "wb") as file:
@@ -472,20 +472,20 @@ with open(tocPath, 'w') as outfile:
 os.remove(tocPathTemp);
 #----------------------------------------------------- run pandoc for TOC
 
-destTocPath = os.path.join(webBookPath, "chapters", "toc.html")
-sourceTocPath = os.path.join(webBookPath, "toc.html")
+# destTocPath = os.path.join(webBookPath, "chapters", "toc.html")
+# sourceTocPath = os.path.join(webBookPath, "toc.html")
 
-print("Converting", sourceTocPath, "to", destTocPath, "...")
+# print("Converting", sourceTocPath, "to", destTocPath, "...")
 
-# subprocess.call(["pandoc", "-o", destTocPath, sourceTocPath,
-#                                     "-s", "-p",
-#                                     "--include-in-header=createWebBookTemplate/IncludeInHeader.html",
-#                                     "--include-before-body=createWebBookTemplate/IncludeBeforeBodyTOC.html",
-#                                     "--include-after-body=createWebBookTemplate/IncludeAfterBodyTOC.html",
-#                                     "--template=createWebBookTemplate/default.html"])
+# # subprocess.call(["pandoc", "-o", destTocPath, sourceTocPath,
+# #                                     "-s", "-p",
+# #                                     "--include-in-header=createWebBookTemplate/IncludeInHeader.html",
+# #                                     "--include-before-body=createWebBookTemplate/IncludeBeforeBodyTOC.html",
+# #                                     "--include-after-body=createWebBookTemplate/IncludeAfterBodyTOC.html",
+# #                                     "--template=createWebBookTemplate/default.html"])
 
-print("Removing", sourceTocPath, "...")
-os.remove(sourceTocPath)
+# print("Removing", sourceTocPath, "...")
+# os.remove(sourceTocPath)
 
 #----------------------------------------------------- copy index redirect to TOC
 
