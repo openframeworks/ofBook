@@ -3,10 +3,15 @@ if [ -f /home/ofadmin/ofBook/web/.lock ] || [ ! -f /home/ofadmin/hooks/.regenera
 fi
 touch /home/ofadmin/ofBook/web/.lock
 rm /home/ofadmin/hooks/.regenerate_book
+echo
+echo
+echo "--------------------------------"
+echo
+date
 cd /home/ofadmin/ofBook/
 git pull origin master 
 cd scripts
-./create_book_linux.sh > logweb.log
+./create_book_linux.sh
 retWeb=$?
 if [ $retWeb -ne 0 ] 
 then
@@ -15,10 +20,8 @@ then
 	EMAIL="arturo@openframeworks.cc"
 	# Email text/message
 	# send an email using /bin/mail
-	/usr/bin/mail -s "$SUBJECT" "$EMAIL" < buildstate
-	cat buildstate
+	echo "Building ofBook failed, check http://openframeworks.cc/ofBook/logweb.log" | /usr/bin/mail -s "$SUBJECT" "$EMAIL" 
 	rm /home/ofadmin/ofBook/web/.lock
-	rm /home/ofadmin/ofBook/web/buildstate
 	exit
 fi
 echo copy newsite
