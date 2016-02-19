@@ -451,6 +451,8 @@ for group in chapterGroups:
 
 soup.append(wrapperDiv)
 
+print(soup.prettify("utf-8"));
+
 htmlOut = soup.prettify("utf-8")
 tocPath = os.path.join(webBookPath, "toc.html")
 print("toc path")
