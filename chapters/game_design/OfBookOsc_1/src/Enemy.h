@@ -6,10 +6,8 @@
 //
 //
 
-#ifndef __OfBookOsc__Enemy__
-#define __OfBookOsc__Enemy__
 
-#include <iostream>
+#pragma once
 #include "ofMain.h"
 
 class Enemy {
@@ -29,5 +27,3 @@ public:
     
     ofImage * img;
 };
-
-#endif /* defined(__OfBookOsc__Enemy__) */
