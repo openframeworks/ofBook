@@ -1,5 +1,7 @@
 # Ooops! = Object Oriented Programming + Classes
 
+*by [Rui Pereira](http://www.rux-werx-here.net/)*
+
 
 ## Overview
 This tutorial is a quick and practical introduction to Object Oriented Programming in openFrameworks and a how-to guide to build and use your own classes.
