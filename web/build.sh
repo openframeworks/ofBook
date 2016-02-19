@@ -6,7 +6,8 @@ rm /home/ofadmin/hooks/.regenerate_book
 cd /home/ofadmin/ofBook/
 git pull origin master 
 cd scripts
-./create_book_linux.sh > logweb.log
+date > logweb.log
+./create_book_linux.sh >> logweb.log
 retWeb=$?
 if [ $retWeb -ne 0 ] 
 then
