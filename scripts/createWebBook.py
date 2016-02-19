@@ -419,9 +419,14 @@ wrapperDiv['class'] = "toc-wrapper"
 # Run through the chapter groups
 for group in chapterGroups:
 
+
+	tocSection = Tag(soup, None, "div");
+	tocSection['class'] = "tocSection"
+
+
 	h3 = Tag(soup, None, "h3")
 	h3.append(group['groupName'])
-	wrapperDiv.append(h3)
+	tocSection.append(h3)
 
 	ul = Tag(soup, None, "ul");
 
@@ -441,7 +446,8 @@ for group in chapterGroups:
 		else:
 			print(chap)
 
-	wrapperDiv.append(ul)
+	tocSection.append(ul)
+	wrapperDiv.append(tocSection);
 
 soup.append(wrapperDiv)
 
