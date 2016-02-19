@@ -127,7 +127,7 @@ In this chapter we will look at animating movement (changing position over time)
 
 The first and probably most important lesson of animation is that we **love** numbers between 0 and 1.
 
-![loving 0...1](images/01heart.png)
+![loving 0...1](images/heart.jpg)
 
 The thing about numbers between 0 and 1 is that they are super easy to use in interesting ways. We typically refer to these kinds of numbers as percent, and you'll see me use the shorthand `pct` in the code – this is a floating point number between 0 and 1. If we wanted to get from point A to point B, we could use this number to figure out how much of one point and how much of another point to use. The formula is this:
 
@@ -684,7 +684,7 @@ We don't have time to get into it in this chapter, but there are different appro
 
 ### openFrameworks / animation in general
 
-* [OpenFrameworks / Animation by Code](https://github.com/bschorr/OFAnimation_Spring2015 "OpenFrameworks / Animation by Code course at Parsons The New School for Design, Spring 2015") (course at Parsons The New School for Design, Spring 2015)
+* [Algorithmic animation code](https://github.com/ofZach/algo2012 "Algorithmic animation code") (Code from a class I've taught at Parsons School for Design and School for Poetic Computation)
 * [ofxAddons: animation](http://www.ofxaddons.com/categories/7-animation "ofxAddons for animation")
 * [Wikipedia animations portal](https://en.wikipedia.org/wiki/Portal:Animation)
 * [Wikipedia book: Animation](https://en.wikipedia.org/wiki/Book:Animation)
