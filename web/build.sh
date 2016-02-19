@@ -3,6 +3,9 @@ if [ -f /home/ofadmin/ofBook/web/.lock ] || [ ! -f /home/ofadmin/hooks/.regenera
 fi
 touch /home/ofadmin/ofBook/web/.lock
 rm /home/ofadmin/hooks/.regenerate_book
+echo
+echo
+echo "--------------------------------"
 date
 cd /home/ofadmin/ofBook/
 git pull origin master 
