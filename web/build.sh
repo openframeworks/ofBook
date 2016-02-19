@@ -16,10 +16,10 @@ then
 	EMAIL="arturo@openframeworks.cc"
 	# Email text/message
 	# send an email using /bin/mail
-	/usr/bin/mail -s "$SUBJECT" "$EMAIL" < buildstate
+	/usr/bin/mail -s "$SUBJECT" "$EMAIL" < logweb.log
 	cat buildstate
 	rm /home/ofadmin/ofBook/web/.lock
-	rm /home/ofadmin/ofBook/web/buildstate
+	rm /home/ofadmin/ofBook/web/logweb.log
 	exit
 fi
 echo copy newsite
