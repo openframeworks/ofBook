@@ -12,7 +12,7 @@
 		277D61953427F04E35FD1483 /* LevelController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6389435AA5A4E7A75354B4A7 /* LevelController.cpp */; };
 		2A18B270BA3F830132A6D00B /* CollageTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C057779296C6374316B0FB55 /* CollageTexture.cpp */; };
 		2C3DDFF7819C684DC0EA5BAB /* LinearTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B16CA76BF0B5C9545C2C0EFF /* LinearTexture.cpp */; };
-		472C9F8F1C76CFCA00B8BEB1 /* ofApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 472C9F8D1C76CFCA00B8BEB1 /* ofApp.cpp */; };
+		472C9F931C76D26200B8BEB1 /* ofApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 472C9F911C76D26200B8BEB1 /* ofApp.cpp */; };
 		4957F2C50D54011D4C2DEDF6 /* Enemy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 478612FCF146228B1CC1B197 /* Enemy.cpp */; };
 		4ADB88E2FB52E76A471065DE /* ofxOscParameterSync.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0AED834CE4DEC5260AF302A2 /* ofxOscParameterSync.cpp */; };
 		510CAFE035E576A4E1502D52 /* UdpSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6DEF695B88BA5FAACEAA937 /* UdpSocket.cpp */; };
@@ -78,8 +78,8 @@
 		3B361208CD4107E479F04E7B /* NetworkingUtils.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = NetworkingUtils.cpp; path = ../../../addons/ofxOsc/libs/oscpack/src/ip/posix/NetworkingUtils.cpp; sourceTree = SOURCE_ROOT; };
 		3E71FF39F2A4961E51B3C093 /* ofxSpriteSheetRenderer.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxSpriteSheetRenderer.cpp; path = ../../../addons/ofxSpriteSheetRenderer/src/ofxSpriteSheetRenderer.cpp; sourceTree = SOURCE_ROOT; };
 		444657A12E59D0ED86981498 /* TimerListener.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = TimerListener.h; path = ../../../addons/ofxOsc/libs/oscpack/src/ip/TimerListener.h; sourceTree = SOURCE_ROOT; };
-		472C9F8D1C76CFCA00B8BEB1 /* ofApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofApp.cpp; path = ../../../../../ofBook/chapters/game_design/OfBookOsc_1/src/ofApp.cpp; sourceTree = "<group>"; };
-		472C9F8E1C76CFCA00B8BEB1 /* ofApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofApp.h; path = ../../../../../ofBook/chapters/game_design/OfBookOsc_1/src/ofApp.h; sourceTree = "<group>"; };
+		472C9F911C76D26200B8BEB1 /* ofApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofApp.cpp; sourceTree = "<group>"; };
+		472C9F921C76D26200B8BEB1 /* ofApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofApp.h; sourceTree = "<group>"; };
 		478612FCF146228B1CC1B197 /* Enemy.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = Enemy.cpp; path = src/Enemy.cpp; sourceTree = SOURCE_ROOT; };
 		48974F980F51769171D0B2F5 /* IpEndpointName.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = IpEndpointName.h; path = ../../../addons/ofxOsc/libs/oscpack/src/ip/IpEndpointName.h; sourceTree = SOURCE_ROOT; };
 		4CC3E660883FB9CB67327346 /* Life.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = Life.cpp; path = src/Life.cpp; sourceTree = SOURCE_ROOT; };
@@ -262,8 +262,8 @@
 			isa = PBXGroup;
 			children = (
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
-				472C9F8D1C76CFCA00B8BEB1 /* ofApp.cpp */,
-				472C9F8E1C76CFCA00B8BEB1 /* ofApp.h */,
+				472C9F911C76D26200B8BEB1 /* ofApp.cpp */,
+				472C9F921C76D26200B8BEB1 /* ofApp.h */,
 				C0B4DA812938EC5EC0248612 /* Bullet.cpp */,
 				8935D11AEC6700945FA171CB /* Bullet.h */,
 				478612FCF146228B1CC1B197 /* Enemy.cpp */,
@@ -446,7 +446,7 @@
 				ADE367465D2A8EBAD4C7A8D9 /* IpEndpointName.cpp in Sources */,
 				67FE4C7B15C2F0478C8126C2 /* NetworkingUtils.cpp in Sources */,
 				510CAFE035E576A4E1502D52 /* UdpSocket.cpp in Sources */,
-				472C9F8F1C76CFCA00B8BEB1 /* ofApp.cpp in Sources */,
+				472C9F931C76D26200B8BEB1 /* ofApp.cpp in Sources */,
 				62545D179C94265CA1389D4A /* OscOutboundPacketStream.cpp in Sources */,
 				C4782ECC372420ACE0615B74 /* OscPrintReceivedElements.cpp in Sources */,
 				0546D1A38E13BD319CC9755B /* OscReceivedElements.cpp in Sources */,

@@ -10,16 +10,16 @@ void ofApp::setup(){
     max_enemy_amplitude = 3.0;
     max_enemy_shoot_interval = 1.5;
     
-    enemy_image.loadImage("enemy0.png");
-    player_image.loadImage("player.png");
-    life_image.loadImage("life_image.png");
-    enemy_bullet_image.loadImage("enemy_bullet.png");
-    player_bullet_image.loadImage("player_bullet.png");
-    start_screen.loadImage("start_screen.png");
-    end_screen.loadImage("end_screen.png");
+    enemy_image.load("enemy0.png");
+    player_image.load("player.png");
+    life_image.load("life_image.png");
+    enemy_bullet_image.load("enemy_bullet.png");
+    player_bullet_image.load("player_bullet.png");
+    start_screen.load("start_screen.png");
+    end_screen.load("end_screen.png");
     player_1.setup(&player_image);
     
-    score_font.loadFont("Gota_Light.otf", 48);
+    score_font.load("Gota_Light.otf", 48);
     //simply change this boolean to turn testing on and off
     testing == false;
     if(testing == true){
