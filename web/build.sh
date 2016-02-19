@@ -6,6 +6,7 @@ rm /home/ofadmin/hooks/.regenerate_book
 echo
 echo
 echo "--------------------------------"
+echo
 date
 cd /home/ofadmin/ofBook/
 git pull origin master 
