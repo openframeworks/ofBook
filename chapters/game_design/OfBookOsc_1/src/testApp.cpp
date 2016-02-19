@@ -248,7 +248,7 @@ void testApp::check_bullet_collisions() {
 //--------------------------------------------------------------
 void testApp::draw_lives() {
     for (int i = 0; i < player_1.lives; i++) {
-        player_image.draw(ofGetWidth() - (i * player_image.width) - 100, 30);
+        player_image.draw(ofGetWidth() - (i * player_image.getWidth()) - 100, 30);
     }
     
 }
