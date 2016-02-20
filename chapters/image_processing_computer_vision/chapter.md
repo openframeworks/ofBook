@@ -853,27 +853,56 @@ void ofApp::draw(){
 
 We now have all the pieces we need to understand and implement a popular and widely-used workflow in computer vision: *contour extraction and blob tracking from background subtraction*. This workflow produces a set of (x,y) points that represent the boundary of (for example) a person's body that has entered the camera's view. 
 
-In this section, we'll base our discussion around the standard oF *opencvExample*, which can be found in the `examples/addons/opencvExample` directory of your openFrameworks installation. *(Note: the complete code accompanying the discussion below can be found in that project.)* 
-
-When you compile and run this example, you'll see the shadow of a hand entering a video frame—and, at the bottom right of our window, the contour of this hand, rendered as a cyan polyline. This polyline is *our prize:* using it, we can obtain all sorts of information about our visitor. So how did we get here?
-
 ![Screenshot of the opencvExample](images/opencvExample.png)
 
-We now discuss the inner mechanics of the *opencvExample*, step-by-step.
+In this section, we'll base our discussion around the standard oF *opencvExample*, which can be found in the `examples/addons/opencvExample` directory of your openFrameworks installation. When you compile and run this example, you'll see a video of a hand casting a shadow—and, at the bottom right of our window, the contour of this hand, rendered as a cyan polyline. This polyline is *our prize:* using it, we can obtain all sorts of information about our visitor. So how did we get here?
 
-**Step 1. Video Acquisition.** <br /> 
-In the upper-left of our screen display is the raw, unmodified video of a hand creating a shadow. Although it's not so obvious, this is actually a color video (that happens to be showing a mostly black-and-white scene). 
+The code below is a slightly simplified version of the standard *opencvExample*. In the discussion that follows, we separate its inner mechanics into five steps, and discuss how they are performed and displayed: 
 
-In `setup()`, the hand video is read from from its source file into `vidPlayer`, an instance of an `ofVideoPlayer` that has been declared in ofApp.h. In `setup()`, we also initialize some global variables, and allocate the memory we'll need for a variety of globally-scoped `ofxCvImage` image buffers.
-
-It's quite common in computer vision workflows to maintain a large number of image buffers, each holding an intermediate state in the image-processing chain. Here, we have one buffer (`colorImg`)
+1. Video Acquisition
+2. Color to Grayscale Conversion 
+3. Storing a "Background Image"
+4. Thresholded Absolute Differencing
+5. Contour Tracing
 
 
 ```cpp
+// Example 7: Background Subtraction 
+// This is ofApp.h
+
+#pragma once
+#include "ofMain.h"
+#include "ofxOpenCv.h"
+
+class ofApp : public ofBaseApp{
+	public:
+		void setup();
+		void update();
+		void draw();
+		void keyPressed(int key);
+	
+		ofVideoPlayer			vidPlayer;
+	
+		ofxCvColorImage			colorImg;
+		ofxCvGrayscaleImage 	grayImage;
+		ofxCvGrayscaleImage 	grayBg;
+		ofxCvGrayscaleImage 	grayDiff;
+		ofxCvContourFinder		contourFinder;
+
+		int						thresholdValue;
+		bool					bLearnBackground;
+};
+```
+
+```cpp
+// Example 7: Background Subtraction 
+// This is ofApp.cpp
+#include "ofApp.h"
+
+//---------------------
 void ofApp::setup(){
 	vidPlayer.load("fingers.mov");
 	vidPlayer.play();
-	vidPlayer.setLoopState(OF_LOOP_NORMAL);
 
 	colorImg.allocate(320,240);
 	grayImage.allocate(320,240);
@@ -881,15 +910,79 @@ void ofApp::setup(){
 	grayDiff.allocate(320,240);
 
 	bLearnBackground = true;
-	threshold = 80;
-}     
+	thresholdValue = 80;
+}
+
+//---------------------
+void ofApp::update(){
+	
+	// Ask the video player to update itself.
+	vidPlayer.update();
+	
+	if (vidPlayer.isFrameNew()){ // If there is fresh data...
+		
+		// Copy the data from the video player into an ofxCvColorImage
+		colorImg.setFromPixels(vidPlayer.getPixels());
+		
+		// Make a grayscale version of colorImg in grayImage
+		grayImage = colorImg;
+		
+		// If it's time to learn the background;
+		// copy the data from grayImage into grayBg
+		if (bLearnBackground == true){
+			grayBg = grayImage; // Note: this is 'operator overloading'
+			bLearnBackground = false; // Latch: only learn it once.
+		}
+
+		// Take the absolute value of the difference 
+		// between the background and incoming images.
+		grayDiff.absDiff(grayBg, grayImage);
+		
+		// Perform an in-place thresholding of the difference image.
+		grayDiff.threshold(thresholdValue);
+
+		// Find contours whose areas are betweeen 20 and 25000 pixels.
+		// "Find holes" is true, so we'll also get interior contours.
+		contourFinder.findContours(grayDiff, 20, 25000, 10, true);
+	}
+}
+
+//---------------------
+void ofApp::draw(){
+	ofBackground(100,100,100);
+
+	ofSetHexColor(0xffffff);
+	colorImg.draw(20,20);    // The incoming color image
+	grayImage.draw(360,20);  // A gray version of the incoming video
+	grayBg.draw(20,280);     // The stored background image
+	grayDiff.draw(360,280);  // The thresholded difference image
+
+	ofNoFill();
+	ofDrawRectangle(360,540,320,240);
+
+	// Draw each blob individually from the blobs vector
+	int numBlobs = contourFinder.nBlobs;
+	for (int i=0; i<numBlobs; i++){
+		contourFinder.blobs[i].draw(360,540);
+	}
+}
+
+//---------------------
+void ofApp::keyPressed(int key){
+	bLearnBackground = true;
+}
 ```
 
+**Step 1. Video Acquisition.** <br /> 
+In the upper-left of our screen display is the raw, unmodified video of a hand creating a shadow. Although it's not very obvious, this is actually a color video; it just happens to be showing a mostly black-and-white scene. 
 
-this video is stored in `colorImg`, an `ofxCvColorImage`.
+In `setup()`, the hand video is read from from its source file into `vidPlayer`, an instance of an `ofVideoPlayer` that has been declared in ofApp.h. In `setup()`, we also initialize some global variables, and allocate the memory we'll need for a variety of globally-scoped `ofxCvImage` image buffers.
 
+It's quite common in computer vision workflows to maintain a large number of image buffers, each holding an intermediate state in the image-processing chain. Here, the `colorImg` buffer (an `ofxCvColorImage`) stores the unmodified color data from `vidPlayer`; whenever there is a fresh frame of data from the player, the colorImg receives a copy. Note the commands by which the data is extracted from `vidPlayer` and then assigned to `colorImg`: 
 
-
+```cpp
+colorImg.setFromPixels(vidPlayer.getPixels());
+```
 
 **Step 2. Color to Grayscale Conversion.** <br />
 In the upper-right of the window is the same video, converted to grayscale. Here it is stored in the `grayImage` object, which is an instance of an `ofxCvGrayscaleImage`. It's easy to miss the grayscale conversion; it's done implicitly in the assignment `grayImage = colorImg;` (line 48 in the ofApp.cpp file) using operator overloading of the `=` sign. All of the subsequent image processing in *opencvExample* is done with grayscale (rather than color) images. 
