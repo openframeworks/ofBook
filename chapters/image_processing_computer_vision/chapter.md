@@ -340,7 +340,7 @@ Here's the .cpp file:
 
 //---------------------
 void ofApp::setup(){
-	laserTagImage.loadImage("images/laser_tag.jpg");
+	laserTagImage.load("laser_tag.jpg");
 }
 
 //---------------------
@@ -636,20 +636,20 @@ void ofApp::setup(){
 	
 	// Load the image and ensure we're working in monochrome.
 	// This is our source ("src") image. 
-	lincolnOfImageSrc.loadImage("images/lincoln_120x160.png");
+	lincolnOfImageSrc.load("lincoln_120x160.png");
 	lincolnOfImageSrc.setImageType(OF_IMAGE_GRAYSCALE);
 	
 	// Construct and allocate a new image with the same dimensions. 
 	// This will store our destination ("dst") image. 
-	int imgW = lincolnOfImageSrc.width;
-	int imgH = lincolnOfImageSrc.height;
+	int imgW = lincolnOfImageSrc.getWidth();
+	int imgH = lincolnOfImageSrc.getHeight();
 	lincolnOfImageDst.allocate(imgW, imgH, OF_IMAGE_GRAYSCALE);
 	
 	// Acquire pointers to the pixel buffers of both images. 
 	// These images use 8-bit unsigned chars to store gray values. 
 	// Note the convention 'src' and 'dst' -- this is very common.
-	unsigned char* srcArray = lincolnOfImageSrc.getPixels();
-	unsigned char* dstArray = lincolnOfImageDst.getPixels();
+	unsigned char* srcArray = lincolnOfImageSrc.getPixels().getData();
+	unsigned char* dstArray = lincolnOfImageDst.getPixels().getData();
 	
 	// Loop over all of the destination image's pixels. 
 	// Each destination pixel will be 10 gray-levels brighter
@@ -733,13 +733,13 @@ void ofApp::setup(){
 	// ofxOpenCV doesn't have image loading.
 	// So first, load the .png file into a temporary ofImage.
 	ofImage lincolnOfImage;
-	lincolnOfImage.loadImage("lincoln_120x160.png");
+	lincolnOfImage.load("lincoln_120x160.png");
 	lincolnOfImage.setImageType(OF_IMAGE_GRAYSCALE);
 	
 	// Set the lincolnCvImage from the pixels of this ofImage.
 	int imgW = lincolnOfImage.getWidth();
 	int imgH = lincolnOfImage.getHeight();
-	unsigned char *lincolnPixels = lincolnOfImage.getPixels();
+	unsigned char *lincolnPixels = lincolnOfImage.getPixels().getData();
 	lincolnCvImageSrc.setFromPixels( lincolnPixels, imgW, imgH);
 	
 	// Make a copy of the source image into the destination.
@@ -822,13 +822,13 @@ void ofApp::setup(){
 	
 	// Load the cells image
 	ofImage cellsOfImage;
-	cellsOfImage.loadImage("cells.jpg");
+	cellsOfImage.load("cells.jpg");
 	cellsOfImage.setImageType(OF_IMAGE_GRAYSCALE);
 	
 	// Set the myCvImageSrc from the pixels of this ofImage.
 	int imgW = cellsOfImage.getWidth();
 	int imgH = cellsOfImage.getHeight();
-	unsigned char *cellsPixels = cellsOfImage.getPixels();
+	unsigned char *cellsPixels = cellsOfImage.getPixels().getData();
 	myCvImageSrc.setFromPixels (cellsPixels, imgW, imgH);
 }
 
