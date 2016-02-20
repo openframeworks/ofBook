@@ -66,7 +66,7 @@ Below is our complete *ofApp.cpp* file. The Lincoln image is *loaded* from our h
 
 void ofApp::setup(){
 	// We load an image from our "data" folder into the ofImage:
-	myImage.loadImage("lincoln.png");
+	myImage.load("lincoln.png");
 	myImage.setImageType(OF_IMAGE_GRAYSCALE);
 }
 
@@ -75,8 +75,8 @@ void ofApp::draw(){
 	ofSetColor(255);
 
 	// We fetch the ofImage's dimensions and display it 10x larger.  
-	int imgWidth = myImage.width;
-	int imgHeight = myImage.height;
+	int imgWidth = myImage.getWidth();
+	int imgHeight = myImage.getHeight();
 	myImage.draw(10, 10, imgWidth * 10, imgHeight * 10);
 }
 ```
@@ -172,7 +172,7 @@ void ofApp::update(){
 	if(myVideoGrabber.isFrameNew()){
 
 		// Obtain a pointer to the grabber's image data.
-		unsigned char* pixelData = myVideoGrabber.getPixels();
+		unsigned char* pixelData = myVideoGrabber.getPixels().getData();
 		
 		// Reckon the total number of bytes to examine. 
 		// This is the image's width times its height,
