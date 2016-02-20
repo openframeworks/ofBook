@@ -847,10 +847,62 @@ void ofApp::draw(){
 	myCvImageDst.draw (360,20,  320,240);
 }
 ```
-## A Complete Workflow
+## A Complete Workflow: Background Subtraction
 
-Hello
-Background subtraction 
+We now have all the pieces we need to understand and implement a popular and widely-used workflow in computer vision: *contour extraction and blob tracking from background subtraction*. This workflow produces a set of (x,y) points that represent the boundary of (for example) a person's body that has entered the camera's view. 
+
+In this section, we'll base our discussion around the standard oF *opencvExample*, which can be found in the `examples/addons/opencvExample` directory of your openFrameworks installation. *(Note: the complete code accompanying the discussion below can be found in that project.)* 
+
+When you compile and run this example, you'll see the shadow of a hand entering a video frame—and, at the bottom right of our window, the contour of this hand, rendered as a cyan polyline. This polyline is *our prize:* using it, we can obtain all sorts of information about our visitor. So how did we get here?
+
+![Screenshot of the opencvExample](images/opencvExample.png)
+
+We now discuss the inner mechanics of the *opencvExample*, step-by-step.
+
+**Step 1. Video Acquisition.** <br /> 
+In the upper-left of our screen display is the raw, unmodified video of a hand creating a shadow. Although it's not so obvious, this is actually a color video (that happens to be showing a mostly black-and-white scene). 
+
+In `setup()`, the hand video is read from from its source file into `vidPlayer`, an instance of an `ofVideoPlayer` that has been declared in ofApp.h. In `setup()`, we also initialize some global variables, and allocate the memory we'll need for a variety of globally-scoped `ofxCvImage` image buffers.
+
+It's quite common in computer vision workflows to maintain a large number of image buffers, each holding an intermediate state in the image-processing chain. Here, we have one buffer (`colorImg`)
+
+
+```cpp
+void ofApp::setup(){
+	vidPlayer.load("fingers.mov");
+	vidPlayer.play();
+	vidPlayer.setLoopState(OF_LOOP_NORMAL);
+
+	colorImg.allocate(320,240);
+	grayImage.allocate(320,240);
+	grayBg.allocate(320,240);
+	grayDiff.allocate(320,240);
+
+	bLearnBackground = true;
+	threshold = 80;
+}     
+```
+
+
+this video is stored in `colorImg`, an `ofxCvColorImage`.
+
+
+
+
+**Step 2. Color to Grayscale Conversion.** <br />
+In the upper-right of the window is the same video, converted to grayscale. Here it is stored in the `grayImage` object, which is an instance of an `ofxCvGrayscaleImage`. It's easy to miss the grayscale conversion; it's done implicitly in the assignment `grayImage = colorImg;` (line 48 in the ofApp.cpp file) using operator overloading of the `=` sign. All of the subsequent image processing in *opencvExample* is done with grayscale (rather than color) images. 
+
+**Step 3. Storing a "Background Image".** <br />
+In the middle-left is a view of the *background image*. This is a grayscale image of the scene captured when the video first started playing, before the hand entered the frame. (See line 48 of the ofApp.cpp file.) 
+
+**Step 4. Thresholded Absolute Differencing.** <br />
+4. In the middle-right is an image that shows the *thresholded absolute difference* between the current frame and the background frame. This image has been *binarized*, meaning that pixel values are either black (0) or white (255). The white pixels represent regions that are significantly different from the background: the hand! 
+
+**Step 5. Contour Tracing.** <br />
+5. In the bottom right, an `ofxCvContourFinder` has been tasked to `findContours()` in the binarized image. It does this by identifying blobs of white pixels that meet certain area requirements -- and then tracing the contours of those blobs into an `ofxCvBlob` outline of (x,y) points. The app shows the contour of each blob in cyan, and also shows the bounding rectangle of those points in magenta. *Note:* The contour is a vector-based representation, and can be used for all sorts of further geometric play....
+
+
+
 Frame differencing
 
 ## Refinements
