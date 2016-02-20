@@ -8,7 +8,6 @@ Basics
 	OOPs!
 Approaches
 	animation
-	data_vis
 	game_design
 	image_processing_computer_vision 
 I/O
