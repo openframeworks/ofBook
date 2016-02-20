@@ -991,24 +991,27 @@ Now that you can locate faces in images and video, consider using the following 
 
 ## Suggestions for Further Experimentation
 
-I sometimes assign my students the project of copying a well-known work of interactive new-media art. Reimplementing projects such as the ones below can be highly instructive, and test the limits of your attention to detail. As Gerald King [writes](http://www.geraldking.com/Copying.htm), such copying "provides insights which cannot be learned from any other source." *I recommend you build...*
+I sometimes assign my students the project of copying a well-known work of interactive new-media art. Reimplementing projects such as the ones below can be highly instructive, and test the limits of your attention to detail. Such copying provides insights which cannot be learned from any other source. *I recommend you build...*
 
 #### A Slit-Scanner.
-*Slit-scanning* — a type of "time-space imaging" — has been a common trope in interactive video art for more than twenty years. Interactive slit-scanners have been developed by some of the most revered pioneers of new media art (Toshio Iwai, Paul de Marinis, Steina Vasulka) as well as by [literally dozens](http://www.flong.com/texts/lists/slit_scan/) of other highly regarded practitioners. The premise remains an open-ended format for seemingly limitless experimentation, whose possibilities have yet to be exhausted. It is also a good exercise in managing image data, particularly in extracting and copying pixel ROIs. In digital slit-scanning, thin slices are extracted from a sequence of video frames, and concatenated into a new image. The result is an image which succinctly reveals the history of movements in a video or camera stream.
+*Slit-scanning* — a type of spatiotemporal or "time-space imaging" — has been a common trope in interactive video art for more than twenty years. Interactive slit-scanners have been developed by some of the most revered pioneers of new media art (Toshio Iwai, Paul de Marinis, Steina Vasulka) as well as by [literally dozens](http://www.flong.com/texts/lists/slit_scan/) of other highly regarded practitioners. The premise remains an open-ended format for seemingly limitless experimentation, whose possibilities have yet to be exhausted. It is also a good exercise in managing image data, particularly in extracting and copying image subregions. 
+
+In digital slit-scanning, thin slices are extracted from a sequence of video frames, and concatenated into a new image. The result is an image which succinctly reveals the history of movements in a video or camera stream. In [*Time Scan Mirror*](http://www.smoothware.com/danny/timescan.html) (2004) by Danny Rozin, for example, a image is composed from thin vertical slices of pixels that have been extracted from the center of each frame of incoming video, and placed side-by-side. Such a slit-scanner can be built in fewer than 20 lines of code—try it!
 
 ![Daniel Rozin, Time Scan Mirror (2004)](images/rozin_timescan.jpg)
 
 #### *Text Rain* by Camille Utterback and Romy Achituv (1999).
 
-*[Text Rain](http://camilleutterback.com/projects/text-rain/)* is a now-classic work of interactive art in which virtual letters appear to "fall" on the visitor's "silhouette". Utterback writes: "In the Text Rain installation, participants stand or move in front of a large projection screen. On the screen they see a mirrored video projection of themselves in black and white, combined with a color animation of falling letters. Like rain or snow, the letters appears to land on participants’ heads and arms. The letters respond to the participants’ motions and can be caught, lifted, and then let fall again. The falling text will 'land' on anything darker than a certain threshold, and 'fall' whenever that obstacle is removed."
+*[Text Rain](http://camilleutterback.com/projects/text-rain/)* is a now-classic work of interactive art in which virtual letters appear to "fall" on the visitor's "silhouette". Utterback writes: "In the *Text Rain* installation, participants stand or move in front of a large projection screen. On the screen they see a mirrored video projection of themselves in black and white, combined with a color animation of falling letters. Like rain or snow, the letters appears to land on participants’ heads and arms. The letters respond to the participants’ motions and can be caught, lifted, and then let fall again. The falling text will 'land' on anything darker than a certain threshold, and 'fall' whenever that obstacle is removed."
 
 ![Camille Utterback and Romy Achituv, Text Rain (1999)](images/text-rain.jpg)
 
+*Text Rain* can be implemented in about 30 lines of code, and involves many of the topics we've discussed in this chapter, such as fetching the brightness of a pixel at a given location. It can also be an ideal project for ensuring that you understand how to make objects (to store the positions and letters of the falling particles) and arrays of objects.
 
 ========================================================  
 ## Bibliography
 
-Computer vision is a huge field. For more information, we highly recommend the following books and online resources.
+This chapter has introduced a few introductory image processing and computer vision techniques. But computer vision is a huge and constantly evolving field. For more information, we highly recommend the following books and online resources.
 
 - Bradski, Gary. [Learning OpenCV](http://cs.haifa.ac.il/~dkeren/ip/OReilly-LearningOpenCV.pdf) (PDF)
 - Cardoso, Jorge. [Computer vision techniques for interactive art](http://www.slideshare.net/jorgecardoso/computer-vision-techniques-for-interactive-art)
