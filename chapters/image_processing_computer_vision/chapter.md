@@ -215,7 +215,7 @@ A common pattern among developers of interactive computer vision systems is to e
 	#ifdef _USE_LIVE_VIDEO
         myVideoGrabber.initGrabber(320,240);
 	#else
-        myVideoPlayer.loadMovie("pedestrians.mov");
+        myVideoPlayer.load("pedestrians.mov");
         myVideoPlayer.play();
 	#endif
 	//...
@@ -294,7 +294,7 @@ Most of the time, you'll be working with image data that is stored in a higher-l
 
 ```cpp
 int arrayIndex = (y * imgWidth) + x;
-unsigned char* myImagePixelBuffer = myImage.getPixels();
+unsigned char* myImagePixelBuffer = myImage.getPixels().getData();
 unsigned char pixelValueAtXY = myImagePixelBuffer[arrayIndex];
 ```
 
@@ -531,8 +531,8 @@ The simplest method to convert a color image to grayscale is to modify its data 
 
 ```cpp
 ofImage myImage; 
-myImage.loadImage ("colorful.jpg"); // Load a colorful image.
-myImage.setImageType (OF_IMAGE_GRAYSCALE); // Poof! Now it's grayscale. 
+myImage.load("colorful.jpg"); // Load a colorful image.
+myImage.setImageType(OF_IMAGE_GRAYSCALE); // Poof! Now it's grayscale. 
 ```
 The ofxOpenCV addon library provides several methods for converting color imagery to grayscale. For example, the `convertToGrayscalePlanarImage()` and `setFromColorImage()` functions create or set an `ofxCvGrayscaleImage` from color image data stored in an `ofxCvColorImage`. But the easiest way is simply to assign the grayscale version from the color one; the addon takes care of the conversion for you:
 
@@ -563,10 +563,10 @@ Here's a code fragment for converting from color to grayscale, written "from scr
 // Load a color image, fetch its dimensions, 
 // and get a pointer to its pixel data. 
 ofImage myImage; 
-myImage.loadImage ("colorful.jpg");
+myImage.load("colorful.jpg");
 int imageWidth = myImage.getWidth();
 int imageHeight = myImage.getHeight();
-unsigned char* rgbPixelData = myImage.getPixels(); 
+unsigned char* rgbPixelData = myImage.getPixels().getData(); 
 
 // Allocate memory for storing a grayscale version.
 // Since there's only 1 channel of data, it's just w*h. 
