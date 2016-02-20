@@ -66,7 +66,7 @@ Below is our complete *ofApp.cpp* file. The Lincoln image is *loaded* from our h
 
 void ofApp::setup(){
 	// We load an image from our "data" folder into the ofImage:
-	myImage.loadImage("lincoln.png");
+	myImage.load("lincoln.png");
 	myImage.setImageType(OF_IMAGE_GRAYSCALE);
 }
 
@@ -75,8 +75,8 @@ void ofApp::draw(){
 	ofSetColor(255);
 
 	// We fetch the ofImage's dimensions and display it 10x larger.  
-	int imgWidth = myImage.width;
-	int imgHeight = myImage.height;
+	int imgWidth = myImage.getWidth();
+	int imgHeight = myImage.getHeight();
 	myImage.draw(10, 10, imgWidth * 10, imgHeight * 10);
 }
 ```
@@ -172,7 +172,7 @@ void ofApp::update(){
 	if(myVideoGrabber.isFrameNew()){
 
 		// Obtain a pointer to the grabber's image data.
-		unsigned char* pixelData = myVideoGrabber.getPixels();
+		unsigned char* pixelData = myVideoGrabber.getPixels().getData();
 		
 		// Reckon the total number of bytes to examine. 
 		// This is the image's width times its height,
@@ -215,7 +215,7 @@ A common pattern among developers of interactive computer vision systems is to e
 	#ifdef _USE_LIVE_VIDEO
         myVideoGrabber.initGrabber(320,240);
 	#else
-        myVideoPlayer.loadMovie("pedestrians.mov");
+        myVideoPlayer.load("pedestrians.mov");
         myVideoPlayer.play();
 	#endif
 	//...
@@ -294,7 +294,7 @@ Most of the time, you'll be working with image data that is stored in a higher-l
 
 ```cpp
 int arrayIndex = (y * imgWidth) + x;
-unsigned char* myImagePixelBuffer = myImage.getPixels();
+unsigned char* myImagePixelBuffer = myImage.getPixels().getData();
 unsigned char pixelValueAtXY = myImagePixelBuffer[arrayIndex];
 ```
 
@@ -340,7 +340,7 @@ Here's the .cpp file:
 
 //---------------------
 void ofApp::setup(){
-	laserTagImage.loadImage("images/laser_tag.jpg");
+	laserTagImage.load("laser_tag.jpg");
 }
 
 //---------------------
@@ -531,8 +531,8 @@ The simplest method to convert a color image to grayscale is to modify its data 
 
 ```cpp
 ofImage myImage; 
-myImage.loadImage ("colorful.jpg"); // Load a colorful image.
-myImage.setImageType (OF_IMAGE_GRAYSCALE); // Poof! Now it's grayscale. 
+myImage.load("colorful.jpg"); // Load a colorful image.
+myImage.setImageType(OF_IMAGE_GRAYSCALE); // Poof! Now it's grayscale. 
 ```
 The ofxOpenCV addon library provides several methods for converting color imagery to grayscale. For example, the `convertToGrayscalePlanarImage()` and `setFromColorImage()` functions create or set an `ofxCvGrayscaleImage` from color image data stored in an `ofxCvColorImage`. But the easiest way is simply to assign the grayscale version from the color one; the addon takes care of the conversion for you:
 
@@ -563,10 +563,10 @@ Here's a code fragment for converting from color to grayscale, written "from scr
 // Load a color image, fetch its dimensions, 
 // and get a pointer to its pixel data. 
 ofImage myImage; 
-myImage.loadImage ("colorful.jpg");
+myImage.load("colorful.jpg");
 int imageWidth = myImage.getWidth();
 int imageHeight = myImage.getHeight();
-unsigned char* rgbPixelData = myImage.getPixels(); 
+unsigned char* rgbPixelData = myImage.getPixels().getData(); 
 
 // Allocate memory for storing a grayscale version.
 // Since there's only 1 channel of data, it's just w*h. 
@@ -636,20 +636,20 @@ void ofApp::setup(){
 	
 	// Load the image and ensure we're working in monochrome.
 	// This is our source ("src") image. 
-	lincolnOfImageSrc.loadImage("images/lincoln_120x160.png");
+	lincolnOfImageSrc.load("lincoln_120x160.png");
 	lincolnOfImageSrc.setImageType(OF_IMAGE_GRAYSCALE);
 	
 	// Construct and allocate a new image with the same dimensions. 
 	// This will store our destination ("dst") image. 
-	int imgW = lincolnOfImageSrc.width;
-	int imgH = lincolnOfImageSrc.height;
+	int imgW = lincolnOfImageSrc.getWidth();
+	int imgH = lincolnOfImageSrc.getHeight();
 	lincolnOfImageDst.allocate(imgW, imgH, OF_IMAGE_GRAYSCALE);
 	
 	// Acquire pointers to the pixel buffers of both images. 
 	// These images use 8-bit unsigned chars to store gray values. 
 	// Note the convention 'src' and 'dst' -- this is very common.
-	unsigned char* srcArray = lincolnOfImageSrc.getPixels();
-	unsigned char* dstArray = lincolnOfImageDst.getPixels();
+	unsigned char* srcArray = lincolnOfImageSrc.getPixels().getData();
+	unsigned char* dstArray = lincolnOfImageDst.getPixels().getData();
 	
 	// Loop over all of the destination image's pixels. 
 	// Each destination pixel will be 10 gray-levels brighter
@@ -733,13 +733,13 @@ void ofApp::setup(){
 	// ofxOpenCV doesn't have image loading.
 	// So first, load the .png file into a temporary ofImage.
 	ofImage lincolnOfImage;
-	lincolnOfImage.loadImage("lincoln_120x160.png");
+	lincolnOfImage.load("lincoln_120x160.png");
 	lincolnOfImage.setImageType(OF_IMAGE_GRAYSCALE);
 	
 	// Set the lincolnCvImage from the pixels of this ofImage.
 	int imgW = lincolnOfImage.getWidth();
 	int imgH = lincolnOfImage.getHeight();
-	unsigned char *lincolnPixels = lincolnOfImage.getPixels();
+	unsigned char *lincolnPixels = lincolnOfImage.getPixels().getData();
 	lincolnCvImageSrc.setFromPixels( lincolnPixels, imgW, imgH);
 	
 	// Make a copy of the source image into the destination.
@@ -822,13 +822,13 @@ void ofApp::setup(){
 	
 	// Load the cells image
 	ofImage cellsOfImage;
-	cellsOfImage.loadImage("cells.jpg");
+	cellsOfImage.load("cells.jpg");
 	cellsOfImage.setImageType(OF_IMAGE_GRAYSCALE);
 	
 	// Set the myCvImageSrc from the pixels of this ofImage.
 	int imgW = cellsOfImage.getWidth();
 	int imgH = cellsOfImage.getHeight();
-	unsigned char *cellsPixels = cellsOfImage.getPixels();
+	unsigned char *cellsPixels = cellsOfImage.getPixels().getData();
 	myCvImageSrc.setFromPixels (cellsPixels, imgW, imgH);
 }
 

@@ -2,10 +2,10 @@
 
 void Life::setup(ofImage * _img) {
     img = _img;
-    width = img->width;
+    width = img->getWidth();
     speed = 5;
     pos.x = ofRandom(ofGetWidth());
-    pos.y = -img->width/2;
+    pos.y = -img->getWidth()/2;
 }
 
 void Life::update() {
@@ -13,5 +13,5 @@ void Life::update() {
 }
 
 void Life::draw() {
-    img->draw(pos.x - img->width/2, pos.y - img->width/2);
+    img->draw(pos.x - img->getWidth()/2, pos.y - img->getWidth()/2);
 }

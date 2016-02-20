@@ -6,7 +6,7 @@ void Enemy::setup(float m_e_a, float m_e_s_i, ofImage * enemy_image) {
     pos.x = ofRandom(ofGetWidth());
     pos.y = 0;
     img = enemy_image;
-    width = img->width;
+    width = img->getWidth();
     
     speed = ofRandom(2, 7);
     
