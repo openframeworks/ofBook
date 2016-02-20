@@ -2,9 +2,7 @@
 
 *by [Zach Lieberman](http://thesystemis.com)* 
 
-*extensions by tpltnt*
-
-*with edits from Kayla Lewis*
+*with edits from tpltnt, Kayla Lewis*
 
 
 ## Background 
@@ -127,7 +125,7 @@ In this chapter we will look at animating movement (changing position over time)
 
 The first and probably most important lesson of animation is that we **love** numbers between 0 and 1.
 
-![loving 0...1](images/01heart.png)
+![loving 0...1](images/heart.jpg)
 
 The thing about numbers between 0 and 1 is that they are super easy to use in interesting ways. We typically refer to these kinds of numbers as percent, and you'll see me use the shorthand `pct` in the code – this is a floating point number between 0 and 1. If we wanted to get from point A to point B, we could use this number to figure out how much of one point and how much of another point to use. The formula is this:
 
@@ -148,12 +146,11 @@ which simplifies to `(1*A + 0*B)` or A. If we are 25 percent of the way, it look
 ```
 
 which is 75% of A + 25% of B. Essentially by taking a mix, you get from one to the other. The first example (**1_rectangleInterpolate**) shows how this is done.
-Describe a new object in the header (rectangle.h):
+
+For this example, we will be using an object called "rectangle".  It has a variable for position, as well as two other variables (posA and posB) that represent the a and b positions we are moving between. 
+
 
 ```cpp
-#ifndef RECTANGLE_H
-#define RECTANGLE_H
-
 #include "ofMain.h"
 
 class rectangle {
@@ -169,130 +166,29 @@ class rectangle {
         ofPoint	posb;
         float pct;	// what pct are we between "a" and "b"
 };
-
-#endif // RECTANGLE_H
 ```
 
-Fill the implementation file (rectangle.cpp):
+the function interpolateByPct() does the actual interpolation: 
 
 ```cpp
-#include "rectangle.h"
-
-//------------------------------------------------------------------
-rectangle::rectangle(){
-}
-
-//------------------------------------------------------------------
-void rectangle::draw() {
-    ofFill();
-    ofSetRectMode(OF_RECTMODE_CENTER); // center around the position
-    ofSetColor(198,246,55);
-    ofRect(pos.x, pos.y, 20,20);
-}
-
-//------------------------------------------------------------------
 void rectangle::interpolateByPct(float myPct){
-    pct = myPct;
-    pos.x = (1-pct) * posa.x + (pct) * posb.x;
-    pos.y = (1-pct) * posa.y + (pct) * posb.y;
-
-    // this is an alternative way to write above..
-    // different style, but the same mathematically.
-    //pos.x = posa.x + (pct) * (posb.x-posa.x);
+	pos.x = (1-pct) * posa.x + (pct) * posb.x;
+	pos.y = (1-pct) * posa.y + (pct) * posb.y;
 }
 ```
 
-The `rectangle` class is used in "testApp.h"
+in the ofApp file, we create a variable called pct, and set it to 0.  We increate pct every frame and pass it through to the rectangle object in the update function:  
+
 
 ```cpp
-#ifndef _TEST_APP
-#define _TEST_APP
+pct += 0.01f;		// increase by a certain amount
+if (pct > 1) {
+	pct = 0;	// just between 0 and 1 (0% and 100%)
+}
+myRectangle.interpolateByPct(pct);	// go between pta and ptb
 
-#include "ofMain.h"
-#include "rectangle.h"
-
-class testApp : public ofSimpleApp{
-
-	public:
-
-		void setup();
-		void update();
-		void draw();
-
-		rectangle	myRectangle;
-		float		pct;
-};
-
-#endif
 ```
 
-and "testApp.cpp"
-
-```cpp
-#include "testApp.h"
-#include "ofMain.h"
-
-//--------------------------------------------------------------
-void testApp::setup(){
-	// macs by default run on non vertical sync, which can make animation very, very fast
-	// this fixes that:
-	ofSetVerticalSync(true);
-
-	// set background:
-	ofBackground(30,30,30);
-
-	// set the "a" and "b" positions of the rectangle...
-	myRectangle.posa.x = 10;
-	myRectangle.posa.y = 10;
-	myRectangle.posb.x = 590;
-	myRectangle.posb.y = 590;
-	myRectangle.interpolateByPct(0);	// start at 0 pct
-	pct = 0;				// a variable we can alter...
-}
-
-//--------------------------------------------------------------
-void testApp::update(){
-	// to see pct in the console
-	//printf("%f \n", pct);
-
-	pct += 0.01f;		// increase by a certain amount
-	if (pct > 1) {
-		pct = 0;	// just between 0 and 1 (0% and 100%)
-	}
-	myRectangle.interpolateByPct(pct);	// go between pta and ptb
-}
-
-//--------------------------------------------------------------
-void testApp::draw(){
-	myRectangle.draw();
-}
-
-//--------------------------------------------------------------
-void testApp::mousePressed(int x, int y, int button){
-	//myRectangle.posa.x = x;
-	//myRectangle.posa.y = y;
-}
-```
-
-All this is tied together and into openFrameworks via the "main.cpp" file.
-
-```cpp
-#include "ofMain.h"
-#include "testApp.h"
-#include "ofAppGlutWindow.h"
-
-//========================================================================
-int main( ){
-
-    ofAppGlutWindow window;
-	ofSetupOpenGL(&window, 600,600, OF_WINDOW);			// <-------- setup the GL context
-
-	// this kicks off the running of my app
-	// can be OF_WINDOW or OF_FULLSCREEN
-	// pass in width and height too:
-	ofRunApp( new testApp());
-}
-```
 
 If everything is working as expected, you should see the following screen:
 
@@ -786,7 +682,7 @@ We don't have time to get into it in this chapter, but there are different appro
 
 ### openFrameworks / animation in general
 
-* [OpenFrameworks / Animation by Code](https://github.com/bschorr/OFAnimation_Spring2015 "OpenFrameworks / Animation by Code course at Parsons The New School for Design, Spring 2015") (course at Parsons The New School for Design, Spring 2015)
+* [Algorithmic animation code](https://github.com/ofZach/algo2012 "Algorithmic animation code") (Code from a class I've taught at Parsons School for Design and School for Poetic Computation)
 * [ofxAddons: animation](http://www.ofxaddons.com/categories/7-animation "ofxAddons for animation")
 * [Wikipedia animations portal](https://en.wikipedia.org/wiki/Portal:Animation)
 * [Wikipedia book: Animation](https://en.wikipedia.org/wiki/Book:Animation)

@@ -1,4 +1,6 @@
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+#!/bin/bash
+
+DIR="$( cd "$( dirname $0 )" && pwd )"
 cd ${DIR}/..
 source pythonenv/bin/activate
 cd scripts
