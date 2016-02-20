@@ -4,11 +4,11 @@
 
 This chapter presents an overview of an Anthropocene, an body reactive interactive video installation for Greenpeace as part of their field at Glastonbury 2013.   It's presented here in the form of diary / journal, discussing the work in narrative form from initial emails, concepting and back and forth through to final coded work.  
 
-To see the finished project as part of a wider event please see the ![YouTube link](http://youtu.be/LwokmKqT0og?t=1m12s)
+To see the finished project as part of a wider event please see the [YouTube link](http://youtu.be/LwokmKqT0og?t=1m12s)
 
-Or an ![exceprt from inside the dome](https://vimeo.com/97113402)
+Or an [exceprt from inside the dome](https://vimeo.com/97113402)
 
-All source code can be found ![here](https://github.com/HellicarAndLewis/Anthropocene)
+All source code can be found [here](https://github.com/HellicarAndLewis/Anthropocene)
 
 **Anthropocene**
 
