@@ -46,11 +46,11 @@ $(document).ready(function() {
       .end().filter("[href=#" + id + "]").parent().addClass("selected");
 
 
-    // var scrollTop = $(window).scrollTop();
-    // var height = $(window).height();
-    // $('.banner').css({
-    //   'opacity': ((height - scrollTop * 3.4) / height)
-    // });
+    var scrollTop = $(window).scrollTop();
+    var height = $(window).height();
+    $('.banner').css({
+      'opacity': ((height - scrollTop * 3.4) / height)
+    });
   });
 
 
