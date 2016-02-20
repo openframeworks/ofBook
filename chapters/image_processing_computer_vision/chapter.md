@@ -976,55 +976,117 @@ void ofApp::keyPressed(int key){
 **Step 1. Video Acquisition.** <br /> 
 In the upper-left of our screen display is the raw, unmodified video of a hand creating a shadow. Although it's not very obvious, this is actually a color video; it just happens to be showing a mostly black-and-white scene. 
 
-In `setup()`, the hand video is read from from its source file into `vidPlayer`, an instance of an `ofVideoPlayer` that has been declared in ofApp.h. In `setup()`, we also initialize some global variables, and allocate the memory we'll need for a variety of globally-scoped `ofxCvImage` image buffers.
+In `setup()`, we initialize some global-scoped variables (declared in ofApp.h), and allocate the memory we'll need for a variety of globally-scoped `ofxCvImage` image buffers.  We also load the hand video from from its source file into `vidPlayer`, a globally-scoped instance of an `ofVideoPlayer`.
 
-It's quite common in computer vision workflows to maintain a large number of image buffers, each holding an intermediate state in the image-processing chain. Here, the `colorImg` buffer (an `ofxCvColorImage`) stores the unmodified color data from `vidPlayer`; whenever there is a fresh frame of data from the player, the colorImg receives a copy. Note the commands by which the data is extracted from `vidPlayer` and then assigned to `colorImg`: 
+It's quite common in computer vision workflows to maintain a large number of image buffers, each of which stores an intermediate state in the image-processing chain. For optimal performance, it's best to `allocate()` these only once, in `setup()`; otherwise, the operation of reserving memory for these images can hurt your frame rate. 
+
+Here, the `colorImg` buffer (an `ofxCvColorImage`) stores the unmodified color data from `vidPlayer`; whenever there is a fresh frame of data from the player, in `update()`, `colorImg` receives a copy. Note the commands by which the data is extracted from `vidPlayer` and then assigned to `colorImg`: 
 
 ```cpp
 colorImg.setFromPixels(vidPlayer.getPixels());
 ```
 
 **Step 2. Color to Grayscale Conversion.** <br />
-In the upper-right of the window is the same video, converted to grayscale. Here it is stored in the `grayImage` object, which is an instance of an `ofxCvGrayscaleImage`. It's easy to miss the grayscale conversion; it's done implicitly in the assignment `grayImage = colorImg;` (line 48 in the ofApp.cpp file) using operator overloading of the `=` sign. All of the subsequent image processing in *opencvExample* is done with grayscale (rather than color) images. 
+In the upper-right of the window is the same video, converted to grayscale. Here it is stored in the `grayImage` object, which is an instance of an `ofxCvGrayscaleImage`. 
+
+It's easy to miss the grayscale conversion; it's done implicitly in the assignment `grayImage = colorImg;` using operator overloading of the `=` sign. All of the subsequent image processing in *opencvExample* is done with grayscale (rather than color) images. 
 
 **Step 3. Storing a "Background Image".** <br />
-In the middle-left is a view of the *background image*. This is a grayscale image of the scene captured when the video first started playing, before the hand entered the frame. (See line 48 of the ofApp.cpp file.) 
+In the middle-left of the screen is a view of the *background image*. This is a grayscale image of the scene that was captured, once, when the video first started playing—before the hand entered the frame. 
+
+The background image, `grayBg`, stores the first valid frame of video; this is performed in the line `grayBg = grayImage;`. A boolean latch (`bLearnBackground`) prevents this from happening repeatedly on subsequent frames. However, this latch is reset if the user presses a key. 
+
+It is absolutely essential that your system "learn the background" when your subject (such as the hand) is *out of the frame*. Otherwise, your subject will be impossible to detect properly!
 
 **Step 4. Thresholded Absolute Differencing.** <br />
-4. In the middle-right is an image that shows the *thresholded absolute difference* between the current frame and the background frame. This image has been *binarized*, meaning that pixel values are either black (0) or white (255). The white pixels represent regions that are significantly different from the background: the hand! 
+4. In the middle-right of the screen is an image that shows the *thresholded absolute difference* between the current frame and the background frame. The white pixels represent regions that are significantly different from the background: the hand! 
+
+The absolute differencing and thresholding take place in two separate operations, whose code is shown below. The `absDiff()` operation computes the absolute difference between `grayBg` and `grayImage` (which holds the current frame), and places the result into `grayDiff`. 
+
+The subsequent thresholding operation ensures that this image is *binarized*, meaning that its pixel values are either black (0) or white (255). The thresholding is done as an *in-place operation* on `grayDiff`, meaning that the `grayDiff` image is clobbered with a thresholded version of itself. 
+
+```cpp
+// Take the absolute value of the difference 
+// between the background and incoming images.
+grayDiff.absDiff(grayBg, grayImage);
+
+// Perform an in-place thresholding of the difference image.
+grayDiff.threshold(thresholdValue);
+```
 
 **Step 5. Contour Tracing.** <br />
-5. In the bottom right, an `ofxCvContourFinder` has been tasked to `findContours()` in the binarized image. It does this by identifying blobs of white pixels that meet certain area requirements -- and then tracing the contours of those blobs into an `ofxCvBlob` outline of (x,y) points. The app shows the contour of each blob in cyan, and also shows the bounding rectangle of those points in magenta. *Note:* The contour is a vector-based representation, and can be used for all sorts of further geometric play....
+5. The final steps are displayed in the bottom right of the screen. Here, an `ofxCvContourFinder` has been tasked to `findContours()` in the binarized image. It does this by identifying contiguous blobs of white pixels, and then tracing the contours of those blobs into an `ofxCvBlob` outline comprised of (x,y) points. 
 
+Internally, the `ofxCvContourFinder` first performs a pixel-based operation called [*connected component labeling*](https://en.wikipedia.org/wiki/Connected-component_labeling), in which contiguous areas are identified as uniquely-labeled blobs. It then extracts the boundary of each blob, which it stores in an `ofPolyline`, using a process known as a [*chain code algorithm*](http://www.mind.ilstu.edu/curriculum/chain_codes_intro/chain_codes_intro.php). 
 
+Some of the parameters to the `findContours()` method allow you to select only those blobs which meet certain minimum and maximum area requirements. This is useful if you wish to discard very tiny blobs (which can result from noise in the video) or extremely large blobs (which can result from sudden changes in lighting). 
 
-Frame differencing
+```cpp
+// Find contours whose areas are betweeen 20 and 25000 pixels.
+// "Find holes" is set to true, so we'll also get interior contours.
+contourFinder.findContours(grayDiff, 20, 25000, 10, true);
+```
+
+In `draw()`, the app then displays the contour of each blob in cyan, and also shows the bounding rectangle of those points in magenta.
+
+```cpp
+// Draw each blob individually from the blobs vector
+int numBlobs = contourFinder.nBlobs;
+for (int i=0; i<numBlobs; i++){
+   contourFinder.blobs[i].draw(360,540);
+}
+```
+
+### Contour Games
+
+Blob contours are a *vector-based* representation, comprised of a series of (x,y) points. Once obtained, a contour can be used for all sorts of exciting geometric play. 
+
+A good illustration of this is the following project by Cyril Diagne, in which the body's contour is triangulated by [ofxTriangle](https://github.com/obviousjim/ofxTriangle), and then used as the basis for simulated physics interactions using [ofxBox2D](https://github.com/vanderlin/ofxBox2d). The user of Diagne's project can "catch" the bouncy circular "balls" with their silhouette. 
+
+![Screenshots of ofx-kikko](images/ofx-kikko.jpg)
+
+One of the flags to the `ofxCvContourFinder::findContours()` function allows you to search specifically for *interior* contours, also known as [*negative space*](https://en.wikipedia.org/wiki/Negative_space). An interactive artwork which uses this to good effect is *Shadow Monsters* by Philip Worthington, which interprets interior contours as sites for monstrous eyeballs. 
+
+![Screenshots of ofx-kikko](images/shadowmonsters_jefrouner.jpg)
+
+The original masterwork of contour play was Myron Krueger’s landmark interactive artwork, [*Videoplace*](https://www.youtube.com/watch?v=dmmxVA5xhuo), which was developed continuously between 1970 and 1989, and which premiered publicly in 1974. The *Videoplace* project comprised at least two dozen profoundly inventive scenes which comprehensively explored the design space of full-body camera-based interactions with virtual graphics — including telepresence applications and (as pictured here, in the “Critter” scene) interactions with animated artificial creatures. 
+
+![Photographs of Myron Krueger's VideoPlace](images/krueger.jpg)
+
+Here's a quick list of some fun and powerful things you can do with contours extracted from blobs: 
+
+* A blob's contour is represented as a `ofPolyline`, and can be smoothed and simplified with `ofPolyline::getSmoothed()`. Try experimenting with extreme smoothing, to create ultra-filtered versions of captured geometry. 
+* If you have too many (or too few) points in your contour, consider using `ofPolyline::getResampledBySpacing()` or `getResampledByCount()` to reduce (or increase) its number of points. 
+* `ofPolyline` provides methods for computing the area, perimeter, centroid, and bounding box of a contour; consider mapping these to audiovisual or other interactive properties. For example, you could map the area of a shape to its mass (in a physics simulation), or to its color. 
+* You can identify "special" points on a shape (such as the corners of a square, or an extended fingertip on a hand) by searching through a contour for points with high local curvature. The function `ofPolyline::getAngleAtIndex()` can be helpful for this. 
+* The mathematics of [*shape metrics*](http://what-when-how.com/biomedical-image-analysis/spatial-domain-shape-metrics-biomedical-image-analysis/) can provide powerful tools for contour analysis and even recognition. One simple shape metric is [*aspect ratio*](https://en.wikipedia.org/wiki/Aspect_ratio), which is the ratio of a shape's width to its height. Another elegant shape metric is *compactness* (also called the [*isoperimetric ratio*](https://en.wikipedia.org/wiki/Isoperimetric_ratio)), which the ratio of a shape's perimeter-squared to its area. You can use these metrics to distinguish between (for example) cardboard cutouts of animals or numbers. 
+
 
 ## Refinements
 
-Hello 
-- *neighborhood processing* operations (morphological filters, convolution filtering).
+In this section we discuss several important refinements that can be made to improve the quality and performance of computer vision programs. 
+
+* Cleaning Up Thresholded Images: Erosion and Dilation
+* Automatic Thresholding and Dynamic Thresholding
+* Adaptive Background Subtraction
+* ROI Processing
 
 
-* Running average background
-* Morphological Operators (Erosion and Dilation)
-* Automatic Thresholding
-* Contour Smoothing
-* ROI processing for speed
-* Dynamic thresholding (per-pixel thresholding)
+### Cleaning Up Thresholded Images: Erosion and Dilation
 
-### Cleaning Up Thresholded Images: Erosion & Dilation
-
+Morphological Processing
 Sometimes thresholding leaves noise. 
 
 ![Erosion](images/erosion_in_use.png)
 
 
-Automatic gain control destroys background subtraction
+
 
 The above example uses thresholding to distinguish light objects from a dark background. But thresholding can be applied to any image whose brightness quantifies a variable of interest. 
 
 
+
+Automatic gain control destroys background subtraction
 
 Recap: A Person Detection Pipeline
 
@@ -1036,6 +1098,18 @@ Here's a recap of a simple pipeline for detecting people in video:
 2. A "background" image is acquired, at a time when nobody is in the scene. Sometimes, a running average of the camera feed is used as the background. 
 3. The live video image is compared with the background image. Their absolute difference is computed. 
 4. The absolute difference is thresholded. 
+
+---
+
+ (per-pixel thresholding)
+
+  
+Hello 
+- *neighborhood processing* operations (morphological filters, convolution filtering).
+
+Tracking blobs over time (IDs)
+
+Frame differencing
 
 
 
@@ -1147,9 +1221,9 @@ In digital slit-scanning, thin slices are extracted from a sequence of video fra
 
 ![Daniel Rozin, Time Scan Mirror (2004)](images/rozin_timescan.jpg)
 
-#### *Text Rain* by Camille Utterback and Romy Achituv (1999).
+#### A cover of *Text Rain* by Utterback & Achituv (1999).
 
-*[Text Rain](http://camilleutterback.com/projects/text-rain/)* is a now-classic work of interactive art in which virtual letters appear to "fall" on the visitor's "silhouette". Utterback writes: "In the *Text Rain* installation, participants stand or move in front of a large projection screen. On the screen they see a mirrored video projection of themselves in black and white, combined with a color animation of falling letters. Like rain or snow, the letters appears to land on participants’ heads and arms. The letters respond to the participants’ motions and can be caught, lifted, and then let fall again. The falling text will 'land' on anything darker than a certain threshold, and 'fall' whenever that obstacle is removed."
+*[Text Rain](http://camilleutterback.com/projects/text-rain/)* by Camille Utterback and Romy Achituv is a now-classic work of interactive art in which virtual letters appear to "fall" on the visitor's "silhouette". Utterback writes: "In the *Text Rain* installation, participants stand or move in front of a large projection screen. On the screen they see a mirrored video projection of themselves in black and white, combined with a color animation of falling letters. Like rain or snow, the letters appears to land on participants’ heads and arms. The letters respond to the participants’ motions and can be caught, lifted, and then let fall again. The falling text will 'land' on anything darker than a certain threshold, and 'fall' whenever that obstacle is removed."
 
 ![Camille Utterback and Romy Achituv, Text Rain (1999)](images/text-rain.jpg)
 
