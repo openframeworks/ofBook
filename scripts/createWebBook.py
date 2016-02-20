@@ -492,5 +492,5 @@ os.remove(tocPathTemp);
 destPath = os.path.join(webBookPath, "index.html")
 sourcePath = os.path.join("createWebBookTemplate", "index.html")
 
-print("Copying", sourcePath, "to", destPath, "...")
-shutil.copyfile(sourcePath, destPath)
+# print("Copying", sourcePath, "to", destPath, "...")
+# shutil.copyfile(sourcePath, destPath)
