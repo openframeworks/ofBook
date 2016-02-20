@@ -66,7 +66,7 @@ Below is our complete *ofApp.cpp* file. The Lincoln image is *loaded* from our h
 
 void ofApp::setup(){
 	// We load an image from our "data" folder into the ofImage:
-	myImage.load("lincoln.png");
+	myImage.loadImage("lincoln.png");
 	myImage.setImageType(OF_IMAGE_GRAYSCALE);
 }
 
@@ -75,8 +75,8 @@ void ofApp::draw(){
 	ofSetColor(255);
 
 	// We fetch the ofImage's dimensions and display it 10x larger.  
-	int imgWidth = myImage.getWidth();
-	int imgHeight = myImage.getHeight();
+	int imgWidth = myImage.width;
+	int imgHeight = myImage.height;
 	myImage.draw(10, 10, imgWidth * 10, imgHeight * 10);
 }
 ```
@@ -172,7 +172,7 @@ void ofApp::update(){
 	if(myVideoGrabber.isFrameNew()){
 
 		// Obtain a pointer to the grabber's image data.
-		unsigned char* pixelData = myVideoGrabber.getPixels().getData();
+		unsigned char* pixelData = myVideoGrabber.getPixels();
 		
 		// Reckon the total number of bytes to examine. 
 		// This is the image's width times its height,
@@ -215,7 +215,7 @@ A common pattern among developers of interactive computer vision systems is to e
 	#ifdef _USE_LIVE_VIDEO
         myVideoGrabber.initGrabber(320,240);
 	#else
-        myVideoPlayer.load("pedestrians.mov");
+        myVideoPlayer.loadMovie("pedestrians.mov");
         myVideoPlayer.play();
 	#endif
 	//...
@@ -294,7 +294,7 @@ Most of the time, you'll be working with image data that is stored in a higher-l
 
 ```cpp
 int arrayIndex = (y * imgWidth) + x;
-unsigned char* myImagePixelBuffer = myImage.getPixels().getData();
+unsigned char* myImagePixelBuffer = myImage.getPixels();
 unsigned char pixelValueAtXY = myImagePixelBuffer[arrayIndex];
 ```
 
@@ -340,7 +340,7 @@ Here's the .cpp file:
 
 //---------------------
 void ofApp::setup(){
-	laserTagImage.load("laser_tag.jpg");
+	laserTagImage.loadImage("images/laser_tag.jpg");
 }
 
 //---------------------
@@ -531,8 +531,8 @@ The simplest method to convert a color image to grayscale is to modify its data 
 
 ```cpp
 ofImage myImage; 
-myImage.load("colorful.jpg"); // Load a colorful image.
-myImage.setImageType(OF_IMAGE_GRAYSCALE); // Poof! Now it's grayscale. 
+myImage.loadImage ("colorful.jpg"); // Load a colorful image.
+myImage.setImageType (OF_IMAGE_GRAYSCALE); // Poof! Now it's grayscale. 
 ```
 The ofxOpenCV addon library provides several methods for converting color imagery to grayscale. For example, the `convertToGrayscalePlanarImage()` and `setFromColorImage()` functions create or set an `ofxCvGrayscaleImage` from color image data stored in an `ofxCvColorImage`. But the easiest way is simply to assign the grayscale version from the color one; the addon takes care of the conversion for you:
 
@@ -563,10 +563,10 @@ Here's a code fragment for converting from color to grayscale, written "from scr
 // Load a color image, fetch its dimensions, 
 // and get a pointer to its pixel data. 
 ofImage myImage; 
-myImage.load("colorful.jpg");
+myImage.loadImage ("colorful.jpg");
 int imageWidth = myImage.getWidth();
 int imageHeight = myImage.getHeight();
-unsigned char* rgbPixelData = myImage.getPixels().getData(); 
+unsigned char* rgbPixelData = myImage.getPixels(); 
 
 // Allocate memory for storing a grayscale version.
 // Since there's only 1 channel of data, it's just w*h. 
@@ -636,20 +636,20 @@ void ofApp::setup(){
 	
 	// Load the image and ensure we're working in monochrome.
 	// This is our source ("src") image. 
-	lincolnOfImageSrc.load("lincoln_120x160.png");
+	lincolnOfImageSrc.loadImage("images/lincoln_120x160.png");
 	lincolnOfImageSrc.setImageType(OF_IMAGE_GRAYSCALE);
 	
 	// Construct and allocate a new image with the same dimensions. 
 	// This will store our destination ("dst") image. 
-	int imgW = lincolnOfImageSrc.getWidth();
-	int imgH = lincolnOfImageSrc.getHeight();
+	int imgW = lincolnOfImageSrc.width;
+	int imgH = lincolnOfImageSrc.height;
 	lincolnOfImageDst.allocate(imgW, imgH, OF_IMAGE_GRAYSCALE);
 	
 	// Acquire pointers to the pixel buffers of both images. 
 	// These images use 8-bit unsigned chars to store gray values. 
 	// Note the convention 'src' and 'dst' -- this is very common.
-	unsigned char* srcArray = lincolnOfImageSrc.getPixels().getData();
-	unsigned char* dstArray = lincolnOfImageDst.getPixels().getData();
+	unsigned char* srcArray = lincolnOfImageSrc.getPixels();
+	unsigned char* dstArray = lincolnOfImageDst.getPixels();
 	
 	// Loop over all of the destination image's pixels. 
 	// Each destination pixel will be 10 gray-levels brighter
@@ -733,13 +733,13 @@ void ofApp::setup(){
 	// ofxOpenCV doesn't have image loading.
 	// So first, load the .png file into a temporary ofImage.
 	ofImage lincolnOfImage;
-	lincolnOfImage.load("lincoln_120x160.png");
+	lincolnOfImage.loadImage("lincoln_120x160.png");
 	lincolnOfImage.setImageType(OF_IMAGE_GRAYSCALE);
 	
 	// Set the lincolnCvImage from the pixels of this ofImage.
 	int imgW = lincolnOfImage.getWidth();
 	int imgH = lincolnOfImage.getHeight();
-	unsigned char *lincolnPixels = lincolnOfImage.getPixels().getData();
+	unsigned char *lincolnPixels = lincolnOfImage.getPixels();
 	lincolnCvImageSrc.setFromPixels( lincolnPixels, imgW, imgH);
 	
 	// Make a copy of the source image into the destination.
@@ -822,13 +822,13 @@ void ofApp::setup(){
 	
 	// Load the cells image
 	ofImage cellsOfImage;
-	cellsOfImage.load("cells.jpg");
+	cellsOfImage.loadImage("cells.jpg");
 	cellsOfImage.setImageType(OF_IMAGE_GRAYSCALE);
 	
 	// Set the myCvImageSrc from the pixels of this ofImage.
 	int imgW = cellsOfImage.getWidth();
 	int imgH = cellsOfImage.getHeight();
-	unsigned char *cellsPixels = cellsOfImage.getPixels().getData();
+	unsigned char *cellsPixels = cellsOfImage.getPixels();
 	myCvImageSrc.setFromPixels (cellsPixels, imgW, imgH);
 }
 
@@ -986,6 +986,8 @@ Here, the `colorImg` buffer (an `ofxCvColorImage`) stores the unmodified color d
 colorImg.setFromPixels(vidPlayer.getPixels());
 ```
 
+In the full code of opencvExample (not shown here) a `#define` near the top of ofApp.h allows you to swap out the `ofVideoPlayer` for an `ofVideoGrabber`—a live webcam. 
+
 **Step 2. Color to Grayscale Conversion.** <br />
 In the upper-right of the window is the same video, converted to grayscale. Here it is stored in the `grayImage` object, which is an instance of an `ofxCvGrayscaleImage`. 
 
@@ -1005,6 +1007,8 @@ The absolute differencing and thresholding take place in two separate operations
 
 The subsequent thresholding operation ensures that this image is *binarized*, meaning that its pixel values are either black (0) or white (255). The thresholding is done as an *in-place operation* on `grayDiff`, meaning that the `grayDiff` image is clobbered with a thresholded version of itself. 
 
+The variable `thresholdValue` is set to 80, meaning that a pixel must be at least 80 gray-levels different than the background in order to be considered foreground. In the official example, a keypress permits the user to adjust this number. 
+
 ```cpp
 // Take the absolute value of the difference 
 // between the background and incoming images.
@@ -1013,6 +1017,10 @@ grayDiff.absDiff(grayBg, grayImage);
 // Perform an in-place thresholding of the difference image.
 grayDiff.threshold(thresholdValue);
 ```
+
+This example uses thresholding to distinguish dark objects from a light background. But it's worth pointing out that thresholding can be applied to any image whose brightness quantifies a variable of interest. 
+
+If you're using a webcam instead of the provided "fingers.mov" demo video, note that automatic gain control can sometimes interfere with background subtraction. You may need to increase the value of your threshold, or use a more sophisticated background subtraction technique. 
 
 **Step 5. Contour Tracing.** <br />
 5. The final steps are displayed in the bottom right of the screen. Here, an `ofxCvContourFinder` has been tasked to `findContours()` in the binarized image. It does this by identifying contiguous blobs of white pixels, and then tracing the contours of those blobs into an `ofxCvBlob` outline comprised of (x,y) points. 
@@ -1037,6 +1045,14 @@ for (int i=0; i<numBlobs; i++){
 }
 ```
 
+### Frame Differencing
+
+Closely related to background subtraction is *frame differencing*. If background subtraction is useful for detecting *presence* (by comparing a scene before and after someone entered it), frame differencing is useful for detecting *motion*. 
+
+The difference between background subtraction and frame differencing is 
+
+
+
 ### Contour Games
 
 Blob contours are a *vector-based* representation, comprised of a series of (x,y) points. Once obtained, a contour can be used for all sorts of exciting geometric play. 
@@ -1045,9 +1061,9 @@ A good illustration of this is the following project by Cyril Diagne, in which t
 
 ![Screenshots of ofx-kikko](images/ofx-kikko.jpg)
 
-One of the flags to the `ofxCvContourFinder::findContours()` function allows you to search specifically for *interior* contours, also known as [*negative space*](https://en.wikipedia.org/wiki/Negative_space). An interactive artwork which uses this to good effect is *Shadow Monsters* by Philip Worthington, which interprets interior contours as sites for monstrous eyeballs. 
+One of the flags to the `ofxCvContourFinder::findContours()` function allows you to search specifically for *interior* contours, also known as [*negative space*](https://en.wikipedia.org/wiki/Negative_space). An interactive artwork which uses this to good effect is *Shadow Monsters* by Philip Worthington, which interprets interior contours as the boundaries of lively, animated eyeballs. 
 
-![Screenshots of ofx-kikko](images/shadowmonsters_jefrouner.jpg)
+![Screenshots of Philip Worthington's Shadow Monsters. Photo by Jef Rouner](images/shadowmonsters_jefrouner.jpg)
 
 The original masterwork of contour play was Myron Krueger’s landmark interactive artwork, [*Videoplace*](https://www.youtube.com/watch?v=dmmxVA5xhuo), which was developed continuously between 1970 and 1989, and which premiered publicly in 1974. The *Videoplace* project comprised at least two dozen profoundly inventive scenes which comprehensively explored the design space of full-body camera-based interactions with virtual graphics — including telepresence applications and (as pictured here, in the “Critter” scene) interactions with animated artificial creatures. 
 
@@ -1064,7 +1080,7 @@ Here's a quick list of some fun and powerful things you can do with contours ext
 
 ## Refinements
 
-In this section we discuss several important refinements that can be made to improve the quality and performance of computer vision programs. 
+In this section we briefly discuss several important refinements that can be made to improve the quality and performance of computer vision programs. 
 
 * Cleaning Up Thresholded Images: Erosion and Dilation
 * Automatic Thresholding and Dynamic Thresholding
@@ -1074,30 +1090,37 @@ In this section we discuss several important refinements that can be made to imp
 
 ### Cleaning Up Thresholded Images: Erosion and Dilation
 
-Morphological Processing
-Sometimes thresholding leaves noise. 
+Sometimes thresholding leaves noise, which can manifest as fragmented blobs or unwanted speckles. If altering your threshold value doesn't solve this problem, you'll definitely want to know about [*erosion*](http://homepages.inf.ed.ac.uk/rbf/HIPR2/erode.htm) and [*dilation*](http://homepages.inf.ed.ac.uk/rbf/HIPR2/dilate.htm), which are types of *morphological operators* for binarized images. Briefly, 
+
+* Erosion removes a layer of pixels from every blob in the scene. 
+* Dilation adds a layer of pixels to every blob in the scene. 
+
+In the example below, one pass of erosion is applied to the image at left. This eliminates all of the isolated specks of noise: 
 
 ![Erosion](images/erosion_in_use.png)
 
-
-
-
-The above example uses thresholding to distinguish light objects from a dark background. But thresholding can be applied to any image whose brightness quantifies a variable of interest. 
-
-
-
-Automatic gain control destroys background subtraction
-
-Recap: A Person Detection Pipeline
+By contrast, observe how dilation is used in the person-detecting pipeline below: 
 
 ![A complete image-processing pipeline](images/full_pipeline.png)
 
-Here's a recap of a simple pipeline for detecting people in video:
+1. Live video is captured and converted to grayscale. A background image is acquired at a time when nobody is in the scene. (Sometimes, a running average of the camera feed is used as the background, especially for outdoor scenes subject to changing lighting conditions.)
+2. A person walks into the frame.  
+3. The live video image is compared with the background image. The absolute difference of Images (1) and (2) is computed. 
+4. Image (3), the absolute difference, is thresholded. Unfortunately, the person's body is fragmented into pieces, because some pixels were insufficiently different from the background. 
+5. Two passes of dilation are applied to Image (4) the thresholded image. This fills in the cracks between the pieces, creating a single, contiguous blob. 
+6. The contour tracer identifies just one blob instead of several.  
 
-1. Live video is captured and (often) converted to grayscale. 
-2. A "background" image is acquired, at a time when nobody is in the scene. Sometimes, a running average of the camera feed is used as the background. 
-3. The live video image is compared with the background image. Their absolute difference is computed. 
-4. The absolute difference is thresholded. 
+OpenCV makes erosion and dilation easy. See `ofxCvImage::erode()` and `ofxCvImage::dilate()` for methods that provide access to this functionality. 
+
+
+
+
+
+
+
+
+
+
 
 ---
 
