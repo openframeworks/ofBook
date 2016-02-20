@@ -1,11 +1,12 @@
 
 # Image Processing and Computer Vision
 
-By [Golan Levin](http://www.flong.com/)
-
+By [Golan Levin](http://www.flong.com/)<br />
 Edited by [Brannon Dorsey](http://brannondorsey.com)
 
-## Hold On! Maybe There is a Magic Bullet
+This chapter introduces techniques for manipulating and analyzing images. We introduce the subject "from scratch", and there's a lot to learn, so before we get started, it's worth checking to see whether there may already be a tool that happens to do exactly what you want. In the first section, we point to a few free tools that tidily encapsulate some vision workflows that are especially popular in interactive art and design. 
+
+## Maybe There is a Magic Bullet
 
 Computer vision allows you to make assertions about what's going on in images, video, and camera feeds. It's fun (and hugely educational) to create your own vision software, but it's not always *necessary* to implement such techniques yourself. Many of the most common computer vision workflows have been encapsulated into apps that can detect the stuff you want—and transmit the results over OSC to your openFrameworks app! Before you dig in to this chapter, consider whether you can instead sketch a prototype with one of these time-saving vision tools.
 
@@ -84,7 +85,7 @@ Compiling and running the above program displays the following canvas, in which 
 
 ![The small Lincoln image, displayed large](images/lincoln-displayed.jpg)
 
-If you're new to working with images in oF, it's worth pointing out that you should try to avoid loading images in the `draw()` or `update()` functions, if possible. Why? Well, reading data from disk is one of the slowest things you can ask a computer to do. In many circumstances, you can simply load all the images you'll need just once, when your program is first initialized, in `setup()`. By contrast, if you're repeatedly loading an image in your `draw()` loop — the same image, again and again, sixty times per second — you're hurting the performance of your app, and potentially even risking damage to your hard disk.  
+If you're new to working with images in oF, it's worth pointing out that you should try to avoid loading images in the `draw()` or `update()` functions, if possible. Why? Well, reading data from disk is one of the slowest things you can ask a computer to do. In many circumstances, you can simply load all the images you'll need just once, when your program is first initialized, in `setup()`. By contrast, if you're repeatedly loading an image in your `draw()` loop — the same image, again and again, 60 times per second — you're hurting the performance of your app, and potentially even risking damage to your hard disk.  
 
 #### Where (Else) Images Come From
 
@@ -101,13 +102,13 @@ In openFrameworks, raster images can come from a wide variety of sources, includ
 ![A Kinect depth image (left) and corresponding RGB image (right)](images/kinect_depth_image.png) 
 *An example of a depth image (left) and a corresponding RGB color image (right), captured simultaneously with a Microsoft Kinect. In the depth image, the brightness of a pixel represents its proximity to the camera. (Note that these two images, presented in a raw state, are not yet "calibrated" to each other, meaning that there is not an exact pixel-for-pixel correspondence between a pixel's color and its corresponding depth.)*
 
-Incidentally, oF makes it easy to **load images directly from the Internet**, by using a URL as the filename argument, as in `myImage.loadImage("http://en.wikipedia.org/wiki/File:Example.jpg");`. Keep in mind that doing this will load the remotely-stored image *synchronously*, meaning your program will "block" (or freeze) while it waits for all of the data to download from the web. For an improved user experience, you can also load Internet images *asynchronously* (in a background thread), using the response provided by `ofLoadURLAsync()`; a  sample implementation of this can be found in the openFrameworks *imageLoaderWebExample* graphics example. Now that you can load images stored on the Internet, you can fetch images *computationally* using fun APIs (like those of [Temboo](https://temboo.com/library/), [Instagram](http://instagram.com/developer/) or [Flickr](https://www.flickr.com/services/api/)), or from dynamic online sources such as live traffic cameras.
+Incidentally, oF makes it easy to **load images directly from the Internet**, by using a URL as the filename argument, as in `myImage.loadImage("http://en.wikipedia.org/wiki/File:Example.jpg");`. Keep in mind that doing this will load the remotely-stored image *synchronously*, meaning your program will "block" (or freeze) while it waits for all of the data to download from the web. For an improved user experience, you could instead load Internet images *asynchronously* (in a background thread), using the response provided by `ofLoadURLAsync()`; a  sample implementation of this can be found in the openFrameworks *imageLoaderWebExample* graphics example. Now that you can load images stored on the Internet, you can fetch images *computationally* using fun APIs (like those of [Temboo](https://temboo.com/library/), [Instagram](http://instagram.com/developer/) or [Flickr](https://www.flickr.com/services/api/)), or from dynamic online sources such as live traffic cameras.
 
 #### Acquiring and Displaying a Webcam Image
 
 The procedure for **acquiring a video stream** from a live webcam or digital movie file is no more difficult than loading an `ofImage`. The main conceptual difference is that the image data contained within an `ofVideoGrabber` or `ofVideoPlayer` object happens to be continually refreshed, usually about 30 times per second (or at the framerate of the footage). Each time you ask this object to render its data to the screen, as in `myVideoGrabber.draw()` below, the pixels will contain freshly updated values. 
 
-The following program (which you can find elaborated in the oF *videoGrabberExample*) shows the basic procedure. In this example below, for some added fun, we also retrieve the buffer of data that contains the `ofVideoGrabber`'s pixels, then arithmetically "invert" this data (to produce a "photographic negative") and display it with an `ofTexture`.
+The following program (which you can find elaborated in the oF *videoGrabberExample*) shows the basic procedure. In this example below, for some added fun, we also retrieve the buffer of data that contains the `ofVideoGrabber`'s pixels, then arithmetically "invert" this data (to generate a "photographic negative") and display this with an `ofTexture`.
 
 The header file for our app declares an `ofVideoGrabber`, which we will use to acquire video data from our computer's default webcam. We also declare a buffer of unsigned chars to store the inverted video frame, and the `ofTexture` which we'll use to display it:
 
@@ -135,9 +136,9 @@ class ofApp : public ofBaseApp{
 };
 
 ```
-Does the `unsigned char*` declaration look unfamiliar? It's important to recognize and understand, because this is a nearly universal way of storing and exchanging image data. The `unsigned` keyword means that the values which describe the colors in our image are exclusively positive numbers. The `char` means that each color component of each pixel is stored in a single 8-bit number—a byte, with values ranging from 0 to 255—which for many years was also the data type in which *char*acters were stored. And the asterisk (`*`) means that the data named by this variable is not just a single unsigned char, but rather, an *array* of unsigned chars (or more accurately, a *pointer* to a buffer of unsigned chars). For more information about such datatypes, see the *Memory in C++* chapter.
+Does the `unsigned char*` declaration look unfamiliar? It's very important to recognize and understand, because this is a nearly universal way of storing and exchanging image data. The `unsigned` keyword means that the values which describe the colors in our image are exclusively positive numbers. The `char` means that each color component of each pixel is stored in a single 8-bit number—a byte, with values ranging from 0 to 255—which for many years was also the data type in which *char*acters were stored. And the asterisk (`*`) means that the data named by this variable is not just a single unsigned char, but rather, an *array* of unsigned chars (or more accurately, a *pointer* to a buffer of unsigned chars). For more information about such datatypes, see the *Memory in C++* chapter.
 
-Below is the complete code of our webcam-grabbing .cpp file. As you might expect, the `ofVideoGrabber` object provides many more methods and settings, not shown here. These allow you to do things like listing and selecting from available camera devices; setting your capture dimensions and framerate; and (depending on your hardware and drivers) adjusting parameters like camera exposure and contrast.
+Below in Example 2 is the complete code of our webcam-grabbing .cpp file. As you might expect, the `ofVideoGrabber` object provides many more methods and settings, not shown here. These allow you to do things like listing and selecting available camera devices; setting your capture dimensions and framerate; and (depending on your hardware and drivers) adjusting parameters like camera exposure and contrast.
 
 Note that the example segregates our heavy computation into the `update()` method, and the rendering of our graphics into `draw()`. This is a recommended pattern for structuring your code. 
 
@@ -205,7 +206,7 @@ This application continually displays the live camera feed, and also presents a 
 
 ![Webcam videeo grabbing and pixelwise inversion](images/videograbber.png)
 
-Acquiring frames from a Quicktime movie or other digital video file stored on disk is an almost identical procedure. See the OF *videoPlayerExample* implementation or `ofVideoGrabber` [documentation](http://openframeworks.cc/documentation/video/ofVideoGrabber.html) for details.
+Acquiring frames from a Quicktime movie or other digital video file stored on disk is an almost identical procedure. See the oF *videoPlayerExample* implementation or `ofVideoGrabber` [documentation](http://openframeworks.cc/documentation/video/ofVideoGrabber.html) for details.
 
 A common pattern among developers of interactive computer vision systems is to enable easy switching between a pre-stored "sample" video of your scene, and video from a live camera grabber. That way, you can test and refine your processing algorithms in the comfort of your hotel room, and then switch to "real" camera input when you're back at the installation site. A hacky if effective example of this pattern can be found in the openFrameworks *opencvExample*, in the addons example directory, where the "switch" is built using a `#define` [preprocessor directive](http://www.cplusplus.com/doc/tutorial/preprocessor/):
 
@@ -287,7 +288,9 @@ int y = arrayIndex / imgWidth; // NOTE, this is integer division!
 int x = arrayIndex % imgWidth; // The friendly modulus operator.
 ```
 
-Most of the time, you'll be working with image data that is stored in a higher-level container object, such as an `ofImage`. There are *two* ways to get the values of pixel data stored in such a container. In one method, we can ask the image for its array of unsigned char pixel data, using `.getPixels()`, and then fetch the value we want from this array. Many image containers, such as `ofVideoGrabber`, also support a `.getPixels()` function.
+#### Low-Level vs. High-Level Pixel Access Methods
+
+Most of the time, you'll be working with image data that is stored in a higher-level container object, such as an `ofImage`. There are *two* ways to get the values of pixel data stored in such a container. In the "low-level" method, we can ask the image for a pointer to its array of raw, unsigned char pixel data, using `.getPixels()`, and then extract the value we want from this array. This involves some array-index calculation using the pattern described above. (And incidentally, most other openFrameworks image containers, such as `ofVideoGrabber`, support such a `.getPixels()` function.)
 
 ```cpp
 int arrayIndex = (y * imgWidth) + x;
@@ -295,7 +298,7 @@ unsigned char* myImagePixelBuffer = myImage.getPixels();
 unsigned char pixelValueAtXY = myImagePixelBuffer[arrayIndex];
 ```
 
-The second method is a high-level function that returns the color stored at a pixel location:
+The second method is a high-level function that returns the *color* stored at a given pixel location:
 
 ```cpp
 ofColor colorAtXY = myImage.getColor(x, y);
@@ -438,13 +441,13 @@ for (int y=0; y<h; y++) {
 
 ```
 
-This technique is often used with an "eyedropper-style" interaction, in which the user selects the target color interactively (by clicking). Note that there are more sophisticated ways of measuring "[color distance](http://en.wikipedia.org/wiki/Color_difference)", such as the Delta-E [calculation](http://colormine.org/delta-e-calculator/) in the CIE76 color space, that are much more robust to variations in lighting and also have a stronger basis in human color perception. 
+This technique is often used with an "eyedropper-style" interaction, in which the user selects the target color interactively (by clicking). Note that there are more sophisticated ways of measuring "[color distance](http://en.wikipedia.org/wiki/Color_difference)", such as the *Delta-E* [calculation](http://colormine.org/delta-e-calculator/) in the CIE76 color space, that are much more robust to variations in lighting and also have a stronger basis in human color perception. 
 
 #### Three-Channel (RGB) Images.
 
 Our Lincoln portrait image shows an 8-bit, 1-channel, "[grayscale](http://en.wikipedia.org/wiki/Grayscale)" image. Each pixel uses a single round number (technically, an unsigned char) to represent a single luminance value. But other data types and formats are possible.
 
-For example, it is common for color images to be represented by 8-bit, *3-channel* images. In this case, each pixel brings together 3 bytes' worth of information: one byte each for red, green and blue intensities. In computer memory, it is common for these values to be interleaved R-G-B. As you can see, color images necessarily contain three times as much data.
+For example, it is common for color images to be represented by 8-bit, *3-channel* images. In this case, each pixel brings together 3 bytes' worth of information: one byte each for red, green and blue intensities. In computer memory, it is common for these values to be interleaved R-G-B. As you can see, RGB color images necessarily contain three times as much data.
 
 ![Interleaved RGB pixels](images/interleaved_1.png)
 
@@ -491,7 +494,7 @@ You'll also find:
 - 2-channel images (commonly used for luminance plus transparency);
 - 3-channel images (generally for RGB data, but occasionally used to store images in other color spaces, such as HSB or YUV);
 - 4-channel images (commonly for RGBA images, but occasionally for CMYK);
-- *Bayer images*, in which the RGB color channels are not interleaved R-G-B-R-G-B-R-G-B... but instead appear in a unique checkerboard pattern.
+- [*Bayer images*](https://en.wikipedia.org/wiki/Bayer_filter), in which the RGB color channels are not interleaved R-G-B-R-G-B-R-G-B... but instead appear in a unique checkerboard pattern.
 
 It gets even more exotic. ["Hyperspectral" imagery from the Landsat 8 satellite](https://www.mapbox.com/blog/putting-landsat-8-bands-to-work/), for example, has 11 channels, including bands for ultraviolet, near infrared, and thermal (deep) infrared!
 
@@ -506,11 +509,13 @@ In openFrameworks, images can be stored in a variety of different *container cla
 - **ofTexture** This container stores image data in the texture memory of your computer's graphics card (GPU). Many other classes, including `ofImage`, `ofxCvImage`, `ofVideoPlayer`, `ofVideoGrabber`, `ofFbo`, and `ofKinect`, maintain an internal ofTexture object to render their data to the screen. 
 - **cv::Mat** This is the data structure used by OpenCV to store image information. It's not used in openFrameworks, but if you work a lot with OpenCV, you'll often find yourself placing and extracting data from this format.
 
-To the greatest extent possible, the designers of openFrameworks (and OF addons for image processing, like ofxOpenCV and Kyle McDonald's ofxCv) have provided simple operators to help make it easy to exchange data between these containers. 
+To the greatest extent possible, the designers of openFrameworks (and oF addons for image processing, like ofxOpenCV and Kyle McDonald's [ofxCv](https://github.com/kylemcdonald/ofxCv)) have provided simple operators to help make it easy to exchange data between these containers. 
 
-It's important to point out that image data may be stored in very different parts of your computer's memory. Good old-fashioned unsigned chars, and image data in container classes like `ofPixels` and `ofxCvImage`, are maintained in your computer's main RAM; that's handy for image processing operations by the CPU. By contrast, the `ofTexture` class, as indicated above, stores its data in GPU memory, which is ideal for rendering it quickly to the screen. 
+![Simplified diagrams of ofImage and ofCvImage](images/two-image-types.png)
 
-It's helpful to know that there's generally a performance penalty for moving image data back-and-forth between the CPU and GPU, such as the `ofImage::grabScreen()` method, which captures a portion of the screen from the GPU and stores it in an `ofImage`, or the `ofTexture::readToPixels()` method, which copies image data from an `ofTexture` to an `ofPixels`.
+The diagram above shows a simplified representation of the two most common oF image formats you're likely to see. At left, we see an `ofImage`, which at its core contains an array of unsigned chars. An `ofPixels` object wraps up this array, along with some helpful metadata which describes it. The `ofImage` then wraps this `ofPixels` object up with an `ofTexture`, which provides functionality for rendering the image to the screen. The `ofCvImage` at right is very similar, but stores the image data in structures called [IplImages](https://www.safaribooksonline.com/library/view/learning-opencv/9780596516130/ch03s03.html) that play well with OpenCV *(don't worry about IplImages!)*. All of these classes provide a variety of methods for moving image data into and out of them.
+
+It's important to point out that image data may be stored in very different parts of your computer's memory. Good old-fashioned unsigned chars, and image data in container classes like `ofPixels` and `ofxCvImage`, are maintained in your computer's main RAM; that's handy for image processing operations by the CPU. By contrast, the `ofTexture` class, as indicated above, stores its data in GPU memory, which is ideal for rendering it quickly to the screen. It's also helpful to know that there's generally a performance penalty for moving image data back-and-forth between the CPU and GPU, such as the `ofImage::grabScreen()` method, which captures a portion of the screen from the GPU and stores it in an `ofImage`, or the `ofTexture::readToPixels()` method, which copies image data from an `ofTexture` to an `ofPixels`.
 
 #### RGB to Grayscale Conversion, and its Role in Computer Vision
 
@@ -520,7 +525,7 @@ For example, if you're calculating a "blob" to represent the location of a user'
 
 Let's suppose that your raw source data is color video (as is common with webcams). For many image processing and computer vision applications, your first step will involve *converting this to monochrome*. Depending on your application, you'll either clobber your color data to grayscale directly, or create a grayscale copy for subsequent processing. 
 
-The simplest method to convert a color image to grayscale is to modify its data by changing its OF image type to `OF_IMAGE_GRAYSCALE`. Note that this causes the image to be reallocated and any ofTextures to be updated, so it can be an expensive operation if done frequently. It's also a "destructive operation", in the sense that the image's original color information is lost in the conversion.
+The simplest method to convert a color image to grayscale is to modify its data by changing its openFrameworks image type to `OF_IMAGE_GRAYSCALE`. Note that this causes the image to be reallocated and any ofTextures to be updated, so it can be an expensive operation if done frequently. It's also a "destructive operation", in the sense that the image's original color information is lost in the conversion.
 
 ```cpp
 ofImage myImage; 
@@ -536,15 +541,17 @@ The ofxOpenCV addon library provides several methods for converting color imager
 // And given a declared ofxCvGrayscaleImage:
 ofxCvGrayscaleImage kittenCvImgGray;
 	
-// Then the color-to-gray conversion is performed by this assignment: 
+// The color-to-gray conversion is then performed by this assignment.
+// NOTE: This uses "operator overloading" to customize the meaning of
+// the '=' operator for ofxOpenCV images. 
 kittenCvImgGray = kittenCvImgColor;
 ```
 
-Although OF provides the above utilities to convert color images to grayscale, it's worth taking a moment to understand the subtleties of the conversion process. There are three common techniques for performing the conversion: 
+Although oF provides the above utilities to convert color images to grayscale, it's worth taking a moment to understand the subtleties of the conversion process. There are three common techniques for performing the conversion: 
 
 * **Extracting just one of the R,G, or B color channels,** as a proxy for the luminance of the image. For example, one might fetch only the green values as an approximation to an image's luminance, discarding its red and blue data. For a typical color image whose bytes are interleaved R-G-B, this can be done by fetching every 3rd byte. This method is computationally fast, but it's also perceptually inaccurate, and it tends to produce noisier results for images of natural scenes. 
 * **Taking the average of the R,G, and B color channels.** A slower but more perceptually accurate method approximates luminance (often written *Y*) as a straight average of the red, green and blue values for every pixel: `Y = (R+G+B)/3;`. This not only produces a better representation of the image's luminance across the visible color spectrum, but it also diminishes the influence of noise in any one color channel.
-* **Computing the luminance with colorimetric coefficients**. The most perceptually accurate methods for computing grayscale from color images employ a specially-weighted "colorimetric" average of the RGB color data. These methods are marginally more expensive to compute, as each color channel must be multiplied by its own weighting factor. The CCIR 601 imaging specification, which is used in the OpenCV [cvtColor](http://docs.opencv.org/modules/imgproc/doc/miscellaneous_transformations.html#cvtcolor) function, itself used in the ofxOpenCV addon, employs the formula `Y = 0.299*R + 0.587*G + 0.114*B` (with the assumption that the RGB values have been gamma-corrected). According to [Wikipedia](http://en.wikipedia.org/wiki/Luma_(video)), "these coefficients represent the measured intensity perception of typical trichromat humans; in particular, human vision is most sensitive to green and least sensitive to blue."
+* **Computing the luminance with colorimetric coefficients**. The most perceptually accurate methods for computing grayscale from color images employ a specially-weighted "colorimetric" average of the RGB color data. These methods are marginally more expensive to compute, as each color channel must be multiplied by its own weighting factor. The CCIR 601 imaging specification, which is used in the OpenCV [cvtColor](http://docs.opencv.org/modules/imgproc/doc/miscellaneous_transformations.html#cvtcolor) function, itself used in the ofxOpenCV addon, employs the formula `Y = 0.299*R + 0.587*G + 0.114*B` (with the further assumption that the RGB values have been gamma-corrected). According to [Wikipedia](http://en.wikipedia.org/wiki/Luma_(video)), "these coefficients represent the measured intensity perception of typical trichromat humans; in particular, human vision is most sensitive to green and least sensitive to blue."
 
 Here's a code fragment for converting from color to grayscale, written "from scratch" in C/C++, using the averaging method described above. This code also shows, more generally, how the pixelwise computation of a 1-channel image can be based on a 3-channel image. 
 
@@ -586,9 +593,9 @@ for(int indexGray=0; indexGray<nBytesGrayscale; indexGray++){
 
 ## Point Processing Operations on Images
 
-In this section, we consider image processing operations that are precursors to a wide range of further decision-making. In particular, we will look at *point processing* operations, namely image arithmetic and thresholding.  
+In this section, we consider image processing operations that are precursors to a wide range of further analysis and decision-making. In particular, we will look at *point processing* operations, namely image arithmetic and thresholding.  
 
-We begin with *image arithmetic*, a core part of the workflow of computer vision. These are the basic mathematical operations we all know—addition, subtraction, multiplication, and division—but applied to images. Developers use such operations constantly, and for a wide range of reasons. 
+We begin with *image arithmetic*, a core part of the workflow of computer vision. These are the basic mathematical operations we all know—addition, subtraction, multiplication, and division—but as they are applied to images. Developers use such operations constantly, and for a wide range of reasons. 
 
 ### Image Arithmetic with Constants
 
@@ -673,7 +680,7 @@ Image arithmetic is simple! But there's a lurking peril when arithmetic operatio
 
 Consider what happens when we add 10 to the specially-marked pixel in the bottom row of the illustration above. Its initial value is 251—but the largest number we can store in an unsigned char is 255! What should the resulting value be? More generally, what happens if we attempt to assign a pixel value that's too large to be represented by our pixel's data type?
 
-The answer is: it depends which libraries or programming techniques you're using, and it can have significant consequences! Some image-processing libraries, like OpenCV, will clamp or constrain all arithmetic to the data's desired range; thus, adding 10 to 251 will result in a maxed-out value of 255 (a solution sometimes known as "saturation"). In other situations, such as with our direct editing of unsigned chars in the code above, we risk "rolling over" the data, wrapping around zero like a car's odometer. Without the ability to carry, only the least significant bits are retained. In the land of unsigned chars, adding 10 to 251 gives... 6!
+The answer is: *it depends which libraries or programming techniques you're using*, and it can have very significant consequences! Some image-processing libraries, like OpenCV, will clamp or constrain all arithmetic to the data's desired range; thus, adding 10 to 251 will result in a maxed-out value of 255 (a solution sometimes known as "saturation"). In other situations, such as with our direct editing of unsigned chars in the code above, we risk "rolling over" the data, wrapping around zero like a car's odometer. Without the ability to carry, only the least significant bits are retained. In the land of unsigned chars, adding 10 to 251 gives... 6!
 
 The perils of integer overflow are readily apparent in the illustration below. I have used the code above to lighten a source image of Abraham Lincoln, by adding a constant to all of its pixel values. Without any preventative measures in place, many of the light-colored pixels have "wrapped around" and become dark. 
 
@@ -690,14 +697,15 @@ Integer overflow can also present problems with other arithmetic operations, suc
 
 The OpenCV computer vision library offers fast, easy-to-use and high-level implementations of image arithmetic. Here's the same example as above, re-written using the ofxOpenCV addon library, which comes with the openFrameworks core download. Note the following: 
 
-* As with all addons, it's important to include the ofxOpenCV addon properly in your project. The openFrameworks ProjectGenerator can help with this. 
 * ofxOpenCv provides convenient methods for copying data between images.
 * ofxOpenCv provides convenient operators for performing image arithmetic.
 * ofxOpenCv's arithmetic operations saturate, so integer overflow is not a concern.
-* ofxOpenCv does not currently provide methods for loading images, so we employ an `ofImage` as an intermediary for doing so.  
+* ofxOpenCv does not currently provide methods for loading images, so we employ an `ofImage` as an intermediary for doing so. 
+* As with all addons, it's important to import the ofxOpenCV addon properly into your project. (Simply adding `#include "ofxOpenCv.h"` in your app's header file isn't sufficient!) The openFrameworks [ProjectGenerator](https://www.youtube.com/watch?v=4k2ZcvC0YEA) is designed to help you with this, and makes it easy to add an addon into a new (or pre-existing) project. 
 
 ```cpp
 // Example 5: Add a constant value to an image, with ofxOpenCv.
+// Make sure to use the ProjectGenerator to include the ofxOpenCv addon.
 // This is ofApp.h
 #pragma once
 
@@ -753,13 +761,13 @@ Here's the result. Note how the high values (light areas) have saturated instead
 
 ### Arithmetic with Two Images: Absolute Differencing
 
-Image arithmetic is especially useful when applied to two images. As you would expect, it is possible to add two images, multiply two images, subtract one image from another, and divide one image by another. When performing an operation (such as addition) on two images, the first pixel of image *A* is added to the first pixel of image *B*, the second pixel of *A* is added to the second pixel of *B*, and so forth. For the purposes of this discussion, we'll assume that *A* and *B* are both monochromatic, and have the same dimensions. 
+Image arithmetic is especially useful when applied to two images. As you would expect, it is possible to add two images, multiply two images, subtract one image from another, and divide one image by another. When performing an arithmetic operation (such as addition) on two images, the operation is done "pixelwise": the first pixel of image *A* is added to the first pixel of image *B*, the second pixel of *A* is added to the second pixel of *B*, and so forth. For the purposes of this discussion, we'll assume that *A* and *B* are both monochromatic, and have the same dimensions. 
 
-Many computer vision applications depend on being able to compare two images. At the basis of doing so is the arithmetic operation of *absolute differencing*, illustrated below. This operation is equivalent to taking the absolute value of the results when one image is subtracted from the other: *|A-B|*. As we shall see, absolute differencing is a key step in common workflows like frame-differencing and background subtraction.  
+Many computer vision applications depend on being able to compare two images. At the basis of doing so is the arithmetic operation of *absolute differencing*, illustrated below. This operation is equivalent to taking the absolute value of the results when one image is subtracted from the other: *|A-B|*. As we shall see, absolute differencing is a key step in common workflows like *frame differencing* and *background subtraction*.  
 
 ![Diagram of absolute differencing](images/absolute-difference.png)
 
-In this illustration, we used absolute differencing to compare two 5x5 pixel images. From this, it's clear that the greatest difference occurs in their lower-right pixels. 
+In the illustration above, we have used absolute differencing to compare two 5x5 pixel images. From this, it's clear that the greatest difference occurs in their lower-right pixels. 
 
 Absolute differencing is accomplished in just a line of code, using the ofxOpenCv addon:
 
@@ -777,7 +785,7 @@ myCvImageDiff.absDiff (myCvImageA, myCvImageB);
 
 In computer vision programs, we frequently have the task of determining which pixels represent something of interest, and which do not. Key to building such discriminators is the operation of *thresholding*. 
 
-Thresholding poses a *pixelwise conditional test*—that is, it asks "`if`" the value stored in each pixel *(x,y)* of a source image meets a certain criterion. In return, thresholding produces a destination image, which represents where and how the criterion is (or isn't) met in the original's corresponding pixels. As we stated earlier, pixels which satisfy the criterion are conventionally assigned 255 (white), while those which don't are assigned 0 (black). And as we shall see, the white blobs which result from such thresholding are ideally suited for further analysis by contour tracers.
+Thresholding poses a *pixelwise conditional test*—that is, it asks "`if`" the value stored in each pixel *(x,y)* of a source image meets a certain criterion. In return, thresholding produces a destination image, which represents where and how the criterion is (or is not) met in the original's corresponding pixels. As we stated earlier, pixels which satisfy the criterion are conventionally assigned 255 (white), while those which don't are assigned 0 (black). And as we shall see, the white blobs which result from such thresholding are ideally suited for further analysis by *contour tracers*.
 
 Here's an example, a photomicrograph (left) of light-colored cells. We'd like to know which pixels represent a cell, and which do not. For our criterion, we test for pixels whose grayscale brightness is greater than some constant, the *threshold value*. In this illustration, we test against a threshold value of 127, the middle of the 0-255 range: 
 
