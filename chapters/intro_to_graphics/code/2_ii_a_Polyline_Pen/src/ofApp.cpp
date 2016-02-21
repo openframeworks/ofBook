@@ -1,10 +1,36 @@
+// =============================================================================
+//
+// Source code for section 2.ii.a. Polyline Pen from the Introduction
+// to Graphics chapter of ofBook (https://github.com/openframeworks/ofBook).
+//
+// Copyright (c) 2014 Michael Hadley, mikewesthad.com
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+//
+// =============================================================================
+
 #include "ofApp.h"
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    leftMouseButtonPressed = false;
     minDistance = 10.0;
-    isSavingPDF = false;
+    leftMouseButtonPressed = false;
 }
 
 //--------------------------------------------------------------
@@ -22,53 +48,19 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-
-    // If isSavingPDF is true (i.e. the s key has been pressed), then
-    // anything in between ofBeginSaveScreenAsPDF(...) and ofEndSaveScreenAsPDF()
-    // Note: anything after ofBeginSaveScreenAsPDF(...) has been called
-    // is not drawn to the screen, it is instead rendered into a PDF file
-    if (isSavingPDF) {
-        ofBeginSaveScreenAsPDF("savedScreenshot_"+ofGetTimestampString()+".pdf");
-    }
-
     ofBackground(0);
     ofSetColor(255);  // White color for saved polylines
     for (int i=0; i<polylines.size(); i++) {
-
-        // Drawing the polyline
         ofPolyline polyline = polylines[i];
-        //polyline.draw();
-
-        // Drawing evenly spaced tangents along the polyline
-        //  Note: These are pretty exaggerated tangents, like Figure 16 (right)
-        ofSetColor(255, 50);
-        float numPoints = polyline.size();
-        float tangentLength = 300;
-        for (int p=0; p<500; p+=1) {
-            ofVec3f point = polyline.getPointAtPercent(p/500.0);
-            float floatIndex = p/500.0 * (numPoints-1);
-            ofVec3f tangent = polyline.getTangentAtIndexInterpolated(floatIndex) * tangentLength;
-            ofDrawLine(point-tangent/2, point+tangent/2);
-        }
+        polyline.draw();
     }
-
     ofSetColor(255,100,0);  // Orange color for active polyline
     currentPolyline.draw();
-
-    // Finish saving the PDF and reset the isSavingPDF flag to false
-    // Ending the PDF tells openFrameworks to resume drawing to the screen.
-    if (isSavingPDF) {
-        ofEndSaveScreenAsPDF();
-        isSavingPDF = false;
-    }
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-    if (key == 's') {
-        // isSavingPDF is a flag that lets us know whether or not save a PDF
-        isSavingPDF = true;
-    }
+
 }
 
 //--------------------------------------------------------------
@@ -94,12 +86,6 @@ void ofApp::mousePressed(int x, int y, int button){
         currentPolyline.curveTo(x, y);  // Necessary duplicate for first control point
         lastPoint.set(x, y);  // Set the x and y of a ofVec2f in a single line
     }
-
-    // Erase the polylines if the right mouse button is pressed
-    if (button == OF_MOUSE_BUTTON_RIGHT) {
-        currentPolyline.clear();
-        polylines.clear();
-    }
 }
 
 //--------------------------------------------------------------
@@ -107,7 +93,6 @@ void ofApp::mouseReleased(int x, int y, int button){
     if (button == OF_MOUSE_BUTTON_LEFT) {
         leftMouseButtonPressed = false;
         currentPolyline.curveTo(x, y);   // Necessary duplicate for last control point
-        currentPolyline.simplify(0.75);
         polylines.push_back(currentPolyline);
         currentPolyline.clear();  // Erase the vertices, allows us to start a new brush stroke
     }
