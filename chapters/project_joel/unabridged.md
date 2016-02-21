@@ -180,7 +180,7 @@ void setDelayMap(unsigned char* map, ofImageType type); //from ofxSlitScan.h
 ```
 So connecting them was simple:
 ```cpp
-slitScan.setDelayMap(depthPixels); //from testApp::update() in testApp.cpp
+slitScan.setDelayMap(depthPixels); //from ofApp::update() in ofApp.cpp
 ```
 This kind of separation demonstrates encapsulation or the information hiding qualities of software - the utility of not having to know the specifics of the implementation of the functionality described, merely the inputs required and outputs produced.
 
@@ -258,7 +258,7 @@ enum GreenpeaceModes {BLANK, GUI, VIDEO, VIDEOCIRCLES, KINECTPOINTCLOUD, SLITSCA
  }
 */
 ```
-I used the Stack Overflow tip in the `void testApp::keyPressed (int key)` method.
+I used the Stack Overflow tip in the `void ofApp::keyPressed (int key)` method.
 
 ```cpp
 case 'a': //used to be key left, but it interferes with ofxtimeline
@@ -396,7 +396,7 @@ The structure of setup(), update() and draw() methods is common to openFramework
 
 ```cpp
 //--------------------------------------------------------------
-void testApp::update() {
+void ofApp::update() {
     //kinect
     kinect.update();
     // there is a new frame and we are connected
@@ -499,7 +499,7 @@ see below for mode by mode update details
 ```
 
 ```cpp
-void testApp::draw() {
+void ofApp::draw() {
 	ofBackground(0, 0, 0);
 	ofSetColor(255, 255, 255);
     
@@ -1633,7 +1633,7 @@ sender:
 
 ```cpp
 
-void testApp::setup(){
+void ofApp::setup(){
 	parameters.setName("parameters");
 	parameters.add(size.set("size",10,1,100));
 	parameters.add(number.set("number",10,1,100));
@@ -1645,7 +1645,7 @@ void testApp::setup(){
 	ofSetVerticalSync(true);
 }
 
-void testApp::update(){
+void ofApp::update(){
 	sync.update();
 }
 
@@ -1655,7 +1655,7 @@ receiver:
 
 ```cpp
 
-void testApp::setup(){
+void ofApp::setup(){
 	parameters.setName("parameters");
 	parameters.add(size.set("size",10,0,100));
 	parameters.add(number.set("number",10,0,100));
@@ -1667,11 +1667,11 @@ void testApp::setup(){
 	ofSetVerticalSync(true);
 }
 
-void testApp::update(){
+void ofApp::update(){
 	sync.update();
 }
 
-void testApp::draw(){
+void ofApp::draw(){
 	gui.draw();
 	ofSetColor(color);
 	for(int i=0;i<number;i++){
@@ -2039,7 +2039,7 @@ Get all three modes working first, then have a think about how to get them worki
 
 /Users/joel/Documents/Projects/HellicarAndLewis/greenpeaceArcticGlastonbury2013/OF/openFrameworks-develop/examples/gl/fboTrailsExample
 
-Lets make it first, then do a InstallationMode object, based on what Sparkles actually needed. tightly coupling into testApp at the moment with a passed pointer, but whatever works for now...Compilation problems, forward declaration because of pointers to testApp...
+Lets make it first, then do a InstallationMode object, based on what Sparkles actually needed. tightly coupling into ofApp at the moment with a passed pointer, but whatever works for now...Compilation problems, forward declaration because of pointers to ofApp...
 
 http://stephanschulz.ca/downloads/singleton.zip
 
@@ -2340,7 +2340,7 @@ Via OF Forum post: http://forum.openframeworks.cc/index.php?topic=7165.0 :
 paulf london Posts: 22
 Re: Weird codeblocks 007 build errors
 Reply #5 on: April 05, 2012, 02:12:39 PM
-in testApp.h having #include "ofxOpenCv.h" at the top of my include list solved the issue for me
+in ofApp.h having #include "ofxOpenCv.h" at the top of my include list solved the issue for me
 
 Crazy... OK. got that working, but way too slow...
 

@@ -174,7 +174,7 @@ void setDelayMap(unsigned char* map, ofImageType type); //from ofxSlitScan.h
 ```
 So connecting them was simple:
 ```cpp
-slitScan.setDelayMap(depthPixels); //from testApp::update() in testApp.cpp
+slitScan.setDelayMap(depthPixels); //from ofApp::update() in ofApp.cpp
 ```
 This kind of separation demonstrates encapsulation or the information hiding qualities of software - the utility of not having to know the specifics of the implementation of the functionality described, merely the inputs required and outputs produced.
 
@@ -252,7 +252,7 @@ enum GreenpeaceModes {BLANK, GUI, VIDEO, VIDEOCIRCLES, KINECTPOINTCLOUD, SLITSCA
  }
 */
 ```
-I used the Stack Overflow tip in the `void testApp::keyPressed (int key)` method.
+I used the Stack Overflow tip in the `void ofApp::keyPressed (int key)` method.
 
 ```cpp
 case 'a': //used to be key left, but it interferes with ofxtimeline
