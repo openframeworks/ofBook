@@ -1049,9 +1049,14 @@ for (int i=0; i<numBlobs; i++){
 
 Closely related to background subtraction is *frame differencing*. If background subtraction is useful for detecting *presence* (by comparing a scene before and after someone entered it), frame differencing is useful for detecting *motion*. 
 
-The difference between background subtraction and frame differencing is 
+The difference between background subtraction and frame differencing can be described as follows: 
 
+* Background subtraction compares the current frame with a previously-stored background image
+* Frame differencing compares the current frame with the immediately previous frame of video. 
 
+As with background subtraction, it's customary to threshold the difference image, in order to discriminate signals from noise. Using frame differencing, it's possible to quantify *how much motion* is happening in a scene. This can be done by counting up the white pixels in the thresholded difference image. 
+
+In practice, background subtraction and frame differencing are often used together. For example, background subtraction can tell us that someone is in the room, while frame differencing can tell us how much they are moving around. In a common solution that combines the best of both approaches, motion detection (from frame differencing) and presence detection (from background subtraction) can be combined to create a generalized detector. A simple trick for doing so is to take a weighted average of their results, and use that as the basis for further thresholding. 
 
 ### Contour Games
 
@@ -1075,7 +1080,8 @@ Here's a quick list of some fun and powerful things you can do with contours ext
 * If you have too many (or too few) points in your contour, consider using `ofPolyline::getResampledBySpacing()` or `getResampledByCount()` to reduce (or increase) its number of points. 
 * `ofPolyline` provides methods for computing the area, perimeter, centroid, and bounding box of a contour; consider mapping these to audiovisual or other interactive properties. For example, you could map the area of a shape to its mass (in a physics simulation), or to its color. 
 * You can identify "special" points on a shape (such as the corners of a square, or an extended fingertip on a hand) by searching through a contour for points with high local curvature. The function `ofPolyline::getAngleAtIndex()` can be helpful for this. 
-* The mathematics of [*shape metrics*](http://what-when-how.com/biomedical-image-analysis/spatial-domain-shape-metrics-biomedical-image-analysis/) can provide powerful tools for contour analysis and even recognition. One simple shape metric is [*aspect ratio*](https://en.wikipedia.org/wiki/Aspect_ratio), which is the ratio of a shape's width to its height. Another elegant shape metric is *compactness* (also called the [*isoperimetric ratio*](https://en.wikipedia.org/wiki/Isoperimetric_ratio)), which the ratio of a shape's perimeter-squared to its area. You can use these metrics to distinguish between (for example) cardboard cutouts of animals or numbers. 
+* The mathematics of [*shape metrics*](http://what-when-how.com/biomedical-image-analysis/spatial-domain-shape-metrics-biomedical-image-analysis/) can provide powerful tools for contour analysis and even recognition. One simple shape metric is [*aspect ratio*](https://en.wikipedia.org/wiki/Aspect_ratio), which is the ratio of a shape's width to its height. Another elegant shape metric is *compactness* (also called the [*isoperimetric ratio*](https://en.wikipedia.org/wiki/Isoperimetric_ratio)), which the ratio of a shape's perimeter-squared to its area. You can use these metrics to distinguish between (for example) cardboard cutouts of animals or numbers.
+* The ID numbers (array indices) assigned to blobs by the `ofxCvContourFinder` are based on the blobs' sizes and locations. If you need to *track* multiple blobs whose positions and areas change over time, see the [*example-contours-tracking*](https://github.com/kylemcdonald/ofxCv/tree/master/example-contours-tracking) example in Kyle McDonald's addon, [ofxCv](https://github.com/kylemcdonald/ofxCv/).
 
 
 ## Refinements
@@ -1087,13 +1093,12 @@ In this section we briefly discuss several important refinements that can be mad
 * Adaptive Background Subtraction
 * ROI Processing
 
+#### Cleaning Up Thresholded Images: Erosion and Dilation
 
-### Cleaning Up Thresholded Images: Erosion and Dilation
+Sometimes thresholding leaves noise, which can manifest as fragmented blobs or unwanted speckles. If altering your threshold value doesn't solve this problem, you'll definitely want to know about [*erosion*](http://homepages.inf.ed.ac.uk/rbf/HIPR2/erode.htm) and [*dilation*](http://homepages.inf.ed.ac.uk/rbf/HIPR2/dilate.htm), which are types of *morphological operators* for binarized images. Simply put, 
 
-Sometimes thresholding leaves noise, which can manifest as fragmented blobs or unwanted speckles. If altering your threshold value doesn't solve this problem, you'll definitely want to know about [*erosion*](http://homepages.inf.ed.ac.uk/rbf/HIPR2/erode.htm) and [*dilation*](http://homepages.inf.ed.ac.uk/rbf/HIPR2/dilate.htm), which are types of *morphological operators* for binarized images. Briefly, 
-
-* Erosion removes a layer of pixels from every blob in the scene. 
-* Dilation adds a layer of pixels to every blob in the scene. 
+* Erosion *removes* a layer of pixels from every blob in the scene. 
+* Dilation *adds* a layer of pixels to every blob in the scene. 
 
 In the example below, one pass of erosion is applied to the image at left. This eliminates all of the isolated specks of noise: 
 
@@ -1112,124 +1117,60 @@ By contrast, observe how dilation is used in the person-detecting pipeline below
 
 OpenCV makes erosion and dilation easy. See `ofxCvImage::erode()` and `ofxCvImage::dilate()` for methods that provide access to this functionality. 
 
+Other operations which may be helpful in removing noise is `ofxCvImage::blur()` and `ofxCvImage:: blurGaussian()`. These should be applied *before* the thresholding operation, rather than after. 
 
+#### Adaptive Background Subtraction
 
+In situations with fluctuating lighting conditions, such as outdoor scenes, it can be difficult to perform background subtraction. One common solution is to slowly adapt the background image over the course of the day, accumulating a running average of the background. 
 
+The overloaded operators for `ofxCvImage` make such running averages straightforward. In the code fragment below, the background image is continually but slowly reassigned to be a combination of 99% of what it was a moment ago, with 1% of new information. This is also known as an *adaptive background*. 
 
-
-
-
-
-
-
----
+```cpp
+grayBg = 0.99*grayBg + 0.01*grayImage;
+```
+ 
+#### Automatic Thresholding and Dynamic Thresholding
 
  (per-pixel thresholding)
+ 
 
-  
-Hello 
-- *neighborhood processing* operations (morphological filters, convolution filtering).
+#### ROI Processing 
 
-Tracking blobs over time (IDs)
+Many image processing and computer vision operations can be sped up by performing calculations only within a sub-region of the main image, known as a *region of interest* or ROI. 
 
-Frame differencing
+The relevant function is `ofxCvImage::setROI()`, which sets the ROI in the image. Region of Interest is a rectangular area in an image, to segment object for further processing. Once the ROI is defined, OpenCV functions will operate on the ROI, reducing the number of pixels that the operation will examine and modify.
 
-
-
-
-## Other Stuff
-
-
-
-### Filtering and Noise Removal Convolution Filtering
-
-- Blurring an image
-- Edge detection
-
-1. Scenario I. Basic Blobs (e.g. Manual Input Sessions)
-1. Scenario I. Basic Blobs (e.g. Manual Input Sessions)
+#### Compensating for perspectival distortion and lens distortion
 
 
 
 
-3.1. The Why
-- Some examples of projects that use blob-tracking
-- and some scenarios that call for it.
 
-### 3.2. Detecting and Locating Presence and Motion
-
-#### 3.2.1. Detecting presence with Background subtraction
-sfdflkj
-#### 3.2.2. Detecting motion with frame-differencing
-sfdflkj
-#### 3.2.3. Binarization, blob detection and contour extraction
-sfdflkj
-- Area thresholds for contour extraction (min plausible area, max plausible area, as % of capture size)
-- Finding negative vs. positive contours
-
-### 3.3. Image Processing Refinements
-#### 3.3.1. Using a running average of background
-#### 3.3.2. Erosion, dilation, median to remove noise after binarization
-
-Motion detection (from frame-differencing) and presence detection (from background subtraction) can be combined to create a generalized detector. A simple trick for doing so is to take a weighted average of their results, and use that as the basis for further thresholding. Such a solution combines the best of both approaches. 
-
-#### 3.3.4. Compensating for perspectival distortion and lens distortion
-
-3.4. Thresholding Refinements
-   - Some techniques for automatic threshold detection
-   - Dynamic thresholding (per-pixel thresholding)
-
-3.5. The Vector space: Extracting information from Blob Contours
-   - Area, Perimeter, Centroids, Bounding box
-   - Calculating blob orientation (central axis)
-   - Locating corners in contours, estimating local curvature
-   - 1D Filtering of contours to eliminate noise, i.e local averaging.
-   - Other shape metrics; shape recognition
 
 3.6. Using Kinect depth images
    - Finding the "fore-point" (foremost point)
    - Background subtraction with depth images
-   - Hole-filling in depth images
 
 3.7. Suggestions for further experimentation:
-   - Tracking multiple blobs with ofxCv.tracker
+   - 
    - Box2D polygons using OpenCV contours, e.g. https://vimeo.com/9951522
 
 ========================================================
 4. Scenario II. Face Tracking.
 
-4.1. Overview
+Overview
 Some examples of projects that use face-tracking
-- *[Face Substitution](https://vimeo.com/29348533)* by Kyle McDonald & Arturo Castro (2011). The classic
-- *[Google Faces](http://www.onformative.com/lab/googlefaces/)* by Onformative (2012). This project, which identifies face-like features in Google Earth satellite imagery, explores what Greg Borenstein has called *machine pareidolia* -- the possibility that computer algorithms can "hallucinate" faces in everyday images.
+
+Well [Face Substitution](https://vimeo.com/29348533) by Kyle McDonald & Arturo Castro (2011). The classic
+
 
 ### A basic face detector.
 In this section we'll which implements face detection using the classic "Viola-Jones" face detector that comes with OpenCV.
 - Face detection with classic OpenCV viola-Jones detector
 - How it works, and considerations when using it.
 - cvDazzle;
-
-How does the Viola-Jones face-tracker work?
-
+- 
 The [cvDazzle](http://cvdazzle.com/) project by Adam Harvey 
-
-Ada writes: "OpenCV is one of the most widely used face detectors. This algorithm performs best for frontal face imagery and excels at computational speed. It's ideal for real-time face detection and is used widely in mobile phone apps, web apps, robotics, and for scientific research.
-
-OpenCV is based on the the Viola-Jones algorithm. This video shows the process used by the Viola Jones algorithm, a cascading set of features that scans across an image at increasing sizes. By understanding how the algorithm detects a face, the process of designing an "anti-face" becomes more intuitive."
-
-#### SIDEBAR
-> *Orientation-dependence in the OpenCV face detector: Bug or Feature?*
-> - Kyle & Aram ("How to Avoid Facial Recognition"
-
-4.3. Advanced face analysis with the Saraghi FaceTracker
-
-### 4.4. Suggestions for Further Experimentation
-Now that you can locate faces in images and video, consider using the following exercises as starting-points for further exploration:
-
-- Make a face-controlled puppet
-- Mine an image database for faces
-- Make a kinetic sculpture that points toward a visitor's face.
-
 
 
 
