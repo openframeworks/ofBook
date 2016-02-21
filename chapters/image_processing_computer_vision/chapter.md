@@ -11,6 +11,7 @@ This chapter introduces techniques for manipulating and analyzing images. We int
 Computer vision allows you to make assertions about what's going on in images, video, and camera feeds. It's fun (and hugely educational) to create your own vision software, but it's not always *necessary* to implement such techniques yourself. Many of the most common computer vision workflows have been encapsulated into apps that can detect the stuff you want—and transmit the results over OSC to your openFrameworks app! Before you dig in to this chapter, consider whether you can instead sketch a prototype with one of these time-saving vision tools.
 
 ![TSPS (left) and Community Core Vision (right)](images/tsps_ccv.png)
+
 *TSPS (left) and Community Core Vision (right) are richly-featured toolkits for performing computer vision tasks that are common in interactive installations. They transmit summaries of their analyses over OSC, a signalling protocol that is widely used in the media arts.*
 
 - [Toolkit for Sensing People in Spaces (TSPS)](http://opentsps.com/): A powerful toolkit for tracking bodies in video.
