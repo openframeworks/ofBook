@@ -14,13 +14,22 @@ I/O
 	hardware
 	sound
 	network	
-Advanced topics
+Graphics
+	openGL
+	lines
+	generativemesh
 	advanced_graphics
-	math
-	memory
+	shaders
+C++	
 	threads
-	ios	
+	memory
+	stl_vector
+	stl_map
 	c++11
+Advanced topics	
+	math
+Platforms	
+	ios
 Tools
 	version_control_with_git
 	ofSketch

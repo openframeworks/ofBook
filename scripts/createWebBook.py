@@ -150,6 +150,10 @@ cssFile.close()
 print("output " + outputCssFile)
 
 
+
+
+
+
 chapterDicts = [];
 
 #-------------------------------------------------------------- make the book
@@ -463,6 +467,9 @@ with open(tocPathTemp, "wb") as file:
     file.write(htmlOut)
 
 
+
+
+
 filenames = ['createWebBookTemplate/IncludeBeforeBodyTOC.html', tocPathTemp, 'createWebBookTemplate/IncludeAfterBodyTOC.html']
 with open(tocPath, 'w') as outfile:
     for fname in filenames:
@@ -494,3 +501,15 @@ sourcePath = os.path.join("createWebBookTemplate", "index.html")
 
 # print("Copying", sourcePath, "to", destPath, "...")
 # shutil.copyfile(sourcePath, destPath)
+
+bookBaseUrl = "http://openframeworks.cc/ofBook/chapters/";
+
+for group in chapterGroups:
+    print("- " + group['groupName']);
+    for chap in group['chapters']:
+        c = returnChapterByCommonName(chap)
+        print("\t- [" +c['title'] +"](" + bookBaseUrl + c['href'] + ")");
+        
+        #print(c['href'])
+#print()
+
