@@ -692,16 +692,21 @@ Go get some other data.  Make up some new rules.  Make something weird and share
 For ideas of the types of things you can generate, check out these projects:
 
 Golan Levin used portraits to create a series of lines in [Segmentation and Symptom](http://www.flong.com/projects/zoo/):
-[![GolanSegmentationAndSymptom](images/GolanSegmentationAndSymptom.jpg)](http://www.flong.com/projects/zoo/)
+
+![GolanSegmentationAndSymptom](images/GolanSegmentationAndSymptom.jpg)
 
 Quayola explored Flemish paintings in [Strata #4](http://www.quayola.com/strata4/)
-[![QuayolaStrata4](images/QuayolaStrata4.png)](http://www.quayola.com/strata4/)
+
+![QuayolaStrata4](images/QuayolaStrata4.png)
 
 Marcin Ignac created some generative jellyfish creatures in [Cindermedusae](http://marcinignac.com/projects/cindermedusae/):
-[![IgnacCindermedusae](images/IgnacCindermedusae.png)](http://marcinignac.com/projects/cindermedusae/)
+
+![IgnacCindermedusae](images/IgnacCindermedusae.png)
 
 The Rockwell group used people's movement to change their meshes in [Hall of Fragments](http://lab.rockwellgroup.com/work/venice-biennale.html):
-[![RockwellHallOfFragments](images/RockwellHallOfFragments.png)](http://lab.rockwellgroup.com/work/venice-biennale.html)
+
+![RockwellHallOfFragments](images/RockwellHallOfFragments.png)
 
 Onformative played with text in [Growing Data](http://www.onformative.com/work/growing-data/):
-[![onformativeGrowingData](images/onformativeGrowingData.png)](http://www.onformative.com/work/growing-data/)
+
+![onformativeGrowingData](images/onformativeGrowingData.png)
