@@ -300,16 +300,16 @@ cout << ofToString( a + b ) << endl;
 Vector addition serves many simple roles. In this example, we're trying to track our friend Lars as he makes his way home from a pub. Trouble is, Lars is a little drunk. He knows he lives south of the pub, so he ventures south; But since he can't walk straight, he might end up somewhere else.
 
 ```cpp
-/* in testApp.h: */
+/* in ofApp.h: */
 ofVec2f larsPosition;
 void larsStep(ofVec2f direction);
 
-/* in testApp.cpp: */
-void testApp::setup(){
+/* in ofApp.cpp: */
+void ofApp::setup(){
 	larsPosition = ofVec2f( ofGetWidth() / 2., ofGetHeight() / 3. );
 }
 
-void testApp::update(){
+void ofApp::update(){
 	if (larsPosition.y < ofGetHeight * 2. / 3.){
 		//As Lars attempts to take one step south,
 		//He also deviates a little to the right, 
@@ -322,7 +322,7 @@ void ofApp::larsStep(ofVec2f direction){
 	position += direction; 
 }
 
-void testApp::draw(){ 
+void ofApp::draw(){ 
 	//Draw Lars any way you want. No one's judging you.
 }
 ```

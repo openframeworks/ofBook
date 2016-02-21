@@ -4344,10 +4344,10 @@ The reason x and y work is because they are implicitly members of `this`, which 
 When seeing classes in OpenFrameworks code templates, the top of the class declaration might contain more than I've taught you. Something like:
 
 ```cpp
-class testApp : public ofBaseApp{
+class ofApp : public ofBaseApp{
 ```
 
-The mysterious part at the end that goes `: public ofBaseApp` means that the class `testApp` is *inheriting* some pre-written variables and functions from OpenFrameworks so it is more capable than meets the eye.
+The mysterious part at the end that goes `: public ofBaseApp` means that the class `ofApp` is *inheriting* some pre-written variables and functions from OpenFrameworks so it is more capable than meets the eye.
 
 ## STL Strings
 

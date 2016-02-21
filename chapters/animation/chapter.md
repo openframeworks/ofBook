@@ -75,15 +75,15 @@ By default, oF enables vertical sync and sets a frame rate of 60 FPS. You can ad
 Another important point which is a bit hard to cover deeply in this chapter is frame rate independence. If you animate using a simple model -- say for example, you create a variable called `xPos`, increase it by a certain amount every frame and draw it.
 
 ```cpp
-void testApp::setup(){
+void ofApp::setup(){
     xPos = 100;
 }
 
-void testApp::update(){
+void ofApp::update(){
     xPos += 0.5;
 }
 
-void testApp::draw(){
+void ofApp::draw(){
     ofRect(xPos, 100, 10, 10);
 }
 ```
@@ -91,7 +91,7 @@ void testApp::draw(){
 This kind of animation works fine, but it assumes that your frame rate is constant. If your app runs faster, say by jumping from 30 FPS to 60 FPS, the object will appear to go twice as fast, since there will be 2x the number of update and draw functions called per second.  Typically more complex animations will be written to take this into account, either by using functions like time (explained below) or mixing the frame rate or elapsed time into your update. For example, a solution might be something like:
 
 ```cpp
-void testApp::update(){
+void ofApp::update(){
     xPos += ofGetLastFrameTime() * speed;
 }
 ```
@@ -110,7 +110,7 @@ Finally, there are a few other functions that are useful for animation timing:
 
 In these examples, I'll be using objects pretty heavily. It's helpful to feel comfortable with object-oriented programming (OOP) to understand the code. One object that is used heavily is [`ofPoint`](http://openframeworks.cc/documentation/types/ofPoint.html "ofPoint Documentation Page"), which contains an x,y and z variable. In the past this was called "ofVec3f" (vector of three floating point numbers), but we just use the more convenient ofPoint. In some animation code, you'll see vectors used, and you should know that ofPoint is essentially a vector.
 
-You will also see objects that have basic functionality and internal variables. I will typically have a setup, update and draw inside them. A lot of times, these objects are either made because they are useful recipes to have many things on the screen or they help by putting all the variables and logic of movement in one place. I like to have as little code as possible at the testApp / ofApp level. If you are familiar with ActionScript / Flash, this would be similar to having as a little as possible in your main timeline.
+You will also see objects that have basic functionality and internal variables. I will typically have a setup, update and draw inside them. A lot of times, these objects are either made because they are useful recipes to have many things on the screen or they help by putting all the variables and logic of movement in one place. I like to have as little code as possible at the ofApp / ofApp level. If you are familiar with ActionScript / Flash, this would be similar to having as a little as possible in your main timeline.
 
 
 ## Linear movement
@@ -314,7 +314,7 @@ You can do simple things with offsets to the phase (how shifted over the sine wa
 
 ```cpp
 //--------------------------------------------------------------
-void testApp::draw(){
+void ofApp::draw(){
     float sinOfTime               = sin( ofGetElapsedTimef() );
     float sinOfTimeMapped         = ofMap(sinOfTime, -1, 1, 0, 255);
 
@@ -362,7 +362,7 @@ For these examples, I start to add a "trail" to the object by using the [ofPolyl
 If we increase the radius, for example by doing: 
 
 ```cpp
-void testApp::update(){
+void ofApp::update(){
     radius = radius + 0.1;
 }
 ```
