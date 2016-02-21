@@ -1151,7 +1151,7 @@ The relevant function is `ofxCvImage::setROI()`, which sets the ROI in the image
 
 ## Suggestions for Further Experimentation
 
-There's lots more to explore! We strongly recommend you try out all of the openCV examples that come with openFrameworks. (An audience favorite is the *opencvHaarFinderExample*, which implements the classic Viola-Jones face detector!) When you're done with those, check out the examples that come with Kyle McDonald's [ofxCv](https://github.com/kylemcdonald/ofxCv) addon. 
+There's tons more to explore! We strongly recommend you try out all of the openCV examples that come with openFrameworks. (An audience favorite is the *opencvHaarFinderExample*, which implements the classic Viola-Jones face detector!) When you're done with those, check out the examples that come with Kyle McDonald's [ofxCv](https://github.com/kylemcdonald/ofxCv) addon. 
 
 I sometimes assign my students the project of copying a well-known work of interactive new-media art. Reimplementing projects such as the ones below can be highly instructive, and test the limits of your attention to detail. Such copying provides insights which cannot be learned from any other source. *I recommend you build...*
 
