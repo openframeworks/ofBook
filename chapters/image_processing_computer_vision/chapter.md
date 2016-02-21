@@ -1131,8 +1131,17 @@ grayBg = 0.99*grayBg + 0.01*grayImage;
  
 #### Automatic Thresholding and Dynamic Thresholding
 
- (per-pixel thresholding)
- 
+Sometimes it's difficult to know in advance exactly what the threshold value should be. Camera conditions change, lighting conditions change, scene conditions change. To resolve this, there are *automatic thresholding* techniques that can compute an "ideal" threshold based on an image's luminance histogram. There are several great techniques for this, including [Otsu's Method](https://en.wikipedia.org/wiki/Otsu%27s_method) and Gaussian Mixture Modeling, IsoData Thresholding, and Maximum Entropy thresholding. For an amazing overview of such techniques, check out [ImageJ](http://imagej.nih.gov/ij/), an open-source (Java) computer vision toolkit produced by the US National Institute of Health. 
+
+![Automatic Thresholds](images/thresholds.png)
+
+In some situations, such as images with strong gradients, a single threshold may be unsuitable for the entire image field. Instead, it may be preferable to implement some form of *per-pixel thresholding*, in which a different threshold is computed for every pixel (i.e. a "threshold image"). 
+
+As you can see below, a single threshold fails for this particular source image, a page of text. Instead of using a single number, the threshold is established for each pixel by taking an average of the brightness values in its neighborhood (minus a constant!). 
+
+![Adaptive Thresholding](images/hipr-adaptive.jpg)
+
+The name for this technique is *adaptive thresholding*, and an excellent discussion can be found in the online [Hypertext Image Processing Reference](http://homepages.inf.ed.ac.uk/rbf/HIPR2/adpthrsh.htm). 
 
 #### ROI Processing 
 
@@ -1140,41 +1149,9 @@ Many image processing and computer vision operations can be sped up by performin
 
 The relevant function is `ofxCvImage::setROI()`, which sets the ROI in the image. Region of Interest is a rectangular area in an image, to segment object for further processing. Once the ROI is defined, OpenCV functions will operate on the ROI, reducing the number of pixels that the operation will examine and modify.
 
-#### Compensating for perspectival distortion and lens distortion
-
-
-
-
-
-
-3.6. Using Kinect depth images
-   - Finding the "fore-point" (foremost point)
-   - Background subtraction with depth images
-
-3.7. Suggestions for further experimentation:
-   - 
-   - Box2D polygons using OpenCV contours, e.g. https://vimeo.com/9951522
-
-========================================================
-4. Scenario II. Face Tracking.
-
-Overview
-Some examples of projects that use face-tracking
-
-Well [Face Substitution](https://vimeo.com/29348533) by Kyle McDonald & Arturo Castro (2011). The classic
-
-
-### A basic face detector.
-In this section we'll which implements face detection using the classic "Viola-Jones" face detector that comes with OpenCV.
-- Face detection with classic OpenCV viola-Jones detector
-- How it works, and considerations when using it.
-- cvDazzle;
-- 
-The [cvDazzle](http://cvdazzle.com/) project by Adam Harvey 
-
-
-
 ## Suggestions for Further Experimentation
+
+There's lots more to explore! We strongly recommend you try out all of the openCV examples that come with openFrameworks. (An audience favorite is the *opencvHaarFinderExample*, which implements the classic Viola-Jones face detector!) When you're done with those, check out the examples that come with Kyle McDonald's [ofxCv](https://github.com/kylemcdonald/ofxCv) addon. 
 
 I sometimes assign my students the project of copying a well-known work of interactive new-media art. Reimplementing projects such as the ones below can be highly instructive, and test the limits of your attention to detail. Such copying provides insights which cannot be learned from any other source. *I recommend you build...*
 
