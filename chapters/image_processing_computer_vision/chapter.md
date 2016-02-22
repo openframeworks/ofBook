@@ -35,7 +35,7 @@ This chapter introduces techniques for manipulating (and extracting certain kind
 
 Image processing begins with, well, *an image*. Happily, loading and displaying an image is very straightforward in oF. Let's start with this tiny, low-resolution (12x16 pixel) grayscale portrait of Abraham Lincoln:
 
-![Small Lincoln image](images/lincoln.png) 
+![A small image of Lincoln](images/lincoln.png) 
 
 Below is a simple application for loading and displaying an image, very similar to the *imageLoaderExample* in the oF examples collection. The header file for our program, *ofApp.h*, declares an instance of an `ofImage` object, *myImage*:
 
@@ -82,7 +82,7 @@ void ofApp::draw(){
 
 Compiling and running the above program displays the following canvas, in which this (very tiny!) image is scaled up by a factor of 10, and rendered so that its upper left corner is positioned at pixel location (10,10). The positioning and scaling of the image are performed by the `myImage.draw()` command. Note that the image appears "blurry" because, by default, openFrameworks uses [linear interpolation](http://en.wikipedia.org/wiki/Linear_interpolation) when displaying upscaled images.
 
-![The small Lincoln image, displayed large](images/lincoln-displayed.jpg)
+![The small Lincoln image, scaled up large in an openFrameworks app](images/lincoln-displayed.jpg)
 
 If you're new to working with images in oF, it's worth pointing out that you should try to avoid loading images in the `draw()` or `update()` functions, if possible. Why? Well, reading data from disk is one of the slowest things you can ask a computer to do. In many circumstances, you can simply load all the images you'll need just once, when your program is first initialized, in `setup()`. By contrast, if you're repeatedly loading an image in your `draw()` loop — the same image, again and again, 60 times per second — you're hurting the performance of your app, and potentially even risking damage to your hard disk.  
 
@@ -102,7 +102,13 @@ In openFrameworks, raster images can come from a wide variety of sources, includ
 
 *An example of a depth image (left) and a corresponding RGB color image (right), captured simultaneously with a Microsoft Kinect. In the depth image, the brightness of a pixel represents its proximity to the camera. (Note that these two images, presented in a raw state, are not yet "calibrated" to each other, meaning that there is not an exact pixel-for-pixel correspondence between a pixel's color and its corresponding depth.)*
 
-Incidentally, oF makes it easy to **load images directly from the Internet**, by using a URL as the filename argument, as in `myImage.loadImage("http://en.wikipedia.org/wiki/File:Example.jpg");`. Keep in mind that doing this will load the remotely-stored image *synchronously*, meaning your program will "block" (or freeze) while it waits for all of the data to download from the web. For an improved user experience, you could instead load Internet images *asynchronously* (in a background thread), using the response provided by `ofLoadURLAsync()`; a  sample implementation of this can be found in the openFrameworks *imageLoaderWebExample* graphics example. Now that you can load images stored on the Internet, you can fetch images *computationally* using fun APIs (like those of [Temboo](https://temboo.com/library/), [Instagram](http://instagram.com/developer/) or [Flickr](https://www.flickr.com/services/api/)), or from dynamic online sources such as live traffic cameras.
+Incidentally, oF makes it easy to **load images directly from the Internet**, by using a URL as the filename argument, as in 
+
+```
+myImage.loadImage("http://en.wikipedia.org/wiki/File:Example.jpg");
+```
+
+Keep in mind that doing this will load the remotely-stored image *synchronously*, meaning your program will "block" (or freeze) while it waits for all of the data to download from the web. For an improved user experience, you could instead load Internet images *asynchronously* (in a background thread), using the response provided by `ofLoadURLAsync()`; a  sample implementation of this can be found in the openFrameworks *imageLoaderWebExample* graphics example. Now that you can load images stored on the Internet, you can fetch images *computationally* using fun APIs (like those of [Temboo](https://temboo.com/library/), [Instagram](http://instagram.com/developer/) or [Flickr](https://www.flickr.com/services/api/)), or from dynamic online sources such as live traffic cameras.
 
 #### Acquiring and Displaying a Webcam Image
 
@@ -204,7 +210,7 @@ void ofApp::draw(){
 ```
 This application continually displays the live camera feed, and also presents a live, "filtered" (photo negative) version. Here's the result, using my laptop's webcam:
 
-![Webcam videeo grabbing and pixelwise inversion](images/videograbber.png)
+![Webcam video grabbing (left) and pixelwise inversion (at right)](images/videograbber.png)
 
 Acquiring frames from a Quicktime movie or other digital video file stored on disk is an almost identical procedure. See the oF *videoPlayerExample* implementation or `ofVideoGrabber` [documentation](http://openframeworks.cc/documentation/video/ofVideoGrabber.html) for details.
 
@@ -225,7 +231,7 @@ Uncommenting the `//#define _USE_LIVE_VIDEO` line in the .h file of the *opencvE
 #### Pixels in Memory
 To begin our study of image processing and computer vision, we'll need to do more than just load and display images; we'll need to *access, manipulate and analyze the numeric data represented by their pixels*. It's therefore worth reviewing how pixels are stored in computer memory. Below is a simple illustration of the grayscale image buffer which stores our image of Abraham Lincoln. Each pixel's brightness is represented by a single 8-bit number, whose range is from 0 (black) to 255 (white):
 
-![Pixel data diagram](images/lincoln_pixel_values.png)
+![Pixel data diagram. At left, our image of Lincoln; at center, the pixels labeled with numbers from 0-255, representing their brightness; and at right, these numbers by themselves.](images/lincoln_pixel_values.png)
 
 In point of fact, pixel values are almost universally stored, at the hardware level, in a *one-dimensional array*. For example, the data from the image above is stored in a manner similar to this long list of unsigned chars:
 
@@ -309,7 +315,7 @@ float brightnessOfColorAtXY = colorAtXY.getBrightness();
 
 Using what we know now, we can write a simple program that locates the brightest pixel in an image. This elementary concept was used to great artistic effect by the artist collective, Graffiti Research Lab (GRL), in the openFrameworks application they built for their 2007 project [*L.A.S.E.R Tag*](http://www.graffitiresearchlab.com/blog/projects/laser-tag/). The concept of *L.A.S.E.R Tag* was to allow people to draw projected graffiti onto a large building facade, by means of a laser pointer. The bright spot from the laser pointer was tracked by code similar to that shown below, and used as the basis for creating interactive, projected graphics.
 
-![L.A.S.E.R. Tag by the Graffiti Research Lab (GRL)](images/laser_tag.jpg)
+![L.A.S.E.R. Tag by the Graffiti Research Lab (GRL), 2007](images/laser_tag.jpg)
 
 The .h file for our app loads an ofImage (`laserTagImage`) of someone pointing a laser at the building. (In the real application, a live camera was used.)
 
@@ -384,7 +390,7 @@ Our little application locates the bright spot of the laser (which, luckily for 
 
 Being able to locate the brightest pixel in an image has other uses, too. For example, in a *depth image* (such as produced by a Kinect sensor), the brightest pixel corresponds to the *foremost point*—or the nearest object to the camera. This can be extremely useful if you're making an interactive installation that tracks a user's hand.
 
-![The Kinect "fore-point"](images/kinect-forepoint.jpg)
+![The foremost point, or 'fore-point', in a Kinect depth image](images/kinect-forepoint.jpg)
 
 *The brightest pixel in a depth image corresponds to the nearest object to the camera. In the configuration shown here, the "nearest point" is almost certain to be the user's hand.*
 
@@ -477,6 +483,7 @@ unsigned char redValueAtXY   = buffer[rArrayIndex];
 unsigned char greenValueAtXY = buffer[gArrayIndex];
 unsigned char blueValueAtXY  = buffer[bArrayIndex];
 ```
+
 This is, then, the three-channel "RGB version" of the basic `index = y*width + x` pattern we employed earlier to fetch pixel values from monochrome images.
 
 Note that you may occasionally encounter external libraries or imaging hardware which deliver RGB bytes in a different order, such as BGR. 
@@ -513,7 +520,7 @@ Whereas image *formats* differ in the kinds of image data that they represent (e
 
 To the greatest extent possible, the designers of openFrameworks (and addons for image processing, like ofxOpenCV and Kyle McDonald's [ofxCv](https://github.com/kylemcdonald/ofxCv)) have provided simple operators to help make it easy to exchange data between these containers. 
 
-![Simplified diagrams of ofImage and ofCvImage](images/two-image-types.png)
+![Simplified diagrams of ofImage (left) and ofxCvImage (right)](images/two-image-types.png)
 
 The diagram above shows a simplified representation of the two most common oF image formats you're likely to see. At left, we see an `ofImage`, which at its core contains an array of unsigned chars. An `ofPixels` object wraps up this array, along with some helpful metadata which describes it, such as its width, height, and format (RGB, RGBA, etc.). The `ofImage` then wraps this `ofPixels` object up together with an `ofTexture`, which provides functionality for rendering the image to the screen. The `ofxCvImage` at right is very similar, but stores the image data in IplImages. All of these classes provide a variety of methods for moving image data into and out of them.
 
@@ -553,7 +560,7 @@ Although oF provides the above utilities to convert color images to grayscale, i
 
 * **Extracting just one of the R,G, or B color channels,** as a proxy for the luminance of the image. For example, one might fetch only the green values as an approximation to an image's luminance, discarding its red and blue data. For a typical color image whose bytes are interleaved R-G-B, this can be done by fetching every 3rd byte. This method is computationally fast, but it's also perceptually inaccurate, and it tends to produce noisier results for images of natural scenes. 
 * **Taking the average of the R,G, and B color channels.** A slower but more perceptually accurate method approximates luminance (often written *Y*) as a straight average of the red, green and blue values for every pixel: `Y = (R+G+B)/3;`. This not only produces a better representation of the image's luminance across the visible color spectrum, but it also diminishes the influence of noise in any one color channel.
-* **Computing the luminance with colorimetric coefficients**. The most perceptually accurate methods for computing grayscale from color images employ a specially-weighted "colorimetric" average of the RGB color data. These methods are marginally more expensive to compute, as each color channel must be multiplied by its own weighting factor. The CCIR 601 imaging specification, which is used in the OpenCV [cvtColor](http://docs.opencv.org/modules/imgproc/doc/miscellaneous_transformations.html#cvtcolor) function, itself used in the ofxOpenCV addon, employs the formula `Y = 0.299*R + 0.587*G + 0.114*B` (with the further assumption that the RGB values have been gamma-corrected). According to [Wikipedia](http://en.wikipedia.org/wiki/Luma_(video)), "these coefficients represent the measured intensity perception of typical trichromat humans; in particular, human vision is most sensitive to green and least sensitive to blue."
+* **Computing the luminance with colorimetric coefficients**. The most perceptually accurate methods for computing grayscale from color images employ a specially-weighted "colorimetric" average of the RGB color data. These methods are marginally more expensive to compute, as each color channel must be multiplied by its own perceptual weighting factor. The CCIR 601 imaging specification, which is used in the OpenCV [cvtColor](http://docs.opencv.org/modules/imgproc/doc/miscellaneous_transformations.html#cvtcolor) function, itself used in the ofxOpenCV addon, employs the formula `Y = 0.299*R + 0.587*G + 0.114*B` (with the further assumption that the RGB values have been gamma-corrected). According to [Wikipedia](http://en.wikipedia.org/wiki/Luma_(video)), "these coefficients represent the measured intensity perception of typical trichromat humans; in particular, human vision is most sensitive to green and least sensitive to blue."
 
 Here's a code fragment for converting from color to grayscale, written "from scratch" in C/C++, using the averaging method described above. This code also shows, more generally, how the pixelwise computation of a 1-channel image can be based on a 3-channel image. 
 
@@ -603,7 +610,7 @@ We begin with *image arithmetic*, a core part of the workflow of computer vision
 
 Some of the simplest operations in image arithmetic transform the values in an image by a constant. In the example below, we add the constant value, **10**, to an 8-bit monochrome image. Observe how the value is added *pixelwise*: each pixel in the resulting destination image stores a number which is 10 more (i.e. 10 gray-levels brighter) than its corresponding pixel in the source image. Because each pixel is processed in isolation, without regard to its neighbors, this kind of image math is sometimes called *point processing*.
 
-![Pixelwise image arithmetic: adding 10 to an image](images/image_arithmetic_1b.png)
+![Pixelwise image arithmetic: adding 10 to an image, i.e., adding 10 to every pixel value. But what value should go in the red square?](images/image_arithmetic_1b.png)
 
 Adding a constant makes an image uniformly brighter, while subtracting a constant makes it uniformly darker.  
 
@@ -689,10 +696,12 @@ The perils of integer overflow are readily apparent in the illustration below. I
 ![Numeric overflow in an image of Lincoln](images/numeric_overflow.png)
 
 In the example above, integer overflow can be avoided by promoting the added numbers to integers, and including a saturating constraint, before assigning the new pixel value:
+
 ```cpp
 // The 'min' prevents values from exceeding 255, avoiding overflow.
 dstArray[index] = min(255, (int)srcValue + 10);
 ```
+
 Integer overflow can also present problems with other arithmetic operations, such as multiplication and subtraction (when values go negative). 
 
 ### Image Arithmetic with the ofxOpenCv Addon
@@ -759,6 +768,7 @@ void ofApp::draw(){
 }
 ```
 Here's the result. Note how the high values (light areas) have saturated instead of overflowed. 
+
 ![Image arithmetic with saturation](images/image_lightening.png)
 
 ### Arithmetic with Two Images: Absolute Differencing
@@ -767,7 +777,7 @@ Image arithmetic is especially useful when applied to two images. As you would e
 
 Many computer vision applications depend on being able to compare two images. At the basis of doing so is the arithmetic operation of *absolute differencing*, illustrated below. This operation is equivalent to taking the absolute value of the results when one image is subtracted from the other: *|A-B|*. As we shall see, absolute differencing is a key step in common workflows like *frame differencing* and *background subtraction*.  
 
-![Diagram of absolute differencing](images/absolute-difference.png)
+![Diagram of absolute differencing. The image at right contains values which are the absolute difference of the corresponding pixels in the left and center images](images/absolute-difference.png)
 
 In the illustration above, we have used absolute differencing to compare two 5x5 pixel images. From this, it's clear that the greatest difference occurs in their lower-right pixels. 
 
@@ -791,7 +801,7 @@ Thresholding poses a *pixelwise conditional test*—that is, it asks "`if`" the 
 
 Here's an example, a photomicrograph (left) of light-colored cells. We'd like to know which pixels represent a cell, and which do not. For our criterion, we test for pixels whose grayscale brightness is greater than some constant, the *threshold value*. In this illustration, we test against a threshold value of 127, the middle of the 0-255 range: 
 
-![Thresholding](images/thresholded_cells.png)
+![Thresholding, also called binarization](images/thresholded_cells.png)
 
 And below is the complete openFrameworks program for thresholding the image—although here, instead of using a constant (127), we instead use the `mouseX` as the threshold value. This has the effect of placing the thresholding operation under interactive user control. 
 
@@ -855,16 +865,17 @@ We now have all the pieces we need to understand and implement a popular and wid
 
 ![Screenshot of the opencvExample](images/opencvExample.png)
 
-In this section, we'll base our discussion around the standard oF *opencvExample*, which can be found in the `examples/addons/opencvExample` directory of your openFrameworks installation. When you compile and run this example, you'll see a video of a hand casting a shadow—and, at the bottom right of our window, the contour of this hand, rendered as a cyan polyline. This polyline is *our prize:* using it, we can obtain all sorts of information about our visitor. So how did we get here?
+In this section, we'll base our discussion around the standard openFrameworks *opencvExample*, which can be found in the `examples/addons/opencvExample` directory of your openFrameworks installation. When you compile and run this example, you'll see a video of a hand casting a shadow—and, at the bottom right of our window, the contour of this hand, rendered as a cyan polyline. This polyline is *our prize:* using it, we can obtain all sorts of information about our visitor. So how did we get here?
 
-The code below is a slightly simplified version of the standard *opencvExample*. In the discussion that follows, we separate its inner mechanics into five steps, and discuss how they are performed and displayed: 
+The code below is a slightly simplified version of the standard *opencvExample*; for example, we have here omitted some UI features, and we have omitted the `#define _USE_LIVE_VIDEO` (mentioned earlier) which allows for switching between a live video source and a stored video file.  
+
+In the discussion that follows, we separate the inner mechanics into five steps, and discuss how they are performed and displayed: 
 
 1. Video Acquisition
 2. Color to Grayscale Conversion 
 3. Storing a "Background Image"
 4. Thresholded Absolute Differencing
 5. Contour Tracing
-
 
 ```cpp
 // Example 7: Background Subtraction 
@@ -1064,7 +1075,7 @@ Blob contours are a *vector-based* representation, comprised of a series of (x,y
 
 A good illustration of this is the following project by Cyril Diagne, in which the body's contour is triangulated by [ofxTriangle](https://github.com/obviousjim/ofxTriangle), and then used as the basis for simulated physics interactions using [ofxBox2D](https://github.com/vanderlin/ofxBox2d). The user of Diagne's project can "catch" the bouncy circular "balls" with their silhouette. 
 
-![Screenshots of ofx-kikko](images/ofx-kikko.jpg)
+![Screenshots of ofx-kikko by Cyril Diagne](images/ofx-kikko.jpg)
 
 One of the flags to the `ofxCvContourFinder::findContours()` function allows you to search specifically for *interior* contours, also known as [*negative space*](https://en.wikipedia.org/wiki/Negative_space). An interactive artwork which uses this to good effect is *Shadow Monsters* by Philip Worthington, which interprets interior contours as the boundaries of lively, animated eyeballs. 
 
@@ -1102,11 +1113,11 @@ Sometimes thresholding leaves noise, which can manifest as fragmented blobs or u
 
 In the example below, one pass of erosion is applied to the image at left. This eliminates all of the isolated specks of noise: 
 
-![Erosion](images/erosion_in_use.png)
+![Original image (left), after one pass of erosion (right)](images/erosion_in_use.png)
 
 By contrast, observe how dilation is used in the person-detecting pipeline below: 
 
-![A complete image-processing pipeline](images/full_pipeline.png)
+![A complete image-processing pipeline, including ](images/full_pipeline.png)
 
 1. Live video is captured and converted to grayscale. A background image is acquired at a time when nobody is in the scene. (Sometimes, a running average of the camera feed is used as the background, especially for outdoor scenes subject to changing lighting conditions.)
 2. A person walks into the frame.  
@@ -1131,15 +1142,15 @@ grayBg = 0.99*grayBg + 0.01*grayImage;
  
 #### Automatic Thresholding and Dynamic Thresholding
 
-Sometimes it's difficult to know in advance exactly what the threshold value should be. Camera conditions change, lighting conditions change, scene conditions change. To resolve this, there are *automatic thresholding* techniques that can compute an "ideal" threshold based on an image's luminance histogram. There are several great techniques for this, including [Otsu's Method](https://en.wikipedia.org/wiki/Otsu%27s_method) and Gaussian Mixture Modeling, IsoData Thresholding, and Maximum Entropy thresholding. For an amazing overview of such techniques, check out [ImageJ](http://imagej.nih.gov/ij/), an open-source (Java) computer vision toolkit produced by the US National Institute of Health. 
+Sometimes it's difficult to know in advance exactly what the threshold value should be. Camera conditions change, lighting conditions change, scene conditions change; all affect the value which we hope to use to distinguish light from dark. To resolve this, there are *automatic thresholding* techniques that can compute an "ideal" threshold based on an image's luminance histogram. There are dozens of great techniques for this, including [Otsu's Method](https://en.wikipedia.org/wiki/Otsu%27s_method), Gaussian Mixture Modeling, IsoData Thresholding, and Maximum Entropy thresholding. For an amazing overview of such techniques, check out [ImageJ](http://imagej.nih.gov/ij/), an open-source (Java) computer vision toolkit produced by the US National Institute of Health. 
 
-![Automatic Thresholds](images/thresholds.png)
+![An image histogram, and four possible thresholds. The histogram shows a hump of dark pixels (with a large peak at 28/255), and a shallower hump of bright pixels (with a peak at 190). The vertical gray lines represent possible threshold values, automatically determined by four different methods. ](images/thresholds.png)
 
 In some situations, such as images with strong gradients, a single threshold may be unsuitable for the entire image field. Instead, it may be preferable to implement some form of *per-pixel thresholding*, in which a different threshold is computed for every pixel (i.e. a "threshold image"). 
 
 As you can see below, a single threshold fails for this particular source image, a page of text. Instead of using a single number, the threshold is established for each pixel by taking an average of the brightness values in its neighborhood (minus a constant!). 
 
-![Adaptive Thresholding](images/hipr-adaptive.jpg)
+![Adaptive Thresholding. From the Hypertext Image Processing Reference.](images/hipr-adaptive.jpg)
 
 The name for this technique is *adaptive thresholding*, and an excellent discussion can be found in the online [Hypertext Image Processing Reference](http://homepages.inf.ed.ac.uk/rbf/HIPR2/adpthrsh.htm). 
 
