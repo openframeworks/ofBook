@@ -110,7 +110,7 @@ Incidentally, oF makes it easy to **load images directly from the Internet**, by
 myImage.loadImage("http://en.wikipedia.org/wiki/File:Example.jpg");
 ```
 
-Keep in mind that doing this will load the remotely-stored image *synchronously*, meaning your program will "block" (or freeze) while it waits for all of the data to download from the web. For an improved user experience, you could instead load Internet images *asynchronously* (in a background thread), using the response provided by `ofLoadURLAsync()`; a  sample implementation of this can be found in the openFrameworks *imageLoaderWebExample* graphics example. Now that you can load images stored on the Internet, you can fetch images *computationally* using fun APIs (like those of [Temboo](https://temboo.com/library/), [Instagram](http://instagram.com/developer/) or [Flickr](https://www.flickr.com/services/api/)), or from dynamic online sources such as live traffic cameras.
+Keep in mind that doing this will load the remotely-stored image *synchronously*, meaning your program will "block" (or freeze) while it waits for all of the data to download from the web. For an improved user experience, you could instead load Internet images *asynchronously* (in a background thread), using the response provided by `ofLoadURLAsync()`; a  sample implementation of this can be found in the openFrameworks *imageLoaderWebExample* graphics example (and check out the *threadedImageLoaderExample* as well). Now that you can load images stored on the Internet, you can fetch images *computationally* using fun APIs (like those of [Temboo](https://temboo.com/library/), [Instagram](http://instagram.com/developer/) or [Flickr](https://www.flickr.com/services/api/)), or from dynamic online sources such as live traffic cameras.
 
 #### Acquiring and Displaying a Webcam Image
 
@@ -500,10 +500,11 @@ Note that you may occasionally encounter external libraries or imaging hardware 
 For a practical example, consider once again Microsoft's popular Kinect sensor, whose XBox 360 version produces a depth image whose values range from 0 to 1090. Clearly, that's wider than the range of 8-bit values (from 0 to 255) that one typically encounters in image data; in fact, it's approximately 11 bits of resolution. To accommodate this, the `ofxKinect` addon employs a 16-bit image to store this information without losing precision. Likewise, the precision of 32-bit floats is almost mandatory for computing high-quality video composites.
 
 You'll also find:
-- 2-channel images (commonly used for luminance plus transparency);
-- 3-channel images (generally for RGB data, but occasionally used to store images in other color spaces, such as HSB or YUV);
-- 4-channel images (commonly for RGBA images, but occasionally for CMYK);
-- [*Bayer images*](https://en.wikipedia.org/wiki/Bayer_filter), in which the RGB color channels are not interleaved R-G-B-R-G-B-R-G-B... but instead appear in a unique checkerboard pattern.
+
+* 2-channel images (commonly used for luminance plus transparency);
+* 3-channel images (generally for RGB data, but occasionally used to store images in other color spaces, such as HSB or YUV);
+* 4-channel images (commonly for RGBA images, but occasionally for CMYK);
+* [*Bayer images*](https://en.wikipedia.org/wiki/Bayer_filter), in which the RGB color channels are not interleaved R-G-B-R-G-B-R-G-B... but instead appear in a unique checkerboard pattern.
 
 It gets even more exotic. ["Hyperspectral" imagery from the Landsat 8 satellite](https://www.mapbox.com/blog/putting-landsat-8-bands-to-work/), for example, has 11 channels, including bands for ultraviolet, near infrared, and thermal (deep) infrared!
 
@@ -1144,9 +1145,70 @@ grayBg = 0.99*grayBg + 0.01*grayImage;
  
 #### Automatic Thresholding and Dynamic Thresholding
 
-Sometimes it's difficult to know in advance exactly what the threshold value should be. Camera conditions change, lighting conditions change, scene conditions change; all affect the value which we hope to use to distinguish light from dark. To resolve this, there are *automatic thresholding* techniques that can compute an "ideal" threshold based on an image's luminance histogram. There are dozens of great techniques for this, including [Otsu's Method](https://en.wikipedia.org/wiki/Otsu%27s_method), Gaussian Mixture Modeling, IsoData Thresholding, and Maximum Entropy thresholding. For an amazing overview of such techniques, check out [ImageJ](http://imagej.nih.gov/ij/), an open-source (Java) computer vision toolkit produced by the US National Institute of Health. 
+Sometimes it's difficult to know in advance exactly what the threshold value should be. Camera conditions change, lighting conditions change, scene conditions change; all affect the value which we hope to use to distinguish light from dark. 
+
+To resolve this, you could make this a manually adjusted setting, as we did in Example 6 (above) when we used the `mouseX` as the threshold value. But there are also *automatic thresholding* techniques that can compute an "ideal" threshold based on an image's luminance histogram. There are dozens of great techniques for this, including [Otsu's Method](https://en.wikipedia.org/wiki/Otsu%27s_method), Gaussian Mixture Modeling, IsoData Thresholding, and Maximum Entropy thresholding. For an amazing overview of such techniques, check out [ImageJ](http://imagej.nih.gov/ij/), an open-source (Java) computer vision toolkit produced by the US National Institute of Health. 
 
 ![An image histogram, and four possible thresholds. The histogram shows a hump of dark pixels (with a large peak at 28/255), and a shallower hump of bright pixels (with a peak at 190). The vertical gray lines represent possible threshold values, automatically determined by four different methods. ](images/thresholds.png)
+
+Below is code for the *Isodata* method, one of the simpler (and shorter) methods for automatically computing an ideal threshold. Note that the function takes as input the image's *histogram*: an array of 256 integers that contain the count, for each gray-level, of how many pixels are colored with that gray-level. 
+
+```cpp
+/*
+From: http://www.ph.tn.tudelft.nl/Courses/FIP/frames/fip-Segmenta.html
+This iterative technique for choosing a threshold was developed by 
+Ridler and Calvard. The histogram is initially segmented into two parts
+using a starting threshold value such as th0 = 127, half the maximum
+dynamic range for an 8-bit image. The sample mean (mf,0) of the gray 
+values associated with the foreground pixels and the sample mean (mb,0) 
+of the gray values associated with the background pixels are computed. 
+A new threshold value th1 is now computed as the average of these two 
+sample means. The process is repeated, based upon the new threshold, 
+until the threshold value does not change any more. 
+
+Input: imageHistogram, an array of 256 integers, each of which represents 
+the count of pixels that have that particular gray-level. For example,
+imageHistogram[56] contains the number of pixels whose gray-level is 56.
+Output: an integer (between 0-255) indicating an ideal threshold.
+*/
+
+int ofApp::getThresholdIsodata (int *imageHistogram){
+	int theThreshold = 127; // our output
+	
+	if (input != NULL){ // sanity check
+		int thresh = theThreshold;
+		int tnew = thresh;
+		int thr  = 0;
+		int sum  = 0;
+		int mean1, mean2;
+		int ntries = 0;
+		
+		do {
+			thr = tnew;
+			sum = mean1 = mean2 = 0;
+
+			for (int i=0; i<thr; i++){
+				mean1 += (imageHistogram[i] * i);
+				sum   += (imageHistogram[i]);
+			}     
+			if (sum != 0){ mean1 = mean1 / sum;}
+
+			sum = 0;
+			for (int i=thr; i<255; i++){
+				mean2 += (imageHistogram[i] * i);
+				sum   += (imageHistogram[i]);
+			}
+
+			if (sum != 0){ mean2 = mean2 / sum;}
+			tnew = (mean1 + mean2) / 2;
+			ntries++;
+
+		} while ((tnew != thr) && (ntries < 64));
+		theThreshold = tnew;
+	}
+	return theThreshold;
+}
+```
 
 In some situations, such as images with strong gradients, a single threshold may be unsuitable for the entire image field. Instead, it may be preferable to implement some form of *per-pixel thresholding*, in which a different threshold is computed for every pixel (i.e. a "threshold image"). 
 
