@@ -4,7 +4,9 @@
 By [Golan Levin](http://www.flong.com/)<br />
 Edited by [Brannon Dorsey](http://brannondorsey.com)
 
-This chapter introduces techniques for manipulating and analyzing images. We introduce the subject "from scratch", and there's a lot to learn, so before we get started, it's worth checking to see whether there may already be a tool that happens to do exactly what you want. In the first section, we point to a few free tools that tidily encapsulate some vision workflows that are especially popular in interactive art and design. 
+This chapter introduces some basic techniques for manipulating and analyzing images in openFrameworks. As it would be impossible to treat this field comprehensively, we limit ourselves to a discussion of how images relate to computer memory, and work through an example of background subtraction, a popular operation for detecting people in video. This chapter is not a comprehensive guide to computer vision; for that, we refer you to excellent resources such as Richard Szeliski's [*Computer Vision: Algorithms and Applications*](http://szeliski.org/Book/) or Gary Bradski's [*Learning OpenCV*](http://cs.haifa.ac.il/~dkeren/ip/OReilly-LearningOpenCV.pdf).
+
+We introduce the subject "from scratch", and there's a lot to learn, so before we get started, it's worth checking to see whether there may already be a tool that happens to do exactly what you want. In the first section, we point to a few free tools that tidily encapsulate some vision workflows that are especially popular in interactive art and design. 
 
 ## Maybe There is a Magic Bullet
 
