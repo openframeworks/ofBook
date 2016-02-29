@@ -54,7 +54,7 @@ And onto the code!
 
 Add a mesh variable to your header file (.h, e.g. ofApp.h):
 
-```.cpp
+```cpp
 class ofApp : public ofBaseApp{
 
     public:
@@ -65,7 +65,7 @@ class ofApp : public ofBaseApp{
 
 Update `setup()` and `draw()` functions in your source file (.cpp) to look like this:
 
-```.cpp
+```cpp
 void ofApp::setup() {
     mesh.setMode(OF_PRIMITIVE_POINTS);
 
@@ -89,7 +89,7 @@ If you build and run your project, you should see three white dots that are plac
 
 White is boring?  Well, you can add some color by modifying setup:
 
-```.cpp
+```cpp
 void ofApp::setup() {
     mesh.setMode(OF_PRIMITIVE_POINTS);
     mesh.enableColors();
@@ -113,7 +113,7 @@ We first enable colors using [`mesh.enableColors()`](http://openframeworks.cc/do
 
 You find our points boring?  Time for some lines then.  We need to change the primitive mode to lines, but there are three different line primitive options.  Try each of them for yourself by changing the first line of your setup function to any of these:
 
-```.cpp
+```cpp
     mesh.setMode(OF_PRIMITIVE_LINES);
     mesh.setMode(OF_PRIMITIVE_LINE_STRIP);
     mesh.setMode(OF_PRIMITIVE_LINE_LOOP);
@@ -129,7 +129,7 @@ The modes for [`mesh.setMode(...)`](http://openframeworks.cc/documentation/3d/of
 
 Only `OF_PRIMITIVE_LINE_LOOP` outlined the whole triangle. If you wanted to create that same triangle using `OF_PRIMITIVE_LINE`, you might try adding some more vertices like this:
 
-```.cpp
+```cpp
     mesh.addVertex(top);
     mesh.addVertex(left);
     mesh.addVertex(left);
@@ -140,7 +140,7 @@ Only `OF_PRIMITIVE_LINE_LOOP` outlined the whole triangle. If you wanted to crea
 
 Feels excessive to add duplicate vertices? Let's try something else:
 
-```.cpp
+```cpp
 void ofApp::setup() {
     mesh.setMode(OF_PRIMITIVE_LINES);
     mesh.enableColors();
@@ -182,7 +182,7 @@ As a reward for reading the whole section:
 
 I know.  It's not a great reward.  But it does show off something you can do with `OF_PRIMITIVE_LINES` that you can't do with the two other line primitive modes - you can create separate lines.  We will take advantage of this in the next section.
 
-```.cpp
+```cpp
     mesh.setMode(OF_PRIMITIVE_LINES);
     mesh.enableColors();
     mesh.enableIndices();
@@ -242,7 +242,7 @@ First things first, let's load that image.  Go into the main.cpp file and change
 
 Then go into your header file (ofApp.h) and add:
 
-```.h
+```cpp
     ofImage image;
 ```
 
@@ -266,13 +266,13 @@ Great! Image loaded.  Now, we want to create a mesh with some vertices. If we on
 
 Add a mesh to ofApp.h:
 
-```.cpp
+```cpp
     ofMesh mesh;
 ```
 
 And add this to ofApp.cpp:
 
-```.cpp
+```cpp
 void ofApp::setup(){
     image.load("stars.png")
 
@@ -289,8 +289,8 @@ void ofApp::setup(){
             if (intensity >= intensityThreshold) {
                 ofVec3f pos(x, y, 0.0);
                 mesh.addVertex(pos);
-								// When addColor(...), the mesh will automatically convert
-								// the ofColor to an ofFloatColor
+                // When addColor(...), the mesh will automatically convert
+                // the ofColor to an ofFloatColor
                 mesh.addColor(c);
             }
         }
@@ -308,7 +308,7 @@ In that code, we created a mesh with points for primitives.  Then we looped thro
 
 Let's make that background into something more fitting using [ofBackgroundGradient](http://openframeworks.cc/documentation/graphics/ofGraphics/#!show_ofBackgroundGradient)...
 
-```.cpp
+```cpp
 void ofApp::draw(){
     ofColor centerColor = ofColor(85, 78, 68);
     ofColor edgeColor(0, 0, 0);
@@ -321,7 +321,7 @@ Almost time for lines, lines, lines!
 
 We have a lot of vertices in our mesh.  You can check the number using [getNumVertices()](http://openframeworks.cc/documentation/3d/ofMesh/#show_getNumVertices) if you like:
 
-```.cpp
+```cpp
 // With a threshold of 150, there will be ~64,000 vertices
 cout << mesh.getNumVertices() << endl;
 ```
@@ -329,14 +329,14 @@ cout << mesh.getNumVertices() << endl;
 If we were to start looping through those each of those 64,000 vertices to connect them up to the other vertices that are close-by, we could end up spending a fair chunk of time in that loop.  A fairly common thing to do to speed up the processing of an image is to shrink it:
 
 
-```.cpp
+```cpp
 image.load("stars.png");
 image.resize(200, 200);
 ```
 
 And then because our image pixel are no longer one-to-one with our openFrameworks window pixels, we need to adjust the *pos* variable inside of our loop:
 
-```.cpp
+```cpp
 if (intensity >= intensityThreshold) {
     // We shrunk our image by a factor of 4, so we need to multiply our pixel
     // locations by 4 in order to have our mesh cover the openFrameworks window
@@ -349,7 +349,7 @@ if (intensity >= intensityThreshold) {
 Now that we have a reasonable number of vertices (~2000), we can start connecting up vertices to form lines.  If we want to only connect vertices that are nearby to each other, then we need to loop through all possible pairs of vertices, check if the distance between them is less than a particular value, and if so, connect them.
 
 
-```.cpp
+```cpp
 // Don't forget to change to lines mode!
 mesh.setMode(OF_PRIMITIVE_LINES);
 
@@ -369,8 +369,8 @@ for (int a=0; a<numVerts; ++a) {
         ofVec3f vertb = mesh.getVertex(b);
         float distance = verta.distance(vertb);
         if (distance <= connectionDistance) {
-				    // In OF_PRIMITIVE_LINES, every pair of vertices or indices will be
-						// connected to form a line
+            // In OF_PRIMITIVE_LINES, every pair of vertices or indices will be
+            // connected to form a line
             mesh.addIndex(a);
             mesh.addIndex(b);
         }
@@ -390,7 +390,7 @@ Let's take a look at that code again:
 
 Boom! Generative mesh.  Let's add two more tweaks to make this into proper 3D.  Firstly, we can use the saturation of the color at a pixel to change the z-coordinate of its corresponding vertex.
 
-```.cpp
+```cpp
 if (intensity >= intensityThreshold) {
     float saturation = c.getSaturation();
     float z = ofMap(saturation, 0, 255, -100, 100);
@@ -406,13 +406,13 @@ Hm...that didn't change your mesh very much?  Well, now it's time for the last t
 
 Add this to your header:
 
-```.cpp
+```cpp
 		ofEasyCam easyCam;
 ```
 
 And then modify your draw function:
 
-```.cpp
+```cpp
 void ofApp::draw(){
     ofColor centerColor = ofColor(85, 78, 68);
     ofColor edgeColor(0, 0, 0);
@@ -450,13 +450,13 @@ When using Perlin noise to generate motion, it is common to pass in the current 
 
 Let's jump into the code.  Add this to your header:
 
-```.cpp
+```cpp
 		vector<ofVec3f> offsets;
 ```
 
 And add the following two lines to your setup function:
 
-```.cpp
+```cpp
 // Add this line to explicitly set the framerate to 60 frames per second:
 ofSetFrameRate(60);
 
@@ -475,8 +475,9 @@ for (int x=0; x<w; ++x) {
             mesh.addColor(c);
 
             // And add this line to your existing for loop:
-            // It will create a ofVec3f with 3 random values
-            // These will allow us to move the x, y and z coordinates of each vertex independently
+            // It will create a ofVec3f with 3 random values, which
+            // will allow us to move the x, y and z coordinates of
+            // each vertex independently
             offsets.push_back(ofVec3f(ofRandom(0,100000), ofRandom(0,100000), ofRandom(0,100000)));
         }
     }
@@ -485,7 +486,7 @@ for (int x=0; x<w; ++x) {
 
 And finally, add these lines to your update function:
 
-```.cpp
+```cpp
 int numVerts = mesh.getNumVertices();
 for (int i=0; i<numVerts; ++i) {
     ofVec3f vert = mesh.getVertex(i);
@@ -497,11 +498,17 @@ for (int i=0; i<numVerts; ++i) {
 
     // A typical design pattern for using Perlin noise uses a couple parameters:
     // ofSignedNoise(time*timeScale+timeOffset)*displacementScale
-    //     ofSignedNoise(time) gives us noise values that change smoothly over time
-    //     ofSignedNoise(time*timeScale) allows us to control the smoothness of our noise (smaller timeScale, smoother values)
-    //     ofSignedNoise(time+timeOffset) allows us to use the same Perlin noise function to control multiple things and have them look as if they are moving independently
-    //     ofSignedNoise(time)*displacementScale allows us to change the bounds of the noise from [-1, 1] to whatever we want
-    // Combine all of those parameters together, and you've got some nice control over your noise
+    //     ofSignedNoise(time) gives us noise values that change smoothly over
+    //         time
+    //     ofSignedNoise(time*timeScale) allows us to control the smoothness of
+    //         our noise (smaller timeScale, smoother values)
+    //     ofSignedNoise(time+timeOffset) allows us to use the same Perlin noise
+    //         function to control multiple things and have them look as if they
+    //         are moving independently
+    //     ofSignedNoise(time)*displacementScale allows us to change the bounds
+    //         of the noise from [-1, 1] to whatever we want
+    // Combine all of those parameters together, and you've got some nice
+    // control over your noise
 
     vert.x += (ofSignedNoise(time*timeScale+timeOffsets.x)) * displacementScale;
     vert.y += (ofSignedNoise(time*timeScale+timeOffsets.y)) * displacementScale;
@@ -535,7 +542,7 @@ Let's forget about the z-dimension for now and focus in on the x- and y-dimensio
 
 If we know how far our point is from the center, we can define its location in space using a distance and an angle (polar coordinates).  We can take that distance and angle and use it to convert to x and y values (Cartesian coordinates):
 
-```.cpp
+```cpp
 x = distance * cos(angle)
 y = distance * sin(angle)
 ```
@@ -550,7 +557,7 @@ So for our meshy purposes, we need to:
 
 Let's get some new variables in our header file:
 
-```.cpp
+```cpp
 // We are going to use these to allow us to toggle orbiting on and off
 ofMesh meshCopy;
 bool orbiting;
@@ -564,19 +571,19 @@ ofVec3f meshCentroid;
 
 Add this at the end of your setup function:
 
-```.cpp
+```cpp
 // We need to calculate our center point for the mesh
 // ofMesh has a method called getCentroid() that will
 // find the average location over all of our vertices
 //    http://en.wikipedia.org/wiki/Centroid
 meshCentroid = mesh.getCentroid();
 
-// Now that we know our centroid, we need to know the polar coordinates (distance and angle)
-// of each vertex relative to that center point.
+// Now that we know our centroid, we need to know the polar coordinates
+// (distance and angle) of each vertex relative to that center point.
 // We've found the distance between points before, but what about the angle?
-// This is where atan2 comes in.  atan2(y, x) takes an x and y value and returns the angle relative
-//     to the origin (0,0).  If we want the angle between two points (x1, y1) and (x2, y2) then we
-//     just need to use atan2(y2-y1, x2-x1).
+// This is where atan2 comes in.  atan2(y, x) takes an x and y value and returns
+// the angle relative to the origin (0,0).  If we want the angle between two
+// points (x1, y1) and (x2, y2) then we just need to use atan2(y2-y1, x2-x1).
 for (int i=0; i<numVerts; ++i) {
     ofVec3f vert = mesh.getVertex(i);
     float distance = vert.distance(meshCentroid);
@@ -593,7 +600,7 @@ meshCopy = mesh; // Store a copy of the mesh, so that we can reload the original
 
 Add this into your update function:
 
-```.cpp
+```cpp
 if (orbiting) {
     int numVerts = mesh.getNumVertices();
     for (int i=0; i<numVerts; ++i) {
@@ -610,8 +617,9 @@ if (orbiting) {
         // the starting angular rotation
         float rotatedAngle = elapsedTime * speed + angle;
 
-        // Remember that our distances are calculated relative to the centroid of the mesh, so
-        // we need to shift everything back to screen coordinates by adding the x and y of the centroid
+        // Remember that our distances are calculated relative to the centroid
+        // of the mesh, so we need to shift everything back to screen
+        // coordinates by adding the x and y of the centroid
         vert.x = distance * cos(rotatedAngle) + meshCentroid.x;
         vert.y = distance * sin(rotatedAngle) + meshCentroid.y;
 
@@ -622,7 +630,7 @@ if (orbiting) {
 
 And then add a `keyPressed` function into your cpp file:
 
-```.cpp
+```cpp
 void ofApp::keyPressed(int key){
 	if (key == 'o') {
 		orbiting = !orbiting; // This inverts the boolean
@@ -636,7 +644,7 @@ Now you should be able to toggle orbiting on and off using the 'o' key!
 
 One additional programming note: the variable *meshCopy* was used as a backup copy of the original mesh that could be reloaded when needed.  In the setup function, when we used the line:
 
-```.cpp
+```cpp
 meshCopy = mesh;
 ```
 
@@ -667,28 +675,28 @@ This tweak will make use of some vector math, so check out the Math chapter if y
 
 Add a new variable to your header:
 
-```.cpp
+```cpp
 		// Like with the orbiting tweak, this gives us a way to toggle on and off our magnifying effect
 		bool mouseDisplacement;
 ```
 
 Add a line at the end of our setup function:
 
-```.cpp
+```cpp
     // We want to start off without the effect turned on
     mouseDisplacement = false;
 ```
 
 Add this chunk of code at that start of our update function:
 
-```.cpp
+```cpp
 if (mouseDisplacement) {
     // Get the mouse location - it must be relative to the center of our screen
-		// because of the ofTranslate() command in draw()
+    // because of the ofTranslate() command in draw()
     ofVec3f mouse(mouseX, ofGetWidth()-mouseY, 0);
 
     // Loop through all the vertices in the mesh and move them away from the
-		// mouse
+    // mouse
     for (int i=0; i<mesh.getNumVertices(); ++i) {
         ofVec3f vertex = meshCopy.getVertex(i);
         float distanceToMouse = mouse.distance(vertex);
