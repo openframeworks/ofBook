@@ -34,24 +34,24 @@ The second point to make about animation is that it requires variables. A variab
 
 ```cpp
 void ofApp::setup(){
-    xpos = 5;  // vertical start position
+    xPos = 5;  // horizontal start position
     ofBackground(ofColor::black);  // black background
 }
 
 void ofApp::update(){
-    xpos += 2;
-    if(ofGetWidth()<xPos){  // if vertical position is off the screen (width)
-        xPos = 5             // reset vertical position
+    xPos += 2;
+    if(ofGetWidth()<xPos){  // if horizontal position is off the screen (width)
+        xPos = 5             // reset horizontal position
     }
 }
 
 void ofApp::draw(){
     ofSetColor(ofColor::red);  // draw everything in red
-    ofDrawCircle(xpos, 100, 10);   // draw a circle at the (variable) vertical position, 100 pixels from the top with a 10 pixel diameter
+    ofDrawCircle(xPos, 100, 10);   // draw a circle at the (variable) horizontal position, 100 pixels from the top with a 10 pixel diameter
 }
 ```
 
-In this example a red circle moves from the left to the right on the screen. The vertical position (`xpos`) is an integer and gets set to 5 as the initial value in `setup()`. The `update()` function always adds 2 to the `xpos` variable and stores the new value until it becomes larger than the screen width (`ofGetWidth()`), then the vertical position gets reset. The `draw()` function reads the value stored in the variable `xpos` and draws the red circle accordingly.
+In this example a red circle moves from the left to the right on the screen. The horizontal position (`xPos`) is an integer and gets set to 5 as the initial value in `setup()`. The `update()` function always adds 2 to the `xPos` variable and stores the new value until it becomes larger than the screen width (`ofGetWidth()`), then the horizontal position gets reset. The `draw()` function reads the value stored in the variable `xPos` and draws the red circle accordingly.
 
 ### Frame rate
 
