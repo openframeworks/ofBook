@@ -381,7 +381,7 @@ Particle p1;
 moveParticle(&p1);
 ```
 
-Now, here's something new, notice how to refer to the variables of a pointer to an object instead of using the dot, we use the `->` operator, everytime we want to access a variable in a pointer to an object instead of having to dereference it like:
+Now, here's something new, notice how to refer to the variables of a pointer to an object instead of using the dot, we use the `->` operator, every time we want to access a variable in a pointer to an object instead of having to dereference it like:
 
 ```cpp
 (*p).x +=10;
@@ -458,7 +458,7 @@ Now we are passing a reference to the original object but instead of having to u
     ofVec2f averagePos = averagePosition(ps);
 
 
-> const only makes it imposible to modify the variable, even if it's a reference, and tells anyone using that function that they can pass their data into it and it won't be changed, also anyone modifying that function knows that in the future it should stay the same and the input, the particle system shouldn't be modified.
+> const only makes it impossible to modify the variable, even if it's a reference, and tells anyone using that function that they can pass their data into it and it won't be changed, also anyone modifying that function knows that in the future it should stay the same and the input, the particle system shouldn't be modified.
 
 Outside of parameters, references have a couple of special characteristics.
 
@@ -749,13 +749,13 @@ Vectors have some more features and using them properly might be tricky mostly i
 
 ## Other memory structures, lists and maps ##
 
-Having objects in memory one after another is most of the time what we want, the access is really fast no matter if we want to access sequentially to each of them or randomly to anyone, since a vector is just an array internally, accesing let's say position 20 in it, just means that internally it just needs to get the memory address of the first position and add 20 to it. In soime cases though, vectors are not the most optimal memory structure. For example, if we want to frequnetly add  or remove elements in the middle of the vector, and you imagine the vector as a memory strip, that means that we need to move the rest of the vector till the end one position to the right and then insert the new element in the free location. In memory there's no such thing as move, moving contiguous memory means copying it and as we've said before, copying memory is a relatively slow operation.
+Having objects in memory one after another is most of the time what we want, the access is really fast no matter if we want to access sequentially to each of them or randomly to anyone, since a vector is just an array internally, accessing let's say position 20 in it, just means that internally it just needs to get the memory address of the first position and add 20 to it. In some cases though, vectors are not the most optimal memory structure. For example, if we want to frequently add  or remove elements in the middle of the vector, and you imagine the vector as a memory strip, that means that we need to move the rest of the vector till the end one position to the right and then insert the new element in the free location. In memory there's no such thing as move, moving contiguous memory means copying it and as we've said before, copying memory is a relatively slow operation.
 
 ![Vector inserting](images/vector_inserting "")
 
 Sometimes, if there's not enough memory to move/copy the elements, one position to the right, the vector will need to copy the whole thing to a new memory location. If we are working with thousands of elements and doing this very frequently, like for example every frame, this can really slow things down a lot.
 
-To solve that, there's other memory structures like for example lists. In a list, memory, is not contiguous but instead each element has a pointer to the next and previous element so inserting one element just means changing those pointers to point to the newly added element. In a list we never need to move elements around but it's main disadvantage is that not being the elements contiguous in memory it's access can be slightly slower than a vector, also that we can't use it in certain cases like for example to upload data to the graphics card which always wants contiguos memory.
+To solve that, there's other memory structures like for example lists. In a list, memory, is not contiguous but instead each element has a pointer to the next and previous element so inserting one element just means changing those pointers to point to the newly added element. In a list we never need to move elements around but it's main disadvantage is that not being the elements contiguous in memory it's access can be slightly slower than a vector, also that we can't use it in certain cases like for example to upload data to the graphics card which always wants contiguous memory.
 
 ![List](images/list "")
 
@@ -792,7 +792,7 @@ You can find the complete reference on maps in the [c++ documentation for maps](
 
 ## smart pointers ##
 
-As we've said before, traditional c pointers also called now *raw pointers* are sometimes problematic, the most frequent problems are dangling pointers: pointers that probably were once vañlid but now point to an invalid memory location, trying to dereference a NULL pointer, posible memory leaks if we fail to deallocate memory before loosing the reference to that memory address...
+As we've said before, traditional c pointers also called now *raw pointers* are sometimes problematic, the most frequent problems are dangling pointers: pointers that probably were once valid but now point to an invalid memory location, trying to dereference a NULL pointer, possible memory leaks if we fail to deallocate memory before loosing the reference to that memory address...
 
 Smart pointers try to solve that by adding what we've been calling stack semantics to memory allocation, the correct term for this is RAII: [Resource Acquisition Is Initialization](http://en.wikipedia.org/wiki/Resource_Acquisition_Is_Initialization) And means that the creation of an object in the stack, allocates the resources that it'll use later. When it's destructor is called because the variable goes out of scope, the destructor of the object is triggered which takes care of deallocating all the used resources. There's some more implications to RAII but for this chapter this is what matters to us more.
 
@@ -872,7 +872,7 @@ void ofApp::setup(){
 }
 ```
 
-As you can see, once it's created it's syntax is the same as a raw pointer, we can use the `*` operator to dereference it and access or modiify it's value, if we are working with objects like:
+As you can see, once it's created it's syntax is the same as a raw pointer, we can use the `*` operator to dereference it and access or modify it's value, if we are working with objects like:
 
 ```cpp
 void ofApp::setup(){
