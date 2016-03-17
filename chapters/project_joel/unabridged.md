@@ -720,7 +720,7 @@ Mode draw:
                             ofColor pixelColor = timeline.getVideoPlayer("video")->getPixelsRef().getColor(i, j);
                             int b = pixelColor.b;
                             float val = 1 - ((float)b / 255.0f); //more blue in the arctic!
-                            ofCircle(i*widthRatio, j*heightRatio, circleSpacing * val);
+                            ofDrawCircle(i*widthRatio, j*heightRatio, circleSpacing * val);
                         }
                     }
                 }
@@ -1675,7 +1675,7 @@ void testApp::draw(){
 	gui.draw();
 	ofSetColor(color);
 	for(int i=0;i<number;i++){
-		ofCircle(ofGetWidth()*.5-size*((number-1)*0.5-i), ofGetHeight()*.5, size);
+		ofDrawCircle(ofGetWidth()*.5-size*((number-1)*0.5-i), ofGetHeight()*.5, size);
 	}
 }
 
@@ -2074,7 +2074,7 @@ ofSetColor(ofColor::white);
 float circleX = theFBO.getWidth()/2.f;
 float circleY = theFBO.getHeight()/2.f;
 float circleRadius = min(circleX, circleY);
-ofCircle(circleX,circleY, circleRadius);
+ofDrawCircle(circleX,circleY, circleRadius);
 theFBO.end();
 ```
 

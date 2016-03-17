@@ -55,7 +55,7 @@ Find the oF version that you downloaded and decompress it. From now on we will r
 
 Open it. Inside of it you will find several folders which we will describe below in more detail. For now, navigate to the examples folder and let's try to compile examples/graphics/graphicsExample. If you are on OS X, click on the graphicsExample.xcodeproj. If you are using Visual Studio, choose the ".sln" file. On Code::Blocks, choose the ".workspace" file.
 
-*A quick side note about workspace files. The reason we ask you to open those rather then the project file is that they contain a sub-project to build the oF library also. If you have any doubts, please read the readme for your given platform.*
+*A quick side note about workspace files. The reason we ask you to open those rather than the project file is that they contain a sub-project to build the oF library also. If you have any doubts, please read the readme for your given platform.*
 
 Now your IDE should open and load this example. It should look like the IDE screenshots above. Locate the "Run" button or menu option and click on it. The example should compile (which might take a while, since the first time you compile you are also compiling the oF library). You'll see a lot of files being compiled the first time -- don't worry, this will just happen once, when the oF library needs to be rebuilt. Feel free to get a cup of coffee or stretch. Long compile times are great moments to take a screen break. 
 

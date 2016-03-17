@@ -132,9 +132,9 @@ public:
     int radius;
     
     // default constructor
-    Vehicle() {}; 
+    Particle() {}; 
     // overloaded constructor
-    Vehicle(float x, float y) {
+    Particle(float x, float y) {
         
         acceleration = ofVec2f(0,0);
         velocity = ofVec2f(0, -2);
@@ -157,7 +157,7 @@ public:
         
         ofFill();
         ofSetColor(color);
-        ofCircle(location.x, location.y, radius); 
+        ofDrawCircle(location.x, location.y, radius);
     }
 
 // etc...

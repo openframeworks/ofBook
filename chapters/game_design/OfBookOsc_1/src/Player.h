@@ -6,10 +6,7 @@
 //
 //
 
-#ifndef __OfBookOsc__Player__
-#define __OfBookOsc__Player__
-
-#include <iostream>
+#pragma once
 #include "ofMain.h"
 
 class Player {
@@ -32,6 +29,3 @@ public:
     ofImage * img;
     
 };
-
-
-#endif /* defined(__OfBookOsc__Player__) */

@@ -8,26 +8,33 @@ Basics
 	OOPs!
 Approaches
 	animation
-	data_vis
 	game_design
 	image_processing_computer_vision 
 I/O
 	hardware
 	sound
 	network	
-Advanced topics
+Graphics
+	openGL
+	lines
+	generativemesh
 	advanced_graphics
-	math
-	memory
+	shaders
+C++	
 	threads
-	ios	
+	memory
+	stl_vector
+	stl_map
 	c++11
+Advanced topics	
+	math
+Platforms	
+	ios
 Tools
 	version_control_with_git
 	ofSketch
 	installation_up_4evr_macosx
 	installation_up_4evr_linux
 Case studies
-	project_elliot
 	project_eva
 	project_joel

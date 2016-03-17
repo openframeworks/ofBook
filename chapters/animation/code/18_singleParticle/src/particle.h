@@ -4,14 +4,12 @@
 #include "ofMain.h"
 
 class particle{
-	
+
     public:
-	
-		
         ofVec2f pos;
         ofVec2f vel;
-        ofVec2f frc;   // frc is also know as acceleration (newton says "f=ma")
-			
+        ofVec2f frc;
+
         particle();
 
         void resetForce();
@@ -20,9 +18,8 @@ class particle{
         void setInitialCondition(float px, float py, float vx, float vy);
         void update();
         void draw();
-	
-		float damping;
 
+		float damping;
 };
 
 #endif // PARTICLE_H

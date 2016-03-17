@@ -1,6 +1,5 @@
 #include "particle.h"
 
-
 //------------------------------------------------------------
 particle::particle(){
 	setInitialCondition(0,0,0,0);
@@ -22,7 +21,6 @@ void particle::addForce(float x, float y){
 
 //------------------------------------------------------------
 void particle::addDampingForce(){
-	
 	// the usual way to write this is  vel *= 0.99
 	// basically, subtract some part of the velocity 
 	// damping is a force operating in the oposite direction of the 
@@ -48,6 +46,5 @@ void particle::update(){
 
 //------------------------------------------------------------
 void particle::draw(){
-    ofCircle(pos.x, pos.y, 3);
+    ofDrawCircle(pos.x, pos.y, 3);
 }
-

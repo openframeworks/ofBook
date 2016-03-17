@@ -8,7 +8,6 @@
 
 Traditionally, in frameworks like openFrameworks or processing, the way of drawing things has been something like:
 
-
 ```cpp
 void ofApp::draw(){
     ofFill();
@@ -21,26 +20,22 @@ void ofApp::draw(){
     ofEndShape(true);
 }
 ```
-
 `openFrameworks version`
 
-
 Which will draw a red square of side 20 at 20,20. For simple primitives like a rectangle we can use `ofRect()`, but if we want to draw more complex shapes the above method is common. This kind of syntax comes from the openGL equivalent:
-
 
 ```cpp
 void ofApp::draw(){
     glColor4f(1.0,0.0,0.0,1.0);
     glBegin(GL_TRIANGLE_FAN);
-    glVertex(20,20);
-    glVertex(40,20);
-    glVertex(40,40);
-    glVertex(20,40);
+    glVertex2i(20,20);
+    glVertex2i(40,20);
+    glVertex2i(40,40);
+    glVertex2i(20,40);
     glEnd();
 }
 ```
-
-`GL version
+`GL version`
 
 However, that method is deprecated since OpenGL 3. The openFrameworks version actually does something else. This is because while drawing a rectangle like that works in triangle fan mode, if we try to draw something more complex (mostly any concave shape), it won't work. Because OpenGL only knows how to draw triangles, drawing a concave shape needs one more step called tessellation. The tessellation process involves converting a shape into several triangles before sending to the graphics card.
 
@@ -185,7 +180,7 @@ If you've worked with processing, openFrameworks or similar frameworks you are p
 ```cpp
 ofTranslate(20,20);
 ofRotate(45);
-ofRect(20,20,20,20);
+ofDrawRectangle(20,20,20,20);
 ```
 
 This draws a square rotated 45 degrees around it's top-left corner. Usually you would enclose that between `ofPush/PopMatrix` so later drawings won't be affected by the transformations that we've just applied.
@@ -195,7 +190,7 @@ This comes from the openGL equivalent:
 ```cpp
 glTranslatef(20,20);
 glRotatef(45);
-ofRect(20,20,20,20);
+ofDrawRectangle(20,20,20,20);
 ```
 
 This is also deprecated since openGL 3.  What!? "I can't do use translate/rotate/scale anymore?", you might ask. Well, in openFrameworks you can still use the equivalent `ofTranslate/Rotate/Scale` if you want, but that has a number of problems and that's why they've been deprecated. Let's see why:
@@ -214,8 +209,8 @@ void ofApp::setup(){
     path.lineTo(40,40);
     path.lineTo(20,40);
     path.close();
-    m.rotate(45);
-    m.translate(20,20);
+    m.rotate(45,0,0,0);
+    m.translate(20,20,0);
 }
 
 void ofApp::draw(){
@@ -232,7 +227,7 @@ In openFrameworks, the classes that apply transformations still return the matri
 
 If you want to know more about how transformation matrices work you should check out the chapter on mathematics. The purpose of this chapter is not so much to show how they work, but rather the newest paradigms in the latest versions of openGL.
 
-In openFrameworks, there's a utility class called ofNode, that allows you to apply complex transformations like set an object to look to another, set a hierarchy of nodes... When working with 3D it's useful to keep an ofNode along with every mesh that represents it's transformations, so when you draw each mesh, instead of using ofTranslate, rotate, scale you can just apply the transformation of it's node using `node.transformGL()`. This will multiply the current matrix by the one in the node. When you are done you can use `node.restoreTransformGL()`to go back to the previous state.
+In openFrameworks, there's a utility class called ofNode, that allows you to apply complex transformations like set an object to look to another, set a hierarchy of nodes... When working with 3D it's useful to keep an ofNode along with every mesh that represents it's transformations, so when you draw each mesh, instead of using ofTranslate, rotate, scale you can just apply the transformation of it's node using `node.transformGL()`. This will multiply the current matrix by the one in the node. When you are done you can use `node.restoreTransformGL()`to go back to the previous state. 
 
 The most important idea of this section is that when working with complex transformations, instead of using ofTranslate/Rotate/Scale, it is usually easier to implement an ofNode associated to each mesh or shape that you draw. This is also much easier for readability. For meshes, there's a new class in openFrameworks since 0.8.0 called of3dPrimitive, that internally has an ofVboMesh and an ofNode so you can use this pattern in an easy way.
 
@@ -380,7 +375,7 @@ void ofApp::setup(){
     mesh.addVertex(ofVec3f(20,40));
     mesh.addTexCoord(ofVec2f(0,20));
     mesh.setMode(OF_PRIMITIVE_TRIANGLE_FAN);
-    img.loadImage("some20x20img.png");
+    img.load("some20x20img.png");
 }
 
 void ofApp::draw(){

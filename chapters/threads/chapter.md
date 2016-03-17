@@ -2,7 +2,7 @@
 
 *by [Arturo Castro](http://arturocastro.net)*
 
-*corrections by [Brannon Dorsey](http://brannondorsey.com)*
+*corrections by Brannon Dorsey*
 
 ## What's a thread and when to use it
 
@@ -22,16 +22,16 @@ First let's see how to create a thread in openFrameworks.
 
 Every application has at least one thread, the main thread (also called the GL thread), when it's using openGL.
 
-But as we've said we can create auxiliary threads to do certain tasks that would take too long to run in the main thread. In openFrameworks we can do that using the ofThread class. ofThread is not meant to be used directly, instead we inherit from it and mplement a `threadedFunction` which will later get called from the auxiliary thread once we start it:
+But as we've said we can create auxiliary threads to do certain tasks that would take too long to run in the main thread. In openFrameworks we can do that using the ofThread class. ofThread is not meant to be used directly, instead we inherit from it and implement a `threadedFunction` which will later get called from the auxiliary thread once we start it:
 
 ```cpp
 class ImageLoader: public ofThread{
     void setup(string imagePath){
-        this->imagePath = imagePath;
+        this->path = imagePath;
     }
 
     void threadedFunction(){
-        ofLoadImage(path,image);
+        ofLoadImage(image, path);
     }
 
     ofPixels image;
@@ -63,11 +63,11 @@ As we see in the image the duration of loading of the image and thus the duratio
 ```cpp
 class ImageLoader: public ofThread{
     void setup(string imagePath){
-        this->imagePath = imagePath;
+        this->path = imagePath;
     }
 
     void threadedFunction(){
-        ofLoadImage(path,image);
+        ofLoadImage(image, path);
     }
 
     ofPixels image;
@@ -86,14 +86,16 @@ void ofApp::setup(){
 
 void ofApp::update(){
     if(loading==true && !imgLoader.isThreadRunning()){
-        img.getPixelsRef() = imgLoader.img;
+        img.getPixelsRef() = imgLoader.image;
         img.update();
         loading = false;
     }
 }
 
 void ofApp::draw(){
-    img.draw(0,0);
+    if (img.isAllocated()) {
+        img.draw(0, 0);
+    }
 }
 
 void ofApp::keyPressed(int key){
@@ -115,7 +117,7 @@ class ImageLoader: public ofThread{
     }
 
     void load(string imagePath){
-        this->imagePath = imagePath;
+        this->path = imagePath;
         loading = true;
         startThread();
     }
@@ -145,7 +147,7 @@ void ofApp::update(){
         if(imgLoaders[i].loaded){
             if(imgs.size()<=i) imgs.resize(i+1);
 
-            imgs[i].getPixelsRef() = imgLoaders[i].img;
+            imgs[i].getPixelsRef() = imgLoaders[i].image;
             imgs[i].update();
             imgLoaders[i].loaded = false;
         }
@@ -190,11 +192,11 @@ class ImageLoader: public ofThread{
         loaded = false;
     }
     void setup(string imagePath){
-        this->imagePath = imagePath;
+        this->path = imagePath;
     }
 
     void threadedFunction(){
-        ofLoadImage(path,image);
+        ofLoadImage(image, path);
         loaded = true;
     }
 
@@ -214,14 +216,16 @@ void ofApp::setup(){
 
 void ofApp::update(){
     if(imgLoader.loaded){
-        img.getPixelsRef() = imgLoader.img;
+        img.getPixelsRef() = imgLoader.image;
         img.update();
         imgLoader.loaded = false;
     }
 }
 
 void ofApp::draw(){
-    img.draw(0,0);
+    if (img.isAllocated()) {
+        img.draw(0, 0);
+    }
 }
 
 void ofApp::keyPressed(int key){
@@ -250,7 +254,7 @@ class ImageLoader: public ofThread{
     }
     void setup(string imagePath){
         image.setUseTexture(false);
-        this->imagePath = imagePath;
+        this->path = imagePath;
     }
 
     void threadedFunction(){
@@ -280,7 +284,9 @@ void ofApp::update(){
 }
 
 void ofApp::draw(){
-    imageLoader.image.draw(0,0);
+    if (imgLoader.image.isAllocated()){
+        imgLoader.image.draw(0,0);
+    }
 }
 
 void ofApp::keyPressed(int key){
@@ -298,9 +304,9 @@ A very specific case is sound, sound APIs in openFrameworks, in particular ofSou
 
 ## ofMutex
 
-Before we started the openGL and threads section we were talking about how accessing the same memory area from 2 different threads can cause problems. This mostly occurs if we write from one of the threads causing the data structure to move in memory or make a location invalid.
+Before we started the openGL and threads section we were talking about how accessing the same memory area from 2 different threads can cause problems. This mostly occurs if we write from one of the threads causing the data structure to move in memory or make a location invalid. 
 
-To avoid that we need something that allows to access that data to only one thread simultaneously. For that we use something called mutex. When one thread want's to access the shared data, it locks the mutex and when a mutex is locked any other thread trying to lock it will get blocked there until the mutex is unlocked again. You can think of this as some kind of token that each thread needs to have to be able to access the shared memory.
+To avoid that we need something that allows to access that data to only one thread simultaneously. For that we use something called mutex. When one thread want's to access the shared data, it locks the mutex and when a mutex is locked any other thread trying to lock it will get blocked there until the mutex is unlocked again. You can think of this as some kind of token that each thread needs to have to be able to access the shared memory. 
 
 Imagine you are with a group of people building a tower of cards, if more than one at the same time tries to put cards on it it's very possible that it'll collapse so to avoid that, anyone who wants to put a card on the tower, needs to have a small stone, that stone gives them permission to add cards to the tower and there's only one, so if someone wants to add cards they need to get the stone but if someone else has the stone then they have to wait till the stone is freed. If more than one wants to add cards and the stone is not free they queue, the first one in the queue gets the stone when it's finally freed.
 
@@ -356,9 +362,9 @@ void ofApp::setup(){
 
 void ofApp::update(){
     numberGenerator.lock();
-    while(!numberGenerator.empty()){
-        cout << numberGenerator.front() << endl;
-        numberGenerator.pop_front();
+    while(!numberGenerator.numbers.empty()){
+        cout << numberGenerator.numbers.front() << endl;
+        numberGenerator.numbers.pop_front();
     }
     numberGenerator.unlock();
 }
@@ -500,7 +506,7 @@ Sometimes we need to lock a function until it returns, or lock for the duration 
 For example, the previous example could be turned into:
 
 ```cpp
-class VideoReader{
+class VideoRenderer{
 public:
     void setup(){
         pixelsBack.allocate(640,480,3);
@@ -626,7 +632,7 @@ public:
 
 private:
     queue<string> queueUrls;
-}
+};
 ```
 
 That alleviates the problem slightly but not completely. The thread won't consume as much CPU now, but it sleeps for an unnecesarily while when there's still urls to load. It also continues to run in the background even when there's no more urls to ping. Specially in small devices powered by batteries, like a phone, this pattern would drain the battery in a few hours.
@@ -645,7 +651,7 @@ class ThreadedHTTPPing: public ofThread{
     void threadedFunction(){
         while(isThreadRunning()){
             mutex.lock();
-            if (queue.empty()){
+            if (queueUrls.empty()){
                 condition.wait(mutex);
             }
             string url = queueUrls.front();
@@ -659,7 +665,7 @@ class ThreadedHTTPPing: public ofThread{
 private:
     Poco::Condition condition;
     queue<string> queueUrls;
-}
+};
 ```
 
 Before we call `condition.wait(mutex)` the mutex needs to be locked, then the condition unlocks the mutex and blocks the execution of that thread until `condition.signal()` is called. When the condition awakens the thread because it's been signaled, it locks the mutex again and continues the execution. We can read the queue without problem because we know that the other thread won't be able to access it. We copy the next url to ping and unlock the mutex to keep the lock time to a minimum. Then outside the lock we ping the server and start the process again.
@@ -669,3 +675,4 @@ Whenever the queue gets emptied the condition will block the execution of the th
 ## Conclusion
 
 As we've seen threads are a powerfull tool to allow for several tasks to happen simultaneously in the same application. They are also hard to use, the main problem is usually accessing shared resouces, usually shared memory. We've only seen one specific case, how to use threads to do background tasks that will pause the execution of the main task, there's other cases where we can parallelize 1 task by dividing it in small subtasks like for example doing some image operation by dividing the image in for subregions and assigning a thread to each. For those cases there's special libraries that make the syntax easier, OpenCv for example can do some operations using more than one core through [TBB](https://www.threadingbuildingblocks.org/) and there's libraries like the same TBB or [OpenMP](http://openmp.org/wp/) that allow to specify that a loop should be divided and run simultaneol¡usly in more than one core
+
