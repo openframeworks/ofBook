@@ -6,6 +6,7 @@ Basics
 	setup_and_project_structure
 	intro_to_graphics
 	OOPs!
+	how_of_works
 Approaches
 	animation
 	game_design
