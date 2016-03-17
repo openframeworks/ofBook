@@ -1,13 +1,23 @@
-#Hardware
+---
+.. title: 하드웨어
+.. type: ofBook
+.. translator: Jongun won
+.. translator_site: http://scripter.co.kr
+---
 
+#Hardware
+#하드웨어
 *by [Caitlin Morris](http://www.caitlinmorris.net/) and [Pierre Proske](http://www.digitalstar.net/)*
 
 
 ## introduction
+## 소개
 
 This chapter will give you an introduction to working with openFrameworks outside of your computer screen and into the physical world. Why exactly would you want to do this? Well, given that we are physical creatures ourselves, having software control, sense and actuate real-world things can be pretty exciting and create truly visceral experiences. Screen based work can be captivating, but physical installations have the potential to deliver greater impact due to their more tangible nature.
+이 챕터는 당신에게 당신의 컴퓨터 스크린이외에서 작업과 실제 물리적인 오픈프레임웍스 작업을 소개 할 것이다. 당신은 정확히 왜 이것을 하기 원하는가? 글쎄, 우리는 스스로 물리적인 창조물 이며, 소프트웨어를 컨트롤 하며, 감각적이며, 실제 세계에서 어떤것을 조작 하는것이 상당히 흥미롭게 하며 진실로 본능적인 경험을 창조 한다. 스크린을 베이스로한 작업은 매혹적이나, 물리적인 설치물은 그들에게 실제로 보이는 것들이기 때문에 가능성과 강력한 임펙트를 전달한다.
 
 There are a number of ways of taking your openFrameworks app out of the frame of your own personal computer and getting it to interact with the outside world. Largely this involves some kind of communication from openFrameworks to whatever hardware you've decided to hook up to. The different types of computer based communications (or protocols) vary, but the most common is what's known as 'serial' communication, so called because each bit of data sent is transferred one after the other (as opposed to multiple bits being sent in parallel). 
+당신의 개인 컴퓨터를 벗어나고, 반응적인 밖의 세상으로 나가기 위한 오픈프레임웍스 앱을 이용한 3가지 방법이 있다. 크게는 어떤 당신이 관심을 가지기로한 어떤 하드웨어의 오픈프레임웍스 커뮤니티같은 곳에 참여 하는 것이다. 다른 종류의 컴퓨터기반의 통신(혹은 프로토콜)은 서로 다르나, 대부분은 '시리얼' 통신이 무었인가 이다. 왜 그렇게 불리냐면 다른 각각의 데이터의 비트를 전송 서로 다른것으로 전송 하기 (다중 비트들을 동시에 서로 보내기) 때문이다. 
 
 The first hardware that we’ll look at interfacing with is the excellent **Arduino** prototyping platform.  Arduino is, in its own words, an *“open-source electronics prototyping platform based on flexible, easy-to-use hardware and software… intended for artists, designers, hobbyists, and anyone interested in creating interactive objects or environments.*”  It’s easy to see why there’s a lot of overlap between communities of people interested in using openFrameworks and Arduino!  With Arduino, it’s quick to get your openFrameworks app hooked up to sensors (like light sensors, proximity sensors, or other methods of environmental input), actuators (like lights, motors, and other outputs), and real-time interaction.  You're free to move out of the realm of pixels and into the physical world.
 
