@@ -20,12 +20,18 @@ There are a number of ways of taking your openFrameworks app out of the frame of
 당신의 개인 컴퓨터를 벗어나고, 반응적인 밖의 세상으로 나가기 위한 오픈프레임웍스 앱을 이용한 3가지 방법이 있다. 크게는 어떤 당신이 관심을 가지기로한 어떤 하드웨어의 오픈프레임웍스 커뮤니티같은 곳에 참여 하는 것이다. 다른 종류의 컴퓨터기반의 통신(혹은 프로토콜)은 서로 다르나, 대부분은 '시리얼' 통신이 으로 알려져 있다. 왜 그렇게 불리냐면 다른 각각의 데이터의 비트를 전송 서로 다른것으로 전송 하기 (다중 비트들을 동시에 서로 보내기) 때문이다. 
 
 The first hardware that we’ll look at interfacing with is the excellent **Arduino** prototyping platform.  Arduino is, in its own words, an *“open-source electronics prototyping platform based on flexible, easy-to-use hardware and software… intended for artists, designers, hobbyists, and anyone interested in creating interactive objects or environments.*”  It’s easy to see why there’s a lot of overlap between communities of people interested in using openFrameworks and Arduino!  With Arduino, it’s quick to get your openFrameworks app hooked up to sensors (like light sensors, proximity sensors, or other methods of environmental input), actuators (like lights, motors, and other outputs), and real-time interaction.  You're free to move out of the realm of pixels and into the physical world.
+첫번째 하드웨어로 당신은 훌륭한 **Arduino** 프로토타입 플랫폼을 보게 될 것이다. 아두이노는 그들의 말로 
+*"오픈 소스 일렉트로닉 프로토타이핑 플랫폼기반의 유연하고, 사용하기 쉬운 하드웨어와 소프트웨어... 아티스트, 다자이너, 취미로 즐기는 사람, 관심있는 사람들이 오브젝트나 환경을 창조 하는것을 목표로 하고 있다 "*
+왜 그들의 커뮤니티나 사람들의 광심에 오픈프레임웍스와 아두이노가 오버랩 되는지 쉽게 볼수 있다. 아두이노와 함께라면, 센서를  오픈프레임웍스로 연결 하고(발광센서, 근접센서, 또는 주위 여러 기능의 입력장치들), 동작기(전구 , 모터 , 여타 아웃풋 장치), 그리고 실시간 인터랙션을 빠르게 구현 할 수 있다.
 
 This chapter assumes that you have the Arduino IDE installed, in addition to the environment that you normally use for working with openFrameworks.  If not, you can download it from the Arduino website (arduino.cc) or the Arduino github (github.com/arduino).
+이 챕터는 아두이노 개발환경의 설치와, 보통의 오픈프레임웍스 작업 환경에 붙이는 것을 맡고 있다. 아니면, 아두이노 웹사이트(arduino.cc) 또는 아두이노 깃허브(github.com/arduino) 에서 다운로드 할 수 있다.
 
 Additionally, following along with the examples in this chapter requires you to have a few pieces of basic hardware.  You’ll need an Arduino (any generation; an Uno, Leonardo, or Duemilanove will look the most like the graphics in this chapter but any USB-connected Arduino will work just fine) and the appropriate USB cable to connect to your computer.  
+추가로, 이 챕터의 예제를 계속 따라 오려면, 몇몇의 기본적인 하드웨어를 필요로 한다. 당신은 아마 아두이노(어떤 종류, Uno , Leonardo, 또는 Duemilanove 은 이챕터의 대부분의 그래픽과 비슷 할 것이나, 어떤 USB연결도 작업에는 무난하다)가 필요 할 것이며 적절한 USB 케이블이 당신의 컴퓨터와 연결되어야 한다.
 
 [** Callout - The Leonardo differs from earlier boards in that it has built-in USB communication, eliminating the need for a secondary processor. This allows the Leonardo to appear to a connected computer as a mouse and keyboard, in addition to a virtual serial port. This makes setting up interactive applications a very simple procedure - in your openFrameworks app all you need to do is check for a key press! **]
+[** 참고 - Leonardo 는 빌드인된 USB 통신(인터페이스)을 가진 다른 보드들과 다르며,  두번째 프로세스를 제거 할 필요가 있다. 이것은 Leonardo가 컴퓨터의 마우스와 키보드 같은것을 연결 하는것을 나타내며, 게다가 가상 시리얼 포트로 연결된다(?) 이것은 간단한 절차의 인터랙티브 어플리케이션 설정을 하게 해주며, 당신의 오픈프레임웍스 앱의 모든 key press를 체크할 필요가 있다.**]
 
 ## getting started with serial communication
 
