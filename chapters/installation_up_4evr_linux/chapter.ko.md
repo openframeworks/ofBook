@@ -32,8 +32,6 @@ sudo apt-get install openssh-server
 
 7. 세션을 로그아웃하고 시작화면에서 unity 대신 openbox를 선택합니다.
 
-8. You'll get a grey screen with no decorations, bars... you can access a context menu pressing with the right button of the mouse anywhere in the desktop although i find it easier at this point to just log in through ssh from my laptop.
-
 8. 이제 아무런 장식이 없는 회색 화면이 보일것입니다. 콘텍스트 메뉴 등은 데스크톱에서 마우스 우측버튼을 눌러 접근할 수 있습니다. 또한 다른 노트북에서 ssh를 통해 로그인하여 보다 쉽게 접근할 수도 있습니다.
 
 9. 여러분의 어플리케이션을 설치했다면, 컴퓨터가 부팅되었을 때 자동으로 시작되길 원할것입니다. Openbox에서는 ~/.config/openbox/autostart 스크립트 파일을 만들고 여기에 어플리케이션의 바이너리의 경로를 추가하면 됩니다.
