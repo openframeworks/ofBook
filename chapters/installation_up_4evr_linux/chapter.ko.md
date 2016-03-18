@@ -2,8 +2,6 @@
 
 *by [Arturo Castro](http://arturocastro.net)*
 
-In linux you can install a barebones desktop which makes things way easier to setup for installations, since among other things, you won't need to worry about deactivating annoying notifications. Also things like deactivating screen blanking can be done via scripts so everything can just be copy and pasted and it's easy to automate.
-
 리눅스를 사용하면 베어본 데스크탑을 사용하여 손쉽게 설치작업을 할 수 있습니다. 그중에서도 특히, 짜증나는 알림에 대해서 걱정할 필요가 없습니다. 또한 화면 깜빡임을 스크립트를 통해 끌 수 있습니다. 단순히 복사하여 붙여넣기 하면 되므로 자동화과정이 정말 쉽습니다.
 
 1. 여러분이 원하는 리눅스 배포판을 설치합니다. 저의 경우 대체로 우분투를 선택하는데, 그래픽카드 드라이버가 미리 설치되어있기 떄문입니다. 설치할 때 자동로그인 옵션을 활성화하면, 컴퓨터를 켜자마자 나중의 설치를 진행할 수 있습니다.
