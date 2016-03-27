@@ -123,7 +123,7 @@ class ImageLoader: public ofThread{
     }
 
     void threadedFunction(){
-        ofLoadImage(path,image);
+        ofLoadImage(image,path);
         loaded = true;
     }
 
