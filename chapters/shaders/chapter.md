@@ -10,13 +10,13 @@ You've probably heard somewhere about "shaders", those mystical things that let 
 
 ### The graphics pipeline
 
-The triangle is the root of making 3D or even 2D scenes. We spend a lot of time trying to hide this or make them fancier, flashing, sparklier, etc, but the truth is: pretty much everything is a triangle. The OpenGL pipeline is pretty oriented towards the following workpath: your OF app fills OpenGL-managed memory buffers with arrays of points in 3D space (we're going to call these "vertices") and these "vertices" are projected into screen space, put together into triangles, and finally turned into pixel-sized fragments in a process called "rasterization". Finally, every fragment (read: pixel) is assigned a color value and drawn to the framebuffer so that you can actually see it. When we're talking about shaders, the whole "figuring out where vertices go in screen space" is a Vertex Shader and the whole "assign a color value to each pixel" is a Fragment Shader. The flow looks more or less like this (excuse the over-simplification)
+The triangle is the root of making 3D or even 2D scenes. We spend a lot of time trying to hide this or make them fancier, flashing, sparklier, etc, but the truth is: pretty much everything is a triangle. The OpenGL pipeline is pretty oriented towards the following workpath: your oF app fills OpenGL-managed memory buffers with arrays of points in 3D space (we're going to call these "vertices") and these "vertices" are projected into screen space, put together into triangles, and finally turned into pixel-sized fragments in a process called "rasterization". Finally, every fragment (read: pixel) is assigned a color value and drawn to the framebuffer so that you can actually see it. When we're talking about shaders, the whole "figuring out where vertices go in screen space" is a Vertex Shader and the whole "assign a color value to each pixel" is a Fragment Shader. The flow looks more or less like this (excuse the over-simplification)
 
 ![The pipeline](images/shaders_pipeline.png)
 
 Walking from the upper left to the lower right we have:
 
-* 1) Our OF application passing some vertex positions and texture coordinates to the graphics card
+* 1) Our oF application passing some vertex positions and texture coordinates to the graphics card
 * 2) Our Vertex Shader.
 * 3) Primitive Assembly setup of primitives, e.g. triangles, lines, and points
 * 4) Rasterization: interpolation of data (colors, texture coordinates, other varying values) for all pixels
@@ -40,9 +40,9 @@ The generated fragments then pass through another program called the fragment sh
 
 ### GLSL
 
-Now that we've kinda glossed over the vertex and fragment shaders, you might be asking: "yes, those sound great, but how do I use them?" Answer: Graphics Language Shading Language or GLSL (double points for double "Language", right?). GLSL is a high-level programming language that’s similar to C/C++ for several parts of the graphics card. With GLSL, you can code short programs, called shaders, which are executed on the GPU. A shading language is a special programming language adapted to easily map on shader programming. It doesn't look trememndously different from what you see in the OF math classes: float, vec4, mat4, and so on. Because of the various target markets of 3-D graphics, different shading languages have been developed, but we're only focusing on GLSL in this tutorial. GLSL shaders themselves are a set of strings that are passed to the graphics card drivers for compilation from within an application using the OpenGL API’s entry points. Shaders can be created on the fly from within an application or read in as text files, but they must be sent to the driver in the form of a text string.
+Now that we've kinda glossed over the vertex and fragment shaders, you might be asking: "yes, those sound great, but how do I use them?" Answer: Graphics Language Shading Language or GLSL (double points for double "Language", right?). GLSL is a high-level programming language that’s similar to C/C++ for several parts of the graphics card. With GLSL, you can code short programs, called shaders, which are executed on the GPU. A shading language is a special programming language adapted to easily map on shader programming. It doesn't look trememndously different from what you see in the oF math classes: float, vec4, mat4, and so on. Because of the various target markets of 3-D graphics, different shading languages have been developed, but we're only focusing on GLSL in this tutorial. GLSL shaders themselves are a set of strings that are passed to the graphics card drivers for compilation from within an application using the OpenGL API’s entry points. Shaders can be created on the fly from within an application or read in as text files, but they must be sent to the driver in the form of a text string.
 
-In OF we load our shaders into ofShader objects and I'm going to drive-by lay out the most important elements of that object:
+In oF we load our shaders into ofShader objects and I'm going to drive-by lay out the most important elements of that object:
 
 *load()* - load a shader from two (or three) files: a .vert file and a .frag file.
 
@@ -52,7 +52,7 @@ In OF we load our shaders into ofShader objects and I'm going to drive-by lay ou
 
 You can load shader programs into your ofShader object using *shader.load()* or just use strings from your application with *shader.setupShaderFromSource()*, passing body of your shader in a string as a second parameter using STRINGIFY macro and linking it with *shader.linkProgram()*. Either way is a-ok.
 
-Before we go get into trouble, there's something that I want to explain that might not make sense right at first but is fairly important to acknoweldge and is not so important to deeply grok at first: our examples use OpenGL3 mostly and to use OpenGL3 in OF you need to alter your main.cpp file. The main files in the tutorial download all look like this:
+Before we go get into trouble, there's something that I want to explain that might not make sense right at first but is fairly important to acknoweldge and is not so important to deeply grok at first: our examples use OpenGL3 mostly and to use OpenGL3 in oF you need to alter your main.cpp file. The main files in the tutorial download all look like this:
 
 ```cpp
 #include "ofMain.h"
@@ -88,7 +88,7 @@ The differences between the shaders aren't major but they exist, however it's mo
 
 ## Your first shader!
 
-Let's take a look at a very simple example to help you get going with it. First we'll look at the OF side of things:
+Let's take a look at a very simple example to help you get going with it. First we'll look at the oF side of things:
 
 ```cpp
 
@@ -107,7 +107,7 @@ void ofApp::draw(){
 
 ```
 
-Two big things to note: take a look at *setup()* and see that thing that says: *shader.load("shadersGL3/shader")*? That's where we're actually loading the shaders in. OF lets us take a little shrtcut in loading a shader where we just tell OF what folder we're loading the shaders out of and what both files are named and we're off to the races. Those files are actualy called shader.vert (that's the vertex shader) and shader.frag (that's the fragment shader) so they're both going to be loaded with that single call. If you have files that are named separately you can always just use this:
+Two big things to note: take a look at *setup()* and see that thing that says: *shader.load("shadersGL3/shader")*? That's where we're actually loading the shaders in. OpenFrameworks lets us take a little shrtcut in loading a shader where we just tell oF what folder we're loading the shaders out of and what both files are named and we're off to the races. Those files are actualy called shader.vert (that's the vertex shader) and shader.frag (that's the fragment shader) so they're both going to be loaded with that single call. If you have files that are named separately you can always just use this:
 
 ```cpp
 shader.load("myCrazyVertFile.vert", "myCrazyFragFile.frag");
@@ -117,7 +117,7 @@ It's up to you, go with your heart. Our version of it above is a little messy be
 
 Next, note how the *draw()* method contains *shader.begin()* and *shader.end()*? That's how we tell our renderer that we want to have all the vertices and textures and fragments go through our shader rather than just being passed directly to the framebuffer. That's about all there is in our application.
 
-Alright, onto the shaders themselves. In our tutorial examples, these live in the data folder of your application, along with images, fonts, and other data that you might want to load into your application. You can also have a shader just as a string in your applciation but we thought it might be nicer to see them in a separte folder so you can work with them outside of your OF app.
+Alright, onto the shaders themselves. In our tutorial examples, these live in the data folder of your application, along with images, fonts, and other data that you might want to load into your application. You can also have a shader just as a string in your applciation but we thought it might be nicer to see them in a separte folder so you can work with them outside of your oF app.
 
 Here's the vertex shader, the first one that will be called in each *draw()* of our application.
 
@@ -169,7 +169,7 @@ That should look like the following when you run it:
 
 ![IMG](images/001.png)
 
-Let's break some of the things in there down a little bit. At the top of the fragment and vertex shaders you can see a lot of "uniforms". A uniform is a value passed to each shader from your program that sets some additional values that you use in each stage of your shading. Uniform variables act as constants, at least for the duration of your OF applications *draw()* method. Your OF application feeds these variables to the graphics pipeline so that they're accessible in both stages of shading. Any shader can access any uniform variable as long as it declares the variable, like we do in both shaders in our example. Note though that these variables are read-only in the shaders. If you want to update the value of a uniform, you can do it in your OF application by calling:
+Let's break some of the things in there down a little bit. At the top of the fragment and vertex shaders you can see a lot of "uniforms". A uniform is a value passed to each shader from your program that sets some additional values that you use in each stage of your shading. Uniform variables act as constants, at least for the duration of your oF applications *draw()* method. Your oF application feeds these variables to the graphics pipeline so that they're accessible in both stages of shading. Any shader can access any uniform variable as long as it declares the variable, like we do in both shaders in our example. Note though that these variables are read-only in the shaders. If you want to update the value of a uniform, you can do it in your oF application by calling:
 
 ```cpp
 shader.setUniform1f("myUniform", 1.f);
@@ -185,11 +185,11 @@ You can set several different kinds of uniforms, vec3, vec4, mat4, even structs.
 
 ### The vertex shader
 
-*modelViewProjectionMatrix* - This is actually a value passed in from OF. You can tell that because it's got a "uniform" in front of it. This means that it's passed in for each vertex with exactly the same value.
+*modelViewProjectionMatrix* - This is actually a value passed in from oF. You can tell that because it's got a "uniform" in front of it. This means that it's passed in for each vertex with exactly the same value.
 
-Next up in our vertex shader is a different kind of variable: *in vec4 position*. This is called an attribute and every vertex has a different one. That's helpful when you want to have lots of vertices that aren't all in the same place. Each one having its own position means that you can access the location of each vertex within the shader and use it in a calculation or even modify it in place. There are several different kinds of attributes for different kinds of objects in OF: position, color, or texture coordinates, all of which are handy for making complex geometery and shading them.
+Next up in our vertex shader is a different kind of variable: *in vec4 position*. This is called an attribute and every vertex has a different one. That's helpful when you want to have lots of vertices that aren't all in the same place. Each one having its own position means that you can access the location of each vertex within the shader and use it in a calculation or even modify it in place. There are several different kinds of attributes for different kinds of objects in oF: position, color, or texture coordinates, all of which are handy for making complex geometery and shading them.
 
-*position* - This is also a value passed in from OF but you'll notice that it has an "in" at the front of it, which means that the value passed in is different for each vertex because the each vertex has a slightly different position. These are called attributes and they're all set up when the ofMesh is created and each value is set when they're being drawn.
+*position* - This is also a value passed in from oF but you'll notice that it has an "in" at the front of it, which means that the value passed in is different for each vertex because the each vertex has a slightly different position. These are called attributes and they're all set up when the ofMesh is created and each value is set when they're being drawn.
 
 *gl_Position* - This is what comes out of the vertex shader. It's a variable with a fixed role: pass the position of the vertex to the triangle assembly. "Triangle assembly" is when the GPU connects vertices to form triangles. It does this by taking the vertices in the order specified by the element array and grouping them into sets of three that then either create triangle strips or triangle fans.
 
@@ -240,7 +240,7 @@ void ofApp::setup(){
 
 ```
 
-Next up, we're going to make a mouse-reactive color and set the front color of our application using that color. GLSL will have access to the color that is set in our ofColor application through the globalColor variable. This isn't actually a GLSL special object, this is created and updated by OF, just like the modelViewMatrix mat4 that we can use to determine how our 3D world should be laid out.
+Next up, we're going to make a mouse-reactive color and set the front color of our application using that color. GLSL will have access to the color that is set in our ofColor application through the globalColor variable. This isn't actually a GLSL special object, this is created and updated by oF, just like the modelViewMatrix mat4 that we can use to determine how our 3D world should be laid out.
 
 ```cpp
 
@@ -251,7 +251,7 @@ void ofApp::draw(){
 
     // the mouse/touch X position changes the color of the plane.
     // please have a look inside the frag shader,
-    // we are using the globalColor value that OF passes into the shader everytime you call ofSetColor().
+    // we are using the globalColor value that oF passes into the shader everytime you call ofSetColor().
     ofColor colorLeft = ofColor::magenta;
     ofColor colorRight = ofColor::cyan;
     ofColor colorMix = colorLeft.getLerped(colorRight, percentX);
@@ -291,7 +291,7 @@ Now, because we have one call to the vertex shader for each vertex, we can play 
 uniform mat4 modelViewProjectionMatrix;
 in vec4 position;
 
-// the time value is passed into the shader by the OF app.
+// the time value is passed into the shader by the oF app.
 uniform float time;
 
 
@@ -309,7 +309,7 @@ void main()
 }
 ```
 
-As you hopefully recall from the last little section, we have one call to the fragment shader per pixel, which means we can play with it as well. That's what we did in the last example, though, to keep things simple in this example we're just using a global color set in a uniform. The thing about that  is that we're setting it in the OF application, so that each *draw()* has a slightly different color based on the mouse position.
+As you hopefully recall from the last little section, we have one call to the fragment shader per pixel, which means we can play with it as well. That's what we did in the last example, though, to keep things simple in this example we're just using a global color set in a uniform. The thing about that  is that we're setting it in the oF application, so that each *draw()* has a slightly different color based on the mouse position.
 
 ```cpp
 
@@ -452,13 +452,13 @@ Now you know how to pass a few different values into a shader and use them to dy
 
 Let's talk about textures: you know textures as what you see on the screen when you draw your ofImage or a frame from your *ofVideo* player. Lots of times in shading, for example, in a vertex array, the data is fed to the vertex shader one element at a time and there's no way for the vertex shader to access other elements. A texture, on the other hand, makes its entire contents available to any vertex or fragment shader. Those shaders sample the texture at one (or a hundred) different texture coordinates. This makes it really powerful for passing data into your shader, first, because uploading a texture is (comparatively) really fast and two, because you can access any point in them.
 
-There's one nice little feature wrapped into the OF application: *mapTexCoordsFromTexture()*. This lets you just pass a texture reference to the plane and auto-calculate where each part of the texture should go. This is nice because it saves you needing to loop through each vertex and assign the texture coordinate. Of course, when you want to start doing tricky things yourself you'll want to do this yourself so you have more control over it, but for a simple ofPlanePrimitive, this is pretty sweet.
+There's one nice little feature wrapped into the oF application: *mapTexCoordsFromTexture()*. This lets you just pass a texture reference to the plane and auto-calculate where each part of the texture should go. This is nice because it saves you needing to loop through each vertex and assign the texture coordinate. Of course, when you want to start doing tricky things yourself you'll want to do this yourself so you have more control over it, but for a simple ofPlanePrimitive, this is pretty sweet.
 
 The other thing to note is that we're binding the texture in the *draw()* method before we call *shader.begin()*. This actually happens automatically when you call *ofImage::draw()* but since we're not doing that, we need to make sure that the image is available on the graphics card. The thing about ofTexture and textures in general, is that since you can have a lot of them on the graphics card of your computer, it's nice to be able to say which ones you're going to use in your program. The way that you do that is by "binding" the images, really just making sure that the memory that holds your texture is available to your shader. You can bind quite a few textures but for starters we'll just do one.
 
 ```cpp
 
-// OF
+// oF
 
 #include "ofApp.h"
 
@@ -535,9 +535,9 @@ void main()
 
 ```
 
-The fragment shader simply looks up the location in texture using the vec2 that's passed into it. The texture itself is represented by the sampler2DRect construct. This is the source of a lot of confusion when people get started using shaders in OF becuase there are two kinds of samplers: *sampler2DRect* and *sampler2D*. The difference between these two lies in the kind of texture data that you're actually uploading. If your texture is a power of two size where the height and width are both power of two values like 256 or 512 of 1024 or 2048, then you can use a sampler2D to represent your texture data. In OF however, we want to assume that you can use any image size because sometimes images are weird shapes and sizes like 4x1837 or 381x293 and that should be ok to work with. And it is and it works out fine in your shader as long as you use sampler2DRect. The way to get points in that data is the *texture()* method that takes the *sampler2DRect* that you're drawing the data from and the texture coordinate of the particular pixel that you want.
+The fragment shader simply looks up the location in texture using the vec2 that's passed into it. The texture itself is represented by the sampler2DRect construct. This is the source of a lot of confusion when people get started using shaders in oF becuase there are two kinds of samplers: *sampler2DRect* and *sampler2D*. The difference between these two lies in the kind of texture data that you're actually uploading. If your texture is a power of two size where the height and width are both power of two values like 256 or 512 of 1024 or 2048, then you can use a sampler2D to represent your texture data. In oF however, we want to assume that you can use any image size because sometimes images are weird shapes and sizes like 4x1837 or 381x293 and that should be ok to work with. And it is and it works out fine in your shader as long as you use sampler2DRect. The way to get points in that data is the *texture()* method that takes the *sampler2DRect* that you're drawing the data from and the texture coordinate of the particular pixel that you want.
 
-You'll notice that the *sampler2DRect* is called "tex0" and that we didn't actually set that uniform in our OF app. Why is that? The secret is in the *setUniformTexture()* method, which calls *bind()* for you. Also, drawing an image, as we do with *image.draw(0, 0)*, binds the texture as well and since it isn't given a uniform name, it appears as *tex0*. Confusing? Perhaps, but it's common enough to see that I wanted to call it to your attention. To be explicit, there are three ways of getting a texture into your shader:
+You'll notice that the *sampler2DRect* is called "tex0" and that we didn't actually set that uniform in our oF app. Why is that? The secret is in the *setUniformTexture()* method, which calls *bind()* for you. Also, drawing an image, as we do with *image.draw(0, 0)*, binds the texture as well and since it isn't given a uniform name, it appears as *tex0*. Confusing? Perhaps, but it's common enough to see that I wanted to call it to your attention. To be explicit, there are three ways of getting a texture into your shader:
 
 1) You can bind a texture and access it as *tex0* if it's the only one bound without a uniform name.
 2) You can call *setUniformTexture()* and pass a uniform name and the texture itself
