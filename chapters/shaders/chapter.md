@@ -17,7 +17,7 @@ The triangle is the root of making 3D or even 2D scenes. We spend a lot of time 
 Walking from the upper left to the lower right we have:
 
 * 1) Our oF application passing some vertex positions and texture coordinates to the graphics card
-* 2) Our Vertex Shader.
+* 2) Our Vertex Shader
 * 3) Primitive Assembly setup of primitives, e.g. triangles, lines, and points
 * 4) Rasterization: interpolation of data (colors, texture coordinates, other varying values) for all pixels
 * 5) Our Fragment Shader
