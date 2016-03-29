@@ -73,7 +73,7 @@ int main( ){
 
 Did you catch that? There's a new setting object that lets you define the OpenGL version and the dimension of the window.
 
-Now, what OpenGL3 is and how it's going to change the way that you think about code and graphics on your computer isn't a topic for this tutorial, but if you want to look up some tutorials on that [please do so](http://www.youtube.com/watch?v=XMgfddy7S7Q). We're working on an OpenGL tutorial but for the the moment we're going to stick with shaders. The OpenGL3 shader which confusingly uses GLSL 1.5, has the following at the top:
+Now, what OpenGL3 is and how it's going to change the way that you think about code and graphics on your computer isn't a topic for this tutorial, but if you want to look up some tutorials on that [please do so](https://www.youtube.com/watch?v=XMgfddy7S7Q "youtube: Beginners' OpenGL 3+ - Starting Out"). We're working on an OpenGL tutorial but for the the moment we're going to stick with shaders. The OpenGL3 shader which confusingly uses GLSL 1.5, has the following at the top:
 
 ```cpp
 #version 150
