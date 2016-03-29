@@ -29,7 +29,7 @@ Let's get more specific.
 
 ### Vertices
 
-Rendering an ofMesh start out as some vertex buffers on the CPU side that get filled with arrays of vertex attributes like colors or positions or texture coordinates. These attributes are used as the inputs into the vertex shader, this is what you're working with in your vertex shader. When you call draw() on an ofMesh the indexes control how the vertices get assembled into triangles later on.
+Rendering an ofMesh starts out as some vertex buffers on the CPU side are getting filled with arrays of vertex attributes like colors or positions or texture coordinates. These attributes are used as the inputs into the vertex shader, this is what you're working with in your vertex shader. When you call draw() on an ofMesh the indexes of the arrays with the vertex attributes control how the vertices get assembled into triangles later on.
 
 ### The vertex shader
 
