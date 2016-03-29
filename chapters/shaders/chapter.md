@@ -36,7 +36,8 @@ Rendering an ofMesh starts out as some vertex buffers on the CPU side are gettin
 The GPU begins by reading each selected vertex out of the vertex array and running it through the vertex shader. This shader is a program that takes a set of vertex attributes as inputs and outputs a new set of attributes. They are referred to as varying values and get fed to the rasterizer. At a minimum, the vertex shader calculates the projected position of the vertex in screen space. The vertex shader can also generate other varying outputs, such as a color or texture coordinates, for the rasterizer to blend across the surface of the triangles connecting the vertex.
 
 ### The fragment shader
-The generated fragments then pass through another program called the fragment shader. The fragment shader receives the varying values output by the vertex shader and interpolated by the rasterizer as inputs. It outputs color and depth values that then get drawn into the framebuffer. Common fragment shader operations include texture mapping and lighting. Since the fragment shader runs independently for every pixel drawn, it can perform the most sophisticated special effects; however, it is also the most performance-sensitive part of the graphics pipeline.
+
+The generated fragments then pass through another program called the fragment shader. The fragment shader receives the varying values output by the vertex shader and interpolated by the rasterizer as inputs. It outputs color and depth values that then get drawn into the framebuffer. Common fragment shader operations include texture mapping and lighting. Since the fragment shader runs independently for every pixel drawn, it can perform the most sophisticated special effects. However, it is also the most performance-sensitive part of the graphics pipeline.
 
 ### GLSL
 
