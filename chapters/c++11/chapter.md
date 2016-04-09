@@ -265,6 +265,7 @@ When we want to pass a lambda function as a variable, we need to introduce a typ
 class Graphic {
 public:
     void draw() {
+        whatToDraw();
     }
 
     std::function<void()> whatToDraw;
