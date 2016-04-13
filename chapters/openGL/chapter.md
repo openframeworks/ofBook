@@ -350,7 +350,7 @@ void ofApp::draw(){
 
 ```
 
-With this code you have accomplished two important things. It's a bit like making a movie, you have first to position the light, to turn it on, and then you have to put your camera in the right position. Now the set of our movie is ready for our first scene. If you run this code, you will a gray screen. That is obvius, there is nothing under our camera.Let's put an actor (a simple box) under the reflectors.
+With this code you have accomplished two important things. It's a bit like making a movie, you have first to position the light, to turn it on, and then you have to put your camera in the right position. Now the set of our movie is ready for our first scene. If you run this code, you will a gray screen. That is obvius, there is nothing under our camera. Let's put an actor (a simple box) under the reflectors.
 
 ```cpp
 
