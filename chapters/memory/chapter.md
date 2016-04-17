@@ -37,7 +37,7 @@ Internally the computer doesn't really know about that memory area as `i` but as
 
 When we create a variable like `int i` we are telling our program to reserve 4 bytes of memory, associate the address of the first byte of those 4 to the variable name `i` and restrict the type of data that we are going to store in those 4 bytes to only ints.
 
-![Int i](images/int_i "")
+![Int i](images/int_i.svg "")
 
 Usually memory addresses are represented in [hexadecimal](http://en.wikipedia.org/wiki/Hexadecimal). In c++ you can get the memory address of a variable by using the `&` operator, like:
 
@@ -55,15 +55,15 @@ i = 0;
 
 Our memory will look like:
 
-![Int i equals 0](images/int_i_equals_0 "")
+![Int i equals 0](images/int_i_equals_0.svg "")
 
 The order in which the bytes that form the int are layed out in the memory depends on the architecture of our computer, you'll prpbably seen [little endian and big endian](http://en.wikipedia.org/wiki/Endianness) mentioned sometime. Those terms refer to how the bytes of a data type are ordered in memory, if the most significative bytes come first or last. Most of the time we don't really need to know about this order but most modern computer architectures use little endian.
 
 If you've used c++ for a while you've probably had crashes in your programs because of bad memory accesses. Usually the message you'll see is something like `segmentation fault...`. What does that mean?
 
-When you create variables in a program, even in c++, you can't really access all the memory in the computer, for security reasons. Imagine you had your bank account opened in your browser, if any program could access all the memory in the computer a malign application could just access the memory of the browser and get that information or even modify it. To avoid it the operating system assigns chunks of memory to every program. When your application starts it's assigned a `segment` of memory. Later on as you create variables if there's enough memory in that `segment` your variables will be created there. When there's not more memory available in that segment the operating system assigns the application a new one and the application starts using that. If you try to access a memory address that doesn't belong to a segment assigned to your application, the operating system just kills the application to avoid possible security risks.
+When you create variables in a program, even in c++, you can't really access all the memory in the computer, for security reasons. Imagine you had your bank account opened in your browser, if any program could access all the memory in the computer a malign application could just access the memory of the browser and get that information or even modify it. To avoid it the operating system assigns chunks of memory to every program. When your application starts it's assigned a `segment` of memory. Later on as you create variables if there's enough memory in that `segment` your variables will be created there. When there's no more memory available in that segment the operating system assigns the application a new one and the application starts using that. If you try to access a memory address that doesn't belong to a segment assigned to your application, the operating system just kills the application to avoid possible security risks.
 
-How does that happen usually? Well most of the time you just don't try to access memory addresses by their number, so how's it possible that sometimes you try to access a variable and you get a segmentation fault. Most of the time this happens because you try to access a varible that doesn't exist anymore, usually because you stored a pointer to a memory area and then free or move that memory somewhere else. We'll talk in more detail about this later
+How does that happen usually? Well most of the time you just don't try to access memory addresses by their number, so how's it possible that sometimes you try to access a variable and you get a segmentation fault. Most of the time this happens because you try to access a variable that doesn't exist anymore, usually because you stored a pointer to a memory area and then freed or moved that memory somewhere else. We'll talk in more detail about this later.
 
 ## Stack variables, variables in functions vs variables in objects
 
@@ -151,12 +151,12 @@ And that will give us the memory address of the first byte used by that variable
 
 ```cpp
 int i = 0;
-int * a = &i;
+int * p = &i;
 ```
 
 And what we get in memory is something like:
 
-![Pointer](images/pointer "")
+![Pointer](images/pointer.svg "")
 
 A pointer usually occupies 4 or 8 bytes (depending if we are on a 32 or 64bits application), we are representing it as 1 byte only to make things easier to understand, but as you can see it's just another variable, that instead of containing a value contains a memory address that points to a value. That's why it's called pointer.
 
@@ -169,7 +169,7 @@ int i;
 ```
 We get a memory layout like:
 
-![Int i](images/int_i "")
+![Int i](images/int_i.svg "")
 
 As we see there's no value in that memory area yet. In other languages like processing doing something like:
 
@@ -278,7 +278,7 @@ In both languages the `=` means copy the value of the right side into the variab
 
 This is more or less what memory would look like in Java and C++:
 
-![Objects Java C](images/objects_java_c "")
+![Objects Java C](images/objects_java_c.svg "")
 
 As you can see in c++ objects in memory are just all their member variables one after another. When we make an object variable equal to another, by default, c++ copies all the object to the left side of the equal operator.
 
@@ -309,7 +309,7 @@ p2 = p1;
 
 Well as before c++ will copy the contents of p1 on p2, the contents of p1 are an ofVec2f which consits of 2 floats x and y and then a pointer to a ParticleSystem, and that's what gets copied, the ParticleSystem itself won't get copied only the pointer to it, so p2 will end up having a copy of the position of p2 and a pointer to the same ParticleSystem but we'll have only 1 particle system.
 
-![Object pointers](images/object_pointers "")
+![Object pointers](images/object_pointers.svg "")
 
 The fact that things are copied by default and that objects can be stored in the stack as oposed to being always a pointer has certain adavantages. For example, in c++ a vector or an array of particles like the ones we've used in the last example will look like:
 
@@ -381,7 +381,7 @@ Particle p1;
 moveParticle(&p1);
 ```
 
-Now, here's something new, notice how to refer to the variables of a pointer to an object instead of using the dot, we use the `->` operator, everytime we want to access a variable in a pointer to an object instead of having to dereference it like:
+Now, here's something new, notice how to refer to the variables of a pointer to an object instead of using the dot, we use the `->` operator, every time we want to access a variable in a pointer to an object instead of having to dereference it like:
 
 ```cpp
 (*p).x +=10;
@@ -458,7 +458,7 @@ Now we are passing a reference to the original object but instead of having to u
     ofVec2f averagePos = averagePosition(ps);
 
 
-> const only makes it imposible to modify the variable, even if it's a reference, and tells anyone using that function that they can pass their data into it and it won't be changed, also anyone modifying that function knows that in the future it should stay the same and the input, the particle system shouldn't be modified.
+> const only makes it impossible to modify the variable, even if it's a reference, and tells anyone using that function that they can pass their data into it and it won't be changed, also anyone modifying that function knows that in the future it should stay the same and the input, the particle system shouldn't be modified.
 
 Outside of parameters, references have a couple of special characteristics.
 
@@ -618,7 +618,7 @@ most probably our application will crash if the memory address at arr + 25 is ou
 
 We've just said arr + 25? what does that mean? As we've seen before a variable is just some place in memory, we can get its memory address which is the first byte that is assigned to that variable in memory. With arrays is pretty much the same, for example since we know that an int occupies 4 bytes in memory, an array of 10 ints will occupy 40 bytes and those bytes are contiguous:
 
-![Array](images/array "")
+![Array](images/array.svg "")
 
 Remember that memory addresses are expressed as hexadecimal so 40 == 0x0028. Now to take the address of an array, as with other variable we might want to use the `&` operator and indeed we can do it like:
 
@@ -749,15 +749,15 @@ Vectors have some more features and using them properly might be tricky mostly i
 
 ## Other memory structures, lists and maps ##
 
-Having objects in memory one after another is most of the time what we want, the access is really fast no matter if we want to access sequentially to each of them or randomly to anyone, since a vector is just an array internally, accesing let's say position 20 in it, just means that internally it just needs to get the memory address of the first position and add 20 to it. In soime cases though, vectors are not the most optimal memory structure. For example, if we want to frequnetly add  or remove elements in the middle of the vector, and you imagine the vector as a memory strip, that means that we need to move the rest of the vector till the end one position to the right and then insert the new element in the free location. In memory there's no such thing as move, moving contiguous memory means copying it and as we've said before, copying memory is a relatively slow operation.
+Having objects in memory one after another is most of the time what we want, the access is really fast no matter if we want to access sequentially to each of them or randomly to anyone, since a vector is just an array internally, accessing let's say position 20 in it, just means that internally it just needs to get the memory address of the first position and add 20 to it. In some cases though, vectors are not the most optimal memory structure. For example, if we want to frequently add  or remove elements in the middle of the vector, and you imagine the vector as a memory strip, that means that we need to move the rest of the vector till the end one position to the right and then insert the new element in the free location. In memory there's no such thing as move, moving contiguous memory means copying it and as we've said before, copying memory is a relatively slow operation.
 
-![Vector inserting](images/vector_inserting "")
+![Vector inserting](images/vector_inserting.svg "")
 
 Sometimes, if there's not enough memory to move/copy the elements, one position to the right, the vector will need to copy the whole thing to a new memory location. If we are working with thousands of elements and doing this very frequently, like for example every frame, this can really slow things down a lot.
 
-To solve that, there's other memory structures like for example lists. In a list, memory, is not contiguous but instead each element has a pointer to the next and previous element so inserting one element just means changing those pointers to point to the newly added element. In a list we never need to move elements around but it's main disadvantage is that not being the elements contiguous in memory it's access can be slightly slower than a vector, also that we can't use it in certain cases like for example to upload data to the graphics card which always wants contiguos memory.
+To solve that, there's other memory structures like for example lists. In a list, memory, is not contiguous but instead each element has a pointer to the next and previous element so inserting one element just means changing those pointers to point to the newly added element. In a list we never need to move elements around but it's main disadvantage is that not being the elements contiguous in memory it's access can be slightly slower than a vector, also that we can't use it in certain cases like for example to upload data to the graphics card which always wants contiguous memory.
 
-![List](images/list "")
+![List](images/list.svg "")
 
 Another problem of lists is that trying to access an element in the middle of the list (what is called random access) is slow since we always have to go through all the list till we arrive to the desired element. Lists are used then, when we seldom need to access randomly to a position of it and we need to add or remove elements in the middle frequently. For the specifics of the syntax of a list you can check the [c++ documentation on lists](http://www.cplusplus.com/reference/list/list/)
 
@@ -792,7 +792,7 @@ You can find the complete reference on maps in the [c++ documentation for maps](
 
 ## smart pointers ##
 
-As we've said before, traditional c pointers also called now *raw pointers* are sometimes problematic, the most frequent problems are dangling pointers: pointers that probably were once vañlid but now point to an invalid memory location, trying to dereference a NULL pointer, posible memory leaks if we fail to deallocate memory before loosing the reference to that memory address...
+As we've said before, traditional c pointers also called now *raw pointers* are sometimes problematic, the most frequent problems are dangling pointers: pointers that probably were once valid but now point to an invalid memory location, trying to dereference a NULL pointer, possible memory leaks if we fail to deallocate memory before loosing the reference to that memory address...
 
 Smart pointers try to solve that by adding what we've been calling stack semantics to memory allocation, the correct term for this is RAII: [Resource Acquisition Is Initialization](http://en.wikipedia.org/wiki/Resource_Acquisition_Is_Initialization) And means that the creation of an object in the stack, allocates the resources that it'll use later. When it's destructor is called because the variable goes out of scope, the destructor of the object is triggered which takes care of deallocating all the used resources. There's some more implications to RAII but for this chapter this is what matters to us more.
 
@@ -872,7 +872,7 @@ void ofApp::setup(){
 }
 ```
 
-As you can see, once it's created it's syntax is the same as a raw pointer, we can use the `*` operator to dereference it and access or modiify it's value, if we are working with objects like:
+As you can see, once it's created it's syntax is the same as a raw pointer, we can use the `*` operator to dereference it and access or modify it's value, if we are working with objects like:
 
 ```cpp
 void ofApp::setup(){

@@ -41,7 +41,7 @@ void ofApp::setup(){
 void ofApp::update(){
     xpos += 2;
     if(ofGetWidth()<xPos){  // if vertical position is off the screen (width)
-        xPos = 5             // reset vertical position
+        xPos = 5;             // reset vertical position
     }
 }
 
