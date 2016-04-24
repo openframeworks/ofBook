@@ -230,7 +230,7 @@ So we need some data and some rules.  Let's grab some "data" in the form of an i
 
 ![Original hubble image](images/stars.png)
 
-Create a new openFrameworks project called HubbleMesh. Inside that project create the bin/data directory ('bin' may already exist) and save the above image there as "stars.png".  (Click [here](/images/stars.png), then right-click the image and "save as image.")
+Create a new openFrameworks project called HubbleMesh. Inside that project create the bin/data directory ('bin' may already exist) and save the above image there as "stars.png".  (Click [here](https://raw.githubusercontent.com/openframeworks/ofBook/master/chapters/generativemesh/images/stars.png), then right-click the image and "save as image.")
 
 Now we have some colorful, pixely goodness, but what rules should we use to transform those pixels into a mesh?  We can start with drawing points and work our way up to drawing lines.  Our image has a ton of stars, so let's create some vertices where those stars are located.  Once we do that, we can connect up neighboring vertices with lines in order to create a web of sorts.
 
