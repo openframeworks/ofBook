@@ -7,7 +7,7 @@ ofBook
 - English(영어) : [README.md](README.md)
 
 **이 저장소는 현재 작업 진행중임을 명심하십시오**
-
+**현재는 ofBook은 영어로만 보여지고 있습니다. [이곳](http://openframeworks.cc/ofBook/)에서 확인할 수 있습니다. 한국어 및 일본어 번역이 진행중에 있습니다.**
 
 # 책 빌드하기
 
