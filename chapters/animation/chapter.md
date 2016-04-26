@@ -96,7 +96,7 @@ void testApp::update(){
 }
 ```
 
-Here `ofGetLastFrameTime()` returns the time it took to complete the last frame. Since this tome has passed in the system, we use it to multiply with the speed. This is going to yield the distance (virtually) travelled by the rectangle. Now it is effectively moving at the same speed regardless of frame rate.  Frame rate independence is fairly important to think about once you get the hang of things. As observers of animation, we really do feel objects speeding up or slowing down even slightly, but in this chapter I will skip it for the sake of simplicity in the code.
+Here `ofGetLastFrameTime()` returns the time it took to complete the last frame. Since this time has passed in the system, we use it to multiply with the speed. This is going to yield the distance (virtually) travelled by the rectangle. Now it is effectively moving at the same speed regardless of frame rate.  Frame rate independence is fairly important to think about once you get the hang of things. As observers of animation, we really do feel objects speeding up or slowing down even slightly, but in this chapter I will skip it for the sake of simplicity in the code.
 
 ### Time functions
 
