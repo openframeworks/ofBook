@@ -177,7 +177,7 @@ void rectangle::interpolateByPct(float myPct){
 }
 ```
 
-in the ofApp file, we create a variable called pct, and set it to 0.  We increate pct every frame and pass it through to the rectangle object in the update function:  
+in the ofApp file, we create a variable called pct, and set it to 0.  We increment pct every frame and pass it through to the rectangle object in the update function:  
 
 
 ```cpp
