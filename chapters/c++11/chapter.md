@@ -265,6 +265,7 @@ When we want to pass a lambda function as a variable, we need to introduce a typ
 class Graphic {
 public:
     void draw() {
+        whatToDraw();
     }
 
     std::function<void()> whatToDraw;
@@ -410,7 +411,7 @@ One way of doing this would be to store some data saying that we needed to chang
 
 A nice workaround is to use lambda functions for this purpose, e.g. :
 
-```
+```cpp
 class CameraClass : public ofThread {
 protected:
 	void threadedFunction() override {
