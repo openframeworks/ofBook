@@ -34,24 +34,24 @@ The second point to make about animation is that it requires variables. A variab
 
 ```cpp
 void ofApp::setup(){
-    xpos = 5;  // vertical start position
+    xpos = 5;  // horizontal start position
     ofBackground(ofColor::black);  // black background
 }
 
 void ofApp::update(){
     xpos += 2;
-    if(ofGetWidth()<xPos){  // if vertical position is off the screen (width)
-        xPos = 5;             // reset vertical position
+    if(ofGetWidth()<xPos){  // if horizontal position is off the screen (width)
+        xPos = 5;             // reset horizontal position
     }
 }
 
 void ofApp::draw(){
     ofSetColor(ofColor::red);  // draw everything in red
-    ofDrawCircle(xpos, 100, 10);   // draw a circle at the (variable) vertical position, 100 pixels from the top with a 10 pixel diameter
+    ofDrawCircle(xpos, 100, 10);   // draw a circle at the (variable) horizontal position, 100 pixels from the top with a 10 pixel diameter
 }
 ```
 
-In this example a red circle moves from the left to the right on the screen. The vertical position (`xpos`) is an integer and gets set to 5 as the initial value in `setup()`. The `update()` function always adds 2 to the `xpos` variable and stores the new value until it becomes larger than the screen width (`ofGetWidth()`), then the vertical position gets reset. The `draw()` function reads the value stored in the variable `xpos` and draws the red circle accordingly.
+In this example a red circle moves from the left to the right on the screen. The horizontal position (`xpos`) is an integer and gets set to 5 as the initial value in `setup()`. The `update()` function always adds 2 to the `xpos` variable and stores the new value until it becomes larger than the screen width (`ofGetWidth()`), then the horizontal position gets reset. The `draw()` function reads the value stored in the variable `xpos` and draws the red circle accordingly.
 
 ### Frame rate
 
@@ -96,7 +96,7 @@ void testApp::update(){
 }
 ```
 
-Here `ofGetLastFrameTime()` returns the time it took to complete the last frame. Since this tome has passed in the system, we use it to multiply with the speed. This is going to yield the distance (virtually) travelled by the rectangle. Now it is effectively moving at the same speed regardless of frame rate.  Frame rate independence is fairly important to think about once you get the hang of things. As observers of animation, we really do feel objects speeding up or slowing down even slightly, but in this chapter I will skip it for the sake of simplicity in the code.
+Here `ofGetLastFrameTime()` returns the time it took to complete the last frame. Since this time has passed in the system, we use it to multiply with the speed. This is going to yield the distance (virtually) travelled by the rectangle. Now it is effectively moving at the same speed regardless of frame rate.  Frame rate independence is fairly important to think about once you get the hang of things. As observers of animation, we really do feel objects speeding up or slowing down even slightly, but in this chapter I will skip it for the sake of simplicity in the code.
 
 ### Time functions
 
@@ -177,7 +177,7 @@ void rectangle::interpolateByPct(float myPct){
 }
 ```
 
-in the ofApp file, we create a variable called pct, and set it to 0.  We increate pct every frame and pass it through to the rectangle object in the update function:  
+in the ofApp file, we create a variable called pct, and set it to 0.  We increment pct every frame and pass it through to the rectangle object in the update function:  
 
 
 ```cpp
