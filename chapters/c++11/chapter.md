@@ -411,7 +411,7 @@ One way of doing this would be to store some data saying that we needed to chang
 
 A nice workaround is to use lambda functions for this purpose, e.g. :
 
-```
+```cpp
 class CameraClass : public ofThread {
 protected:
 	void threadedFunction() override {
