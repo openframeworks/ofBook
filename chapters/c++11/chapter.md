@@ -1,5 +1,7 @@
 # C++ 11
 
+*by [Elliot Woods](http://www.kimchiandchips.com/)*
+
 ## Introduction
 C++ is a pretty old language, it's been around since 1983, and perhaps because of that (but certainly for many other reasons), it is often seen as archaic, obtuse, or perhaps just plain out of touch by today's standards. Contrary to this, many people believe that it is still offers the best balance of performance and clarity on the coding high street, and (in part thanks to the success of Unix and its mates) has an incredibly strong ecosystem of 3rd party libraries, device support and general acceptance, even up to the point where current shader languages and CUDA use C++ as their language of choice.
 
@@ -263,6 +265,7 @@ When we want to pass a lambda function as a variable, we need to introduce a typ
 class Graphic {
 public:
     void draw() {
+        whatToDraw();
     }
 
     std::function<void()> whatToDraw;
@@ -281,7 +284,7 @@ protected:
 void ofApp::setup() {
 	Graphic circle;
 	circle.whatToDraw = []() {
-		ofCircle(50,50,20);
+		ofDrawCircle(50,50,20);
 	};
 	this->graphicElements.push_back(circle);
 
@@ -408,7 +411,7 @@ One way of doing this would be to store some data saying that we needed to chang
 
 A nice workaround is to use lambda functions for this purpose, e.g. :
 
-```
+```cpp
 class CameraClass : public ofThread {
 protected:
 	void threadedFunction() override {

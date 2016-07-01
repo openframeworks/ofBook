@@ -230,7 +230,7 @@ void particle::update(){
 
 //------------------------------------------------------------
 void particle::draw(){
-    ofCircle(pos.x, pos.y, 3);
+    ofDrawCircle(pos.x, pos.y, 3);
 }
 
 

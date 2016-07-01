@@ -173,7 +173,7 @@ Those ignored files will still exist in our working directory, that means we can
 If, later down the line, we see files appearing in our list of changes which should not be there, or if we can't seem to add a file that belongs in the repository, we don't force Git to do what it doesn't want to, rather fine-tune the `.gitignore` pattern to match our expectations.
 Note that the `.gitignore` pattern does _not_ affect files that have already been committed.
 
-Because it can be daunting to come up with a generally useful `.gitignore` template, it's [currently planned](https://github.com/openframeworks/openFrameworks/issues/2791) that OF offers to add a pre-made `.gitignore` file when we create our project.
+Because it can be daunting to come up with a generally useful `.gitignore` template, it's currently planned that the project generator will optionally add a pre-made `.gitignore` file when we create our project (the template can already be [found at](https://github.com/openframeworks/openFrameworks/blob/master/scripts/templates/gitignore/.gitignore) `scripts/templates/gitignore/.gitignore`).
 This file will look similar to this (formatted into three columns for convenience):
 
 ```bash

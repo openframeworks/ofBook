@@ -1,26 +1,20 @@
 #Anthropocene
 
-## Project Overview
+*by [Joel Gethin Lewis](http://www.hellicarandlewis.com/)*
+
+This chapter presents an overview of an Anthropocene, an body reactive interactive video installation for Greenpeace as part of their field at Glastonbury 2013.   It's presented here in the form of diary / journal, discussing the work in narrative form from initial emails, concepting and back and forth through to final coded work.  
+
+To see the finished project as part of a wider event please see the [YouTube link](http://youtu.be/LwokmKqT0og?t=1m12s)
+
+Or an [exceprt from inside the dome](https://vimeo.com/97113402)
+
+All source code can be found [here](https://github.com/HellicarAndLewis/Anthropocene)
 
 **Anthropocene**
 
 _Adjective_
 
 _Relating to or denoting the current geological age, viewed as the period during which human activity has been been the dominant influence on climate and the environment._
-
-Anthropocene, an body reactive interactive video installation for Greenpeace as part of their field at Glastonbury 2013.
-
-To see the finished project as part of a wider event please see the YouTube link below:
-
-http://youtu.be/LwokmKqT0og?t=1m12s
-
-Or an exceprt from inside the dome here:
-
-https://vimeo.com/97113402
-
-All source code can be found here:
-
-https://github.com/HellicarAndLewis/Anthropocene
 
 ## The Project
 
@@ -66,7 +60,7 @@ After some studio thinking, by 16th April we responded with the following docume
 
 ![Tenth Page of Presentation, Kaleidoscope Imagery from previous installation](images/2013_04_16_Greenpeace_HandL_10.jpg "Tenth Page of Presentation, Kaleidoscope Imagery from previous installation")
 
-On April 30th, we recieved an email from Paul:
+On April 30th, we received an email from Paul:
 
 "..we would love you to implement your proposal in our main feature of the dome at Glastonbury Festival this year..."
 

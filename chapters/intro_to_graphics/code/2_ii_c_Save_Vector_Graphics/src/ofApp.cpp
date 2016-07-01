@@ -48,7 +48,7 @@ void ofApp::draw(){
             ofVec3f point = polyline.getPointAtPercent(p/500.0);
             float floatIndex = p/500.0 * (numPoints-1);
             ofVec3f tangent = polyline.getTangentAtIndexInterpolated(floatIndex) * tangentLength;
-            ofLine(point-tangent/2, point+tangent/2);
+            ofDrawLine(point-tangent/2, point+tangent/2);
         }
     }
 

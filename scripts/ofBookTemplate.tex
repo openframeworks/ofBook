@@ -79,6 +79,9 @@ $if(listings)$
         rulecolor=\color{fencedBorderColor},
         basicstyle=\small\ttfamily}
 $endif$
+% This command is used by pandoc when create lists and is defined in pandoc's default latex template
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 $if(lhs)$
 \lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small\ttfamily}}{}
 $endif$

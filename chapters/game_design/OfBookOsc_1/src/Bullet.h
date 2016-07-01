@@ -6,9 +6,8 @@
 //
 //
 
-#ifndef __OfBookOsc__Bullet__
-#define __OfBookOsc__Bullet__
-#include <iostream>
+
+#pragma once
 #include "ofMain.h"
 
 class Bullet {
@@ -27,4 +26,3 @@ public:
     
     ofImage * img;
 };
-#endif /* defined(__OfBookOsc__Bullet__) */

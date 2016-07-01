@@ -1,7 +1,10 @@
 ofBook
-======
+====== 
 
 this is a collaboratively written openFrameworks book.  
+
+for other language, please read below.
+- Korean(한국어) : [README.ko.md](README.ko.md)
 
 **please note that this is still work-in-progress**
 

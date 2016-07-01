@@ -6,22 +6,31 @@ Basics
 	setup_and_project_structure
 	intro_to_graphics
 	OOPs!
+	how_of_works
 Approaches
 	animation
-	data_vis
 	game_design
 	image_processing_computer_vision 
 I/O
 	hardware
 	sound
 	network	
-Advanced topics
+Graphics
+	openGL
+	lines
+	generativemesh
 	advanced_graphics
-	math
-	memory
+	shaders
+C++	
 	threads
-	ios	
+	memory
+	stl_vector
+	stl_map
 	c++11
+Advanced topics	
+	math
+Platforms	
+	ios
 Tools
 	version_control_with_git
 	ofSketch

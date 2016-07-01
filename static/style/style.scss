@@ -152,6 +152,7 @@ a:active {
 .banner {
   position:fixed;
   background-color: rgba(200,120,120,0.9);
+  
   width:100%;
   left:0px;
   top:0px;
@@ -375,16 +376,27 @@ a:active {
 }
 
 .toc {
-  width: 980px;
+  width: 980;
   margin-left: 0px;
 
   .toc-wrapper {
+        -webkit-column-count: 2; /* Chrome, Safari, Opera */
+    -moz-column-count: 2; /* Firefox */
     column-count: 2;
-    -webkit-column-count: 2;
-    -moz-column-count: 2;
 
     h3 {
       margin-top: 0;
+    }
+    ul{
+    list-style-type: none;
+    }
+
+    .tocSection {
+        margin: 0;
+    -webkit-column-break-inside: avoid; /* Chrome, Safari */
+    page-break-inside: avoid;           /* Theoretically FF 20+ */
+    break-inside: avoid-column;         /* IE 11 */
+    display:table;                      /* Actually FF 20+ */
     }
   }
 

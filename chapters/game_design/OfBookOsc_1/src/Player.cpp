@@ -6,7 +6,7 @@ void Player::setup(ofImage * _img) {
     speed = 5;
     
     img = _img;
-    width = height = img->width;
+    width = height = img->getWidth();
     
     pos.x = ofGetWidth()/2;
     pos.y = ofGetHeight() - height * 2;

@@ -3,6 +3,6 @@
 void BallRed::draw(){
     
     ofSetColor(ofColor::red);
-    ofCircle(x, y, dim);
+    ofDrawCircle(x, y, dim);
 
 }
