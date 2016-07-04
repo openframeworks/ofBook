@@ -422,7 +422,7 @@ But because there's always a time you might just want to destroy them all, vecto
 Feel free to experiment and try using it yourself!
 
 ```cpp
-balls.clear();
+myBall.clear();
 ```
 
 
