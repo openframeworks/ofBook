@@ -113,7 +113,7 @@ __ofApp.cpp__
 
 ~~~~{.cpp}
 void ofApp::setup(){
-    pixels1.allocate(640,480,OF_IMAGE_COLOR)
+    pixels1.allocate(640,480,OF_IMAGE_COLOR);
     pixels1.set(0);
     pixels2 = pixels1;
     pixels2.setColor(10,10,ofColor(255,255,255));
