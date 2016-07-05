@@ -602,17 +602,16 @@ We are getting all of the vertices in our `ofPolyline`. But here, we are also us
 ![Figure 14: Drawing normals at the vertices of a polyline, without and with resampling points evenly](images/Figure14_PolylineNormals.png)
 
 ```cpp
-float numPoints = polyline.size();
 float normalLength = 50;
 for (int p=0; p<100; p+=10) {
     ofVec3f point = polyline.getPointAtPercent(p/100.0);
-    float floatIndex = p/100.0 * (numPoints-1);
+    float floatIndex = polyline.getIndexAtPercent(p/100.0);
     ofVec3f normal = polyline.getNormalAtIndexInterpolated(floatIndex) * normalLength;
     ofDrawLine(point-normal/2, point+normal/2);
 }
 ```
 
-We can get an evenly spaced point by using percents again, but `getNormalAtIndexInterpolated(...)` is asking for an index. Specifically, it is asking for a `floatIndex` which means that we can pass in 1.5 and the polyline will return a normal that lives halfway between the point at index 1 and halfway between the point at index 2. So we need to convert our percent, `p/100.0`, to a `floatIndex`. All we need to do is to multiply the percent by the last index in our polyline (which we can get from subtracting one from the [`size()`](http://www.openframeworks.cc/documentation/graphics/ofPolyline.html#show_size) which tells us how many vertices are in our polyline), resulting in figure 14 (right).
+We can get an evenly spaced point by using percents again, but `getNormalAtIndexInterpolated(...)` is asking for an index. Specifically, it is asking for a `floatIndex` which means that we can pass in 1.5 and the polyline will return a normal that lives halfway between the point at index 1 and halfway between the point at index 2. So we need to convert our percent, `p/100.0`, to a `floatIndex` using [`getIndexAtPercent(...)`](http://openframeworks.cc/documentation/graphics/ofPolyline/#!show_getIndexAtPercent). Once we've done that, we'll have something like figure 14 (right).
 
 Now we can pump up the number of normals in our drawing. Let's change our loop increment from `p+=10` to `p+=1`, change our loop condition from `p<100` to `p<500` and change our `p/100.0` lines of code to `p/500.0`. We might also want to use a transparent white for drawing these normals, so let's add `ofSetColor(255,100)` right before our loop. We will end up being able to draw ribbon lines, like figure 15.
 
@@ -638,11 +637,10 @@ I'm sure you can guess what's next... drawing a whole bunch of tangents at evenl
 
 ```cpp
 ofSetColor(255, 50);
-float numPoints = polyline.size();
 float tangentLength = 300;
 for (int p=0; p<500; p+=1) {
     ofVec3f point = polyline.getPointAtPercent(p/500.0);
-    float floatIndex = p/500.0 * (numPoints-1);
+    float floatIndex = polyline.getIndexAtPercent(p/500.0);
     ofVec3f tangent = polyline.getTangentAtIndexInterpolated(floatIndex) * tangentLength;
     ofDrawLine(point-tangent/2, point+tangent/2);
 }
