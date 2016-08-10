@@ -254,6 +254,7 @@ void testApp::draw(){
 ```
 
 You should have a player who moves around on-screen. Sweet!
+
 ###Player bullets
 
 Let's make our bullets next. In order to have a variable number of bullets on screen at a time, we need to add a `vector<Bullet> bullets` to testApp.h. Let's also create a `void update_bullets()` function, which will update our vector of bullets (and, shortly, trigger the check for bullet collisions). We also want our player and enemy bullets to look different, so we'll add `ofImage enemy_bullet_image` and `ofImage player_bullet_image` to our `testApp.h` file.
