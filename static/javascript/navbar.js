@@ -2,7 +2,7 @@ $(document).ready(function() {
 
   // Handle selecting & unselecting chapter groups in the sidebar
   var $selectedGroup = $('.group.selected');
-  $(".group").click(function() {
+  $(".group").click(function(event) {
     // Pull out the element that to which the click event is bound (li.group)
     var newSelected = event.currentTarget;
 
