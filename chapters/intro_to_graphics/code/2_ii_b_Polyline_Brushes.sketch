@@ -73,11 +73,10 @@ void draw() {
         //  Note: If you want to use the normals to add thickness to our polylines
         //  (creating "ribbons"), then edit the loop so that it moves by a smaller
         //  percentage each iteration
-//        float numPoints = polyline.size();
 //        float normalLength = 50;
 //        for (int p=0; p<100; p+=10) {
 //            ofVec3f point = polyline.getPointAtPercent(p/100.0);
-//            float floatIndex = p/100.0 * (numPoints-1);
+//            float floatIndex = polyline.getIndexAtPercent(p/100.0);
 //            ofVec3f normal = polyline.getNormalAtIndexInterpolated(floatIndex) * normalLength;
 //            ofLine(point-normal/2, point+normal/2);
 //        }
@@ -85,11 +84,10 @@ void draw() {
         // Drawing evenly spaced tangents along the polyline
         //  Note: These are pretty exaggerated tangents, like Figure 16 (right)
         ofSetColor(255, 50);
-        float numPoints = polyline.size();
         float tangentLength = 300;
         for (int p=0; p<500; p+=1) {
             ofVec3f point = polyline.getPointAtPercent(p/500.0);
-            float floatIndex = p/500.0 * (numPoints-1);
+            float floatIndex = polyline.getIndexAtPercent(p/500.0);
             ofVec3f tangent = polyline.getTangentAtIndexInterpolated(floatIndex) * tangentLength;
             ofLine(point-tangent/2, point+tangent/2);
         }

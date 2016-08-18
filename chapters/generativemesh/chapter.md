@@ -693,7 +693,7 @@ Add this chunk of code at that start of our update function:
 if (mouseDisplacement) {
     // Get the mouse location - it must be relative to the center of our screen
     // because of the ofTranslate() command in draw()
-    ofVec3f mouse(mouseX, ofGetWidth()-mouseY, 0);
+    ofVec3f mouse(mouseX, ofGetHeight()-mouseY, 0);
 
     // Loop through all the vertices in the mesh and move them away from the
     // mouse

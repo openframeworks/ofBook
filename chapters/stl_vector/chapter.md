@@ -320,7 +320,7 @@ It is very important to remember that when erasing a pointer to an object in a v
 ```
  
 
-Note that this means erase and remove_if demonstrated above will not be sufficient. If pointers are needed, it is worthwhile to consider using shared pointers instead. <a href="/documentation/types/ofPtr.html">See ofPtr</a>
+Note that this means erase and remove_if demonstrated above will not be sufficient. If pointers are needed, it is worthwhile to consider using shared pointers instead.
 
 
 <a name="optimizing"></a>
