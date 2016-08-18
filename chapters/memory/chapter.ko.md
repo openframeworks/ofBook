@@ -116,7 +116,7 @@ The life of a variable is called `scope`.
 변수의 수명은 `변수영역(scope)` 이라고도 불립니다.
 
 Apart from creating variables inside functions we can also create variables in the class declaration in our .h like:
-함수 내에서 변수를 선언하는 부분을 .h내의 클래스 선언부에서 변수를 선언하도록 분리해보도록 하죠. 아래와 같이요:
+함수 내에서 변수를 선언하는 부분을 .h파일의 클래스 선언부에서 변수를 선언하도록 분리해봅시다. 다음과 같이요:
 ```cpp
 class Ball{
 public:
@@ -126,26 +126,27 @@ public:
 }
 ```
 
-These kind of variables are called `instance variables` because every instance or object of our class will get a copy of it. The way they behave is more or less the same as the stack variables created in functions. They exist for the duration of the {} in which they were defined, in this case the {} of the object to which they belong.
+이런 종류의 변수를 '인스턴스 변수' 라고 합니다. 이는 모든 클래스의 인스턴스나 오브젝트들은 카피되기 떄문입니다. 이러한 동작은 함수내에서 스택 변수들을 선언할떄의 동작과 완벽히 같습니다. 이들은 이들이 선언된 {} 내에서만 존재하며, 위의 경우 오브젝트의 {} 내에서 존재하게 됩니다.  
 
-These variables can be accessed from anywhere in the class so when we need to have data that is accessible from any function in an object of this class we create it like this.
+이러한 변수들은 클래스 내 어디에서든 접근이 가능하기 떄문에 이 데이터들이 필요할 경우엔, 위에서 선언한 클래스 오브젝트 내 함수를 통해서 접근할 수 있습니다.
 
-The memory in the stack is limited, the exact size, depends on the architecture of our computer, the operating system and even the compiler we are using. In some systems it can even be changed during the runtime of the application, but most of the time we won't reach that limit.
+스택 내의 메모리는 제한적인데, 사용하고 있는 컴퓨터의 아키텍쳐, 운영체제, 그리고 심지어 컴파일러에 따라서 사이즈가 달라집니다. 어떠한 시스템의 경우 어플리케이션이 실행중인 때에도 크기가 바뀌기도합니다. 하지만 대부분은 이 한계에 다다를 일은 없습니다. 
 
-Even if we create all of our variables in the stack, usually the objects that consume most memory like for example a vector or in openFrameworks something like ofPixels, will create most of the memory they use internally in the heap which is only limited by the amount of memory available in the computer so we don't need to worry about it.
+만일 모든 변수들을 스택에 생성했다 하더라도, 일반적으로 오브젝트들(예를들어 벡터라든가, 오픈프레임웍스의 ofPixels와 같은)은 내부적으로 컴퓨터에서 사용가능한 전체 메모리의 크기에 제한을 받는 힙영역을 사용하기 때문에, 우리가 걱정할 필요는 없습니다.
 
-We'll see in the next sections how the heap works and what are the advantages of using the heap or the stack.
+다음 섹션에서는 힙메모리가 어떻게 동작하는지, 그리고 힙과 스택을 사용할때의 장점들을 살펴보겠습니다.
 
-## Pointers and references ##
+## 포인터와 레퍼런스 ##
 
-Before talking about heap memory let's see how pointers and references work in c++, what's their syntax and what's really happening with memory when we create a pointer or a reference.
+힙메모리에 대해 얘기하기 전에 우선, C++에서의 포인터와 레퍼런스가 어덯게 동작하는지, 사용 문법, 그리고 포인터나 레퍼런스를 사용할 때 실제로 메모리에서 어떻게 동작하는지에 대해서 살펴보도록 합니다. 
 
-As we've seen before we can get the address of a variable by doing:
+앞에서 보셨다시피 변수의 실제 메모리 주소를 얻기 위해서는 이렇게 하면 됩니다:
 
 ```cpp
 cout << &i << endl;
 ```
 
+이렇게 하면 변수의 타입과 상관 없이, 변수의 첫번째 바이트의 메모리 주소를 얻어올 수 있습니다. 
 And that will give us the memory address of the first byte used by that variable no matter its type. When we store that memory address in another variable that's what we call in c++ a pointer. The syntax is:
 
 ```cpp
