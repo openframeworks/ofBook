@@ -17,15 +17,16 @@
 
 여러분의 컴퓨터는 아마도 대략 4기가 정도의 램을 갖고 있을것입니다. C++에서는 메모리의 대부분에 접근할 수 있으며, 이를 위해 변수를 생성합니다. 메모리는 바이트(byte)로 나뉘어지는데, 이는 C++ 어플리케이션에서 일반적으로 사용할 수 있는 최소 메모리 사이즈입니다. char, int, float..와 같은 각각 데이터 타입은 byte를 단위로 서로 다른 크기를 갖습니다. 이들은 플랫폼마다 달라질 수 있지만, 대부분 아래와 같은 크기를 갖습니다:
 
-- char:  1 byte
-- short: 2 bytes
-- int:   4 bytes
-- float  4 bytes
-- double 8 bytes
+	- char:  1 byte
+	- short: 2 bytes
+	- int:   4 bytes
+	- float  4 bytes
+	- double 8 bytes
 
 배열이나 문자열과 같은 다른 타입들은 포함하고있는 내용에 따라 가변적인 크기를 가질 수 있습니다.
 
 변수를 선언하는 예제는 아래와 같습니다:
+
 ```cpp
 int i;
 ```
@@ -40,6 +41,7 @@ int i;
 
 일반적으로 메모리 주소는 [16진수](http://ko.wikipedia.org/wiki/십육진법)로 표현됩니다. C++에서는 `&`연산자를 사용하여 메모리 주소를 얻을 수 있습니다. 아래와 같이요:
 
+
 ```cpp
 cout << &i << endl;
 ```
@@ -47,11 +49,14 @@ cout << &i << endl;
 위 cout의 결과가 바로 우리가 방금 생성한 변수 `i`의 첫번째 byte 메모리 주소입니다.
 
 이후에 위 변수에 값을 할당하면, 변수를 선언함으로써 예약된 메모리 영역에 이 값이 저장됩니다. 따라서 우리가 아래와 같이 하면:
+
 ```cpp
 i = 0;
 ```
 
+
 메모리는 내부적으로 이렇게 보여집니다:
+
 ![Int i equals 0](images/int_i_equals_0.svg "")
 
 int형인 byte들이 메모리 내에서 어떠한 순서로 구성되어지는지는 컴퓨터의 아키텍쳐에 따라 달라집니다. 아마도 [리틀 엔디안, 빅 엔디안](https://ko.wikipedia.org/wiki/%EC%97%94%EB%94%94%EC%96%B8)에 대해 어디선가 들어본 적이 있을겁니다. 이는 데이터형의 바이트들을 메모리에 나열할 때, 큰 단위를 앞에서 혹은 뒤에서부터 나열하는 것을 의미합니다. 대부분의 경우 이것에 대해서 알아야 할 필요는 없지만, 최신 현대 컴퓨터 아키텍쳐들은 리틀 엔디안을 사용합니다.
@@ -74,11 +79,11 @@ int형인 byte들이 메모리 내에서 어떠한 순서로 구성되어지는�
 
 ```cpp
 void ofApp::setup(){
-    int a = 0;
+	int a = 0;
 }
 
 void ofApp::update(){
-    a = 5; // setup의 바깥에서는 존재하지 않으므로 에러
+	a = 5; // setup의 바깥에서는 존재하지 않으므로 에러
 }
 ```
 
@@ -88,7 +93,7 @@ void ofApp::update(){
 
 ```cpp
 for (int i=0;i<10;i++){
-    int a = 5;
+	int a = 5;
 }
 cout << a << endl; // for{} 블록 바깥에서는 존재하지 않으므로 에러 
 ```
@@ -98,31 +103,28 @@ cout << a << endl; // for{} 블록 바깥에서는 존재하지 않으므로 에
 ```cpp
 void ofApp::setup(){
    {
-        int a = 0;
-        // do something with a
+		int a = 0;
+		// do something with a
    }
-
-   {
-        int a = 0;
-        // do something with a
+	   {
+		int a = 0;
+		// do something with a
    }
 }
 ```
-
-which is not very common but is used sometimes to define the life of a variable inside a function, mostly when that variable is an object that holds resources and we want to only hold them for a specific duration.
+	which is not very common but is used sometimes to define the life of a variable inside a function, mostly when that variable is an object that holds resources and we want to only hold them for a specific duration.
 위의 예제는 흔하지 않은 경우지만 함수 내에서 변수의 수명을 지정하기 위해 가끔 사용합니다. 대부분 이 변수들은 리소스를 갖고 있는 오브젝트이며, 특정한 기간에만 쥐고 있길 원할 때 사용하죠.
 
-The life of a variable is called `scope`.
 변수의 수명은 `변수영역(scope)` 이라고도 불립니다.
 
 Apart from creating variables inside functions we can also create variables in the class declaration in our .h like:
 함수 내에서 변수를 선언하는 부분을 .h파일의 클래스 선언부에서 변수를 선언하도록 분리해봅시다. 다음과 같이요:
+
 ```cpp
 class Ball{
 public:
-    void setup();
-
-    float pos_x;
+	void setup();
+	float pos_x;
 }
 ```
 
@@ -146,79 +148,83 @@ public:
 cout << &i << endl;
 ```
 
-이렇게 하면 변수의 타입과 상관 없이, 변수의 첫번째 바이트의 메모리 주소를 얻어올 수 있습니다. 
-And that will give us the memory address of the first byte used by that variable no matter its type. When we store that memory address in another variable that's what we call in c++ a pointer. The syntax is:
+이렇게 하면 변수의 타입과 상관 없이, 변수의 첫번째 바이트의 메모리 주소를 얻어올 수 있습니다.
+이 메모리 주소를 다른 변수에 저장할 때, C++에서는 이것을 포인터라고 합니다. 문법은 이와 같습니다:
 
 ```cpp
 int i = 0;
 int * p = &i;
 ```
 
-And what we get in memory is something like:
+	우리가 메모리에서 얻을 수 있는 것은 이와 같습니다:
 
-![Pointer](images/pointer.svg "")
+	![Pointer](images/pointer.svg "")
 
-A pointer usually occupies 4 or 8 bytes (depending if we are on a 32 or 64bits application), we are representing it as 1 byte only to make things easier to understand, but as you can see it's just another variable, that instead of containing a value contains a memory address that points to a value. That's why it's called pointer.
+	포인터는 대체로 4 또는 8바이트를 차지하는데(32비트 혹은 64비트 프로그램을 사용하느냐에 따라 달라집니다), 여기서는 이해를 돕기 위해 그냥 1바이트로 표현하였습니다. 보시다시피 값을 직접 담는 대신 값을 가리키고 있는 메모리 주소를 담고 있다는 변수임을 알 수 있습니다. 그렇게 때문에 포인터라고 불리우는 것이죠.
 
-A pointer can point to heap or stack memory.
+	포인터는 힙 또는 스택 메모리를 가리킬 수 있습니다.
 
-Now, let's explain something that it's really important to take into account when programming in c++. As we've seen till now, when we declare a variable like:
+	이제, C++에서 프로그래밍을 할 때 아주 중요한 것들에 대해서 설명하고자 합니다. 지금까지 여러분이 봐왔던 것처럼, 아래와 같이 변수를 선언할때:
+	Now, let's explain something that it's really important to take into account when programming in c++. As we've seen till now, when we declare a variable like:
 
 ```cpp
 int i;
 ```
-We get a memory layout like:
+메모리의 레이아웃은 다음과 같습니다:
 
 ![Int i](images/int_i.svg "")
 
-As we see there's no value in that memory area yet. In other languages like processing doing something like:
+보는 것과 같이, 이 메모리 영역에는 아무런 값이 없습니다. 프로세싱과 같은 다른 언어에서는 이와 같이 동작합니다:
 
 ```java
 int i;
 println(i);
 ```
 
+(역자 주 : 내용이 조금 이상하므로 재확인이 필요)
+이는 유효하지 않는데, 컴파일러는 초기화 됮 이낳은 변수를 사용하려 한다고 알려줍니다. C++에서는, 명백하게 유효하지만, 해당 변수의 내용은 지정되있지 않습니다. 대부분의 경우 0의 값을 갖고 있는데, 이는 운영체제에서 프로그램에게 메모리를 할당하기 전에 해당 메모리를 소거하기 때문입니다, 이는 보안적인 이유이기 때문이죠. 하지만 한번 할당된 뒤 다시 사용하는 메모리라면, 이 메모리 영역은 값을 유지하고 있으며, 결과적으로 프로그램은 지정되어있지 않게 됩니다.
+
 is illegal, the compiler will tell us that we are trying to use a variable that is not initialized. In c++ though, that's perfectly legal but the contents of that variable are undefined. Most of the times we'll get 0 because the operating system will clear the memory before assigning it to our program, again, for security reasons. But if we are reusing memory that we had already assigned, then, that memory area will contain anything, and the results of our program will be undefined.
 
-If for example we have a variable that defines the position of something we are going to draw, failing to initialize it will lead to that object being drawn anywhere.
+예를들어 뭔가를 그리기는데 위치를 지정하기 위해 변수를 사용한다고 할때, 초기화하는데 실패하면 그려지는 오브젝트들의 위치는 알 수 없게 됩니다.
 
-Most objects have default constructors that will initialize their value to, for example 0, so in the case of objects it's usually not necessary to give them a value.
+대부분의 오브젝트들은 그들의 값을 초기화하는 기본 생성자를 가지고 있어서(예를들어 0으로 초기화), 일반적으로는 값을 줄 필요가 없습니다.
 
-What happens when we use an uninitialized pointer? Well, since a pointer contains a memory address, if the value we get in that memory area points to an address that doesn't belong to our program and we try to retrieve or modify the value stored in that address the OS will kill our application with a segmentation fault signal.
+초기화되지 않은 포인터를 사요할때는 어떤일이 벌어질까요? 포인터는 메모리 주소를 담고 있기 때문에, 만약 가리키는 주소가 자신의 프로그램과 상관없는 영역인데다가 그 값을 얻거나 수정하려고 하면 운영체제는 세그멘테이션 폴트 신호와 함께 해당 프로그램을 강제로 죽여버립니다.
 
-Back to pointers, we've seen that, we can create a pointer like:
+포인터로 다시 돌아와서, 포인터는 아래와 같이 생성합니다:
 
 ```cpp
 int i = 5;
 int * p = &i;
 ```
-
-now, if we try to use the pointer directly like;
+그리고 포인터를 직접 사용할려면 이렇게 사용하면 됩니다:
 
 ```cpp
 cout << p <<< endl;
 ```
 
-what we'll get is a memory address not the value 5. So how do we access the value pointed by a pointer, well we can use the opposite operator to `&`: as `&` gives us the address of a variable, `*` gives us the value pointed by a memory address, so we can do:
+위의 결과는 값 5가 아닌, 메모리의 주소를 얻게 됩니다. 그렇다면 포인터가 가리키고 있는 값은 어떻게 얻어올 수 있을까요? `&`의 반대 연산자를 사용하면 됩니다: `&`는 가리키고있는 메모리의 주소를, `*`는 가리키고 있는 메모리주소의 실제 값을 알려줍니다.
 
 ```cpp
 cout << *p << endl;
 ```
 
-and we'll get the value 5 printed now. We can also do:
+위와 같이 입력함으로써, 값 5를 출력할 수 있습니다. 또한 아래와 같이 해도 동일하게 동작합니다:
 
 ```cpp
 int j = *p;
 cout << j << endl;
 ```
 
-and again will get the value 5 since we made a copy of the value pointed by p in j.
+j는 p가 가리키고 있는 값을 복사했기 때문에, 똑같이 값 5를 얻어올 수 있습니다.
 
-The `&`operator is called the *reference operator* since it gives us a reference to a variable, its memory address. The `*` operator is its opposite, the *dereference operator* and it gives us the value pointed by a pointer, it dereferences a reference, a memory address, so we can access its value instead of the address.
+`&`연산자는 *참조 연산자(레퍼런스 연산자, reference operator)*라고 합니다. 메모리 주소를 이용해 변수를  참조해주기 때문이죠, `*`연산자는 반대로, *역 참조 연산자(dereference operator*라고 하며, 포인터가 가리키는 값을 얻어올 수 있습니다, 메모리 주소 즉 참조의  역 참조인거죠. 따라서 주소 대신 값에 접근할 수 있게 됩니다.
 
-Till now, we've work with primitive values, ints really, but the behaviour will be the same for any other primitive value, like float, short, char, unsigned int...  In c++ in fact, the behaviour is also the same for objects.
 
-If you are used to Java, for example you've probably noticed that while in Java and C++ this:
+지금까지는, int형으로 살펴봤습니다만, float, short, char, unsigned int...와 같은  다른 어떠한 원론적인 값과도 동일하게 동작합니다. 또한 오브젝트들과도 마찬가지입니다.
+
+만약 Java를 사용해 온 분들이라면, Java와 C++에서 아래와 같은 상황을 겪어보셨을 겁니다:
 
 ```cpp
 int a = 5;
@@ -227,7 +233,8 @@ a = 7;
 cout << "a: " << a << " b: " << b << endl;
 ```
 
-will behave the same (of course changing cout for the equivalent in java). That is: `a` will end up being 7 and `b` will be 5. When we use objects the behaviour in c++ is different to that of Java. For example, let's say we have a class Ball:
+위의 코드는 동일하게 동작합니다(당연히 cout의 부분은 Java의 문법으로 바꿔줘야겠죠). `a`는 7이 되고, `b`는 5가 됩니다. 이것을 C++에서 오브젝트로 사용하보면, C++과 Java에서는 다르게 동작합니다. 예를들어 Ball클래스를 갖고 있다고 해봅시다:
+
 
 ```cpp
 class Ball{
@@ -239,7 +246,7 @@ public:
 }
 ```
 
-or the similar class in processing;
+프로세싱에서는 아래와 같겠지요:
 
 ```java
 class Ball{
@@ -249,7 +256,7 @@ class Ball{
 }
 ```
 
-if in c++ you do:
+C++에서 아래와 같이 하면:
 
 ```cpp
 Ball b1;
@@ -259,10 +266,10 @@ b2 = b1;
 b2.pos.set(30,30);
 ```
 
-b1 pos will end up being 20,20 and b2 30,30 while if you do the equivalent in java both b1 and b2 will have position 30,30:
+C++에서는 b1의 pos는 20, 20이, b2는 30,30이 되지만, Java에서는 b1과 b2가 동일하게 30,30이 됩니다:
 
 
-```cpp
+```java
 Ball b1 = new Ball();
 b1.pos.set(20,20);
 Ball b2;
@@ -270,19 +277,19 @@ b2 = b1;
 b2.pos.set(30,30);
 ```
 
-Notice how in the case of Java we have made new for the first ball but not for the second, that's because in Java everything that is an object is a pointer in the heap so when we do `b2 = b1`we are actually turning b2 into a reference to b1, and when we later change b2, we are also changing b1.
+Java에서의 예제에서 첫번째 ball은 new를 사용했지만, second에서는 그렇지 않았다는 점에 유의하세요. Java에서 오브젝트는 힙영역을 가키리는 포인터역할을 하기 때문에, `b2 = b1` 부분에서 실제로 b2는 b1의 참조역할을 합니다. 그래서 나중에 b2의 값을 바꾸면, b1역시 함께 바뀌는 것이지요.
 
-In c++, instead when we do `b2 = b1` we are actually copying the values of the variables of b1 into b2 so we still have 2 different variables instead of a reference. When we modify b2, b1 stays the same.
+C++에서는, `b2 = b1`을 수행할때는 반대로, b1의 값을 b2로 복사하므로, 실제로는 참조대신 서로 다른 2개의 값을 갖고 있게 됩니다. 따라서 b2를 수정해도, b1의 값은 변화가 없습니다.
 
-In both languages the `=` means copy the value of the right side into the variable on the left side of the `=`. The difference is that in Java an object is really a pointer to an object the contents of `b1` or `b2` are not the object itself but its memory address, while in c++ b1 actually contains the object itself.
+두 언어 모두 `=`의 의미는 `=`를 기준으로 우변의 값을 좌변의 변수로 복사한다는 의미입니다. 차이점이 있다면 Java에서는 오브젝트가 `b1` 또는 `b2`의 내용인 오브젝트의 메모리주소를 가리키는 포인터이지, 오브젝트 자체가 아니라는 것입니다. C++에서는 오브젝트 자체를 의미합니다. 
 
-This is more or less what memory would look like in Java and C++:
+이것이 바로 Java와 C++에서의 메모리입니다:
 
 ![Objects Java C](images/objects_java_c.svg "")
 
-As you can see in c++ objects in memory are just all their member variables one after another. When we make an object variable equal to another, by default, c++ copies all the object to the left side of the equal operator.
+보시다시피 C++에서 메모리 내의 오브젝트는 자신의 멤버변수일 뿐입니다. 이 오브젝트를 다른 변수에 할당하면, 기본적으로 C++에서는 `=` 우측의 오브젝트 전체를 좌측으로 복사합니다.
 
-Now what would happen if we have a class like:
+자 만약 이와 같은 클래스를 갖고 있고:
 
 ```cpp
 class Particle{
@@ -295,7 +302,7 @@ public:
 }
 ```
 
-And we do:
+이렇게 한다면:
 
 ```cpp
 Particle p1;
@@ -307,19 +314,19 @@ p1.parent = &ps;
 p2 = p1;
 ```
 
-Well as before c++ will copy the contents of p1 on p2, the contents of p1 are an ofVec2f which consits of 2 floats x and y and then a pointer to a ParticleSystem, and that's what gets copied, the ParticleSystem itself won't get copied only the pointer to it, so p2 will end up having a copy of the position of p2 and a pointer to the same ParticleSystem but we'll have only 1 particle system.
+앞서 말했다시피, C++은 p1의 콘텐츠 자체를 p2로 복사하므로, p1이 갖고 있는 콘텐츠 즉 2개의 float인 x, y를 담고 있는 p1의 ofVec2f, ParticleSystem을 가리키는 포인터가 복사됩니다. ParticleSystem자체는 복사되지 않고, 그것을 가리키고 있는 포인터만 복사횝니다, 따라서 p2는 p2의 위치와, 같은 ParticleSystem을 가리키는 포인터가 복사되는 결과를 낳게 됩니다. 중요한건 단 하나의 particle system을 갖는다는 것이죠.
 
 ![Object pointers](images/object_pointers.svg "")
 
-The fact that things are copied by default and that objects can be stored in the stack as oposed to being always a pointer has certain adavantages. For example, in c++ a vector or an array of particles like the ones we've used in the last example will look like:
+중요한 것은 디폴트로 복사되는 것과 오브젝트들이 스택에 저장되는데, 이것이 포인터를 사용하는 것에 비해 항상 장점을 갖고 있는 것입니다. 예를들어 아래와 같은 C++에서의 벡터 또는 particle의 배열과 같이 우리가 앞서 살펴봤던 예제를 살펴볼까요?:
 
 ```cpp
 vector<Particle> particles;
 ```
 
-in memory all the particles will be contiguous, among other things, that makes accessing them faster than if we had pointers to a different location in memory. It also makes it easier to translate c++ vectors to openGL memory structures but that's the topic for another chapter.
+메모리 내의 particle들은 서로 연속적이므로, 만약 이들을 실제 메모리의 서로 다른 위치에 있고 그것을 가리키는 포인터를 사용한다고 했을 때보다 훨씬 빠른 접근이 가능하다는 것입니다. 다른 챕터의 주제이지만 이는 또한 C++의 벡터를 openGL 메모리 구조로 쉽게 변환할 수도 있습니다.
 
-Among other things we need to be aware of the fact that c++ copies things by default, when passing objects to functions as parameters. For example this:
+또한 우리가 함께 알아두어야 할 사항은, 함수로 파라메터로써 오브젝트가 전달 될 때, C++에서는 디폴트로 복사된다는 점입니다. 예를들어:
 
 ```cpp
 void moveParticle(Particle p){
@@ -333,9 +340,9 @@ Particle p1;
 moveParticle(p1);
 ```
 
-Is perfectly valid code, but won't have any effect since the function will receive a copy of the particle and modify that copy instead of the original.
+위는 완벽하게 유효한 코드이지만, 함수는 particle의 복사된 값을 전달받으므로, 이 값을 수정하더라도 원래의 값에 영향을 주지 않습니다.
 
-We can do this:
+이렇게 할 수 있습니다:
 
 ```cpp
 Particle moveParticle(Particle p){
@@ -349,7 +356,8 @@ Particle p1;
 p1 = moveParticle(p1);
 ```
 
-So we pass a copy of our particle to the function which modifies its values and returns a modified copy which we then copy into p1 again. See how many times we've mentioned copy in the previous sentence?  The compiler will optimize some of those out and for small objects it's perfectly okay to do that but imagine we had something like this:
+이렇게 하면, 함수에 particle의 복사본을 전달하여 그것의 값을 변경한 다음, 수정된 값을 리턴(이는 p1을 다시 복사한 값입니다)할 수 있습니다. 앞 문장에서 얼마나 많이 복사라는 말을 언급했지요? 컴파일러는 이 과정을 최적화 하기 때문에 작은 오브젝트들은 전혀 문제가 없지만, 이렇게 수행한다면 어떨까요 ?:
+
 
 ```cpp
 vector<Particle> moveParticles(vector<Particle> ps){
@@ -366,34 +374,36 @@ vector<Particle> ps;
 ps = moveParticles(ps);
 ```
 
-If we have 1 million particles that will be awfully slow, memory is really slow compared to the cpu, so anything that involves copying memory or allocating new memory should be usually avoided. So what can we do to avoid all that copies?
+만일 백만개의 particle을 갖고 있다면, 엄청나게 느려질 것입니다. 메모리는 cpu에 비해 엄청나게 느리므로, 복사에 관련된 무엇이든 혹은 메모리를 새로 할당하는 것들은 일반적으로 반드시 피해야할 사항입니다. 그렇다면 어떻게 하면 복사의 과정을 피할 수 있을까요?
 
-Well we could use pointers right?
+
+그렇담, 포인터를 사용할 수 있지 않을까요?
 
 ```cpp
 void moveParticle(Particle * p){
     p->x += 10;
     p->y += 10;
 }
+
 ...
 
 Particle p1;
 moveParticle(&p1);
 ```
 
-Now, here's something new, notice how to refer to the variables of a pointer to an object instead of using the dot, we use the `->` operator, every time we want to access a variable in a pointer to an object instead of having to dereference it like:
+자, 여기 새로운 게 있네요, 여기서 오브젝트를 가리키는 변수들을 취하기 위해 . 대신 `->` 연산자를 사용했다는 사실에 주목해주세요. 포인터에서 오브젝트의 변수에 접근할 때 역참조를 사용하지 않으려면:
 
 ```cpp
 (*p).x +=10;
 ```
 
-we can use the `->`
+`->` 를 사용할 수 있습니다.
 
 ```cpp
 p->x += 10;
 ```
 
-So that solves our problem, using a pointer instead of passing a copy of the object, we are passing a reference to it, its memory address, so the function will actually modify the original.
+자 이렇게 오브젝트의 값을 복사하는 것 대신 포인터를 사용하여 문제를 해결 할 수 있습니다. 메모리주소의 참조를 전달하는 것이죠. 이렇게 하면 함수는 실제 원본을 수정할 수 있게 됩니다.
 
 The main problem with this is that the syntax is kind of weird, imagine how would look like if we passed a pointer for the second example, the one with the vector:
 
