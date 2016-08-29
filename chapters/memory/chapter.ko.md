@@ -165,7 +165,6 @@ int * p = &i;
 	포인터는 힙 또는 스택 메모리를 가리킬 수 있습니다.
 
 	이제, C++에서 프로그래밍을 할 때 아주 중요한 것들에 대해서 설명하고자 합니다. 지금까지 여러분이 봐왔던 것처럼, 아래와 같이 변수를 선언할때:
-	Now, let's explain something that it's really important to take into account when programming in c++. As we've seen till now, when we declare a variable like:
 
 ```cpp
 int i;
