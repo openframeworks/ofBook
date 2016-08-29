@@ -375,8 +375,7 @@ ps = moveParticles(ps);
 
 만일 백만개의 particle을 갖고 있다면, 엄청나게 느려질 것입니다. 메모리는 cpu에 비해 엄청나게 느리므로, 복사에 관련된 무엇이든 혹은 메모리를 새로 할당하는 것들은 일반적으로 반드시 피해야할 사항입니다. 그렇다면 어떻게 하면 복사의 과정을 피할 수 있을까요?
 
-
-그렇담, 포인터를 사용할 수 있지 않을까요?
+포인터를 사용할 수 있지 않을까요?
 
 ```cpp
 void moveParticle(Particle * p){
@@ -404,6 +403,7 @@ p->x += 10;
 
 자 이렇게 오브젝트의 값을 복사하는 것 대신 포인터를 사용하여 문제를 해결 할 수 있습니다. 메모리주소의 참조를 전달하는 것이죠. 이렇게 하면 함수는 실제 원본을 수정할 수 있게 됩니다.
 
+하지만 여기서 문제점이라고 한다면 문법이 이상해진다는 점입니다. 두번째 예시에서 벡터의 포인터를 전달한다고 하면 어떻게 될까요?:
 The main problem with this is that the syntax is kind of weird, imagine how would look like if we passed a pointer for the second example, the one with the vector:
 
 ```cpp
@@ -422,10 +422,14 @@ ps = moveParticles(ps);
 ```
 
 Now, the function will look like:
+함수는 이렇게 작성되어야 할것입니다:
 
 ```cpp
 void moveParticles(vector<Particle> * ps){
 ```
+
+여기서 문제는 벡터의 요소들에 접근하기 위해 []연산자를 사용할수 없다는 점입니다. ps는 포인터이지, 벡터가 아니니까요. 
+게다가 아래의 코드는
 
 the problem is that now we can't use the [] operator to access the elements in the vector cause ps is not a vector anymore but a pointer to a vector. What's more this
 
@@ -433,7 +437,11 @@ the problem is that now we can't use the [] operator to access the elements in t
 ps[i].x += 10;
 ```
 
+실제로 컴파일은 되지만, 메모리 엑세스 에러, 즉 세그멘테이션폴트를 발생시킵니다. 현재 ps는 포인터이고, 포인터를 사용할 때 '[]'는 벡터의 배열인것처럼 동작하기 떄문이죠!
+
 would actually compile but would mostly sure give as a memory access error, a segmentation fault. ps is now a pointer and when using pointers the `[]' behaves like if we had an array of vectors!
+
+이 부분에 대해서는 메모리 구조에 관한 섹션에서 더 깊게 설명하도록 하겠습니다. 하지만 포인터 문법이 아닌, 레퍼런스(참조)를 전달하는 방법을 살펴보도록 하죠. C++에서는 레퍼런스라 불리우며 이렇게 작성합니다:
 
 We'll explain this in more depth in the section about memory structures, but let's see how to pass a reference that doesn't have pointer syntax. In c++ is called a reference and it looks like:
 
@@ -450,7 +458,11 @@ vector<Particle> ps;
 moveParticles(ps);
 ```
 
+이제 포인터 문법을 사용하지 않고 원본 오브젝트의 참조를 전달했지만, 일반적인 오브젝트와 마찬가지로 사용할 수 있음을 볼 수 있습니다.
+
 Now we are passing a reference to the original object but instead of having to use pointer syntax we can still use it as if it was a normal object.
+
+> 고급 사항 : 종종 함수에 오브젝트를 전달할 떄, 복사를 피하기 위해 레퍼런스를 사용하면서, 동시에 전달되는 오브젝트의 원본이 변경되지 못하도록 할 때가 있습니다. 그럴 때에는 아래와 같이 const를 사용하는 것을 추천드립니다:
 
 > Advanced note: Some times we want to use references to avoid copies but still be sure that the function we pass our object to, won't modify its contents, in that case it's recommendable to use const like:
 
@@ -467,10 +479,15 @@ Now we are passing a reference to the original object but instead of having to u
     ofVec2f averagePos = averagePosition(ps);
 
 
+> const를 사용하면 그것이 참조(레퍼런스)일 지라도 해당 변수를 수정하지 못하도록 합니다. 또한 추후 누구라도 해당 함수를 수정할 때에도 입력값(즉 파티클)이 수정되지 않고 유지되어야 한다는 점을 알게 할 수도 있습니다.
+
 > const only makes it impossible to modify the variable, even if it's a reference, and tells anyone using that function that they can pass their data into it and it won't be changed, also anyone modifying that function knows that in the future it should stay the same and the input, the particle system shouldn't be modified.
 
+파라메터 이외에, 참조(레퍼런스)는 몇가지 특별한 특성을 갖고 있습니다.
 Outside of parameters, references have a couple of special characteristics.
 
+
+첫 번째로, 한번 생성되면 레퍼런스의 내용은 수정할 수 없습니다. 예를들어 이렇게 작성할 수 있겠죠:
 First we can't modify the content of a reference once it's created, for example we can do:
 
 ```cpp
@@ -478,14 +495,17 @@ ofVec2f & pos = p.pos;
 pos.x = 5;
 ```
 
+하지만 아래와 같이 레퍼런스 자체를 변경하려고 하면:
 but trying to change the reference itself like in:
 
 
 ```cpp
 ofVec2f & pos = p.pos;
 pos.x = 5;
-pos = p2.pos;  // error, a reference can only be assigned on its declaration
+pos = p2.pos;  // 에러가 발생합니다, 레퍼런스는 선언부에서만 지정될 수 있습니다.
 ```
+
+또한, 레퍼런스를 리턴할 수 있지만, 그 레퍼런스가 무엇을 가리키고 있는지에 따라서 좋지 않은 경우가 될 수도 있습니다:
 
 Also you can return a reference but depending on what that reference it's pointing to it can be a bad idea:
 
@@ -500,42 +520,51 @@ ofVec2f & averagePosition(const vector<Particle> & ps){
 }
 ```
 
+위 코드는 실제로 컴파일이 됩니다만, 아마도 경우에 따라 동작하지만 이상한 값을 내뱉거나, 세그멘테이션폴트 오류가 날 것입니다. 여기서 보면 스택에 `average`라는 변수를 선언했기 떄문에 해당 변수는 메모리가 *삭제*될 것이고, 따라서 함수가 리턴하는 레퍼런스는 더이상 평균값을 갖고 있지 않는 메모리 영역일 것입니다. 어쩌면 덮어씌워진 이상한 값을 얻을 수 있을수도 있지만, 참조하고 있는 메모리 영역이 더이상 우리의 프로그램 영역이 아닐 수도 있지요.
+
 Will actually compile but will probably result in a segmentation fault at some point or even just work but we'll get weird values when calling this function. The problem is that we are creating the variable `average` in the stack so when the function returns it'll be *deleted* from memory, the reference we return will be pointing to a memory area that is not reserved anymore for average and as soon as it gets overwritten we'll get invalid values or a pointer to a memory area that doesn't belong to our program anymore.
 
+이것이 바로 C++에서 가장 골치아픈 문제점입니다. 댕글링 포인터(대롱대롱 매달린 포인터, dangling pointer)라고도 불리는 이것은 이미 해제되어버린 메모리 영역을 가리키거나 참조할때 발생합니다.
 This is one of the most annoying problems in c++ it's called dangling pointers or in this case references and it's caused when we have a pointer or a reference that points to a memory area that is later freed somehow.
+
+더 현대적인 언어들의 경우 다양한 방법으로 이러한 문제를 해결하는데, 예를 들어 Java의 경우 레퍼런스가 범위를 벗어나기 전까지는 오브젝트를 삭제하지 못하도록 했는데, 이는 그때그때 오브젝트의 메모리를 훓어보며 참조되는 메모리가 있는지를 확인하고, 만일 그렇다면 삭제하는 가비지 콜렉터라는 기법을 사용합니다. 이 방법으로 문제를 해결했지만 오브젝트가 실제로 언제 삭제되는지는 알기 어렵습니다. C++의 최신 버전 및 보다 더 현대적인 언어에서는 오브젝트의 소유를 지정하는 새로운 종류의 포인터를 사용하여 문제를 해결하는데, 이것은 스마트 포인터라는 것으로 이 챕터의 끝에서 다루도록 하겠습니다.
 
 More modern langauges solve this with diferent strategies, for example Java won't let this happen since objects are only deleted once the last reference to them goes out of scope, it uses something called a garbage collector that from time to time goes through the memory looking for objects which have no more references pointing to them, and deletes them. This solves the problem but makes it hard to know when objects are going to get really deleted. c++ in its latest versions, and more modern languages try to solve this using new kinds of pointers that define ownership of the object, we'll talk about it in the latest section of this chapter, smart pointers.
 
-## Variables in the heap ##
+## 힙(heap) 영역에서의 변수들##
 
-Now that we know the syntax and semantics of pointers lets see how to use the heap. The heap is an area of memory common to all of our application, any function can create variables in this space and share it with others, to use it we need a new keyword `new`:
+이제 포인터의 문법과 그 의미를 알았으니, 힙 영역을 어떻게 사용하는지 살펴보겠습니다. 힙은 모든 어플리케이션이 함께 사용할 수 있는 메모리 영역이며, 어떠한 함수든 이 영역에 변수를 생성하고 다른 함수와 공유하여 사용할 수 있습니다. 힙영역을 사용하기 위해서는 새로운 키워드 `new`를 사용해야 합니다:
 
 ```cpp
 Particle * p1 = new Particle;
 ```
 
+프로세싱 혹은 Java언어에서 이와 비슷한 것을 본 경험이 있는 분들도 있을겁니다, 그렇죠? 요놈은 Java 오브젝트와 정확하게 같습니다: `new`키워드를 사용하면, 스택이 아닌, 힙에 변수를 선언합니다. `new`는 힙영역의 메모리 주소를 가리키는 포인터를 리턴하는데, C++에서는 `p1`변수에 어디에 기록할 것인지 정확히 명시해둘 필요가 있습니다. `p1`는 선언부에서 `*`를 사용했다시피 바로 포인터입니다.
+
 If you know processing or Java that looks a little bit like it, right? indeed this is exactly the same as a Java object: when we use `new` we are creating that variable in the heap instead of the stack. `new` returns  a pointer to a memory address in the heap and in c++ we explictly need to specify that the variable `p1` where we are going to store it, is a pointer by using the `*` in the declaration.
 
-To access the variables or functions of a pointer to an object, as we've seen before, we use the `->` operator so we would do:
+오브젝트를 가키리는 함수 혹은 변수에 접근하기 위해서는, 이전에 살펴보았다 시피`->`연산자를 사용합니다. 따라서 이렇게 해야 합니다:
 
 ```cpp
 Particle * p1 = new Particle;
 p1->pos.set(20,20);
 ```
 
-or:
+또는 이렇게 말이지요:
 
 ```cpp
 Particle * p1 = new Particle;
 p1->setup();
 ```
 
-A pointer as any variable can be declared without initializing it yet:
+포인터는 여타 변수들과 마찬가지로 초기화 없이 선언이 가능합니다:
 
 ```cpp
 Particle * p1;
-p1->setup() // this will compile but fail when executing the application
+p1->setup() // 이부분은 컴파일은 되지만, 실행되지 않을것입니다.
 ```
+
+스택을 지역 메모리(local memory)라 한다면, 힙은 일종의 전역 메모리(global memory)라고 생각할 수 있습니다. 스택에서는 블록내에서만 소유할 수 있지만, 힙은 선언된 블록 범주 바깥에서도, 그리고 어떠한 함수에서도 레퍼런스(포인터)를 갖고 있는 한 접근이 가능합니다. 예를 들어볼까요:
 
 We can imagine the heap as some kind of global memory as opposed to the stack being local memory. In the stack only the block that owned it could access it while things created in the heap outlive the scope in which they were created and any function can access them as long as they have a reference (a pointer) to them. For example:
 
@@ -553,9 +582,10 @@ void modifyParticle(Particle * p){
 Particle * p = createParticle();
 modifyParticle(p);
 ```
+`createParticle` 함수는 힙 영역에 새 `Particle`를 생성합니다. 따라서 이 createParticle함수가 종료되더라도 이 `Particle`은 여전히 존재합니다.
+따라서 함수의 바깥영역에서, 다른 함수로 레퍼런스를 전달할 수 있습니다..
 
-`createParticle` is creating a new `Particle` in the heap, so even when createParticle finishes that `Particle` still exists. We can use it outside the function, pass a reference to it to other functions...
-
+그렇다면, 해당 변수를 더이상 사용하고 싶지 않을때에는요? `delete`키워드를 사용합니다:
 So how can we say that we don't want to use that variable anymore? we use the keyword `delete`:
 
 ```cpp
@@ -564,6 +594,8 @@ p1->setup();
 ...
 delete p1;
 ```
+
+이것은 힙 영역을 사용할 때 아주아주 중요합니다. 만약 이 부분을 건너뛰면, 메모리 누수(memory leak)라고 불리는 문제가 발생합니다. 어느곳에서도 참조되지 않는 메모리이지만 여전히 힙영역에 남아있어서, 컴퓨터에 사용가능한 메모리가 다 찰때까지 프로그램이 점점 더 많은 메모리를 계속해서 잡아먹기 떄문입니다:
 
 This is important when using the heap, if we fail to do this we'll get with what is called a memory leak, memory that is not referenced by anyone but continues to leave in the heap, making our application use more and more memory over time till it fills all the available memory in our computer:
 
@@ -575,7 +607,11 @@ void ofApp::draw(){
 }
 ```
 
+위 예제에서, `draw`함수를 호출할 때, 새로운 particle을 생성하게 되는데, 매번 `draw`함수가 호출된 뒤 *p1 레퍼런스를 잃지만, new를 사용하여 할당된 메모리는 함수의 끝부분에서 해제되지 않았으므로, 프로그램은 조금씩 점점 더 많은 메모리를 사용하게 됩니다. 이는 시스템 모니터도구를 사용하여 확인할 수 있습니다. (역자 주 : 윈도우의 경우 작업 관리자, 맥의 경우 Activity Monitor)
+
 every time we call `draw`, it'll create a new particle, once each `draw` call finishes we loose the reference *p1 to it but the memory we allocated using new is not freed when the function call ends so our program will slowly use more and more memory, you can check it using the system monitor.
+
+앞에서 언급했듯이 스택 메모리는 제한적이므로, 가끔은 힙 메모리를 사용할 필요가 있는데, 가령 예를들어 백만개의 파티클을 스택에 생성한다면 stack overflow 문제가 발생할 것입니다. 따라서 일반적으로 대부분의 경우 C++에서는 적어도 힙을 직접적으로 사용하지 않고, vector, ofPixels 혹은 힙 메모리를 사용할 수 있는 다른 메모리 구조와 같은 클래스를 사용합니다. 하지만 여전히 stack의 개념을 사용합니다. 가령 아래와 같은 예를 살펴봅시다:
 
 As we've mentioned before the stack memory is limited so sometimes we need to use the heap, trying to create 1 million particles in the stack will probably cause a stack overflow. In general, though, most of the time in c++ we don't need to use the heap, at least not directly, classes like vector, ofPixels and other memory structures allow us to use heap memory but still have stack semantics, for example this:
 
@@ -591,15 +627,21 @@ void ofApp::draw(){
 }
 ```
 
+위 코드의 vector는 내부적으로 힙영역을 사용하지만, particles 변수가 범주를 벗어날 떄마다 vector의 소멸자(destructor)에서 메모리의 해제를 자동으로 담당해줍니다. (여기서는 현재 draw호출이 끝났을 때를 말합니다)
+
 is actually using heap memory since the vector is internally using that, but the vector destructor will take care of freeing that memory for us as soon as the particles variable goes out of scope, when the current call to draw finishes.
 
-## Memory structures, arrays and vectors ##
+## 메모리 구조, 배열과 vector ##
+
+배열은 C++에서 오브젝트들의 집합체를 가장 쉽게 생성할 수 있는 방법입니다. C++의 다른 타입 또한 스택 혹은 힙에 생성할 수 있지만 말이죠. 비록 스택 내에서 배열은 크기의 제한이 있지만, 배열을 선언할 때 미리 크기를 지정해주어야 하며, 이후 크기를 변경할 수 없습니다.
 
 Arrays are the most simple way in c++ to create collections of objects, as any other type in c++ they can also be created in the stack or in the heap. Arrays in the stack have a limitation though, they need to have a predifined size that needs to be specified in its declaration and can't change afterwards:
 
 ```cpp
 int arr[10];
 ```
+
+다른 타입들과 마찬가지로, 위의 선언부에서는 이미 10개의 정수형만큼의 메모리를 예약해두었는데, 여기서 우리는 new를 사용할 필요가 없으며, 이 메모리들은 초기화 되지 않습니다. 여기에 접근하려면, 이전 챕터에서 살펴보았듯이 이렇게 작성하면 됩니다:
 
 the same as with any other type, the previous declaration already reserves memory for 10 ints, we don't need to use new, and that memory will be uninitialized. To access them, as you might know from previous chapters you can just do:
 
@@ -610,32 +652,37 @@ int a = arr[0];
 ```
 
 if we try to do:
+만약 아래와 같이 코드를 작성하면:
 
 ```cpp
 int arr[10];
 int a = arr[5];
 ```
 
-the value of a will be undefined since the memory in the array is not initialized to any value when it's created. Also if we try to do:
+a의 값은 배열이 생성된 이후 초기화 되지 않았으므로 undefined의 값을 같습니다.
+또한 아래와 같이 작성하면:
 
 ```cpp
 int arr[10];
 int a = arr[25];
 ```
 
-most probably our application will crash if the memory address at arr + 25 is outside the memory that the operating system has assigned to our application.
+대부분의 프로그램은 죽게 되는데, 이는 arr + 25가 운영체제에서 프로그램에 할당해준 메모리의 범위를 벗어나기 때문입니다. 
+
+가만, 방금 arr + 25라고 했죠? 이게 대체 무슨말이죠? 이전에 우리는 변수란 메모리의 특정한 공간이라고 했으며, 변수에 할당된 메모리의 첫번째 byte의 메모리 주소라고 했습니다. 배열의 경우 이와 정확히 똑같습니다. 예를들어 int형이 메모리에서 4byte를 차지하는것을 알고 있으므로, 10개의 길이를 갖는 int 배열은 40byte를 차지할 것이며, 이 byte들은 연속적으로 위치해 있습니다:
 
 We've just said arr + 25? what does that mean? As we've seen before a variable is just some place in memory, we can get its memory address which is the first byte that is assigned to that variable in memory. With arrays is pretty much the same, for example since we know that an int occupies 4 bytes in memory, an array of 10 ints will occupy 40 bytes and those bytes are contiguous:
 
 ![Array](images/array.svg "")
 
-Remember that memory addresses are expressed as hexadecimal so 40 == 0x0028. Now to take the address of an array, as with other variable we might want to use the `&` operator and indeed we can do it like:
+메모리 주소는 16진수로 표시되므로, 40 == 0x0028이 됩니다. 자 이제 배열의 주소를 얻어와볼까요, 아래의 예시처럼 다른 변수들과 마찾가지로 `&`연산자를 사용하면 됩니다:
 
 ```cpp
 int arr[0];
 int * a = &arr[0];
 ```
 
+배열의 첫 요소의 주소, 즉 배열의 주소를 얻어올 수 있습니다. 하지만 배열은 사실 포인터입니다:
 That gives us the address of the first element of the array which is indeed that of the array, but with arrays, the same variable is actually a pointer itself:
 
 ```cpp
@@ -643,6 +690,8 @@ int arr[10];
 int * a = &arr[0];
 cout << "a: " << a << " arr: " << arr << endl;
 ```
+
+위의 코드에서 a와 arr은 같은 값을 출력합니다. 즉 배열은 메모리 주소를 가리키는 포인터일 뿐입니다. 한가지 다른 점이 있다면, 해당 메모리 주소는 (즉 여기서는 10개의 정수를 위해 할당되기에 충분한) 예약된 메모리의 시작 주소라는 점입니다. 이 모든 정수들은 각각 인접해 있으므로, `arr[5]`에 접근하기위한 메모리의 주소는 배열의 주소 + 5개의 정수(int)크기가 됩니다. 만약 배열이 `0x0010`을 시작하고, 정수(int)형이 `4 byte`씩 차지한다고 하면, arr[5]의 주소는 `16` *(16진수로는 0x0010)* ` + 4 * 5 = 36`, 16진수로 `0x0024`가 됩니다. 실제로 코드에서도 동작합니다:
 
 will print the same value for both a and arr. So an array is just a pointer to a memory address with the only difference that, that memory address is the beginning of reserved memory enough to allocate, in our case, 10 ints. All those ints will be one after another, so when we do `arr[5]` we are just accessing the value that is in the memory address of our array + the size of 5 ints. If our array started in `0x0010`, and ints occupy `4 bytes`, arr[5] would be `16` *(the decimal for 0x0010)* ` + 4 * 5 = 36` which in hexadecimal is `0x0024`. We can actually do this in our code:
 
@@ -652,10 +701,11 @@ arr[5] = 20;
 cout << "&arr[5]: " << &arr[5] << "arr+5: " << arr+5 << endl;
 cout << "arr[5]: " << arr[5] << "*(arr+5): " << *(arr+5) << endl;
 ```
+이것을 포인터 연산이라고 하는데, 정말로 괴상하므로 대부분의 경우 이렇게 사용할 필요가 없습니다. 첫번째 줄cout에서 처음 출력되는 값은 `&`를 사용하여 `arr[5]`의 주소를 출력하는 것이고, 두번째는 첫번째 주소인 `arr`에 5을 직접 더해 `arr+5`를 출력합니다. 두번째 줄의 cout에서는 `arr[5]`를 사용해 메모리 위치의 값을 얻거나, `*`연산자를 이용하여 `arr+5`의 주소를 역참조 하여 값을 얻는 것을 보여줍니다.
 
 now, that's really weird and most of the time you won't use it, it's called pointer arithmetic. The first cout will print the address in memory of the int at position 5 in the array in the first case using the `&` operator to get the address of `arr[5]` and in the second directly by adding 5 to the first address of `arr` doing `arr+5`. In the second cout we print the value at that memory location, using `arr[5]` or dereferencing the address `arr+5` using the `*` operator.
 
-Note that when we add `5` to the adress of the array it's not bytes we are adding but the size in bytes of the type it contains, in this case `+5` actually means `+20` bytes, you can check it by doing:
+여기서 배열의 주소에 `5`를 더했는데, 이것은 byte를 더한것이 아니라, 해당 타입이 담고 있는 값의 byte크기라는 것에 주의하시기 바랍니다. 즉 `+5`는 실제로 `+20`byte인 것이지요. 아래의 코드로 확인할 수 있습니다:
 
 ```cpp
 int arr[10];
