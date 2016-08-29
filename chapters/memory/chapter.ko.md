@@ -707,12 +707,15 @@ now, that's really weird and most of the time you won't use it, it's called poin
 
 여기서 배열의 주소에 `5`를 더했는데, 이것은 byte를 더한것이 아니라, 해당 타입이 담고 있는 값의 byte크기라는 것에 주의하시기 바랍니다. 즉 `+5`는 실제로 `+20`byte인 것이지요. 아래의 코드로 확인할 수 있습니다:
 
+Note that when we add `5` to the adress of the array it's not bytes we are adding but the size in bytes of the type it contains, in this case `+5` actually means `+20` bytes, you can check it by doing:
+
 ```cpp
 int arr[10];
 arr[5] = 7;
 cout << "arr: " << arr << "arr+5: " << arr+5 << endl;
 ```
 
+또한 계산기로 16진수값을 뺄셈해보시기 바랍니다. 만약 프로그램에서 아래와 같이 뺄셈을 해보시면 :
 and substracting the hexadecimal values in a calculator. If you try to substract them in your program like:
 
 
@@ -722,14 +725,15 @@ arr[5] = 20;
 cout << "arr: " << arr << "arr+5: " << arr+5 << endl;
 cout << "(arr+5) - arr: " << (arr+5) - arr << endl;
 ```
+`5`로 끝남을 알수 있습니다. 마찬가지로 언급했듯이 포인터 연산은 byte가 아니라 타입의 크기로 동작하기 때문입니다.
 
-You will end up with `5` again because as we've said pointer arithmetic works with the type size not bytes.
+포인터 연산의 문법은 복잡할 뿐더러, 여기서 보여드린 예시들은 포인터 연산을 제대로 보여드린것은 아니지만, 배열이라는것이 단지 메모리에서 서로 연속되어 배치되어있다는 것을 알 수 있었으므로, 설령 여러분이 문법에 대해서 완벽하게 이해히지 못했다 하더라도 너무 걱정마시기 바랍니다. 아마도 이렇게 사용할 필요는 없을테니까요. 다만 배열변수는 포인터처럼 동작한다는 사실을 기억하시면 됩니다. 배열을 `[]`연산자 없이 취급할때에는, 그것이 메모리 주소이지, 그것이 담고 있는 값이 아니라는 것입니다.
 
 The syntax of pointer arithmetics is kind of complicated, and the idea of this part wasn't really to show pointer arithmetics itself but how arrays are just a bunch of values one after another in memory, so don't worry if you haven't fully understood the syntax, it's probably something you won't need to use. It is also important to remember that an array variable acts as a pointer so when we refer to it without using the `[]` operator we end up with a memory address not with the values it contains.
 
-The arrays we've created till now are created in the stack so be careful when using big arrays like this cause it might be problematic.
+지금까지 우리는 배열을 스택내에 생성했으므로, 커다란 배열을 사용할때 주의하지 않으면 문제가 발생할 수 있습니다.
 
-Arrays in the heap are created like anything else in the heap, by using `new`:
+힙 내에 배열을 생성할때에는 다른 방법과 마찬가지로 `new`키워드를 사용해야 합니다:
 
 ```cpp
 int arr[] = new int[10];
@@ -741,18 +745,21 @@ or
 int * arr = new int[10];
 ```
 
+보시다시피 앞서서 언급했던 사항을 다시한번 확인하고 있습니다. 배열 변수는 단지 포인터이므로 `new int[10]`이라고 하면, 10개의 정수형을 저장할 메모리를 할당한 다음, 해당 메모리의 첫번째(즉 배열의 첫번째 정수)의 byte 메모리 주소를 리턴하는데, 이것을 두번째 예제의 포인터 혹은 `int arr[]`(정해지지 않은 크기의 배열을 선언) 에 저장합니다.
+
 As you can see this confirms what we've said before, an array variable is just a pointer, when we call `new int[10]` it allocates memory to store 10 integers and returns the memory address of the first byte of the first integer in the array, we can keep it in a pointer like in the second example or using `int arr[]` which declares an array of unkown size.
 
-The same as other variables created in the heap we'll need to delete this manually so when we are done with it we need to use `delete` to deallocate that memory, in the case of arrays in the heap the syntax is slightly special:
+힙에 생성하는 다른 변수들과 마찬가지로, 수동으로 삭제해줘야 하기 때문에, 작업을 마친 후에는 `delete`키워드를 사용하여 메모리를 해제해야합니다. 힙에 배열을 생성하는 경우 문법은 약간 특별합니다:
 
 ```cpp
 int arr[] = new int[10];
 ...
 delete[] arr;
 ```
+여기서 `[]`키워드를 사용하지 않고 삭제를 하면, (배열의) 첫번째 값만 해제를 하게 되며, 결국 메모리 누수를 일으킬 것입니다.
 
-if you fail to use the `[]` when deleting it, it'll only deallocate the first value and you'll end up with a memory leak.
 
+배열의 문법에는 몇가지 주의사항이 있습니다. 예를들어 아래와 같습니다:
 There's also some problems with the syntax of arrays, for example this:
 
 
@@ -762,6 +769,7 @@ int arrB[10];
 arrB = arr;
 ```
 
+위의 코드는 컴파일 되지 않습니다. 또한 아래의 경우:
 will fail to compile. And this:
 
 
@@ -771,28 +779,29 @@ int arrB[] = new int[10];
 arrB = arr;
 ```
 
-will actually compile but as with other variables we are not copying the values that arr points to into arrB but instead the memory address. In this case will end up with 2 pointers pointing to the same memory location, the one that we created when creating arr and lose the memory that we allocated when initializing arrB. Again we have a memory leak, the memory allocated when doing `int arrB[] = new int[10];` is not referenced by any variable anymore so we can't delete it anymore. To copy arrays there's some **c** (not c++) functions like memcpy but their syntax is kind of complex, that's why when working with c++ is recommended to use vectors.
+실제로 컴파일은 되지만, 다른 변수들과 마찬가지로 arr의 메모리 주소가 arrB로 복사하는 것이지, 실제 값이 복사되는 것이 아닙니다. 이러한 상황의 경우 두개의 포인터가 같은 메모리위치를 가리키고 있는 상황이 됩니다. arr과 arrB는 각자 메모리를 할당받았으나, arrB를 초기화했을때 할당된 메모리는 잃게 되는 상황이 발생하는 것이죠. 즉, 메모리 누수가 발생한다는 것입니다. `int arrB[] = new int[10]`에서 메모리를 할당받았지만, 이 메모리는 더이상 어떤 변수로부터 참조되지 않기 때문에 더이상 삭제할 수도 없습니다. 메모리를 복사하려면, memcpy라는 **c**(c++가 아닙니다)의 함수를 사용할 수 있지만, 문법이 좀 복잡합니다. 그렇기 때문에 C++에서는 vector를 사용하는것을 추천드립니다.
 
-C++ vectors are very similar to arrays, indeed their layout in memory is the same as an array, they contain a bunch of values contiguous in memory and always allocated in the heap. The main difference is that we get a nicer syntax and *stack semantics*. To allocate a vector to contain 10 ints we can do:
+C++의 vector는 배열과 아주 비슷합니다. 메모리내에서의 레이아웃이 배열과 같죠. 값의 집합들이 메모리 내에 연속적으로 위치해 있으며, 항상 힙에 할당됩니다. 그러면서도 문법이 훨씬 훌륭하고 *스택 개념*입니다. vector에 10개의 정수를 할당하려면 아래와 같이 하면 됩니다:
 
 ```cpp
 vector<int> vec(10);
 ```
-
-We can even give an initial value to those 10 ints in the initialization like:
+또한 이 10개의 정수에 초기값을 주고 싶다면 아래와 같이 하면 됩니다:
 
 ```cpp
 vector<int> vec(10,0);
 ```
 
-And for example copying a vector into another, works as expected:
+또한 예를들어 vector를 다른 vector로 복사하고 싶다면, 아래와 같이 하면 됩니다. 생각하는 그대로 동작하지요:
 
 ```cpp
 vector<int> vec(10,0);
 vector<int> vecB = vec;
 ```
 
-Will create a copy of the contents of vec in vecB. Also even if the memory that the vector uses is in the heap, when a vector goes out of scope, when the block in which it was declared ends, the vector is destroyed cause the vector itself is created in the stack, so going out of scope, triggers its destructor that takes care of deleting the memory that it has created in the heap:
+위 코드는 vec의 복사본을 vecB로 생성합니다. 
+
+또한 만약 vector가 사용하는 메모리가 힙영역임에도 불구하고, 아래의 예시와 같이 vector가 scope 영역내에 선언되었으므로, vector자체는 스택에 생성되어있는데, 이 vector의 선언이 끝나 scope를 벗어나면, 자체적인 소멸자가 트리거되어 사용하고 있었던 힙 영역내의 메모리 삭제를 담당하게 됩니다. 
 
 ```cpp
 void ofApp::update(){
@@ -801,28 +810,29 @@ void ofApp::update(){
 }
 ```
 
-That makes vectors easier to use than arrays since we don't need to care about deleting them, end up with dangling pointers, memory leaks... and their syntax is easier.
+이렇기 때문에 메모리를 일일히 관리해주지 않으면 허상 포인터, 메모리 누수와 같은 문제를 발생시킬 위험이 있는 배열에 비해서 vector를 사용하는 것이 훨씬 쉽습니다. 게다가 문법이 더 쉽지요.
+
+vector는 이 외에도 더 많은 기능이 있는데, 성능향상을 꾀하거나 멀티스레딩 어플리케이션을 위해 사용할때에는 까다로운 경우가 대부분입니다만, 이러한 부분은 이 챕터의 범위를 벗어납니다. vector에 관한 튜토리얼은 [vectors basics](http://openframeworks.cc/tutorials/c++%20concepts/001_stl_vectors_basic.html)을 참고하시면 되는데, 오픈프레임웍스 사이트의 소개중 하나입니다. 또한 고급 개념에 관한 설명은 [std::vector](http://arturocastro.net/blog/2011/10/28/stl::vector/)을 참고하시기 바랍니다.
 
 Vectors have some more features and using them properly might be tricky mostly if we want to optimize for performance or use them in multithreaded applications, but that's not the scope of this chapter, you can find some tutorials about vectors, this is an introductory one in the openFrameworks site: [vectors basics](http://openframeworks.cc/tutorials/c++%20concepts/001_stl_vectors_basic.html) and this one explains more advanced concepts [std::vector](http://arturocastro.net/blog/2011/10/28/stl::vector/)
 
+## 다른 메모리 구조, 리스트와 맵 ##
 
-## Other memory structures, lists and maps ##
-
-Having objects in memory one after another is most of the time what we want, the access is really fast no matter if we want to access sequentially to each of them or randomly to anyone, since a vector is just an array internally, accessing let's say position 20 in it, just means that internally it just needs to get the memory address of the first position and add 20 to it. In some cases though, vectors are not the most optimal memory structure. For example, if we want to frequently add  or remove elements in the middle of the vector, and you imagine the vector as a memory strip, that means that we need to move the rest of the vector till the end one position to the right and then insert the new element in the free location. In memory there's no such thing as move, moving contiguous memory means copying it and as we've said before, copying memory is a relatively slow operation.
+이 외에도 메모리의 다른 오브젝트가 있다는 것은 대부분 우리가 원하는 다른 기능을 위한 것입니다. 메모리의 내용을 연속적으로 혹은 랜덤으로 접근하더라도 엄청 빠르게 동작하길 바라는것이죠. vecto는 내부적으로는 단순히 배열이므로, 가령 예를들어 20번째 위치에 접근하려고 하면, 실제 내부적으로는 첫번째 메모리 주소를 얻은 다음 거기에 20을 더하는 방식으로 접근하게 됩니다. 어떤 경우에는, vector는 최적화된 메모리 구조가 아닐 때도 있습니다. 예를 들어, vector의 중간위치에 빈번하게 어떠한 요소를 더하거나 삭제할 경우를 생각해봅시다. vector는 메모리의 스트립이라고 생각하면 됩니다. 즉 중간에 추가를 하면 추가한 위치부터 vector의 끝까지의 요소들을 우측으로 이동시킨 뒤, 비어있는 공간에 새 요소를 넣어야 하는 것이죠. 베보리에서는 이동시킨다는 개념이 없습니다. 인접한 메모리의 이동이라는 것은 복사를 의미하는 것이고, 이전에도 언급했듯이, 메모리의 복사는 상대적으로 느린 연산입니다.
 
 ![Vector inserting](images/vector_inserting.svg "")
 
-Sometimes, if there's not enough memory to move/copy the elements, one position to the right, the vector will need to copy the whole thing to a new memory location. If we are working with thousands of elements and doing this very frequently, like for example every frame, this can really slow things down a lot.
+간혹, 요소들을 한칸씩 우측으로 이동시킬때 이동/복사할때 메모리가 부족할 경우, vector 전체를 새로운 메모리 위치로 복사해야 합니다. 만약 이러한 작업을 수천개의 요소들로, 게다가 자주 하게 되면(예를 들어 매 프레임마다), 이는 엄청나게 느리게 동작할 겁니다.
 
-To solve that, there's other memory structures like for example lists. In a list, memory, is not contiguous but instead each element has a pointer to the next and previous element so inserting one element just means changing those pointers to point to the newly added element. In a list we never need to move elements around but it's main disadvantage is that not being the elements contiguous in memory it's access can be slightly slower than a vector, also that we can't use it in certain cases like for example to upload data to the graphics card which always wants contiguous memory.
+이를 해결하기 위해서, 리스트와 같은 다른 메모리 구조가 있습니다. 리스트에서는, 메모리는 연속적이지 않은 대신, 각 요소들은 이전 및 다음 요소들을 가리키는 포인터를 가지고 있습니다. 따라서 새로운 요소를 삽입하면, 이 포인터들을 새로 추가되는 요소들을 가리키도록 해주면 됩니다. 리스트에서는 요소들을 이동시킬 필요는 없지만, 가장 큰 단점이라면 요소들이 메모리 내에서 연속적으로 위치해 있지 않으므로 vector에 비해서 살짝 느리다는 점입니다. 또한 반드시 연속적인 메모리를 요구하는 그래픽카드에 데이터를 업로드 해야 하는 상황과 같은 특수한 경우에도 사용할 수 없습니다. 
 
 ![List](images/list.svg "")
 
-Another problem of lists is that trying to access an element in the middle of the list (what is called random access) is slow since we always have to go through all the list till we arrive to the desired element. Lists are used then, when we seldom need to access randomly to a position of it and we need to add or remove elements in the middle frequently. For the specifics of the syntax of a list you can check the [c++ documentation on lists](http://www.cplusplus.com/reference/list/list/)
+리스트의 또다른 문제점이라면, 리스트의 중간 요소들에 접근(랜덤 접근이라고도 합니다)하는 것이 느리다는 점입니다. 원하는 요소에 접근하려면 우리가 원하는 요소에 다다를때까지 리스트의 모든 요소들을 거쳐야 하기 때문이죠. 즉, 리스트는 리스트의 중간쯤에 빈번하게 추가/삭제를 하거나, 아주 가끔 랜덤한 위치에 접근할 필요가 있을때 사용합니다. 리스트의 상세 문법들은 [c++ documentation on lists](http://www.cplusplus.com/reference/list/list/)에서 확인하실 수 있습니다.
 
-There's several memory structures in the c++ standard library or other c++ libraries, apart from vectors and lists we are only going to see briefly maps.
+vector와 리스트 이외에도, C++의 표준 라이브러리 혹은 다른 C++ 라이브러리에는 몇몇 메모리 구조들이 있는데, 이중 맵(map)에 대해서만 간략히 살펴보도록 하겠습니다.
 
-Sometimes, we don't want to access things by their position or have an ordered list of elements but instead have something like an index or dictionary of elements that we can access by some key, that's what a map is. In a map we can store pairs of (key,value) and look for a value by it's key. For example let's say we have a collection of objects which have a name, if that name is unique for all the objects, we can store them in a map to be able to look for them by their name:
+가끔은 요소의 위치에 관한 접근이 필요없거나, 정렬된 리스트를 가지는 것과 상관없지만, 인덱스 혹은 키와 같은 요소들의 딕셔너리로 접근이 필요한 때가 있는데, 이것이 바로 맵입니다. 맵에서는 요소들을 (키,값)의 쌍으로 저장하고, 키로 값을 찾을 수 있습니다. 예를들어서 이름을 갖는 오브젝트들의 집합이 있고, 각 이름이 유일하다고 해봅시다. 우리는 이것들을 맵으로 저장하고, 이것들을 이름으로 검색할 수 있습니다:
 
 ```cpp
 map<string, NamedObject> objectsMap;
@@ -832,13 +842,14 @@ o1.name = "object1";
 objectsMap[o1.name] = o1;
 ```
 
-Later on we can look for that object using it's name like:
+이후, 아래와 같이 이름으로 오브젝트를 검색할 수 있습니다:
 
 ```cpp
 objectsMap["object1"].doSomething();
 ```
 
-Be careful though, if the object didn't exist before, using the `[]` operator will create a new one. If you are not sure, it's usually wise to try to find it first and only use it if it exists:
+주의해야 할 사항은, 만약 검색한 값이 존재하지 않는다면, `[]`연산자를 사용할때 새로운 오브젝트를 생성한다는 점입니다. 따라서 확실치 않을 경우, 일반적으로 우선 검색해보고, 값이 존재할때만 동작하도록 하는것이 좋습니다:
+
 
 ```cpp
 if(objectsMap.find("object1")!=objectsMap.end()){
@@ -846,10 +857,10 @@ if(objectsMap.find("object1")!=objectsMap.end()){
 }
 ```
 
-You can find the complete reference on maps in the [c++ documentation for maps](http://www.cplusplus.com/reference/map/map/)
+맵에 관한 레퍼런스는 [c++ documentation for maps](http://www.cplusplus.com/reference/map/map/)에서 살펴볼 수 있습니다.
 
+## 스마트 포인터 ##
 
-## smart pointers ##
 
 As we've said before, traditional c pointers also called now *raw pointers* are sometimes problematic, the most frequent problems are dangling pointers: pointers that probably were once valid but now point to an invalid memory location, trying to dereference a NULL pointer, possible memory leaks if we fail to deallocate memory before loosing the reference to that memory address...
 
