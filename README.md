@@ -3,7 +3,7 @@ ofBook
 
 this is a collaboratively written openFrameworks book.  
 
-Read the latest version [here](http://openframeworks.cc/ofBook)!
+Read the latest version [here](http://openframeworks.cc/learning/)!
 
 for other language, please read below.
 - Korean(한국어) : [README.ko.md](README.ko.md)
