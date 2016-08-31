@@ -861,9 +861,9 @@ if(objectsMap.find("object1")!=objectsMap.end()){
 
 ## 스마트 포인터 ##
 
+이전에 말씀드렸듯, 전통적인 C 포인터들은 종종 문제를 발생시키는 *raw pointer*라고도 불리웁니다. 자주 발생하는 문제는 바로 허상포인터: 한때는 유효했지만, 유효하지 않은 메모리를 가리키고 있는 포인터로써, 널포인터를 역참조하려고 하고, 이 잘못된 메모리 주소를 잃기 전에 제대로 해제해주지 않으면 메모리 누수를 발생시킬 가능성이 있지요..
 
-As we've said before, traditional c pointers also called now *raw pointers* are sometimes problematic, the most frequent problems are dangling pointers: pointers that probably were once valid but now point to an invalid memory location, trying to dereference a NULL pointer, possible memory leaks if we fail to deallocate memory before loosing the reference to that memory address...
-
+스마트 포인터는 우리가 스택 체계라고 불렀던 방식으로 메모리를 할당하는 것으로 문제를 해결하는데, 정확한 명칭은 RAII: [Resource Acquisition Is Initialization](http://en.wikipedia.org/wiki/Resource_Acquisition_Is_Initialization)라고 합니다. 이의 의미는 스택에 오브젝트를 생성하고, 나중에 사용할 리소스를 할당한다는 의미입니다. 이것의 소멸자가 
 Smart pointers try to solve that by adding what we've been calling stack semantics to memory allocation, the correct term for this is RAII: [Resource Acquisition Is Initialization](http://en.wikipedia.org/wiki/Resource_Acquisition_Is_Initialization) And means that the creation of an object in the stack, allocates the resources that it'll use later. When it's destructor is called because the variable goes out of scope, the destructor of the object is triggered which takes care of deallocating all the used resources. There's some more implications to RAII but for this chapter this is what matters to us more.
 
 Smart pointers use this technique to avoid all the problems that we've seen in raw pointers. They do this by also defining better who is the owner of some allocated memory or object. Till now we've seen how things allocated in the stack belong to the function or block that creates them we can return a copy of them (or in c++11 or later, move them) out of a function as a return value but their ownership is always clear.
