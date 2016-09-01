@@ -209,7 +209,7 @@ void ofApp::setup(){
     path.lineTo(40,40);
     path.lineTo(20,40);
     path.close();
-    m.rotate(45,0,0,0);
+    m.rotate(45,0,0,1);
     m.translate(20,20,0);
 }
 
