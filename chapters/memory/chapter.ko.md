@@ -715,7 +715,7 @@ arr[5] = 7;
 cout << "arr: " << arr << "arr+5: " << arr+5 << endl;
 ```
 
-또한 계산기로 16진수값을 뺄셈해보시기 바랍니다. 만약 프로그램에서 아래와 같이 뺄셈을 해보시면 :
+또한 계산기로 16진수값을 뺄셈해보시기 바랍니다. 만약 프로그램에서 아래와 같이 뺄셈을 해보면:
 and substracting the hexadecimal values in a calculator. If you try to substract them in your program like:
 
 
@@ -770,7 +770,6 @@ arrB = arr;
 ```
 
 위의 코드는 컴파일 되지 않습니다. 또한 아래의 경우:
-will fail to compile. And this:
 
 
 ```cpp
@@ -863,9 +862,11 @@ if(objectsMap.find("object1")!=objectsMap.end()){
 
 이전에 말씀드렸듯, 전통적인 C 포인터들은 종종 문제를 발생시키는 *raw pointer*라고도 불리웁니다. 자주 발생하는 문제는 바로 허상포인터: 한때는 유효했지만, 유효하지 않은 메모리를 가리키고 있는 포인터로써, 널포인터를 역참조하려고 하고, 이 잘못된 메모리 주소를 잃기 전에 제대로 해제해주지 않으면 메모리 누수를 발생시킬 가능성이 있지요..
 
-스마트 포인터는 우리가 스택 체계라고 불렀던 방식으로 메모리를 할당하는 것으로 문제를 해결하는데, 정확한 명칭은 RAII: [Resource Acquisition Is Initialization](http://en.wikipedia.org/wiki/Resource_Acquisition_Is_Initialization)라고 합니다. 이의 의미는 스택에 오브젝트를 생성하고, 나중에 사용할 리소스를 할당한다는 의미입니다. 이것의 소멸자가 
+스마트 포인터는 우리가 스택 체계라고 불렀던 방식으로 메모리를 할당하는 것으로 문제를 해결하는데, 정확한 명칭은 RAII: [Resource Acquisition Is Initialization](http://en.wikipedia.org/wiki/Resource_Acquisition_Is_Initialization)라고 합니다. 이의 의미는 스택에 오브젝트를 생성하고, 나중에 사용할 리소스를 할당한다는 의미입니다.  변수가 유효범주를 벗어나  이것의 소멸자가 호출될때, 오브젝트의 소멸자는 사용된 모든 리소스를 반환합니다. RAII에는 더 많은 것들을 의미하고 있지만, 이것이 바로 이 챕터와 관련이 있다고 할 수 있습니다.
+
 Smart pointers try to solve that by adding what we've been calling stack semantics to memory allocation, the correct term for this is RAII: [Resource Acquisition Is Initialization](http://en.wikipedia.org/wiki/Resource_Acquisition_Is_Initialization) And means that the creation of an object in the stack, allocates the resources that it'll use later. When it's destructor is called because the variable goes out of scope, the destructor of the object is triggered which takes care of deallocating all the used resources. There's some more implications to RAII but for this chapter this is what matters to us more.
 
+스마트포인터는 앞서 raw 포인터를 직접 사용했을 때 발생되는 모든 문제들을 해결하는 방법들을 사용합니다. 오브젝트 혹은 할당된 메모리의 소유자가 누구인지를 더 잘 정의하는 방법을 사용해서 말이지요. 지금까지 
 Smart pointers use this technique to avoid all the problems that we've seen in raw pointers. They do this by also defining better who is the owner of some allocated memory or object. Till now we've seen how things allocated in the stack belong to the function or block that creates them we can return a copy of them (or in c++11 or later, move them) out of a function as a return value but their ownership is always clear.
 
 With heap memory though, ownership becomes way more fuzzy, someone might create a variable in the heap like:
