@@ -112,7 +112,6 @@ void ofApp::setup(){
    }
 }
 ```
-	which is not very common but is used sometimes to define the life of a variable inside a function, mostly when that variable is an object that holds resources and we want to only hold them for a specific duration.
 위의 예제는 흔하지 않은 경우지만 함수 내에서 변수의 수명을 지정하기 위해 가끔 사용합니다. 대부분 이 변수들은 리소스를 갖고 있는 오브젝트이며, 특정한 기간에만 쥐고 있길 원할 때 사용하죠.
 
 변수의 수명은 `변수영역(scope)` 이라고도 불립니다.
