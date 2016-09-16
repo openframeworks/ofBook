@@ -866,9 +866,10 @@ if(objectsMap.find("object1")!=objectsMap.end()){
 
 Smart pointers try to solve that by adding what we've been calling stack semantics to memory allocation, the correct term for this is RAII: [Resource Acquisition Is Initialization](http://en.wikipedia.org/wiki/Resource_Acquisition_Is_Initialization) And means that the creation of an object in the stack, allocates the resources that it'll use later. When it's destructor is called because the variable goes out of scope, the destructor of the object is triggered which takes care of deallocating all the used resources. There's some more implications to RAII but for this chapter this is what matters to us more.
 
-스마트포인터는 앞서 raw 포인터를 직접 사용했을 때 발생되는 모든 문제들을 해결하는 방법들을 사용합니다. 오브젝트 혹은 할당된 메모리의 소유자가 누구인지를 더 잘 정의하는 방법을 사용해서 말이지요. 지금까지 
+스마트포인터는 이 기술을 사용함으로써 앞서 raw 포인터를 직접 사용했을 때 발생할 수 있는 문제들을 해결합니다. 오브젝트 혹은 할당된 메모리의 소유자가 누구인지를 더 잘 정의하는 방법을 사용해서 말이지요. 지금까지 
 Smart pointers use this technique to avoid all the problems that we've seen in raw pointers. They do this by also defining better who is the owner of some allocated memory or object. Till now we've seen how things allocated in the stack belong to the function or block that creates them we can return a copy of them (or in c++11 or later, move them) out of a function as a return value but their ownership is always clear.
 
+힙메모리를 사용하는 경우라면, 소유권은 훨씬 복잡해집니다. 만약 어떤 녀석이 입에 아래와 같이 변수를 하나 생성했다고 생각해봅시다:
 With heap memory though, ownership becomes way more fuzzy, someone might create a variable in the heap like:
 
 ```cpp
@@ -879,6 +880,7 @@ int * createFive(){
 }
 ```
 
+자, 다른 누군가가 저 함수를 호출했다고 하면, `new int`의 소유권은 누구에게 있을까요? 만일 다른 함수 혹은 오브젝트로 해당 메모리의 포인터를 전달한다고 하면, 이는 훨씬 복잡해집니다.
 Now, when someone calls that function, who is the owner of the `new int`? Things can get even more complicated, what if we pass a pointer to that memory to another function or even an object?
 
 
@@ -894,6 +896,7 @@ void ofApp::setup(){
 }
 ```
 
+당최 해당 메모리의 소유자는 누가 될까요? ofApp? 오브젝트? 소유권이 무엇인가를 간단히 생각해보자면, 더이상 사용되지 않을 때, 해당 메모리를 지워야 할 책임이 누구에게 있는지라고 정리할 수 있을텐데, 지금 보면 ofApp와 오브젝트 모두가 해당 메모리를 참조하고 있습니다. 만약 오브젝트가 해당 메모리의 작업을 완료하기 전에 ofApp가 삭제를 해버린다면, 오브젝트가 삭제된 메모리 영역을 접근하려고 할것이고, 어플리케이션은 죽어버릴겁니다. 위의 예제에서는 ofApp이 오브젝트와 포인터인 int a 두 녀석으 알고 있으므로, 삭제를 책임질 필요가 있다고 볼 수 있는데요, 만약 아래와 같이 변경을 한다면 어떨까요? :
 who is now the owner of that memory? ofApp? object? The ownership defines among other things who is responsible for deleting that memory when it's not used anymore, now both ofApp and object have a reference to it, if ofApp deletes it before object is done with it, object might try to access it and crash the application, or the other way around. In this case it seems logical that ofApp takes care of deleting it since it knows about both object and the pointer to int a, but what if we change the example to :
 
 
@@ -909,6 +912,7 @@ void ofApp::setup(){
 ```
 
 or even:
+혹은 심지어 아래와 같이 변경한다면요?:
 
 
 
