@@ -172,8 +172,6 @@ As mentioned before, addons extend oF core functionalities. In each oF distribut
 
 - **ofxAccelerometer**
 This addon is used to interface and work with [accelerometers](https://en.wikipedia.org/wiki/Accelerometer "Wikipedia article on accelerometers").
-- **ofxAndroid**
-This addon lets you use openFrameworks on [Android](https://www.android.com/ "homepage of Android OS").
 - **ofxAssimpModelLoader**
 This addon loads 3D models into your oF project, but it is done using the [assimp](http://assimp.sourceforge.net/) library, which supports a wide variety of 3D file formats, even animated 3D objects.
 - **ofxEmscripten**
