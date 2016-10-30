@@ -198,8 +198,6 @@ Allows you to write [unit tests](https://en.wikipedia.org/wiki/Unit_testing "Wik
 Used to write out [EPS](https://en.wikipedia.org/wiki/Encapsulated_PostScript "Wikipedia article on encapsulated PostScript (eps)") vector graphics files. It the same drawing syntax as oF's regular drawing syntax, so it is really easy to use. Check chapter **[add correct chapter number]** for more info about oF's drawing capabilities. 
 - **ofxXmlSettings**
 This is oF's simple XML implementation used mostly for loading and saving settings. 
-- **ofxiOS**
-Enables you to use openFrameworks on [iOS](https://www.apple.com/ios/ "iOS website").
 
 That's what's in the pantry.  What do you want to cook?
 
