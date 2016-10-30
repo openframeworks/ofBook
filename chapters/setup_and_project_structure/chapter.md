@@ -187,7 +187,7 @@ Lets you deal with network protocols such as UDP and TCP. You can use it to comm
 - **ofxOpenCv**
 This is oF's binding to one of the best and most used computer vision code library, [OpenCV](http://opencv.org/). Computer vision is a complete world in itself, and being able to use OpenCV right out-of-the-box is a super important and useful oF feature.
 - **ofxOsc**
-[OSC (Open Sound Control)](https://en.wikipedia.org/wiki/Open_Sound_Control "Wikipedia article on OSC") implementation for oF. OSC easily communicates with other devices or applications within the same network. OSC is used to send messages and parameters from one app to another one. Several chapters in this book discuss OSC. 
+[OSC (Open Sound Control)](https://en.wikipedia.org/wiki/Open_Sound_Control "Wikipedia article on OSC") implementation for oF. OSC easily communicates with other devices or applications within the same network. OSC is used to send messages and parameters from one app to another one. Several chapters in this book discuss OSC.
 - **ofxSvg**
 Loads and displays [SVG](https://en.wikipedia.org/wiki/Scalable_Vector_Graphics "Wikipedia article on SVG") files. These are vector graphics files, usually exported from vector drawing programs such as Inkscape or Adobe Illustrator.
 - **ofxThreadedImageLoader**
