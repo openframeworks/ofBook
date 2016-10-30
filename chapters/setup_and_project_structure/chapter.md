@@ -188,8 +188,6 @@ This is oF's binding to one of the best and most used computer vision code libra
 Loads and displays [SVG](https://en.wikipedia.org/wiki/Scalable_Vector_Graphics "Wikipedia article on SVG") files. These are vector graphics files, usually exported from vector drawing programs such as Inkscape or Adobe Illustrator.
 - **ofxThreadedImageLoader**
 Loads images on a different thread, so your main thread (the one that draws to your screen) doesn't get stuck while loading images. Really useful when loading online images.
-- **ofxUnitTests**
-Allows you to write [unit tests](https://en.wikipedia.org/wiki/Unit_testing "Wikipedia article on unit tests") for code involving openFrameworks.
 - **ofxVectorGraphics**
 Used to write out [EPS](https://en.wikipedia.org/wiki/Encapsulated_PostScript "Wikipedia article on encapsulated PostScript (eps)") vector graphics files. It the same drawing syntax as oF's regular drawing syntax, so it is really easy to use. Check chapter **[add correct chapter number]** for more info about oF's drawing capabilities. 
 - **ofxXmlSettings**
