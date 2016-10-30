@@ -174,8 +174,6 @@ As mentioned before, addons extend oF core functionalities. In each oF distribut
 This addon is used to interface and work with [accelerometers](https://en.wikipedia.org/wiki/Accelerometer "Wikipedia article on accelerometers").
 - **ofxAssimpModelLoader**
 This addon loads 3D models into your oF project, but it is done using the [assimp](http://assimp.sourceforge.net/) library, which supports a wide variety of 3D file formats, even animated 3D objects.
-- **ofxEmscripten**
-This addon lets you export openFrameworks applications to work on the web by transforming C++ to JavaScript using [emscripten](https://kripken.github.io/emscripten-site/ "emscripten project website").
 - **ofxGui**
 This is the default GUI (Graphical User Interface) for oF. It lets you add sliders and buttons so you can easily modify parameters while your project is running. It relies heavily on ofParameters and ofParameterGroup. It allows you to save and load the values for the parameters that you've adjusted.
 - **ofxKinect**
