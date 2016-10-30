@@ -3,6 +3,8 @@ ofBook
 
 this is a collaboratively written openFrameworks book.  
 
+Read the latest version [here](http://openframeworks.cc/learning/)!
+
 for other language, please read below.
 - Korean(한국어) : [README.ko.md](README.ko.md)
 
@@ -57,5 +59,5 @@ Older Book discussions can be checked at [ofBook Archives](http://dev.openframew
 
 # gulp
 
-In addition to the python routines to build the book, there is also an optional gulp file for use in style development.  It requires gulp, browser-sync and gulp sass and can be used primarily to see changes to CSS reflect live on the static pages.  You have to run the python createWebBook script first. 
+In addition to the python routines to build the book, there is also an optional gulp file for use in style development.  It requires [gulp](http://gulpjs.com/), [browser-sync](https://browsersync.io/) and [gulp sass](https://github.com/dlmanning/gulp-sass) and can be used primarily to see changes to CSS reflect live on the static pages.  You have to run the python createWebBook script first.
 

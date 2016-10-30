@@ -4,7 +4,6 @@
 
 *with edits from tpltnt, Kayla Lewis*
 
-
 ## Background 
 
 The word animation is a medieval term stemming from the Latin animare, which means 'instill with life''. In modern terms, it's used to describe the process of creating movement from still, sequential images. Early creators of animation used spinning discs ([phenakistoscopes](https://en.wikipedia.org/wiki/Phenakistoscope "Wikipedia on phenakistoscopes")) and cylinders ([zoetropes](https://en.wikipedia.org/wiki/Zoetrope "Wikipedia on zoetropes")) with successive frames to create the illusion of a smooth movement from persistence of vision. In modern times, we're quite used to other techniques such as [flip books](https://en.wikipedia.org/wiki/Flip_book "Wikipedia on flip books") and cinematic techniques like [stop motion](https://en.wikipedia.org/wiki/Stop_motion "Wikipedia on stop motion"). Increasingly, artists have been using computational techniques to create animation -- using code to "bring life" to objects on the screen over successive frames. This chapter is going to look at these techniques and specifically try to address a central question: how can we create compelling, organic, and even absurd movement through code?

@@ -1,10 +1,27 @@
 $(document).ready(function() {
 
-  $(".group").click(function() {
-    $('.group.selected').removeClass('selected');
+  // Handle selecting & unselecting chapter groups in the sidebar
+  var $selectedGroup = $('.group.selected');
+  $(".group").click(function(event) {
+    // Pull out the element that to which the click event is bound (li.group)
+    var newSelected = event.currentTarget;
 
-    $(this).addClass('selected');
-  })
+    if ($selectedGroup.length && ($selectedGroup.get(0) === newSelected)) {
+      // Clicked on already selected group, but only unselect the current group
+      // if the click happened over the title div. This helps prevents
+      // accidentally closing the group, e.g. if click happened in-between
+      // chapter links.
+      if ($(event.target).hasClass('groupTitle')) {
+        $selectedGroup.removeClass('selected');
+        $selectedGroup = $(); // Empty selection
+      }
+    } else {
+      // Clicked on a new group
+      $selectedGroup.removeClass('selected');
+      $selectedGroup = $(newSelected);
+      $selectedGroup.addClass('selected');
+    }
+  });
 
 
   // Cache selectors

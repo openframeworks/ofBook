@@ -329,7 +329,10 @@ for idx, chapter in enumerate(chapterDicts):
 		# Create a chapter group LI
 		groupLi = Tag(soup, None, "li")
 		groupLi['class']="group"
-		groupLi.append( group['groupName'])
+		groupTitle = Tag(soup, None, 'div')
+		groupTitle['class'] = 'groupTitle'
+		groupTitle.string = group['groupName']
+		groupLi.append(groupTitle)
 		navbar.append(groupLi)
 
 		# Run through the chapters of the group

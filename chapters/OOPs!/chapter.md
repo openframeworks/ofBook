@@ -350,7 +350,7 @@ Vectors are really great as they'll allow to create collections of objects witho
 So, let's use them!
 Note: You'll be hearing about two different types of vectors throughout this book. Please don't confuse stl::vectors (the elastic arrays type we're talking about) with mathematical vectors (e.g. forces).
 
-To learn more about stl::vector check the "C++ basics" chapter or the [short online tutorial on the openFrameworks website](http://www.openframeworks.cc/tutorials/c++%20concepts/001_stl_vectors_basic.html).
+To learn more about stl::vector check the "C++ basics" chapter or the [short online tutorial on the openFrameworks website](http://openframeworks.cc/tutorials/c++%20concepts/001_stl_vectors_basic.html).
 
 Back to our beloved ofApp.h file, let's define a vector of `Ball` objects by typing:
 
@@ -422,7 +422,7 @@ But because there's always a time you might just want to destroy them all, vecto
 Feel free to experiment and try using it yourself!
 
 ```cpp
-balls.clear();
+myBall.clear();
 ```
 
 
