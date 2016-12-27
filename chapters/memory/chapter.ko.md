@@ -1004,6 +1004,7 @@ The compiler won't fail there but if we try to execute the application it'll cra
 ###shared_ptr
 
 As we've seen before, sometimes having unique ownership is not enough, sometimes we need to share an object among several owners, in c++11 or later, this is solved through `shared_ptr`. The usage is pretty similar to `unique_ptr`, we create it like:
+앞에서 살펴본것처럼, 종종 유일한 소유권을 갖는것만으론 부족하기 때문에, 여러 소유자에게 오브젝트를 공유할 필요가 있습니다. c++11 또는 그 이후에서는, `shared_ptr`를 통해 이를 해결합니다. 사용법은 `unique_ptr`과 아주 흡사하며, 아래와 같이 생성할 수 있습니다:
 
 ```cpp
 void ofApp::setup(){
@@ -1016,7 +1017,7 @@ void ofApp::setup(){
 ```
 
 The difference is that now, both the vector and ofApp::setup, have a reference to that object, and doing:
-
+여기서 차이점이 있다면, vector와 ofApp::setup 둘다 이 오브젝트에 대한 레퍼런스를 갖는다는 것입니다. 그리고 아래의 수행은:
 
 ```cpp
 void ofApp::setup(){
@@ -1029,5 +1030,5 @@ void ofApp::setup(){
 	cout << *a << endl;
 }
 ```
+완벽하게 동작합니다. shared_ptr의 동작방법은, 얼마나 많이 참조되는지 그 횟수를 유지하는 것입니다. 오브젝트의 복사본을 만들때마다, 카운터가 1씩 증가하며, 레퍼런스가 삭제되면, 카운터가 1씩 줄어듭니다. 레퍼런스 카운트가 0에 다다르면, 할당된 메모리를 해제합니다. 레퍼런스 카운트는 atomically하게 수행되는데, 이 말은 즉 카운트와의 문제 없이 shared_ptr를 스페르끼리 공유할 수 있다는 것을 의미합니다. 그렇다고 해서 멀티 스레드 어플리케이션에서 이것에 담겨있는 데이터를 안전하게 접근할 수 있다는 것은 아닙니다, 단지 다른 스레드끼리 shared_ptr를 전달하더라도, 레퍼런스 카운트가 틀릴 수 없다는 것 뿐입니다.
 
-Is perfectly ok. The way a shared_ptr works is by keeping a count of how many references there are to it, whenever we make a copy of it, it increases that counter by one, whenever a reference is destroyed it decreases that reference by one. When the reference count arrives to 0 it frees the allocated memory. The reference counting is done atomically, which means that we can share a shared_ptr across threads without having problems with the count. That doesn't mean that we can access the contained data safely in a multithreaded application, just that the reference count won't get wrong if we pass a shared_ptr accross different threads.
