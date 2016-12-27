@@ -112,7 +112,6 @@ void ofApp::setup(){
    }
 }
 ```
-	which is not very common but is used sometimes to define the life of a variable inside a function, mostly when that variable is an object that holds resources and we want to only hold them for a specific duration.
 위의 예제는 흔하지 않은 경우지만 함수 내에서 변수의 수명을 지정하기 위해 가끔 사용합니다. 대부분 이 변수들은 리소스를 갖고 있는 오브젝트이며, 특정한 기간에만 쥐고 있길 원할 때 사용하죠.
 
 변수의 수명은 `변수영역(scope)` 이라고도 불립니다.
@@ -156,15 +155,15 @@ int i = 0;
 int * p = &i;
 ```
 
-	우리가 메모리에서 얻을 수 있는 것은 이와 같습니다:
+우리가 메모리에서 얻을 수 있는 것은 이와 같습니다:
 
 	![Pointer](images/pointer.svg "")
 
-	포인터는 대체로 4 또는 8바이트를 차지하는데(32비트 혹은 64비트 프로그램을 사용하느냐에 따라 달라집니다), 여기서는 이해를 돕기 위해 그냥 1바이트로 표현하였습니다. 보시다시피 값을 직접 담는 대신 값을 가리키고 있는 메모리 주소를 담고 있다는 변수임을 알 수 있습니다. 그렇게 때문에 포인터라고 불리우는 것이죠.
+포인터는 대체로 4 또는 8바이트를 차지하는데(32비트 혹은 64비트 프로그램을 사용하느냐에 따라 달라집니다), 여기서는 이해를 돕기 위해 그냥 1바이트로 표현하였습니다. 보시다시피 값을 직접 담는 대신 값을 가리키고 있는 메모리 주소를 담고 있다는 변수임을 알 수 있습니다. 그렇게 때문에 포인터라고 불리우는 것이죠.
 
-	포인터는 힙 또는 스택 메모리를 가리킬 수 있습니다.
+포인터는 힙 또는 스택 메모리를 가리킬 수 있습니다.
 
-	이제, C++에서 프로그래밍을 할 때 아주 중요한 것들에 대해서 설명하고자 합니다. 지금까지 여러분이 봐왔던 것처럼, 아래와 같이 변수를 선언할때:
+이제, C++에서 프로그래밍을 할 때 아주 중요한 것들에 대해서 설명하고자 합니다. 지금까지 여러분이 봐왔던 것처럼, 아래와 같이 변수를 선언할때:
 
 ```cpp
 int i;
@@ -866,10 +865,9 @@ if(objectsMap.find("object1")!=objectsMap.end()){
 
 Smart pointers try to solve that by adding what we've been calling stack semantics to memory allocation, the correct term for this is RAII: [Resource Acquisition Is Initialization](http://en.wikipedia.org/wiki/Resource_Acquisition_Is_Initialization) And means that the creation of an object in the stack, allocates the resources that it'll use later. When it's destructor is called because the variable goes out of scope, the destructor of the object is triggered which takes care of deallocating all the used resources. There's some more implications to RAII but for this chapter this is what matters to us more.
 
-스마트포인터는 앞서 raw 포인터를 직접 사용했을 때 발생되는 모든 문제들을 해결하는 방법들을 사용합니다. 오브젝트 혹은 할당된 메모리의 소유자가 누구인지를 더 잘 정의하는 방법을 사용해서 말이지요. 지금까지 
-Smart pointers use this technique to avoid all the problems that we've seen in raw pointers. They do this by also defining better who is the owner of some allocated memory or object. Till now we've seen how things allocated in the stack belong to the function or block that creates them we can return a copy of them (or in c++11 or later, move them) out of a function as a return value but their ownership is always clear.
+스마트포인터는 이 기술을 사용함으로써 앞서 raw 포인터를 직접 사용했을 때 발생할 수 있는 문제들을 해결합니다. 오브젝트 혹은 할당된 메모리의 소유자가 누구인지를 더 잘 정의하는 방법을 사용해서 말이지요. Till now we've seen how things allocated in the stack belong to the function of block that creates them we can return a copy of them(or in c++11 or later, move them) out of a function as a return value but their ownership is always clear.
 
-With heap memory though, ownership becomes way more fuzzy, someone might create a variable in the heap like:
+힙메모리를 사용하는 경우라면, 소유권은 훨씬 복잡해집니다. 만약 어떤 녀석이 입에 아래와 같이 변수를 하나 생성했다고 생각해봅시다:
 
 ```cpp
 int * createFive(){
@@ -879,7 +877,7 @@ int * createFive(){
 }
 ```
 
-Now, when someone calls that function, who is the owner of the `new int`? Things can get even more complicated, what if we pass a pointer to that memory to another function or even an object?
+자, 다른 누군가가 저 함수를 호출했다고 하면, `new int`의 소유권은 누구에게 있을까요? 만일 다른 함수 혹은 오브젝트로 해당 메모리의 포인터를 전달한다고 하면? 이는 훨씬 복잡해집니다.
 
 
 ```cpp
@@ -894,6 +892,7 @@ void ofApp::setup(){
 }
 ```
 
+당최 해당 메모리의 소유자는 누가 될까요? ofApp? 오브젝트? 소유권이 무엇인가를 간단히 생각해보자면, 더이상 사용되지 않을 때, 해당 메모리를 지워야 할 책임이 누구에게 있는지라고 정리할 수 있을텐데, 지금 보면 ofApp와 오브젝트 모두가 해당 메모리를 참조하고 있습니다. 만약 오브젝트가 해당 메모리의 작업을 완료하기 전에 ofApp가 삭제를 해버린다면, 오브젝트가 삭제된 메모리 영역을 접근하려고 할것이고, 어플리케이션은 죽어버릴겁니다. 위의 예제에서는 ofApp이 오브젝트와 포인터인 int a 두 녀석으 알고 있으므로, 삭제를 책임질 필요가 있다고 볼 수 있는데요, 만약 아래와 같이 변경을 한다면 어떨까요? :
 who is now the owner of that memory? ofApp? object? The ownership defines among other things who is responsible for deleting that memory when it's not used anymore, now both ofApp and object have a reference to it, if ofApp deletes it before object is done with it, object might try to access it and crash the application, or the other way around. In this case it seems logical that ofApp takes care of deleting it since it knows about both object and the pointer to int a, but what if we change the example to :
 
 
@@ -908,7 +907,7 @@ void ofApp::setup(){
 }
 ```
 
-or even:
+혹은 심지어 아래와 같이 변경한다면요?:
 
 
 
@@ -922,16 +921,20 @@ void ofApp::setup(){
 }
 ```
 
-
+이 경우, ofApp는 할당된 메모리에 관해 아는게 없지만 
 now ofApp doesn't know anymore about the allocated memory but both cases are possible so we actually need to know details of the implementation of object to know if we need to keep a reference of that variable to destroy it later or not. That, among other things breaks encapsulation, that you might now from chapter 1. We shouldn't need to know how object works internally to be able to use it. This makes the logic of our code really complicated and error prone.
 
+스마트 포인터는 오브젝트의 소유권이 누구에게 있는지를 명확하게 정의하여, 소유자가 파괴되었을 때 할당되었던 메모리를 자동으로 삭제하여 문제를 해결합니다. 어떤 경우엔, 몇몇의 소유자들에게 하나의 오브젝트를 공유해야할 필요가 있습니다. 이러한 경우에 우리에겐 공유포인터(shared pointer)라고 불리우는, 특별한 타입의 스마트 포인터가 있습니다. 공유소유자를 지정하여 모든 소유자들이 변수를 사용하지 않을때에만 할당된 메모리를 해제합니다.
 
 Smart pointers solve this by clearly defining who owns an object and by automatically deleting the allocated memory when the owner is destroyed. Sometimes, we need to share an object among several owners. For that cases we have a special type of smart pointers called shared pointers that defined a shared ownership and free the allocated memory only when all the owners cease to use the variable.
+
+지금까지는 아주 간략하게만 살펴보았지만, 웹 상에는 이밖에도 스마트포인터의 사용방법 예제들과 레퍼런스들이 있습니다. 하지만 가장 중요한것은 raw pointer와 다르게 스마트포인터가 어떻게 소유권을 명확히 정의하여 문제를 해결하는지를 이해하는 것입니다.
 
 We are only going to see this briefly, there's lots of examples in the web about how to use smart pointers and reference to their syntax, the most important is to understand how they work by defining the ownership clearly compared to raw pointers and the problems they solve.
 
 ### unique_ptr
 
+unique_ptr은, 이름 그대로, 오브젝트의 유일한 소유권을 지정하는 포인터입니다. 
 A unique_ptr, as it's name suggests, is a pointer that defines a unique ownership for an object, we can move it around and the object or function that has it at some point is the owner of it, no more than one reference at the same time is valid and when it goes out of scope it automatically deletes any memory that we might have allocated.
 
 To allocate memory using a unique_ptr we do:
