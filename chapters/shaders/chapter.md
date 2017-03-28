@@ -40,7 +40,7 @@ The generated fragments then pass through another program called the fragment sh
 
 ###GLSL
 
-Now that we've kinda glossed over the vertex and fragment shaders, you might be asking: "yes, those sound great, but how do I use them?" Answer: Graphics Language Shading Language or GLSL (double points for double "Language", right?). GLSL is a high-level programming language that’s similar to C/C++ for several parts of the graphics card. With GLSL, you can code short programs, called shaders, which are executed on the GPU. A shading language is a special programming language adapted to easily map on shader programming. It doesn't look trememndously different from what you see in the OF math classes: float, vec4, mat4, and so on. Because of the various target markets of 3-D graphics, different shading languages have been developed, but we're only focusing on GLSL in this tutorial. GLSL shaders themselves are a set of strings that are passed to the graphics card drivers for compilation from within an application using the OpenGL API’s entry points. Shaders can be created on the fly from within an application or read in as text files, but they must be sent to the driver in the form of a text string.
+Now that we've kinda glossed over the vertex and fragment shaders, you might be asking: "yes, those sound great, but how do I use them?" Answer: Graphics Language Shading Language or GLSL (double points for double "Language", right?). GLSL is a high-level programming language that’s similar to C/C++ for several parts of the graphics card. With GLSL, you can code short programs, called shaders, which are executed on the GPU. A shading language is a special programming language adapted to easily map on shader programming. It doesn't look tremendously different from what you see in the OF math classes: float, vec4, mat4, and so on. Because of the various target markets of 3-D graphics, different shading languages have been developed, but we're only focusing on GLSL in this tutorial. GLSL shaders themselves are a set of strings that are passed to the graphics card drivers for compilation from within an application using the OpenGL API’s entry points. Shaders can be created on the fly from within an application or read in as text files, but they must be sent to the driver in the form of a text string.
 
 In OF we load our shaders into ofShader objects and I'm going to drive-by lay out the most important elements of that object:
 
@@ -52,7 +52,7 @@ In OF we load our shaders into ofShader objects and I'm going to drive-by lay ou
 
 You can load shader programs into your ofShader object using *shader.load()* or just use strings from your application with *shader.setupShaderFromSource()*, passing body of your shader in a string as a second parameter using STRINGIFY macro and linking it with *shader.linkProgram()*. Either way is a-ok.
 
-Before we go get into trouble, there's something that I want to explain that might not make sense right at first but is fairly important to acknoweldge and is not so important to deeply grok at first: our examples use OpenGL3 mostly and to use OpenGL3 in OF you need to alter your main.cpp file. The main files in the tutorial download all look like this:
+Before we go get into trouble, there's something that I want to explain that might not make sense right at first but is fairly important to acknowledge and is not so important to deeply grok at first: our examples use OpenGL3 mostly and to use OpenGL3 in OF you need to alter your main.cpp file. The main files in the tutorial download all look like this:
 
 ```cpp
 #include "ofMain.h"
@@ -84,7 +84,7 @@ The OpenGL2 version of a shader (confusing, GLSL 1.2), does not have a define ab
 precision highp float;
 ```
 
-The differences between the shaders aren't major but they exist, however it's more important to know that they exist than to have a line by line description of what's different between the three. In this tutorial all the shader examples are in the same folder so you'll seee increasingly little code in the tutorials as we go on because we don't want to waste too much space repeating stuff and you'll be such a pro by the end of this that you won't need all that code repeated anyways.
+The differences between the shaders aren't major but they exist, however it's more important to know that they exist than to have a line by line description of what's different between the three. In this tutorial all the shader examples are in the same folder so you'll see increasingly little code in the tutorials as we go on because we don't want to waste too much space repeating stuff and you'll be such a pro by the end of this that you won't need all that code repeated anyways.
 
 ##Your first shader!
 
@@ -107,17 +107,17 @@ void ofApp::draw(){
 
 ```
 
-Two big things to note: take a look at *setup()* and see that thing that says: *shader.load("shadersGL3/shader")*? That's where we're actually loading the shaders in. OF lets us take a little shrtcut in loading a shader where we just tell OF what folder we're loading the shaders out of and what both files are named and we're off to the races. Those files are actualy called shader.vert (that's the vertex shader) and shader.frag (that's the fragment shader) so they're both going to be loaded with that single call. If you have files that are named separately you can always just use this:
+Two big things to note: take a look at *setup()* and see that thing that says: *shader.load("shadersGL3/shader")*? That's where we're actually loading the shaders in. OF lets us take a little shrtcut in loading a shader where we just tell OF what folder we're loading the shaders out of and what both files are named and we're off to the races. Those files are actually called shader.vert (that's the vertex shader) and shader.frag (that's the fragment shader) so they're both going to be loaded with that single call. If you have files that are named separately you can always just use this:
 
 ```cpp
 shader.load("myCrazyVertFile.vert", "myCrazyFragFile.frag");
 ```
 
-It's up to you, go with your heart. Our version of it above is a little messy because we're loading one of three different renderees depending on whether you're on an iPhone, an old school computer or a new school computer. Even though we have shaders for all three cases, we're going to be explaining the OpenGL3 example mostly because it's probably the easiest to understand at first.
+It's up to you, go with your heart. Our version of it above is a little messy because we're loading one of three different renderers depending on whether you're on an iPhone, an old school computer or a new school computer. Even though we have shaders for all three cases, we're going to be explaining the OpenGL3 example mostly because it's probably the easiest to understand at first.
 
 Next, note how the *draw()* method contains *shader.begin()* and *shader.end()*? That's how we tell our renderer that we want to have all the vertices and textures and fragments go through our shader rather than just being passed directly to the framebuffer. That's about all there is in our application.
 
-Alright, onto the shaders themselves. In our tutorial examples, these live in the data folder of your application, along with images, fonts, and other data that you might want to load into your application. You can also have a shader just as a string in your applciation but we thought it might be nicer to see them in a separte folder so you can work with them outside of your OF app.
+Alright, onto the shaders themselves. In our tutorial examples, these live in the data folder of your application, along with images, fonts, and other data that you might want to load into your application. You can also have a shader just as a string in your application but we thought it might be nicer to see them in a separate folder so you can work with them outside of your OF app.
 
 Here's the vertex shader, the first one that will be called in each *draw()* of our application.
 
@@ -535,7 +535,7 @@ void main()
 
 ```
 
-The fragment shader simply looks up the location in texture using the vec2 that's passed into it. The texture itself is represented by the sampler2DRect construct. This is the source of a lot of confusion when people get started using shaders in OF becuase there are two kinds of samplers: *sampler2DRect* and *sampler2D*. The difference between these two lies in the kind of texture data that you're actually uploading. If your texture is a power of two size where the height and width are both power of two values like 256 or 512 of 1024 or 2048, then you can use a sampler2D to represent your texture data. In OF however, we want to assume that you can use any image size because sometimes images are weird shapes and sizes like 4x1837 or 381x293 and that should be ok to work with. And it is and it works out fine in your shader as long as you use sampler2DRect. The way to get points in that data is the *texture()* method that takes the *sampler2DRect* that you're drawing the data from and the texture coordinate of the particular pixel that you want.
+The fragment shader simply looks up the location in texture using the vec2 that's passed into it. The texture itself is represented by the sampler2DRect construct. This is the source of a lot of confusion when people get started using shaders in OF because there are two kinds of samplers: *sampler2DRect* and *sampler2D*. The difference between these two lies in the kind of texture data that you're actually uploading. If your texture is a power of two size where the height and width are both power of two values like 256 or 512 of 1024 or 2048, then you can use a sampler2D to represent your texture data. In OF however, we want to assume that you can use any image size because sometimes images are weird shapes and sizes like 4x1837 or 381x293 and that should be ok to work with. And it is and it works out fine in your shader as long as you use sampler2DRect. The way to get points in that data is the *texture()* method that takes the *sampler2DRect* that you're drawing the data from and the texture coordinate of the particular pixel that you want.
 
 You'll notice that the *sampler2DRect* is called "tex0" and that we didn't actually set that uniform in our OF app. Why is that? The secret is in the *setUniformTexture()* method, which calls *bind()* for you. Also, drawing an image, as we do with *image.draw(0, 0)*, binds the texture as well and since it isn't given a uniform name, it appears as *tex0*. Confusing? Perhaps, but it's common enough to see that I wanted to call it to your attention. To be explicit, there are three ways of getting a texture into your shader:
 
@@ -882,7 +882,7 @@ img.draw(0, 0);
 ```
 
 
-Unlike the last few instances, all the interesting stuff in this example is happening in the vertex shader since as you might have guessed from the name of the example, displacement is primarily a geometry based action rather than a pixel-shading based one. As I've mentioned elsehwere, the handy thing about texture data is that it's available everywhere all at the same time, even in the vertex shader. The *gl_Position* variable is modified using the *r* value of the texture at the texture coordinate passed in from the ofPlanePrimitive and that's really all the trickery there is.
+Unlike the last few instances, all the interesting stuff in this example is happening in the vertex shader since as you might have guessed from the name of the example, displacement is primarily a geometry based action rather than a pixel-shading based one. As I've mentioned elsewhere, the handy thing about texture data is that it's available everywhere all at the same time, even in the vertex shader. The *gl_Position* variable is modified using the *r* value of the texture at the texture coordinate passed in from the ofPlanePrimitive and that's really all the trickery there is.
 
 ```cpp
 #version 150
@@ -975,7 +975,7 @@ void ofApp::draw(){
 
 ```
 
-This is a pretty canonical blur fragment shader, you'll see it or something very similar to it in lots of different sources. Really you're just creating an image kernel and looking at different texels around the texture to figure out what an averaged or blurred approximation of each pixel would look like. This is another one of the places where having access to the entire texture at a given time is very helpful and lets us create complex effects very quickly by doing image processing on the graphics card. You'll notice that this is just the X pass. The Y pass looks almost identical, but with Y values in the *vec2* rather than X values. Why two passes? Let's look at the math: the computational cost for the multi-stage blur shader is 18 (9 + 9) texture look-up operations. The computational cost for the shader if it's all blured in one pass is 9*9 or 81 texture look-up operations. You can see how it'd save some time to do two passes, no?
+This is a pretty canonical blur fragment shader, you'll see it or something very similar to it in lots of different sources. Really you're just creating an image kernel and looking at different texels around the texture to figure out what an averaged or blurred approximation of each pixel would look like. This is another one of the places where having access to the entire texture at a given time is very helpful and lets us create complex effects very quickly by doing image processing on the graphics card. You'll notice that this is just the X pass. The Y pass looks almost identical, but with Y values in the *vec2* rather than X values. Why two passes? Let's look at the math: the computational cost for the multi-stage blur shader is 18 (9 + 9) texture look-up operations. The computational cost for the shader if it's all blurred in one pass is 9*9 or 81 texture look-up operations. You can see how it'd save some time to do two passes, no?
 
 ```cpp
 
