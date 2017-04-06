@@ -834,7 +834,7 @@ void ofApp::update(){
     float noiseScale = ofMap(mouseX, 0, ofGetWidth(), 0, 0.1);
     float noiseVel = ofGetElapsedTimef();
 
-    unsigned char * pixels = img.getPixels();
+    ofPixels & pixels = img.getPixels();
     int w = img.getWidth();
     int h = img.getHeight();
     for(int y=0; y<h; y++) {
