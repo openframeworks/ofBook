@@ -4,11 +4,11 @@
 
 ## Intro
 
-In this chapter we will build the planet Earth from scratch. With a sphere and a texture is much more easier than what its sound. We will work with the `ofTexture` class, and after this chaper you will be able to apply any kind of texture to a 3d primitive. And you will be ready to dig further using shaders and textures [together](/ofBook/chapters/shaders.html#addingtextures).
+In this chapter we will build the planet Earth from scratch. With a sphere and a texture is much more easier than what its sound. We will work with the `ofTexture` class, and after this chapter you will be able to apply any kind of texture to a 3d primitive. And you will be ready to dig further using shaders and textures [together](/ofBook/chapters/shaders.html#addingtextures).
 
 ## Basics: Adding a textures to a sphere
 
-To add a texture to a sphere we need to save the images that we want to apply in the `bin/data` folder. Let's assume that we have saved this [image](http://paulbourke.net/geometry/transformationprojection/earth.jpg) and we want to apply it to a sphere. In order to do this, you need to setup a basic 3D scene, with a sphere and a texture object. Your app.h file should look like this:
+To add a texture to a sphere we need to save the image that we want to apply in the `bin/data` folder. Let's assume that we have saved this [image](http://paulbourke.net/geometry/transformationprojection/earth.jpg) and we want to apply it to a sphere. In order to do this, you need to setup a basic 3D scene, with a sphere and a texture object. Your app.h file should look like this:
 
 ```cpp
 #pragma once
@@ -94,9 +94,9 @@ And voila', the Earth is done.
 
 ## Mipmaps
 
-A mipmap is something clever, it make possible that our sphere looks good from far away and also looks good when we look at it really close. Basically, a mipmap is an image that contains our image at different resolutions, from an high resolution version of the image to a lower resolution version. When we look at the planet earth from far away, the lower resolution version of that image will be used to render the sphere, when we look at the sphere closer, the higher resolution image will be use instead. This solution avoid antialiasing effects and increase speed. The wikipedia page about [Mipmaps](https://en.wikipedia.org/wiki/Mipmap) is really interesting, have a look.
+A mipmap is something clever, it make possible that our sphere looks good from far away and also looks good when we look at it really close. Basically, a mipmap is an image that contains our image at different resolutions, from an high resolution version of the image to a lower resolution version. When we look at the planet earth from far away, the lower resolution version of that image will be used to render the sphere, when we look at the sphere closer, the higher resolution image will be use instead. This solution avoid antialiasing effects and increase speed. The wikipedia page about [Mipmaps](https://en.wikipedia.org/wiki/Mipmap) is really interesting, have a look if you want to know more.
 
-This means that we have to resize our planet earth image at differen resolution and to decide which one to render depending on the case? no, openFrameworks comes in our help with a simple method, `generateMipmap()` that will do all this work for us. Change the setup method as follow:
+This means that we have to resize our planet earth image at different resolutions and to decide which one to render depending on the case? no, openFrameworks comes in our help with a simple method, `generateMipmap()` that will do all this work for us. Change the setup method as follow:
 
 ```cpp
 ofDisableArbTex();
@@ -112,7 +112,7 @@ mtex.enableMipmap();
 ofLoadImage(mTex,"earth.jpg");
 ```
 
-Now, there are different way on which these images with different resolutions are used internally by openGL. By default, in openFrameworks, these images are linearly interpolated using `GL_LINEAR`. To change the default behaviour, there is a method called `setTextureMinMagFilter()`.
+Now, there are different ways on which these images with different resolutions are used internally by openGL. By default, in openFrameworks, these images are linearly interpolated using `GL_LINEAR`. To change the default behaviour, there is a method called `setTextureMinMagFilter()`.
 
 If we add this line after `mTex.generateMipmap()`
 
@@ -140,11 +140,11 @@ we obtain an image like the following one:
 
 ## Texture repetition
 
-Sometimes you need to repeat a texture all over a mesh. To repeat the texture of the planet Earth around a sphere is weird, but the repeat the texture of a bark over a tree make sense. Let's see how to do this and how the texture repetition and the mipmaps change the aspect of the meshes. For the sake of clarity, I will skip the code to load the mesh of a tree and to load the texture, and I've also used as texture an image containing a black ball on a red background, to make the artifacts more visible.
+Sometimes you need to repeat a texture all over a mesh. To repeat the texture of the planet Earth around a sphere is weird, but to repeat the texture of a bark over a tree makes sense. Let's see how to do this and how the texture repetition and the mipmaps change the aspect of the meshes. For the sake of clarity, I will skip the code to load the mesh of a tree and to load the texture, and I've also used as texture an image containing a black ball on a red background, to make the artifacts more visible.
 
-The new method that we see in the following code is `setTextureWrap()`. It takes to argument, the first one define it the texture should repeat on the x, the second one if the texture should repeat y.
+The new method that we see in the following code is `setTextureWrap()`. It takes two argument, the first one defines if the texture should repeat on the x, the second one if the texture should repeat y.
 
-Let's observe this image containing the same three with different texture usage.
+Let's observe this image containing the same three with different texture's usage.
 
 ![textures](images/repetition.jpg)
 
