@@ -1,6 +1,6 @@
 # Using textures on a 3d primitive
 
-*By: [ Davide Prati](http://www.davideprati.com/) and [Hubris](http://cargocollective.com/hubris)*
+*By: [ Davide Prati](http://www.davideprati.com/) and [Hubris](http://hubris.xyz)*
 
 ## Intro
 
