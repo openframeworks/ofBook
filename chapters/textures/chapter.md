@@ -94,7 +94,7 @@ And voila', the Earth is done.
 
 ## Mipmaps
 
-A mipmap is something clever, it make possible that our sphere looks good from far away and also looks good when we look at it really close. Basically, a mipmap is an image that contains our image at different resolutions, from an high resolution version of the image to a lower resolution version. When we look at the planet earth from far away, the lower resolution version of that image will be used to render the sphere, when we look at the sphere closer, the higher resolution image will be use instead. This solution avoid antialiasing effects and increase speed. The wikipedia page about [Mipmaps](https://en.wikipedia.org/wiki/Mipmap) is really interesting, have a look if you want to know more.
+A mipmap is something clever, it makes possible that our sphere looks good from far away and also looks good when we look at it really close. Basically, a mipmap is an image that contains our image at different resolutions, from an high resolution version of the image to a lower resolution version. When we look at the planet earth from far away, the lower resolution version of that image will be used to render the sphere, when we look at the sphere closer, the higher resolution image will be use instead. This solution avoid antialiasing effects and increase speed. The wikipedia page about [Mipmaps](https://en.wikipedia.org/wiki/Mipmap) is really interesting, have a look if you want to know more.
 
 This means that we have to resize our planet earth image at different resolutions and to decide which one to render depending on the case? no, openFrameworks comes in our help with a simple method, `generateMipmap()` that will do all this work for us. Change the setup method as follow:
 
