@@ -50,5 +50,7 @@ We try to organize and support the community developing addons through the [http
 
 ### Do it with others (DIWO)
 
+<i>“To build community requires vigilant awareness of the work we must continually do to undermine all the socialization that leads us to behave in ways that perpetuate domination.”</i> 
+
 The driving philosophy behind openFrameworks is "do it with others" (DIWO). We love do it yourself (DIY) culture, which has been heavily promoted and facilitated by the rise of tutorial website like Instructables or Make. But we're also excited about the idea of "making socially" ("with others"). We practice DIWO through workshops, developer conferences, hackathons/labs, knitting circles and meetups in person, and online in the form of mailing lists, forum posts, and so on. We even have a gang sign. Because if you have a gang, you have to have a gang sign. The most important thing we want to stress is that you are not alone, that there's a great group of people out there learning, teaching, hacking, making and exploring the creative side of code.
 
