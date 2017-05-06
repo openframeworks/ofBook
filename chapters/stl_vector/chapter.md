@@ -197,7 +197,7 @@ while( it != particles.end() ){
 
 When erasing multiple elements with an iterator, it is important that the iterator gets a return value from the erased element so it does not become invalid.
 ```cpp
-vector<float> iterator::it = nums.begin(); // iterator points to first element
+vector<float>::iterator it = nums.begin(); // iterator points to first element
 
 for(; it != num.end();){
 	if( *it > 5.2 ) it = nums.erase(it); // be sure to return the iterator when erasing so it is not invalidated

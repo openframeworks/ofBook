@@ -43,7 +43,7 @@ As we've said the GL syntax is now actually deprecated in openFrameworks if you 
 
 The openFrameworks version continues to work but it's ineffective depending on what we are doing. Internally, the openFrameworks version is tessellating the shape, then storing all the triangles in an ofMesh, and then drawing that ofMesh. If you are using openGL 3+ instead of an ofMesh that will be drawn through a VBO using an ofVboMesh, since that's the only possible way of drawing in newer openGL.
 
-Tessellation is kind of slow, but also depending on the number of vertices our shape has it doesn't make much sense to send them to the graphics card every frame. The paradigm that newer versions of openGL use is something like this: create the shape once, upload it to the graphics card, and then draw it every frame without having to reupload again, this is usually don through some kind of buffer in the graphics card, usually vbo's.
+Tessellation is kind of slow, but also depending on the number of vertices our shape has it doesn't make much sense to send them to the graphics card every frame. The paradigm that newer versions of openGL use is something like this: create the shape once, upload it to the graphics card, and then draw it every frame without having to reupload again, this is usually done through some kind of buffer in the graphics card, usually vbo's.
 
 In openFrameworks, the ofPolyline and ofPath classes do this in 2D and ofVboMesh for 3D.
 
@@ -209,7 +209,7 @@ void ofApp::setup(){
     path.lineTo(40,40);
     path.lineTo(20,40);
     path.close();
-    m.rotate(45,0,0,0);
+    m.rotate(45,0,0,1);
     m.translate(20,20,0);
 }
 

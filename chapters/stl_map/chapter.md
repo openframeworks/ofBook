@@ -259,10 +259,10 @@ the same key. Example:
   for (const auto& cityYear : coldestCities )
     cout << cityYear.first<< "year: "<< cityYear.second << endl;
 ```
-We use a map whan we want that our keys appear only once, we use a multimap
+We use a map when we want that our keys appear only once, we use a multimap
 when this detail is not important.
 
-## Other Usefull methods
+## Other useful methods
 
 `empty` - if the container is empty returns true, otherwise returns false
 
