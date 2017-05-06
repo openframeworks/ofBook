@@ -83,7 +83,7 @@ export DISPLAY=:0
 ~/openFrameworks/apps/myapps/myapp/bin/myapp.sh &
 ```
 
-    이제 myapp.sh 스크립트를 아래와 같이 수정합니다:
+    이제 myapp.sh 스크립트를 아래와 같이 수정합니다: 
 
 ```bash
 cd ~/openFrameworks/apps/myapps/myapp/bin/
