@@ -346,7 +346,7 @@ for (int t=0; t<numTriangles; t++) {
     // Define a triangle at the origin (0,0) that points to the right (code omitted)
     // The triangle size is a bit smaller than the last brush - see the source code
 
-    // Rotate the triangle, then shift it to the mouse position (code omitted)
+    // Rotate the triangle (code omitted)
 
     ofVec2f triangleOffset(offsetDistance, 0.0);
     triangleOffset.rotate(rotation);
