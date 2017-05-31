@@ -298,11 +298,11 @@ All you have to do is imagine a unit circle, which has a radius of 1 and a cente
 
 It's pretty easy to use `sin(...)` to animate the position of an object.  
 
-Here, we'll take the sine of the elapsed time `sin(ofGetElpasedTimef())`. This returns a number between negative one and one. It does this every 6.28 seconds. We can use ofMap to map this to a new range. For example
+Here, we'll take the sine of the elapsed time `sin(ofGetElapsedTimef())`. This returns a number between negative one and one. It does this every 6.28 seconds. We can use ofMap to map this to a new range. For example
 
 ```cpp
 void ofApp::draw(){
-    float xPos = ofMap(sin(ofGetElpasedTimef()), -1, 1, 0, ofGetWidth());
+    float xPos = ofMap(sin(ofGetElapsedTimef()), -1, 1, 0, ofGetWidth());
     ofRect(xPos, ofGetHeight()/2, 10,10);
 }
 ```
