@@ -28,24 +28,22 @@ Scripts for building the web and pdf versions of the book are in `scripts/` dire
 
 ## OS X
 1. install pip at the terminal ```sudo easy_install pip```
-2. install [beauitful soup 4](http://www.crummy.com/software/BeautifulSoup/) (bs4) `pip install beautifulsoup4`
+2. install python dependencies with `pip install -r requirements.txt`
 3. install [pandoc](https://github.com/jgm/pandoc/releases)
 4. install [basictex & MacTeX-Additions](http://www.tug.org/mactex/morepackages.html)
-5. install [libsass](https://github.com/dahlia/libsass-python) `sudo pip install libsass`
 
 ## Windows Installation of Dependencies
 1. Download and install [Python 2.7+](https://www.python.org/)
 2. Get the necessary python libraries using the python package manager ([pip](https://pip.pypa.io/en/latest/installing.html)).
   - Python 2.7.9 and later (on the python2 series), and Python 3.4 and later include pip by default, so you may have pip already.  It is typically stored in `C:/PythonXX/Scripts`.  To access it from command line, you will need to add the location of your `Scripts` folder to your path variable (see this [guide](http://windowsitpro.com/systems-management/how-can-i-add-new-folder-my-system-path)).
-  - Download and install [beauitful soup 4](http://www.crummy.com/software/BeautifulSoup/) (bs4).  Run `pip install beautifulsoup4` from the command line to install BeautifulSoup.
-  - Download and install [libsass](https://github.com/dahlia/libsass-python): `pip install libsass`
+  - Run `pip install -r requirements.txt` from the command line (inside of the ofBook/ directory) to install the dependencies.
 3. Download and install pandoc using the latest windows installer (.msi) from [here](https://github.com/jgm/pandoc/releases)
 4. Download and install MiKTeX using the windows installer from [here](http://miktex.org/download)
   - When installing, check the box for "Install Packages on the Fly."  The pandoc -> PDF pipeline uses latex packages that don't all come standard with MiKTeX, so this will allow you to grab any missing packages when building the book for the first time.
 
 ## Debian (Linux)
 1. install packages: ```sudo apt-get install python-pip python2.7-dev git pandoc ruby-sass texlive```
-2. install [beauitful soup 4](http://www.crummy.com/software/BeautifulSoup/) and [libsass](https://github.com/dahlia/libsass-python): ```pip install beauitfulsoup4 libsass```
+2. install python dependencies with `pip install -r requirements.txt`
 
 
 # contribution workflow
