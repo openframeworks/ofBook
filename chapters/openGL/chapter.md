@@ -586,7 +586,7 @@ planeFull.mapTexCoords(0, 0, 500, 389);
 Now to draw this:
 
 ```cpp
-void testApp::draw(){
+void ofApp::draw(){
   ofSetColor(255);
 
     ofTranslate(250, 196);

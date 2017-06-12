@@ -232,23 +232,23 @@ private:
 	ofVec2f position;
 }
 
-/* in testApp.h: */
+/* in ofApp.h: */
 Gary gary;
 
-/* in testApp.cpp: */
-void testApp::setup(){
+/* in ofApp.cpp: */
+void ofApp::setup(){
 	ofVec2f garysStartingPoint( ofGetWidth() / 2., ofGetHeight() / 3. );
 	gary.setPosition( garysStartingPoint );
 }
 
-void testApp::update(){
+void ofApp::update(){
 	if (gary.position.y < ofGetHeight * 2. / 3.){
 		ofVec2f nextStep(ofRandom(-1.,1.),1.); //Take one step south, Gary
 		gary.step();
 	}
 }
 
-void testApp::draw(){ gary.draw(); }
+void ofApp::draw(){ gary.draw(); }
 ```
 
 ###### Example: `ofVec2f` as velocity

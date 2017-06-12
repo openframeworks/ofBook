@@ -70,7 +70,7 @@ With all that written out, let's use OSC to affect the following:
 
 These three parameters will allow the developer to tailor the difficulty of the game to the individual playing it, second-by-second.
 
-Let's start with our testApp. There are a few things we definitely know we'll want classes for, so make corresponding .h and .cpp files for Player, Bullet, Life, Enemy, and LevelController. Remember to `#include "ofMain.h"` in each of those classes, and to include the .h file of each of those classes in `testApp.h`.
+Let's start with our ofApp. There are a few things we definitely know we'll want classes for, so make corresponding .h and .cpp files for Player, Bullet, Life, Enemy, and LevelController. Remember to `#include "ofMain.h"` in each of those classes, and to include the .h file of each of those classes in `ofApp.h`.
 
 ###Gamestates
 
@@ -82,11 +82,11 @@ int score;
 Player player_1;
 ```
 
-We'll then divide up `testApp`'s `update()` and `draw()` loops between those game states:
+We'll then divide up `ofApp`'s `update()` and `draw()` loops between those game states:
 
 ```cpp
 //--------------------------------------------------------------
-void testApp::update(){
+void ofApp::update(){
    if (game_state == "start") {
 
    } else if (game_state == "game") {
@@ -95,7 +95,7 @@ void testApp::update(){
    }
 }
 //--------------------------------------------------------------
-void testApp::draw(){
+void ofApp::draw(){
    if (game_state == "start") {
    } else if (game_state == "game") {
    } else if (game_state == "end") {
@@ -108,7 +108,7 @@ Let's set the initial value of `game_state` to `"start"` right when the app begi
 
 ```cpp
 //--------------------------------------------------------------
-void testApp::setup(){
+void ofApp::setup(){
    game_state = "start";
   score = 0;
 }
@@ -118,7 +118,7 @@ Finally, let's make sure that we can move forward from the start screen. In this
 
 ```cpp
 //--------------------------------------------------------------
-void testApp::keyReleased(int key){
+void ofApp::keyReleased(int key){
    
    if (game_state == "start") {
        game_state = "game";
@@ -173,7 +173,7 @@ Here's what our new `keyPressed()` and `keyReleased()` functions look like:
 
 ```cpp
 //--------------------------------------------------------------
-void testApp::keyPressed(int key){
+void ofApp::keyPressed(int key){
    if (game_state == "game") {
        if (key == OF_KEY_LEFT) {
            player_1.is_left_pressed = true;
@@ -194,7 +194,7 @@ void testApp::keyPressed(int key){
 
 }
 //--------------------------------------------------------------
-void testApp::keyReleased(int key){
+void ofApp::keyReleased(int key){
    if (game_state == "start") {
        game_state = "game";
    } else if (game_state == "game") {
@@ -218,10 +218,10 @@ void testApp::keyReleased(int key){
 ```
 
 
-Add `ofImage player_image` to `testApp.h`, then load the player's image and instantiate the player in `testApp`'s `setup()`:
+Add `ofImage player_image` to `ofApp.h`, then load the player's image and instantiate the player in `ofApp`'s `setup()`:
 
 ```cpp
-void testApp::setup(){
+void ofApp::setup(){
    game_state = "start";
    player_image.loadImage("player.png");
    
@@ -229,11 +229,11 @@ void testApp::setup(){
 }
 ```
 
-Finally, update and draw your player in the appropriate part of `testApp::update()` and `testApp::draw()`:
+Finally, update and draw your player in the appropriate part of `ofApp::update()` and `ofApp::draw()`:
 
 ```cpp
 //--------------------------------------------------------------
-void testApp::update(){
+void ofApp::update(){
    if (game_state == "start") {
       
    } else if (game_state == "game") {
@@ -242,7 +242,7 @@ void testApp::update(){
 }
 
 //--------------------------------------------------------------
-void testApp::draw(){
+void ofApp::draw(){
    if (game_state == "start") {
 
    } else if (game_state == "game") {
@@ -257,7 +257,7 @@ You should have a player who moves around on-screen. Sweet!
 
 ###Player bullets
 
-Let's make our bullets next. In order to have a variable number of bullets on screen at a time, we need to add a `vector<Bullet> bullets` to testApp.h. Let's also create a `void update_bullets()` function, which will update our vector of bullets (and, shortly, trigger the check for bullet collisions). We also want our player and enemy bullets to look different, so we'll add `ofImage enemy_bullet_image` and `ofImage player_bullet_image` to our `testApp.h` file.
+Let's make our bullets next. In order to have a variable number of bullets on screen at a time, we need to add a `vector<Bullet> bullets` to ofApp.h. Let's also create a `void update_bullets()` function, which will update our vector of bullets (and, shortly, trigger the check for bullet collisions). We also want our player and enemy bullets to look different, so we'll add `ofImage enemy_bullet_image` and `ofImage player_bullet_image` to our `ofApp.h` file.
 
 Our bullet class will look a lot like the player class and have a position, speed, width, pointer to an image, and various functions. The big difference is that the bullets will keep track of who they came from (since that will affect who they can hurt and which direction they move).
 
@@ -306,13 +306,13 @@ Again, this is much like the code for the player, but with two differences:
 * We keep track of where the bullet comes from, and alter the code based on that variable (meaning we can keep all the bullets in the same vector)
 * When instantiating a bullet, we check to see the position of the shooter, as well as the shooter's current speed (so it will always move faster than the thing that shot it)
 
-Now that our bullet class is implemented, we can go back to `testApp::setup()` and add `enemy_bullet_image.loadImage("enemy_bullet.png");` and `player_bullet_image.loadImage("player_bullet.png");` right underneath where we loaded in our `player_image`.
+Now that our bullet class is implemented, we can go back to `ofApp::setup()` and add `enemy_bullet_image.loadImage("enemy_bullet.png");` and `player_bullet_image.loadImage("player_bullet.png");` right underneath where we loaded in our `player_image`.
  
 For now, our `update_bullets()` function will call the `update()` function in each bullet, and will also get rid of bullets that have flown offscreen in either direction.
 
 ```cpp
 //--------------------------------------------------------------
-void testApp::update_bullets() {
+void ofApp::update_bullets() {
    for (int i = 0; i < bullets.size(); i++) {
        bullets[i].update();
        if (bullets[i].pos.y - bullets[i].width/2 < 0 || bullets[i].pos.y + bullets[i].width/2 > ofGetHeight()) {
@@ -323,11 +323,11 @@ void testApp::update_bullets() {
 }
 ```
 
-Our `testApp::update()` and `testApp::draw()` will now look like this:
+Our `ofApp::update()` and `ofApp::draw()` will now look like this:
 
 ```cpp
 //--------------------------------------------------------------
-void testApp::update(){
+void ofApp::update(){
    if (game_state == "start") {
 
    } else if (game_state == "game") {
@@ -336,7 +336,7 @@ void testApp::update(){
    }
 }
 //--------------------------------------------------------------
-void testApp::draw(){
+void ofApp::draw(){
    if (game_state == "start") {
 
    } else if (game_state == "game") {
@@ -356,7 +356,7 @@ Finally, let's add an if-statement to our `keyPressed()` so that when we press t
 
 ```cpp
 //--------------------------------------------------------------
-void testApp::keyPressed(int key){
+void ofApp::keyPressed(int key){
    if (game_state == "game") {
        if (key == OF_KEY_LEFT) {
            player_1.is_left_pressed = true;
@@ -387,7 +387,7 @@ Remember, the first parameter in the bullet's setup is whether it comes from the
 
 ###Adding adversaries
 
-Let's move on to our enemy. This process should be familiar by now. Add an `ofImage enemy_image` and a `vector<Enemy> enemies` to `testApp.h`. Additionally, add `float max_enemy_amplitude` and `float max_enemy_shoot_interval` to `testApp.h`. These are two of the enemy parameters we'll affect with OSC.
+Let's move on to our enemy. This process should be familiar by now. Add an `ofImage enemy_image` and a `vector<Enemy> enemies` to `ofApp.h`. Additionally, add `float max_enemy_amplitude` and `float max_enemy_shoot_interval` to `ofApp.h`. These are two of the enemy parameters we'll affect with OSC.
 Your enemy class will look like this:
 
 ```cpp
@@ -443,11 +443,11 @@ bool Enemy::time_to_shoot() {
 In update, we're using the current elapsed time, in frames, to give us a constantly increasing number to feed to the sine function, which in turn returns a value between -1 and 1. We multiply it by the amplitude of the wave, making this curve more or less exaggerated.
 
 In `time_to_shoot()`, we check to see whether the difference between the current time and the time this enemy last shot is greater than the enemy's shooting interval. If it is, we set `start_shoot` to the current time, and return true. If not, we return false.
-Let's integrate our enemies into the rest of our `testApp.cpp`:
+Let's integrate our enemies into the rest of our `ofApp.cpp`:
 
 ```cpp
 //--------------------------------------------------------------
-void testApp::setup(){
+void ofApp::setup(){
    game_state = "start";
    
    max_enemy_amplitude = 3.0;
@@ -461,7 +461,7 @@ void testApp::setup(){
    player_1.setup(&player_image);
 }
 //--------------------------------------------------------------
-void testApp::update(){
+void ofApp::update(){
    if (game_state == "start") {
        
    } else if (game_state == "game") {
@@ -480,7 +480,7 @@ void testApp::update(){
    }
 }
 //--------------------------------------------------------------
-void testApp::draw(){
+void ofApp::draw(){
    if (game_state == "start") {
    } else if (game_state == "game") {
        ofBackground(0,0,0);
@@ -498,11 +498,11 @@ void testApp::draw(){
 
 ###Collisions
 
-Let's implement our bullet collision checks. Add a `void check_bullet_collisions()` to your `testApp.h`, then write the following function: 
+Let's implement our bullet collision checks. Add a `void check_bullet_collisions()` to your `ofApp.h`, then write the following function: 
 
 ```cpp
 //--------------------------------------------------------------
-void testApp::check_bullet_collisions() {
+void ofApp::check_bullet_collisions() {
    for (int i = 0; i < bullets.size(); i++) {
        if (bullets[i].from_player) {
            for (int e = enemies.size()-1; e >= 0; e--) {
@@ -533,7 +533,7 @@ Don't forget to call `check_bullet_collisions()` as part of `update_bullets()`:
 
 ```cpp
 //--------------------------------------------------------------
-void testApp::update_bullets() {
+void ofApp::update_bullets() {
    for (int i = 0; i < bullets.size(); i++) {
        bullets[i].update();
        if (bullets[i].pos.y - bullets[i].width/2 < 0 || bullets[i].pos.y + bullets[i].width/2 > ofGetHeight()) {
@@ -546,7 +546,7 @@ void testApp::update_bullets() {
 
 ###Our game's brain
 
-Great! Except… we don't have any enemies yet! Definitely an oversight. This is where our level controller comes in. Add `LevelController level_controller;` to your `testApp.h`.
+Great! Except… we don't have any enemies yet! Definitely an oversight. This is where our level controller comes in. Add `LevelController level_controller;` to your `ofApp.h`.
  Our level controller class is super simple:
 
 ```cpp
@@ -583,7 +583,7 @@ When we set up our level controller, we'll give it a starting time. It'll use th
 We'll wait to set up our level controller until the game actually starts, namely, when the game state changes from `"start"` to `"game"`.
 
 ```cpp
-void testApp::keyReleased(int key){
+void ofApp::keyReleased(int key){
    if (game_state == "start") {
        game_state = "game";
        level_controller.setup(ofGetElapsedTimeMillis());
@@ -593,11 +593,11 @@ void testApp::keyReleased(int key){
 }
 ```
 
-Next we'll integrate it into our `testApp::update()`:
+Next we'll integrate it into our `ofApp::update()`:
 
 ```cpp
 //--------------------------------------------------------------
-void testApp::update(){
+void ofApp::update(){
    if (game_state == "start") {
        
    } else if (game_state == "game") {
@@ -626,7 +626,7 @@ Awesome! We're close to done!
 
 ###Bonus lives
 
-Before we finish, let's add in our last OSC feature: the ability to throw in bonus lives on the fly. Add `vector<Life> bonuses` and `ofImage life_image` to your `testApp.h`. To keep our code modular, let's also add `void update_bonuses()` in the same place. Don't forget to `life_image.loadImage("life_image.png")` in `testApp::setup()`.
+Before we finish, let's add in our last OSC feature: the ability to throw in bonus lives on the fly. Add `vector<Life> bonuses` and `ofImage life_image` to your `ofApp.h`. To keep our code modular, let's also add `void update_bonuses()` in the same place. Don't forget to `life_image.loadImage("life_image.png")` in `ofApp::setup()`.
 
 `Life.h` should look like this:
 
@@ -667,7 +667,7 @@ Our `update_bonuses()` function works a lot like the bullet collision function:
 
 ```cpp
 //--------------------------------------------------------------
-void testApp::update_bonuses() {
+void ofApp::update_bonuses() {
    for (int i = bonuses.size()-1; i > 0; i--) {
        bonuses[i].update();
        if (ofDist(player_1.pos.x, player_1.pos.y, bonuses[i].pos.x, bonuses[i].pos.y) < (player_1.width + bonuses[i].width)/2) {
@@ -682,11 +682,11 @@ void testApp::update_bonuses() {
 }
 ```
 
-All that's left for our lives functionality is to alter `testApp::update()` and `testApp::draw()`.
+All that's left for our lives functionality is to alter `ofApp::update()` and `ofApp::draw()`.
 
 ```cpp
 //--------------------------------------------------------------
-void testApp::update(){
+void ofApp::update(){
    if (game_state == "start") {
        
    } else if (game_state == "game") {
@@ -711,7 +711,7 @@ void testApp::update(){
    }
 }
 //--------------------------------------------------------------
-void testApp::draw(){
+void ofApp::draw(){
    if (game_state == "start") {
        start_screen.draw(0,0);
    } else if (game_state == "game") {
@@ -738,13 +738,13 @@ void testApp::draw(){
 
 ###Let's get visual
 
-Finally! We've been a bit stingy with visual feedback, so let's add in a start screen, a score, a visual representation of the lives left, and an end screen. Add `ofImage start_screen;`, `ofImage end_screen;`, `void draw_lives();`, and `void draw_score();` to `testApp.h`.
+Finally! We've been a bit stingy with visual feedback, so let's add in a start screen, a score, a visual representation of the lives left, and an end screen. Add `ofImage start_screen;`, `ofImage end_screen;`, `void draw_lives();`, and `void draw_score();` to `ofApp.h`.
 
-Change `testApp::setup()` to load in those assets:
+Change `ofApp::setup()` to load in those assets:
 
 ```cpp
 //--------------------------------------------------------------
-void testApp::setup(){
+void ofApp::setup(){
     ...
    player_1.setup(&player_image);
    start_screen.loadImage("start_screen.png");
@@ -759,14 +759,14 @@ Add in the last two functions:
 
 ```cpp
 //--------------------------------------------------------------
-void testApp::draw_lives() {
+void ofApp::draw_lives() {
    for (int i = 0; i < player_1.lives; i++) {
        player_image.draw(ofGetWidth() - (i * player_image.width) - 100, 30);
    }
    
 }
 //--------------------------------------------------------------
-void testApp::draw_score() {
+void ofApp::draw_score() {
    if (game_state == "game") {
        score_font.drawString(ofToString(score), 30, 72);
    } else if (game_state == "end") {
@@ -778,7 +778,7 @@ void testApp::draw_score() {
 
 By using `stringWidth()`, we can calculate the width of a string and shift the text over (handy for centering it).
 
-All that's left after that is to call `draw_score()` and `draw_lives()` during the `testApp::draw()`'s game state, and to call `draw_score()` during the end state.
+All that's left after that is to call `draw_score()` and `draw_lives()` during the `ofApp::draw()`'s game state, and to call `draw_score()` during the end state.
 
 Congrats–you made a game!
 
