@@ -60,9 +60,9 @@ The individual lines that make up our outlines can be jagged too. We can fix tha
 
 **Extensions**
 
-1.	We can change the thickness of lines using [`ofSetLineWidth(...)`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofSetLineWidth). The default thickness is 1. We use this function like `ofFill()` and `ofSetColor(...)` in that it changes the thickness of the "marker" we use to draw lines. Note: the range of widths supported by this feature is dependent on your graphics card, so if it's not working, it might not be your fault!
-2.	Draw some rounded rectangles using [`ofDrawRectRounded(...)`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#!show_ofDrawRectRounded)\.
-3.	Explore the world of curved lines with [`ofDrawCurve(...)`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#!show_ofDrawCurve) and [`ofDrawBezier(...)`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#!show_ofDrawBezier). You can control the resolution using [`ofSetCurveResolution(...)`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#!show_ofSetCurveResolution)\.
+1. We can change the thickness of lines using [`ofSetLineWidth(...)`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#show_ofSetLineWidth). The default thickness is 1. We use this function like `ofFill()` and `ofSetColor(...)` in that it changes the thickness of the "marker" we use to draw lines. Note: the range of widths supported by this feature is dependent on your graphics card, so if it's not working, it might not be your fault!
+2. Draw some rounded rectangles using [`ofDrawRectRounded(...)`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#!show_ofDrawRectRounded)\.
+3. Explore the world of curved lines with [`ofDrawCurve(...)`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#!show_ofDrawCurve) and [`ofDrawBezier(...)`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#!show_ofDrawBezier). You can control the resolution using [`ofSetCurveResolution(...)`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#!show_ofSetCurveResolution)\.
 
 ### Brushes from Basic Shapes
 
@@ -370,9 +370,9 @@ We are now using `ofVec2f` for our offset. We started with a vector that points 
 
 **Extensions**
 
-1.	Define some public variables to control brush parameters like `transparency`, `brushWidth`, `offsetDistance`, `numberOfShapes`, etc.
-2.	Use the [`keyPressed(int key)`](http://openframeworks.cc/documentation/application/ofBaseApp.html#!show_keyPressed) function (in `.cpp`) to control those parameters at run time (e.g. increasing/decreasing `brushWidth` with the `+` and `-` keys). If you are using ofSketch, see the next section for how to use that function.
-3.	Track the mouse position and use the distance it moves between frames to control those parameters (e.g. fast moving mouse draws a thicker brush).
+1. Define some public variables to control brush parameters like `transparency`, `brushWidth`, `offsetDistance`, `numberOfShapes`, etc.
+2. Use the [`keyPressed(int key)`](http://openframeworks.cc/documentation/application/ofBaseApp.html#!show_keyPressed) function (in `.cpp`) to control those parameters at run time (e.g. increasing/decreasing `brushWidth` with the `+` and `-` keys). If you are using ofSketch, see the next section for how to use that function.
+3. Track the mouse position and use the distance it moves between frames to control those parameters (e.g. fast moving mouse draws a thicker brush).
 
 #### Raster Graphics: Taking a Snapshot
 
@@ -423,7 +423,7 @@ straightSegmentPolyline.addVertex(300, 100);
 curvedSegmentPolyline.curveTo(350, 100);  // These curves are Catmull-Rom splines
 curvedSegmentPolyline.curveTo(350, 100);  // Necessary Duplicate for Control Point
 curvedSegmentPolyline.curveTo(400, 150);
-curvedSegmentPolyline.curveTo(450, 100);  
+curvedSegmentPolyline.curveTo(450, 100);
 curvedSegmentPolyline.curveTo(500, 150);
 curvedSegmentPolyline.curveTo(550, 100);
 curvedSegmentPolyline.curveTo(550, 100);  // Necessary Duplicate for Control Point
@@ -458,7 +458,7 @@ The advantage of drawing in this way (versus raster graphics) is that the polyli
 
 **Extensions**
 
-1.	Check out [`arc(...)`](http://openframeworks.cc/documentation/graphics/ofPolyline.html#show_arc), [`arcNegative(...)`](http://openframeworks.cc/documentation/graphics/ofPolyline.html#show_arcNegative) and [`bezierTo(...)`](http://openframeworks.cc/documentation/graphics/ofPolyline.html#show_bezierTo) for other ways to draw shapes with `ofPolyline`.
+1. Check out [`arc(...)`](http://openframeworks.cc/documentation/graphics/ofPolyline.html#show_arc), [`arcNegative(...)`](http://openframeworks.cc/documentation/graphics/ofPolyline.html#show_arcNegative) and [`bezierTo(...)`](http://openframeworks.cc/documentation/graphics/ofPolyline.html#show_bezierTo) for other ways to draw shapes with `ofPolyline`.
 
 ### Building a Brush from Polylines
 
@@ -551,10 +551,10 @@ And we have a simple pen-like brush that tracks the mouse, and we can draw a dop
 
 **Extensions**
 
-1.	Add color!
-2.	Explore [`ofBeginSaveScreenAsPDF(...)`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#!show_ofBeginSaveScreenAsPDF) and [`ofEndSaveScreenAsPDF(...)`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#!show_ofEndSaveScreenAsPDF) to save your work into a vector file format.
-3.	Try using the `keyPressed(...)` function in your source file to add an undo feature that deletes the most recent brush stroke.
-4.	Try restructuring the code to allow for a redo feature as well.
+1. Add color!
+2. Explore [`ofBeginSaveScreenAsPDF(...)`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#!show_ofBeginSaveScreenAsPDF) and [`ofEndSaveScreenAsPDF(...)`](http://openframeworks.cc/documentation/graphics/ofGraphics.html#!show_ofEndSaveScreenAsPDF) to save your work into a vector file format.
+3. Try using the `keyPressed(...)` function in your source file to add an undo feature that deletes the most recent brush stroke.
+4. Try restructuring the code to allow for a redo feature as well.
 
 #### Polyline Brushes: Points, Normals and Tangents
 
@@ -652,9 +652,9 @@ for (int p=0; p<500; p+=1) {
 
 **Extensions**
 
-1.	Try drawing shapes other than `ofDrawLine(...)` and `ofDrawCircle(...)` along your polylines. You could use your brush code from section 1.
-2.	The density of tangents or normals drawn is dependent on the length of the brush stroke. Try making it independent (hint: you may need to adjust your loop and use `getPerimeter()` to calculate the length).
-3.	Check out how to draw polygons using `ofPath` and try drawing a brush stroke that is a giant, closed shape.
+1. Try drawing shapes other than `ofDrawLine(...)` and `ofDrawCircle(...)` along your polylines. You could use your brush code from section 1.
+2. The density of tangents or normals drawn is dependent on the length of the brush stroke. Try making it independent (hint: you may need to adjust your loop and use `getPerimeter()` to calculate the length).
+3. Check out how to draw polygons using `ofPath` and try drawing a brush stroke that is a giant, closed shape.
 
 #### Vector Graphics: Taking a Snapshot (Part 2)
 
@@ -832,7 +832,7 @@ ofNoFill();
 ofPushMatrix();
     ofTranslate(ofGetWidth()/2, ofGetHeight()/2);  // Translate to the center of the screen
     for (int i=0; i<100; i++) {
-        ofScale(1.1, 1.1);  
+        ofScale(1.1, 1.1);
         ofRotate(5);
         ofDrawRectangle(0, 0, 50, 50);
     }
@@ -906,8 +906,8 @@ Now use `bgColor` for the transparent rectangle we draw on the screen and `fgCol
 
 **Extensions**
 
-1.	Pass in a third parameter, `z`, into `ofTranslate(...)` and `ofScale(...)` or rotate around the x and y axes with `ofRotate(...)`.
-2.	Capture animated works using an addon called [ofxVideoRecorder](https://github.com/timscaffidi/ofxVideoRecorder). If you are using Windows, like me, that won't work for you, so try screen capture software (like fraps) or saving out a series of images using `ofSaveScreen(...)` and using them to create a GIF or movie with your preferred tools (Photoshop, [ffmpeg](https://ffmpeg.org/), [ImageMagick](http://imagemagick.org/) etc.)
+1. Pass in a third parameter, `z`, into `ofTranslate(...)` and `ofScale(...)` or rotate around the x and y axes with `ofRotate(...)`.
+2. Capture animated works using an addon called [ofxVideoRecorder](https://github.com/timscaffidi/ofxVideoRecorder). If you are using Windows, like me, that won't work for you, so try screen capture software (like fraps) or saving out a series of images using `ofSaveScreen(...)` and using them to create a GIF or movie with your preferred tools (Photoshop, [ffmpeg](https://ffmpeg.org/), [ImageMagick](http://imagemagick.org/) etc.)
 
 Next Steps
 ----------
