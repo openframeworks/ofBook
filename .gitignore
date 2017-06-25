@@ -1,6 +1,7 @@
 
 *~
 
+node_modules
 output/*
 /images
 /chapters/*/chapter_modified_for_print.md
