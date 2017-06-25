@@ -1,0 +1,85 @@
+/*
+    Fenced off code block look like this: 
+        <div class="sourceCode">
+            <pre class="soureCode">
+                <code></code>
+            </pre>
+        </div>
+
+    Inline code blocks look like:
+        <code>
+
+*/
+.chapter-content {
+
+    
+    // Inline code block (and shared wtih fenced off block)
+    code {
+        font-family: "firaMono";
+        color: #EC6A88;
+        font-size: 12px;
+        padding: 5px 5px 3px 5px;
+        white-space: nowrap;
+        border-radius: 3px;
+        background-color: #f0f0f0;
+    }
+
+    // Fenced off block only
+    div.sourceCode {
+        margin: 10px 0;
+
+        pre {
+            tab-size: 4;
+            font-size: 11px;
+            border: none;
+            border-radius: 0px;
+            white-space: pre-wrap;
+            padding: 0;
+
+            code {
+                background-color: #f7f7f7;
+                padding: 12px 0 10px 20px;
+                border-left: 6px solid rgba(197, 213, 229, 0.65);
+                display: block;
+                color: inherit; // Don't take color from inline code style
+                white-space: inherit;
+            }
+        }
+    }
+
+
+
+    // Keyword styling
+    code {
+        span.dv {
+            color: #3A00DC;
+        }
+        span.kw {
+            color: #C800A4;
+            font-weight: normal;
+        }
+        span.dt {
+            color: #C800A4;
+        }
+        span.co {
+            color: #008E00;
+        }
+        span.ot {
+            color: #902000;
+        }
+        span.st {
+            color: #DF0002;
+        }
+    }
+
+    // Base code styling
+    code.sourceCode.bash {
+        span.kw {
+            color: inherit;
+            font-weight: normal;
+        }
+        span.co {
+            font-style: normal;
+        }
+    }
+}
