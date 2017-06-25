@@ -55,7 +55,11 @@ Since [git](http://git-scm.com/) is at the heart of the management of this endea
 
 Older Book discussions can be checked at [ofBook Archives](http://dev.openframeworks.cc/private.cgi/ofbook-openframeworks.cc/)
 
-# gulp
+# Gulp
 
-In addition to the python routines to build the book, there is also an optional gulp file for use in style development.  It requires [gulp](http://gulpjs.com/), [browser-sync](https://browsersync.io/) and [gulp sass](https://github.com/dlmanning/gulp-sass) and can be used primarily to see changes to CSS reflect live on the static pages.  You have to run the python createWebBook script first.
+In addition to the python routines to build the book, there is also an optional gulp file for use in style development:
 
+- Install [node.js](https://nodejs.org/en/).
+- Open a terminal window in the root of the project and run `npm install`.
+- Run `npm run build-webbook` to run the python script that builds the web book.
+- Run `npm run gulp` to compile the SASS, copy the static files and start the browser-sync live server.

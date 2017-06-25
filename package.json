@@ -4,7 +4,8 @@
   "description": "ofBook\r ======",
   "main": "gulpfile.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build-webbook": "cd scripts && python createWebBook.py",
+    "gulp": "gulp"  
   },
   "repository": {
     "type": "git",
