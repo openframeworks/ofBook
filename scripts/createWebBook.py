@@ -142,18 +142,6 @@ copytree(staticJSPath, webBookJSPath)
 staticScssFile = os.path.join("..", "static", "style", 'style.scss')
 outputCssFile = os.path.join(webBookPath, "style", "style.css")
 
-print("compiling " + staticScssFile)
-compiledCss = sass.compile(filename=staticScssFile)
-cssFile = open(outputCssFile, 'w')
-cssFile.write(compiledCss)
-cssFile.close()
-print("output " + outputCssFile)
-
-
-
-
-
-
 chapterDicts = [];
 
 #-------------------------------------------------------------- make the book
