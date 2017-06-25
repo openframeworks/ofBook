@@ -4,13 +4,12 @@ var sass        = require('gulp-sass');
 
 // Static Server + watching scss/html files
 gulp.task('serve', ['sass'], function() {
-
     browserSync.init({
-        server: "./output/webBook"
+        server: "./output/webBook",
+        directory: true,
+        startPath: "/chapters"
     });
-
     gulp.watch("static/style/*.scss", ['sass']);
-    //gulp.watch("output/webBook/chapter/*.html").on('change', browserSync.reload);
     gulp.watch("output/webBook/**").on('change', browserSync.reload);
 });
 
