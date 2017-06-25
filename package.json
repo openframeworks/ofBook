@@ -5,7 +5,10 @@
   "main": "gulpfile.js",
   "scripts": {
     "build-webbook": "cd scripts && python createWebBook.py",
-    "gulp": "gulp"  
+    "gulp": "gulp",
+    "webpack": "webpack --config webpack.config.js --watch",
+    "clean": "rimraf output/webBook",
+    "dev": "concurrently \"npm run gulp\" \"npm run webpack\""
   },
   "repository": {
     "type": "git",
@@ -18,11 +21,17 @@
   },
   "homepage": "https://github.com/openframeworks/ofBook#readme",
   "devDependencies": {
+    "babel-core": "^6.25.0",
+    "babel-loader": "^7.1.0",
+    "babel-preset-env": "^1.5.2",
     "browser-sync": "^2.18.12",
+    "concurrently": "^3.5.0",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^4.0.0",
     "gulp-plumber": "^1.1.0",
     "gulp-sass": "^3.1.0",
     "gulp-sourcemaps": "^2.6.0",
+    "rimraf": "^2.6.1",
+    "webpack": "^3.0.0"
   }
 }
