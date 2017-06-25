@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" $if(lang)$ lang="$lang$" xml:lang="$lang$" $endif$>
+
+<head>  
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <meta name="generator" content="pandoc" /> 
+  $for(author-meta)$ <meta name="author" content="$author-meta$" /> $endfor$
+  $if(date-meta)$ <meta name="date" content="$date-meta$" /> $endif$
+
+  <title>$if(title-prefix)$ $title-prefix$ - $endif$ $pagetitle$</title>
+
+  $if(quotes)$
+  <style type="text/css">
+    q {
+      quotes: "“" "”" "‘" "’";
+    }
+  </style>
+  $endif$
+  
+  $if(highlighting-css)$
+  <style type="text/css">
+    $highlighting-css$
+  </style>
+  $endif$
+  
+  $if(math)$ $math$ $endif$ 
+  
+  <link rel="stylesheet" type="text/css" href="../style/index.css">
+</head>
+
+<body>
+  <!-- Bootstrap fixed navbar -->
+  <nav class="navbar navbar-default navbar-fixed-top" id="top-navbar">
+      <div class="fluid-container">
+          <ul class="nav navbar-nav">
+              <li>
+                  <span id="menu-open" class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+                  <span id="menu-close" class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
+              </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+              <li>
+                  <a id="github-mark"  href="https://github.com/openframeworks/ofBook">
+                      <img src="../images/GitHub-Mark-32px.png">
+                  </a>
+              </li>
+          </ul>
+      </div>
+  </nav>
+
+  <!-- Collapsible TOC Sidebar -->
+  <nav role="navigation" id="sidebar-toc">
+    <ul id="nav-parts"></ul>
+  </nav>
+
+  <!-- Chapter Contents -->
+  <div class="content-wrapper">
+    <div class="chapter-content">
+      $if(title)$
+      <div id="$idprefix$header">
+        <h1 class="title">$title$</h1>
+        $if(subtitle)$
+        <h1 class="subtitle">$subtitle$</h1>
+        $endif$ 
+        $for(author)$
+        <h2 class="author">$author$</h2>
+        $endfor$ 
+        $if(date)$
+        <h3 class="date">$date$</h3>
+        $endif$
+      </div>
+      $endif$
+      
+      $if(toc)$
+      <div id="$idprefix$TOC">
+        $toc$
+      </div>
+      $endif$
+
+<!-- Make sure there is no unnecessary indentation! That will mess up the code blocks -->
+$body$
+
+      <div class="footer">
+        <div id="prev_chapter"></div>
+        <div id="next_chapter"></div>
+      </div>
+      <div id="help">
+        Please note that this book is a work in progress. If you have a suggestion or correction for this chapter, you can edit it <a href="$editLink$">here</a>. If you have general feedback, feel free to submit it here <a href="https://github.com/openframeworks/ofBook/issues/new">here</a>.
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+  <script src="../bundle.js"></script>
+</body>
+</html>

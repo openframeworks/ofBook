@@ -163,11 +163,13 @@ for chapter in chapters:
 
 	print("Converting", sourceChapterPath, "to", destChapterPath, "...")
 
+	editLink = "https://github.com/openframeworks/ofbook/edit/master/chapters/{}/chapter.md".format(chapter)
 
-	subprocess.call(["pandoc", "-o", destChapterPath, sourceChapterPath,
-                                        "-s", "-p", "--mathjax",
-                                        "--template=createWebBookTemplate\chapter-template.html",
-                                        "--default-image-extension=svg"])
+	subprocess.call([
+		"pandoc", "-o", destChapterPath, sourceChapterPath, "-s", "-p", "--mathjax",
+		"--template=webBookTemplates\chapter-template.html", "--default-image-extension=svg",
+		"--variable=editLink:{}".format(editLink)
+	])
 
 
 
@@ -458,7 +460,7 @@ with open(tocPathTemp, "wb") as file:
 
 
 
-filenames = ['createWebBookTemplate/IncludeBeforeBodyTOC.html', tocPathTemp, 'createWebBookTemplate/IncludeAfterBodyTOC.html']
+filenames = ['webBookTemplates/IncludeBeforeBodyTOC.html', tocPathTemp, 'webBookTemplates/IncludeAfterBodyTOC.html']
 with open(tocPath, 'w') as outfile:
     for fname in filenames:
         with open(fname) as infile:
