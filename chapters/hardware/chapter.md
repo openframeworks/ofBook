@@ -73,7 +73,7 @@ void outputColour(int red, int green, int blue) {
   analogWrite(greenPin, green);    
 }
 
-void setColor() {
+void getColour() {
   int i = 0;
   
   //wait and be patient
