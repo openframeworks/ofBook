@@ -647,7 +647,7 @@ Calling ofFbo::begin() sets the FBO as the render buffer that everything will be
 
     shader.begin();
     shader.setUniformTexture("redTex", camera.getTextureReference(), 1);
-    shader.setUniformTexture("greenTex", greenOF, 2);
+    shader.setUniformTexture("greenTex", image, 2);
     shader.setUniformTexture("blueTex", movie.getTextureReference(), 3);
     shader.setUniformTexture("imageMask", imageMask.getTextureReference(), 4);
 
