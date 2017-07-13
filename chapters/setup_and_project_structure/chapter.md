@@ -170,10 +170,10 @@ Here you will find a lot of different things, from ingredients to tools, all ord
 
 As mentioned before, addons extend oF core functionalities. In each oF distribution there are several included addons, usually referred to as "core addons":
 
-- **ofx3DModelLoader**
-Used for loading 3D models into your oF project. It only works with .3ds files.
+- **ofxAccelerometer**
+This addon is used to interface and work with [accelerometers](https://en.wikipedia.org/wiki/Accelerometer "Wikipedia article on accelerometers").
 - **ofxAssimpModelLoader**
-Also loads 3D models into your oF project, but it is done using the [assimp](http://assimp.sourceforge.net/) library, which supports a wide variety of 3D file formats, even animated 3D objects.
+This addon loads 3D models into your oF project, but it is done using the [assimp](http://assimp.sourceforge.net/) library, which supports a wide variety of 3D file formats, even animated 3D objects.
 - **ofxGui**
 This is the default GUI (Graphical User Interface) for oF. It lets you add sliders and buttons so you can easily modify parameters while your project is running. It relies heavily on ofParameters and ofParameterGroup. It allows you to save and load the values for the parameters that you've adjusted.
 - **ofxKinect**
@@ -183,7 +183,7 @@ Lets you deal with network protocols such as UDP and TCP. You can use it to comm
 - **ofxOpenCv**
 This is oF's binding to one of the best and most used computer vision code library, [OpenCV](http://opencv.org/). Computer vision is a complete world in itself, and being able to use OpenCV right out-of-the-box is a super important and useful oF feature.
 - **ofxOsc**
-OSC (Open Sound Control) implementation for oF. OSC easily communicates with other devices or applications within the same network. OSC is used to send messages and parameters from one app to another one. Several chapters in this book discuss OSC. 
+[OSC (Open Sound Control)](https://en.wikipedia.org/wiki/Open_Sound_Control "Wikipedia article on OSC") implementation for oF. OSC easily communicates with other devices or applications within the same network. OSC is used to send messages and parameters from one app to another one. Several chapters in this book discuss OSC.
 - **ofxSvg**
 Loads and displays [SVG](https://en.wikipedia.org/wiki/Scalable_Vector_Graphics "Wikipedia article on SVG") files. These are vector graphics files, usually exported from vector drawing programs such as Inkscape or Adobe Illustrator.
 - **ofxThreadedImageLoader**
