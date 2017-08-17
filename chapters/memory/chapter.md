@@ -1,4 +1,4 @@
-#Memory in C++#
+# Memory in C++
 
 *by [Arturo Castro](http://arturocastro.net)*
 
@@ -9,7 +9,7 @@ There's also an important difference, in c++ we have two different memory areas,
 
 We'll see later what the main differences are, but first let's see what's memory and what happens when we create variables in our program.
 
-## Computer memory and variables ##
+## Computer memory and variables
 
 It's helpful to understand at least at a high level how computer memory works.
 
@@ -927,7 +927,7 @@ void ofApp::setup(){
 The compiler won't fail there but if we try to execute the application it'll crash since `a` is not owned by ofApp::setup anymore, having to explicitly use `move` tries to solve that problem by making the syntax clearer. After using move, we can't use that variable anymore except through the vector. More modern langauages like [Rust](http://www.rust-lang.org/) completely solve this by making the compiler detect these kinds of uses of moved variables and producing a compiler error. This will probably be solved at some point in c++ but for now you need to be careful to not use a moved variable.
 
 
-###shared_ptr
+### shared_ptr
 
 As we've seen before, sometimes having unique ownership is not enough, sometimes we need to share an object among several owners, in c++11 or later, this is solved through `shared_ptr`. The usage is pretty similar to `unique_ptr`, we create it like:
 

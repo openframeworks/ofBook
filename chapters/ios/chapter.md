@@ -1,20 +1,19 @@
-#ofxiOS
+# ofxiOS
 
 *by [Lukasz Karluk](http://www.julapy.com/)*
 
-##OpenFrameworks on iOS devices.
+## OpenFrameworks on iOS devices.
 
 ![Figure 1: OF on iPhone.](images/ofxiOS_iPhone_sml.png "Figure 1: OF on iPhone.")
 
-##Intro
+## Intro
 The beauty behind OpenFrameworks is its cross-platform nature and the ability to run the same code on your desktop and mobile devices while achieving the same results.
 
 Support for the iPhone in OpenFrameworks started when the very early iPhones (iPhone 2 or 3 - fact check!) were being released. Some clever people from the OF community realised that the iPhone supported OpenGL which also happened to be what OF was using for rendering graphics, and even more importantly, that C++ code could be mixed with Obj-C code. With these two very important pieces of the puzzle in place it was a matter of tweaking the core OF code to begin it's support for iOS devices. It was then when ofxiPhone was born.
 
 Since then Apple have released a number of other devices like the iPad and so the ofxiPhone title became less accurate and was eventually changed to ofxiOS, OpenFrameworks support for all iOS devices.
 
-
-##Intro to Objective-C
+## Intro to Objective-C
 
 We've briefly mentioned Objective-C or Obj-C for short and some people may know or may not know what it is. Obj-C is the main programming language used by Apple for OSX and iOS systems. Obj-C is also a superset of the C programming language which makes it possible to compile C and C++ code with an Obj-C compiler, which means its possible to mix OF C++ code with native Obj-C code.
 
@@ -22,7 +21,7 @@ Some people right about now may be letting off long desperate sighs, thinking - 
 
 Obj-C syntax can look a little daunting when you first look at it. It certainly scared the hell out of me the first time I saw it. And you may notice its unusually very long which is due to it's very explicit nature, meaning that all function names are very descriptive of the functionality they perform and all those words add up. You may think that it would take longer to work with an explicit language but its actually the opposite, because the functions are easier to find and in XCode you can usually start typing the function you are looking for and XCode will give you a list of suggestions and complete the function name for you.
 
-###Obj-C Class structure
+### Obj-C Class structure
 
 Like in C++, in Obj-C your code is broken down into two files, the header file and the implementation file. The header file still has the same .h extension but a implementation file has a .m extension. Here is a very basic example of how these two files look like.
 
@@ -48,7 +47,7 @@ The implementation (.m) file is where you add your actual code for the methods d
 @end
 ```
 
-###Make new Obj-C Class in XCode
+### Make new Obj-C Class in XCode
 
 Nice thing about XCode is that it makes programming easier by creating the basic structure of a class when you first create it, so you don't have to type out the above code structure everytime. By going to File menu, selecting New and then File... a dialogue will appear showing all the files that XCode can create for you. Select `Objective-C class` and another dialogue will appear where you can name your new Class and specify which Subclass it will extend. MyClass will then be automatically generated, ready for you to enter your code into.
 
@@ -56,7 +55,7 @@ Nice thing about XCode is that it makes programming easier by creating the basic
 
 ![Figure 1: OF on iPhone.](images/ofxiOS_objc_1_sml.jpg "Figure 1: OF on iPhone.")
 
-###Variables and Methods
+### Variables and Methods
 
 So now that we have the bare bones of our class, lets add some methods and variables to it so it actually does something. Lets start simple and say that MyClass contains two string variables, one for my first name and one for my last name. We will also want to create some methods for setting and retrieving these variables from the class.
 
@@ -117,7 +116,7 @@ Now that we have defined our variables and methods in the class interface, lets 
 
 In terms of structure, the methods look almost exactly the same as the in the class interface, only now each method has curly braces on the end `{` and `}` which symbolise the begining and end of the method code. The two getter methods (`getFirstName` and `getLastName`) are pretty straight forward and simply return a pointer to a `NSString` variable. The setter methods (`setFirstName` and `setLastName`) contain code which is more specific to Obj-C and here is where we first touch upon the topic of memory managemen in Obj-C.
 
-###Memory Management
+### Memory Management
 
 Lets look at what is going on inside the `setFirstName` method.
 
@@ -151,7 +150,7 @@ firstName = [NSString stringWithString:@"I'm a string"];
 
 The general rule when it comes to Obj-C memory management is if you create an object using the `alloc` method or call `retain` on a object, you have taken responsibility for that object and sometime in the the future you will have to `release` it.
 
-###Ins and Outs
+### Ins and Outs
 
 With everything that was just discussed, lets take another look at MyClass which will now include the `init` and `dealloc` methods, the entry and exit points of all Obj-C objects.
 
@@ -200,7 +199,7 @@ Both the `init` and `dealloc` methods are already defined in every Obj-C object 
 
 The `dealloc` method is called when an object is about to be released from memory, which makes it the perfect place to release any other memory the object is holding onto. `firstName` and `lastName` objects are released and the last order of business is calling the `[super dealloc]` method, before the object is completely removed from memory.
 
-###Properties
+### Properties
 
 Nice thing about Obj-C is that it really makes programming a lot faster by providing syntax shortcuts where possible. In `MyClass` we had to create getter and setter methods for passing in the `firstName` and `lastName` into the object. In Obj-C there is actually a much faster way of declaring getters and setters with the use of properties. Properties are a syntax feature that allow to automatically declare getter and setter accessors. Here is how the `@property` syntax looks like in the header file,
 
@@ -263,9 +262,9 @@ if(firstName != nil) {
 
 Properties definitely take a little while to get used to but when mastered are very powerful tool to faster and flexible coding.
 
-###Delegates
+### Delegates
 
-###Automatic Reference Counting (ARC)
+### Automatic Reference Counting (ARC)
 
 All this talk of memory management can get pretty heavy, so you'll be happy to know that Obj-C have made programming easier using Automatic Reference Countng (ARC). ARC does all the memory management for you so you no longer have to worry about retaining and releasing objects, its all done by the compiler. ARC works by looking at your code at compile time and making sure that each object is retained for as long as it needs to be but also that its released as soon as it no longer used.
 
@@ -277,14 +276,14 @@ When ARC is turned on, it is possible to specify which Obj-C class should use AR
 
 ![Figure 1: OF on iPhone.](images/ofxiOS_ARC_1.png "Figure 2: ofxiOS XCode.")
 
-###Mixing Obj-C and C++ (Objective-C++)
+### Mixing Obj-C and C++ (Objective-C++)
 
 Since both the Obj-C and C++ languages are a subset of the C language, it is possible to mix the two together. First of all before you start typing C++ code into your Obj-C classes or vise versa you need to rename your implementation file extension from `(*.m)` => `(*.mm)`. This lets the XCode compiler know that the file is a combination of Obj-C and C++.
 
 `ofApp.mm` by default is already to setup this way so you can start using Obj-C code inside your app. One example of this might be that you would like to use UIKit to add some kind of user interface over the top of your ofApp. There are many very useful possibilities of mixing Obj-C with C++ and we'll go into more detail later in this chapter.
 
 
-###TODO
+### TODO
 
 - what does objective-C look like?
 - differences between C++ and Obj-C (string, arrays)
@@ -294,7 +293,7 @@ Since both the Obj-C and C++ languages are a subset of the C language, it is pos
 good reference => http://cocoadevcentral.com/d/learn_objectivec/
 
 
-##Under the Hood
+## Under the Hood
 
 UIKit is the backbone of all iOS apps. It is a collection of classes or framework that provide a standardised structure for creating and running applications. UIKit provides the skeleton structure into which you can insert your custom application code and makes it easy to receive system events like device orientation changes or memory warning as two examples amongst many.
 
@@ -316,7 +315,7 @@ ofxiOSEAGLView is the OF UIView which displays all OF rendered content. ofxiOSEA
 
 TODO // need to make a diagram to visualise all this.
 
-###ofxiOSApp
+### ofxiOSApp
 
 ![Figure 1: OF on iPhone.](images/ofxiOS_XCode_sml.png "Figure 2: ofxiOS XCode.")
 
@@ -348,7 +347,7 @@ void deviceOrientationChanged(int newOrientation);
 iOS dispatches orientation events when ever the device orientation changes. Orientation events are passed into the ofApp through `deviceOrientationChanged()` method. It is then up to the user to handle these orientation changes as they see fit. iosOrientationExample inside examples/ios/ folder demonstrates how the orientation events can be used.
 
 
-###OpenGL ES and iOS
+### OpenGL ES and iOS
 
 - Intro > lead to types
 - iOS Support for ES 1.1
@@ -370,7 +369,7 @@ iOS dispatches orientation events when ever the device orientation changes. Orie
 - https://www.khronos.org/webgl/wiki/WebGL_and_OpenGL_Differences
 
 
-##OF & UIKit
+## OF & UIKit
 - Adding UIViews to an OF app, above and below the OF glView.
 - openFrameworks as part of a larger app, several openFrameworks apps in one iOS app
 - addons for ofxiOS
@@ -379,13 +378,13 @@ iOS dispatches orientation events when ever the device orientation changes. Orie
 http://www.creativeapplications.net/iphone/integrating-native-uikit-to-your-existing-openframeworks-ios-project/
 
 
-##Media Playback and Capture
+## Media Playback and Capture
 
 A large chunk of ofxiOS support is media playback and capture. ofxiOS has good support for video playback, sound playback, camera capature and sound input. All Obj-C code that makes these features possible is wrapped and abstracted so a regular OF user can continue using the OF API the same way across all supported platforms.
 
 For example, lets say you have a very simple ofApp that plays a video. To achieve this you would use the `ofVideoPlayer` class, create a object instance of the class, call the `loadMovie()` method to load the video file and then call the `play()` method to begin playback of the video. Now to do this across desktop OF apps or iOS OF apps, the code is exactly the same. This is because we are using the `ofVideoPlayer` API which is common across all supported OF platforms. Although the thing to know here is that even though the code works the same way across the different platforms, the actual code used to play a video on OSX and iOS (for example) is very different.
 
-###ofxiOSVideoPlayer
+### ofxiOSVideoPlayer
 
 ![Figure 1: OF on iPhone.](images/ofxiOS_moviePlayerExample_sml.png "Figure 2: ofxiOS XCode.")
 
@@ -436,30 +435,30 @@ avVideoPlayer = (AVFoundationVideoPlayer *)video.getAVFoundationVideoPlayer();
 
 
 
-###ofxiOSVideoGrabber
+### ofxiOSVideoGrabber
 
-###ofxiOSSoundPlayer and ofxOpenALSoundPlayer
+### ofxiOSSoundPlayer and ofxOpenALSoundPlayer
 
 ![Figure 1: OF on iPhone.](images/ofxiOS_soundPlayerExample_sml.png "Figure 2: ofxiOS XCode.")
 
-###ofxiOSSoundStream
+### ofxiOSSoundStream
 
 ![Figure 1: OF on iPhone.](images/ofxiOS_audioInputExample_sml.png "Figure 2: ofxiOS XCode.")
 
 ![Figure 1: OF on iPhone.](images/ofxiOS_audioOutputExample_sml.png "Figure 2: ofxiOS XCode.")
 
 
-##Life Hacks
+## Life Hacks
 - ofxiOS utils, ofxiOSExtras, ofxiOSImagePicker, ofxiOSMapKit etc.
 
 
 
-##App Store
+## App Store
 - App distribution, preparing your OF app for the app store.
 - examples of OF iOS apps already in the app store.
 
 
-##Case Studies
+## Case Studies
 
 https://itunes.apple.com/au/app/john-lennon-the-bermuda-tapes/id731652276?mt=8
 

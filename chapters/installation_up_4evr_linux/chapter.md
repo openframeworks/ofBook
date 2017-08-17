@@ -1,4 +1,4 @@
-#Installation up 4evr - Linux#
+# Installation up 4evr - Linux #
 
 *by [Arturo Castro](http://arturocastro.net)*
 
@@ -46,11 +46,11 @@ sudo apt-get install openssh-server
 ```bash
 xset s off
 xset -dpms
-``` 
+```
 
 And that's it now the computer will start you app everytime it starts. Most PC's have a BIOS setting where you can choose to start it automatically after a power cut so if the installation is somewhere where they just cut the power at night it'll immediately start automatically in the morning when they turn it on again.
 
-##Some additional tricks:
+## Some additional tricks:
 
 - Linux can be installed in an SD card so you can save some money by buying a 16Gb SD Card instead of an HD, most SD Cards are also pretty fast so boot times will be really short. Just boot from a USB stick or CD and with the SD card in the reader, if there's no HD the ubuntu installer will just install in the sdcard. Installing to an SD card makes it also really easy to make copies of an installation. In ubuntu you can use the "Disks" tool to create and restore backups or from the command line with:
 

@@ -28,7 +28,7 @@ More than anything, we've tried as hard as we can to create a friendly atmospher
 
 This book, much in the spirit of openFrameworks, is a community driven affair and it's **very much a work in progress**.   It was a suggestion on the openFrameworks developers mailing list which kicked this off and for a the past months we've been hacking away on it.
 
-A couple of notes, 
+A couple of notes,
 
 * Feedback is very much appreciated and we'd like to know what's missing, or what you'd like to have in here.  Likewise, if you find something helpful, we'd love to hear it, too!  Our github repo is active and we take issues and pull requests.
 * Please note that there are likely gaps here.  We've tried to roughly lay out chapters in order of skill level, but since it's a collectively written book, it can feel a bit disorienting, with some chapters being on the long side, while some are short.  Think of it not as a book you read front to back, but more like a collection of short tutorials from the community.

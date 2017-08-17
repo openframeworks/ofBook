@@ -10,7 +10,7 @@ I have found it very useful to explain oF by making analogies to cooking. Coding
 
 You need to download the oF version and the [IDE](https://en.wikipedia.org/wiki/Integrated_development_environment "Wikipedia article on IDE") (Integrated Development Environment) that suits your platform. The IDE is a piece of software that will let you write, compile, run and debug the code you write. It is "integrated" because it uses other pieces of software to do each of the mentioned tasks. You can run your code without using the IDE, but the IDE will make your programming life much easier.
 
-Go to [http://openframeworks.cc/download](http://openframeworks.cc/download "Download openFrameworks!") and download the version that you need. By the side of each available version you will find a link to download the matching IDE and how to install it. 
+Go to [http://openframeworks.cc/download](http://openframeworks.cc/download "Download openFrameworks!") and download the version that you need. By the side of each available version you will find a link to download the matching IDE and how to install it.
 
 ## Welcome to your new kitchen
 
@@ -33,13 +33,13 @@ All IDEs have a similar interface:
 
 [Xcode](https://developer.apple.com/xcode/ "Xcode website") is Apple's IDE. It is used both for iOS apps and desktop apps. Even though there are other IDEs for OS X, Xcode is a pretty mature one with lots of nice and useful features, especially for dealing with iOS apps.
 
-Use the latest version of Xcode and read the setup guide. 
+Use the latest version of Xcode and read the setup guide.
 
 ![Xcode screenshot](images/XcodeScreenShot.jpg "XCode screenshot")
 
 #### Microsoft Visual Studio 2012 Express
 
-[Visual Studio](http://visualstudio.com/ "Visual Studio website") is Microsoft's IDE, which is aimed at Windows development. It's a commercial product, but there's a free version you can download called "Express". 
+[Visual Studio](http://visualstudio.com/ "Visual Studio website") is Microsoft's IDE, which is aimed at Windows development. It's a commercial product, but there's a free version you can download called "Express".
 
 ![Visual Studio screenshot](images/VS_ScreenShot.jpg "Visual Studio screenshot")
 
@@ -51,24 +51,24 @@ Use the latest version of Xcode and read the setup guide.
 
 ## Running examples
 
-Find the oF version that you downloaded and decompress it. From now on we will refer to this folder as the oF root folder. You can place the oF root folder anywhere you like. One thing to stress is that oF is designed to be self contained -- everything you need will stay in one folder and this folder can even be moved around on your drive if need be. If you download another version of openFrameworks, it should stay in it's own folder and don't try to merge them. 
+Find the oF version that you downloaded and decompress it. From now on we will refer to this folder as the oF root folder. You can place the oF root folder anywhere you like. One thing to stress is that oF is designed to be self contained -- everything you need will stay in one folder and this folder can even be moved around on your drive if need be. If you download another version of openFrameworks, it should stay in it's own folder and don't try to merge them.
 
 Open it. Inside of it you will find several folders which we will describe below in more detail. For now, navigate to the examples folder and let's try to compile examples/graphics/graphicsExample. If you are on OS X, click on the graphicsExample.xcodeproj. If you are using Visual Studio, choose the ".sln" file. On Code::Blocks, choose the ".workspace" file.
 
 *A quick side note about workspace files. The reason we ask you to open those rather than the project file is that they contain a sub-project to build the oF library also. If you have any doubts, please read the readme for your given platform.*
 
-Now your IDE should open and load this example. It should look like the IDE screenshots above. Locate the "Run" button or menu option and click on it. The example should compile (which might take a while, since the first time you compile you are also compiling the oF library). You'll see a lot of files being compiled the first time -- don't worry, this will just happen once, when the oF library needs to be rebuilt. Feel free to get a cup of coffee or stretch. Long compile times are great moments to take a screen break. 
+Now your IDE should open and load this example. It should look like the IDE screenshots above. Locate the "Run" button or menu option and click on it. The example should compile (which might take a while, since the first time you compile you are also compiling the oF library). You'll see a lot of files being compiled the first time -- don't worry, this will just happen once, when the oF library needs to be rebuilt. Feel free to get a cup of coffee or stretch. Long compile times are great moments to take a screen break.
 
-If everything went well, a new window will pop up and display the example you just compiled. If this happened, congrats! You just have installed and compiled openFrameworks successfully and you are ready to go on. If this didn't happen, the first rule is, don't panic! Check the notes below for each IDE and be sure to read the release notes that come with oF. 
+If everything went well, a new window will pop up and display the example you just compiled. If this happened, congrats! You just have installed and compiled openFrameworks successfully and you are ready to go on. If this didn't happen, the first rule is, don't panic! Check the notes below for each IDE and be sure to read the release notes that come with oF.
 
-- Xcode: make sure that the popdown menu just at the right of the run button has selected the item with the name of your example and not the one named "openFrameworks." There might be more than one item with the name of the example you are trying to run. Select any one of them as long as it is not the one named "openFrameworks". This popdown menu selects the target you want to compile. If "openFrameworks" is selected you will just compile the openFrameworks core and not the example code. When you select the other items Xcode will compile both the oF core and the code for your example and when done, run the example. 
-- Visual Studio: make sure you've opened the .sln file. Visual Studio Express doesn't have a triangle button by default (I think it looks like a gear for debugging). Locate the [run without debugging option](http://social.msdn.microsoft.com/Forums/vstudio/en-US/7b2182f9-0e46-4e6f-a8db-3ab5af39f14b/start-without-debugging-option-missing-from-debug-menu?forum=vsdebug), which you can add to the menu bar if you want to customize the IDE. 
+- Xcode: make sure that the popdown menu just at the right of the run button has selected the item with the name of your example and not the one named "openFrameworks." There might be more than one item with the name of the example you are trying to run. Select any one of them as long as it is not the one named "openFrameworks". This popdown menu selects the target you want to compile. If "openFrameworks" is selected you will just compile the openFrameworks core and not the example code. When you select the other items Xcode will compile both the oF core and the code for your example and when done, run the example.
+- Visual Studio: make sure you've opened the .sln file. Visual Studio Express doesn't have a triangle button by default (I think it looks like a gear for debugging). Locate the [run without debugging option](http://social.msdn.microsoft.com/Forums/vstudio/en-US/7b2182f9-0e46-4e6f-a8db-3ab5af39f14b/start-without-debugging-option-missing-from-debug-menu?forum=vsdebug), which you can add to the menu bar if you want to customize the IDE.
 - Code::Blocks: make sure you've opened the .workspace file. If you are opening up other projects, be sure to close the current workspace first, as Code::Blocks doesn't handle multiple open projects very well.   
 - all IDEs: the play button will compile and run the project, but sometimes you might need to hit the button twice if the window doesn't launch.
 
-If the graphics example works, spend some time going through the other oF examples and running them. Usually it's good practice to close the current project / workspace completely before you open another one. Once the oF library is compiled, the projects should build quite quickly! 
+If the graphics example works, spend some time going through the other oF examples and running them. Usually it's good practice to close the current project / workspace completely before you open another one. Once the oF library is compiled, the projects should build quite quickly!
 
-If you have trouble, please keep track of what errors you have, what platform you are on, and start using the [oF forum](http://forum.openframeworks.cc/) to find help. There's years of experience there, and really helpful folks who can help answer questions. First, try searching for a specific error and if you don't see it, post a question in the forum. When you are beginning it can be quite frustrating, but the community is very good at helping each other out. 
+If you have trouble, please keep track of what errors you have, what platform you are on, and start using the [oF forum](http://forum.openframeworks.cc/) to find help. There's years of experience there, and really helpful folks who can help answer questions. First, try searching for a specific error and if you don't see it, post a question in the forum. When you are beginning it can be quite frustrating, but the community is very good at helping each other out.
 
 Once done continue reading.
 
@@ -79,10 +79,10 @@ Inside the oF root folder you will find several other folders, at least, the fol
 ### Addons
 The "addons" folder will contain the included "core" addons. Addons are extra pieces of code that extend oF's functionalities, allowing you to do almost anything with oF. Addons are usually written by third parties that have shared these. The "core" addons, the ones already included in your oF download, are addons that are used so frequently that it has been decided to include them as part of the official oF download. These are coded and maintained by oF's core developers.     
 Check the examples/addons folder in your oF root folder where you will find at least one example about how to use each of these addons.
-You can also go to [ofxAddons](http://ofxaddons.com/ "ofxaddons, a collection of oF addons") where you'll find a huge collection of additional addons from the community. 
+You can also go to [ofxAddons](http://ofxaddons.com/ "ofxaddons, a collection of oF addons") where you'll find a huge collection of additional addons from the community.
 
 ### Apps
-This is the folder where you put your project files as you make new projects. Your current oF download contains the folder named "myApps" inside of "apps", and this is where the project generator will default to when you make a new project. One important thing to note is that the project is positioned relatively to the libs folder, i.e. if you were to look inside the project file you'd see relative folder paths, i.e. `../../../libs`. This image is showing how `../../../libs` might work visually: 
+This is the folder where you put your project files as you make new projects. Your current oF download contains the folder named "myApps" inside of "apps", and this is where the project generator will default to when you make a new project. One important thing to note is that the project is positioned relatively to the libs folder, i.e. if you were to look inside the project file you'd see relative folder paths, i.e. `../../../libs`. This image is showing how `../../../libs` might work visually:
 
 ![app position to root](images/projectPlacement.png)
 
@@ -95,26 +95,26 @@ This is a folder with examples, sorted by topic. There are a big bunch of exampl
 
 ### libs
 
-These are the libraries that openFrameworks uses to compile your project. They include things like [FreeType](http://freetype.org/ "FreeType website") for typography support, [FreeImage](http://freeimage.sourceforge.net/ "FreeImage project website") for image loading, glfw for windowing, etc. Also the code for openFrameworks is in libs, as well as the project files that help compile oF. If you need to look at the source code, here's where to look. 
+These are the libraries that openFrameworks uses to compile your project. They include things like [FreeType](http://freetype.org/ "FreeType website") for typography support, [FreeImage](http://freeimage.sourceforge.net/ "FreeImage project website") for image loading, glfw for windowing, etc. Also the code for openFrameworks is in libs, as well as the project files that help compile oF. If you need to look at the source code, here's where to look.
 
 ### other
 Here you'll find an [Arduino](http://www.arduino.cc/ "website if the arduino single-board microcontroller") sketch for using with the serial example located at examples/communication/. This is handy to check that your serial communication with Arduino is set up correctly and working.
 
 ### projectGenerator
 
-oF now ships with a simple project generator which is really useful for making new projects. One of the larger challenges has always been making a new project. This tool takes a template (located in the scripts folder) and modifies it, changing the name to a new one that you choose and even allowing you to specify addons. It allows you to place the project anywhere you want, and while we've structured all the examples to be a certain distance away from the root, you can set the position using this tool (e.g. if you put the project deeper, it will change the `../../../libs` to `../../../../libs`). It's designed to make it easy / trivial to start sketching in code, without worrying too much about making a new project. In the past we've always recommend that you copy an old project and rename it, but this is a more civilized approach to making projects. Check the readme file where the usage of this app is described. 
+oF now ships with a simple project generator which is really useful for making new projects. One of the larger challenges has always been making a new project. This tool takes a template (located in the scripts folder) and modifies it, changing the name to a new one that you choose and even allowing you to specify addons. It allows you to place the project anywhere you want, and while we've structured all the examples to be a certain distance away from the root, you can set the position using this tool (e.g. if you put the project deeper, it will change the `../../../libs` to `../../../../libs`). It's designed to make it easy / trivial to start sketching in code, without worrying too much about making a new project. In the past we've always recommend that you copy an old project and rename it, but this is a more civilized approach to making projects. Check the readme file where the usage of this app is described.
 
 ## The oF Pantry
 
-Your default new kitchen will only have tools for coding, but the oF kitchen comes with a super nice pantry, filled up with really nice, cool and useful stuff. 
+Your default new kitchen will only have tools for coding, but the oF kitchen comes with a super nice pantry, filled up with really nice, cool and useful stuff.
 
-Imagine that you want to cook something but your kitchen has no pantry or if there is one it is completely empty. Cooking anything would be quite difficult under such conditions, as you'd have to go out and buy the things you need and you probably won't find everything in one outing. This is not a nice scenario, especially if you want to get creative and make awesome things. 
+Imagine that you want to cook something but your kitchen has no pantry or if there is one it is completely empty. Cooking anything would be quite difficult under such conditions, as you'd have to go out and buy the things you need and you probably won't find everything in one outing. This is not a nice scenario, especially if you want to get creative and make awesome things.
 
 So, what happens when you have your pantry filled with oF's components? You will be able to cook whatever you want because some really good ingredients are already there. Additionally, there are some really nice tools in there. This will let you complete recipes in a short amount of time, leaving you more time to get creative and try out new and more delicious recipes.
 
 ### What is inside the oF pantry
 
-Here you will find a lot of different things, from ingredients to tools, all ordered according to use. This is a breakdown of how oF code is organized (as well as the examples) and should give you a sense of what oF contains: 
+Here you will find a lot of different things, from ingredients to tools, all ordered according to use. This is a breakdown of how oF code is organized (as well as the examples) and should give you a sense of what oF contains:
 
 - **3D**
     - tools for drawing basic 3D polygonal objects, such as spheres, cubes, pyramids, etc.
@@ -130,7 +130,7 @@ Here you will find a lot of different things, from ingredients to tools, all ord
     - [`ofArduino`](http://openframeworks.cc/documentation/communication/ofArduino.html "ofArduino Documentation Page") allows openFrameworks to communicate via [Firmata](http://playground.arduino.cc/Interfacing/Firmata "Arduino reference for Firmata")
 - **events**
     - the oF event manager, allowing you to tap into app events if you need or even creating your own events
-- **gl** 
+- **gl**
     - [OpenGL](https://en.wikipedia.org/wiki/OpenGL "Wikipedia article on OpenGL"), the library for using the computer's [GPU](https://en.wikipedia.org/wiki/Graphics_processing_unit "Wikipedia article on the graphics processing unit")
     - contains GL specific functionality such as VBOs (Vertex Buffer Object), FBOs (Frame Buffer Object), Renderers, Lights, Materials, Shaders, Textures, and several other GL utilities
     - oF implements different rendering pipelines (fixed, programmable & OpenGL ES (used on less powerful devices such as smartphones and the Raspberry Pi)) -- most of this code is found in the gl folder
@@ -183,15 +183,15 @@ Lets you deal with network protocols such as UDP and TCP. You can use it to comm
 - **ofxOpenCv**
 This is oF's binding to one of the best and most used computer vision code library, [OpenCV](http://opencv.org/). Computer vision is a complete world in itself, and being able to use OpenCV right out-of-the-box is a super important and useful oF feature.
 - **ofxOsc**
-OSC (Open Sound Control) implementation for oF. OSC easily communicates with other devices or applications within the same network. OSC is used to send messages and parameters from one app to another one. Several chapters in this book discuss OSC. 
+OSC (Open Sound Control) implementation for oF. OSC easily communicates with other devices or applications within the same network. OSC is used to send messages and parameters from one app to another one. Several chapters in this book discuss OSC.
 - **ofxSvg**
 Loads and displays [SVG](https://en.wikipedia.org/wiki/Scalable_Vector_Graphics "Wikipedia article on SVG") files. These are vector graphics files, usually exported from vector drawing programs such as Inkscape or Adobe Illustrator.
 - **ofxThreadedImageLoader**
 Loads images on a different thread, so your main thread (the one that draws to your screen) doesn't get stuck while loading images. Really useful when loading online images.
 - **ofxVectorGraphics**
-Used to write out [EPS](https://en.wikipedia.org/wiki/Encapsulated_PostScript "Wikipedia article on encapsulated PostScript (eps)") vector graphics files. It the same drawing syntax as oF's regular drawing syntax, so it is really easy to use. Check chapter **[add correct chapter number]** for more info about oF's drawing capabilities. 
+Used to write out [EPS](https://en.wikipedia.org/wiki/Encapsulated_PostScript "Wikipedia article on encapsulated PostScript (eps)") vector graphics files. It the same drawing syntax as oF's regular drawing syntax, so it is really easy to use. Check chapter **[add correct chapter number]** for more info about oF's drawing capabilities.
 - **ofxXmlSettings**
-This is oF's simple XML implementation used mostly for loading and saving settings. 
+This is oF's simple XML implementation used mostly for loading and saving settings.
 
 That's what's in the pantry.  What do you want to cook?
 
