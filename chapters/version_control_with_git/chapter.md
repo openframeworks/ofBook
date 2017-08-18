@@ -891,7 +891,7 @@ Probably the most important thing left now is to point out where you can learn m
     - [Try Git](http://try.github.io/levels/1/challenges/1) is an excellent interactive tutorial.
     - Github offers a [Hello World](https://guides.github.com/activities/hello-world/) introduction to Git and Github.
     - There are some websites available which visualize/animate the workings of Git, see [here](http://www.wei-wang.com/ExplainGitWithD3/), [here](http://pcottle.github.io/learnGitBranching/) or [here](http://ndpsoftware.com/git-cheatsheet.html).
-    - Gitignore patterns for a lot of different situations can be found e.g. [here](http://github.com/github/gitignore) or at [gitignore.io](www.gitignore.io). 
+    - Gitignore patterns for a lot of different situations can be found e.g. [here](http://github.com/github/gitignore) or at [gitignore.io](www.gitignore.io).
 * Get help:
     - [Google](https://www.google.com/) the errors you get!
     - [Stack Overflow](http://stackoverflow.com/) is an awesome resources to find answers to problems you encounter (probably someone had the same problem before), and to ask questions yourself! There's even [a separate tag](http://stackoverflow.com/questions/tagged/git) for Git.

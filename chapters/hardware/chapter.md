@@ -1,4 +1,4 @@
-#Hardware
+# Hardware
 
 *by [Caitlin Morris](http://www.caitlinmorris.net/) and [Pierre Proske](http://www.digitalstar.net/)*
 
@@ -7,7 +7,7 @@
 
 This chapter will give you an introduction to working with openFrameworks outside of your computer screen and into the physical world. Why exactly would you want to do this? Well, given that we are physical creatures ourselves, having software control, sense and actuate real-world things can be pretty exciting and create truly visceral experiences. Screen based work can be captivating, but physical installations have the potential to deliver greater impact due to their more tangible nature.
 
-There are a number of ways of taking your openFrameworks app out of the frame of your own personal computer and getting it to interact with the outside world. Largely this involves some kind of communication from openFrameworks to whatever hardware you've decided to hook up to. The different types of computer based communications (or protocols) vary, but the most common is what's known as 'serial' communication, so called because each bit of data sent is transferred one after the other (as opposed to multiple bits being sent in parallel). 
+There are a number of ways of taking your openFrameworks app out of the frame of your own personal computer and getting it to interact with the outside world. Largely this involves some kind of communication from openFrameworks to whatever hardware you've decided to hook up to. The different types of computer based communications (or protocols) vary, but the most common is what's known as 'serial' communication, so called because each bit of data sent is transferred one after the other (as opposed to multiple bits being sent in parallel).
 
 The first hardware that we’ll look at interfacing with is the excellent **Arduino** prototyping platform.  Arduino is, in its own words, an *“open-source electronics prototyping platform based on flexible, easy-to-use hardware and software… intended for artists, designers, hobbyists, and anyone interested in creating interactive objects or environments.*”  It’s easy to see why there’s a lot of overlap between communities of people interested in using openFrameworks and Arduino!  With Arduino, it’s quick to get your openFrameworks app hooked up to sensors (like light sensors, proximity sensors, or other methods of environmental input), actuators (like lights, motors, and other outputs), and real-time interaction.  You're free to move out of the realm of pixels and into the physical world.
 
@@ -31,7 +31,7 @@ Serial communication is actually a very broad topic and there are many serial pr
 However, if you're connecting to an Arduino, it already appears to the computer as a virtual serial port and you just need a regular USB cable (the exact type is dependent on which model Arduino you have). The Arduino also has a built-in library which handles reading and writing to the serial port that appears on your computer. Additionally, the Arduino has bi-directional RS-232 serial ports which can be used to connect to other external serial devices. In short - the Arduino is well equipped for serial communications and does most of the hard work for you!
 
  **note: expand on Serial library**
- 
+
 
 The speed at which data is transmitted between the Arduino and your software is measured in bits per second, or bps, a fairly self-explanatory unit of measurement.  The rate of bits per second is commonly referred to as the baud rate, and will vary based on your application.  For example, the standard baud rate of 9600bps will transfer data more slowly than a rate of 115200, but the faster baud rate may have more issues with byte scrambling.
 
@@ -55,7 +55,7 @@ int greenPin = 10;  // Green LED
 int bluePin  = 11;  // Blue LED
 
 int color[4];
-long int inByte; 
+long int inByte;
 int wait = 10; //10ms
 
 void setup()
@@ -63,8 +63,8 @@ void setup()
   pinMode(redPin,   OUTPUT);   // sets the pins as output
   pinMode(greenPin, OUTPUT);   
   pinMode(bluePin,  OUTPUT);
-  
-  Serial.begin(9600); 
+
+  Serial.begin(9600);
 }
 
 void outputColour(int red, int green, int blue) {
@@ -75,7 +75,7 @@ void outputColour(int red, int green, int blue) {
 
 void getColour() {
   int i = 0;
-  
+
   //wait and be patient
   while (i < 4)
   {
@@ -92,13 +92,13 @@ void loop()
   if (Serial.available() > 0) {
     // get incoming byte:
     inByte = Serial.read();
-    
+
      if (inByte == 'C') {
       getColour();
       analogWrite(redPin, color[1]);
       analogWrite(bluePin, color[2]);
-      analogWrite(greenPin, color[3]); 
-    } 
+      analogWrite(greenPin, color[3]);
+    }
   }
   delay(wait);
 }
@@ -258,7 +258,7 @@ In order to continuously update with new information on the serial port, it's im
 myArduino.update();
 ```
 
-That's it! Now you're ready to start sending digital signals to pin 13 on your Arduino. 
+That's it! Now you're ready to start sending digital signals to pin 13 on your Arduino.
 
 There are any number of triggers that you can use to control this signalling: you could set up a timer, integrate it into a game event, use a camera input... the possibilities are endless!  Here, I'm going to trigger my Pin 13 LED to turn on and off based on the up and down arrow keys.
 
@@ -278,10 +278,10 @@ void ofApp::keyPressed  (int key){
     	}
 	}
 ```
-	
+
 When all the parts are together, run the app and toggle your UP and DOWN arrow keys to turn the on-board LED on your Arduino on and off!  You can also put in a 3mm or 5mm LED on pin 13 to make the effect more obvious.  Remember that pin 13 is the only Arduino pin with a built-in resistor, so if you want to add LEDs or other components on other pins, you'll need to build a full circuit with resistors to avoid burning out your parts.
 
- 
+
 ## Lights On - controlling hardware via DMX
 
 DMX (which stands for Digital Multiplex), also known as DMX512 (512 being the number of channels each output can accommodate), is a protocol for controlling lighting and stage equipment. It's been around since the 80's, and is sometimes referred to as the MIDI of the lighting world as it achieves a fairly similar outcome - the sequencing and controlling of hardware through the use of a computer. DMX can be used to control anything from strobes to RGB par-can lights to LED fixtures. It's even possible to drive LED strips by Pulse Width Modulation if you have the right hardware. The advantage of sending DMX through a custom openFrameworks app is that you can then integrate it via all the other goodness OF has to offer, including custom GUI's, custom sequencing algorithms, camera tracking - you name it.
@@ -321,7 +321,7 @@ void ofApp::setup() {
 void ofApp::update() {
 
     //assign the relevant values to your DMX data structure
-    
+
     //update the DMX controller with the new data
 }
 

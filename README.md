@@ -1,5 +1,5 @@
 ofBook
-====== 
+======
 
 this is a collaboratively written openFrameworks book.  
 
@@ -10,15 +10,14 @@ for other language, please read below.
 
 **please note that this is still work-in-progress**
 
-
 # Building the Book
 
 Dependencies
 
-- [LaTeX](http://www.latex-project.org/) 
+- [LaTeX](http://www.latex-project.org/)
 - [pandoc](http://johnmacfarlane.net/pandoc/)
 - [python 2.7+](https://www.python.org/)
-- [beauitful soup 4](http://www.crummy.com/software/BeautifulSoup/) 
+- [beauitful soup 4](http://www.crummy.com/software/BeautifulSoup/)
 - [sass](http://sass-lang.com/)
 - [libsass](https://github.com/dahlia/libsass-python)
 
@@ -46,16 +45,16 @@ Scripts for building the web and pdf versions of the book are in `scripts/` dire
 2. install python dependencies with `pip install -r requirements.txt`
 
 
-# contribution workflow
+## Gulp
+In addition to the python routines to build the book, there is also an optional gulp file for use in style development.  It requires [gulp](http://gulpjs.com/), [browser-sync](https://browsersync.io/) and [gulp sass](https://github.com/dlmanning/gulp-sass) and can be used primarily to see changes to CSS reflect live on the static pages.  You have to run the python createWebBook script first.
+
+
+# Contribution Workflow
 Since [git](http://git-scm.com/) is at the heart of the management of this endeavour, please check the [git best practices](https://sethrobertson.github.io/GitBestPractices/). If you do not agree with all of them, please at least stick to the "Do commit early and often" paradigm. This will make doing reviews, picking the good stuff from your contributions and polishing the rest a lot easier. Github itself also offers [a lot of help](https://help.github.com/) on common issues. So sign up, [fork the repo](https://help.github.com/articles/fork-a-repo/) and [send your pull requests](https://help.github.com/articles/creating-a-pull-request/) along our way.
 
-#Mailing List
 
+# Mailing List
 [openFrameworks Book discussion](http://dev.openframeworks.cc/listinfo.cgi/ofbook-openframeworks.cc).
 
 Older Book discussions can be checked at [ofBook Archives](http://dev.openframeworks.cc/private.cgi/ofbook-openframeworks.cc/)
-
-# gulp
-
-In addition to the python routines to build the book, there is also an optional gulp file for use in style development.  It requires [gulp](http://gulpjs.com/), [browser-sync](https://browsersync.io/) and [gulp sass](https://github.com/dlmanning/gulp-sass) and can be used primarily to see changes to CSS reflect live on the static pages.  You have to run the python createWebBook script first.
 

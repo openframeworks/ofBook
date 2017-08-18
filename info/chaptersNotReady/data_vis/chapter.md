@@ -1,24 +1,24 @@
-#Information Visualization
+# Information Visualization
 
 *by [Tega Brain](http://www.tegabrain.com/)*
 
 
 This chapter gives a brief overview of working with data in openFrameworks and introduces some basic information visualization techniques. It describes steps in the data visualization process, common file formats and useful functions for converting data. It is structured around an example of a time based plot.
 
-##Intro
+## Intro
 
-###What is data? What is information?
+### What is data? What is information?
 Computation has driven a huge increase in our capacity to collect, sort and store recorded observations and yet our ability to understand them remains limited by our sensory and cognitive capacities.
 
 Data are symbols or numerical interpretations that represent the properties of objects and environments (Ackoff, 1989). Information is produced from analyzing the context and descriptive qualities of data, it relates to why the data was collected. Although these terms are often used interchangeably, in the field of information science data is generally thought of as a raw material from which information is produced through analytical processes. Data visualization is a way of interpreting and presenting data and can potentially reveal patterns that might otherwise remain invisible.
 
-###Steps of visualizing data
+### Steps of visualizing data
 Ben Fry is a data artist and the author of Visualizing Data (2008), a well-known text outlining data visualization approaches for the Processing programming environment. In this excellent reference text, Fry describes seven stages for visualizing data and these provide a useful structure for approaching data-driven projects. These steps are:
 
-*Acquire:  Obtain the data. 
+*Acquire:  Obtain the data.
 Data is commonly made available in files downloadable from online sources such as weather services, newspapers, census records and from social media platforms. However there are also times when you may need to compile and format data from hardware or sensors. Real-time data is often available via an Application Programming Interface (API), which is an interface and a set of rules that define the process of how other applications can communicate with it. Every API is designed differently and therefore can be communicated with in different ways. This chapter presents two examples of visualising a static dataset imported into OF from external files, and an example that reads data from the New York Times API.
 
-*Parse: Provide some structure for the data’s meaning, and order it into categories. 
+*Parse: Provide some structure for the data’s meaning, and order it into categories.
 Once you have obtained your data, before you load it into openFrameworks it is important to parse the data. Parsing means checking the file’s format. Is the dataset tagged correctly? Check that each line of your data is broken up consistently across columns. This can be done in a number of ways such as, printing your file out in the terminal or opening your file in a text editor or spreadsheet program and checking for inconsistencies or gaps.
 
 *Filter: Remove all but the data of interest.
@@ -33,14 +33,14 @@ As Fry (2008) outlines, the mining stage of visualizing data involves applying s
 
 *Interact: Add methods for manipulating the data or controlling what features are visible.
 
-##Working with data files in openFrameworks
+## Working with data files in openFrameworks
 
-###Common data file structures: tsv, csv, xml, json
+### Common data file structures: tsv, csv, xml, json
 Data is available and stored in specific file types that have particular structures and syntax. The following file types are some of the most common forms of structuring data.
 
-*CSV: Comma separated values (csv) files are files where entries in the lines of the file are separated by commas. These can be directly imported into OF by using the ofxCsv add-on. This add-on allows for the reading and writing of CSV file. 
+*CSV: Comma separated values (csv) files are files where entries in the lines of the file are separated by commas. These can be directly imported into OF by using the ofxCsv add-on. This add-on allows for the reading and writing of CSV file.
 
-*TSV: Tab separated value files are text files where entries in the lines of the file are separated by tabs. These can be directly imported into OF. 
+*TSV: Tab separated value files are text files where entries in the lines of the file are separated by tabs. These can be directly imported into OF.
 
 *XML: XML files are written in EXtensible Markup Language. XML files are composed of tags that define a data hierarchy for the values within them. A tag has a name, attributes and values within it. If tags are nested, the enclosing tags are called parent tags and the nested tags are the children. The tags next to one another are siblings.
 
@@ -57,7 +57,7 @@ Reading an XML file in OF requires the use of an OF addon called ofxXmlSettings.
 *JSON: JSON stands for ‘javascript object notation’. This is a human readable file that is built on two structures, a collection of name/value pairs which can be realized in OF as a struct and an ordered list of values, realized as a vector. JSON files also are parsed using an OF addon called ofxJSON, see example 2.XX for how to implement this.
 
 
-###Example - Visualizing Time Series Plot
+### Example - Visualizing Time Series Plot
 
 **Step 1 Acquire:** This section works through an example of a data visualization of US population data downloaded from the United States Census service here: http://www.nber.org/data/census-decennial-population.html
 
@@ -75,13 +75,13 @@ Save your file as a tsv file. If you are using Excel, you can save as a 'tab del
 
 Loading Your file into an oF Project.
 
-First, generate a new project remembering to include the add-ons if your data is in csv or json format. Then save the parsed population data file to the ‘bin’ folder of your OF project. 
+First, generate a new project remembering to include the add-ons if your data is in csv or json format. Then save the parsed population data file to the ‘bin’ folder of your OF project.
 
 Once your project file is set up, we will now work through writing the code.
 
 Organising your data.
 
-First, we will need several structures to keep our data organised and allow easy access to it. 
+First, we will need several structures to keep our data organised and allow easy access to it.
 
 *Vectors? Explain here – or has this happened elsewhere?
 
@@ -141,7 +141,7 @@ vector < popData > dataPoints;
 
 Explain typedef ???
 
-We will also need to declare some variables to contain minimum and maximum values from our dataset. 
+We will also need to declare some variables to contain minimum and maximum values from our dataset.
 
 ```cpp
 int minYear;
@@ -203,13 +203,13 @@ IN THE OFAPP FILE:
 
 We will now load the data file into OF using the ofBuffer class.
 
-####ofBuffer Class
+#### ofBuffer Class
 ofBuffer will read the data into a buffer, which is temporary storage for it, as we write code to restructure and process it.
 ofBuffer is what is known as a convenience class, and provides easy methods for reading from and writing to files. A convenience class simply means that this is a class that doesn’t do anything by itself but wraps or allows access to the functionality of a group of other classes.
 
-####Buffer Functions
+#### Buffer Functions
 `ofBufferFromFile()` is a function that allows you to load your data file.
-```cpp	
+```cpp
 ofBuffer file = ofBufferFromFile("population.tsv");
 cout << file.getText();
 ```
@@ -229,7 +229,7 @@ We have used `getFirstLine()` to copy the first line of the file containing the 
 `getNextLine()` returns the next row of the data file as marked by `\n` or `\r` (new line characters).
 `isLastLine()` returns the last line of the file.
 
-These functions can be combined to run through each line of data in the buffer and we can nest this function in a conditional function that checks we are not at the last line of our file, here the `while()` loop is used. When the last line of the file is reached, our program will leave the buffer and this loop. 
+These functions can be combined to run through each line of data in the buffer and we can nest this function in a conditional function that checks we are not at the last line of our file, here the `while()` loop is used. When the last line of the file is reached, our program will leave the buffer and this loop.
 
 ```cpp
 	while (!file.isLastLine()){
@@ -259,7 +259,7 @@ void ofApp::setup(){
 
     ofBuffer file = ofBufferFromFile("population.tsv");
     cout << file.getText();
-    
+
     // grab the first line, which is just labels.
     string nameLine = file.getFirstLine();
 
@@ -273,16 +273,16 @@ void ofApp::setup(){
         data.ala = ofToFloat(split[3]);
         dataPoints.push_back(data);
     }
-    
-    
+
+
     // let's find the min and max years, and the max value for the data.
     // years are easy, we know it's the first and last year of the array.
 
     minYear = dataPoints[0].year;
     maxYear = dataPoints[dataPoints.size()-1].year;
-    
+
     // search linearly through the data to find the max value;
-    
+
     maxValue = 0;
     for (int i = 0; i < dataPoints.size(); i++){
         if (dataPoints[i].ny > maxValue){
@@ -314,7 +314,7 @@ void ofApp::setup(){
 
 **Step 4 Represent.**
 
-The `draw()` part of the code incorporates a for loop that maps the full range of values across the first variable pop to the dimensions of the graph. This is a way to make our graph responsive. If we were to now load in different data, it would be remapped according to how many data points it contains. 
+The `draw()` part of the code incorporates a for loop that maps the full range of values across the first variable pop to the dimensions of the graph. This is a way to make our graph responsive. If we were to now load in different data, it would be remapped according to how many data points it contains.
 
 
 ```cpp
@@ -369,7 +369,7 @@ We add x axis labels using the following block of code:
 
 ```
 
-So what does this mean? First we are iterating though each line of the dataPoints vector using a for loop. For each value of i, we access a line of the vector. As we do this we check: 
+So what does this mean? First we are iterating though each line of the dataPoints vector using a for loop. For each value of i, we access a line of the vector. As we do this we check:
 
 ```cpp
 if (dataPoints[i].year % 10 == 0){
@@ -464,7 +464,7 @@ to this:
 
 ```
 
-We have created a new float ‘value’ to hold each data point. Depending on the value of ‘which’, value is assigned data from one of the three data sets in the tsv file. 
+We have created a new float ‘value’ to hold each data point. Depending on the value of ‘which’, value is assigned data from one of the three data sets in the tsv file.
 
 Finally, the last step is to draw the titles to the screen, which is done by adding the last block of code underneath the for loop we just changed.
 
@@ -485,9 +485,9 @@ Finally, the last step is to draw the titles to the screen, which is done by add
 ```
 
 
-##More Useful functions for working with data
+## More Useful functions for working with data
 
-###Conversion functions (ofSplitString, ofToString, ofToInt)
+### Conversion functions (ofSplitString, ofToString, ofToInt)
 Conversion functions enable the manipulation of each line of data in the buffer. They allow each line to be split and for parts of it to be placed into string or integer variables.
 ```cpp
 ofSplitString(line, "\t" );
@@ -509,16 +509,16 @@ ofToFloat(string);
 This object converts another variable type into an a float variable.
 
 
-##Working with APIs
-###What are APIs?
+## Working with APIs
+### What are APIs?
 An API is an Application Programming Interface. This means it is a software to software interface allowing one piece of software to interact automatically with application. It takes the form of a set of instructions for how a program can be designed to interface with the online service. Every API is different with some being very well documented while others are not.
 
 You can write programs in openFrameworks so that data an be pulled from an API automatically and used in your sketch. For example if we want to be able to pull data from the New York Times API we would inspect the instructions for doing so here: http://developer.nytimes.com/docs.
 
 
-##Further resources
+## Further resources
 JSON validation tools like: http://jsonlint.com/
 
-##References
+## References
 Fry, B. (2008). *Visualizing Data,* O’Reilly Media.  
 Ackoff, R. L. (1989). *From Data to Wisdom. Journal of Applied Systems Analysis,* 16, 3–9.

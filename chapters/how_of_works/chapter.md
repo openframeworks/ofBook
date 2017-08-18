@@ -9,11 +9,11 @@ openFrameworks uses a few patterns so it's easy to understand how things work. O
 
 If you are a developer contributing to OF then this document will also be useful to you, to know how to code your classes so they behave in a consistent way with the rest of openFrameworks
 
-##	 setup, update, draw
+## setup, update, draw
 
 Most functionality in openframeworks works using this pattern. In every example ofApp there's also always setup, update and draw methods.
 
-###setup()
+### setup()
 
 The setup method is called only once at the beginning of the application and it's used to initialize other objects or variables usually declared in `ofApp.h`.
 
@@ -36,7 +36,7 @@ void ofApp::setup(){
 In C++ it's super important to initialize variables since by default they are not initialized. For example, if we don't do `counter = 0;`, `counter` can have any value.
 
 
-###update/draw()
+### update/draw()
 
 Update and draw are called in an infinite loop one after another in that order, until we finish the application.
 
@@ -173,8 +173,8 @@ will draw a black rectangle with a white pixel at 10,10 in both left and right s
 
 ### Data types
 
-These are classes that represent types in openFrameworks like ofRectangle, ofVec3f or ofMatrix4x4.
+These are classes that represent types in openFrameworks like `ofRectangle`, `ofVec3f` or `ofMatrix4x4`.
 
 ## Functions
 
-Some functionality in openFrameworks is provided through plain C functions. This are usually utility functions like ofToString(), ofRandom(), ofDrawBitmapString() and simple draw functions like ofDrawCircle(), ofDrawRectangle().
+Some functionality in openFrameworks is provided through plain C functions. This are usually utility functions like `ofToString()`, `ofRandom()`, `ofDrawBitmapString()` and simple draw functions like `ofDrawCircle()`, `ofDrawRectangle()`.
