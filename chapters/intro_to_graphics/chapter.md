@@ -423,7 +423,7 @@ straightSegmentPolyline.addVertex(300, 100);
 curvedSegmentPolyline.curveTo(350, 100);  // These curves are Catmull-Rom splines
 curvedSegmentPolyline.curveTo(350, 100);  // Necessary Duplicate for Control Point
 curvedSegmentPolyline.curveTo(400, 150);
-curvedSegmentPolyline.curveTo(450, 100);  
+curvedSegmentPolyline.curveTo(450, 100);
 curvedSegmentPolyline.curveTo(500, 150);
 curvedSegmentPolyline.curveTo(550, 100);
 curvedSegmentPolyline.curveTo(550, 100);  // Necessary Duplicate for Control Point
@@ -731,7 +731,7 @@ ofDrawCircle(80, 90, 15);
 ofDrawRectangle(65, 110, 30, 60);
 ```
 
-Draw a white background and color the shapes, and we end up with something like figure 18 (left).
+Draw a white background and color the shapes. You should end up with something like the leftmost portion of Figure 18.
 
 ![Figure 18: Arranging a little stick figure family](images/Figure18_ArrangingTheFamily.png)
 
@@ -832,7 +832,7 @@ ofNoFill();
 ofPushMatrix();
     ofTranslate(ofGetWidth()/2, ofGetHeight()/2);  // Translate to the center of the screen
     for (int i=0; i<100; i++) {
-        ofScale(1.1, 1.1);  
+        ofScale(1.1, 1.1);
         ofRotate(5);
         ofDrawRectangle(0, 0, 50, 50);
     }
