@@ -2,27 +2,27 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    
+
     for (int i=0; i <NBALLS; i++) {
-        myBall[i].setup();
+        groupOfBalls[i].setup();
     }
 
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    
+
     for (int i=0; i <NBALLS; i++) {
-        myBall[i].update();
+        groupOfBalls[i].update();
     }
-    
+
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    
+
     for (int i=0; i <NBALLS; i++) {
-        myBall[i].draw();
+        groupOfBalls[i].draw();
     }
 
 }
@@ -68,6 +68,6 @@ void ofApp::gotMessage(ofMessage msg){
 }
 
 //--------------------------------------------------------------
-void ofApp::dragEvent(ofDragInfo dragInfo){ 
+void ofApp::dragEvent(ofDragInfo dragInfo){
 
 }
