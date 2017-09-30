@@ -26,11 +26,11 @@ Every class has two files: a header file, also known as a declarations file with
 A very easy way of knowing what these two files do is to think of the header file (.h) as a recipe, a list of the main ingredients of your cookie. The implementation file (.cpp) is what we're going to do with them, how you mix and work them to be the perfect cookie!
 So let's see how it works:
 
-First of all let's create the two class files: 
+First of all let's create the two class files:
 If you're using Xcode as your IDE (it stands for: Integrated Development Environment), select the src folder and left Click (or CTRL + click), on the pop-up menu select 'New File' and you'll be taken to a new window menu, choose the appropriate platform you're developing for (OS X or iOS) and select C++ class and finally choose a name (we used 'Ball'). You'll automatically see the two files in your 'src' folder: 'Ball.h' and 'Ball.cpp'.
 If you are using Code::Blocks create a new project from empty one given inside the "examples" directory (or check out the ProjectGenerator). Copy the folder "empty" and rename it to "OOP". Change into this new directory, copy the "emptyExample" and rename it to "ball1". Inside the "ball1" directory rename "emptyExample.workspace" to "ball1.workspace" and "emptyExample.cbp" to "ball1.cbp". Now you have a dedicated directory and a dedicated project to play around with. Open "ball1.cbp" with Code::Blocks , right-click on the "emptyExample" workspace, select "Properties" (last entry in the list) and change the title of the project. The "src" directory in your project contains all the files you need to edit in this chapter. Add two new files inside the 'src' directory by either using 'File'->'New'->'Empty File' or pressing Tab+Ctrl+N. One file should be named 'Ball.h' and the other 'Ball.cpp'.
 Now let's edit your class header (.h) file. Feel free to delete all its contents and let's start from scratch:
-Declare a class in the header file (.h). In this case, the file name should be Ball.h. 
+Declare a class in the header file (.h). In this case, the file name should be Ball.h.
 Follow the code below and type into your own Ball.h file, please note the comments I've included to guide you along.
 
 ```cpp
@@ -44,7 +44,7 @@ class Ball {
     // methods, equivalent to specific functions of your class objects
     void setup();	// setup method, use this to setup your object's initial state
     void update();  // update method, used to refresh your objects properties
-    void draw();    // draw method, this where you'll do the object's drawing 
+    void draw();    // draw method, this where you'll do the object's drawing
 
     // variables
     float x;        // position
@@ -115,7 +115,7 @@ void Ball::draw(){
 Now, this is such a simple program that we could have written it inside our ofApp(.h and .cpp) files and that would make sense if we didn't want to reuse this code elsewhere. One of the advantages of Object Oriented Programming is reuse. Imagine we want to create thousands of these balls. The code could easily get messy without OOP. By creating our own class we can later re-create as many objects as we need from it and just call the appropriate methods when needed keeping our code clean and efficient. In a more pragmatic example think of creating a class for each of your user-interface (UI) elements (button, slider, etc) and how easy it would be to then deploy them in your program but also to include and reuse them in future programs.
 
 
-## Make an Object from your Class 
+## Make an Object from your Class
 Now that we've created a class let's make the real object! In your ofApp.h (header file) we'll have to declare a new object but first we need to include (or give the instructions to do so) your Ball class in our program. To do this we need to write:
 
 ```cpp
@@ -128,7 +128,7 @@ on the top of your ofApp.h file. Then we can finally declare an instance of the 
 Ball myBall;
 ```
 
-Now let's get that ball bouncing on screen! Go to your project ofApp.cpp (implementation) file. Now that we've created the object, we just need to set it up and then update its values and draw it by calling its methods. 
+Now let's get that ball bouncing on screen! Go to your project ofApp.cpp (implementation) file. Now that we've created the object, we just need to set it up and then update its values and draw it by calling its methods.
 
 In the `setup()` function of ofApp.cpp add the following code:
 
@@ -196,10 +196,10 @@ In the ofApp class header file, where you define the balls objects, you also def
 We'll now use the constant NBALLS value to define the size of our array of objects:
 
 ```cpp
-Ball myBall[NBALLS];
+Ball groupOfBalls[NBALLS];
 ```
 
-An array is an indexed list of items of the same type. The index is used to access a particular item in the list. This index usually starts with 0, so the first `Ball` (object) is found at myBall[0]. Only a handful of programming languages start the index of an array with 1. If you try to access an invalid index (either larger than the size of the array or a negative one), you get an error. Check the 'C++ basics' chapter for more information on arrays. In our implementation file we create an array of objects and call their methods through 'for' loops.
+An array is an indexed list of items of the same type. The index is used to access a particular item in the list. This index usually starts with 0, so the first `Ball` (object) is found at groupOfBalls[0]. Only a handful of programming languages start the index of an array with 1. If you try to access an invalid index (either larger than the size of the array or a negative one), you get an error. Check the 'C++ basics' chapter for more information on arrays. In our implementation file we create an array of objects and call their methods through 'for' loops.
 
 In the `setup()` function remove:
 
@@ -213,7 +213,7 @@ and add
 
 ```cpp
 for(int i=0; i<NBALLS; i++){
-    myBall[i].setup();
+    groupOfBalls[i].setup();
 }
 ```
 
@@ -231,7 +231,7 @@ and write
 
 ```cpp
 for(int i=0; i<NBALLS; i++){
-    myBall[i].update();
+    groupOfBalls[i].update();
 }
 ```
 
@@ -247,7 +247,7 @@ with
 
 ```cpp
 for(int i=0; i<NBALLS; i++){
-    myBall[i].draw();
+    groupOfBalls[i].draw();
 }
 ```
 
@@ -330,16 +330,16 @@ for(int i=0; i<NBALLS; i++){
 	int randomX = ofRandom( 0, ofGetWidth() ); //generate a random value bigger than 0 and smaller than our application screen width
 	int randomY = ofRandom( 0, ofGetHeight() ); //generate a random value bigger than 0 and smaller than our application screen height
 
-    myBall[i].setup(randomX, randomY, size);
+    groupOfBalls[i].setup(randomX, randomY, size);
 }
 ```
 
 As you see it is now possible to directly control the objects properties on its creation. Now we'll just need to use the for loop from above to go through the balls to update and draw them in the respective functions.
 
 ```cpp
-myBall[i].update();
+groupOfBalls[i].update();
 
-myBall[i].draw();
+groupOfBalls[i].draw();
 ```
 
 
@@ -355,10 +355,10 @@ To learn more about stl::vector check the "C++ basics" chapter or the [short onl
 Back to our beloved ofApp.h file, let's define a vector of `Ball` objects by typing:
 
 ```cpp
-vector <Ball> myBall;
+vector <Ball> groupOfBalls;
 ```
 
-In this expression we're creating a type (vector) of type (Ball pointers) and naming it myBall.
+In this expression we're creating a type (vector) of type (Ball pointers) and naming it groupOfBalls.
 Now, let's head to our ofApp.cpp and start cooking!
 Ignore the `setup()`, `update()` and `draw()` methods in the ofApp for now, let's jump to `ofApp::mouseDragged(...)` method. This method constantly listens to the mouse drag action and if it has changed it reveals its values (position and button state) to us.
 
@@ -374,26 +374,26 @@ The dragging activity of your mouse or trackpad is an ubiquitous, simple but als
 void ofApp::mouseDragged(int x, int y, int button){
     Ball tempBall;							// create the ball object
     tempBall.setup(x,y, ofRandom(10,40));	// setup its initial state
-    myBall.push_back(tempBall);				// add it to the vector
+    groupOfBalls.push_back(tempBall);				// add it to the vector
 }
 ```
 
 A few new things in our code: we begin by declaring a temporary object, think of it as a placeholder for the real object - that will be inside the vector! - we them define its initial properties by assigning the `x` and `y` mouse drag coordinates to its setup variables. Afterwards, we use this temporary object as a placeholder to add `Ball` objects to our vector.
 
-Back to our update and draw methods. We can add the needed 'for loops' to iterate over the objects in the vector to update and draw them like we would do with arrays. This time though we didn't declare a variable that stores the maximum number of objects but instead, the vector object provides us with a handy method we can call to know their size (`size()`). 
+Back to our update and draw methods. We can add the needed 'for loops' to iterate over the objects in the vector to update and draw them like we would do with arrays. This time though we didn't declare a variable that stores the maximum number of objects but instead, the vector object provides us with a handy method we can call to know their size (`size()`).
 See code below for `update()`
 
 ```cpp
-for (int i = 0; i<myBall.size(); i++) {
-    myBall[i].update();
+for (int i = 0; i<groupOfBalls.size(); i++) {
+    groupOfBalls[i].update();
 }
 ```
 
 and for `draw()`:
 
 ```cpp
-for (int i = 0 ; i<myBall.size(); i++) {
-    myBall[i].draw();
+for (int i = 0 ; i<groupOfBalls.size(); i++) {
+    groupOfBalls[i].draw();
 }
 ```
 
@@ -405,15 +405,15 @@ Now the 'for' loop iterates over all objects in the vector without us needing to
 If you ran the previous code you'll see that in a very short time you'll not only create a huge amount of balls but at some point your system might become sluggish because there are just way too many objects on screen. As we just mentioned vectors are very special as we can add and remove elements dynamically. That's their magic: vectors are elastic!
 So, let's also implement a way to delete them before we have way too many Balls.
 
-On the `ofApp::MousePressed(...)` call we will loop though our vector and check the distance between the coordinates of the mouse with a particular `Ball` position. If this distance is smaller than the `Ball` radius then we know that we're clicking inside it and we can delete it. Because we're using the `vector.erase(...)` method we need to use an iterator (`myBall.begin()`). Iterators are pointing to some element in a larger contained group and have the ability to iterate through the elements of that range. See them as paths or links. In this very case they are a shortcut that references the first element of the vector as a starting point to access the vector element we really want to erase (`i`), thus `myBall.begin()+i`.
+On the `ofApp::MousePressed(...)` call we will loop though our vector and check the distance between the coordinates of the mouse with a particular `Ball` position. If this distance is smaller than the `Ball` radius then we know that we're clicking inside it and we can delete it. Because we're using the `vector.erase(...)` method we need to use an iterator (`groupOfBalls.begin()`). Iterators are pointing to some element in a larger contained group and have the ability to iterate through the elements of that range. See them as paths or links. In this very case they are a shortcut that references the first element of the vector as a starting point to access the vector element we really want to erase (`i`), thus `groupOfBalls.begin()+i`.
 
 
 ```cpp
-for (int i =0; i < myBall.size(); i++) {
-    float distance = ofDist(x,y, myBall[i].x, myBall[i].y); // a method oF gives us to check the distance between two coordinates
+for (int i =0; i < groupOfBalls.size(); i++) {
+    float distance = ofDist(x,y, groupOfBalls[i].x, groupOfBalls[i].y); // a method oF gives us to check the distance between two coordinates
 
-    if (distance < myBall[i].dim) {
-        myBall.erase(myBall.begin()+i); // we need to use an iterator/ reference to the vector position we want to delete
+    if (distance < groupOfBalls[i].dim) {
+        groupOfBalls.erase(groupOfBalls.begin()+i); // we need to use an iterator/ reference to the vector position we want to delete
     }
 }
 ```
@@ -422,7 +422,7 @@ But because there's always a time you might just want to destroy them all, vecto
 Feel free to experiment and try using it yourself!
 
 ```cpp
-myBall.clear();
+groupOfBalls.clear();
 ```
 
 
@@ -491,7 +491,7 @@ We can leave the `update()` and `draw()` functions as they were, but `mouseDragg
 void ofApp::mouseDragged(int x, int y, int button){
     Ball tempBall;				// create the ball object
     tempBall.setup();			// setup its initial state
-    myBall.push_back(tempBall);	// add it to the vector
+    groupOfBalls.push_back(tempBall);	// add it to the vector
 }
 ```
 
