@@ -176,7 +176,7 @@ void rectangle::interpolateByPct(float myPct){
 }
 ```
 
-in the ofApp file, we create a variable called pct, and set it to 0.  We increment pct every frame and pass it through to the rectangle object in the update function:  
+in the ofApp file, we create a variable called pct, and set it to 0.  We increment pct every frame and pass it through to the rectangle object in the update function:
 
 
 ```cpp
@@ -197,7 +197,7 @@ As a side note, the function `ofMap`, which maps between an input range, uses pc
 
 ### Curves
 
-One of the interesting properties of numbers between 0 and 1 is that they can be easily adjusted / curved.  
+One of the interesting properties of numbers between 0 and 1 is that they can be easily adjusted / curved.
 
 The easiest way to see this is by raising the number to a power.  A power, as you might remember from math class, is multiplying a number by itself,  e.g., 2^3 = `2*2*2 = 8`. Numbers between 0 and 1 have some interesting properties. If you raise 0 to any power it equals 0 (`0*0*0*0 = 0`). The same thing is true for 1 (`1*1*1*1 = 1`), but if you raise a number between 0 and 1 to a power, it changes. For example, 0.5 to the 2nd power = 0.25.
 
@@ -211,7 +211,7 @@ As a side note, it's important to be aware that things in the world often don't 
 
 ![nonlinear](images/atob_nonlinear.png)
 
-If you raise the incoming number between 0 and 1 to a larger power it looks more extreme. Interestingly, if you raise this value between 0 and 1 to a fractional (rational) power (i.e., a power that's less than 1 and greater than 0), it curves in the other direction.  
+If you raise the incoming number between 0 and 1 to a larger power it looks more extreme. Interestingly, if you raise this value between 0 and 1 to a fractional (rational) power (i.e., a power that's less than 1 and greater than 0), it curves in the other direction.
 
 The next example (**3_rectangleInterpolatePowf**) shows an animation that uses pct again to get from A to B, but in this case, pct is raised to a power:
 
@@ -284,7 +284,7 @@ In this section of the book we'll look at a few examples that show function base
 
 Another interesting and simple system to experiment with motion in openFrameworks is using [`sin(...)`](http://www.cplusplus.com/reference/cmath/sin/ "C++ sin() documentation page") and [`cos(...)`](http://www.cplusplus.com/reference/cmath/cos/ "C++ cos() documentation page)").
 
-`sin(...)` and `cos(...)` (sine and cosine) are [trigonometric functions](https://en.wikipedia.org/wiki/Trigonometric_functions "Wikipedia on trigonometric functions"), which means they are based on angles. They are the x and y position of a point moving with a constant radius and rate around a circle. The circle is a unit circle with a radius (r) of 1, which means the diameter is `2*r*PI` or `2*PI`. In oF you'll see this constant as `TWO_PI`, which is 6.28318...
+`sin(...)` and `cos(...)` (sine and cosine) are [trigonometric functions](https://en.wikipedia.org/wiki/Trigonometric_functions "Wikipedia on trigonometric functions"), which means they are based on angles. They are the x and y position of a point moving with a constant radius and rate around a circle. The circle is a unit circle with a radius (r) of 1, which means the circumference is `2*r*PI` or `2*PI`. In oF you'll see this constant as `TWO_PI`, which is 6.28318...
 
 *As a side note, sometimes it can be confusing that some functions in oF take degrees where others take radians. `sin(...)` and `cos(...)` are part of the math library, so they take radians, whereas most OpenGL rotation takes degrees. We have some helper constants such as `DEG_TO_RAD` and `RAD_TO_DEG`, which can help you convert one to the other.*
 
@@ -296,7 +296,7 @@ All you have to do is imagine a unit circle, which has a radius of 1 and a cente
 
 #### Simple examples
 
-It's pretty easy to use `sin(...)` to animate the position of an object.  
+It's pretty easy to use `sin(...)` to animate the position of an object.
 
 Here, we'll take the sine of the elapsed time `sin(ofGetElapsedTimef())`. This returns a number between negative one and one. It does this every 6.28 seconds. We can use ofMap to map this to a new range. For example
 
@@ -344,7 +344,7 @@ xPos = xOrig + radius * cos(angle);
 yPos = yOrig + radius * sin(angle);
 ```
 
-This allows us to create something moving in a circular way. In the circle example (**12_sinExample_circlePlusPath**), I will animate using this approach.  
+This allows us to create something moving in a circular way. In the circle example (**12_sinExample_circlePlusPath**), I will animate using this approach.
 
 ```cpp
 float xorig = 500;
@@ -374,11 +374,11 @@ Finally, if we alter the angles we pass in to x and y for this formula at differ
 
 ### Noise
 
-Noise is similar to sine/cosine in that it's a function taking some input and producing output, which we can then use for movement. In the case of sine/cosine you are passing in an angle and getting a result back that goes back and forth between -1 and 1. In openFrameworks we wrap code using [simplex noise](https://en.wikipedia.org/wiki/Simplex_noise "Wikipedia on simplex noise"), which is comparable to [Perlin noise](https://en.wikipedia.org/wiki/Perlin_noise "Wikipedia on Perlin noise") and we have a function [`ofNoise()`](http://openframeworks.cc/documentation/math/ofMath.html#!show_ofNoise "ofNoise Documentation Page") that takes an input and produces an output. Both algorithms (Perlin, Simplex) provide a pseudo random noise pattern -- they are quite useful for animation, because they are continuous functions, unlike [ofRandom](http://openframeworks.cc/documentation/math/ofMath.html#!show_ofRandom "ofRandom Documentation Page") for example, which just returns random values.  
+Noise is similar to sine/cosine in that it's a function taking some input and producing output, which we can then use for movement. In the case of sine/cosine you are passing in an angle and getting a result back that goes back and forth between -1 and 1. In openFrameworks we wrap code using [simplex noise](https://en.wikipedia.org/wiki/Simplex_noise "Wikipedia on simplex noise"), which is comparable to [Perlin noise](https://en.wikipedia.org/wiki/Perlin_noise "Wikipedia on Perlin noise") and we have a function [`ofNoise()`](http://openframeworks.cc/documentation/math/ofMath.html#!show_ofNoise "ofNoise Documentation Page") that takes an input and produces an output. Both algorithms (Perlin, Simplex) provide a pseudo random noise pattern -- they are quite useful for animation, because they are continuous functions, unlike [ofRandom](http://openframeworks.cc/documentation/math/ofMath.html#!show_ofRandom "ofRandom Documentation Page") for example, which just returns random values.
 
 When I say continuous function, what I mean is if you pass in smaller changes as input, you get smaller output and if you pass in the same value you get the same result. For example, `sin(1.7)` always returns the same value, and `ofNoise(1.7)` also always returns the same result. Likewise if you call `sin(1.7)` and `sin(1.75)` you get results that are continuous (meaning, you can call `sin(1.71) sin(1.72)... sin(1.74)` to get intermediate results).
 
-You can do the same thing with ofNoise -- here, I write a for loop to draw noise as a line. `ofNoise` takes an input, here i/10 and produces an output which is between 0 and 1.  [`ofSignedNoise`](http://openframeworks.cc/documentation/math/ofMath.html#!show_ofSignedNoise "ofSignedNoise Documentation Page") is similar but it produces an output between -1 and 1.
+You can do the same thing with ofNoise -- here, I write a for loop to draw noise as a line. `ofNoise` takes an input -- here, i/10 -- and produces an output which is between 0 and 1.  [`ofSignedNoise`](http://openframeworks.cc/documentation/math/ofMath.html#!show_ofSignedNoise "ofSignedNoise Documentation Page") is similar but it produces an output between -1 and 1.
 
 ![noise line](images/noiseLine.png)
 
@@ -451,7 +451,7 @@ There's a ton more we can do with noise, we'll leave it for now but encourage yo
 
 ## Simulation
 
-If you have a photograph of an object at one point in time, you know its position. If you have a photograph of an object at another point in time and the camera hasn't changed, you can measure its velocity, i.e., its change in distance over time. If you have a photograph at three points in time, you can measure its acceleration, i.e., how much the speed changing over time.  
+If you have a photograph of an object at one point in time, you know its position. If you have a photograph of an object at another point in time and the camera hasn't changed, you can measure its velocity, i.e., its change in distance over time. If you have a photograph at three points in time, you can measure its acceleration, i.e., how much the speed changing over time.
 
 The individual measurements compared together tell us something about movement. Now, we're going to go in the opposite direction. Think about how we can use measurements like speed and acceleration to control position.
 
@@ -564,7 +564,7 @@ void addClockwiseForce( float px, float py, float radius, float strength);
 void addCounterClockwiseForce( float px, float py, float radius, float strength);
 ```
 
-They essentially add forces the move towards or away from a point that you pass in, or in the case of clockwise forces, around a point.
+They essentially add forces that move towards or away from a point that you pass in, or in the case of clockwise forces, around a point.
 
 ![sin](images/particle.png)
 
