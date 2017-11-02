@@ -3,11 +3,11 @@
 *by [Elliot Woods](http://www.kimchiandchips.com/)*
 
 ## Introduction
-C++ is a pretty old language, it's been around since 1983, and perhaps because of that (but certainly for many other reasons), it is often seen as archaic, obtuse, or perhaps just plain out of touch by today's standards. Contrary to this, many people believe that it is still offers the best balance of performance and clarity on the coding high street, and (in part thanks to the success of Unix and its mates) has an incredibly strong ecosystem of 3rd party libraries, device support and general acceptance, even up to the point where current shader languages and CUDA use C++ as their language of choice.
+C++ an old language. It has been around since 1983. It is often seen as archaic, obtuse, and perhaps just plain out of touch by today's standards. Contrary to this, many people believe it offers the best balance of performance and clarity on the coding high street, and many other people use it fot its strong ecosystem of 3rd party libraries, device support and general acceptance. Even new technologies (like CUDA) often use C++ as their language of choice.
 
 Some more modern languages (such as JavaScript and C#) make programs which run in a very different way to C/C++. They have a 'virtual machine', which is a very different type of computer than the one which crunches electronic signals on a circuit board. The virtual machine receives and processes program instructions like a real machine, but allows for all sorts of ideas which don't directly translate to silicon electronics, such as dynamic typing and reflection. The virtual machine abstracts the constraints of the processor away from the thinking of the programmer.
 
-C/C++ does not have a virtual machine, which (for the time being) often gives it a performance edge over these newer languages. It is quite strict in that ultimately the C code itself (somewhere down the chain) translates 1:1 with physical processor instructions, the design of the language is inflexible in this way, but clinging to this is the achievement of C++, that code can be both understood naturally by a human, and clearly translate to machine code.
+C/C++ does not have a virtual machine, which (for the time being) often gives it a performance edge over these newer languages. It is quite strict in that the instructions you type deep down have a 1:1 translation with physical processor instructions. This gives the language some inflexibilities, but means that code can be both understood naturally by a human, and clearly translate to machine code.
 
 In this chapter we'll look at some of the new patterns in the C++ language introduced in C++11, which retain this promise whilst offering new ways of writing code.
 
@@ -21,6 +21,7 @@ float rectangleCenterX = rectangleCenter.x;
 ```
 
 In this code block, we are declaring 3 variables:
+
 * `myRectangle`
 * `rectangleCenter`
 * `rectangleCenterX`
@@ -31,7 +32,7 @@ On each line of code we are:
 2. Declaring a new variable which is explicitly typed to match the value on the right
 3. Assigning the value to the variable
 
-What we may notice, is that the type of data on the right and left side of the `=` is the same. Since C++ is strictly typed (e.g. a function which returns a `float` will always return a `float` no matter what), it is impossible for the value on the right hand side to ever be anything different. The compiler __knows__ what type of value the right hand will give, e.g. it knows that on line 1 that on the right hand side of the `=` is an `ofRectangle`. So perhaps if we were to write something like:
+The type of data on the right and left side of the `=` is the same. Since C++ is strictly typed (e.g. a function which returns `float` will always return `float`), it is impossible for the value on the right hand side to ever be anything different. The compiler __knows__ what data type the right hand side of the code will give, e.g. it knows that on line 1 that on the right hand side of the `=` is an `ofRectangle`. So perhaps if we were to write something like:
 
 ```cpp
 auto myRectangle = ofGetCurrentViewport();
@@ -39,16 +40,19 @@ auto rectangleCenter = myRectangle.getCenter();
 auto rectangleCenterX = rectangleCenter.x;
 ```
 
-Then the compiler can do some of the coding for us. In fact, thanks to `auto`, we can do this now. This code block compiles to exactly the same result as the first code block did. The compiler notices what's on the right hand side and substitutes in the correct type wherever it sees `auto`.
+Then the compiler can do some of the coding for us. In fact, this is exactly the facility of the `auto` feature. This code block compiles to exactly the same result as the first code block did. The compiler notices what's on the right hand side and substitutes in the correct type wherever it sees `auto`.
 
 #### How this helps
-Well firstly, auto's going to save you keystrokes.  Imagine the following:
+auto is going to save you keystrokes. Imagine the following:
 
 ```cpp
+//.h
 vector<shared_ptr<ofThread> > myVectorOfThreads;
 ````
 
 ```cpp
+//.cpp
+
 // the old way
 vector<shared_ptr<ofThread>>::iterator firstThreadIterator = this->myVectorOfThreads.begin();
 
@@ -56,7 +60,9 @@ vector<shared_ptr<ofThread>>::iterator firstThreadIterator = this->myVectorOfThr
 auto firstThreadIterator = this->myVectorOfThreads.begin();
 ```
 
-Now this makes the code more readable (by decent humans), but also you could take advantage of `auto` in other ways, for example you could make changes things in the h file, and the cpp file code would automatically correct itself. For example in the h you might change the `vector` to a `list`, or change `shared_ptr<ofThread>` to `ofThread *`. These changes would perpetuate automatically to wherever an `auto` is listening out in the code. Nifty huh?
+This makes the code more readable, but also you could take advantage of `auto` in other ways.
+
+For example, when you reuse or copy variables, you can use auto along the way, meaning that you only have to define which type you want to use at the beginning and not everywhere else in your code. For example in the above h file, you might change the `vector` to a `list`, or change `shared_ptr<ofThread>` to `ofThread *`. These changes would perpetuate automatically to wherever an `auto` is being used int the code. Nifty huh?
 
 ### Watch out for this
 
@@ -134,7 +140,7 @@ Consider the following common pattern:
 ```cpp
 vector<ofPixels> mySelfies;
 /*
-take some lovely snaps
+take some snaps here and store in mySelfies
 */
 
 //oh dear, my photos are all in portrait
@@ -147,7 +153,7 @@ vector<ofxSnapChat::Friend> myFriends = snapChatClient.getFriends();
 
 //now let's send them to all my friends
 for(int i=0; i<myFriends.size(); i++) {
-	if (myFriends[i].isSingle()) {
+	if (myFriends[i].isOnline()) {
 		for(int i=0; i<mySelfies.size(); i++) {
 			myFriends[i].sendImage(mySelfies[i]);
 		}
@@ -173,7 +179,7 @@ auto myFriends = snapChatClient.getFriends();
 
 //now let's send them to all my friends
 for(auto & myFriend : myFriends) {
-	if (myFriend.isSingle()) {
+	if (myFriend.isOnline()) {
 		for(auto & mySelfie : mySelfies) {
 			myFriend.sendImage(mySelfie); // (2)
 		}
