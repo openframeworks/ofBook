@@ -273,7 +273,7 @@ void ofApp::keyPressed  (int key){
 	case OF_KEY_DOWN:
             ard.sendDigital(13, ARD_LOW); // turn LED off
             break;
-       	default:
+        default:
             break;
     }
 }
