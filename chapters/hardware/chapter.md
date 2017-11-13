@@ -197,7 +197,7 @@ Now we've extended the capabilities of the native openFrameworks ofArduino class
 In the setup() of ofApp.cpp, use the ofArduino `connect()` function to set up a connection at the appropriate port and baud rate.  `connect()` takes two parameters: the first is a String of the serial port name, which should match the serial port name you connected to in the Arduino application; the second is the baud rate.  Firmata uses a standard baud rate of 57600 bps.
 
 ```cpp
-ard.connect("/dev/tty.usbserial-a700fiyD", 57600);
+myArduino.connect("/dev/tty.usbserial-a700fiyD", 57600);
 ```
 
 **Set up an event listener to determine whether we’ve successfully connected to the Arduino**
@@ -222,7 +222,7 @@ The argument that's being passed to the function, `const int & version`, is a de
 
 In the `setup()` of ofApp.cpp, create a listener using `ofAddListener()`.  `ofAddListener()` is a function of ofEventUtils, which takes the arguments (event object, callback object, callback function).  When the event object happens (in this case, when the ofArduino EInitialized event is triggered), ofAddListener tells the callback object (here, a pointer to the ofApp itself, referred to as “this”) to perform the setupArduino function that we created in the last step.
 
-```cpp
+```cpp                 
 ofAddListener(myArduino.EInitialized, this, &ofApp.setupArduino);
 ```
 
@@ -268,15 +268,15 @@ Because I'm controlling activity with keyboard keys, I'm going to use the `void 
 void ofApp::keyPressed  (int key){
     switch (key) {
         case OF_KEY_UP:
-   	         	ard.sendDigital(13, ARD_HIGH);  // turn LED on
-   	         	break;
-			case OF_KEY_DOWN:
-				ard.sendDigital(13, ARD_LOW); // turn LED off
-				break;
-       		default:
-           		break;
-    	}
-	}
+            myArduino.sendDigital(13, ARD_HIGH);  // turn LED on
+            break;
+	case OF_KEY_DOWN:
+            ard.sendDigital(13, ARD_LOW); // turn LED off
+            break;
+       	default:
+            break;
+    }
+}
 ```
 
 When all the parts are together, run the app and toggle your UP and DOWN arrow keys to turn the on-board LED on your Arduino on and off!  You can also put in a 3mm or 5mm LED on pin 13 to make the effect more obvious.  Remember that pin 13 is the only Arduino pin with a built-in resistor, so if you want to add LEDs or other components on other pins, you'll need to build a full circuit with resistors to avoid burning out your parts.
