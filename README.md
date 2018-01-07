@@ -16,10 +16,10 @@ for other language, please read below.
 
 Dependencies
 
-- [LaTeX](http://www.latex-project.org/) 
+- [LaTeX](http://www.latex-project.org/)
 - [pandoc](http://johnmacfarlane.net/pandoc/)
 - [python 2.7+](https://www.python.org/)
-- [beauitful soup 4](http://www.crummy.com/software/BeautifulSoup/) 
+- [beauitful soup 4](http://www.crummy.com/software/BeautifulSoup/)
 - [sass](http://sass-lang.com/)
 - [libsass](https://github.com/dahlia/libsass-python)
 
