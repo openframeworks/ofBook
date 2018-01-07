@@ -58,7 +58,7 @@ Scripts for building the web and pdf versions of the book are in `scripts/` dire
 
 ---
 
-# contribution workflow
+# Contribution Workflow
 Since [git](http://git-scm.com/) is at the heart of the management of this endeavour, please check the [git best practices](https://sethrobertson.github.io/GitBestPractices/). If you do not agree with all of them, please at least stick to the "Do commit early and often" paradigm. This will make doing reviews, picking the good stuff from your contributions and polishing the rest a lot easier. Github itself also offers [a lot of help](https://help.github.com/) on common issues. So sign up, [fork the repo](https://help.github.com/articles/fork-a-repo/) and [send your pull requests](https://help.github.com/articles/creating-a-pull-request/) along our way.
 
 ---
