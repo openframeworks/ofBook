@@ -496,7 +496,7 @@ void ofApp::mouseDragged(int x, int y, int button){
 ```
 
 Now, let's start making child versions of this parent class.
-Create a new class set of files and name them `BlazBlue`. Feel free to copy the code below.
+Create a new class set of files and name them `BallBlue`. Feel free to copy the code below.
 It's '.h' should look like this:
 
 ```cpp
@@ -522,7 +522,7 @@ void BallBlue::draw(){
 }
 ```
 
-Now create two new classes on your own: `BallRed` and `BallGreen` based on the `Ball` class like `BlazBlue`.
+Now create two new classes on your own: `BallRed` and `BallGreen` based on the `Ball` class like `BallBlue`.
 Back to your 'ofApp.h'. Include the newly made classes and create one instance of each and in your 'ofApp.cpp' file. Initialize them and call their `update()` and `draw()` methods. A quick trick! Right before you call the `draw()` method, make this call:
 
 ```cpp
