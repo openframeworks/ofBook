@@ -1,5 +1,5 @@
 ofBook
-====== 
+======
 
 this is a collaboratively written openFrameworks book.  
 
