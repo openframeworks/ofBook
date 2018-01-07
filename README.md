@@ -54,7 +54,7 @@ Scripts for building the web and pdf versions of the book are in `scripts/` dire
 2. install python dependencies with `pip install -r requirements.txt`
 
 ## Gulp
--In addition to the python routines to build the book, there is also an optional gulp file for use in style development.  It requires [gulp](http://gulpjs.com/), [browser-sync](https://browsersync.io/) and [gulp sass](https://github.com/dlmanning/gulp-sass) and can be used primarily to see changes to CSS reflect live on the static pages.  You have to run the python createWebBook script first.
+In addition to the python routines to build the book, there is also an optional gulp file for use in style development.  It requires [gulp](http://gulpjs.com/), [browser-sync](https://browsersync.io/) and [gulp sass](https://github.com/dlmanning/gulp-sass) and can be used primarily to see changes to CSS reflect live on the static pages.  You have to run the python createWebBook script first.
 
 ---
 
