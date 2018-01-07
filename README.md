@@ -42,7 +42,8 @@ Scripts for building the web and pdf versions of the book are in `scripts/` dire
 1. Download and install [Python 2.7+](https://www.python.org/)
 2. Get the necessary python libraries using the python package manager ([pip](https://pip.pypa.io/en/latest/installing.html)).
   - Python 2.7.9 and later (on the python2 series), and Python 3.4 and later include pip by default, so you may have pip already.  It is typically stored in `C:/PythonXX/Scripts`.  To access it from command line, you will need to add the location of your `Scripts` folder to your path variable (see this [guide](http://windowsitpro.com/systems-management/how-can-i-add-new-folder-my-system-path)).
- -  - Run `pip install -r requirements.txt` from the command line (inside of the ofBook/ directory) to install the dependencies.3. Download and install pandoc using the latest windows installer (.msi) from [here](https://github.com/jgm/pandoc/releases)
+  - Run `pip install -r requirements.txt` from the command line (inside of the ofBook/ directory) to install the dependencies.
+3. Download and install pandoc using the latest windows installer (.msi) from [here](https://github.com/jgm/pandoc/releases)
 4. Download and install MiKTeX using the windows installer from [here](http://miktex.org/download)
   - When installing, check the box for "Install Packages on the Fly."  The pandoc -> PDF pipeline uses latex packages that don't all come standard with MiKTeX, so this will allow you to grab any missing packages when building the book for the first time.
 
