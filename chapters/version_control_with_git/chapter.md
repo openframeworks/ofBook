@@ -73,7 +73,7 @@ Most of the files associated with Git are in the `.git` folder in your project r
 
 The basic element for tracking the history of the repository is the **commit**.
 This is basically a snapshot of the repository's state at the time of the commit, including a **commit message** and any parent commits (s).
-Think of it as a checkpoint for saving in a video game.
+Think of it as a checkpoint for saving in a videogame.
 It has a unique identifier called the **hash** (or **SHA**).
 This is a checksum calculated from the commit's contents.
 It's impossible to change any part of the commit without the hash changing.
