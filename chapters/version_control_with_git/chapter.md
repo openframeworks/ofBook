@@ -16,12 +16,12 @@ How do you track the state of your projects over time?
 Have you ever made several copies of your project folder (or text document, Photoshop file,...)?
 Did you name them something like `Awesome_project_1`, `Awesome_project_may10`, `Awesome_project_final`, `Awesome_project_final2`, `Awesome_project_really_final`,...?
 Did you mail around zipped projects to collaborators, and had some trouble synchronizing the changes they (or you) made in the meantime?
-Have you run into problems when you had to go back to a previous version, change things, copy those changes to other version, or generally keep tabs on changes?
+Have you run into problems when you had to go back to a previous version, change things, copy those changes to another version, or generally keep tabs on changes?
 
 If you nodded at some of these questions, you've come to the right place - version control is there to help you!
-[Version control](http://en.wikipedia.org/wiki/Revision_control) (also called revision control) is the management of changes to documents, computer programs, large web sites, and other collections of information.
+[Version control](http://en.wikipedia.org/wiki/Revision_control) (also called revision control) is the management of changes to documents, computer programs, large websites, and other collections of information.
 It is used to easily, efficiently and reproducibly track changes to all kinds of information (like a really advanced "undo" function).
-Specifically, in programming it is (primarily) used to track changes to your source code, but it's generally applicable to most kinds of files on your computer.
+Specifically, in programming, it is (primarily) used to track changes to your source code, but it's generally applicable to most kinds of files on your computer.
 Version control also enables programmers to effectively collaborate in teams, because it offers methods to distribute changes, merge different development versions together, resolve conflicts if two (or more) programmers modified the same file, sync state between computers, etc.
 
 I hope you'll agree by now that it is a very good idea to use some manner of version control when developing your programs.
@@ -53,10 +53,10 @@ Some [notable systems](http://en.wikipedia.org/wiki/List_of_revision_control_sof
 
 ## Introduction to Git
 
-openFrameworks uses Git to version-control the code base, and relies on [Github](www.github.com) as a hosting platform for the code and the issue tracker.
+openFrameworks uses Git to version-control the code base and relies on [Github](www.github.com) as a hosting platform for the code and the issue tracker.
 In this section, I'll give you an introduction on how to use version control with your openFrameworks project, and introduce the relevant concepts and commands as they are encountered.
 
-Note that this chapter is only an introduction, and as such only touches the surface of Git's capabilities, both in the presented commands, and their options.
+Note that this chapter is only an introduction and as such only touches the surface of Git's capabilities, both in the presented commands, and their options.
 Much more detailed information, including in-depth tutorials and a command reference, can be found online. Some links are collected at the end of the chapter, and most commands presented have a link to their online reference.
 
 In what follows, I'll explain the basic concepts of Git.
@@ -71,8 +71,8 @@ This means that the contents of that folder are tracked with Git.
 Most of the files associated with Git are in the `.git` folder in your project root (the leading dot means this folder is by probably hidden from view in your file browser by default).
 
 The basic element for tracking the history of the repository is the **commit**.
-This is basically a snapshot of the repository's state at the time of the commit, including a **commit message** and any parent commit(s).
-Think of it as a checkpoint for saving in a videogame.
+This is basically a snapshot of the repository's state at the time of the commit, including a **commit message** and any parent commits (s).
+Think of it as a checkpoint for saving in a video game.
 It has a unique identifier called the **hash** (or **SHA**).
 This is a checksum calculated from the commit's contents.
 It's impossible to change any part of the commit without the hash changing.
@@ -81,7 +81,7 @@ Thus, a commit hash uniquely defines a commit and the whole history preceding it
 As your work proceeds, you will be adding commits, describing the things you change.
 These commits will form a chain of commits, making up the project history.
 A chain of such commits is called a **branch**, and the default branch is called `master`.
-Branches can also be created when you decide to diverge from a line of development, and try something different (for example a new feature, or a bug fix) while preserving the state of the project.
+Branches can also be created when you decide to diverge from a line of development and try something different (for example a new feature, or a bug fix) while preserving the state of the project.
 This new chain of commits, which *branches off* at a certain commit of the original branch, now forms its own branch.
 
 Branches can be **merged** into another branch.
@@ -116,14 +116,14 @@ Armed with these basic facts, we can dive right in, and start working on our fir
 You can follow along with this section by entering the given commands (in the line starting with `$`) into your terminal.
 You can also use a Git program with a GUI if you want (some will be presented later in the chapter), but you will have to figure out which actions correspond to the respective terminal commands.
 
-Much of what follows will be less tedious to achieve, and presented in a prettier way, if you're using a GUI to interact with Git.
+Much of what follows will be less tedious to achieve, and presented in a prettier way if you're using a GUI to interact with Git.
 Nevertheless, I am presenting this intro with a terminal-based approach for several reasons:
 
 * I think it's actually more instructive to follow some typed commands than pages after pages of (rapidly outdated) screenshots of a GUI app you probably don't even use (as there are quite a lot of them out there).
-* Many GUI programs don't offer the full range of functions that Git provides, so you will probably have to drop down into a terminal sooner or later. At that point it's quite handy to know what your GUI does in the background.
+* Many GUI programs don't offer the full range of functions that Git provides, so you will probably have to drop down into a terminal sooner or later. At that point, it's quite handy to know what your GUI does in the background.
 * Most of the online documentation and advice on Git focus on the command-line interface.
 
-First, we have to set up Git itself for our operation system.
+First, we have to set up Git itself for our operating system.
 This mainly involves [downloading and installing](http://git-scm.com/downloads) and setting the username and email address.
 The instructions [vary slightly depending on the operating system](https://help.github.com/articles/set-up-git#platform-all).
 
@@ -160,17 +160,17 @@ Initialised empty Git repository in /home/bilderbuchi/demoProject/.git/
 
 #### `.gitignore`
 
-One thing we should do right at the beginning is add a special Git file called [`.gitignore`](http://git-scm.com/docs/gitignore) to the root of our repository.
+One thing we should do right at the beginning adds a special Git file called [`.gitignore`](http://git-scm.com/docs/gitignore) to the root of our repository.
 
 It's important that the Git repository contains all files necessary to successfully compile our program, but no unnecessary stuff.
-Generally, this means that files we edit by hand (e.g. source and header files, Readme files, images,...) should be included in the repository, but files which are *generated from* our code (e.g. compiled binaries, pdfs generated from some source file, video files or image sequences created with our program) should stay out.
+Generally, this means that files we edit by hand (e.g. source and header files, Readme files, images,...) should be included in the repository, but files which are *generated from* our code (e.g. compiled binaries, pdf generated from some source file, video files or image sequences created with our program) should stay out.
 Also, user-specific files like IDE files describing the location of windows in our IDE, or backup copies of our files that the OS creates, don't really belong in the repository.
 
 If we take care of this right at the beginning, we can easily make sure that only "proper" files end up in our repo.
 Git handles this file exclusion with the aforementioned `.gitignore` files (there can be several), which contains patterns describing which files are ignored by Git.
 Those ignored files will still exist in our working directory, that means we can still use them, but Git will not track them.
 
-If, later down the line, we see files appearing in our list of changes which should not be there, or if we can't seem to add a file that belongs in the repository, we don't force Git to do what it doesn't want to, rather fine-tune the `.gitignore` pattern to match our expectations.
+If later down the line, we see files appearing in our list of changes which should not be there, or if we can't seem to add a file that belongs in the repository, we don't force Git to do what it doesn't want to, rather fine-tune the `.gitignore` pattern to match our expectations.
 Note that the `.gitignore` pattern does _not_ affect files that have already been committed.
 
 Because it can be daunting to come up with a generally useful `.gitignore` template, it's currently planned that the project generator will optionally add a pre-made `.gitignore` file when we create our project (the template can already be [found at](https://github.com/openframeworks/openFrameworks/blob/master/scripts/templates/gitignore/.gitignore) `scripts/templates/gitignore/.gitignore`).
@@ -207,7 +207,7 @@ $ pr -tW84 -s"|" -i" "1 -3 .gitignore
 ########################   |local.properties   |.csettings
 ```
 
-This might look like magic to you, but let us just continue for now, you can always look up more information on the `.gitignore` syntax later, for example [here](http://git-scm.com/docs/gitignore).
+This might look like magic to you, but let us just continue, for now, you can always look up more information on the `.gitignore` syntax later, for example [here](http://git-scm.com/docs/gitignore).
 
 #### `git status`
 
@@ -297,8 +297,8 @@ To unstage changes we have accidentally staged, we use `git rm --cached <file>` 
 #### `git commit`
 
 Now that we've prepared the staging area/index for our first commit, we can go ahead and do it.
-To this end we will use [`git commit`](http://git-scm.com/docs/git-commit).
-We can supply a required commit message at the same time by using the `-m` flag, otherwise Git will open an editor where we can enter a message (and then save and exit to proceed).
+To this end, we will use [`git commit`](http://git-scm.com/docs/git-commit).
+We can supply a required commit message at the same time by using the `-m` flag, otherwise, Git will open an editor where we can enter a message (and then save and exit to proceed).
 
 ```bash
 $ git commit -m "Add initial set of files."
@@ -320,7 +320,7 @@ The first line of the output shows us the branch we are on (`master`), and that 
 Also, we see the hash (i.e. the unique ID) of the commit we just created (`3ef08e9`) and the commit message.
 The hash is given in a short form, as it's often sufficient to only supply the first seven or so characters of the hash to uniquely identify a commit (Git will complain if that's not the case).
 The next line roughly describes the changes that were committed, how many files were changed and how many insertions and deletions were committed.
-The rest lists the files new to Git, the mysterious `mode 100644` is a unix-style description of the file permissions, `100644` is a regular, non-executable file (`100755` would be an executable file).
+The rest lists the files new to Git, the mysterious `mode 100644` is a Unix-style description of the file permissions, `100644` is a regular, non-executable file (`100755` would be an executable file).
 
 Now, let's check our status to see what's going on in the repository:
 
@@ -347,7 +347,7 @@ We have just made a modification to a file that Git is tracking, so it should pi
 ```bash
 $ git status
 # On branch master
-# Changes not staged for commit:
+# Changes are not staged for commit:
 #   (use "git add <file>..." to update what will be committed)
 #   (use "git checkout -- <file>..." to discard changes in working directory)
 #
@@ -369,8 +369,7 @@ It can be used to compare states between all kinds of areas (check out the examp
 Let's check it out:
 
 ```bash
-$ git diff
-diff --git a/src/ofApp.cpp b/src/ofApp.cpp
+$ git diff --git a/src/ofApp.cpp b/src/ofApp.cpp
 index b182cce..8018cf7 100644
 --- a/src/ofApp.cpp
 +++ b/src/ofApp.cpp
@@ -392,10 +391,10 @@ If we have not just renamed a file, those two will typically be identical.
 
 The next couple of lines further define what exactly is being compared, but that's not interesting to us until we come to the line starting with  `@@`.
 This defines a so-called "hunk", which means it tells us what part of the file is being shown next.
-In the _original_ state (prefixed by `-`), this section starts at line 3, and goes on for 6 lines. In the new state (prefix  `+`), the section starts at line 3, and goes on for 7 lines.
+In the _original_ state (prefixed by `-`), this section starts at line 3 and goes on for 6 lines. In the new state (prefix  `+`), the section starts at line 3 and goes on for 7 lines.
 
 Next, we see the actual changes, with a couple of lines around it for context.
-Unchanged lines start with a space, added lines with a `+`, and removed lines with a `-`.
+Unchanged lines start with space, added lines with a `+`, and removed lines with a `-`.
 A modified line will show up as a removed line, followed by an added line.
 We can see that one line containing a hello world message was added.
 
@@ -428,7 +427,7 @@ If this is not enough, follow this with a blank line(!) and a more detailed summ
 *(If your terminal supports this, omitting the second quotation mark allows you to enter multiple lines. Otherwise, omit the `-m` flag to compose the commit message in the editor.)*
 
 
-Now that that is out of the way, we can commit the change we just added, and check the status afterwards:
+Now that that is out of the way, we can commit the change we just added, and check the status afterward:
 
 ```bash
 $ git commit -m "Add welcome message"
@@ -446,7 +445,7 @@ nothing to commit, working directory clean
 
 [Branches and merging](http://git-scm.com/book/en/Git-Branching) are the bread and butter of Git, so you will be branching and merging a lot.
 Branching and merging often is a workflow encouraged by Git, as those are computationally cheap operations.
-We are getting into some slightly more-advanced stuff, so if you don't quite grasp it right away don't be worried.
+We are getting into some slightly more advanced stuff, so if you don't quite grasp it right away don't be worried.
 
 For example, if we want to create some new feature, or fix a bug in our program, it is prudent to start this work on a branch separated from the main branch.
 This has several advantages:
@@ -458,7 +457,7 @@ This has several advantages:
 #### `git branch` and `git checkout`
 
 To get a list of the branches in a repository, we use [`git branch`](http://git-scm.com/docs/git-branch) without arguments (`*` denotes the current branch).
-Since we only have one branch for now, this is not very exciting:
+Since we only have one branch, for now, this is not very exciting:
 
 ```bash
 $ git branch
@@ -576,7 +575,7 @@ $ git commit -am "Add background switching"
 #### `git log`
 
 To show commit logs, we can use the [`git log`](http://git-scm.com/docs/git-log) command.
-In it's default form, `git log` shows a plain list of commits, printing their hashes, timestamp, author and commit message.
+In its default form, `git log` shows a plain list of commits, printing their hashes, timestamp, author and commit message.
 Its output is heavily customizable, and one nice thing we can do is generate a primitive tree view with this incantation *(which you could save under an [alias](http://stackoverflow.com/questions/2553786/how-do-i-alias-commands-in-git) to make it shorter, but this is out of scope for this tutorial)*:
 
 ```bash
@@ -629,11 +628,11 @@ Next, we shall find out what happens if merging does *not* go so smoothly.
 #### `git reset`
 
 First, purely for demonstration purposes, we use [`git reset`](http://git-scm.com/docs/git-reset) to undo the merge commit we just made.
-This can be a dangerous command, because we can erase commits with it, so we have to be careful.
+This can be a dangerous command because we can erase commits with it, so we have to be careful.
 It's always useful to do a `git status` immediately before `git reset`, just to make sure the repository is in the state we think it is.
 `git reset --hard HEAD~<N>` sets the current branch back by `<N>` commits, discarding the rest of the commits in the process if they are not part of another branch. *They can still be [recovered using `git reflog`](http://gitready.com/advanced/2009/01/17/restoring-lost-commits.html), but that's a bit too complicated to show here. Generally, it's hard to really lose things you have previously committed, so if you accidentally deleted some important history, don't despair immediately. :-)*
 
-In contrast, the `--soft` flag just moves the `HEAD` pointer to another commit, but leaves our working directory and index unchanged. This can be useful e.g. for [undoing commits](http://stackoverflow.com/a/927386/599884).
+In contrast, the `--soft` flag just moves the `HEAD` pointer to another commit but leaves our working directory and index unchanged. This can be useful e.g. for [undoing commits](http://stackoverflow.com/a/927386/599884).
 
 Anyway, let's reset our `master` branch back one commit now:
 
@@ -742,8 +741,8 @@ no changes added to commit (use "git add" and/or "git commit -a")
 
 Obediently, we run `git add src/ofApp.cpp` to stage our conflict-free file and mark the conflict as resolved.
 Now, we can finish the merge.
-If we omit the `-m <message>` part, `git commit` will open an editor (which one depends on your setup) with a proposed commit message which mentions the files for which conflicts had occured.
-You can either try that way, or just create a self-made commit message directly, as usual:
+If we omit the `-m <message>` part, `git commit` will open an editor (which one depends on your setup) with a proposed commit message which mentions the files for which conflicts had occurred.
+You can either try that way or just create a self-made commit message directly, as usual:
 
 ```bash
 $ git commit -m "Merge after resolving conflict"
@@ -773,9 +772,9 @@ This concludes the walk-through portion of this chapter, I will continue with mo
 
 #### `git tag`
 
-During your work, you will encounter special commits, which mark significant stations in your project's history, for example released versions, or the state of your code when it was installed somewhere, or handed off to your customer.
+During your work, you will encounter special commits, which mark significant stations in your project's history, for example, released versions, or the state of your code when it was installed somewhere, or handed off to your customer.
 You can do this easily with [Git tags](http://git-scm.com/docs/git-tag).
-Use `git tag somename` to put a tag on the current commit.
+Use `git tag some_name` to put a tag on the current commit.
 This tag now permanently points to that commit, and you can (mostly) use it in Git commands just like commit hashes and branch names.
 For example, `git checkout v1.2` will check out the repository's state (if the tag exists) just like it was when you published version 1.2.
 
@@ -835,7 +834,7 @@ Note that Git tags are only pushed to a remote if you supply the `--tags` flag.
 
 #### Pull requests
 
-A central feature of the Gitub collaboration model are [**pull requests**](https://help.github.com/articles/using-pull-requests).
+A central feature of the GitHub collaboration model is [**pull requests**](https://help.github.com/articles/using-pull-requests).
 Pull requests (or "PRs" for short) are ways to get your personal changes integrated into a repository you forked (it's important that you forked the repository into your own account instead of getting a copy by other means).
 
 Let's walk through this with an example: Say you found a bug in [openFrameworks](https://github.com/openframeworks/openFrameworks), and want to fix it.
@@ -887,14 +886,14 @@ Probably the most important thing left now is to point out where you can learn m
     - [GitRef](http://gitref.org/) is an awesome short primer on Git fundamentals.
     - The [Git home page]([git-scm.com) is probably the most unified but comprehensive online resource. Among others, it hosts:
     - The free [ProGit book](http://git-scm.com/book), readable online. Awesome to get in-depth information about all things Git.
-    - The [Git reference](http://git-scm.com/docs), which has the documentation about all Git commands, their options and usage.
+    - The [Git reference](http://git-scm.com/docs), which has the documentation about all Git commands, their options, and usage.
     - [Try Git](http://try.github.io/levels/1/challenges/1) is an excellent interactive tutorial.
     - Github offers a [Hello World](https://guides.github.com/activities/hello-world/) introduction to Git and Github.
     - There are some websites available which visualize/animate the workings of Git, see [here](http://www.wei-wang.com/ExplainGitWithD3/), [here](http://pcottle.github.io/learnGitBranching/) or [here](http://ndpsoftware.com/git-cheatsheet.html).
     - Gitignore patterns for a lot of different situations can be found e.g. [here](http://github.com/github/gitignore) or at [gitignore.io](www.gitignore.io).
 * Get help:
     - [Google](https://www.google.com/) the errors you get!
-    - [Stack Overflow](http://stackoverflow.com/) is an awesome resources to find answers to problems you encounter (probably someone had the same problem before), and to ask questions yourself! There's even [a separate tag](http://stackoverflow.com/questions/tagged/git) for Git.
+    - [Stack Overflow](http://stackoverflow.com/) is an awesome resource to find answers to problems you encounter (probably someone had the same problem before), and to ask questions yourself! There's even [a separate tag](http://stackoverflow.com/questions/tagged/git) for Git.
     - If you're not successful with Stackoverflow, the openFrameworks forum has a separate [category called "revision control"](http://forum.openframeworks.cc/category/revision-control) for questions around this topic.
 
-Finally, I hope that this chapter made you realize how useful it can be to integrate version control into your creative coding workflow, and that you will one day soon look fondly back on the days of zip files called `Awesome_project_really_final.zip`.
+Finally, I hope that this chapter made you realize how useful it can be to integrate version control into your creative coding workflow and that you will one day soon look fondly back on the days of zip files called `Awesome_project_really_final.zip`.
