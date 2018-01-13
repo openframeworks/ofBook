@@ -164,7 +164,7 @@ Initialised empty Git repository in /home/bilderbuchi/demoProject/.git/
 One thing we should do right at the beginning adds a special Git file called [`.gitignore`](http://git-scm.com/docs/gitignore) to the root of our repository.
 
 It's important that the Git repository contains all files necessary to successfully compile our program, but no unnecessary stuff.
-Generally, this means that files we edit by hand (e.g. source and header files, Readme files, images,...) should be included in the repository, but files which are *generated from* our code (e.g. compiled binaries, pdf generated from some source file, video files or image sequences created with our program) should stay out.
+Generally, this means that files we edit by hand (e.g. source and header files, Readme files, images,...) should be included in the repository, but files which are *generated from* our code (e.g. compiled binaries, pdfs generated from some source file, video files or image sequences created with our program) should stay out.
 Also, user-specific files like IDE files describing the location of windows in our IDE, or backup copies of our files that the OS creates, don't really belong in the repository.
 
 If we take care of this right at the beginning, we can easily make sure that only "proper" files end up in our repo.
