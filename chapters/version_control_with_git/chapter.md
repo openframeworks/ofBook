@@ -4,6 +4,7 @@
 
 In this chapter, you will learn about version control and why you should use it.
 You will get a short introduction to Git, the version control system of choice for openFrameworks.
+
 The major concepts and keywords are explained, enabling you to easily dig deeper into the subject using available online resources.
 A number of tools for working with Git are presented.
 You will learn about Github, a web service for hosting Git repositories and one of the major platforms for "social coding".
@@ -834,7 +835,7 @@ Note that Git tags are only pushed to a remote if you supply the `--tags` flag.
 
 #### Pull requests
 
-A central feature of the GitHub collaboration model is [**pull requests**](https://help.github.com/articles/using-pull-requests).
+A central feature of the GitHub collaboration model are [**pull requests**](https://help.github.com/articles/using-pull-requests).
 Pull requests (or "PRs" for short) are ways to get your personal changes integrated into a repository you forked (it's important that you forked the repository into your own account instead of getting a copy by other means).
 
 Let's walk through this with an example: Say you found a bug in [openFrameworks](https://github.com/openframeworks/openFrameworks), and want to fix it.
