@@ -23,7 +23,7 @@ class ofApp : public ofBaseApp {
 };
 
 void ofApp::setup() {
-  soundPlayer.loadSound("song.mp3");
+  soundPlayer.load("song.mp3");
   soundPlayer.play();
 }
 ```
