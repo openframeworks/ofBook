@@ -62,7 +62,7 @@ auto firstThreadIterator = this->myVectorOfThreads.begin();
 
 This makes the code more readable, but also you could take advantage of `auto` in other ways.
 
-For example, when you reuse or copy variables, you can use auto along the way, meaning that you only have to define which type you want to use at the beginning and not everywhere else in your code. For example in the above h file, you might change the `vector` to a `list`, or change `shared_ptr<ofThread>` to `ofThread *`. These changes would perpetuate automatically to wherever an `auto` is being used int the code. Nifty huh?
+For example, when you reuse or copy variables, you can use auto along the way, meaning that you only have to define which type you want to use at the beginning and not everywhere else in your code. For example in the above h file, you might change the `vector` to a `list`, or change `shared_ptr<ofThread>` to `ofThread *`. These changes would perpetuate automatically to wherever an `auto` is being used in the code. Nifty huh?
 
 ### Watch out for this
 
