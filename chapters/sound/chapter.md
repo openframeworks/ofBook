@@ -10,7 +10,7 @@ Here's a quick overview of the classes you can use to work with sound in openFra
 
 `ofSoundStream` gives you access to the computer's sound hardware, allowing you to generate your own sound as well as react to sound coming into your computer from something like a microphone or line-in jack.
 
-`ofSoundBuffer` is used to store a sequence of audio samples and perform audio-related things on said samples (like resampling). This is new in openFrameworks 0.9.0.
+`ofSoundBuffer` is used to store a sequence of audio samples and perform audio-related things on said samples (like resampling).
 
 ## Getting Started With Sound Files
 
@@ -23,7 +23,7 @@ class ofApp : public ofBaseApp {
 };
 
 void ofApp::setup() {
-  soundPlayer.loadSound("song.mp3");
+  soundPlayer.load("song.mp3");
   soundPlayer.play();
 }
 ```

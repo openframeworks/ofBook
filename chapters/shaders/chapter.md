@@ -647,7 +647,7 @@ Calling ofFbo::begin() sets the FBO as the render buffer that everything will be
 
     shader.begin();
     shader.setUniformTexture("redTex", camera.getTextureReference(), 1);
-    shader.setUniformTexture("greenTex", greenOF, 2);
+    shader.setUniformTexture("greenTex", image, 2);
     shader.setUniformTexture("blueTex", movie.getTextureReference(), 3);
     shader.setUniformTexture("imageMask", imageMask.getTextureReference(), 4);
 
@@ -834,7 +834,7 @@ void ofApp::update(){
     float noiseScale = ofMap(mouseX, 0, ofGetWidth(), 0, 0.1);
     float noiseVel = ofGetElapsedTimef();
 
-    unsigned char * pixels = img.getPixels();
+    ofPixels & pixels = img.getPixels();
     int w = img.getWidth();
     int h = img.getHeight();
     for(int y=0; y<h; y++) {

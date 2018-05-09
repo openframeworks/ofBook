@@ -1,0 +1,2 @@
+beautifulsoup4~=4.0
+libsass~=0.12

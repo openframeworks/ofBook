@@ -1,4 +1,4 @@
-#Foreword
+# Foreword
 
 *by [Zach Lieberman](http://thesystemis.com)*
 
@@ -24,11 +24,11 @@ In recent years, we've tried to help grow and expand the community -- folks like
 More than anything, we've tried as hard as we can to create a friendly atmosphere around programming, which can be an unfriendly activity and in some ways isolating.  We preach the idea of art-making as a laboratory, as R&D (Research & Development) for humanity, and oF is one attempt to make a large lab where we can grow and share experiments together.   There's been a big movement for DIY  (Do it Yourself) culture these days, things like Make Magazine and Instructables promoting a culture of sharing through making.  We are big fans of DIWO (Do it With Others) and try to do that as much as we can online and offline.  Somehow, luckily, we've attracted some of the most amazing, helpful, warm-hearted, lovely people to come be a part of this, and if you're not already, we'd like to say **welcome**.
 
 
-## about this book
+## About This Book
 
 This book, much in the spirit of openFrameworks, is a community driven affair and it's **very much a work in progress**.   It was a suggestion on the openFrameworks developers mailing list which kicked this off and for a the past months we've been hacking away on it.
 
-A couple of notes, 
+A couple of notes,
 
 * Feedback is very much appreciated and we'd like to know what's missing, or what you'd like to have in here.  Likewise, if you find something helpful, we'd love to hear it, too!  Our github repo is active and we take issues and pull requests.
 * Please note that there are likely gaps here.  We've tried to roughly lay out chapters in order of skill level, but since it's a collectively written book, it can feel a bit disorienting, with some chapters being on the long side, while some are short.  Think of it not as a book you read front to back, but more like a collection of short tutorials from the community.
@@ -38,7 +38,7 @@ A couple of notes,
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>
 
 
-## credits
+## Credits
 
 Countless thanks to Rachel Uwa for organizing this project, Tega Brain for helping edit it, Ishac Bertran and Andy Clymer for directing the design, and Arturo Castro, Christoph Buchner and Michael Hadley for developing the codebase for generating the book.   In addition, the following authors and editors have contributed to this book:  Rui Pereira, Arturo Castro, Brannon Dorsey, Zach Lieberman, Kayla Lewis, Josh Nimoy, Phoenix Perry, Jane Friedhoff, Caitlin Morris, Pierre Proske, Golan Levin, Blair Neal, Michael Hadley, Abraham Avnisan, Christopher Baker, Lukasz Karluk, Omer Shapira, Mimi Son & Elliot Woods (Kimchi and Chips), Eva Schindling, Pierre Thirion, Joel Gethin Lewis, Roy Macdonald, Adam Carlucci, Christoph Buchner, tpltnt as well as countless others who have given feedback, submitted pull requests, offered advice, etc.
 

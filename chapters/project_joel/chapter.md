@@ -1,4 +1,4 @@
-#Anthropocene
+# Anthropocene
 
 *by [Joel Gethin Lewis](http://www.hellicarandlewis.com/)*
 
@@ -174,7 +174,7 @@ void setDelayMap(unsigned char* map, ofImageType type); //from ofxSlitScan.h
 ```
 So connecting them was simple:
 ```cpp
-slitScan.setDelayMap(depthPixels); //from testApp::update() in testApp.cpp
+slitScan.setDelayMap(depthPixels); //from ofApp::update() in ofApp.cpp
 ```
 This kind of separation demonstrates encapsulation or the information hiding qualities of software - the utility of not having to know the specifics of the implementation of the functionality described, merely the inputs required and outputs produced.
 
@@ -209,7 +209,7 @@ I knew that I wanted to augment ofxTimelines interface with controls for the set
 
 During development and testing, I realised a furry look could serve well for making people feel like they were polar bears. I had seen "spikey" outline looks before - all achieved by drawing normals along the circumference of a blob. I'd also experimented with optical flow in previous projects and started thinking about how the two could be combined - I looked for optical flow addons on [ofxaddons.com](http://ofxaddons.com) and discovered a flurry of recent activity since I'd last checked. Development tends to flow like this - periods of fallow followed by simultaneous parallel development from several quarters.
 
-* [ofxCvOpticalFlowLK by James George](https://github.com/Flightphase/ofxCvOpticalFlowLK) 
+* [ofxCvOpticalFlowLK by James George](https://github.com/Flightphase/ofxCvOpticalFlowLK)
 * [ofxOpticalFlowFarneback by Tim Scaffidi](https://github.com/timscaffidi/ofxOpticalFlowFarneback)
 * [ofxOpticalFlowLK by Lukasz Karluk](https://github.com/julapy/ofxOpticalFlowLK)
 
@@ -229,18 +229,18 @@ I knew that I would have to switch between different visual looks as the film wa
 
 ```cpp
 enum GreenpeaceModes {BLANK, GUI, VIDEO, VIDEOCIRCLES, KINECTPOINTCLOUD, SLITSCANBASIC, SLITSCANKINECTDEPTHGREY, SPARKLE, VERTICALMIRROR, HORIZONTALMIRROR, KALEIDOSCOPE, COLOURFUR, DEPTH, SHATTER, SELFSLITSCAN, SPIKYBLOBSLITSCAN, MIRRORKALEIDOSCOPE, PARTICLES, WHITEFUR, PAINT, GreenpeaceModes_MAX = PAINT}; //best to use ALL CAPS for enumerated types and constants so you can tell them from ClassNames and variableNames. Use camelCase for variableNames - http://en.wikipedia.org/wiki/CamelCase
- 
+
 /* http://stackoverflow.com/questions/2102582/how-can-i-count-the-items-in-an-enum
  For C++, there are various type-safe enum techniques available, and some of those (such as the proposed-but-never-submitted Boost.Enum) include support for getting the size of a enum.
- 
+
  The simplest approach, which works in C as well as C++, is to adopt a convention of declaring a ...MAX value for each of your enum types:
- 
+
  enum Folders { FA, FB, FC, Folders_MAX = FC };
  ContainerClass *m_containers[Folders_MAX + 1];
  ....
  m_containers[FA] = ...; // etc.
  Edit: Regarding { FA, FB, FC, Folders_MAX = FC} versus {FA, FB, FC, Folders_MAX]: I prefer setting the ...MAX value to the last legal value of the enum for a few reasons:
- 
+
  The constant's name is technically more accurate (since Folders_MAX gives the maximum possible enum value).
  Personally, I feel like Folders_MAX = FC stands out from other entries out a bit more (making it a bit harder to accidentally add enum values without updating the max value, a problem Martin York referenced).
  GCC includes helpful warnings like "enumeration value not included in switch" for code such as the following. Letting Folders_MAX == FC + 1 breaks those warnings, since you end up with a bunch of ...MAX enumeration values that should never be included in switch.
@@ -252,7 +252,7 @@ enum GreenpeaceModes {BLANK, GUI, VIDEO, VIDEOCIRCLES, KINECTPOINTCLOUD, SLITSCA
  }
 */
 ```
-I used the Stack Overflow tip in the `void testApp::keyPressed (int key)` method.
+I used the Stack Overflow tip in the `void ofApp::keyPressed (int key)` method.
 
 ```cpp
 case 'a': //used to be key left, but it interferes with ofxtimeline
@@ -344,7 +344,7 @@ Pete and I discussed how we could transform the installation into one that broad
 
 With the advent of a [Raspberry Pi](http://openframeworks.cc/setup/raspberrypi/) port of openFrameworks, a port of the project to the platform would allow for the deployment of the project to events that have even smaller budgets than this iteration. This would also entail a port of the Kinect code to 2D computer vision, but I'm confident this would be a spur for other interactions and visual effects.
 
-###Conclusion
+### Conclusion
 
 All in all, for a low budget project, using openFrameworks was the differentiator that enabled me to collaborate with the rest of the team at Hellicar&Lewis to make the installation come to life. The key factors were being able to draw upon so many external addons, previous projects and the community as a whole.
 

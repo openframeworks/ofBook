@@ -10,5 +10,5 @@ class ofApp : public ofBaseApp{
 
 		float position;
 		ofImage colorScheme;
-		ofColor getColorForPixel(int x, int y);
+		ofColor getColorForPixel(int x, int y, const ofImage& img);
 };
