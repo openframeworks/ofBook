@@ -750,10 +750,8 @@ void ofApp::setup(){
 	lincolnOfImage.setImageType(OF_IMAGE_GRAYSCALE);
 	
 	// Set the lincolnCvImage from the pixels of this ofImage.
-	int imgW = lincolnOfImage.getWidth();
-	int imgH = lincolnOfImage.getHeight();
-	unsigned char *lincolnPixels = lincolnOfImage.getPixels();
-	lincolnCvImageSrc.setFromPixels( lincolnPixels, imgW, imgH);
+	ofPixels & lincolnPixels = lincolnOfImage.getPixels();
+	lincolnCvImageSrc.setFromPixels( lincolnPixels);
 	
 	// Make a copy of the source image into the destination.
 	lincolnCvImageDst = lincolnCvImageSrc;
@@ -840,10 +838,8 @@ void ofApp::setup(){
 	cellsOfImage.setImageType(OF_IMAGE_GRAYSCALE);
 	
 	// Set the myCvImageSrc from the pixels of this ofImage.
-	int imgW = cellsOfImage.getWidth();
-	int imgH = cellsOfImage.getHeight();
-	unsigned char *cellsPixels = cellsOfImage.getPixels();
-	myCvImageSrc.setFromPixels (cellsPixels, imgW, imgH);
+	ofPixels & cellsPixels = cellsOfImage.getPixels();
+	myCvImageSrc.setFromPixels (cellsPixels);
 }
 
 //---------------------
