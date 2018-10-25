@@ -68,7 +68,7 @@ Below is our complete *ofApp.cpp* file. The Lincoln image is *loaded* from our h
 
 void ofApp::setup(){
 	// We load an image from our "data" folder into the ofImage:
-	myImage.loadImage("lincoln.png");
+	myImage.load("lincoln.png");
 	myImage.setImageType(OF_IMAGE_GRAYSCALE);
 }
 
@@ -108,7 +108,7 @@ In openFrameworks, raster images can come from a wide variety of sources, includ
 Incidentally, oF makes it easy to **load images directly from the Internet**, by using a URL as the filename argument, as in 
 
 ```
-myImage.loadImage("http://en.wikipedia.org/wiki/File:Example.jpg");
+myImage.load("http://en.wikipedia.org/wiki/File:Example.jpg");
 ```
 
 Keep in mind that doing this will load the remotely-stored image *synchronously*, meaning your program will "block" (or freeze) while it waits for all of the data to download from the web. For an improved user experience, you could instead load Internet images *asynchronously* (in a background thread), using the response provided by `ofLoadURLAsync()`; a  sample implementation of this can be found in the openFrameworks *imageLoaderWebExample* graphics example (and check out the *threadedImageLoaderExample* as well). Now that you can load images stored on the Internet, you can fetch images *computationally* using fun APIs (like those of [Temboo](https://temboo.com/library/), [Instagram](http://instagram.com/developer/) or [Flickr](https://www.flickr.com/services/api/)), or from dynamic online sources such as live traffic cameras.
@@ -349,7 +349,7 @@ Here's the .cpp file:
 
 //---------------------
 void ofApp::setup(){
-	laserTagImage.loadImage("images/laser_tag.jpg");
+	laserTagImage.load("images/laser_tag.jpg");
 }
 
 //---------------------
@@ -542,7 +542,7 @@ The simplest method to convert a color image to grayscale is to modify its data 
 
 ```cpp
 ofImage myImage; 
-myImage.loadImage ("colorful.jpg"); // Load a colorful image.
+myImage.load("colorful.jpg"); // Load a colorful image.
 myImage.setImageType (OF_IMAGE_GRAYSCALE); // Poof! Now it's grayscale. 
 ```
 The ofxOpenCV addon library provides several methods for converting color imagery to grayscale. For example, the `convertToGrayscalePlanarImage()` and `setFromColorImage()` functions create or set an `ofxCvGrayscaleImage` from color image data stored in an `ofxCvColorImage`. But the easiest way is simply to assign the grayscale version from the color one; the addon takes care of the conversion for you:
@@ -574,7 +574,7 @@ Here's a code fragment for converting from color to grayscale, written "from scr
 // Load a color image, fetch its dimensions, 
 // and get a pointer to its pixel data. 
 ofImage myImage; 
-myImage.loadImage ("colorful.jpg");
+myImage.load ("colorful.jpg");
 int imageWidth = myImage.getWidth();
 int imageHeight = myImage.getHeight();
 unsigned char* rgbPixelData = myImage.getPixels(); 
@@ -647,7 +647,7 @@ void ofApp::setup(){
 	
 	// Load the image and ensure we're working in monochrome.
 	// This is our source ("src") image. 
-	lincolnOfImageSrc.loadImage("images/lincoln_120x160.png");
+	lincolnOfImageSrc.load("images/lincoln_120x160.png");
 	lincolnOfImageSrc.setImageType(OF_IMAGE_GRAYSCALE);
 	
 	// Construct and allocate a new image with the same dimensions. 
@@ -746,14 +746,12 @@ void ofApp::setup(){
 	// ofxOpenCV doesn't have image loading.
 	// So first, load the .png file into a temporary ofImage.
 	ofImage lincolnOfImage;
-	lincolnOfImage.loadImage("lincoln_120x160.png");
+	lincolnOfImage.load("lincoln_120x160.png");
 	lincolnOfImage.setImageType(OF_IMAGE_GRAYSCALE);
 	
 	// Set the lincolnCvImage from the pixels of this ofImage.
-	int imgW = lincolnOfImage.getWidth();
-	int imgH = lincolnOfImage.getHeight();
-	unsigned char *lincolnPixels = lincolnOfImage.getPixels();
-	lincolnCvImageSrc.setFromPixels( lincolnPixels, imgW, imgH);
+	ofPixels & lincolnPixels = lincolnOfImage.getPixels();
+	lincolnCvImageSrc.setFromPixels( lincolnPixels);
 	
 	// Make a copy of the source image into the destination.
 	lincolnCvImageDst = lincolnCvImageSrc;
@@ -836,14 +834,12 @@ void ofApp::setup(){
 	
 	// Load the cells image
 	ofImage cellsOfImage;
-	cellsOfImage.loadImage("cells.jpg");
+	cellsOfImage.load("cells.jpg");
 	cellsOfImage.setImageType(OF_IMAGE_GRAYSCALE);
 	
 	// Set the myCvImageSrc from the pixels of this ofImage.
-	int imgW = cellsOfImage.getWidth();
-	int imgH = cellsOfImage.getHeight();
-	unsigned char *cellsPixels = cellsOfImage.getPixels();
-	myCvImageSrc.setFromPixels (cellsPixels, imgW, imgH);
+	ofPixels & cellsPixels = cellsOfImage.getPixels();
+	myCvImageSrc.setFromPixels (cellsPixels);
 }
 
 //---------------------
