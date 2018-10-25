@@ -36,10 +36,10 @@ This says: I will be storing images with a key that is a string. In my cpp file,
 void ofApp::setup(){
     // make 2 images to store
     ofImage pImage;
-    pImage.loadImage("portland.jpg");
+    pImage.load("portland.jpg");
     
     ofImage tImage;
-    tImage.loadImage("tokyo.jpg");
+    tImage.load("tokyo.jpg");
     
     // now store them with nice name
     images["Portland"] = pImage;
@@ -71,13 +71,13 @@ Considering this, adding elements in a map means adding pairs into it. There
 are different ways to do this in c++. Let's instantiate 3 new cities
 ```cpp
 ofImage bImage;
-bImage.loadImage("Berlin.jpg");
+bImage.load("Berlin.jpg");
 
 ofImage lImage;
-lImage.loadImage("London.jpg");
+lImage.load("London.jpg");
 
 ofImage pImage;
-pImage.loadImage("Paris.jpg");
+pImage.load("Paris.jpg");
 ```
 How do we add them into the map? One of the most common is to use the `insert` method combined with `make_pairs`.
 ```cpp
