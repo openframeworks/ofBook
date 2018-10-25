@@ -1,11 +1,11 @@
 ofBook
 ======
 
-this is a collaboratively written openFrameworks book.  
+This is a collaboratively written openFrameworks book.  
 
 Read the latest version [here](http://openframeworks.cc/ofBook/chapters/foreword.html)!
 
-for other language, please read below.
+For other language, please read below.
 - Korean(한국어) : [README.ko.md](README.ko.md)
 
 **please note that this is still work-in-progress**
@@ -17,7 +17,7 @@ Dependencies
 - [LaTeX](http://www.latex-project.org/)
 - [pandoc](http://johnmacfarlane.net/pandoc/)
 - [python 2.7+](https://www.python.org/)
-- [beauitful soup 4](http://www.crummy.com/software/BeautifulSoup/)
+- [beautiful soup 4](https://www.crummy.com/software/BeautifulSoup/)
 - [sass](http://sass-lang.com/)
 - [libsass](https://github.com/dahlia/libsass-python)
 
