@@ -61,8 +61,7 @@ Before we go get into trouble, there's something that I want to explain that mig
 int main( ){
     ofGLFWWindowSettings settings;
     settings.setGLVersion(3, 2); //we define the OpenGL version we want to use
-    settings.width = 1024;
-    settings.height = 768;
+    settings.setSize(1024, 768);
     ofCreateWindow(settings);
     // this kicks off the running of my app
     ofRunApp(new ofApp());
@@ -300,7 +299,7 @@ void main()
     // the sine wave travels along the x-axis (across the screen),
     // so we use the x coordinate of each vertex for the calculation,
     // but we displace all the vertex along the y axis (up the screen)/
-    float displacementHeight = 100;
+    float displacementHeight = 100.0;
     float displacementY = sin(time + (position.x / 100.0)) * displacementHeight;
 
     vec4 modifiedPosition = modelViewProjectionMatrix * position;
