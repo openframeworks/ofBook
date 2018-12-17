@@ -26,14 +26,14 @@ Every class has two files: a header file, also known as declarations file with t
 A very easy way of knowing what these two files do is to think of the header file (.h) as a recipe, a list of the main ingredients of your cookie. The implementation file (.cpp) is what we're going to do with them, how you mix and work them to be the perfect cookie!
 So let's see how it works:
 
-First of all, let's create the two class files: 'Ball.h' and 'Ball.cpp', and place these in the project's 'src' folder.
+First of all, let's create the two class files: `Ball.h` and `Ball.cpp` and place these in the project's `src` folder.
 
-If you're using Xcode as your IDE (it stands for Integrated Development Environment), select the src folder and left Click (or CTRL + click), on the pop-up menu select 'New File' and you'll be taken to a new window menu, choose the appropriate platform you're developing for (OS X or iOS) and select C++ class and finally choose a name (we used 'Ball'). You'll automatically see the two files in your 'src' folder: 'Ball.h' and 'Ball.cpp'.
+If you're using Xcode as your IDE (it stands for Integrated Development Environment), select the src folder and left Click (or CTRL + click), on the pop-up menu select 'New File' and you'll be taken to a new window menu, choose the appropriate platform you're developing for (OS X or iOS) and select C++ class and finally choose a name (we used 'Ball'). You'll automatically see the two files in your `src` folder: `Ball.h` and `Ball.cpp`.
 
 If you are using other IDEs it should be quite similar.
 
-Declare a class in the header file (.h). In this case, the file name should be Ball.h.
-Follow the code below and type into your own Ball.h file, please note the comments I've included to guide you along.
+Declare a class in the header file (.h). In this case, the file name should be `Ball.h`.
+Follow the code below and type into your own `Ball.h` file, please note the comments I've included to guide you along.
 
 ```cpp
 #ifndef _BALL // if this class hasn't been defined, the program can define it
@@ -68,7 +68,7 @@ The 'if statement' (#ifndef) is a way to prevent the repetition of header files 
 
 We will now create a class for a ball object. This ball will have color, speed and direction properties: it will move across the screen and bounce against the wall. Some of these properties we will create with randomized attributes but we'll be careful to create the right logic for its motion behaviors.
 
-Here's how you can write the class Ball.cpp file, the implementation file:
+Here's how you can write the class `Ball.cpp` file, the implementation file:
 
 ```cpp
 #include "Ball.h"
@@ -277,7 +277,7 @@ void Ball::setup(float _x, float _y, int _dim){
 }
 ```
 
-Your Ball.cpp file should look like this by now:
+Your `Ball.cpp` file should look like this by now:
 
 ```cpp
 #include "Ball.h"
