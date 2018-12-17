@@ -26,10 +26,12 @@ Every class has two files: a header file, also known as declarations file with t
 A very easy way of knowing what these two files do is to think of the header file (.h) as a recipe, a list of the main ingredients of your cookie. The implementation file (.cpp) is what we're going to do with them, how you mix and work them to be the perfect cookie!
 So let's see how it works:
 
-First of all, let's create the two class files:
+First of all, let's create the two class files: 'Ball.h' and 'Ball.cpp', and place these in the project's 'src' folder.
+
 If you're using Xcode as your IDE (it stands for Integrated Development Environment), select the src folder and left Click (or CTRL + click), on the pop-up menu select 'New File' and you'll be taken to a new window menu, choose the appropriate platform you're developing for (OS X or iOS) and select C++ class and finally choose a name (we used 'Ball'). You'll automatically see the two files in your 'src' folder: 'Ball.h' and 'Ball.cpp'.
-If you are using Code::Blocks create a new project from empty one given inside the "examples" directory (or check out the ProjectGenerator). Copy the folder "empty" and rename it to "OOP". Change into this new directory, copy the "emptyExample" and rename it to "ball1". Inside the "ball1" directory rename "emptyExample.workspace" to "ball1.workspace" and "emptyExample.cbp" to "ball1.cbp". Now you have a dedicated directory and a dedicated project to play around with. Open "ball1.cbp" with Code:: Blocks, right-click on the "emptyExample" workspace, select "Properties" (last entry in the list) and change the title of the project. The "src" directory in your project contains all the files you need to edit in this chapter. Add two new files inside the 'src' directory by either using 'File'->'New'->'Empty File' or pressing Tab+Ctrl+N. One file should be named 'Ball.h' and the other 'Ball.cpp'.
-Now let's edit your class header (.h) file. Feel free to delete all its contents and let's start from scratch:
+
+If you are using other IDEs it should be quite similar.
+
 Declare a class in the header file (.h). In this case, the file name should be Ball.h.
 Follow the code below and type into your own Ball.h file, please note the comments I've included to guide you along.
 
