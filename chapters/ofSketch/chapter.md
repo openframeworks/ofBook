@@ -20,7 +20,7 @@ One of the main goals in developing ofSketch is to decrease the barriers to entr
 
 ### What is ofSketch NOT Good For?
 
-- Replacing a professional IDE like Xcode, Code::Blocks, Visual Studio, etc...
+- Replacing a professional IDE like Xcode, QtCreator, Visual Studio, etc...
 - Building sizable projects or applications
 
 ### How does ofSketch work?
