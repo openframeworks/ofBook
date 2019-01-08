@@ -25,7 +25,9 @@ This chapter will be divided into _'numbers of D's'_ : we'll start from one dime
 Let's start our journey by looking at the number line. It's a stretch of numbers going to infinity in both the positive and negative direction. Suppose we were ants or microbes, so that we could stand on exactly one value here, and travel to any other value by walking in that direction.
 That's pretty much the definition of a _dimension_. It's an infinite collection of values that are all accessible, and any value of it can be described with one number. As you're about to see, these properties are going to enable quite a lot of options.
 
-**[GRAPHICS: The Number Line. Reference added]**
+![Linear interpolation](images/lerp.png)
+
+(image from [FreeCodeCamp](https://medium.freecodecamp.org/understanding-linear-interpolation-in-ui-animations-74701eb9957c))
 
 <!-- ### Interpolation -->
 ### Linear Interpolation: The `ofLerp`
@@ -265,7 +267,7 @@ az
 That falls into the category of _per-vector_ operations, because the entire vector undergoes the same operation. Note that this operation is just a scaling.  
 
 ```cpp
-ofVec3f a(1,2,3);
+glm::vec3 a(1,2,3);
 cout << ofToString( a * 2 ) << endl; 
 //prints (2,4,6)
 ```
@@ -295,18 +297,18 @@ cout << ofToString( a + b ) << endl;
 //prints (14,25,36)
 ```
 
-#### Example: `ofVec2f` as position
+#### Example: `glm::vec2` as position
 
 Vector addition serves many simple roles. In this example, we're trying to track our friend Lars as he makes his way home from a pub. Trouble is, Lars is a little drunk. He knows he lives south of the pub, so he ventures south; But since he can't walk straight, he might end up somewhere else.
 
 ```cpp
 /* in testApp.h: */
-ofVec2f larsPosition;
-void larsStep(ofVec2f direction);
+glm::vec2 larsPosition;
+void larsStep(glm::vec2 direction);
 
 /* in testApp.cpp: */
 void testApp::setup(){
-	larsPosition = ofVec2f( ofGetWidth() / 2., ofGetHeight() / 3. );
+	larsPosition = glm::vec2( ofGetWidth() / 2., ofGetHeight() / 3. );
 }
 
 void testApp::update(){
@@ -314,51 +316,26 @@ void testApp::update(){
 		//As Lars attempts to take one step south,
 		//He also deviates a little to the right, 
 		//or a little to the left. 
-		ofVec2f nextStep(ofRandom(-1.,1.),1.); 
+		glm::vec2 nextStep(ofRandom(-1.,1.),1.); 
 		larsStep(nextStep);
 	}
 
-void ofApp::larsStep(ofVec2f direction){ 
-	position += direction; 
+void ofApp::larsStep(glm::vec2 direction){
+	position += direction;
 }
 
-void testApp::draw(){ 
+void testApp::draw(){
 	//Draw Lars any way you want. No one's judging you.
 }
 ```
 
-#### Note: C++ Operator Overloading
-
-Just like we had to define the meaning of a product of a scalar quantity and a vector, programming languages - working with abstract representations of mathematical objects, also need to have definitions of such an operation built in. C++ takes special care of these cases, using a feature called _Operator Overloading_: defining the `*` operation to accept a scalar quantity and a vector as left-hand side and right-hand side arguments:
-
-```cpp
-ofVec3f operator*( float f, const ofVec3f& vec ) {
-    return ofVec3f( f*vec.x, f*vec.y, f*vec.z );
-}
-```
-
-The same is defined, for example, between two instances of `ofVec3f`:
-
-```cpp
-ofVec3f ofVec3f::operator+( const ofVec3f& pnt ) const {
-	return ofVec3f( x+pnt.x, y+pnt.y, z+pnt.z );
-}
-```
-
-naturally representing the idea of vector addition.
-
-The basic arithmetic operations, `+`, `-`, `*`, `/`,`+=`, `-=`, `*=`, `/=`, exist for both combinations of `ofVec2f`, `ofVec3f` and `ofVec4f`s and between any vector object and a scalar quantity. Whenever an operation is postfixed with `=`, it modifies the left-hand side with the operation, _and only then_. The operations `+`,`-`,`*`,`/` will _always_ return a copy.
-
-Some excellent examples of operator overloading done right exist in the source files for the `ofVec` types. It's encouraged to check them out.
-
-**Warning: Overloading operators will make you go blind.** Programmers use operators without checking what they do, so bugs resulting from bad overloads take a long time to catch. If the expression `a + b` returns a reference instead of a copy, a `null` instead of a value, or modifies one of the input values – someone will use it one day, and that someone will cry for many days. Unless the operator can do one arithmetic thing and that alone, do not overload it with a different meaning. openFrameworks may or may not have a feature that tweets for you whenever you've written a silly operator overload. [No one knows](https://code.google.com/p/keytweeter/).
-
 #### Distance Between Points
 
 ```cpp
-float ofVec3f::distance( const ofVec3f& pnt) const
-float ofVec3f::squareDistance( const ofVec3f& pnt ) const
-float ofVec3f::length() const
+float glm::distance( const glm::vec3& pntA, const glm::vec3& pntB) const
+float glm::distance( const glm::vec2& pntA, const glm::vec2& pntB) const
+float glm::length(const glm::vec3& pnt) const
+float glm::length(const glm::vec2& pnt) const
 float ofDist(float x1, float y1, float x2, float y2);
 float ofDistSquared(float x1, float y1, float x2, float y2);
 ```
@@ -391,7 +368,7 @@ y\\
 z
 \end{array}\right]\right)=\sqrt{x^{2} + y^{2} + z^{2}}$$
 
-And that's exactly what using `.length()` as a property of any `ofVec` will give you.
+And that's exactly what using `glm::length(yourVector)` is giving you back for every `glm::vec2` or `glm::vec3` you pass as parameter.
 
 #### Vector Products: There's More Than One
 So you're multiplying two numbers. Simple, right? Five million and seven times three equals something you know. Even if you need a calculator for the result, you still know _it's a number_ that's not the case with vectors. If we just want to resize vectors (the way we do with numbers), we multiply a vector by a scalar and it grows. But what does it mean, geometrically, to multiply by a vector?
@@ -399,7 +376,7 @@ So you're multiplying two numbers. Simple, right? Five million and seven times t
 If we were to follow the _per-component_ convention that we created, we would get an operation like this:
 
 ```cpp
-cout << ofToString(ofVec3f(1,2,3) * ofVec3f(1,2,3)) << endl;
+cout << ofToString(glm::vec3(1,2,3) * glm::vec3(1,2,3)) << endl;
 //prints (1,4,9)
 ```
 
@@ -410,7 +387,7 @@ In the next section we describe something more helpful.
 #### The Dot Product
 
 ```cpp
-float ofVec3f::dot( const ofVec3f& vec )
+float glm::dot(const glm::vec3& vecA, const glm::vec3& vecB)
 ```
 
 The dot product of two vectors has a definition that's not too clear at first. On one hand, the operation can be defined as $$v_{a}\bullet v_{b}=x_{a}\cdot x_{b}+y_{a}\cdot y_{b}+z_{a}\cdot z_{b}$$ which is really easy to implement (in fact, graphics cards have special circuitry for doing just that!). On the other hand, it can also bet defined as $$v_{a}\bullet v_{b}=\left\Vert v_{a}\right\Vert \cdot\left\Vert v_{b}\right\Vert \cdot\cos\theta$$ where $\theta$ is the angle between the two vectors. Soon you'll see that this is a rather lucky coincidence. In the meantime, here's how you _shoud_ remember dot products:
@@ -450,9 +427,11 @@ float const EPSILON = 0.00001;
 
 // a function that returns -1 if a point is below a plane,
 // 1 if it's above a plane and 0 if it's on a plane
-int whichSide(ofVec3f planeNormal, float planeDistance, ofVec3f testPoint){
-	ofVec3f directionToPlane = planeDistance * planeNormal - testPoint;
-	float dot = directionToPlane.dot(planeNormal);
+int whichSide(glm::vec3 planeNormal, float planeDistance, glm::vec3 testPoint){
+	// normalize the two vectors
+	planeNormal = glm::normalize(planeNormal);
+	directionToPlane = glm::normalize(planeDistance * planeNormal - testPoint);
+	float dot = glm::dot(directionToPlane, planeNormal);
 	if (abs(dot) < EPSILON){ //Check if the dot product is very near zero 
 		return 0;
 	} else { // else return the opposite of its sign!
@@ -479,7 +458,7 @@ At the core of the heavy machinery built to control 3d space, a matrix is just a
 #### Matrix Multiplication as a dot product
 The easiest way to look at a matrix is to look at it as a bunch of vectors. Depending on what we care about, we can either look at the columns or rows as vectors. 
 
-**//TODO: Draw 2x2 example**
+**TODO: Draw 2x2 example**
 
 #### Identity
 Let's start from the simplest case. Just like with numbers, it is a very important property of any algebraic structure to have a _neutral_ member for each operation. For example, in Numberland, multiplication of any $x$ by 1 returns $x$, same goes for addition to 0.
@@ -499,15 +478,15 @@ So for any matrix $M$, $$MI = IM = M$$.
 You might remember that when scaling a vector (i.e point in space and/or velocity and/or force and/or brightness value for a colour, etc), we may choose to scale it uniformly by scalar multiplication:
 
 ```cpp
-ofVec3f v(1, 2, 3);
+glm::vec3 v(1, 2, 3);
 cout << ofToSting(v * 5) << endl; //prints (5, 10, 15)
 ```
 
 or, because of a weird language design choice, most graphics applications will allow you to scale non-uniformly on a per-component basis: 
 
 ```cpp
-ofVec3f v1(1, 2, 3);
-ofVec3f v2(10, 100, 1000);
+glm::vec3 v1(1, 2, 3);
+glm::vec3 v2(10, 100, 1000);
 cout << ofToString(v1 * v2) << endl //prints (10, 200, 3000)
 ```
 
@@ -682,11 +661,13 @@ Noting that, we know that when rotating things in more than 2 dimensions, we nee
 #### Other Methods of Rotation: _Axis-Angles_ and _Quaternions_
 We can only end this one-page section with a defeating note: rotations in 3D are a big subject. Even though one matrix can only mean one thing, there are multiple ways of getting to it. Euler Angles demonstrated above are one common and easy-to-comprehend way; A slightly more general way is given by defining an arbitrary axis and rotating around it, called _Axis-Angle Rotation_.
 
-**//TODO: Draw difference between angle-axis and normal-axis euler rotations **
+**TODO: Draw difference between angle-axis and normal-axis euler rotations**
 
-Constructing the matrix for that kind of rotation is slightly hairy, which is why programmers often prefer not to use matrices for describing those rotations, but more compact Algebraic objects called _Quaternions_. Those exist in openFrameworks under `ofQuaternion`, and can mostly be used without actually investigating the underlying math.
+Constructing the matrix for that kind of rotation is slightly hairy, which is why programmers often prefer not to use matrices for describing those rotations, but more compact Algebraic objects called _Quaternions_. Those exist in openFrameworks under `glm::quat`, and can mostly be used without actually investigating the underlying math.
 
 As far as usage goes, it's important to note that Quaternions are sometimes more efficient (and actually easier to think with) than Matrices, but their Mathematical underpinnings are far beyond the scope of a basic math chapter.
+
+If you want to dif further this topic, this [article](http://www.opengl-tutorial.org/intermediate-tutorials/tutorial-17-quaternions/) is highly recommended
 
 	
 ### Matrix Algebra
@@ -785,56 +766,36 @@ We call this matrix $M$, because it places objects we give it in their place in 
 ### Using Matrices and Quaternions in openFrameworks
 While this chapter was supposed to show the underlying representation of grpahics operations, it did intentionally avoid showing matrix examples in code. Now that you know how matrices look on the inside, it'll be a lot easier for you to figure out how to debug your 3d code, but most of the time using matrices in raw form won't be necessary.
 
-While you could construct a matrix via `ofMatrix4x4`, using:
+While you could construct a matrix via `glm::mat4`, using:
 
 ```cpp
-ofMatrix4x4( const ofQuaternion& quat ) {
-	makeRotationMatrix(quat);
-}
-
-ofMatrix4x4(  float a00, float a01, float a02, float a03,
-              float a10, float a11, float a12, float a13,
-              float a20, float a21, float a22, float a23,
-              float a30, float a31, float a32, float a33);
+glm::mat4 Model = glm::mat4( 1.0 );
 ```
+
 You'll mostly find that what matters to you is the Algebra of the Operation, not the actual numbers, so you'll be much better off using these:
 
 ```cpp
-void ofMatrix4x4::makeScaleMatrix( const ofVec3f& );
-void ofMatrix4x4::makeScaleMatrix( float, float, float );
-
-void ofMatrix4x4::makeTranslationMatrix( const ofVec3f& );
-void ofMatrix4x4::makeTranslationMatrix( float, float, float );
-
-void ofMatrix4x4::makeRotationMatrix( const ofVec3f& from, const ofVec3f& to );
-void ofMatrix4x4::makeRotationMatrix( float angle, const ofVec3f& axis );
-void ofMatrix4x4::makeRotationMatrix( float angle, float x, float y, float z );
-void ofMatrix4x4::makeRotationMatrix( const ofQuaternion& );
-void ofMatrix4x4::makeRotationMatrix( float angle1, const ofVec3f& axis1,
-                 float angle2, const ofVec3f& axis2,
-                 float angle3, const ofVec3f& axis3);
+glm::mat4 myScalingMatrix = glm::scale(2.0f, 2.0f ,2.0f);
+glm::mat4 myTranslatingMatrix = glm::translate( glm::mat4( 1.0f ), glm::vec3( 1.0f ) );
+glm::mat4 myRotationMatrix = glm::mat4 glm::rotate(
+	glm::mat4 const& m, float angle, glm::vec3 const& axis
+);
 ```
 
-All these things do is form Operations you can later multiply your `ofVec4f` objects with.
+All these things do is form Operations you can later multiply your `glm::vec4` objects with.
 
-Here's the same example for Quaternions, using the `ofQuaternion` class:
+Here's the same example for Quaternions, using the `glm::quat` class. The following snippet creates a quaternion to rotate 90 degree on the y axis
 
 ```cpp
 /* Axis-Angle Rotations*/
-void ofQuaternion::makeRotate(float angle, float x, float y, float z);
-void ofQuaternion::makeRotate(float angle, const ofVec3f& vec);
-void ofQuaternion::makeRotate(float angle1, const ofVec3f& axis1, float angle2, const ofVec3f& axis2, float angle3, const ofVec3f& axis3);
-
-/* From-To Rotations */
-void ofQuaternion::makeRotate(const ofVec3f& vec1, const ofVec3f& vec2);
+glm::quat MyQuaternion = glm::angleAxis(90.f, glm::vec3(0,1,0));
 ```
 
 Just like with Matrices, any of these objects create a _rotation operation_ that can later be applied to a vector:
 ```cpp
-ofVec3f myUnrotatedVector(1,0,0);
-ofQuaternion quat;
-quat.makeRotate(ofVec3f(1,0,0), ofVec3f(0,1,0));
-ofVec3f myRotatedVector = quat * myUnrotatedVector;
+glm::vec3 myUnrotatedVector(1,0,0);
+glm::quat quat = glm::angleAxis(90.f, glm::vec3(0,1,0));
+glm::vec3 myRotatedVector = quat * myUnrotatedVector;
 cout << ofToString(myRotatedVector) << endl;
 //prints out (0,1,0)
 ```
