@@ -319,6 +319,7 @@ void ofApp::update(){
 		glm::vec2 nextStep(ofRandom(-1.,1.),1.); 
 		larsStep(nextStep);
 	}
+}
 
 void ofApp::larsStep(glm::vec2 direction){
 	position += direction;
