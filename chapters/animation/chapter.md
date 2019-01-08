@@ -1,10 +1,10 @@
 # Animation
 
-*by [Zach Lieberman](http://thesystemis.com)* 
+*by [Zach Lieberman](http://thesystemis.com)*
 
 *with edits from tpltnt, Kayla Lewis*
 
-## Background 
+## Background
 
 The word animation is a medieval term stemming from the Latin animare, which means 'instill with life''. In modern terms, it's used to describe the process of creating movement from still, sequential images. Early creators of animation used spinning discs ([phenakistoscopes](https://en.wikipedia.org/wiki/Phenakistoscope "Wikipedia on phenakistoscopes")) and cylinders ([zoetropes](https://en.wikipedia.org/wiki/Zoetrope "Wikipedia on zoetropes")) with successive frames to create the illusion of a smooth movement from persistence of vision. In modern times, we're quite used to other techniques such as [flip books](https://en.wikipedia.org/wiki/Flip_book "Wikipedia on flip books") and cinematic techniques like [stop motion](https://en.wikipedia.org/wiki/Stop_motion "Wikipedia on stop motion"). Increasingly, artists have been using computational techniques to create animation -- using code to "bring life" to objects on the screen over successive frames. This chapter is going to look at these techniques and specifically try to address a central question: how can we create compelling, organic, and even absurd movement through code?
 
@@ -12,11 +12,11 @@ As a side note, I studied fine arts, painting and printmaking, and it was accide
 
 This chapter will first explain some basic principles that are useful to understanding animation in oF, then attempt to show a few entry-points to interesting approaches.
 
-## Animation in oF / useful concepts: 
+## Animation in oF / useful concepts:
 
 ### Draw a cycle
 
-The first point to make about animation is that it's based on successive still frames. In openFrameworks we have a certain loop cycle that's based roughly on game programming paradigms. It goes like this: 
+The first point to make about animation is that it's based on successive still frames. In openFrameworks we have a certain loop cycle that's based roughly on game programming paradigms. It goes like this:
 
 - `setup()`
 - `update()`
@@ -25,20 +25,20 @@ The first point to make about animation is that it's based on successive still f
 - `draw()`
 - ...
 
-The `setup()` function gets called once, right at the start of an oF apps lifecycle and `update()` / `draw()` get called repeatedly. Sometimes people ask why two functions get called repeatedly, especially if they are familiar with [Processing](http://www.processing.org/ "Processing website"), which has only a setup and a draw command. There are a few reasons. The first is that drawing in OpenGL is asynchronous, meaning there's a chance, when you send drawing code to the computer, that it can return execution back to your program so that it can perform other operations while it draws. The second is that it's generally very practical to have your drawing code separated from your non-drawing code. If you need to quickly debug something – say, for example, your code is running slow – you can comment out the draw function and just leave the update running. It's separating out the update of the world from the presentation and it can often help clean up and organize your code. Think about it like a stop frame animator working with an overhead camera that might reposition objects while the camera is not taking a picture then snap a photograph the moment things are ready. In the update function you would be moving things around and in the draw function you draw things exactly as they are at that moment. 
+The `setup()` function gets called once, right at the start of an oF apps lifecycle and `update()` / `draw()` get called repeatedly. Sometimes people ask why two functions get called repeatedly, especially if they are familiar with [Processing](http://www.processing.org/ "Processing website"), which has only a setup and a draw command. There are a few reasons. The first is that drawing in OpenGL is asynchronous, meaning there's a chance, when you send drawing code to the computer, that it can return execution back to your program so that it can perform other operations while it draws. The second is that it's generally very practical to have your drawing code separated from your non-drawing code. If you need to quickly debug something – say, for example, your code is running slow – you can comment out the draw function and just leave the update running. It's separating out the update of the world from the presentation and it can often help clean up and organize your code. Think about it like a stop frame animator working with an overhead camera that might reposition objects while the camera is not taking a picture then snap a photograph the moment things are ready. In the update function you would be moving things around and in the draw function you draw things exactly as they are at that moment.
 
 ### Variables
 
-The second point to make about animation is that it requires variables. A variable is a placeholder for a value, which means that you can put the value in and you can also get the value out. Variables are essential for animation since they "hold" value from frame to frame – e.g., if you put a value into a variable in the `setup()` function or `update()` function, you can also get it out from memory in the `draw()` function. Take this example where `xpos` (int) is already defined in the header:
+The second point to make about animation is that it requires variables. A variable is a placeholder for a value, which means that you can put the value in and you can also get the value out. Variables are essential for animation since they "hold" value from frame to frame – e.g., if you put a value into a variable in the `setup()` function or `update()` function, you can also get it out from memory in the `draw()` function. Take this example where `xPos` (int) is already defined in the header file:
 
 ```cpp
 void ofApp::setup(){
-    xpos = 5;  // horizontal start position
+    xPos = 5;  // horizontal start position
     ofBackground(ofColor::black);  // black background
 }
 
 void ofApp::update(){
-    xpos += 2;
+    xPos += 2;
     if(ofGetWidth()<xPos){  // if horizontal position is off the screen (width)
         xPos = 5;             // reset horizontal position
     }
@@ -46,11 +46,11 @@ void ofApp::update(){
 
 void ofApp::draw(){
     ofSetColor(ofColor::red);  // draw everything in red
-    ofDrawCircle(xpos, 100, 10);   // draw a circle at the (variable) horizontal position, 100 pixels from the top with a 10 pixel diameter
+    ofDrawCircle(xPos, 100, 10);   // draw a circle at the (variable) horizontal position, 100 pixels from the top with a 10 pixel diameter
 }
 ```
 
-In this example a red circle moves from the left to the right on the screen. The horizontal position (`xpos`) is an integer and gets set to 5 as the initial value in `setup()`. The `update()` function always adds 2 to the `xpos` variable and stores the new value until it becomes larger than the screen width (`ofGetWidth()`), then the horizontal position gets reset. The `draw()` function reads the value stored in the variable `xpos` and draws the red circle accordingly.
+In this example a red circle moves from the left to the right on the screen. The horizontal position (`xPos`) is an integer and gets set to 5 as the initial value in `setup()`. The `update()` function always adds 2 to the `xPos` variable and stores the new value until it becomes larger than the screen width (`ofGetWidth()`), then the horizontal position gets reset. The `draw()` function reads the value stored in the variable `xPos` and draws the red circle accordingly.
 
 ### Frame rate
 
@@ -74,15 +74,15 @@ By default, oF enables vertical sync and sets a frame rate of 60 FPS. You can ad
 Another important point which is a bit hard to cover deeply in this chapter is frame rate independence. If you animate using a simple model -- say for example, you create a variable called `xPos`, increase it by a certain amount every frame and draw it.
 
 ```cpp
-void testApp::setup(){
+void ofApp::setup(){
     xPos = 100;
 }
 
-void testApp::update(){
+void ofApp::update(){
     xPos += 0.5;
 }
 
-void testApp::draw(){
+void ofApp::draw(){
     ofRect(xPos, 100, 10, 10);
 }
 ```
@@ -90,7 +90,7 @@ void testApp::draw(){
 This kind of animation works fine, but it assumes that your frame rate is constant. If your app runs faster, say by jumping from 30 FPS to 60 FPS, the object will appear to go twice as fast, since there will be 2x the number of update and draw functions called per second.  Typically more complex animations will be written to take this into account, either by using functions like time (explained below) or mixing the frame rate or elapsed time into your update. For example, a solution might be something like:
 
 ```cpp
-void testApp::update(){
+void ofApp::update(){
     xPos += ofGetLastFrameTime() * speed;
 }
 ```
@@ -109,7 +109,7 @@ Finally, there are a few other functions that are useful for animation timing:
 
 In these examples, I'll be using objects pretty heavily. It's helpful to feel comfortable with object-oriented programming (OOP) to understand the code. One object that is used heavily is [`ofPoint`](http://openframeworks.cc/documentation/types/ofPoint.html "ofPoint Documentation Page"), which contains an x,y and z variable. In the past this was called "ofVec3f" (vector of three floating point numbers), but we just use the more convenient ofPoint. In some animation code, you'll see vectors used, and you should know that ofPoint is essentially a vector.
 
-You will also see objects that have basic functionality and internal variables. I will typically have a setup, update and draw inside them. A lot of times, these objects are either made because they are useful recipes to have many things on the screen or they help by putting all the variables and logic of movement in one place. I like to have as little code as possible at the testApp / ofApp level. If you are familiar with ActionScript / Flash, this would be similar to having as a little as possible in your main timeline.
+You will also see objects that have basic functionality and internal variables. I will typically have a setup, update and draw inside them. A lot of times, these objects are either made because they are useful recipes to have many things on the screen or they help by putting all the variables and logic of movement in one place. I like to have as little code as possible at the ofApp level. If you are familiar with ActionScript / Flash, this would be similar to having as a little as possible in your main timeline.
 
 
 ## Linear movement
@@ -146,7 +146,7 @@ which simplifies to `(1*A + 0*B)` or A. If we are 25 percent of the way, it look
 
 which is 75% of A + 25% of B. Essentially by taking a mix, you get from one to the other. The first example (**1_rectangleInterpolate**) shows how this is done.
 
-For this example, we will be using an object called "rectangle".  It has a variable for position, as well as two other variables (posA and posB) that represent the a and b positions we are moving between. 
+For this example, we will be using an object called "rectangle".  It has a variable for position, as well as two other variables (posA and posB) that represent the a and b positions we are moving between.
 
 
 ```cpp
@@ -167,7 +167,7 @@ class rectangle {
 };
 ```
 
-the function interpolateByPct() does the actual interpolation: 
+the function interpolateByPct() does the actual interpolation:
 
 ```cpp
 void rectangle::interpolateByPct(float myPct){
@@ -176,7 +176,7 @@ void rectangle::interpolateByPct(float myPct){
 }
 ```
 
-in the ofApp file, we create a variable called pct, and set it to 0.  We increment pct every frame and pass it through to the rectangle object in the update function:  
+in the ofApp file, we create a variable called pct, and set it to 0.  We increment pct every frame and pass it through to the rectangle object in the update function:
 
 
 ```cpp
@@ -197,11 +197,11 @@ As a side note, the function `ofMap`, which maps between an input range, uses pc
 
 ### Curves
 
-One of the interesting properties of numbers between 0 and 1 is that they can be easily adjusted / curved.  
+One of the interesting properties of numbers between 0 and 1 is that they can be easily adjusted / curved.
 
 The easiest way to see this is by raising the number to a power.  A power, as you might remember from math class, is multiplying a number by itself,  e.g., 2^3 = `2*2*2 = 8`. Numbers between 0 and 1 have some interesting properties. If you raise 0 to any power it equals 0 (`0*0*0*0 = 0`). The same thing is true for 1 (`1*1*1*1 = 1`), but if you raise a number between 0 and 1 to a power, it changes. For example, 0.5 to the 2nd power = 0.25.
 
-Let's look at a plot of pct raised to the second power: 
+Let's look at a plot of pct raised to the second power:
 
 ![pct raised to second power](images/x_squared_plot.png)
 
@@ -211,7 +211,7 @@ As a side note, it's important to be aware that things in the world often don't 
 
 ![nonlinear](images/atob_nonlinear.png)
 
-If you raise the incoming number between 0 and 1 to a larger power it looks more extreme. Interestingly, if you raise this value between 0 and 1 to a fractional (rational) power (i.e., a power that's less than 1 and greater than 0), it curves in the other direction.  
+If you raise the incoming number between 0 and 1 to a larger power it looks more extreme. Interestingly, if you raise this value between 0 and 1 to a fractional (rational) power (i.e., a power that's less than 1 and greater than 0), it curves in the other direction.
 
 The next example (**3_rectangleInterpolatePowf**) shows an animation that uses pct again to get from A to B, but in this case, pct is raised to a power:
 
@@ -267,8 +267,8 @@ In the 5th example (**5_rectangleZeno**), we add a function to the rectangle tha
 
 ```cpp
 void rectangle::zenoToPoint(float catchX, float catchY){
-    pos.x = catchUpSpeed * catchX + (1-catchUpSpeed) * pos.x; 
-    pos.y = catchUpSpeed * catchY + (1-catchUpSpeed) * pos.y; 
+    pos.x = catchUpSpeed * catchX + (1-catchUpSpeed) * pos.x;
+    pos.y = catchUpSpeed * catchY + (1-catchUpSpeed) * pos.y;
 }
 ```
 
@@ -284,7 +284,7 @@ In this section of the book we'll look at a few examples that show function base
 
 Another interesting and simple system to experiment with motion in openFrameworks is using [`sin(...)`](http://www.cplusplus.com/reference/cmath/sin/ "C++ sin() documentation page") and [`cos(...)`](http://www.cplusplus.com/reference/cmath/cos/ "C++ cos() documentation page)").
 
-`sin(...)` and `cos(...)` (sine and cosine) are [trigonometric functions](https://en.wikipedia.org/wiki/Trigonometric_functions "Wikipedia on trigonometric functions"), which means they are based on angles. They are the x and y position of a point moving with a constant radius and rate around a circle. The circle is a unit circle with a radius (r) of 1, which means the diameter is `2*r*PI` or `2*PI`. In oF you'll see this constant as `TWO_PI`, which is 6.28318... 
+`sin(...)` and `cos(...)` (sine and cosine) are [trigonometric functions](https://en.wikipedia.org/wiki/Trigonometric_functions "Wikipedia on trigonometric functions"), which means they are based on angles. They are the x and y position of a point moving with a constant radius and rate around a circle. The circle is a unit circle with a radius (r) of 1, which means the circumference is `2*r*PI` or `2*PI`. In oF you'll see this constant as `TWO_PI`, which is 6.28318...
 
 *As a side note, sometimes it can be confusing that some functions in oF take degrees where others take radians. `sin(...)` and `cos(...)` are part of the math library, so they take radians, whereas most OpenGL rotation takes degrees. We have some helper constants such as `DEG_TO_RAD` and `RAD_TO_DEG`, which can help you convert one to the other.*
 
@@ -296,24 +296,24 @@ All you have to do is imagine a unit circle, which has a radius of 1 and a cente
 
 #### Simple examples
 
-It's pretty easy to use `sin(...)` to animate the position of an object.  
+It's pretty easy to use `sin(...)` to animate the position of an object.
 
-Here, we'll take the sine of the elapsed time `sin(ofGetElpasedTimef())`. This returns a number between negative one and one. It does this every 6.28 seconds. We can use ofMap to map this to a new range. For example
+Here, we'll take the sine of the elapsed time `sin(ofGetElapsedTimef())`. This returns a number between negative one and one. It does this every 6.28 seconds. We can use ofMap to map this to a new range. For example
 
 ```cpp
 void ofApp::draw(){
-    float xPos = ofMap(sin(ofGetElpasedTimef()), -1, 1, 0, ofGetWidth());
+    float xPos = ofMap(sin(ofGetElapsedTimef()), -1, 1, 0, ofGetWidth());
     ofRect(xPos, ofGetHeight()/2, 10,10);
 }
 ```
 
-This draws a rectangle which moves sinusoidally across the screen, back and forth every 6.28 seconds. 
+This draws a rectangle which moves sinusoidally across the screen, back and forth every 6.28 seconds.
 
 You can do simple things with offsets to the phase (how shifted over the sine wave is). In example 7 (**7_sinExample_phase**), we calculate the sine of the time twice, but at the second instance, we add PI: `ofGetElapsedTimef() + PI`. This means the two values will be offset from each other by 180 degrees on the circle (imagining our dot, when one is far right, the other will be far left. When one is up, the other is down). Here we set the background color and the color of a rectangle using these offset values. It's useful if you start playing with sine and cosine to manipulate phase.
 
 ```cpp
 //--------------------------------------------------------------
-void testApp::draw(){
+void ofApp::draw(){
     float sinOfTime               = sin( ofGetElapsedTimef() );
     float sinOfTimeMapped         = ofMap(sinOfTime, -1, 1, 0, 255);
 
@@ -331,20 +331,20 @@ void testApp::draw(){
 
 #### Circular movement
 
-Since sine and cosine are derived from the circle, we can use them to move things in a circular way. We have four variables we need to know: 
+Since sine and cosine are derived from the circle, we can use them to move things in a circular way. We have four variables we need to know:
 
 - the origin of the circle (`xOrig`, `yOrig`)
 - the radius of the circle (`radius`)
 - the angle around the circle (`angle`)
 
-The formula is fairly simple: 
+The formula is fairly simple:
 
 ```cpp
 xPos = xOrig + radius * cos(angle);
 yPos = yOrig + radius * sin(angle);
 ```
 
-This allows us to create something moving in a circular way. In the circle example (**12_sinExample_circlePlusPath**), I will animate using this approach.  
+This allows us to create something moving in a circular way. In the circle example (**12_sinExample_circlePlusPath**), I will animate using this approach.
 
 ```cpp
 float xorig = 500;
@@ -356,29 +356,29 @@ float y = yorig + radius * sin(angle);
 
 *Note: In oF, the top left corner is 0,0 (y axis is increasing as you go down) so you'll notice that the point travels clockwise instead of counterclockwise. If this bugs you (since above, I asked you imagine it moving counterclockwise) you can modify this line `float y = yorig + radius * sin(angle)` to `float y = yorig + radius * -sin(angle)` and see the circle go in the counterclockwise direction.*
 
-For these examples, I start to add a "trail" to the object by using the [ofPolyline](http://openframeworks.cc/documentation/graphics/ofPolyline.html "ofPolyline Documentation Page") object. I keep adding points, and once I have a certain number I delete the oldest one. This helps us better see the motion of the object. 
+For these examples, I start to add a "trail" to the object by using the [ofPolyline](http://openframeworks.cc/documentation/graphics/ofPolyline.html "ofPolyline Documentation Page") object. I keep adding points, and once I have a certain number I delete the oldest one. This helps us better see the motion of the object.
 
-If we increase the radius, for example by doing: 
+If we increase the radius, for example by doing:
 
 ```cpp
-void testApp::update(){
+void ofApp::update(){
     radius = radius + 0.1;
 }
 ```
 
-we get spirals. 
+we get spirals.
 
 #### Lissajous figures
 
-Finally, if we alter the angles we pass in to x and y for this formula at different rates, we can get interesting figures, called ["Lissajous" figures](https://en.wikipedia.org/wiki/Lissajous_curve "Wikipedia on Lissajous figures"), named after the French mathematician, Jules Antoine Lissajous. These formulas look cool. Oftentimes I joke with my students in algorithm class about how this is really a course to make cool screen savers. 
+Finally, if we alter the angles we pass in to x and y for this formula at different rates, we can get interesting figures, called ["Lissajous" figures](https://en.wikipedia.org/wiki/Lissajous_curve "Wikipedia on Lissajous figures"), named after the French mathematician, Jules Antoine Lissajous. These formulas look cool. Oftentimes I joke with my students in algorithm class about how this is really a course to make cool screen savers.
 
 ### Noise
 
-Noise is similar to sine/cosine in that it's a function taking some input and producing output, which we can then use for movement. In the case of sine/cosine you are passing in an angle and getting a result back that goes back and forth between -1 and 1. In openFrameworks we wrap code using [simplex noise](https://en.wikipedia.org/wiki/Simplex_noise "Wikipedia on simplex noise"), which is comparable to [Perlin noise](https://en.wikipedia.org/wiki/Perlin_noise "Wikipedia on Perlin noise") and we have a function [`ofNoise()`](http://openframeworks.cc/documentation/math/ofMath.html#!show_ofNoise "ofNoise Documentation Page") that takes an input and produces an output. Both algorithms (Perlin, Simplex) provide a pseudo random noise pattern -- they are quite useful for animation, because they are continuous functions, unlike [ofRandom](http://openframeworks.cc/documentation/math/ofMath.html#!show_ofRandom "ofRandom Documentation Page") for example, which just returns random values.  
+Noise is similar to sine/cosine in that it's a function taking some input and producing output, which we can then use for movement. In the case of sine/cosine you are passing in an angle and getting a result back that goes back and forth between -1 and 1. In openFrameworks we wrap code using [simplex noise](https://en.wikipedia.org/wiki/Simplex_noise "Wikipedia on simplex noise"), which is comparable to [Perlin noise](https://en.wikipedia.org/wiki/Perlin_noise "Wikipedia on Perlin noise") and we have a function [`ofNoise()`](http://openframeworks.cc/documentation/math/ofMath.html#!show_ofNoise "ofNoise Documentation Page") that takes an input and produces an output. Both algorithms (Perlin, Simplex) provide a pseudo random noise pattern -- they are quite useful for animation, because they are continuous functions, unlike [ofRandom](http://openframeworks.cc/documentation/math/ofMath.html#!show_ofRandom "ofRandom Documentation Page") for example, which just returns random values.
 
 When I say continuous function, what I mean is if you pass in smaller changes as input, you get smaller output and if you pass in the same value you get the same result. For example, `sin(1.7)` always returns the same value, and `ofNoise(1.7)` also always returns the same result. Likewise if you call `sin(1.7)` and `sin(1.75)` you get results that are continuous (meaning, you can call `sin(1.71) sin(1.72)... sin(1.74)` to get intermediate results).
 
-You can do the same thing with ofNoise -- here, I write a for loop to draw noise as a line. `ofNoise` takes an input, here i/10 and produces an output which is between 0 and 1.  [`ofSignedNoise`](http://openframeworks.cc/documentation/math/ofMath.html#!show_ofSignedNoise "ofSignedNoise Documentation Page") is similar but it produces an output between -1 and 1.
+You can do the same thing with ofNoise -- here, I write a for loop to draw noise as a line. `ofNoise` takes an input -- here, i/10 -- and produces an output which is between 0 and 1.  [`ofSignedNoise`](http://openframeworks.cc/documentation/math/ofMath.html#!show_ofSignedNoise "ofSignedNoise Documentation Page") is similar but it produces an output between -1 and 1.
 
 ![noise line](images/noiseLine.png)
 
@@ -397,7 +397,7 @@ for (int i = 0; i < 500; i++){
 ofEndShape();
 ```
 
-If you alter the i/10.0, you can adjust the scale of the noise, either zooming in (i.e., i/100.0), so you see more details, or zooming out (i.e., i/5.0) so you see more variation. 
+If you alter the i/10.0, you can adjust the scale of the noise, either zooming in (i.e., i/100.0), so you see more details, or zooming out (i.e., i/5.0) so you see more variation.
 
 ![noise with i divided by 100](images/noise_i_d_100.png)
 
@@ -451,7 +451,7 @@ There's a ton more we can do with noise, we'll leave it for now but encourage yo
 
 ## Simulation
 
-If you have a photograph of an object at one point in time, you know its position. If you have a photograph of an object at another point in time and the camera hasn't changed, you can measure its velocity, i.e., its change in distance over time. If you have a photograph at three points in time, you can measure its acceleration, i.e., how much the speed changing over time.  
+If you have a photograph of an object at one point in time, you know its position. If you have a photograph of an object at another point in time and the camera hasn't changed, you can measure its velocity, i.e., its change in distance over time. If you have a photograph at three points in time, you can measure its acceleration, i.e., how much the speed changing over time.
 
 The individual measurements compared together tell us something about movement. Now, we're going to go in the opposite direction. Think about how we can use measurements like speed and acceleration to control position.
 
@@ -461,7 +461,7 @@ If you know how fast an object is traveling, you can determine how far it has tr
 position = position + (velocity * elapsed time)
 ```
 
-e.g.: 
+e.g.:
 
 ```cpp
 position = position + 50 * 1;   // for one hour away
@@ -514,7 +514,7 @@ class particle{
         ofVec2f pos;
         ofVec2f vel;
         ofVec2f frc;
-        
+
         particle();
         void setInitialCondition(float px, float py, float vx, float vy);
 
@@ -564,15 +564,15 @@ void addClockwiseForce( float px, float py, float radius, float strength);
 void addCounterClockwiseForce( float px, float py, float radius, float strength);
 ```
 
-They essentially add forces the move towards or away from a point that you pass in, or in the case of clockwise forces, around a point.
+They essentially add forces that move towards or away from a point that you pass in, or in the case of clockwise forces, around a point.
 
 ![sin](images/particle.png)
 
 The calculation of these forces is fairly straightforward - first, we figure out how far away a point is from the center of the force. If it's outside of the radius of interaction, we disregard it. If it's inside, we figure out its percentage, i.e., the distance between the force and the particle divided by the radius of interaction. This gives us a number that's close to 1 when we are towards the far edge of the circle and 0 as we get towards the center. If we invert this, by taking 1 - percent, we get a number that's small on the outside, and larger as we get closer to the center.
 
-This is useful because oftentimes forces are proportional to distance.  For example, a magnetic force will have a radius at which it works, and the closer you get to the magnet the stronger the force. 
+This is useful because oftentimes forces are proportional to distance.  For example, a magnetic force will have a radius at which it works, and the closer you get to the magnet the stronger the force.
 
-Here's a quick look at one of the functions for adding force: 
+Here's a quick look at one of the functions for adding force:
 
 ```cpp
 void particle::addAttractionForce( float px, float py, float radius, float strength){
@@ -581,13 +581,13 @@ void particle::addAttractionForce( float px, float py, float radius, float stren
     posOfForce.set(px, py);
     ofVec2f diff = pos - posOfForce;
 
-    if (diff.length() < radius){ 
+    if (diff.length() < radius){
         float pct = 1 - (diff.length() / radius);
         diff.normalize();
         frc.x -= diff.x * pct * strength;
         frc.y -= diff.y * pct * strength;
     }
-} 
+}
 ```
 
 `diff` is a line between the particle and the position of the force. If the length of diff is less than the radius, we calculate the pct as a number that goes between 0 and 1 (0 on the outside of the radius of interaction, 1 as we get to the center of the force). We take the line `diff` and normalize it to get a "directional" vector, its magnitude (distance) is one, but the angle is still there. We then multiply that by pct * strength to get a line that tells us how to move. This gets added to our force.
@@ -621,7 +621,7 @@ This looks really similar to the code before, except here we pass in a particle 
 ```cpp
 void particle::addRepulsionForce(particle &p, float radius, float scale){
 
-    // ----------- (1) make a vector of where this particle p is: 
+    // ----------- (1) make a vector of where this particle p is:
     ofVec2f posOfForce;
     posOfForce.set(p.pos.x,p.pos.y);
 

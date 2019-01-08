@@ -3,16 +3,16 @@
 *by [Elliot Woods](http://www.kimchiandchips.com/)*
 
 ## Introduction
-C++ is a pretty old language, it's been around since 1983, and perhaps because of that (but certainly for many other reasons), it is often seen as archaic, obtuse, or perhaps just plain out of touch by today's standards. Contrary to this, many people believe that it is still offers the best balance of performance and clarity on the coding high street, and (in part thanks to the success of Unix and its mates) has an incredibly strong ecosystem of 3rd party libraries, device support and general acceptance, even up to the point where current shader languages and CUDA use C++ as their language of choice.
+C++ an old language. It has been around since 1983. It is often seen as archaic, obtuse, and perhaps just plain out of touch by today's standards. Contrary to this, many people believe it offers the best balance of performance and clarity, and many other people use it fot its strong ecosystem of 3rd party libraries, device support and general acceptance. Even new technologies (like CUDA) often use C++ as their language of choice.
 
-Some more modern languages (such as JavaScript and C#) make programs which run in a very different way to C/C++. They have a 'virtual machine', which is a very different type of computer than the one which crunches electronic signals on a circuit board. The virtual machine receives and processes program instructions like a real machine, but allows for all sorts of ideas which don't directly translate to silicon electronics, such as dynamic typing and reflection. The virtual machine abstracts the constraints of the processor away from the thinking of the programmer.
+Some more modern languages (such as JavaScript and C#) make programs which run in a very different way to C/C++. They use the concept of a 'virtual machine', which is a very different type of computer than the one which crunches electronic signals on a circuit board. The virtual machine receives and processes program instructions like a real machine, but allows for all sorts of ideas which don't directly translate to silicon electronics, such as dynamic typing and reflection. The virtual machine abstracts the constraints of the processor away from the thinking of the programmer.
 
-C/C++ does not have a virtual machine, which (for the time being) often gives it a performance edge over these newer languages. It is quite strict in that ultimately the C code itself (somewhere down the chain) translates 1:1 with physical processor instructions, the design of the language is inflexible in this way, but clinging to this is the achievement of C++, that code can be both understood naturally by a human, and clearly translate to machine code.
+C/C++ does not have a virtual machine, which (for the time being) often gives it a performance edge over these newer languages. It is quite strict in that the instructions you type deep down have a 1:1 translation with physical processor instructions. This gives the language some inflexibilities, but means that code can be both understood naturally by a human, and clearly translate to machine code.
 
 In this chapter we'll look at some of the new patterns in the C++ language introduced in C++11, which retain this promise whilst offering new ways of writing code.
 
 ## `auto`
-Perhaps the most used, and simplest new pattern in C++11 is `auto`. You'll love it. And probably won't remember life without it after a day or 2. Consider the following...
+Perhaps the most used, and simplest new pattern in C++11 is `auto`. You'll love it. And probably won't remember life without it after a day or two. Consider the following...
 
 ```cpp
 ofRectangle myRectangle = ofGetCurrentViewport();
@@ -21,6 +21,7 @@ float rectangleCenterX = rectangleCenter.x;
 ```
 
 In this code block, we are declaring 3 variables:
+
 * `myRectangle`
 * `rectangleCenter`
 * `rectangleCenterX`
@@ -31,7 +32,7 @@ On each line of code we are:
 2. Declaring a new variable which is explicitly typed to match the value on the right
 3. Assigning the value to the variable
 
-What we may notice, is that the type of data on the right and left side of the `=` is the same. Since C++ is strictly typed (e.g. a function which returns a `float` will always return a `float` no matter what), it is impossible for the value on the right hand side to ever be anything different. The compiler __knows__ what type of value the right hand will give, e.g. it knows that on line 1 that on the right hand side of the `=` is an `ofRectangle`. So perhaps if we were to write something like:
+The type of data on the right and left side of the `=` is the same. Since C++ is strictly typed (e.g. a function which returns `float` will always return `float`), it is impossible for the value on the right hand side to ever be anything different. The compiler __knows__ what data type the right hand side of the code will give, e.g. it knows that on line 1 that on the right hand side of the `=` is an `ofRectangle`. So perhaps if we were to write something like:
 
 ```cpp
 auto myRectangle = ofGetCurrentViewport();
@@ -39,16 +40,19 @@ auto rectangleCenter = myRectangle.getCenter();
 auto rectangleCenterX = rectangleCenter.x;
 ```
 
-Then the compiler can do some of the coding for us. In fact, thanks to `auto`, we can do this now. This code block compiles to exactly the same result as the first code block did. The compiler notices what's on the right hand side and substitutes in the correct type wherever it sees `auto`.
+Then the compiler can do some of the coding for us. In fact, this is exactly the facility of the `auto` feature. This code block compiles to exactly the same result as the first code block did. The compiler notices what's on the right hand side and substitutes in the correct type wherever it sees `auto`.
 
 #### How this helps
-Well firstly, auto's going to save you keystrokes.  Imagine the following:
+auto is going to save you keystrokes. Imagine the following:
 
 ```cpp
+//.h
 vector<shared_ptr<ofThread> > myVectorOfThreads;
 ````
 
 ```cpp
+//.cpp
+
 // the old way
 vector<shared_ptr<ofThread>>::iterator firstThreadIterator = this->myVectorOfThreads.begin();
 
@@ -56,7 +60,9 @@ vector<shared_ptr<ofThread>>::iterator firstThreadIterator = this->myVectorOfThr
 auto firstThreadIterator = this->myVectorOfThreads.begin();
 ```
 
-Now this makes the code more readable (by decent humans), but also you could take advantage of `auto` in other ways, for example you could make changes things in the h file, and the cpp file code would automatically correct itself. For example in the h you might change the `vector` to a `list`, or change `shared_ptr<ofThread>` to `ofThread *`. These changes would perpetuate automatically to wherever an `auto` is listening out in the code. Nifty huh?
+This makes the code more readable, but also you could take advantage of `auto` in other ways.
+
+For example, when you reuse or copy variables, you can use auto along the way, meaning that you only have to define which type you want to use at the beginning and not everywhere else in your code. For example in the above h file, you might change the `vector` to a `list`, or change `shared_ptr<ofThread>` to `ofThread *`. These changes would perpetuate automatically to wherever an `auto` is being used in the code. Nifty huh?
 
 ### Watch out for this
 
@@ -134,7 +140,7 @@ Consider the following common pattern:
 ```cpp
 vector<ofPixels> mySelfies;
 /*
-take some lovely snaps
+take some snaps here and store in mySelfies
 */
 
 //oh dear, my photos are all in portrait
@@ -143,11 +149,11 @@ for(int i=0; i<mySelfies.size(); i++) {
 	mySelfies[i].rotate90(1);
 }
 
-vector<ofxSnapChat::Friend> myFriends = snapChatClient.getFriends();
+vector<ofxMySpace::Friend> myFriends = myspaceClient.getFriends();
 
 //now let's send them to all my friends
 for(int i=0; i<myFriends.size(); i++) {
-	if (myFriends[i].isSingle()) {
+	if (myFriends[i].isOnline()) {
 		for(int i=0; i<mySelfies.size(); i++) {
 			myFriends[i].sendImage(mySelfies[i]);
 		}
@@ -169,11 +175,11 @@ for(auto & mySelfie : mySelfies) {
 	mySelfie.rotate90(1); // (1)
 }
 
-auto myFriends = snapChatClient.getFriends();
+auto myFriends = myspaceClient.getFriends();
 
 //now let's send them to all my friends
 for(auto & myFriend : myFriends) {
-	if (myFriend.isSingle()) {
+	if (myFriend.isOnline()) {
 		for(auto & mySelfie : mySelfies) {
 			myFriend.sendImage(mySelfie); // (2)
 		}
@@ -184,7 +190,7 @@ for(auto & myFriend : myFriends) {
 Notice that `for(thing : things)` gels so well with `auto`. Also notice that I'm using `auto &` since:
 
 * At `(1)` I want to be able to change the contents of the vector, so I need a reference to the vector item rather than a copy of it.
-* At `(2)`, it makes more sense to use a reference rather than a copy because it's computationally cheaper, and means I don't have to allocate new instances of `ofxSnapChat::Friend` (which I presume is quite a complex object, since it can do things like send images over the internet).
+* At `(2)`, it makes more sense to use a reference rather than a copy because it's computationally cheaper, and means I don't have to allocate new instances of `ofxMySpace::Friend` (which perhaps has many complicated allocations internally which you wouldn't want to repeat by copying the object).
 
 ### Summary
 * Use `for(auto thing : vectorOfThings)`
@@ -230,20 +236,20 @@ This one is a little more complex. Rather than making things quicker or safer to
 Lambda functions are very common in JavaScript, C# and other modern languages, and can be very liberating to use. They can seem more scary than they really are, so I suggest just getting on with some examples to start with. Let's make a simple example:
 
 ```cpp
-void kateBushFunction() {
+void normalFunction() {
 	cout << "Heathcliff, it's me Cathy." << endl;
 }
 
-void changePopMusicForever() {
-    auto kateBushLambdaFunction = []() {
-        cout << "So cold. Let me into your window." << endl;
-    };
-	kateBushFunction();
-	kateBushLambdaFunction();
+void main() {
+	auto lambdaFunction = []() {
+		cout << "So cold. Let me into your window." << endl;
+	};
+	normalFunction();
+	lambdaFunction();
 }
 ```
 
-Let's take a guess what happens here. Yep, we get:
+Let's take a guess what happens here:
 
 ```
 Heathcliff, it's me Cathy.
@@ -252,7 +258,7 @@ So cold. Let me into your window.
 
 So the lambda function is just like a normal function, but the biggest differences are that:
 
-1. The function is defined within the executable code of another function (in this case `kateBushLambdaFunction` is defined inside `changePopMusicForever`).
+1. The function is defined within the executable code of another function (in this case `lambdaFunction` is defined inside `main`).
 2. The function is now also a variable
 
 That second one is where the lambda function really comes into its own. Because we can pass it around, store it, throw it away, copy it. Let's make a more concrete example of this.
@@ -329,7 +335,7 @@ This would of course print out:
 4
 ```
 
-That's great! But we also have to be careful that because this function now has a float return type and a float argument, it is a different type of function to `kateBushLambdaFunction`. Note that if we want to pass this function as an argument we'd need to do like:
+That's great! But we also have to be careful that because this function now has a float return type and a float argument, it is a different type of function to our earlier `lambdaFunction` which took no arguments and returned a string. Note that if we want to pass this function as an argument we'd need to do like:
 
 ```cpp
 void performActionOnFloat(float & x, std::function<float(float)> action) {
@@ -366,6 +372,7 @@ You can:
 
 
 ### Summary so far
+
 * Lambda functions let you define functions in your code which are stored in variables
 * Lambda functions can be passed around between functions, classes, stored variables and `vector`s, etc. Basically, anything you can do with a variable you can do with a lambda function.
 * You can return variables from lambda functions and specify arguments for the function
@@ -373,7 +380,7 @@ You can:
 
 ### Worker thread example
 
-Now let's go for a more down-deep example of how you might use lambda functions to save <s>the world</s> you from getting bogged down. In this example we have a class which talks to a camera device. The particular thing about this camera device is that the camera must run in its own thread, and all operations on the camera must run in that thread.
+Now let's go for a more down-deep example of how you might use lambda functions to save you from getting bogged down. In this example we have a class which talks to a camera device. The particular thing about this camera device is that the camera must run in its own thread, and all operations on the camera must run in that thread.
 
 Imagine our ofApp looks like:
 

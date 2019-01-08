@@ -1,4 +1,4 @@
-#C++ Language Basics (unabridged)#
+# C++ Language Basics (unabridged) #
 
 *by [jtnimoy](http://jtnimoy.net)*
 
@@ -6,11 +6,11 @@
 >
 > **--Aleister Crowley, 1911**
 
-##Look Alive!
+## Look Alive!
 
 This chapter introduces you to writing small computer programs using the C++ language. Although I assume very little about your previous knowledge, the literacy you gain from this chapter will directly influence your comprehension in subsequent chapters of the book, as most other topics stand on the shoulders of this one. Furthermore, the lessons herein are cumulative, meaning you can't skip one of the topics or you will get lost. If you get stuck on one of the concepts, please seek help in understanding specifically the part that did not make sense before moving on to the next topic. Following the lessons with this sort of rigor will insure that you will get the most out of OpenFrameworks, but also computers in general.
 
-##Iteration
+## Iteration
 
 
 I did most of my drawing and painting in the mid-nineties, a high school AP art student sporting a long black ponytail of hair shaved with a step, round eyeglasses, and never an article of clothing without spill, fling, smattering, or splotch of Liquitex Basics acrylic paint. Bored out of my mind in economics class, playing with my TI-82 graphing calculator, I discovered something that flipped a light bulb on in my heart. Unlike smaller calculators around my house growing up, the TI-82 had a thick instruction manual. Amidst sections in this manual about trig functions and other dry out-of-reach science, something caught my thirsty, young eye: a sexy black-on-white pyramid with smaller upside-down pyramids infinitely nested inside, shown in Figure 1.
@@ -27,7 +27,7 @@ The cycle illustrated in Figure 2 is an infinitely repeating loop that I have ha
 
 For those just now familiarizing themselves with what it means to write small programs, it is important to understand the iterative nature of the code writing process. The anecdote in Figure 3 shows what this process is *not*. Rarely would you ever enter some code into the editor just once, and expect to hit compile and see your finished outcome. It is natural, and commonly accepted for programs to start small, have plenty of mistakes (bugs), and evolve slowly toward a goal of desired outcome or behavior. In fact it is so commonplace that to make the former assumption is a downright programmer's mistake. Even in older days when programs were hand-written on paper, the author still needed to eyeball the code obsessively in order to work out the mistakes; therefore the process was iterative. In learning the C++ language, I will provide tiny code examples that you will be compiling on your machine. The abnormal part is typing the code from the book into the editor, and (provided your fingers do not slip) the program magically runs. I am deliberately removing the troubleshooting experience in order to isolate the subject matter of the C++ language itself. Later on, we will tackle the commonplace task of *debugging* (fixing errors) as a topic all its own.
 
-##Compiling My First App
+## Compiling My First App
 
 Let us start by making the smallest, most immediate C++ program possible, then use the convenient environment to test small snippets of C++ code throughout this chapter. In order to do that, we must have a *compiler*, which is a program that translates some code into an actual runnable app, sometimes referred to as the executable file. C++ compilers are mostly free of charge to download, and in a lot of cases, open source. The apps we generate will not automatically show up in places like Apple's App store, Google Play, Steam, Ubuntu Apps Directory, or Pi Store. Instead, they are your personal, private program files and you will be responsible for manually sharing them later on. In the following chapter *OF Setup and Project Structure*, the compiler will sit on your local computer, able to run offline. For now, we will be impatient and compile some casual C++ on the web using a convenient tool by Sphere Research Labs. Please open your web browser and go to [ideone](http://ideone.com) (http://ideone.com).
 
@@ -46,7 +46,7 @@ Notice that the code in the editor changed, and looks something like figure 6.
 This is just an empty code template that does nothing, and creates no errors. The numbers in the left hand gutter indicate the line number of the code. Press the green button labeled *Run*. You will see a copy of the code,  "Success" in the comments, and the section labeled *stdin* (standard input) will be empty. *stdout* (standard output) will also be empty.
 
 
-###Interlude on Typography
+### Interlude on Typography
 
 Most fonts on the web are variable width, meaning the letters are different widths; the eye finds that comfortable to read. Fonts can also be fixed-width, meaning all the letters (even the W and the lowercase i) are the same width. Although this may look funny and quant like a typewriter, it serves an important purpose. A fixed width font makes a block of text into a kind of game board, like chess squares or graphing paper. Computer programming code is generally presented in fixed-width typesetting, because it is a form of ascii-art. The indentation, white space characters, and repetitive patterns are all important to preserve and easily eyeball for comparison. Every coder I know except artist Jeremy Rotsztain uses some manner of monospaced font for their code. Some typeface suggestions are Courier, Andale Mono, Monaco, Profont, Monofur, Proggy, Droid Sans Mono, Deja Vu Sans Mono, Consolas, and Inconsolata. From now on, you will see the font style switch to `this inline style` . . .
 
@@ -56,7 +56,7 @@ and this style encased in a block . . .
 
 . . . and that just means you are looking at some code.
 
-###Comments
+### Comments
 
 Now please press *Edit* (Figure 7) at the top left of the code editor.
 
@@ -108,7 +108,7 @@ Now press the green *ideone it!* button at the bottom right corner and watch the
 
 You made it this far. Now give yourself a pat on the back. You just wrote your first line of C++ code; you analyzed it, compiled it, ran it, and saw the output.
 
-##Beyond Hello World
+## Beyond Hello World
 
 Now that we've gotten our feet wet, let's go back and analyze the other parts of the code. The first line is an include statement:
 
@@ -124,7 +124,7 @@ Similar to *import* in Java and CSS, `#include` is like telling the compiler to 
 
 In OpenFrameworks, double quotes are used to include header files that are not part of the system installation.
 
-###What's with the # ?
+### What's with the # ?
 
 It's a whole story, but worth understanding conceptually. The include statement is not really C++ code (notice the absence of semi-colon). It is part of a completely separate compiler pass called *preprocessor*. It happens before your actual programmatic instructions are dealt with. They are like instructions for the code compiler, as opposed to instructions for the computer to run after the compile. Using a pound/hash symbol before these *preprocessor directives*, one can clearly spot them in the file, and for good reason too. They should be seen as a different language, mixed in with the real C++ code. There aren't many C++ preprocessor directives — they are mostly concerned with herding other code. Here are some you might see.
 
@@ -166,7 +166,7 @@ The compiler found an error and did not run the program. Instead, in attempt to 
 
 When using OpenFrameworks, you have choice of tools and platforms. Each one shows you an error in a different way. Sometimes the editor will open up and highlight the code for you, placing an error talk bubble for more info. Other times, the editor will show nothing, but the compile output will show a raw error formatted similarly to the one above. While sometimes useful that we receive several errors from a compile, it can save a lot of grief if you focus on understanding and fixing the very first error that got reported. After fixing the top error, it is likely that all subsequent errors will elegantly disappear, having all been covered by your first fix.  By commenting out that single line of code at the top, we caused two errors.
 
-###Namespaces at First Glance
+### Namespaces at First Glance
 
 Moving on to line 2, we see:
 
@@ -196,13 +196,13 @@ The compiler says, "Hey, I searched for `cout` and I did find it in one of the n
 std::cout << "Hello World" << std::endl;
 ```
 
-When you run the code, you will see it compiles just fine, and succeeds in printing "Hello World". Even the line that says `using namespace std;` is still commented out. Now imagine you are writing a program to randomly generate lyrics of a song. Obviously, you would be using `cout` quite a bit. Having to type `std::` before all your `cout`s would get really tedious, and one of the reasons a programming language adds these features is to reduce typing. So although line 2 `using namespace std;` was not necessary, having it in place (along with other `using namespace` statements) can keep one's C++ code easy to type and read, through implied context.
+When you run the code, you will see it compiles just fine, and succeeds in printing "Hello World". Even though the line that says `using namespace std;` is still commented out. Now imagine you are writing a program to randomly generate lyrics of a song. Obviously, you would be using `cout` quite a bit. Having to type `std::` before all your `cout`s would get really tedious, and one of the reasons a programming language adds these features is to reduce typing. So although line 2 `using namespace std;` was not necessary, having it in place (along with other `using namespace` statements) can keep one's C++ code easy to type and read, through implied context.
 
 Say I'm at a Scrabble party in Manhattan, and I am the only Josh. People can just call me Josh when it's my turn to play. However, if Josh Noble joins us after dinner however, it gets a bit confusing and we start to call the Joshes by first and last name for clarity. In C++, the same is also true. I would be `Nimoy::Josh` and he would be `Noble::Josh`. It's alright to have two different `cout` names, one from the `std`namespace, and another from the `improved` namespace, as long as both are expressed with explicit namespaces; `std::cout` and `improved::cout`. In fact, the compiler will complain if you don't.
 
 You will see more double-colon syntax (::) when I introduce classes.
 
-##Functions
+## Functions
 
 Moving on, let us take a look at line 4:
 
@@ -230,7 +230,7 @@ Next, we see an opening curly bracket. Sometimes this opening curly bracket is o
 
 In between this opening curly bracket and the closing one, we place our code statements that actually tell the computer to go do something. In this example, I only have one statement, and that is the required `return`. If you leave this out for a function whose return type is `int`, then the compiler will complain that you broke your promise to return an int. In this case, the operating system interprets a 0 as "nothing went wrong". Just for fun, see what happens when you change the 0 to a 1, and run the code.
 
-##Custom Functions
+## Custom Functions
 
 We will now define our own function and make use of it as a word template. Type the sample code into your editor and run it.
 
@@ -287,7 +287,7 @@ Getting back to the previous example, those five lines of code are all ***functi
 
 The colorful line in Figure 11 is the path drawn by an imaginary playback head that steps over the code as it executes. We start at the blue part and go in through the main entrypoint, then encounter `greet()`, which is where a *jump* happens. As the line turns green, it escapes out of `main()` temporarily so it can go follow along `greet()` for a while. About where the line turns yellow, you see it finished executing the containing code inside `greet()` and does a second jump (the return) this time going back to the previous saved place, where it continues to the next statement. The most obvious advantage we can see in this example is the reduction of complexity from that long `cout` statement to a simple call to `greet()`. If we must call `greet()` five times, having the routine *encapsulated* into a function gives it convenience power. Let's say you wanted to change the greeting from "Good night" to "Show's over ". Rather than updating all the lines of code you cut-and-pasted, you could just edit the one function, and all the uses of the function would change their behavior along with it, in a synchronized way. Furthermore, code can grow to be pretty complex. It helps to break it down into small routines, and use those routines as your own custom building blocks when thinking about how to build the greater software. By using functions, you are liberated from the need to meticulously represent every detail of your system; therefore a function is one kind of *abstraction* just like abstraction in art. This sort of abstraction is called *encapsulation of complexity* because it's like taking the big complex thing and putting it inside a nice little capsule, making that big complex thing seem smaller and simpler. It's a very powerful idea — not just in code.
 
-##Encapsulation of Complexity
+## Encapsulation of Complexity
 
 Imagine actor Laurence Fishburne wearing tinted Pince-nez glasses, offering you two options that are pretty complicated to explain. On the one hand, he is willing to help you escape from the evil Matrix so that you may fulfill your destiny as the hacker hero, but it involves living life on life's terms and that is potentially painful but whatever. The story must go on and btw, there is a pretty girl. On the other hand, he is also willing to let you forget this all happened, and mysteriously plant you back in your tiny apartment where you can go on living a lie, none the wiser. These two options are explained in the movie *The Matrix* and then the main character is offered the choice in the form of colored pills, as a way to simplify an otherwise wordy film scenario. The two complex choices are encapsulated into a simple analogy that is much easier for movie audiences to swallow. See Figure 12.
 
@@ -2213,7 +2213,7 @@ char myLetter = 'E';
 
 Unlike an `int`, a `float` allows decimal points, and so you can work at a higher resolution. A `char` holds a single ASCII character. It only needs to take up 8-bits of memory whilst the `float` and `int` take up more (therefore allowing them to express a wider range of values). I will touch briefly on the bits and bytes of memory when we get into bitwise operators, and then Arturo will give you much more in Chapter 16. Let's see the `float` in action!
 
-####Float
+#### Float
 
 ```cpp
 #include <iostream>
@@ -2390,12 +2390,12 @@ The output is still `3.14286`, since the division operator needs to have only on
 
 The output remains `3.14286`.
 
-#####What's in a name?
+##### What's in a name?
 
 I grew up in Southern California. When someone says the word "float" I am reminded of the Pasadena Tournament of Roses, a new years parade with flower-covered **floats** - decorated platforms on wheels. That's why I can understand if it's difficult at first to remember that a float is the variable type that allows decimal points. Often times, when I am having trouble associating a name like this in my mind, it helps me to look deeper into the reasoning behind the nomenclature. The reason these are called *floats* has historical significance. *Floating point precision* means the decimal place can shift left and right (because powers of 10 are useful), in contrast to *fixed point precision* like `double`, a type we will learn later on. If that still doesn't make sense, just do like a scripting language and use floats for everything. *When in doubt, use the type with a higher precision.*
 
 
-####Char
+#### Char
 
 `Char` is another type that stores a single character, whose value is traditionally 0-255, a range that fits inside 8-bits (1 byte). Often times, a char is referred to as a byte for this 8-bit reason. You may know the term `8-bit` if you are a fan of chiptune music or had a Nintendo Entertainment System (NES). A single byte is a pretty classic unit of memory, and as such - incredibly useful for dealing with data. You'll learn more about bits and bytes in chapter 16, in which Arturo will be covering the subject in greater detail. For now, let's start playing with the `char` type and begin to understand its basic uses.
 
@@ -2413,7 +2413,7 @@ int main() {
 
 This program outputs `B`. You've already seen strings surrounded by double quotes. A literal char is surrounded by single-quotes. This strictness can be difficult getting used to if you bring habits from scripting languages that use double and single quotes interchangeably. In C, a char is always surrounded by single quotes. When I add 1 to `myLetter`, it increments from A to B. On the next line, `cout` knows just what to do with the char, and prints it as a letter.
 
-####Casting
+#### Casting
 
 Okay, what if we want to see the numeric representation of our char, instead of the letter? *Explicit type conversion* (or casting) allows you to force the surrounding expression to treat a variable with one type as if it had another type. We do this by placing the desired type in parentheses and attach it to the left of the variable. In the following example, I loop from 'A' (65) to 'z' (122), and print out all the letters with their according numbers.
 
@@ -2526,7 +2526,7 @@ int main() {
 
 The output is `3 4 3`, and notice that I have included `<math.h>` so I can use floor(), ceil(), and round().
 
-###Randomness
+### Randomness
 
 I admit that last topic about variable types was a bit numeric, but it was important so if you feel fuzzy about any of it, please go back and re-read. For now, let's have fun with what we just learned. `math.h` comes with all kinds of useful tools for art. One of them generates a fake data stream of evenly distributed values. Programmers call it *random* and ironically, it's anything but random. To see what I mean, run the following program three times, each time noting the output.
 
@@ -2777,7 +2777,7 @@ In the line marked "artistically tweaked inequalities", my process was simply ch
 
 Having already warned you of its dangers, I am also of the opinion that computer random, just like Lorem Ipsum, fake plastic trees, and the Roland 808 cowbell sound all have their place as real elements in art, particularly when the artist is making a real statement about those very tools, and their people.
 
-###Algorithm
+### Algorithm
 
 The classic random number generator *algorithm* is just a feedback loop wherein a variable feeds back on itself, each time having some manipulation done to it. What gets returned to us is a snapshot of that. An algorithm is just a procedure for doing something. It's a fancy term to describe a useful chunk of code. Figure 31 shows an algorithm represented as a flowchart, which is easier for a lot of people to look at than indented code syntax. Notice it has conditionals, looping, and a main entry point.
 
@@ -2972,7 +2972,7 @@ Chars are signed by default. change `unsigned` to `signed`, and run it again. Th
 
 Instead of counting all the way up to 255, it looks like the sequence stops after 127, switches over to -128, then counts up from there until it reaches -1. A `signed char` can only count to 127 in exchange for the ability to do negative values.
 
-###Bool
+### Bool
 
 I previously mentioned George Boole when talking about the business of true and false. Whilst a true/false can be stored as a number (zero being false, and non-zero being true), C provides a convenient type called a `bool` whose value can only be true or false. In the following example, I declare a boolean variable and store a counting integer into it.
 
@@ -4344,10 +4344,10 @@ The reason x and y work is because they are implicitly members of `this`, which 
 When seeing classes in OpenFrameworks code templates, the top of the class declaration might contain more than I've taught you. Something like:
 
 ```cpp
-class testApp : public ofBaseApp{
+class ofApp : public ofBaseApp{
 ```
 
-The mysterious part at the end that goes `: public ofBaseApp` means that the class `testApp` is *inheriting* some pre-written variables and functions from OpenFrameworks so it is more capable than meets the eye.
+The mysterious part at the end that goes `: public ofBaseApp` means that the class `ofApp` is *inheriting* some pre-written variables and functions from OpenFrameworks so it is more capable than meets the eye.
 
 ## STL Strings
 
@@ -4381,7 +4381,7 @@ For online reference, I recommend http://en.cppreference.com and http://cplusplu
 ===
 ===
 
-###bibliography
+### Bibliography
 + Back to the Future II. Dir. Robert Zemeckis. Perf. Michael J Fox, Christopher Lloyd, Lea Thompson,. Universal Pictures, 1989. Film.
 + Carver, Cecily "Things I Wish Someone Had Told Me When I was Learning How to Code." *HACKER MONTHLY Issue 45* February 2014: Page 28 - 30. Print.
 + Cubbi, "C++ keywords." *cppreference.com* 29 November 2013. Web. 15 February 2014. http://en.cppreference.com/w/cpp/keyword

@@ -16,7 +16,7 @@ When using a brush or pen or chisel, we're taking advantage of the hard work tha
 ### About this Chapter
 A Math chapter for a book about graphics will always miss out on many ideas. In fact, there are entire books covering "math for graphics", mostly consisting of references to other books, focusing on a specific topic (like Linear Algebra, Multivariable Calculus, Differential Geometry, and many other words mysteriously connected to other words). This chapter must therefore be very concise about ideas. All topics here are explained in a friendly way, but please - never fear googling a thing for which you need better examples.
 
-This chapter will be divided into _'numbers of D's'_ : we'll start from one dimension, and slowly explore the possibilities enabled by the amount of dimensions we're operating in. We'll explore concepts of _scale_ and _change_ and learn how much can be described just with these two words. Depending on how you choose to read it, this chapter contains hundreds years of Mathematical research, or in other words, several classes of college math, so it's worth bookmarking.
+This chapter will be divided into _'numbers of D's'_ : we'll start from one dimension, and slowly explore the possibilities enabled by the amount of dimensions we're operating in. We'll explore concepts of _scale_ and _change_ and learn how much can be described just with these two words. Depending on how you choose to read it, this chapter contains hundreds of years of Mathematical research, or in other words, several classes of college math, so it's worth bookmarking.
 
 **Note:** When bringing math to innocent readers, most programming books will try to explain the idea, not necessarily the exact implementation. This book is no different. This chapter contains detailed breakdowns of concepts, but if you want to find out what's going on under the hood, there's no alternative to reading the source code - in fact, since all the math here is only a few lines long - it's actually _encouraged_ to have a look at the source.
 
@@ -302,16 +302,16 @@ cout << ofToString( a + b ) << endl;
 Vector addition serves many simple roles. In this example, we're trying to track our friend Lars as he makes his way home from a pub. Trouble is, Lars is a little drunk. He knows he lives south of the pub, so he ventures south; But since he can't walk straight, he might end up somewhere else.
 
 ```cpp
-/* in testApp.h: */
+/* in ofApp.h: */
 glm::vec2 larsPosition;
 void larsStep(glm::vec2 direction);
 
-/* in testApp.cpp: */
-void testApp::setup(){
+/* in ofApp.cpp: */
+void ofApp::setup(){
 	larsPosition = glm::vec2( ofGetWidth() / 2., ofGetHeight() / 3. );
 }
 
-void testApp::update(){
+void ofApp::update(){
 	if (larsPosition.y < ofGetHeight * 2. / 3.){
 		//As Lars attempts to take one step south,
 		//He also deviates a little to the right, 
@@ -324,7 +324,7 @@ void ofApp::larsStep(glm::vec2 direction){
 	position += direction;
 }
 
-void testApp::draw(){
+void ofApp::draw(){
 	//Draw Lars any way you want. No one's judging you.
 }
 ```
@@ -764,7 +764,7 @@ If you recall, we can multiply all of these matrices to get one matrix represent
 We call this matrix $M$, because it places objects we give it in their place in the _Model_. Whenever you call `ofTranslate()`, `ofRotate()`, `ofScale()` (or equivalent) on an object, that operation is applied to the **currently active _Model_ matrix**. Whenever you execute `ofPushMatrix()`, a copy of that matrix is saved in _the matrix stack_, so that you can go back to it when necessary. And when necessary, you will then use `ofPopMatrix()`, which will cause the current matrix $M$ to be deleted and replace it with a matrix from the top of the matrix stack. That is the entire mystery about matrices. That's it. 
 
 ### Using Matrices and Quaternions in openFrameworks
-While this chapter was supposed to show the underlying representation of grpahics operations, it did intentionally avoid showing matrix examples in code. Now that you know how matrices look on the inside, it'll be a lot easier for you to figure out how to debug your 3d code, but most of the time using matrices in raw form won't be necessary.
+While this chapter was supposed to show the underlying representation of graphics operations, it did intentionally avoid showing matrix examples in code. Now that you know how matrices look on the inside, it'll be a lot easier for you to figure out how to debug your 3d code, but most of the time using matrices in raw form won't be necessary.
 
 While you could construct a matrix via `glm::mat4`, using:
 

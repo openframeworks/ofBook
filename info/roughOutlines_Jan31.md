@@ -2,9 +2,9 @@ Rough Outlines-- What we have so far
 =========
 
 
-Here are the rough outlines altogether so you can see them as one. This is not a place for comments-- just a place 
-to get an overall picture of where you're all headed. To comment, you've all agreed on github/issues so everyone 
-should stick with that 
+Here are the rough outlines altogether so you can see them as one. This is not a place for comments-- just a place
+to get an overall picture of where you're all headed. To comment, you've all agreed on github/issues so everyone
+should stick with that
 
 As Zach pointed out in an email, questions to think about:
 a) Does the scope of the outline look right?  Is it too broad or too narrow?
@@ -66,7 +66,7 @@ C++_basics (JTNimoy)
     - private
     - public
     - inheritance
-    
+
 
 OOPs! (Rui)
 =========
@@ -103,13 +103,13 @@ https://github.com/ofZach/algo2012
 
 - brief notes about animation and movement
 - central question: how can we make things move in a lifelike and compelling way?
-- animation in OF basics: 
+- animation in OF basics:
     - frame rate
     - update and render loop
     - point object
 - variables for movement
     - pct based animation
-    - linear interpolation 0-1, 
+    - linear interpolation 0-1,
     - easing functions, powf
     - zeno
 - sin / cos based movement
@@ -160,12 +160,12 @@ Image_Processing_Computer_Vision (Golan)
 =========
 
 
-##1. Introduction 
+## 1. Introduction
 
 [This outline is based on workshops Golan taught with Kyle.]
 Some previous reference materials here:
 -- http://futuretheater.net/wiki/Vision_Workshop
--- http://piratepad.net/resonate-cv 
+-- http://piratepad.net/resonate-cv
 -- http://www.flong.com/texts/essays/essay_cvad/
 
 Unedited copy-paste from Arturo email (not yet integrated):
@@ -173,9 +173,9 @@ looks great to me, something i always find useful to explain as introduction in 
 also explaining the physical setup of such installations, IR lighting, filters... how to make the computer see some things and humans others and in general how all the work you can do in the physical setup will make your live easier when coding: the first time zach explained to me how in mesa di voce the screen is flooded with IR so the computer has to do almost nothing in order to detect the performers, it totally changed my way of thinking about this kind of problems
 
 ========================================================
-##2. Preliminaries
+## 2. Preliminaries
 
-- 2.1. Image data structures 
+- 2.1. Image data structures
    - 8u, 32f, etc.
    - 1C, 3C, 4C images, etc.
    - Back and forth between ofxCV, ofxOpenCV, unsigned char*, ofPixels.
@@ -185,13 +185,13 @@ also explaining the physical setup of such installations, IR lighting, filters..
    - adding two images together
    - subtracting two images
    - multiplying an image by a constant
-   - mentioning ROI 
+   - mentioning ROI
    - Example: creating an average of several images (e.g. Jason Salavon)
    - Example: creating a circular alpha-mask from a computed Blinn spot
-   
+
 - 2.3. Convolution Filtering
    - Blurring an image
-   - Edge detection 
+   - Edge detection
    - Advanced sidebar: dealing with boundary conditions
 
 - 2.4. Suggestions for Further Experimentation:
@@ -201,75 +201,75 @@ also explaining the physical setup of such installations, IR lighting, filters..
    - Toy version of Memo Akten's Gold: Optical flow + particle system
 
 ========================================================
-##3. Scenario I. Basic Blobs (e.g. Manual Input Sessions) 
+## 3. Scenario I. Basic Blobs (e.g. Manual Input Sessions)
 
-- 3.1. The Why 
+- 3.1. The Why
    - Some examples of projects that use blob-tracking
-   - and some scenarios that call for it. 
-   
-- 3.2. Detecting and Locating Presence and Motion 
+   - and some scenarios that call for it.
+
+- 3.2. Detecting and Locating Presence and Motion
    - Detecting presence with Background subtraction
    - Detecting motion with frame-differencing
    - Binarization, blob detection and contour extraction
       - Area thresholds for contour extraction (min plausible area, max plausible area, as % of capture size)
       - Finding negative vs. positive contours
-   
+
 - 3.3. Image Processing Refinements
    - Using a running average of background
    - Erosion, dilation, median to remove noise after binarization
    - Combining presence and motion in a weighted average
    - Compensating for perspectival distortion and lens distortion
-   
+
 - 3.4. Thresholding Refinements
-   - Some techniques for automatic threshold detection 
+   - Some techniques for automatic threshold detection
    - Dynamic thresholding (per-pixel thresholding)
-   
+
 - 3.5. The Vector space: Extracting information from Blob Contours
    - Area, Perimeter, Centroids, Bounding box
    - Calculcating blob orientation (central axis)
    - Locating corners in contours, estimating local curvature
-   - 1D Filtering of contours to eliminate noise, i.e local averaging. 
+   - 1D Filtering of contours to eliminate noise, i.e local averaging.
    - Convexity defects, contourFinder.getConvexityDefects()
    - Other shape metrics; shape recognition
-   
+
 - 3.6. Using Kinect depth images
    - Finding the "fore-point" (foremost point)
    - Background subtraction with depth images
    - Hole-filling in depth images
    - Computing normals from depth gradients
-   
-- 3.7. Suggestions for further experimentation: 
+
+- 3.7. Suggestions for further experimentation:
    - Tracking multiple blobs with ofxCv.tracker
    - Box2D polygons using OpenCV contours, e.g. https://vimeo.com/9951522
-   
+
 ========================================================   
-##4. Scenario II. Face Tracking.
+## 4. Scenario II. Face Tracking.
 
 - 4.1. Overview
     - Some examples of projects that use face-tracking
         - Golan & Zach's Re:Face
         - Mary Huang's face typography
         - Kyle & Arturo, face swapping
-   
-- 4.2. A basic face detector. 
+
+- 4.2. A basic face detector.
    - Face detection with classic OpenCV viola-Jones detector
-   - How it works, and considerations when using it. 
+   - How it works, and considerations when using it.
    - cvDazzle; Kyle & Aram ("How to Avoid Facial Recognition"
-   
+
 - 4.3. Advanced face analysis with the Saraghi FaceTracker
 
-- 4.4. Suggestions for further experimentation: 
+- 4.4. Suggestions for further experimentation:
    - Make a face-controlled puppet
    - Toy version of David Tinapple's "The Face of TV": Find the average face of a TV channel
-   
+
 ========================================================  
-##5. A Computer-Vision lexicon, and where to find out more information 
+## 5. A Computer-Vision lexicon, and where to find out more information
 
-Computer vision is a huge field and we can't possibly cover all useful examples here. 
-Sometimes people lack the terminology to know what to google for. 
+Computer vision is a huge field and we can't possibly cover all useful examples here.
+Sometimes people lack the terminology to know what to google for.
 
-- Camera calibration. 
-- Homography transforms and re-projection. 
+- Camera calibration.
+- Homography transforms and re-projection.
 
 
 
@@ -286,11 +286,11 @@ It is a very brief overview of dealing with data in OF. It overviews how to load
 	1.2 Defintition of terms and chapter structure
 	1.3 Steps of visualising data ( as per ben fry) .  
 
-2. Working with data 
+2. Working with data
 	2.1 Loading and saving data
-	2.2 Using classes or structs to store data. 
+	2.2 Using classes or structs to store data.
  	2.3 Conversion functions (ofSplitString, ofToString, ofToInt)
-	2.3 Quick overview of some common file structures. 
+	2.3 Quick overview of some common file structures.
 		-tsv, csv, html, xml, json, svg
 	2.4 Notes on Parsing Data.
 
@@ -300,9 +300,9 @@ It is a very brief overview of dealing with data in OF. It overviews how to load
 	3.3 Geolocated data example
 
 4. Working with Real time data
-	5.1 What are APIs? 
+	5.1 What are APIs?
 	5.2 Interacting with URLS
-	5.3 Using this data real time in an animation 
+	5.3 Using this data real time in an animation
 
 5. Challenges and further resources
 
@@ -327,7 +327,7 @@ Terms:
 ●        IP addresses/ports
 
 
-###Outline
+### Outline
 
 ●        Historical overview of OSC
 ●        Overview in general of how OSC works
@@ -360,7 +360,7 @@ Hardware (Caitlin/Pierre)
 - Digital input and output with Firmata / ofArduino
 - Analog input and output with FIrmata / ofArduino
 - Servo control with OF
-- 
+-
 - Creating a headless app for hardware control
 - Serial communication on a single board computer (rPI/Beaglebone)
 
@@ -403,14 +403,14 @@ Sound (Adam)
   - Overview of non-insane synthesis techniques (i.e. http://en.wikipedia.org/wiki/Category:Sound_synthesis_types )
 - Gotchas
   - Sample rates, Nyquist, aliasing
-  - Popping, clipping 
+  - Popping, clipping
   - Latency
 
 - Advanced sidebars
 
     - DSP stuff (windowing, filtering...)
-    - Tricks for human voices (cepstrum and friends) 
-    - Constant Q (and why raw FFT can be not-so-great for music) 
+    - Tricks for human voices (cepstrum and friends)
+    - Constant Q (and why raw FFT can be not-so-great for music)
     - Maybe some insane synthesis techniques
 
 
@@ -440,7 +440,7 @@ iOS (Lukasz)
 
     - GCD, blocks, "the main queue"
     - ARC and C++
-  
+
 
 
 
@@ -491,7 +491,7 @@ Threads (Arturo)
 
 Introduction_to_version_control_with_git (Christoph)
 =========
- 
+
 
 *This chapter will give a high-level overview over a pretty complex topic with a generous amount of links to more material to enable readers to easily find appropriate information. It's quite difficult to do it in anything approaching completeness in only a couple of pages, and a high-level overview  will be more useful to the reader.*
 
@@ -503,8 +503,8 @@ Introduction_to_version_control_with_git (Christoph)
 * Popular systems and their major differences
 
 ### Introduction to Git
-* What is Git? 
-* How does it work? 
+* What is Git?
+* How does it work?
     - *short crash-course with generous links to deeper reading*
     - *KISS! this will be the major challenge considering Git's complexity*
     - introduce following terms:
@@ -521,7 +521,7 @@ Introduction_to_version_control_with_git (Christoph)
 ### Github
 * What is it?
 * How does it work? What can it do for you: Pull requests, issue trackers, collaboration
-* openFrameworks on Github. 
+* openFrameworks on Github.
 * Your project(s) on Github
 
 ### Conclusion
@@ -539,13 +539,13 @@ Shaders (Patricio)
 =========
 
 
-###Intro
+### Intro
 
 - The birth of the render pipeline and a brief history of the GPU
 - Explanation of Vertex Shader and Frag shader
 
 
-###Fragment Shader
+### Fragment Shader
 
 - What are they for? How do they work? Comparison with old pixel-by-pixel operations. References
 - First example: all red billboard (+ basic explanation of how to make a QUAD mesh with texCoords)
@@ -557,13 +557,13 @@ Shaders (Patricio)
 - Exercise: make simple shaders that emulate basic openCV operations such as: grayscale, brightness, contrast, threshold, absDiff
 
 
-###Vertex Shader
+### Vertex Shader
 
 - What are they for? How do they work?
 - Varings
 - Example: cheap DOF passing the alpha value from the vertex shader
 
-###Advanced
+### Advanced
 
 - The Programmable-Render on OF
 - Differences between openGL2, openGL ES and openGL3
@@ -575,17 +575,17 @@ Shaders (Patricio)
 
 
 
-#Intro_to_Graphics (Mike)
+# Intro_to_Graphics (Mike)
 
-###Programming Graphics
+### Programming Graphics
 Personal goals for chapter:
 
 * Explain the basics in a way so as to not lose anyone who is just picking up programming
-* Explain ways for thinking about generating visuals algorithmically 
+* Explain ways for thinking about generating visuals algorithmically
 * Demonstrate some ways to get your work off of your computer and into the interwebs
 * (Hopefully) include interesting things for those who are more advanced
 
-####Section 1: Simple Graphics Loop
+#### Section 1: Simple Graphics Loop
 * __Intent:__ Get comfortable the update/draw, background and 'foregrounds'
 * __Project:__ Drawing a simple shapes at the mouse position  
   * Explain XY pixel coordinate system
@@ -593,13 +593,13 @@ Personal goals for chapter:
   * Circle/Rect/Ellipse/Line (and ofSetRectMode)
   * Fill and stroke concepts in openFrameworks
   * Drawing multiple shapes, drawing order
-  * Turning off auto background and using transparency for trail effect 
+  * Turning off auto background and using transparency for trail effect
     * If not covered in a previous chapter, effects of framerate
 
 
-####Section 2: Procedural Colors
+#### Section 2: Procedural Colors
 * __Intent:__ Explain ofColor and ways to explore colors procedurally (using recursion).  Also, parameter searching.
-* __Project:__ Explore the HSB way of thinking by making color compositions 
+* __Project:__ Explore the HSB way of thinking by making color compositions
   * Explain the ways color can be specified (grayscale, RGB, RGBA, HSB)
   * Using HSB dimensions to generate color palettes
     * Why not RGB?
@@ -607,7 +607,7 @@ Personal goals for chapter:
     * Subdivide screen into smaller rectangles that change slowly along one of the HSB color dimensions
       * Example images: [hue](https://github.com/openframeworks/ofBook/blob/master/20_intro_to_graphics/EvolvingColor_ChangingHue.png), [saturation](https://github.com/openframeworks/ofBook/blob/master/20_intro_to_graphics/EvolvingColor_ChangingSaturation.png), [brightness](https://github.com/openframeworks/ofBook/blob/master/20_intro_to_graphics/EvolvingColor_ChangingBrightness.png)
       * Uses ofRect, ofRectangle, ofRandom and std::vector
-    * Defining controllable parameters 
+    * Defining controllable parameters
       * Parameter searching interactively using mouseX, mouseY and key presses
 * __Extension:__ Documenting your work (part 1)
   * Static work, saving an image (PNG or PDF)
@@ -615,22 +615,22 @@ Personal goals for chapter:
     * Saving images at a higher resolution than screen?
   * Moving work, saving a gif
     * Best for short animations, like here where we can show the process of the colors evolving in the recursion
-    * Saving a series of images and compositing them 
+    * Saving a series of images and compositing them
     * Possibly a section on ofxGifEncoder
     * Tips for compression
-  
-####Section 3: Coordinate Systems Transformations
+
+#### Section 3: Coordinate Systems Transformations
 * __Intent:__ Explain power of moving coordinate system
 * __Project:__ Trippy animated spiralling rectangles
   * Explain the 'moving the paper' analogy
   * Concept of repetition
   * Drawing expanding and sprialling rectangles
-    * Same rectangle code, ofRect(0, 0, w, h) 
+    * Same rectangle code, ofRect(0, 0, w, h)
     * Visual changes comes from ofRotate, ofScale, ofTranslate
     * Makes use of ofNoise for creating sprialling rotations
   * [Example image](https://github.com/openframeworks/ofBook/blob/master/20_intro_to_graphics/CoordSystem_RepeatingSquareSpiral.png)
 
-####Section 4: The Other Shapes
+#### Section 4: The Other Shapes
 * __Intent:__ Finish off 2D graphics using curves, beziers, and custom shape
 * __Project:__ Not yet sure what will go here...
  * Teach in the context of a project with generative visuals, like:
@@ -643,7 +643,7 @@ Personal goals for chapter:
     * For interactive works, 3rd party recording software
     * For noninteractive works, creating a 'rendering' mode, saving frames and stiching them together using ffmpeg or openFrameworks
 
-####Section 5: Meshes
+#### Section 5: Meshes
 * This is pushing the limits of what can fit in a chapter, but I'd love to see coverage of 3D and meshes in the book...
 * __Intent:__ Jump into meshes, cameras, and thinking about ways to generate meshes
 * __Project:__ I could attempt to shorten up the [generative mesh tutorial](http://openframeworks.cc/tutorials/graphics/generativemesh.html) and include it
@@ -655,7 +655,7 @@ Personal goals for chapter:
  * ofEasyCam to navigate
  * How to handle the mesh to create simple animation and interactivity
 
-####Section 6: Links to Addons and Where to Learn More
+#### Section 6: Links to Addons and Where to Learn More
 * Addons
   * Adding Physics
     * ofxBullet
@@ -665,8 +665,8 @@ Personal goals for chapter:
   * Vector Graphics
     * ofxSVG or ofxVectorGraphics
 * Additional Resources
-  * I'll sort this out in more detail once I have an idea of what the other chapters in the book will look like 
-  * ofBook will already have computer vision and shaders, so I'd like to point to resources on particle systems, opengl, vector math, and whatever else fits. 
+  * I'll sort this out in more detail once I have an idea of what the other chapters in the book will look like
+  * ofBook will already have computer vision and shaders, so I'd like to point to resources on particle systems, opengl, vector math, and whatever else fits.
   * Links to cool openFrameworks projects
 -- -- --
 
@@ -719,8 +719,8 @@ Project_Elliot
 
     - matchMapToScan.app
          - Screenshots
-                
-            
+
+
 
 
 
@@ -728,12 +728,12 @@ Project_Elliot
 Project_Eva
 =========
 
-###Case Study
-###"Choreographies for Humans and Stars"
+### Case Study
+### "Choreographies for Humans and Stars"
 (@dailyTLJ project)
 
 
-1. Project 
+1. Project
     - summary, image
     - background story: client, call, competition
     - timeline: from competition, ideation, prototyping, production, to opening
@@ -753,13 +753,13 @@ Project_Eva
         - screenshot camera view with tracking windows
     - choice of visualization software > OF
     - additional software used: processing, gstreamer, switcher, oscdump, ..
-    
+
 4. Viz Software (OF)
     - development setup: linux, codeblocks, sublime, github
     - externals used: ofxOsc, ofxOpenCv, ofxGui, ofEvents
     - input: tracking data
         - OSC communication: dealing with fsp diff, dummies for testing
-        - blobs data structure with std::map, updating 
+        - blobs data structure with std::map, updating
         - perspective transformation
     - implementing video content
         - content preparation (quest for right format, tools used)
@@ -815,50 +815,50 @@ In each case, the planning documents, development schedule and eventual technica
 Project_Memo
 =========
 
-##0. intro
+## 0. intro
 - what this chapter is, and what it isn't.
 - what you should know before reading this.
 - Not indepth coverage of any one topic, but covering each topic very briefly, to show how many different topics can come together to create an app
 - summary of what we will create (Body Paint, Gold, Reincarnation, Depeche Mode Fragile Tension, U2 PUNK), areas we will cover, and how everything fits together
 
-##1. Video Input
+## 1. Video Input
 - loading video files (ofVideoPlayer)
 - reading live webcam input (ofVideoInput)
 - How to write the app in a way to seamlessly switch between taking input from VideoPlayer (i.e. a file) vs Webcam Input (i.e. live)
 - OOP / Polymorphism allows ofBaseVideo
 - pro tips
 
-##2. Basic Image Processing + Computer Vision
-####Create particle-creation-map:
+## 2. Basic Image Processing + Computer Vision
+#### Create particle-creation-map:
 - frame differencing
 - threshold (binary, top, bottom)
 - adaptive threshold
 - blur, median
 - morphology (erode, dilate, open, close)
 
-##Optical flow (to advect fluid simulation)
+## Optical flow (to advect fluid simulation)
 - blur
 - threshold
 
-##Misc
+## Misc
 - align input image to desired position in output: image transforms
 - pro tips
 
-#3. Fluid simulation
+# 3. Fluid simulation
 - non-core addons
 - github
 - advect fluid with optical flow
 - pro tips
-     
-#4. Particles 
-##Behaviours:
+
+# 4. Particles
+## Behaviours:
 - create with particle-creation-map
 - basic dynamics (F=ma, v = u + at)
 - vector math (arithmetic, normalising, cross products, dot products etc.)
 - gravity, wind, mass, drag, momentum, noisefields, mapping curves, adding variance, sparkles, etc.
 - pro tips
 
-##Drawing
+## Drawing
 - manually (easy way, old fashioned and slow)
 - Vertex Array (vs VBO)
 - ofMesh
@@ -866,7 +866,7 @@ Project_Memo
 - pro tips
 
 
-#5. Post FX (optional)?
+# 5. Post FX (optional)?
  - fbo
  - fragment shader?
  - pro tips

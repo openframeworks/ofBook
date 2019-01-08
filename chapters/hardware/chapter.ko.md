@@ -5,8 +5,8 @@
 .. translator_site: http://scripter.co.kr
 ---
 
-#Hardware
-#하드웨어
+# Hardware
+# 하드웨어
 *by [Caitlin Morris](http://www.caitlinmorris.net/) and [Pierre Proske](http://www.digitalstar.net/)*
 
 
@@ -16,11 +16,11 @@
 This chapter will give you an introduction to working with openFrameworks outside of your computer screen and into the physical world. Why exactly would you want to do this? Well, given that we are physical creatures ourselves, having software control, sense and actuate real-world things can be pretty exciting and create truly visceral experiences. Screen based work can be captivating, but physical installations have the potential to deliver greater impact due to their more tangible nature.
 이 챕터는 당신에게 당신의 컴퓨터 스크린이외에서 작업과 실제 물리적인 오픈프레임웍스 작업을 소개 할 것이다. 당신은 정확히 왜 이것을 하기 원하는가? 글쎄, 우리는 스스로 물리적인 창조물 이며, 소프트웨어를 컨트롤 하며, 감각적이며, 실제 세계에서 어떤것을 조작 하는것이 상당히 흥미롭게 하며 진실로 본능적인 경험을 창조 한다. 스크린을 베이스로한 작업은 매혹적이나, 물리적인 설치물은 그들에게 실제로 보이는 것들이기 때문에 가능성과 강력한 임펙트를 전달한다.
 
-There are a number of ways of taking your openFrameworks app out of the frame of your own personal computer and getting it to interact with the outside world. Largely this involves some kind of communication from openFrameworks to whatever hardware you've decided to hook up to. The different types of computer based communications (or protocols) vary, but the most common is what's known as 'serial' communication, so called because each bit of data sent is transferred one after the other (as opposed to multiple bits being sent in parallel). 
-오픈프레임웍스 앱을 이용하여 당신의 개인 컴퓨터를 벗어나고 인터랙티브한 바깥 세상으로 나가기 위한 3가지 방법이 있다. 크게는 어떤 당신이 관심을 가지기로 한 하드웨어의 오픈프레임웍스 커뮤니티같은 곳에 참여 하는 것이다. 다른 종류의 컴퓨터기반의 통신(혹은 프로토콜)은 서로 다르나, 대부분은 '시리얼' 통신으로 알려져 있다. 왜 그렇게 불리냐면 다른 각각의 데이터의 비트를 서로 다른 곳으로 전송(다중 비트들을 동시에 서로 보내기) 하기 때문이다. 
+There are a number of ways of taking your openFrameworks app out of the frame of your own personal computer and getting it to interact with the outside world. Largely this involves some kind of communication from openFrameworks to whatever hardware you've decided to hook up to. The different types of computer based communications (or protocols) vary, but the most common is what's known as 'serial' communication, so called because each bit of data sent is transferred one after the other (as opposed to multiple bits being sent in parallel).
+오픈프레임웍스 앱을 이용하여 당신의 개인 컴퓨터를 벗어나고 인터랙티브한 바깥 세상으로 나가기 위한 3가지 방법이 있다. 크게는 어떤 당신이 관심을 가지기로 한 하드웨어의 오픈프레임웍스 커뮤니티같은 곳에 참여 하는 것이다. 다른 종류의 컴퓨터기반의 통신(혹은 프로토콜)은 서로 다르나, 대부분은 '시리얼' 통신으로 알려져 있다. 왜 그렇게 불리냐면 다른 각각의 데이터의 비트를 서로 다른 곳으로 전송(다중 비트들을 동시에 서로 보내기) 하기 때문이다.
 
 The first hardware that we’ll look at interfacing with is the excellent **Arduino** prototyping platform.  Arduino is, in its own words, an *“open-source electronics prototyping platform based on flexible, easy-to-use hardware and software… intended for artists, designers, hobbyists, and anyone interested in creating interactive objects or environments.*”  It’s easy to see why there’s a lot of overlap between communities of people interested in using openFrameworks and Arduino!  With Arduino, it’s quick to get your openFrameworks app hooked up to sensors (like light sensors, proximity sensors, or other methods of environmental input), actuators (like lights, motors, and other outputs), and real-time interaction.  You're free to move out of the realm of pixels and into the physical world.
-첫번째 하드웨어로 훌륭한 **Arduino** 프로토타입 플랫폼을 보게 될 것이다. 아두이노는 그들의 말로 
+첫번째 하드웨어로 훌륭한 **Arduino** 프로토타입 플랫폼을 보게 될 것이다. 아두이노는 그들의 말로
 *"오픈 소스 일렉트로닉 프로토타이핑 플랫폼기반의 유연하고, 사용하기 쉬운 하드웨어와 소프트웨어 이다...(중략) 아티스트, 다자이너, 취미로 즐기는 사람, 관심있는 사람 모두가 오브젝트나 환경을 창조 하는것을 목표로 하고 있다 "*
 왜 그들의 커뮤니티나 사람들의 관심에서 오픈프레임웍스와 아두이노가 오버랩 되는지 쉽게 알 수 있다. 아두이노와 함께라면, 센서(발광센서, 근접센서, 또는 주변의 여러 기능을 가진 입력장치들)를 오픈프레임웍스와 연결 하고, 동작기(전구, 모터, 여타 아웃풋 장치), 그리고 실시간 인터랙션을 빠르게 구현 할 수 있다.
 
@@ -39,7 +39,7 @@ Additionally, following along with the examples in this chapter requires you to 
 **SERIAL: ONE AFTER THE OTHER**
 **시리얼: 한발 더 들어가기(? 번역하기 애매한 부분)
 Serial, in the most basic language sense, refers to things that come one after another; it’s a term often used to describe magazines, crimes, and television programs.  That meaning also applies when talking about serial data:  “serial communication” means that all information between two entities is being sent one piece at a time, following in a single stream.  One piece of data, or one bit, is just a binary piece of information: you’re either sending a 0 or a 1.  Using the terminology of digital electronics, these are frequently referred to as “high” and “low”; 0 is low (like turning a light off) and 1 is high (flipping it back on).  8 bits (for example the stream 01000001, which represents the letter A) are sometimes packaged together to create a single byte.
-시리얼, 대부분 기본적인 언어 감각 안에, 한발 더 들어 가가는 것을 조회; 그것은 매거진을 정기적으로 구독 하기, 범죄, 그리고 텔레비전 프로그램들이다. 또한 그것이 의미하는 바는 시리얼 데이터를 얻을 때 요청한다. 단일 스트림에 따라서 “시리얼 통신”은 두 엔트리 사이에 모든 정보를 의미, 한번에 한 조각이 보내지기 시작 한다. 한조각의 데이터, 혹은 한 비트는 정보의 한 조각 바이너리일 뿐이고, 또한 0 혹은 1을 보낼 때도 그러하다. 디지털 전자 용어를 사용 하고, “high” 와 ”row” 같은 것을 자주 이용 한다. 0은 low 이고 그리고, 1 은 high 이다(불을 켰다 끄는 것 과 같은)(flipping it back on). 8비트는 간혹 같이 팩키지되어 단일 바이트를 생성 한다(예를 들어 01000001는 A를 나타낸다) 
+시리얼, 대부분 기본적인 언어 감각 안에, 한발 더 들어 가가는 것을 조회; 그것은 매거진을 정기적으로 구독 하기, 범죄, 그리고 텔레비전 프로그램들이다. 또한 그것이 의미하는 바는 시리얼 데이터를 얻을 때 요청한다. 단일 스트림에 따라서 “시리얼 통신”은 두 엔트리 사이에 모든 정보를 의미, 한번에 한 조각이 보내지기 시작 한다. 한조각의 데이터, 혹은 한 비트는 정보의 한 조각 바이너리일 뿐이고, 또한 0 혹은 1을 보낼 때도 그러하다. 디지털 전자 용어를 사용 하고, “high” 와 ”row” 같은 것을 자주 이용 한다. 0은 low 이고 그리고, 1 은 high 이다(불을 켰다 끄는 것 과 같은)(flipping it back on). 8비트는 간혹 같이 팩키지되어 단일 바이트를 생성 한다(예를 들어 01000001는 A를 나타낸다)
 
 Serial communication is actually a very broad topic and there are many serial protocols, including audio-visual protocols such as DMX (based on RS-485) and MIDI (serial at 31,250 bits per second) which we'll briefly cover in this chapter. The most common serial protocol is called RS-232 and computers used to be equipped with RS-232 serial ports (remember them?) but today they are rarely present, which is why serial communications involving a computer will typically require an RS-232 to USB adaptor (found on-line or at your local electronics store).
 시리얼 통신은 사실 매우 폭넓은 주재이며, 거기에는 많은 시리얼 프로토콜이 있고, DMX(based on RS-485) 와 MIDI(serial at 31,250 bits per second) 와 같은 오디오 비주얼 프로토콜을 포함 하며, 우리는 이 챕터에서 잠시 이것들을 잠시 덮어둘 것이다. 대개 보통의 시리얼 프로토콜은 RS-232로 불리우고, 컴퓨터들은 RS-232를 장착해 왔다.(기억하는가?) 그러나 오늘날 그들은 잘 보이지 않고, USB가 RS-232 보다 컴퓨터의 보통 시리얼 통신으로 자리잡게 된 이유이다.
@@ -74,7 +74,7 @@ int greenPin = 10;  // Green LED
 int bluePin  = 11;  // Blue LED
 
 int color[4];
-long int inByte; 
+long int inByte;
 int wait = 10; //10ms
 
 void setup()
@@ -82,8 +82,8 @@ void setup()
   pinMode(redPin,   OUTPUT);   // sets the pins as output
   pinMode(greenPin, OUTPUT);   
   pinMode(bluePin,  OUTPUT);
-  
-  Serial.begin(9600); 
+
+  Serial.begin(9600);
 }
 
 void outputColour(int red, int green, int blue) {
@@ -94,7 +94,7 @@ void outputColour(int red, int green, int blue) {
 
 void setColor() {
   int i = 0;
-  
+
   //wait and be patient
   while (i < 4)
   {
@@ -111,13 +111,13 @@ void loop()
   if (Serial.available() > 0) {
     // get incoming byte:
     inByte = Serial.read();
-    
+
      if (inByte == 'C') {
       getColour();
       analogWrite(redPin, color[1]);
       analogWrite(bluePin, color[2]);
-      analogWrite(greenPin, color[3]); 
-    } 
+      analogWrite(greenPin, color[3]);
+    }
   }
   delay(wait);
 }
@@ -286,7 +286,7 @@ In order to continuously update with new information on the serial port, it's im
 myArduino.update();
 ```
 
-That's it! Now you're ready to start sending digital signals to pin 13 on your Arduino. 
+That's it! Now you're ready to start sending digital signals to pin 13 on your Arduino.
 
 There are any number of triggers that you can use to control this signalling: you could set up a timer, integrate it into a game event, use a camera input... the possibilities are endless!  Here, I'm going to trigger my Pin 13 LED to turn on and off based on the up and down arrow keys.
 
@@ -306,10 +306,10 @@ void testApp::keyPressed  (int key){
     	}
 	}
 ```
-	
+
 When all the parts are together, run the app and toggle your UP and DOWN arrow keys to turn the on-board LED on your Arduino on and off!  You can also put in a 3mm or 5mm LED on pin 13 to make the effect more obvious.  Remember that pin 13 is the only Arduino pin with a built-in resistor, so if you want to add LEDs or other components on other pins, you'll need to build a full circuit with resistors to avoid burning out your parts.
 
- 
+
 ## Lights On - controlling hardware via DMX
 
 DMX (which stands for Digital Multiplex), also known as DMX512 (512 being the number of channels each output can accommodate), is a protocol for controlling lighting and stage equipment. It's been around since the 80's, and is sometimes referred to as the MIDI of the lighting world as it achieves a fairly similar outcome - the sequencing and controlling of hardware through the use of a computer. DMX can be used to control anything from strobes to RGB par-can lights to LED fixtures. It's even possible to drive LED strips by Pulse Width Modulation if you have the right hardware. The advantage of sending DMX through a custom openFrameworks app is that you can then integrate it via all the other goodness OF has to offer, including custom GUI's, custom sequencing algorithms, camera tracking - you name it.
@@ -349,7 +349,7 @@ void ofApp::setup() {
 void ofApp::update() {
 
     //assign the relevant values to your DMX data structure
-    
+
     //update the DMX controller with the new data
 }
 

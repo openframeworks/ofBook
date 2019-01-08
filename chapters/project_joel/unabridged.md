@@ -1,4 +1,4 @@
-#Anthropocene
+# Anthropocene
 
 ## Project Overview
 
@@ -180,7 +180,7 @@ void setDelayMap(unsigned char* map, ofImageType type); //from ofxSlitScan.h
 ```
 So connecting them was simple:
 ```cpp
-slitScan.setDelayMap(depthPixels); //from testApp::update() in testApp.cpp
+slitScan.setDelayMap(depthPixels); //from ofApp::update() in ofApp.cpp
 ```
 This kind of separation demonstrates encapsulation or the information hiding qualities of software - the utility of not having to know the specifics of the implementation of the functionality described, merely the inputs required and outputs produced.
 
@@ -215,7 +215,7 @@ I knew that I wanted to augment ofxTimelines interface with controls for the set
 
 During development and testing, I realised a furry look could serve well for making people feel like they were polar bears. I had seen "spikey" outline looks before - all achieved by drawing normals along the circumference of a blob. I'd also experimented with optical flow in previous projects and started thinking about how the two could be combined - I looked for optical flow addons on [ofxaddons.com](http://ofxaddons.com) and discovered a flurry of recent activity since I'd last checked. Development tends to flow like this - periods of fallow followed by simultaneous parallel development from several quarters.
 
-* [ofxCvOpticalFlowLK by James George](https://github.com/Flightphase/ofxCvOpticalFlowLK) 
+* [ofxCvOpticalFlowLK by James George](https://github.com/Flightphase/ofxCvOpticalFlowLK)
 * [ofxOpticalFlowFarneback by Tim Scaffidi](https://github.com/timscaffidi/ofxOpticalFlowFarneback)
 * [ofxOpticalFlowLK by Lukasz Karluk](https://github.com/julapy/ofxOpticalFlowLK)
 
@@ -235,18 +235,18 @@ I knew that I would have to switch between different visual looks as the film wa
 
 ```cpp
 enum GreenpeaceModes {BLANK, GUI, VIDEO, VIDEOCIRCLES, KINECTPOINTCLOUD, SLITSCANBASIC, SLITSCANKINECTDEPTHGREY, SPARKLE, VERTICALMIRROR, HORIZONTALMIRROR, KALEIDOSCOPE, COLOURFUR, DEPTH, SHATTER, SELFSLITSCAN, SPIKYBLOBSLITSCAN, MIRRORKALEIDOSCOPE, PARTICLES, WHITEFUR, PAINT, GreenpeaceModes_MAX = PAINT}; //best to use ALL CAPS for enumerated types and constants so you can tell them from ClassNames and variableNames. Use camelCase for variableNames - http://en.wikipedia.org/wiki/CamelCase
- 
+
 /* http://stackoverflow.com/questions/2102582/how-can-i-count-the-items-in-an-enum
  For C++, there are various type-safe enum techniques available, and some of those (such as the proposed-but-never-submitted Boost.Enum) include support for getting the size of a enum.
- 
+
  The simplest approach, which works in C as well as C++, is to adopt a convention of declaring a ...MAX value for each of your enum types:
- 
+
  enum Folders { FA, FB, FC, Folders_MAX = FC };
  ContainerClass *m_containers[Folders_MAX + 1];
  ....
  m_containers[FA] = ...; // etc.
  Edit: Regarding { FA, FB, FC, Folders_MAX = FC} versus {FA, FB, FC, Folders_MAX]: I prefer setting the ...MAX value to the last legal value of the enum for a few reasons:
- 
+
  The constant's name is technically more accurate (since Folders_MAX gives the maximum possible enum value).
  Personally, I feel like Folders_MAX = FC stands out from other entries out a bit more (making it a bit harder to accidentally add enum values without updating the max value, a problem Martin York referenced).
  GCC includes helpful warnings like "enumeration value not included in switch" for code such as the following. Letting Folders_MAX == FC + 1 breaks those warnings, since you end up with a bunch of ...MAX enumeration values that should never be included in switch.
@@ -258,7 +258,7 @@ enum GreenpeaceModes {BLANK, GUI, VIDEO, VIDEOCIRCLES, KINECTPOINTCLOUD, SLITSCA
  }
 */
 ```
-I used the Stack Overflow tip in the `void testApp::keyPressed (int key)` method.
+I used the Stack Overflow tip in the `void ofApp::keyPressed (int key)` method.
 
 ```cpp
 case 'a': //used to be key left, but it interferes with ofxtimeline
@@ -350,7 +350,7 @@ Pete and I discussed how we could transform the installation into one that broad
 
 With the advent of a [Raspberry Pi](http://www.openframeworks.cc/setup/raspberrypi/) port of openFrameworks, a port of the project to the platform would allow for the deployment of the project to events that have even smaller budgets than this iteration. This would also entail a port of the Kinect code to 2D computer vision, but I'm confident this would be a spur for other interactions and visual effects.
 
-###Conclusion
+### Conclusion
 
 All in all, for a low budget project, using openFrameworks was the differentiator that enabled me to collaborate with the rest of the team at Hellicar&Lewis to make the installation come to life. The key factors were being able to draw upon so many external addons, previous projects and the community as a whole.
 
@@ -396,18 +396,18 @@ The structure of setup(), update() and draw() methods is common to openFramework
 
 ```cpp
 //--------------------------------------------------------------
-void testApp::update() {
+void ofApp::update() {
     //kinect
     kinect.update();
     // there is a new frame and we are connected
     if(kinect.isFrameNew()) {
         // load grayscale depth image from the kinect source
         depthPreCrop.setFromPixels(kinect.getDepthPixels(), kinect.width, kinect.height);
-        
+
         if(mirror){
             depthPreCrop.mirror(false, true);
         }
-        
+
         maskGrayImage();
         depthPreCrop.flagImageChanged();
 
@@ -415,13 +415,13 @@ void testApp::update() {
         depthOrig = depthPreCrop; //copy cropped image into orig
         depthProcessed = depthOrig; //copy orig into processed
         colorImageRGB = kinect.getPixels(); //getting colour pixels
-        
+
         if(invert) depthProcessed.invert();
         if(mirror) {
             colorImageRGB.mirror(false, true);
             //greyIRSingleChannel.mirror(false, true);
         }
-        
+
         depthOrig.flagImageChanged();
         depthProcessed.flagImageChanged();
         colorImageRGB.flagImageChanged();
@@ -499,30 +499,30 @@ see below for mode by mode update details
 ```
 
 ```cpp
-void testApp::draw() {
+void ofApp::draw() {
 	ofBackground(0, 0, 0);
 	ofSetColor(255, 255, 255);
-    
+
     switch (currentMode) {
 ```
 see below for descriptions of various modes drawing
 ```cpp
     }
-    
+
     if( bShowNonTimelineGUI ){
         nonTimelineGUI.draw();
     }
 
-    
+
 	if( timeline.getIsShowing() ){
         ofSetColor(255, 255, 255);
-        
+
         //timeline
         timeline.draw();
-        
+
         string modeString;
         modeString = "Mode is ";
-        
+
         switch (currentMode) {
             case BLANK: //blank mode
                 modeString += "BLANK";
@@ -531,7 +531,7 @@ see below for descriptions of various modes drawing
 edited for sanity.
 ```cpp
         }
-        
+
         ofSetColor(ofColor::red);
         ofDrawBitmapString(modeString,20,100);
 	}
@@ -576,12 +576,12 @@ Mode draw:
             ofFill();
             ofSetColor(0);
             ofRect(0,0,ofGetWidth(),ofGetHeight()); //draw a black rectangle
-            
+
             int imageOffSet = 10;
             int imageWidth = 320;
             int imageHeight = 240;
             int imageX = imageOffSet;
-            
+
             // draw everything
             ofSetColor(ofColor::white);
             ofEnableAlphaBlending();
@@ -642,7 +642,7 @@ Mode draw:
             << ", fps: " << ofGetFrameRate() << endl
             << "press shift squerty 1-5 & 0 to change the led mode" << endl;
             ofDrawBitmapString(reportStream.str(),20,ofGetHeight()/2.f);
-            
+
             stringstream m;
             m << "fps " << ofGetFrameRate() << endl
             << "pyramid scale: " << flowSolver.getPyramidScale() << " p/P" << endl
@@ -653,7 +653,7 @@ Mode draw:
             << "expansion sigma: " << flowSolver.getExpansionSigma() << " s/S" << endl
             << "flow feedback: " << flowSolver.getFlowFeedback() << " f/F" << endl
             << "gaussian filtering: " << flowSolver.getGaussianFiltering() << " g/G";
-            
+
             ofDrawBitmapString(m.str(), 20+320, 20);
         }
             break;
@@ -704,17 +704,17 @@ Mode draw:
                 if (timeline.getVideoPlayer("video")->isLoaded()) {
                     unsigned char * pixels = timeline.getVideoPlayer("video")->getPixels();
                     ofPixelsRef pixelsRef = timeline.getVideoPlayer("video")->getPixelsRef();
-                    
+
                     // let's move through the "RGB(A)" char array
                     // using the red pixel to control the size of a circle.
                     //ofSetColor(timeline.getColor("colour"));
                     ofSetColor(ofColor::lightBlue);
-                    
+
                     float circleSpacing = 10.f;
-                    
+
                     float widthRatio = ofGetWidth()/timeline.getVideoPlayer("video")->getWidth();
                     float heightRatio = ofGetHeight()/timeline.getVideoPlayer("video")->getHeight();
-                    
+
                     for(int i = 0; i < timeline.getVideoPlayer("video")->getWidth(); i+= 8){
                         for(int j = 0; j < timeline.getVideoPlayer("video")->getHeight(); j+= 8){
                             ofColor pixelColor = timeline.getVideoPlayer("video")->getPixelsRef().getColor(i, j);
@@ -768,7 +768,7 @@ Mode update:
                 slitScanSliderSlid(); //only update when you have to...
                 prevSlitScan = theCurrentSlitScan;
             }
-            
+
             if(timeline.getVideoPlayer("video")->isFrameNew()){
                 slitScan.addImage(timeline.getVideoPlayer("video")->getPixelsRef());
             }
@@ -782,12 +782,12 @@ Mode draw:
 ```cpp
         case SLITSCANBASIC: //slit scan the movie on depth png
             slitScan.getOutputImage().draw(0, 0, ofGetWidth(), ofGetHeight());
-            
+
             //white fur
             ofEnableAlphaBlending();
             flowSolver.drawGrey(ofGetWidth(),ofGetHeight(), 10, 3);
             ofDisableAlphaBlending();
-            
+
             break;
 ```
 #### SLITSCANKINECTDEPTHGREY
@@ -840,15 +840,15 @@ Mode update:
             someSparkles.update(&depthContours);
             someSparkles.draw(ofColor::white);
             //someSparkles.draw(timeline.getColor("colour"));
-            
+
             ofImage distortionMap;
             distortionMap.allocate(someSparkles.theFBO.getWidth(), someSparkles.theFBO.getHeight(), OF_IMAGE_COLOR);
-            
+
             someSparkles.theFBO.readToPixels(distortionMap.getPixelsRef());
-            
+
             distortionMap.resize(timeline.getVideoPlayer("video")->getWidth(), timeline.getVideoPlayer("video")->getHeight());
             slitScan.setDelayMap(distortionMap);
-            
+
             if(timeline.getVideoPlayer("video")->isFrameNew()){
                 slitScan.addImage(timeline.getVideoPlayer("video")->getPixelsRef());
             }
@@ -880,7 +880,7 @@ Mode update:
         {
             if(timeline.getVideoPlayer("video")->isFrameNew()){
                 verticalMirrorImage.setFromPixels(timeline.getVideoPlayer("video")->getPixels(), verticalMirrorImage.getWidth(), verticalMirrorImage.getHeight());
-                
+
                 verticalMirrorImage.updateTexture();
             }
         }
@@ -893,13 +893,13 @@ Mode draw:
         case VERTICALMIRROR:
         {
             bool usingNormTexCoords = ofGetUsingNormalizedTexCoords();
-            
+
             if(!usingNormTexCoords) {
                 ofEnableNormalizedTexCoords();
             }
-            
+
             verticalMirrorImage.getTextureReference().bind();
-            
+
             ofMesh mesh;
             mesh.clear();
             mesh.addVertex(ofVec3f(0, 0));
@@ -908,26 +908,26 @@ Mode draw:
             mesh.addVertex(ofVec3f(ofGetWidth()/2, ofGetHeight()));
             mesh.addVertex(ofVec3f(ofGetWidth(), 0));
             mesh.addVertex(ofVec3f(ofGetWidth(), ofGetHeight()));
-            
-            
+
+
             mesh.addTexCoord(ofVec2f(0.25, 0.0));
             mesh.addTexCoord(ofVec2f(0.25, 1.0));
             mesh.addTexCoord(ofVec2f(0.75, 0.0));
             mesh.addTexCoord(ofVec2f(0.75, 1.0));
             mesh.addTexCoord(ofVec2f(0.25, 0.0));
             mesh.addTexCoord(ofVec2f(0.25, 1.0));
-            
+
             mesh.setMode(OF_PRIMITIVE_TRIANGLE_STRIP);
             ofSetColor(ofColor::white);
             mesh.draw();
-            
+
             verticalMirrorImage.getTextureReference().unbind();
-            
+
             // pop normalized tex coords
             if(!usingNormTexCoords) {
                 ofDisableNormalizedTexCoords();
             }
-            
+
             //white fur
             ofEnableAlphaBlending();
             flowSolver.drawGrey(ofGetWidth(),ofGetHeight(), 10, 3);
@@ -948,7 +948,7 @@ Mode update:
         {
             if(timeline.getVideoPlayer("video")->isFrameNew()){
                 horizontalMirrorImage.setFromPixels(timeline.getVideoPlayer("video")->getPixels(), horizontalMirrorImage.getWidth(), horizontalMirrorImage.getHeight());
-                
+
                 horizontalMirrorImage.updateTexture();
             }
         }
@@ -961,13 +961,13 @@ Mode draw:
         case HORIZONTALMIRROR:
         {
             bool usingNormTexCoords = ofGetUsingNormalizedTexCoords();
-            
+
             if(!usingNormTexCoords) {
                 ofEnableNormalizedTexCoords();
             }
-            
+
             horizontalMirrorImage.getTextureReference().bind();
-            
+
             ofMesh mesh;
             mesh.clear();
             mesh.addVertex(ofVec3f(ofGetWidth(), 0));
@@ -976,25 +976,25 @@ Mode draw:
             mesh.addVertex(ofVec3f(0, ofGetHeight()/2));
             mesh.addVertex(ofVec3f(ofGetWidth(), ofGetHeight()));
             mesh.addVertex(ofVec3f(0,ofGetHeight()));
-            
+
             mesh.addTexCoord(ofVec2f(1.0, 0.25));
             mesh.addTexCoord(ofVec2f(0.0, 0.25));
             mesh.addTexCoord(ofVec2f(1.0, 0.75));
             mesh.addTexCoord(ofVec2f(0.0, 0.75));
             mesh.addTexCoord(ofVec2f(1.0, 0.25));
             mesh.addTexCoord(ofVec2f(0.0, 0.25));
-            
+
             mesh.setMode(OF_PRIMITIVE_TRIANGLE_STRIP);
             ofSetColor(ofColor::white);
             mesh.draw();
-            
+
             horizontalMirrorImage.getTextureReference().unbind();
-            
+
             // pop normalized tex coords
             if(!usingNormTexCoords) {
                 ofDisableNormalizedTexCoords();
             }
-            
+
             //white fur
             ofEnableAlphaBlending();
             flowSolver.drawGrey(ofGetWidth(),ofGetHeight(), 10, 3);
@@ -1015,7 +1015,7 @@ Mode update:
         {
             if(timeline.getVideoPlayer("video")->isFrameNew()){
                 kaleidoscopeMirrorImage.setFromPixels(timeline.getVideoPlayer("video")->getPixels(), kaleidoscopeMirrorImage.getWidth(), kaleidoscopeMirrorImage.getHeight());
-                
+
                 kaleidoscopeMirrorImage.updateTexture();
             }
         }
@@ -1028,35 +1028,35 @@ Mode draw:
         case KALEIDOSCOPE:
         {
             bool usingNormTexCoords = ofGetUsingNormalizedTexCoords();
-            
+
             if(!usingNormTexCoords) {
                 ofEnableNormalizedTexCoords();
             }
-            
+
             kaleidoscopeMirrorImage.getTextureReference().bind();
-            
+
             int star = ((int)timeline.getValue("star")*2);//8; //get star from the timeline gui, but multiply by 2 to get to always even
             float offset = timeline.getValue("offset");//0.5f; // get offset from the timeline gui
             float angle = 360.f/star; //8 sides to start
-            
-            
-            
+
+
+
 			ofMesh mesh;
-            
+
 			ofVec3f vec(0,0,0);
 			mesh.addVertex(vec);
 			vec.x += ofGetHeight()/2;
-            
+
 			for(int i = 0; i < star; i++) {
 				mesh.addVertex(vec);
 				vec.rotate(angle, ofVec3f(0,0,1));
 			}
-            
+
 			// close the loop
 			mesh.addVertex(vec);
-            
-            
-            
+
+
+
 			// now work out the texcoords
 			/*
 			 __________________
@@ -1066,25 +1066,25 @@ Mode draw:
 			 |      \  /      |
 			 |       \/       |
 			 +----------------+
-             
+
 			 A v shape out of the centre of the camera texture
 			 */
-            
-            
-            
+
+
+
 			float realOffset = 0.5;
 			// normalized distance from the centre (half the width of the above 'V')
 			float dist = ABS((float)kaleidoscopeMirrorImage.getHeight()*tan(ofDegToRad(angle)*0.5))/(float)kaleidoscopeMirrorImage.getHeight();
-            
-            
+
+
 			// the realOffset is where the (normalized) middle of the 'V' is on the x-axis
 			realOffset = ofMap(offset, 0, 1, dist, 1-dist);
-            
-            
+
+
 			// this is the point at the bottom of the triangle - our centre for the triangle fan
 			mesh.addTexCoord(ofVec2f(realOffset, 1));
-            
-            
+
+
 			ofVec2f ta(realOffset-dist, 0);
 			ofVec2f tb(realOffset+dist, 0);
 			for(int i = 0; i <= star; i++) {
@@ -1094,21 +1094,21 @@ Mode draw:
 					mesh.addTexCoord(tb);
 				}
 			}
-            
-            
+
+
 			glPushMatrix();
 			glTranslatef(ofGetWidth()/2, ofGetHeight()/2, 0);
 			mesh.setMode(OF_PRIMITIVE_TRIANGLE_FAN);
 			mesh.draw();
 			glPopMatrix();
-            
+
             kaleidoscopeMirrorImage.getTextureReference().unbind();
-            
+
             // pop normalized tex coords
             if(!usingNormTexCoords) {
                 ofDisableNormalizedTexCoords();
             }
-            
+
             //white fur
             ofEnableAlphaBlending();
             flowSolver.drawGrey(ofGetWidth(),ofGetHeight(), 10, 3);
@@ -1183,15 +1183,15 @@ Mode update:
             //update the shatter
             theShatter.update(&depthContours);
             theShatter.draw(ofColor::white);
-            
+
             ofImage distortionMap;
             distortionMap.allocate(theShatter.theFBO.getWidth(), theShatter.theFBO.getHeight(), OF_IMAGE_COLOR);
-            
+
             theShatter.theFBO.readToPixels(distortionMap.getPixelsRef());
-            
+
             distortionMap.resize(timeline.getVideoPlayer("video")->getWidth(), timeline.getVideoPlayer("video")->getHeight());
             slitScan.setDelayMap(distortionMap);
-            
+
             if(timeline.getVideoPlayer("video")->isFrameNew()){
                 slitScan.addImage(timeline.getVideoPlayer("video")->getPixelsRef());
             }
@@ -1229,7 +1229,7 @@ Mode update:
 //                ofImage selfSlitScanDelayMap;
 //                selfSlitScanDelayMap.allocate(timeline.getVideoPlayer("video")->getWidth(), timeline.getVideoPlayer("video")->getHeight(), OF_IMAGE_COLOR);
 //                selfSlitScanDelayMap.setFromPixels(timeline.getVideoPlayer("video")->getPixelsRef());
-               
+
                 slitScan.setDelayMap(timeline.getVideoPlayer("video")->getPixelsRef());
                 slitScan.addImage(timeline.getVideoPlayer("video")->getPixelsRef());
             }
@@ -1263,15 +1263,15 @@ Mode update:
             //update the spikes come what may...
             theSpikey.update(&depthContours);
             theSpikey.draw(ofColor::white);
-            
+
             ofImage distortionMap;
             distortionMap.allocate(theSpikey.theFBO.getWidth(), theSpikey.theFBO.getHeight(), OF_IMAGE_COLOR);
-            
+
             theSpikey.theFBO.readToPixels(distortionMap.getPixelsRef());
-            
+
             distortionMap.resize(timeline.getVideoPlayer("video")->getWidth(), timeline.getVideoPlayer("video")->getHeight());
             slitScan.setDelayMap(distortionMap);
-            
+
             if(timeline.getVideoPlayer("video")->isFrameNew()){
                 slitScan.addImage(timeline.getVideoPlayer("video")->getPixelsRef());
             }
@@ -1303,11 +1303,11 @@ Mode update:
         {
             if(timeline.getVideoPlayer("video")->isFrameNew()){
                 verticalMirrorImage.setFromPixels(timeline.getVideoPlayer("video")->getPixels(), verticalMirrorImage.getWidth(), verticalMirrorImage.getHeight());
-                
+
                 verticalMirrorImage.updateTexture();
-                
+
                 kaleidoscopeMirrorImage.setFromPixels(timeline.getVideoPlayer("video")->getPixels(), kaleidoscopeMirrorImage.getWidth(), kaleidoscopeMirrorImage.getHeight());
-                
+
                 kaleidoscopeMirrorImage.updateTexture();
             }
         }
@@ -1321,13 +1321,13 @@ Mode draw:
         case MIRRORKALEIDOSCOPE:
         {
             bool usingNormTexCoords = ofGetUsingNormalizedTexCoords();
-            
+
             if(!usingNormTexCoords) {
                 ofEnableNormalizedTexCoords();
             }
-            
+
             verticalMirrorImage.getTextureReference().bind();
-            
+
             ofMesh mirrorMesh;
             mirrorMesh.clear();
             mirrorMesh.addVertex(ofVec3f(0, 0));
@@ -1336,38 +1336,38 @@ Mode draw:
             mirrorMesh.addVertex(ofVec3f(ofGetWidth()/2, ofGetHeight()));
             mirrorMesh.addVertex(ofVec3f(ofGetWidth(), 0));
             mirrorMesh.addVertex(ofVec3f(ofGetWidth(), ofGetHeight()));
-            
-            
+
+
             mirrorMesh.addTexCoord(ofVec2f(0.25, 0.0));
             mirrorMesh.addTexCoord(ofVec2f(0.25, 1.0));
             mirrorMesh.addTexCoord(ofVec2f(0.75, 0.0));
             mirrorMesh.addTexCoord(ofVec2f(0.75, 1.0));
             mirrorMesh.addTexCoord(ofVec2f(0.25, 0.0));
             mirrorMesh.addTexCoord(ofVec2f(0.25, 1.0));
-            
+
             mirrorMesh.setMode(OF_PRIMITIVE_TRIANGLE_STRIP);
             ofSetColor(ofColor::white);
             mirrorMesh.draw();
-            
+
             verticalMirrorImage.getTextureReference().unbind();
-            
+
             kaleidoscopeMirrorImage.getTextureReference().bind();
-            
+
             int star = ((int)timeline.getValue("star")*2);//8; //get star from the timeline gui, but multiply by 2 to get to always even
             float offset = timeline.getValue("offset");//0.5f; // get offset from the timeline gui
             float angle = 360.f/star; //8 sides to start
-            
+
 			ofMesh mesh;
-            
+
 			ofVec3f vec(0,0,0);
 			mesh.addVertex(vec);
 			vec.x += ofGetHeight()/2;
-            
+
 			for(int i = 0; i < star; i++) {
 				mesh.addVertex(vec);
 				vec.rotate(angle, ofVec3f(0,0,1));
 			}
-            
+
 			// close the loop
 			mesh.addVertex(vec);
 
@@ -1608,7 +1608,7 @@ doesn't have it
 
 openFrameworks-develop/apps/devApps/projectGenerator/bin/data/xcode/template/emptyExample.xcodeproj/xcshareddata
 
-copied that in, and another file inside 
+copied that in, and another file inside
 
 openFrameworks-develop/apps/devApps/projectGenerator/bin/data/xcode/template/emptyExample.xcodeproj/xcshareddata/xcschemes
 
@@ -1633,7 +1633,7 @@ sender:
 
 ```cpp
 
-void testApp::setup(){
+void ofApp::setup(){
 	parameters.setName("parameters");
 	parameters.add(size.set("size",10,1,100));
 	parameters.add(number.set("number",10,1,100));
@@ -1645,7 +1645,7 @@ void testApp::setup(){
 	ofSetVerticalSync(true);
 }
 
-void testApp::update(){
+void ofApp::update(){
 	sync.update();
 }
 
@@ -1655,7 +1655,7 @@ receiver:
 
 ```cpp
 
-void testApp::setup(){
+void ofApp::setup(){
 	parameters.setName("parameters");
 	parameters.add(size.set("size",10,0,100));
 	parameters.add(number.set("number",10,0,100));
@@ -1667,11 +1667,11 @@ void testApp::setup(){
 	ofSetVerticalSync(true);
 }
 
-void testApp::update(){
+void ofApp::update(){
 	sync.update();
 }
 
-void testApp::draw(){
+void ofApp::draw(){
 	gui.draw();
 	ofSetColor(color);
 	for(int i=0;i<number;i++){
@@ -1755,7 +1755,7 @@ This is a very lightly refactored version of Kyle McDonald's ofBlur example (htt
 Didn't build!
 
 ofxBox2d
-trying every example: 
+trying every example:
 
 * oF/openFrameworks-develop/addons/ofxBox2d/ComplexPolgonExample - useful for making shatter like effects - how do I texture them?
 * oF/openFrameworks-develop/addons/ofxBox2d/ContactListenerExample - useful for tiggering audio samples on ofxBox2D interactions
@@ -2033,13 +2033,13 @@ as the images for the particles
 
 https://github.com/HellicarAndLewis/MulticolouredMagic/blob/master/Somantics/src/somantics/Sparkles/Sparkles.cpp
 
-Do this with the depth image as input to the blob tracker - or the IR image? 
+Do this with the depth image as input to the blob tracker - or the IR image?
 
 Get all three modes working first, then have a think about how to get them working as MODES - make a mode object? Look at somantics for how to have scenes. Maybe call it a mode? Construct with a pointer to the test app for easier data steal. Have a vector of things. Just making sparkles for now, made a sparkle cloud, duplicated the spartkcles logic from marekes sparkles from somantics - the one that spawns along the edges of the blobs... great way of doing it! Going to need an FBO to draw the Sparkles into, so looking at:
 
 /Users/joel/Documents/Projects/HellicarAndLewis/greenpeaceArcticGlastonbury2013/OF/openFrameworks-develop/examples/gl/fboTrailsExample
 
-Lets make it first, then do a InstallationMode object, based on what Sparkles actually needed. tightly coupling into testApp at the moment with a passed pointer, but whatever works for now...Compilation problems, forward declaration because of pointers to testApp...
+Lets make it first, then do a InstallationMode object, based on what Sparkles actually needed. tightly coupling into ofApp at the moment with a passed pointer, but whatever works for now...Compilation problems, forward declaration because of pointers to ofApp...
 
 http://stephanschulz.ca/downloads/singleton.zip
 
@@ -2154,7 +2154,7 @@ ofxPostGlitch - OF/openFrameworks-develop/apps/bunchOfAddonsTrying/ofxPostGlitch
 lots of fun effects and already in an FBO! just do these effects on either the live video OR the depth image, but put into the slitscan
 
 ofxPostProcessing
-3D demo, with 
+3D demo, with
 ```cpp
 post.createPass<FxaaPass>()->setEnabled(false);
 post.createPass<BloomPass>()->setEnabled(false);
@@ -2199,13 +2199,13 @@ case SLIGHTLY BUGGERED RERVERSED VERTICAL MIRROR:
     mirrorImage.setFromPixels(timeline.getVideoPlayer("video")->getPixels(), mirrorImage.getWidth(), mirrorImage.getHeight());
     mirrorImage.updateTexture();
     bool usingNormTexCoords = ofGetUsingNormalizedTexCoords();
-    
+
     if(!usingNormTexCoords) {
         ofEnableNormalizedTexCoords();
     }
-    
+
     mirrorImage.getTextureReference().bind();
-    
+
     ofMesh mesh;
     mesh.clear();
     mesh.addVertex(ofVec3f(0, 0));
@@ -2223,7 +2223,7 @@ case SLIGHTLY BUGGERED RERVERSED VERTICAL MIRROR:
     mesh.setMode(OF_PRIMITIVE_TRIANGLE_STRIP);
     ofSetColor(ofColor::white);
     mesh.draw();
-    
+
     mirrorImage.getTextureReference().unbind();
 
     // pop normalized tex coords
@@ -2240,18 +2240,18 @@ This is right
 case HORIZONTALMIRROR:
 {
     ofxCvColorImage mirrorImage;
-    
+
     mirrorImage.allocate(timeline.getVideoPlayer("video")->getWidth(), timeline.getVideoPlayer("video")->getHeight());
     mirrorImage.setFromPixels(timeline.getVideoPlayer("video")->getPixels(), mirrorImage.getWidth(), mirrorImage.getHeight());
     mirrorImage.updateTexture();
-    
+
     bool usingNormTexCoords = ofGetUsingNormalizedTexCoords();
     if(!usingNormTexCoords) {
         ofEnableNormalizedTexCoords();
     }
-    
+
     mirrorImage.getTextureReference().bind();
-    
+
     ofMesh mesh;
     mesh.clear();
     mesh.addVertex(ofVec3f(ofGetWidth(), 0));
@@ -2269,9 +2269,9 @@ case HORIZONTALMIRROR:
     mesh.setMode(OF_PRIMITIVE_TRIANGLE_STRIP);
     ofSetColor(ofColor::white);
     mesh.draw();
-    
+
     mirrorImage.getTextureReference().unbind();
-    
+
     // pop normalized tex coords
     if(!usingNormTexCoords) {
         ofDisableNormalizedTexCoords();
@@ -2279,7 +2279,7 @@ case HORIZONTALMIRROR:
 }
 ```
 
-Getting a bit better...fixing the controls - some of the keys were clashing. Red lines on the screen indicate track in a and out below the main timeline. 
+Getting a bit better...fixing the controls - some of the keys were clashing. Red lines on the screen indicate track in a and out below the main timeline.
 
 ```
 Keys for Duration/ofxTimeline:
@@ -2340,7 +2340,7 @@ Via OF Forum post: http://forum.openframeworks.cc/index.php?topic=7165.0 :
 paulf london Posts: 22
 Re: Weird codeblocks 007 build errors
 Reply #5 on: April 05, 2012, 02:12:39 PM
-in testApp.h having #include "ofxOpenCv.h" at the top of my include list solved the issue for me
+in ofApp.h having #include "ofxOpenCv.h" at the top of my include list solved the issue for me
 
 Crazy... OK. got that working, but way too slow...
 
@@ -2354,18 +2354,18 @@ if(timeSinceLastShatter > 10.f){ //every 2 seconds make some more....
     float contourHeight = aContourFinder->getHeight();
     float widthRatio = shatterWidth/contourWidth;
     float heightRatio = shatterHeight/contourHeight;
-    
+
     // now just stick some particles on the contour and emit them randomly
     for(int i = 0; i < aContourFinder->nBlobs; i++) {
         int step = 20;
-        
+
         shape.clear();
-        
+
         for(int j = 0; j < aContourFinder->blobs[i].pts.size(); j+=step) {
             shape.addVertex((aContourFinder->blobs[i].pts[j].x)*widthRatio,
                             (aContourFinder->blobs[i].pts[j].y)*heightRatio);
         }
-        
+
         // This is the manual way to triangulate the shape
         // you can then add many little triangles
         // first simplify the shape
@@ -2391,11 +2391,11 @@ if(timeSinceLastShatter > 10.f){ //every 2 seconds make some more....
                 triangles.push_back(p);
             }
         }
-        
+
         // done with shape clear it now
         shape.clear();
     }
-    
+
     timeSinceLastShatter = ofGetElapsedTimef();
 }
 ```
@@ -2457,23 +2457,23 @@ if(numberOfBlobs > 0){
 	bool simplifyCV = gui.getValueB("AURA_IS_CV");
 	float auraScale = gui.getValueF("AURA_SCALE");
 	bool scaleFromStage = gui.getValueB("AURA_SCALE_FROM_STAGE");
-	
+
 	for(int i = 0; i< numberOfBlobs; i++){
 		curve[i] = videoContourFinder.blobs[i];
 		ofPoint centreOfStage = ofPoint(camWidth/2.f, camHeight);
-		
+
 		if(scaleFromStage){
 			curve[i].scaleBlob(centreOfStage, auraScale); //scale from the base of stage
 		}else {
 			curve[i].scaleBlob(curve[i].centroid, auraScale); //else do it from the centroid
 		}
-		
+
 		if(noneSmooth){ //smooth it
 			cu.smooth( curve[i].pts, curveSmooth[i].pts, scale1 );
 		}else{
 				//do nothing.
 		}
-		
+
 		if(simplifyCV){
 				//cv simplify it
 			simplifyDP_openCV( curve[i].pts, curveCvSimplify[i].pts, scale3 );

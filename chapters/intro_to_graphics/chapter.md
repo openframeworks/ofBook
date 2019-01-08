@@ -346,7 +346,7 @@ for (int t=0; t<numTriangles; t++) {
     // Define a triangle at the origin (0,0) that points to the right (code omitted)
     // The triangle size is a bit smaller than the last brush - see the source code
 
-    // Rotate the triangle, then shift it to the mouse position (code omitted)
+    // Rotate the triangle (code omitted)
 
     ofVec2f triangleOffset(offsetDistance, 0.0);
     triangleOffset.rotate(rotation);
@@ -423,7 +423,7 @@ straightSegmentPolyline.addVertex(300, 100);
 curvedSegmentPolyline.curveTo(350, 100);  // These curves are Catmull-Rom splines
 curvedSegmentPolyline.curveTo(350, 100);  // Necessary Duplicate for Control Point
 curvedSegmentPolyline.curveTo(400, 150);
-curvedSegmentPolyline.curveTo(450, 100);  
+curvedSegmentPolyline.curveTo(450, 100);
 curvedSegmentPolyline.curveTo(500, 150);
 curvedSegmentPolyline.curveTo(550, 100);
 curvedSegmentPolyline.curveTo(550, 100);  // Necessary Duplicate for Control Point
@@ -514,11 +514,11 @@ Let's add points to our polyline in `update()`:
 
 ```cpp
 if (leftMouseButtonPressed) {
-    ofVec2f mousePos(ofGetMouseX(), ofGetMouseY());
+    ofPoint mousePos(ofGetMouseX(), ofGetMouseY());
     if (lastPoint.distance(mousePos) >= minDistance) {
         // a.distance(b) calculates the Euclidean distance between point a and b.  It's
         // the length of the straight line distance between the points.
-        currentPolyline.curveTo(mousePos);  // Here we are using an ofVec2f with curveTo(...)
+        currentPolyline.curveTo(mousePos);
         lastPoint = mousePos;
     }
 }
@@ -526,7 +526,7 @@ if (leftMouseButtonPressed) {
 
 Note that this only adds points when the mouse has moved a certain threshold amount (`minDistance`) away from the last point we added to the polyline. This uses the [`distance(...)`](http://openframeworks.cc/documentation/math/ofVec2f.html#show_distance) method of `ofVec2f`.
 
-All that is left is to add code to draw the polyline in `draw()`, and we've got a basic curved polyline drawing program. But we don't have the ability to save multiple polylines, so we have something similar to an [Etch A Sketch](https://en.wikipedia.org/wiki/Etch_A_Sketch). We can only draw a single, continuous line. In order to be able to draw multiple lines that don't have to be connected to each other, we will turn to something called a `vector`. This isn't the same kind of vector that we talked about earlier in the context of `of2Vecf`. If you haven't seen vectors before, check out the [stl::vector basics tutorial](http://openframeworks.cc/tutorials/c++%20concepts/001_stl_vectors_basic.html) on the site.
+All that is left is to add code to draw the polyline in `draw()`, and we've got a basic curved polyline drawing program. But we don't have the ability to save multiple polylines, so we have something similar to an [Etch A Sketch](https://en.wikipedia.org/wiki/Etch_A_Sketch). We can only draw a single, continuous line. In order to be able to draw multiple lines that don't have to be connected to each other, we will turn to something called a `vector`. This isn't the same kind of vector that we talked about earlier in the context of `of2Vecf`. If you haven't seen vectors before, check out the [stl::vector basics tutorial](http://openframeworks.cc/ofBook/chapters/stl_vector.html) on the site.
 
 Define `vector <ofPolyline> polylines` in the header. We will use it to save our polyline brush strokes. When we finish a stroke, we want to add the polyline to our vector. So in the if statement inside of `mouseReleased(...)`, before `currentPolyline.clear()`, add `polylines.push_back(currentPolyline)`. Then we can draw the polylines like this:
 
@@ -731,7 +731,7 @@ ofDrawCircle(80, 90, 15);
 ofDrawRectangle(65, 110, 30, 60);
 ```
 
-Draw a white background and color the shapes, and we end up with something like figure 18 (left).
+Draw a white background and color the shapes. You should end up with something like the leftmost portion of Figure 18.
 
 ![Figure 18: Arranging a little stick figure family](images/Figure18_ArrangingTheFamily.png)
 
@@ -832,7 +832,7 @@ ofNoFill();
 ofPushMatrix();
     ofTranslate(ofGetWidth()/2, ofGetHeight()/2);  // Translate to the center of the screen
     for (int i=0; i<100; i++) {
-        ofScale(1.1, 1.1);  
+        ofScale(1.1, 1.1);
         ofRotate(5);
         ofDrawRectangle(0, 0, 50, 50);
     }

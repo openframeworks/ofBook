@@ -1,4 +1,4 @@
-#Hardware
+# Hardware
 
 *by [Caitlin Morris](http://www.caitlinmorris.net/) and [Pierre Proske](http://www.digitalstar.net/)*
 
@@ -7,7 +7,7 @@
 
 This chapter will give you an introduction to working with openFrameworks outside of your computer screen and into the physical world. Why exactly would you want to do this? Well, given that we are physical creatures ourselves, having software control, sense and actuate real-world things can be pretty exciting and create truly visceral experiences. Screen based work can be captivating, but physical installations have the potential to deliver greater impact due to their more tangible nature.
 
-There are a number of ways of taking your openFrameworks app out of the frame of your own personal computer and getting it to interact with the outside world. Largely this involves some kind of communication from openFrameworks to whatever hardware you've decided to hook up to. The different types of computer based communications (or protocols) vary, but the most common is what's known as 'serial' communication, so called because each bit of data sent is transferred one after the other (as opposed to multiple bits being sent in parallel). 
+There are a number of ways of taking your openFrameworks app out of the frame of your own personal computer and getting it to interact with the outside world. Largely this involves some kind of communication from openFrameworks to whatever hardware you've decided to hook up to. The different types of computer based communications (or protocols) vary, but the most common is what's known as 'serial' communication, so called because each bit of data sent is transferred one after the other (as opposed to multiple bits being sent in parallel).
 
 The first hardware that we’ll look at interfacing with is the excellent **Arduino** prototyping platform.  Arduino is, in its own words, an *“open-source electronics prototyping platform based on flexible, easy-to-use hardware and software… intended for artists, designers, hobbyists, and anyone interested in creating interactive objects or environments.*”  It’s easy to see why there’s a lot of overlap between communities of people interested in using openFrameworks and Arduino!  With Arduino, it’s quick to get your openFrameworks app hooked up to sensors (like light sensors, proximity sensors, or other methods of environmental input), actuators (like lights, motors, and other outputs), and real-time interaction.  You're free to move out of the realm of pixels and into the physical world.
 
@@ -31,11 +31,11 @@ Serial communication is actually a very broad topic and there are many serial pr
 However, if you're connecting to an Arduino, it already appears to the computer as a virtual serial port and you just need a regular USB cable (the exact type is dependent on which model Arduino you have). The Arduino also has a built-in library which handles reading and writing to the serial port that appears on your computer. Additionally, the Arduino has bi-directional RS-232 serial ports which can be used to connect to other external serial devices. In short - the Arduino is well equipped for serial communications and does most of the hard work for you!
 
  **note: expand on Serial library**
- 
+
 
 The speed at which data is transmitted between the Arduino and your software is measured in bits per second, or bps, a fairly self-explanatory unit of measurement.  The rate of bits per second is commonly referred to as the baud rate, and will vary based on your application.  For example, the standard baud rate of 9600bps will transfer data more slowly than a rate of 115200, but the faster baud rate may have more issues with byte scrambling.
 
-```
+<!--
 -- editor joshuajnoble I think adding some explanation of what rs232 is (a picture of an oscilloscope would be good) the flow of using:
 
 enumerateDevices()
@@ -50,12 +50,13 @@ Might be nice to have the Arduino serial example mirror the DMX example, like:
 
 here's some Arduino code to kick this off
 
+```cpp
 int redPin   = 9;   // Red LED
 int greenPin = 10;  // Green LED
 int bluePin  = 11;  // Blue LED
 
 int color[4];
-long int inByte; 
+long int inByte;
 int wait = 10; //10ms
 
 void setup()
@@ -63,8 +64,8 @@ void setup()
   pinMode(redPin,   OUTPUT);   // sets the pins as output
   pinMode(greenPin, OUTPUT);   
   pinMode(bluePin,  OUTPUT);
-  
-  Serial.begin(9600); 
+
+  Serial.begin(9600);
 }
 
 void outputColour(int red, int green, int blue) {
@@ -73,9 +74,9 @@ void outputColour(int red, int green, int blue) {
   analogWrite(greenPin, green);    
 }
 
-void setColor() {
+void getColour() {
   int i = 0;
-  
+
   //wait and be patient
   while (i < 4)
   {
@@ -92,19 +93,19 @@ void loop()
   if (Serial.available() > 0) {
     // get incoming byte:
     inByte = Serial.read();
-    
+
      if (inByte == 'C') {
       getColour();
       analogWrite(redPin, color[1]);
       analogWrite(bluePin, color[2]);
-      analogWrite(greenPin, color[3]); 
-    } 
+      analogWrite(greenPin, color[3]);
+    }
   }
   delay(wait);
 }
 
--- end editor
 ```
+-->
 
 ## digital and analog communication
 
@@ -180,7 +181,7 @@ The basic flow of what we’re going to do looks like this: (graphic missing)
 
 **Make an ofArduino object**
 
-The first step is to add an ofArduino object into the header file of your project (usually, testApp.h).  I'll call this myArduino.
+The first step is to add an ofArduino object into the header file of your project (usually, ofApp.h).  I'll call this myArduino.
 
 ```cpp
 void setup();
@@ -194,36 +195,36 @@ Now we've extended the capabilities of the native openFrameworks ofArduino class
 
 **Connect to the Arduino object at the correct port and baud rate**
 
-In the setup() of testApp.cpp, use the ofArduino `connect()` function to set up a connection at the appropriate port and baud rate.  `connect()` takes two parameters: the first is a String of the serial port name, which should match the serial port name you connected to in the Arduino application; the second is the baud rate.  Firmata uses a standard baud rate of 57600 bps.
+In the setup() of ofApp.cpp, use the ofArduino `connect()` function to set up a connection at the appropriate port and baud rate.  `connect()` takes two parameters: the first is a String of the serial port name, which should match the serial port name you connected to in the Arduino application; the second is the baud rate.  Firmata uses a standard baud rate of 57600 bps.
 
 ```cpp
-ard.connect("/dev/tty.usbserial-a700fiyD", 57600);
+myArduino.connect("/dev/tty.usbserial-a700fiyD", 57600);
 ```
 
 **Set up an event listener to determine whether we’ve successfully connected to the Arduino**
 
 If you're working only within the Arduino IDE, it's easy to have functions (like setting up the pin modes) called only once at the start of the program -- you can just call those functions from within `setup()` with the confidence that they'll always be run once when the device initializes.   When you're communicating with other software like openFrameworks, however, it's important to have a checking system to ensure that any setup functions only occur after a connection has been established.  openFrameworks uses the ofEventUtils class to make this easier, relying on the default `ofAddListener()` and `ofRemoveListener()` functions to check for the connection event.
 
-Within the openFrameworks app, we'll want to create an Arduino-specific `setup()` function, which is only called once as a result of the serial connection being established.  We'll declare this function first in testApp.h:
+Within the openFrameworks app, we'll want to create an Arduino-specific `setup()` function, which is only called once as a result of the serial connection being established.  We'll declare this function first in ofApp.h:
 
 ```cpp
 void setupArduino(const int & version);
 ```
 
-... and call it from testApp.cpp:
+... and call it from ofApp.cpp:
 
 ```cpp
-void testApp::setupArduino(const int & version) {
+void ofApp::setupArduino(const int & version) {
     // Arduino setup tasks will go here
 }
 ```
 
 The argument that's being passed to the function, `const int & version`, is a default return from the listener we're about to set up, which always responds to a connection event by sending back an argument with the connected firmware version.  That can stay as it is.
 
-In the `setup()` of testApp.cpp, create a listener using `ofAddListener()`.  `ofAddListener()` is a function of ofEventUtils, which takes the arguments (event object, callback object, callback function).  When the event object happens (in this case, when the ofArduino EInitialized event is triggered), ofAddListener tells the callback object (here, a pointer to the testApp itself, referred to as “this”) to perform the setupArduino function that we created in the last step.
+In the `setup()` of ofApp.cpp, create a listener using `ofAddListener()`.  `ofAddListener()` is a function of ofEventUtils, which takes the arguments (event object, callback object, callback function).  When the event object happens (in this case, when the ofArduino EInitialized event is triggered), ofAddListener tells the callback object (here, a pointer to the ofApp itself, referred to as “this”) to perform the setupArduino function that we created in the last step.
 
-```cpp
-ofAddListener(myArduino.EInitialized, this, &testApp.setupArduino);
+```cpp                 
+ofAddListener(myArduino.EInitialized, this, &ofApp.setupArduino);
 ```
 
 When the EInitialized event is triggered (when the connection to the Arduino is complete, and the Arduino responds by sending back information about its firmware version), the listener sends us to the callback function, which in this case is `setupArduino()`.
@@ -231,7 +232,7 @@ When the EInitialized event is triggered (when the connection to the Arduino is 
 Within `setupArduino()`, we can remove the listener, because we know a connection has been established.  `ofRemoveListener()` takes the same arguments as its counterpart.
 
 ```cpp
-ofRemoveListener(myArduino.EInitialized, this, &testApp.setupArduino);
+ofRemoveListener(myArduino.EInitialized, this, &ofApp.setupArduino);
 ```
 
 **Set up a pin to communicate with, and specify whether that communication is analog or digital**
@@ -252,36 +253,36 @@ sendAnalogPinMode(PIN_NUMBER, ARD_INPUT) // analog input
 
 **Poll for data from the serial port**
 
-In order to continuously update with new information on the serial port, it's important to periodically call the ofArduino `update()` function.  This can be done in its own Arduino-specific function, or can be called directly from `testApp::update()`:
+In order to continuously update with new information on the serial port, it's important to periodically call the ofArduino `update()` function.  This can be done in its own Arduino-specific function, or can be called directly from `ofApp::update()`:
 
 ```cpp
 myArduino.update();
 ```
 
-That's it! Now you're ready to start sending digital signals to pin 13 on your Arduino. 
+That's it! Now you're ready to start sending digital signals to pin 13 on your Arduino.
 
 There are any number of triggers that you can use to control this signalling: you could set up a timer, integrate it into a game event, use a camera input... the possibilities are endless!  Here, I'm going to trigger my Pin 13 LED to turn on and off based on the up and down arrow keys.
 
-Because I'm controlling activity with keyboard keys, I'm going to use the `void testApp::keyPressed (int key)` function, but you could also place your triggers within `draw()` or another function depending on your desired effect.
+Because I'm controlling activity with keyboard keys, I'm going to use the `void ofApp::keyPressed (int key)` function, but you could also place your triggers within `draw()` or another function depending on your desired effect.
 
 ```cpp
-void testApp::keyPressed  (int key){
+void ofApp::keyPressed  (int key){
     switch (key) {
         case OF_KEY_UP:
-   	         	ard.sendDigital(13, ARD_HIGH);  // turn LED on
-   	         	break;
-			case OF_KEY_DOWN:
-				ard.sendDigital(13, ARD_LOW); // turn LED off
-				break;
-       		default:
-           		break;
-    	}
-	}
+            myArduino.sendDigital(13, ARD_HIGH);  // turn LED on
+            break;
+	case OF_KEY_DOWN:
+            ard.sendDigital(13, ARD_LOW); // turn LED off
+            break;
+        default:
+            break;
+    }
+}
 ```
-	
+
 When all the parts are together, run the app and toggle your UP and DOWN arrow keys to turn the on-board LED on your Arduino on and off!  You can also put in a 3mm or 5mm LED on pin 13 to make the effect more obvious.  Remember that pin 13 is the only Arduino pin with a built-in resistor, so if you want to add LEDs or other components on other pins, you'll need to build a full circuit with resistors to avoid burning out your parts.
 
- 
+
 ## Lights On - controlling hardware via DMX
 
 DMX (which stands for Digital Multiplex), also known as DMX512 (512 being the number of channels each output can accommodate), is a protocol for controlling lighting and stage equipment. It's been around since the 80's, and is sometimes referred to as the MIDI of the lighting world as it achieves a fairly similar outcome - the sequencing and controlling of hardware through the use of a computer. DMX can be used to control anything from strobes to RGB par-can lights to LED fixtures. It's even possible to drive LED strips by Pulse Width Modulation if you have the right hardware. The advantage of sending DMX through a custom openFrameworks app is that you can then integrate it via all the other goodness OF has to offer, including custom GUI's, custom sequencing algorithms, camera tracking - you name it.
@@ -321,7 +322,7 @@ void ofApp::setup() {
 void ofApp::update() {
 
     //assign the relevant values to your DMX data structure
-    
+
     //update the DMX controller with the new data
 }
 

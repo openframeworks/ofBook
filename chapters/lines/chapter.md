@@ -1,10 +1,10 @@
-#Drawing Lines 
+# Drawing Lines
 
 *by [Davide Prati](http://edapx.com)
 
 ## Introducing ...
 
-In this tutorial we will have a look on how to draw lines with openFrameworks. Most of the code in this tutorial comes from [this](https://github.com/ofZach/VAW_workshop/tree/master/drawingWorkshop) workshop held by [Zach Lieberman](http://thesystemis.com/). 
+In this tutorial we will have a look on how to draw lines with openFrameworks. Most of the code in this tutorial comes from [this](https://github.com/ofZach/VAW_workshop/tree/master/drawingWorkshop) workshop held by [Zach Lieberman](http://thesystemis.com/).
 Lines are probably the most primitive abstract form of drawing. They are one of the first things kids learn to draw, and one of the most instinctive way we still use to draw on a surface. But in the end, they are just a bunch of points connected together; openFramework provides a class to easily draw lines connecting point: [ofPolyline](/documentation/graphics/ofPolyline/). Let's start to see how to use it!
 
 
@@ -43,7 +43,7 @@ void ofApp::mousePressed(int x, int y, int button){
 The interesting things are happening in the `mouseDragged` method. When we press the left button of the mouse and we drag it around, the points with the coordinates corresponding to the mouse position are added into the instance `line` of the `ofPolyline` class. When we call `line.draw()`, ofPolyline automatically connects the dots and draws a line on the screen. When we release the mouse, `line.clear()` deletes all the points that we have insterted previously, getting ready to draw a new line.
 
 
-## A bit of noise 
+## A bit of noise
 
 Once that we have the points in the `ofPolyline` we can edit them in the `update` method, before drawing them. Let's move the points one pixel up or down along the x and y axis. Edit the `update` method as follow:
 ```cpp
@@ -58,14 +58,14 @@ You should see something like this:
 
 Note the `&` in the loop. If we would have ommit it, we wouldn't have been able to edit the position of the vertices. The `&` is telling to c++ that we are using a reference of the vertice contained in the `ofPolyline`, and we need a reference because we want to change the values inside the `ofPolyline`. When you simple want to read the values of the point inside the `ofPolyline`, do not use `&`. When you want to edit them, like in this case, use it.
 
-## A web of lines 
+## A web of lines
 
 Let's try something more complex. In this example we are going to create lines with `ofDrawLine` an `ofPoint`. Create a new app with the project generator and edit the `ofApp.h` file as follow:
 ```cpp
 #include "ofMain.h"
 
 class Line {
-public: 
+public:
     ofPoint a;
     ofPoint b;
 };
@@ -90,7 +90,7 @@ void ofApp::setup(){
 void ofApp::draw(){
     ofEnableAlphaBlending();
     ofSetColor(30,30,30,30);
-    
+
     for (auto line : lines) {
         ofDrawLine(line.a, line.b);
     }
@@ -144,7 +144,7 @@ void ofApp::setup(){
 void ofApp::update(){
     baseNode.pan(1);
     childNode.tilt(3);
-    
+
     line.addVertex(grandChildNode.getGlobalPosition());
     if (line.size() > 200){
         line.getVertices().erase(
@@ -168,7 +168,7 @@ You should see an image like this:
 
 ![line nodes](images/line-nodes.gif)
 
-Lets' go through the code. In the `setup` method we create a chain of 3 nodes and we assign them a position. Each node is parent to the previous one using `setParent`. In the `update` method we tell to the `baseNode` to rotate 1 degree on the y axis. This will have a percussion also on the 2 other nodes. We also tell to the `childNode` to rotate 3 degree on the x axis. These 2 rotation are enough to give to the last node of the chain, the `grandChildNode`, an elegant movement around the 2 nodes. In the following lines, we are capturing the points from this movement and we are puttin them in the `ofPolyline`. We keep only 200 points in the line, erasing the old ones as soon as new points are pushed in. Try to increase this value to see how the line change. 
+Lets' go through the code. In the `setup` method we create a chain of 3 nodes and we assign them a position. Each node is parent to the previous one using `setParent`. In the `update` method we tell to the `baseNode` to rotate 1 degree on the y axis. This will have a percussion also on the 2 other nodes. We also tell to the `childNode` to rotate 3 degree on the x axis. These 2 rotation are enough to give to the last node of the chain, the `grandChildNode`, an elegant movement around the 2 nodes. In the following lines, we are capturing the points from this movement and we are puttin them in the `ofPolyline`. We keep only 200 points in the line, erasing the old ones as soon as new points are pushed in. Try to increase this value to see how the line change.
 
 
 
