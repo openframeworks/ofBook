@@ -158,7 +158,7 @@ nums.push_back(10);
 vector<int>::iterator it = nums.begin();
 cout << *it << endl; // prints out 10
 
-vector<Particle>::iterator itp = particles.begin(); // get iterator to first element
+auto itp = particles.begin(); // get iterator to first element
 float xpos = (*itp).pos.x; // use dereference * to access the element value or properties
 particle.erase(itp); // pass the iterator to a vector function such as erase 
 ```
@@ -176,7 +176,7 @@ for(; it != nums.end(); ++it){
 }
 
 
-for(vector<Particle>::iterator it = particles.begin(); it != particles.end(); ++it){ 
+for(auto it = particles.begin(); it != particles.end(); ++it){ 
   cout << (*it).pos.x << end; 
 }
 ```
@@ -186,7 +186,7 @@ Note that when using iterators we want to test that our iterator ( *it* in this 
 
 In a while loop the structure would be:
 ```cpp
-vector<Particle>::iterator it = particles.begin();
+auto it = particles.begin();
 
 while( it != particles.end() ){
  cout << (*it).x << end; 
@@ -220,7 +220,7 @@ bool checkDead( Particle &p ){
  
 Then call *erase* with the iterator returned from *remove_if*:
 ```cpp
-vector<Particle>::iterator it = particles.remove_if(particles.begin(),particles.end(),checkDead);
+auto it = particles.remove_if(particles.begin(),particles.end(),checkDead);
 particles.erase( it, particles.end() );
 
 // or all in one line
@@ -309,7 +309,7 @@ It is very important to remember that when erasing a pointer to an object in a v
     particlePointers.erase( particlePointers.begin()+1 );
 
     // delete and erase with a loop
-    vector<Particle>::iterator it = particlePointers.begin();
+    auto it = particlePointers.begin();
     for(; it != particlePointers.end();){
     	if( (*it)->isDead ){
     		delete *it;
@@ -437,7 +437,7 @@ ofApp.cpp using iterators
     
     void ofApp::update(){
     	
-    	for(vector<Particle>::iterator it = particles.begin(); it != particles.end(); it++){
+    	for(auto it = particles.begin(); it != particles.end(); it++){
     		(*it).update();
     	}
     	
@@ -447,7 +447,7 @@ ofApp.cpp using iterators
     void ofApp::draw(){
     	
         ofTranslate( ofGetWidth()/2, ofGetHeight()/2);
-        for(vector<Particle>::iterator it = particles.begin(); it != particles.end(); it++){
+        for(auto it = particles.begin(); it != particles.end(); it++){
     		(*it).draw();
     	}
     }
