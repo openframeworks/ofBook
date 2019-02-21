@@ -63,7 +63,7 @@ Since [git](http://git-scm.com/) is at the heart of the management of this endea
 
 ---
 
-#Mailing List
+# Mailing List
 
 [openFrameworks Book discussion](http://dev.openframeworks.cc/listinfo.cgi/ofbook-openframeworks.cc).
 
