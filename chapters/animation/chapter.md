@@ -39,7 +39,7 @@ void ofApp::setup(){
 
 void ofApp::update(){
     xPos += 2;
-    if(ofGetWidth()<xPos){  // if horizontal position is off the screen (width)
+    if(xPos > ofGetWidth()){  // if horizontal position is off the screen (width)
         xPos = 5;             // reset horizontal position
     }
 }
