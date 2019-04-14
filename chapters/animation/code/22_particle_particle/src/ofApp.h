@@ -4,7 +4,7 @@
 #include "ofMain.h"
 #include "particle.h"
 
-class ofApp : public ofSimpleApp{
+class ofApp : public ofBaseApp{
 
 	public:
 

@@ -5,7 +5,7 @@
 #include "particle.h"
 #include "spring.h"
 
-class ofApp : public ofSimpleApp{
+class ofApp : public ofBaseApp{
     using ofBaseApp::mouseReleased;
     public:
 

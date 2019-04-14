@@ -3,7 +3,7 @@
 
 #include "ofMain.h"
 #include "rectangle.h"
-class ofApp:public ofSimpleApp{
+class ofApp:public ofBaseApp{
 
     public:
         void setup();
