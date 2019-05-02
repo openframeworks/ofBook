@@ -5,7 +5,7 @@ Graphics
 
 This chapter builds off of the *C++ Basics* and *Setup and Project Structure* chapters, so if you aren't familiar with basic C++ and creating openFrameworks projects, check out those chapters first.
 
-In sections 1 and 2, we will create "paintbrushes" where the mouse is our brush and our code defines how our brush makes marks on the screen. In section 3, we will explore something called "coordinate system transformations" to create hypnotizing, spiraling rectangles. Source code for the projects is linked at the end of each section. If you feel lost at any point, don't hesitate to look at the completed code! You can check out the whole collection of code [here](https://github.com/openframeworks/ofBook/tree/master/chapters/intro_to_graphics/code) - both for standard development structure (Xcode, Code::Blocks, etc.) and for ofSketch.
+In sections 1 and 2, we will create "paintbrushes" where the mouse is our brush and our code defines how our brush makes marks on the screen. In section 3, we will explore something called "coordinate system transformations" to create hypnotizing, spiraling rectangles. Source code for the projects is linked at the end of each section. If you feel lost at any point, don't hesitate to look at the completed code! You can check out the whole collection of code [here](https://github.com/openframeworks/ofBook/tree/master/chapters/intro_to_graphics/code) - both for standard development structure (Xcode, QtCreator, Visual Studio, etc.) and for ofSketch.
 
 If you are following along using ofSketch, great! There are a couple things to note. Coding in ofSketch is a bit different than coding in other Xcode, Code::Blocks, etc. 1) There will be a few points where variables are added to something called a header file (`.h`). When you see those instructions, that means you should put your variables above your `setup()` function in ofSketch. 2) You'll want to use `ofSetWindowShape(int width, int height)` in `setup()` to control the size of your application. 3) Some of the applications you write will save images to your computer. You can find them in your ofSketch folder, by looking for `ofSketch/data/Projects/YOUR_PROJECT_NAME/bin/data/`.
 
@@ -514,11 +514,11 @@ Let's add points to our polyline in `update()`:
 
 ```cpp
 if (leftMouseButtonPressed) {
-    ofVec2f mousePos(ofGetMouseX(), ofGetMouseY());
+    ofPoint mousePos(ofGetMouseX(), ofGetMouseY());
     if (lastPoint.distance(mousePos) >= minDistance) {
         // a.distance(b) calculates the Euclidean distance between point a and b.  It's
         // the length of the straight line distance between the points.
-        currentPolyline.curveTo(mousePos);  // Here we are using an ofVec2f with curveTo(...)
+        currentPolyline.curveTo(mousePos);
         lastPoint = mousePos;
     }
 }

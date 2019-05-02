@@ -128,7 +128,7 @@ This mainly involves [downloading and installing](http://git-scm.com/downloads) 
 The instructions [vary slightly depending on the operating system](https://help.github.com/articles/set-up-git#platform-all).
 
 When we have successfully set up Git, we create a new, **empty project** with the OF project generator.
-We will end up with a project folder containing some C++ files and some IDE files depending on OS and chosen IDE (in my case: Linux and Code::Blocks).
+We will end up with a project folder containing some C++ files and some IDE files depending on OS and chosen IDE (in my case: Linux and Code::Blocks). Note that Code::Blocks is no longer supported as an IDE for openFrameworks. This is left here just as an example. 
 This will look similar to this:
 
 ```bash

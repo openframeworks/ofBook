@@ -35,7 +35,7 @@ However, if you're connecting to an Arduino, it already appears to the computer 
 
 The speed at which data is transmitted between the Arduino and your software is measured in bits per second, or bps, a fairly self-explanatory unit of measurement.  The rate of bits per second is commonly referred to as the baud rate, and will vary based on your application.  For example, the standard baud rate of 9600bps will transfer data more slowly than a rate of 115200, but the faster baud rate may have more issues with byte scrambling.
 
-```
+<!--
 -- editor joshuajnoble I think adding some explanation of what rs232 is (a picture of an oscilloscope would be good) the flow of using:
 
 enumerateDevices()
@@ -50,6 +50,7 @@ Might be nice to have the Arduino serial example mirror the DMX example, like:
 
 here's some Arduino code to kick this off
 
+```cpp
 int redPin   = 9;   // Red LED
 int greenPin = 10;  // Green LED
 int bluePin  = 11;  // Blue LED
@@ -103,8 +104,8 @@ void loop()
   delay(wait);
 }
 
--- end editor
 ```
+-->
 
 ## digital and analog communication
 
