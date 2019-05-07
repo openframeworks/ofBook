@@ -556,7 +556,7 @@ unsigned char blueValueAtXY  = buffer[bArrayIndex];
 
 - **ofxCvImage** This is a container for image data used by the ofxOpenCV addon for openFrameworks, which supports a range of functionality from the popular OpenCV library for filtering, thresholding, and other image manipulations.
 
-- **ofxCvImage** : ofxOpenCV 애드온에서 사용되는 이미지 컨테이너입니다. 인기있는 라이브러리인 OpenCV의 필터링, 쓰레숄딩, 및 다양한 이미지 처리 기능을 제공합니다.
+- **ofxCvImage** : ofxOpenCV 애드온에서 사용되는 이미지 컨테이너입니다. 인기있는 라이브러리인 OpenCV의 필터링, 임계처리, 및 다양한 이미지 처리 기능을 제공합니다.
 
 - **ofTexture** : 이 컨테이너는 컴퓨터의 그래픽카드(GPU)의 텍스쳐 메모리에 이미지 데이터를 저장합니다. `ofImage`, `ofxCvImage`, `ofVideoPlayer`, `ofVideoGrabber`, `ofFbo`, `ofKinect`와 같은 클래스에 데이터를 화면에 그려내는 목적으로, 내부적으로 `ofTextre`가 포함되어있습니다.
 
@@ -633,9 +633,6 @@ Although oF provides the above utilities to convert color images to grayscale, i
 
 * **컬러 상수(colorimetric coefficient)를 이용하여 휘도값을 계산** : 인지적으로 가장 정확한 방법으로, RGB컬러데이터에서 그레이스케일값을 얻기위해 특별히 정의된 RGB컬러데이터의 평균 "표색(colormetric" 수치를 사용하여 계산하는 방법입니다. 이 방법은 대체로 비싼 연산이라고 할 수 있는데, 각 컬러채널별로 고유의 인지적 요소값을 곱하게 됩니다. ofxOpenCV애드온에서 사용되고 있는 OpenCV의 [cvtColor](http://docs.opencv.org/modules/imgproc/doc/miscellaneous_transformations.html#cvtcolor)함수에서 채택하고 있는 CCIR 601 이미징 스펙에 따르면, `Y = 0.299*R + 0.587*G + 0.114*B` 공식을 적용하고 있습니다.(추가적인 감마-수정을 적용한 RGB 값입니다). [위키피디아](http://en.wikipedia.org/wiki/Luma_(video))에 따르면, "이러한 상수는 인간의 삼중 인지강도를 바탕으로 하고 있는데, 일반적으로 인간의 시각은 파란색에 둔감하고 녹색에 더 민감하기 떄문이다" 라고 서술되어 있습니다.
 
-
-Here's a code fragment for converting from color to grayscale, written "from scratch" in C/C++, using the averaging method described above. This code also shows, more generally, how the pixelwise computation of a 1-channel image can be based on a 3-channel image. 
-
 아래는 위에 서술된 내용을 바탕으로 C/C++로 작성된 컬러값을 그레이스케일로 변환하는 코드입니다. 3-채널 이미지를 단일 채널이미지로 변환함에 있어 픽셀단위로 처리하는 보다 일반적인 방법을 보여주고 있습니다.
 
 ```cpp
@@ -678,7 +675,7 @@ for(int indexGray=0; indexGray<nBytesGrayscale; indexGray++){
 
 In this section, we consider image processing operations that are precursors to a wide range of further analysis and decision-making. In particular, we will look at *point processing* operations, namely image arithmetic and thresholding.  
 
-이 섹션에서는, 부가적인 분석 및 의사결정을 위한 precursor을 하는 이미지 처리 연산을 살펴보겠습니다. 특히, 우리가 살펴볼 것은 *포인트 프로세싱(point processing")* 연산, 즉 이미지 산술 및 쓰레숄딩 입니다. 
+이 섹션에서는, 부가적인 분석 및 의사결정을 위한 precursor을 하는 이미지 처리 연산을 살펴보겠습니다. 특히, 우리가 살펴볼 것은 *포인트 프로세싱(point processing")* 연산, 즉 이미지 산술 및 임계처리 입니다. 
 
 We begin with *image arithmetic*, a core part of the workflow of computer vision. These are the basic mathematical operations we all know—addition, subtraction, multiplication, and division—but as they are applied to images. Developers use such operations constantly, and for a wide range of reasons. 
 
@@ -770,35 +767,31 @@ Consider what happens when we add 10 to the specially-marked pixel in the bottom
 
 위의 그림에서 하단에 마킹된 픽셀에 10을 더하면 어떻게 될까요? 원래의 값은 251인데, 이 값은 unsigned char로 저장되므로 가능한 최대의 값은 255입니다! 그렇다면 결과는 어떻게 될까요? 좀 더 일반적으로 질문해본다면, 픽셀의 데이터타입에에 비해 너무 큰 픽셀값이 할당되면 어떤 일이 발생할까요?
 
-The answer is: *it depends which libraries or programming techniques you're using*, and it can have very significant consequences! Some image-processing libraries, like OpenCV, will clamp or constrain all arithmetic to the data's desired range; thus, adding 10 to 251 will result in a maxed-out value of 255 (a solution sometimes known as "saturation"). In other situations, such as with our direct editing of unsigned chars in the code above, we risk "rolling over" the data, wrapping around zero like a car's odometer. Without the ability to carry, only the least significant bits are retained. In the land of unsigned chars, adding 10 to 251 gives... 6!
+정답은 바로 : *어떤 라이브러리를 사용하는지에 따라, 혹은 여러분이 사용하는 프로그래밍 스킬에 따라 다르다* 입니다. 그리고 이건 아주아주 중요한 결과가 될수 있죠! OpenCV와 같은 어떤 이미지 처리 라이브러리의 경우라면, 모든 산술연산에 데이터형에 따라 값을 잘라내거나 제한해줄 것입니다.  그러금로 만약 251에 10을 더하면, 결과는 255이상을 넘지 않습니다(이러한 방법은 "saturation"이라고도 알려져있습니다). 이와 다르게 우리가 위에서 작성했던 코드와 같이 직접 unsigned char를 처리한다고 하면, 데이터의 "롤오버" 현상을 감수해야 합니다, 자동차의 주행적산메터가 표현할수 있는 값을 넘어가면 0이 되는것처럼요. 자리올림의 기능없이, 오직 sifnificant bit만이 남게 되는것이죠. 따라서 unsigned char 데이터 단위에서는, 251에 10을 더하면... 6이 됩니다!
 
-정답은 바로 : *어떤 라이브러리를 사용하는지에 따라, 혹은 여러분이 사용하는 프로그래밍 스킬에 따라 다름* 입니다. 그리고 이건 아주아주 중요한 결과가 될수 있죠! OpenCV와 같은 어떤 이미지 처리 라이브러리의 경우라면, 모든 산술연산에 데이터형에 따라 값을 잘라내거나 제한해줄 것입니다.  그러금로 만약 251에 10을 더하면, 결과는 255이상을 넘지 않습니다(이러한 방법은 "saturation"이라고도 알려져있습니다). 이와 다르게 우리가 위에서 작성했던 코드와 같이 직접 unsigned char를 처리한다고 하면, 데이터의 "롤오버" 현상을 감수해야 합니다, 자동차의 주행적산메터가 표현할수 있는 값을 넘어가면 0이 되는것처럼요. 자리올림의 기능없이, 오직 sifnificant bit만이 남게 되는것이죠. 따라서 unsigned char 데이터 단위에서는, 251에 10을 더하면... 6이 됩니다!
-
-
-The perils of integer overflow are readily apparent in the illustration below. I have used the code above to lighten a source image of Abraham Lincoln, by adding a constant to all of its pixel values. Without any preventative measures in place, many of the light-colored pixels have "wrapped around" and become dark. 
-
-정수 오버플로우의 위험성은 아래의 그림에서 살펴볼 수 있습니다. 
+정수 오버플로우의 위험은 아래의 그림에서 살펴볼 수 있습니다. 위의 코드를 사용해, 모든 픽셀값에 상수값을 더해서 에이브라함 링컨의 초상화를 조금 밝게 적용해보았습니다. 에러(오버플로우)를 피하기위한 별도의 처리가 없다면, 밝은 픽셀들은 "오버플로우"에 의해 검게 바뀝니다.
 
 ![Numeric overflow in an image of Lincoln](images/numeric_overflow.png)
 
 In the example above, integer overflow can be avoided by promoting the added numbers to integers, and including a saturating constraint, before assigning the new pixel value:
 
+위의 예제에서, 새로운 픽셀값에 적용하기 전에, 정수값을 더하고, 그 결과를 값의 범위 제한(constraint)을 적용하는것으로 정수 오버플로우를 피할 수 있습니다:
+
 ```cpp
-// The 'min' prevents values from exceeding 255, avoiding overflow.
+// 오버플로우를 피하기 위해, `min` 함수를 사용하여 255가 넘는 것을 방지한다.
 dstArray[index] = min(255, (int)srcValue + 10);
 ```
 
-Integer overflow can also present problems with other arithmetic operations, such as multiplication and subtraction (when values go negative). 
+곱셈, 뺄셈(이 경우 음수가 되는 에러)과 같은 다른 산술적 연산에서 역시 마찬가지로 정수 오버플로우를 방지할 수 있습니다.
 
-### Image Arithmetic with the ofxOpenCv Addon
+### ofxOpenCv 애드온을 사용한 이미지 연산
 
-The OpenCV computer vision library offers fast, easy-to-use and high-level implementations of image arithmetic. Here's the same example as above, re-written using the ofxOpenCV addon library, which comes with the openFrameworks core download. Note the following: 
+OpenCV 컴퓨터 비전 라이브러리는, 빠르고, 사용하기 쉬운, 고급-레벨의 이미지 연산을 제공합니다. 아래는 우리가 위에 살펴본 똑같은 예제를, 오픈프레임웍스 코어에 포함되어있는 ofxOpenCV 애드온 라이브러리를 사용하여 재작성한것입니다:
 
-* ofxOpenCv provides convenient methods for copying data between images.
-* ofxOpenCv provides convenient operators for performing image arithmetic.
-* ofxOpenCv's arithmetic operations saturate, so integer overflow is not a concern.
-* ofxOpenCv does not currently provide methods for loading images, so we employ an `ofImage` as an intermediary for doing so. 
-* As with all addons, it's important to import the ofxOpenCV addon properly into your project. (Simply adding `#include "ofxOpenCv.h"` in your app's header file isn't sufficient!) The openFrameworks [ProjectGenerator](https://www.youtube.com/watch?v=4k2ZcvC0YEA) is designed to help you with this, and makes it easy to add an addon into a new (or pre-existing) project. 
+* ofxOpenCv는 간편한 이미지들간의 데이터 복사 메소드를 제공합니다.
+* ofxOpenCv는 이미지 연산을 위한 간편한 연산자들을 제공합니다.
+* ofxOpenCv의 산술연산자들은, 정수오버플로우를 방지하므로 이에대해 걱정할 필요가 없습니다.
+* 다른 모든 애드온과 마찬가지로, ofxOpenCV애드온을 프로젝트에 제대로 불러오는것이 중요합니다. (단순히 `#include "ofxOpenCv.h`를 헤더파일에 작성한다고 해서 되는것이 아닙니다!) 오픈프레임웍스의 [프로젝트 생성기](https://www.youtube.com/watch?v=4k2ZcvC0YEA)를 사용하면, 애드온을 새 프로젝트(혹은 이미 존재하는 프로젝트)에 쉽게 추가할 수 있습니다.
 
 ```cpp
 // Example 5: Add a constant value to an image, with ofxOpenCv.
@@ -853,21 +846,28 @@ void ofApp::draw(){
 	lincolnCvImageDst.draw (160,20, 120,160);
 }
 ```
-Here's the result. Note how the high values (light areas) have saturated instead of overflowed. 
+
+아래는 결과입니다. 큰 값들(밝은 부분들)이 오버플로우 에러 없이 제대로 밝아졌는지 확인해보세요.
 
 ![Image arithmetic with saturation](images/image_lightening.png)
 
-### Arithmetic with Two Images: Absolute Differencing
+<!-- ### Arithmetic with Two Images: Absolute Differencing -->
+### 두 이미지를 사용한 연산 : 절대 비교
 
 Image arithmetic is especially useful when applied to two images. As you would expect, it is possible to add two images, multiply two images, subtract one image from another, and divide one image by another. When performing an arithmetic operation (such as addition) on two images, the operation is done "pixelwise": the first pixel of image *A* is added to the first pixel of image *B*, the second pixel of *A* is added to the second pixel of *B*, and so forth. For the purposes of this discussion, we'll assume that *A* and *B* are both monochromatic, and have the same dimensions. 
 
+이미지 연산은 두 이미지간에 적용하는 경우에 훨씬 유용합니다. 예상하셨겠지만, 두 이미지를 더해버리거나, 곱하거나, 한 이미지에서 다른 이미지를 뺼수도 있고, 나눠버릴수도 있습니다. 두 이미지간에 산술연산을 적용할 때(가령 덧셈),이러한 연산은 "픽셀별로" 적용됩니다: 이미지 *A*의 첫 픽셀이 이미지 *B*의 첫 픽셀에, 이미지 *A*의 두번째픽셀이 이미지 *B*의 픽셀에.. 이렇게 연속적으로 적용된다는 얘기입니다. 이 예시를 위해, 이미지 *A*, *B*는 모두 흑백이고, 같은 해상도를 가진다고 가정해봅시다.
+
+
 Many computer vision applications depend on being able to compare two images. At the basis of doing so is the arithmetic operation of *absolute differencing*, illustrated below. This operation is equivalent to taking the absolute value of the results when one image is subtracted from the other: *|A-B|*. As we shall see, absolute differencing is a key step in common workflows like *frame differencing* and *background subtraction*.  
+
+많은 컴퓨터 비전 어플리케이션은 두 이미지의 비교 가능성에 의존하고 있습니다. 일단 아래 그림에서 볼수 있는 *절대 비교* 연산부터 시작해보도록 합시다. 이 연산은 이 연산은 한 임지ㅣ에서 다른 이미지의 값을 뺀 절대값을 계산하는 것과 동일합니다: *|A-B|*. 보시는것과 같이, 절대 비교는 *프레임 비교*, *배경 제거*와 같은 과정의 아주 핵심 과정입니다.
 
 ![Diagram of absolute differencing. The image at right contains values which are the absolute difference of the corresponding pixels in the left and center images](images/absolute-difference.png)
 
-In the illustration above, we have used absolute differencing to compare two 5x5 pixel images. From this, it's clear that the greatest difference occurs in their lower-right pixels. 
+위에 보여지는 그림에서는, 5x5 해상도를 가지는 두 이미지간의 절대비교를 수행합니다. 우측하단의 픽셀이 가장 큰 차이를 보이는것을 볼 수 있습니다.
 
-Absolute differencing is accomplished in just a line of code, using the ofxOpenCv addon:
+절대비교는 ofxOpenCv애드온을 사용한 딱 한줄의 코드로 가능합니다:
 
 ```cpp
 // Given: 
@@ -879,17 +879,23 @@ Absolute differencing is accomplished in just a line of code, using the ofxOpenC
 myCvImageDiff.absDiff (myCvImageA, myCvImageB);
 ```
 
-### Thresholding
+### 임계처리(Thresholding)
 
 In computer vision programs, we frequently have the task of determining which pixels represent something of interest, and which do not. Key to building such discriminators is the operation of *thresholding*. 
 
+컴퓨터 비전 프로그램에서는, 어떤 영역들이(픽셀들이) 을 가져야 하는 부분인지, 그리고 역으로 무시해야할 부분은 어떤 영역들인지를 결정하는 과정이 자주 필요합니다. 이러한 판별을 위한 연산이 바로 *임계처리(thresholding)* 입니다.
+
 Thresholding poses a *pixelwise conditional test*—that is, it asks "`if`" the value stored in each pixel *(x,y)* of a source image meets a certain criterion. In return, thresholding produces a destination image, which represents where and how the criterion is (or is not) met in the original's corresponding pixels. As we stated earlier, pixels which satisfy the criterion are conventionally assigned 255 (white), while those which don't are assigned 0 (black). And as we shall see, the white blobs which result from such thresholding are ideally suited for further analysis by *contour tracers*.
 
-Here's an example, a photomicrograph (left) of light-colored cells. We'd like to know which pixels represent a cell, and which do not. For our criterion, we test for pixels whose grayscale brightness is greater than some constant, the *threshold value*. In this illustration, we test against a threshold value of 127, the middle of the 0-255 range: 
+임계처리는 *픽셀단위 조건 테스트*를 의미합니다- 즉, "만약" 원본 이미지의 각 *(x, y)*에 대항하는 픽셀에 담긴 값이 특정한 조건을 충족하는가 를 묻는것입니다. 임계처리는 그 결과로 원본 이미지의 해당 픽셀과 대응되는 픽셀에 조건이 충족하는지, 혹은 충족하지 않는지를 나타내는 대상 이미지를 리턴해줍니다. 앞서 우리가 잠깐 살펴봤듯이, 조건을 만족하는 픽셀은 255(흰색), 그렇지 않은경우 0(검정)이 됩니다. 그리고 앞으로 우리가 더 살펴보겠지만, 임계처리의 결과로 얻어낸 흰색 덩어리(blob)들은 *윤곽 추적(contour tracers)* 분석에 훨씬 더 적합합니다.
+
+아래의 예시에서, 좌측에는 밝은-색의 세포 현미경 사진이 있습니다. 여기서 어떤 픽셀들이 세포인지, 그리고 어떤 픽셀들이 세포가 아닌지를 알고 싶다고 해봅시다. 우리의 기준이라면, 어떤 픽셀들이 그레이스케일의 밝기가 어떤 기준값, 즉 *임계값* 보다 큰지를 테스트 하면 될것입니다. 아래의 그림에서는, 0-255 범위의 중간값인 127을 임계값으로 설정하여 테스트합니다.
 
 ![Thresholding, also called binarization](images/thresholded_cells.png)
 
 And below is the complete openFrameworks program for thresholding the image—although here, instead of using a constant (127), we instead use the `mouseX` as the threshold value. This has the effect of placing the thresholding operation under interactive user control. 
+
+아래의 코드는 이미지의 임계처리를 위한 오픈프레임웍스의 프로그램입니다만, 상수값 (127)을 사용하는 대신, 마우스의 x좌표인 `mouseX`를 임계값으로 사용했습니다. 이러한 방법을 사용해 사용자 컨트롤에 의한 상호작용으로 임계연산을 적용할 수 있습니다.
 
 ```cpp
 // Example 6: Thresholding 
@@ -946,22 +952,30 @@ void ofApp::draw(){
 }
 ```
 ## A Complete Workflow: Background Subtraction
+## 최종 워크플로우 : 배경 제거 
 
 We now have all the pieces we need to understand and implement a popular and widely-used workflow in computer vision: *contour extraction and blob tracking from background subtraction*. This workflow produces a set of (x,y) points that represent the boundary of (for example) a person's body that has entered the camera's view. 
 
-![Screenshot of the opencvExample](images/opencvExample.png)
+자 이제 컴퓨터비젼에서 가장 많이 사용되는 *배경제거 후 윤곽 추출 및 덩어리 추적법* 에 대해 살펴보고 구현해보도록 하겠습니다. 이 과정을 거치면 (예를 들어) 카메라의 시야에 들어오는 인체의 몸의 경계를 표현하는 덩어리의 (x, y) 좌표들을 얻어올 수 있습니다.
+
+
+![opencvExample의 스크린샷](images/opencvExample.png)
 
 In this section, we'll base our discussion around the standard openFrameworks *opencvExample*, which can be found in the `examples/addons/opencvExample` directory of your openFrameworks installation. When you compile and run this example, you'll see a video of a hand casting a shadow—and, at the bottom right of our window, the contour of this hand, rendered as a cyan polyline. This polyline is *our prize:* using it, we can obtain all sorts of information about our visitor. So how did we get here?
 
+이 섹션에서는, 오픈프레임웍스 디렉토리 내의 `examples/addons/opencvExample`에 위치한 *opencvExample* 예제를 중점으로 합니다. 이 프로젝트를 컴파일한 뒤 실행하면, 손의 그림자와 함께, 우측하단에 손의 윤곽이 cyan색의 polyline으로 그려지는 결과를 보실 수 있을겁니다. 이 polyline이 바로 *결과물*로써, 이것으로 관객들의 각종 정보들을 얻을수 있습니다. 자 그럼 어떻게 이것을 얻어올 수 있을까요?
+
 The code below is a slightly simplified version of the standard *opencvExample*; for example, we have here omitted some UI features, and we have omitted the `#define _USE_LIVE_VIDEO` (mentioned earlier) which allows for switching between a live video source and a stored video file.  
 
-In the discussion that follows, we separate the inner mechanics into five steps, and discuss how they are performed and displayed: 
+아래의 코드는 *opencvExample*예제를 살짝 단순화하여 보여줍니다; 몇가지 UI요소들과, 실시간 비디오 스트림과 미리 저장된 비디오파일 전환을 위한 (앞에서 언급했던 전처리구문인) `#define _USE_LIVE_VIDEO`도 빠져있습니다.
 
-1. Video Acquisition
-2. Color to Grayscale Conversion 
-3. Storing a "Background Image"
-4. Thresholded Absolute Differencing
-5. Contour Tracing
+이제부터는 내부 과정을 다섯단계로 구분하고, 이것들이 어떻게 수행되고, 그려지는지 살펴볼 것입니다:
+
+1. 비디오 얻기
+2. 컬러를 그레이스케일로 변환
+3. "배경 이미지" 저장
+4. 임계처리 비교
+5. 윤곽(contour) 추적
 
 ```cpp
 // Example 7: Background Subtraction 
@@ -1070,14 +1084,21 @@ void ofApp::keyPressed(int key){
 }
 ```
 
-**Step 1. Video Acquisition.** <br /> 
+**단계 1. 비디오 얻기.** <br /> 
 In the upper-left of our screen display is the raw, unmodified video of a hand creating a shadow. Although it's not very obvious, this is actually a color video; it just happens to be showing a mostly black-and-white scene. 
+
+좌측 상단에는, 날것의, 처리되지 않은 손 비디오이 그려집니다. 그렇게 보이진 않겠지만, 이 비디오는 거의 흑백처럼 보일 뿐 사실 컬러 비디오입니다.
 
 In `setup()`, we initialize some global-scoped variables (declared in ofApp.h), and allocate the memory we'll need for a variety of globally-scoped `ofxCvImage` image buffers.  We also load the hand video from from its source file into `vidPlayer`, a globally-scoped instance of an `ofVideoPlayer`.
 
+`setup()`에서, (ofApp.h에서 선언된) 몇가지 `ofxCvImage` 이미지 버퍼 전역변수들을 초기화하고, 메모리를 할당합니다. 또한 `ofVideoPlayer`의 전역변수인 `vidPlayer`에 손 비디오를 불러옵니다.
+
+
 It's quite common in computer vision workflows to maintain a large number of image buffers, each of which stores an intermediate state in the image-processing chain. For optimal performance, it's best to `allocate()` these only once, in `setup()`; otherwise, the operation of reserving memory for these images can hurt your frame rate. 
 
-Here, the `colorImg` buffer (an `ofxCvColorImage`) stores the unmodified color data from `vidPlayer`; whenever there is a fresh frame of data from the player, in `update()`, `colorImg` receives a copy. Note the commands by which the data is extracted from `vidPlayer` and then assigned to `colorImg`: 
+컴퓨터 비전 워크플로우에서는 복수의 이미지버퍼를 사용하는것이 일반적인데, 각 버퍼들은 이미지-처리 체인의 중간상태들을 저장하는데 사용됩니다. 최적의 성능을 위해, `allocate()`(역자 주:메모리 할당)은 `setup()`에서 한번만 해주는 것이 좋습니다; 그렇지 않다면, 매번 메모리를 할당해야 하므로 프레임이 떨어질 것입니다.
+
+`colorImg`버퍼 (`ofxCvColorImage`)는 `vidPlayer`에서 얻어온 수정되지 않은 컬러 데이터가 저장되어있습니다; 이 프레임은 `update()`에서 매번 새롭게 얻어온 프레임이지요. `colorImg`는 이것의 복사본을 받습니다. 어떤 명령으로 `vidPlayer`에서 `colorImg`로 데이터가 적용되는지 살펴보시기 바랍니다:
 
 ```cpp
 colorImg.setFromPixels(vidPlayer.getPixels());
@@ -1085,26 +1106,32 @@ colorImg.setFromPixels(vidPlayer.getPixels());
 
 In the full code of opencvExample (not shown here) a `#define` near the top of ofApp.h allows you to swap out the `ofVideoPlayer` for an `ofVideoGrabber`—a live webcam. 
 
-**Step 2. Color to Grayscale Conversion.** <br />
-In the upper-right of the window is the same video, converted to grayscale. Here it is stored in the `grayImage` object, which is an instance of an `ofxCvGrayscaleImage`. 
+(여기서 보여지진 않지만) opencvExample의 전체코드 중, ofApp.h 의 상단부분에서 실사간 웹캠사용을 위해 `#define`구문을 이용해 `ofVideoplayer`를 `ofVideoGrabber`로 변경할 수 있습니다.
+
+**단계 2. 컬러를 그레이스케일로 변환.** <br />
+우측 상단의 비디오는 그레이스케일로 변환된 같은 비디오입니다. 이 비디오가 바로 `grayImage` 오브젝트에 저장되어있는, `ofxCvGrayscaleImage`의 인스턴스 입니다.
 
 It's easy to miss the grayscale conversion; it's done implicitly in the assignment `grayImage = colorImg;` using operator overloading of the `=` sign. All of the subsequent image processing in *opencvExample* is done with grayscale (rather than color) images. 
 
-**Step 3. Storing a "Background Image".** <br />
-In the middle-left of the screen is a view of the *background image*. This is a grayscale image of the scene that was captured, once, when the video first started playing—before the hand entered the frame. 
+그레이스케일로 변환되었다는 사실을 놓치기 쉽습니다; `=` 연산자 오버로딩을 사용해서 `grayImage = colorImg;` 한줄 코드에 의해서 변환되기 때문이죠.
 
-The background image, `grayBg`, stores the first valid frame of video; this is performed in the line `grayBg = grayImage;`. A boolean latch (`bLearnBackground`) prevents this from happening repeatedly on subsequent frames. However, this latch is reset if the user presses a key. 
 
-It is absolutely essential that your system "learn the background" when your subject (such as the hand) is *out of the frame*. Otherwise, your subject will be impossible to detect properly!
+**단계 3. "배경 이미지" 저장하기".**<br />
+좌측 중간의 화면에는 *배경 이미지*가 보여집니다. 이 이미지는 비디오가 시작하는 순간, 손이 프레임 안에 들어오기전 장면이 캡쳐된 그레이스케일 이미지입니다.
 
-**Step 4. Thresholded Absolute Differencing.** <br />
-4. In the middle-right of the screen is an image that shows the *thresholded absolute difference* between the current frame and the background frame. The white pixels represent regions that are significantly different from the background: the hand! 
+배경이미지인 `garyBg`에는, 비디오의 첫 프레임이 저장되어있습니다; 이는 `grayBh = garyImage;`에 의해 수행됩니다. 불린 스위치(`bLearnBackground`)를 사용하여 매 프레임마다 배경이미지로 저장되는것을 막습니다. 대신에, 이 스위치는 키를 누름으로서 활성화됩니다.
 
-The absolute differencing and thresholding take place in two separate operations, whose code is shown below. The `absDiff()` operation computes the absolute difference between `grayBg` and `grayImage` (which holds the current frame), and places the result into `grayDiff`. 
+이렇게 하면, (가령 손과같은) 오브젝트가 *프레임을 벗어났을때*, 시스템에서 "배경 학습"을 할수 있게 됩니다. 이렇게 하지 않으면, 오브젝트를 제대로 감지할 수 없겠죠!
 
-The subsequent thresholding operation ensures that this image is *binarized*, meaning that its pixel values are either black (0) or white (255). The thresholding is done as an *in-place operation* on `grayDiff`, meaning that the `grayDiff` image is clobbered with a thresholded version of itself. 
+**단계 4. 절대비교 후 임계처리.** <br />
+우측 중간에 보여지는 이미지는 현재 프레임과 배경 프레임을 *절대 비교 후 임계처리된* 화면입니다. 흰색으로 보여지는 영역이 바로 배경과 명백히 다른 영역: 즉 손입니다!
+
+절대비교와 임계처리는 아래에 보이는 코드에서 두 단계로 나뉘어집니다. `absDiff()`는 `grayBg`와 `grayImage`(현재프레임)간의 절대비교를 계산하여 그 결과를 `grayDiff`에 저장합니다.
+
+임계처리의 결과는 *이진화*된 이미지입니다, 이말은 즉, 픽셀값이 검정(0) 또는 흰색(255)으로만 이루어졌다는 뜻입니다. 임계처리는 `grayDiff` 상에서 *in-place operation*에 의해 수행됩니다. 다시말해 `grayDiff`이미지자체가 임계처리된 결과 됩니다.
 
 The variable `thresholdValue` is set to 80, meaning that a pixel must be at least 80 gray-levels different than the background in order to be considered foreground. In the official example, a keypress permits the user to adjust this number. 
+`thresholdValue` 값은 80으로 세팅되어있는데, 배경 이미지와 비교했을 때, 픽셀값이 최소 80이상의 gray-level 차이가 있어야 한다는 의미입니다. 공식 예제에서는, 키를 눌러 이 값을 조정할 수 있습니다.
 
 ```cpp
 // Take the absolute value of the difference 
@@ -1115,16 +1142,16 @@ grayDiff.absDiff(grayBg, grayImage);
 grayDiff.threshold(thresholdValue);
 ```
 
-This example uses thresholding to distinguish dark objects from a light background. But it's worth pointing out that thresholding can be applied to any image whose brightness quantifies a variable of interest. 
+이 예제는 밝은 배경이미지에서 어두운 오브젝트를 구별하기 위해 임계처리를 사용합니다만, 이와 반대로 특정 이미지에서 밝은 부분을 추출할 수도 있습니다.
 
-If you're using a webcam instead of the provided "fingers.mov" demo video, note that automatic gain control can sometimes interfere with background subtraction. You may need to increase the value of your threshold, or use a more sophisticated background subtraction technique. 
+만약 여러분이 제공된 데모비디오인 "fingers.mov"파일 대신, 웹캠을 사용할 경우, 자동 보정기능이 떄로는 배경 제거에 방해가 될 수 있다는 점을 명심하십시오. 이러한 경우 임계값의 값을 키우거나, 또는 좀 더 복잡한 배경제거 기술을 사용해야 합니다.
 
-**Step 5. Contour Tracing.** <br />
-5. The final steps are displayed in the bottom right of the screen. Here, an `ofxCvContourFinder` has been tasked to `findContours()` in the binarized image. It does this by identifying contiguous blobs of white pixels, and then tracing the contours of those blobs into an `ofxCvBlob` outline comprised of (x,y) points. 
+**단계 5. 윤곽 추적.** <br />
+마지막 단계는 우측 상단에서 볼 수 있습니다. 이것이 이진화된 이미지에서 `findContoures()`에 의해 처리된 `ofxCvContourFinder`입니다. 이러한 과정은 연속적인 흰 픽셀 덩어리들을 판별한 뒤, 이 덩어리들의 윤곽을 추적하여 (x,y) 좌표들로 이루어진 `ofxCvBlob`로 변환합니다.
 
-Internally, the `ofxCvContourFinder` first performs a pixel-based operation called [*connected component labeling*](https://en.wikipedia.org/wiki/Connected-component_labeling), in which contiguous areas are identified as uniquely-labeled blobs. It then extracts the boundary of each blob, which it stores in an `ofPolyline`, using a process known as a [*chain code algorithm*](http://www.mind.ilstu.edu/curriculum/chain_codes_intro/chain_codes_intro.php). 
+내부적으로, `ofxCvContourFinder` 는 우선 [*connected component labeling*](https://en.wikipedia.org/wiki/Connected-component_labeling)라고 불리우는 픽셀-단위 계산을 통해, 연결된(연속적인)영역을 고유한-이름을 가진 덩어리로 분류해둡니다. 그런 뒤 이러한 각 덩어리들의 윤곽을 [*chain code algorithm*](http://www.mind.ilstu.edu/curriculum/chain_codes_intro/chain_codes_intro.php)를 사용하여 `ofxPolyline`이라 불리우는 오브젝트에 저장합니다.
 
-Some of the parameters to the `findContours()` method allow you to select only those blobs which meet certain minimum and maximum area requirements. This is useful if you wish to discard very tiny blobs (which can result from noise in the video) or extremely large blobs (which can result from sudden changes in lighting). 
+`findContoures()` 메서드에 적용되는 몇몇 파라메터들을 사용하여 추출할 덩어리의 최소, 최대크기를 지정할 수 있습니다. 이를 통해 (비디오의 노이즈에 의한) 작은 덩어리들을 무시하거나, 또는 (갑작스런 조도변화에 의한) 너무 큰 덩어리들을 무시할 수 있습니다.
 
 ```cpp
 // Find contours whose areas are betweeen 20 and 25000 pixels.
@@ -1132,8 +1159,7 @@ Some of the parameters to the `findContours()` method allow you to select only t
 contourFinder.findContours(grayDiff, 20, 25000, 10, true);
 ```
 
-In `draw()`, the app then displays the contour of each blob in cyan, and also shows the bounding rectangle of those points in magenta.
-
+`draw()` 함수에서, 각 덩어리의 윤곽을 cyan으로, 또한 이 윤곽의 범위를 magenta의 사각형으로 그려냅니다.
 ```cpp
 // Draw each blob individually from the blobs vector
 int numBlobs = contourFinder.nBlobs;
@@ -1142,99 +1168,105 @@ for (int i=0; i<numBlobs; i++){
 }
 ```
 
-### Frame Differencing
 
-Closely related to background subtraction is *frame differencing*. If background subtraction is useful for detecting *presence* (by comparing a scene before and after someone entered it), frame differencing is useful for detecting *motion*. 
+### 프레임 비교
 
-The difference between background subtraction and frame differencing can be described as follows: 
+배경 제거와 아주 흡사한 방법으로 *프레임 비교*가 있습니다. 배경 제거 기법이 *등장* 감지에 유용한다고 하면(가령 누군가가 프레임에 등장하기 전과 등장 후를 비교), 프레임 비교는 *움직임*을 감지하는데 유용합니다.
 
-* Background subtraction compares the current frame with a previously-stored background image
-* Frame differencing compares the current frame with the immediately previous frame of video. 
+배경 제거와 프레임 비교의 차이점은 아래와 같습니다:
+
+* 배경 제거는 현재 프레임과 미리 저장된 배경이미지를 비교한다.
+* 프레임 비교는 비디오의현재 프레임과 직전 프레임을 비교한다.
 
 As with background subtraction, it's customary to threshold the difference image, in order to discriminate signals from noise. Using frame differencing, it's possible to quantify *how much motion* is happening in a scene. This can be done by counting up the white pixels in the thresholded difference image. 
+배경제거를 할때에는, 노이즈 제거를 위해 비교된 이미지를 임계처리하여 조정합니다. 프레임비교를 통하면, 씬에서 *얼마나 많은 움직임이 있었는지*의 정도를 측정할 수 있습니다. 이를 위해 비교된 이미지를 임계처리한 뒤, 흰 픽셀이 얼마나 되는지를 카운트하는 방법을 사용합니다.
 
 In practice, background subtraction and frame differencing are often used together. For example, background subtraction can tell us that someone is in the room, while frame differencing can tell us how much they are moving around. In a common solution that combines the best of both approaches, motion detection (from frame differencing) and presence detection (from background subtraction) can be combined to create a generalized detector. A simple trick for doing so is to take a weighted average of their results, and use that as the basis for further thresholding. 
 
-### Contour Games
+실제로, 배경제어와 프레임비교는 빈번히 함께 사용됩니다. 예를들어, 배경제거를 통해 누군가가 방에 들어왔는지를 알아내고, 프레임 비교를 통해 얼마나 그(그녀)가 움직이는지를 알아차리릴 수 있습니다. 이렇게 (프레임 비교를 통한)동작감지와, (배경 제거를 통한)등장감지를 조합하여 범용적인 감지장치를 만들어내는 것이 일반적인 솔루션입니다. 이렇게 얻은 결과로 가중평균(weighted everage)을 구하고, 그 평균을 추가적인 임계처리값으로 사용합니다.
 
-Blob contours are a *vector-based* representation, comprised of a series of (x,y) points. Once obtained, a contour can be used for all sorts of exciting geometric play. 
+### 윤곽 게임
 
-A good illustration of this is the following project by Cyril Diagne, in which the body's contour is triangulated by [ofxTriangle](https://github.com/obviousjim/ofxTriangle), and then used as the basis for simulated physics interactions using [ofxBox2D](https://github.com/vanderlin/ofxBox2d). The user of Diagne's project can "catch" the bouncy circular "balls" with their silhouette. 
+덩어리 윤곽은 (x,y)점의 좌표집합으로 이루어진 *벡터-기반* 표현입니다. 이렇게 얻어진 윤곽은 모든 종류의 흥미로운 기하학(geometric)적 플레이로 활용이 가능합니다.
+
+아래에 보여지는 Cyril Diagne에 의해 진행된 아래의 프로젝트에서는, 바디의 윤곽을 [ofxTriangle](https://github.com/obviousjim/ofxTriangle)을 사용하여 삼각화(triangulate) 하고, 그 결과를 기반으로 [ofxBox2D](https://github.com/vanderlin/ofxBox2d)를 사용하여 물리 시뮬레이션 인터랙션을 만들어냈습니다. 관객들은 자신들의 실루엣으로 원형의 "공"들을 "캐치"할 수 있습니다.
 
 ![Screenshots of ofx-kikko by Cyril Diagne](images/ofx-kikko.jpg)
 
-One of the flags to the `ofxCvContourFinder::findContours()` function allows you to search specifically for *interior* contours, also known as [*negative space*](https://en.wikipedia.org/wiki/Negative_space). An interactive artwork which uses this to good effect is *Shadow Monsters* by Philip Worthington, which interprets interior contours as the boundaries of lively, animated eyeballs. 
+`ofxCvContourFinder::findContours()`함수에 적용되는 플래그 변수중 하나를 통해, *내부* 윤곽을 찾을지 무시할지를 결정할 수 있습니다. 이 내부 윤곽은 [*negative space*](https://en.wikipedia.org/wiki/Negative_space)라고도 불리웁니다. 이 효과를 사용한 인터랙티브 예술작품 Philip Worthington의 *Shadow Monters*에서는, 이 내부 윤곽들을 살아있는 눈알로 변환합니다.
 
 ![Screenshots of Philip Worthington's Shadow Monsters. Photo by Jef Rouner](images/shadowmonsters_jefrouner.jpg)
 
 The original masterwork of contour play was Myron Krueger’s landmark interactive artwork, [*Videoplace*](https://www.youtube.com/watch?v=dmmxVA5xhuo), which was developed continuously between 1970 and 1989, and which premiered publicly in 1974. The *Videoplace* project comprised at least two dozen profoundly inventive scenes which comprehensively explored the design space of full-body camera-based interactions with virtual graphics — including telepresence applications and (as pictured here, in the “Critter” scene) interactions with animated artificial creatures. 
+윤곽(컨투어)를 사용한 오리지널 명작은 Myron Krueger의 대표적인 인터랙티브 작품인 [*Videoplace*](https://www.youtube.com/watch?v=dmmxVA5xhuo)으로, 1970년부터 1089년까지 지속적으로 개발되왔었으며, 1974년 최초로 공개되었습니다. 이 *Videoplace*는 
 
 ![Photographs of Myron Krueger's VideoPlace](images/krueger.jpg)
 
 Here's a quick list of some fun and powerful things you can do with contours extracted from blobs: 
+아래는 덩어리들로부터 추출된 윤곽들을 응용하여 만들어낼 수 있는 흥미로운 주제들입니다:
 
-* A blob's contour is represented as a `ofPolyline`, and can be smoothed and simplified with `ofPolyline::getSmoothed()`. Try experimenting with extreme smoothing, to create ultra-filtered versions of captured geometry. 
-* If you have too many (or too few) points in your contour, consider using `ofPolyline::getResampledBySpacing()` or `getResampledByCount()` to reduce (or increase) its number of points. 
-* `ofPolyline` provides methods for computing the area, perimeter, centroid, and bounding box of a contour; consider mapping these to audiovisual or other interactive properties. For example, you could map the area of a shape to its mass (in a physics simulation), or to its color. 
-* You can identify "special" points on a shape (such as the corners of a square, or an extended fingertip on a hand) by searching through a contour for points with high local curvature. The function `ofPolyline::getAngleAtIndex()` can be helpful for this. 
-* The mathematics of [*shape metrics*](http://what-when-how.com/biomedical-image-analysis/spatial-domain-shape-metrics-biomedical-image-analysis/) can provide powerful tools for contour analysis and even recognition. One simple shape metric is [*aspect ratio*](https://en.wikipedia.org/wiki/Aspect_ratio), which is the ratio of a shape's width to its height. Another elegant shape metric is *compactness* (also called the [*isoperimetric ratio*](https://en.wikipedia.org/wiki/Isoperimetric_ratio)), which the ratio of a shape's perimeter-squared to its area. You can use these metrics to distinguish between (for example) cardboard cutouts of animals or numbers.
-* The ID numbers (array indices) assigned to blobs by the `ofxCvContourFinder` are based on the blobs' sizes and locations. If you need to *track* multiple blobs whose positions and areas change over time, see the [*example-contours-tracking*](https://github.com/kylemcdonald/ofxCv/tree/master/example-contours-tracking) example in Kyle McDonald's addon, [ofxCv](https://github.com/kylemcdonald/ofxCv/).
+* 덩어리의 윤곽은 `ofPolyline`으로 표현되며, `ofPolyline::getSmoothed()`를 통해 단순화할 수 있습니다. 극단적으로 단순화시켜 실험해보세요.
+* 만약 윤곽들의 좌표가 너무 많거나 적으면, `ofPolyline::getResampledBySpacing()` 또는 `ofPolyline::getResampledByCount()`를 통해 좌표의 수를 줄이거나 늘려보세요.
+* `ofPolyline`은 윤곽의 부피(area), 윤곽의 둘레, 중심점, 바운딩 영역을 계산하는 메소드들을 제공합니다. 이것들을 오디오비주얼 또는 다른 인터랙티브한 요소들로 매핑해보세요. 예들을어, 도형의 부피를 (물리 시뮬레이션에서) 무게로 변환하거나, 그것의 색으로 변환할 수 있을것입니다.
+* 도형에 (손의 손가락 끝이라던가, 사각형의 끝 점과 같은) "특별한" 점을 지정할 수 있습니다.`ofPolyline::getAngleAtindex()`응 사용하여 윤곽을 이루는 포인트들 중 높은 커브값을 갖는 점을 찾을 수 있습니다.
+* [*shape metrics*](http://what-when-how.com/biomedical-image-analysis/spatial-domain-shape-metrics-biomedical-image-analysis/)은 윤곽 분석 및 사물인식과 같은 강력한 기능을 제공합니다. 이중 간단한 shape 측정도(metric)에는 [*aspect ratio*](https://en.wikipedia.org/wiki/Aspect_ratio)가 있는데, 도형의 가로세로 비율을 의미합니다. 또다른 멋진 shape 측정도는 *조밀함*([*isoperimetric ratio*](https://en.wikipedia.org/wiki/Isoperimetric_ratio)이라고도 합니다.)으로, 도형의 둘레의-제곱을 의미합니다. 이러한 측정법들을 사용하여 (예를들어) 동물이나 숫자의 컷아웃을 구별해 낼 수 있습니다.
+* `ofxCvContourFinder`에 의해 얻어진 덩어리(blob)에 할당된 ID(배열 인덱스)를 통해 덩어리의 크기와 위치를 얻을 수 있습니다. 만약 각 블랍의 위치와 크기가 계속 바뀌는 여러 덩어리들을 *추적*하길 원한다면, [ofxCv](https://github.com/kylemcdonald/ofxCv/)Kyle McDonald의 애드온인 [ofxCv](https://github.com/kylemcdonald/ofxCv/)의 [*example-contours-tracking*](https://github.com/kylemcdonald/ofxCv/tree/master/example-contours-tracking)를 살펴보시가 바랍니다.
 
-
-## Refinements
+## 정리
 
 In this section we briefly discuss several important refinements that can be made to improve the quality and performance of computer vision programs. 
+이번 섹션에서는, 컴퓨터비전 프로그램의 성능과 품질향상을 위해 중요한 몇가지 주요 정리사항에 대해 살펴보겠습니다.
 
-* Cleaning Up Thresholded Images: Erosion and Dilation
-* Automatic Thresholding and Dynamic Thresholding
-* Adaptive Background Subtraction
-* ROI Processing
+* 임계처리된 이미지 정리 : 침식(Erosion)과 팽창(Dilation)
+* 자동 임계처리와 동적 임계처리
+* 적응형(adaptive) 배경 추출
+* 관심영역(ROI) 처리
 
-#### Cleaning Up Thresholded Images: Erosion and Dilation
+#### 임계처리된 이미지 정리 : 침식(Erosion)과 팽창(Dilation)
 
-Sometimes thresholding leaves noise, which can manifest as fragmented blobs or unwanted speckles. If altering your threshold value doesn't solve this problem, you'll definitely want to know about [*erosion*](http://homepages.inf.ed.ac.uk/rbf/HIPR2/erode.htm) and [*dilation*](http://homepages.inf.ed.ac.uk/rbf/HIPR2/dilate.htm), which are types of *morphological operators* for binarized images. Simply put, 
+종종 임계처리를 하면, 조각 덩어리가 생기거나 원하지 않은 얼룩등 노이즈가 발생하곤 합니다. 만약 임계값을 적용해도 이러한 문제들이 해결되지 않는다면, [*erosion*](http://homepages.inf.ed.ac.uk/rbf/HIPR2/erode.htm)과 [*dilation*](http://homepages.inf.ed.ac.uk/rbf/HIPR2/dilate.htm)에 대해 살펴볼 필요가 있습니다. 이것들은 이진화된 이미지에서의 *형태적 연산자* 종류이며, 아래와 같이 간략하게 설명될 수 있습니다,
 
-* Erosion *removes* a layer of pixels from every blob in the scene. 
-* Dilation *adds* a layer of pixels to every blob in the scene. 
+* 침식(Erosion) 씬의 모든 덩어리에서 얻은 픽셀의 층을 *제거*한다.
+* 팽창(Dilation)은 씬의 모든 덩어리에서 얻은 픽셀의 층을 *추가*한다.
 
-In the example below, one pass of erosion is applied to the image at left. This eliminates all of the isolated specks of noise: 
+아래에 보여지는 예제에서는, 좌측의 이미지에 erosion 처리를 한번 한 결과를 보여줍니다. 이를 통해 작은 노이즈 얼룩들을 제거하였습니다:
 
 ![Original image (left), after one pass of erosion (right)](images/erosion_in_use.png)
 
-By contrast, observe how dilation is used in the person-detecting pipeline below: 
+반대로, dilation처리가 인체감지 과정에서 어떻게 되는지 아래에서 살펴보시기 바랍니다:
 
 ![A complete image-processing pipeline, including ](images/full_pipeline.png)
 
-1. Live video is captured and converted to grayscale. A background image is acquired at a time when nobody is in the scene. (Sometimes, a running average of the camera feed is used as the background, especially for outdoor scenes subject to changing lighting conditions.)
-2. A person walks into the frame.  
-3. The live video image is compared with the background image. The absolute difference of Images (1) and (2) is computed. 
-4. Image (3), the absolute difference, is thresholded. Unfortunately, the person's body is fragmented into pieces, because some pixels were insufficiently different from the background. 
-5. Two passes of dilation are applied to Image (4) the thresholded image. This fills in the cracks between the pieces, creating a single, contiguous blob. 
-6. The contour tracer identifies just one blob instead of several.  
 
-OpenCV makes erosion and dilation easy. See `ofxCvImage::erode()` and `ofxCvImage::dilate()` for methods that provide access to this functionality. 
+1. 캡쳐된 실시간 비디오는 그레이스케일로 변환됩니다. 씬에 아무도 없을때 배경이미지를 획득합니다. (종종, 실외와 같이 조도 환경이 바뀌는 경우에 카메라 피드에서 평균 이미지를 얻어 배경으로 사용되기도 합니다.)
+2. 프레임 내에 사람이 걸어들어옵니다.
+3. 실시간 미디오 이미지는 배경이미지와 비교됩니다. 이미지 (1)과 (2)의 절대 차이값이 계산됩니다.
+4. 절대 차이값이 계산된 이미지 (3)은 임계처리됩니다. 안타깝게도, 사람의 몸체가 여러 조각으로 조각나 있습니다. 배경이미지와 비교했을 때 큰 차이가 나지 않기 때문입니다.
+5. 임계처리된 이미지 (4)에 Dilation 처리를 두번 수행합니다. 이를 통해 조각난 덩어리들이 하나의 연속된 덩어리로 만들어집니다.
+6. 여러 덩어리 대신 하나의 덩어리로 윤곽추적을 합니다.
 
-Other operations which may be helpful in removing noise is `ofxCvImage::blur()` and `ofxCvImage:: blurGaussian()`. These should be applied *before* the thresholding operation, rather than after. 
+OpenCV를 사용하면 erosion과 dilation을 쉽게 사용할 수 있습니다. `ofxCvImage::erod()`와 `ofxCvImage::dilate()`가 바로 이런 기능을 제공하는 메소드들입니다.
 
-#### Adaptive Background Subtraction
 
-In situations with fluctuating lighting conditions, such as outdoor scenes, it can be difficult to perform background subtraction. One common solution is to slowly adapt the background image over the course of the day, accumulating a running average of the background. 
+`ofxCvImage::blur()`와 `ofxCvImage::blufGaussian()`은 노이즈 제거에 어쩌면 도움이 될 수 있는 다른 연산들입니다. 이것들은 임계처리 후가 아니라 *전에* 사용되어야 합니다.
 
-The overloaded operators for `ofxCvImage` make such running averages straightforward. In the code fragment below, the background image is continually but slowly reassigned to be a combination of 99% of what it was a moment ago, with 1% of new information. This is also known as an *adaptive background*. 
+#### 적응형 배경 제거
+조도 환경이 자주 변하는 실외 같은 환경에서는, 배경 제거가 어려울 수 있습니다. 일반적인 해결책 중 하나는 하루가 흐르는 동안 천천히 배경의 평균을 더해 업데이트하여 배경이미지를 적용하는 것입니다. 
+
+`ofxCvImage`의 연산자 오버로딩 사용을 통해 평균값을 직관적으로 계산할 수 있습니다. 아래의 코드는, 배경을 지속적으로, 천천히 1%의 새 정보와 나머지 99%를 조합하여 계산합니다. 이를 *적응형 배경*이라고도 부릅니다.
 
 ```cpp
 grayBg = 0.99*grayBg + 0.01*grayImage;
 ```
  
-#### Automatic Thresholding and Dynamic Thresholding
+#### 자동 임계처리와 동적 임계처리
+종종 입계값을 보다 정확하게 적용하는것이 어려울 떄가 있습니다. 카메라의 조건이 바뀌거나, 조도값이 바뀌거나, 혹은 대상 씬이 바뀔때와 같은 경우이지요; 이럴 
 
-Sometimes it's difficult to know in advance exactly what the threshold value should be. Camera conditions change, lighting conditions change, scene conditions change; all affect the value which we hope to use to distinguish light from dark. 
-
-To resolve this, you could make this a manually adjusted setting, as we did in Example 6 (above) when we used the `mouseX` as the threshold value. But there are also *automatic thresholding* techniques that can compute an "ideal" threshold based on an image's luminance histogram. There are dozens of great techniques for this, including [Otsu's Method](https://en.wikipedia.org/wiki/Otsu%27s_method), Gaussian Mixture Modeling, IsoData Thresholding, and Maximum Entropy thresholding. For an amazing overview of such techniques, check out [ImageJ](http://imagej.nih.gov/ij/), an open-source (Java) computer vision toolkit produced by the US National Institute of Health. 
+이를 해결하기 위해, 위의 예제 6(위)와 같이, `mouseX`값을 입계값으로 사용하여 수동으로 조절하는 방법을 사용할 수 있습니다. 하지만 *자동 임계처리* 기법을 사용해 이미지의 밝기 히스토그램에 기반한 "이상적인" 임계값을 계산하는 방법도 있습니다. 이를 위한 여러 훌륭한 기법들이 있는데, [Otsu's Method](https://en.wikipedia.org/wiki/Otsu%27s_method), 가우시언 혼합모델링, IsoData 임계처리, 최대 엔드로피 임계처리 등등이 있습니다. US National Institute of Health에서 만든 오픈소스 (JAVA) 컴퓨터 키전 툴킷인 [ImageJ](http://imagej.nih.gov/ij/)에, 이 훌륭한 기법들이 잘 정리되어있으니 살펴보시기 바랍니다.
 
 ![An image histogram, and four possible thresholds. The histogram shows a hump of dark pixels (with a large peak at 28/255), and a shallower hump of bright pixels (with a peak at 190). The vertical gray lines represent possible threshold values, automatically determined by four different methods. ](images/thresholds.png)
 
-Below is code for the *Isodata* method, one of the simpler (and shorter) methods for automatically computing an ideal threshold. Note that the function takes as input the image's *histogram*: an array of 256 integers that contain the count, for each gray-level, of how many pixels are colored with that gray-level. 
+아래의 코드는 *Isodata* 방법을 사용한 코드입니다. 자동화된 이상적인 임계값을 계산하기 위한 단순한 방법중 하나입니다. 함수가 이미지의 *히스토그램*(이미지 전체에서 각 밝기레벨에 얼마나 많은 픽셀이 있는지를 카운트한 값이 256 정수로 나열된 배열)을 입력으로 받는다는 것을 보실 수 있습니다.
 
 ```cpp
 /*
@@ -1279,7 +1311,7 @@ int ofApp::getThresholdIsodata (int *imageHistogram){
 			sum = 0;
 			for (int i=thr; i<255; i++){
 				mean2 += (imageHistogram[i] * i);
-				sum   += (imageHistogram[i]);
+				sum   += (imageHistogram[i]);	
 			}
 
 			if (sum != 0){ mean2 = mean2 / sum;}
@@ -1293,45 +1325,46 @@ int ofApp::getThresholdIsodata (int *imageHistogram){
 }
 ```
 
-In some situations, such as images with strong gradients, a single threshold may be unsuitable for the entire image field. Instead, it may be preferable to implement some form of *per-pixel thresholding*, in which a different threshold is computed for every pixel (i.e. a "threshold image"). 
+이미지의 그라이던트가 너무 강하다던가 하는 몇몇 조건에서는, 하나의 임계값으로는 전체이미지에 적합하지 않은 경우가 있습니다. 이럴 경우 *픽셀당 임계처리*와 같은 구현이 더 적합할 수 있습니다. 전체 이미지 대신 픽셀마다 각기 다른 임계값을 적용하는 것이죠.
 
-As you can see below, a single threshold fails for this particular source image, a page of text. Instead of using a single number, the threshold is established for each pixel by taking an average of the brightness values in its neighborhood (minus a constant!). 
+아래에서 볼 수 있는것처럼, 특정 텍스트가 있는 원본 이미지는단인 임계값을 사용하면 제대로 처리가 되지 않습니다. 단일한 값을 사용하는 대신, 각 픽셀에 인접한 픽셀의 밝기값의 평균을 사용하여 임계처리를 합니다(상수를 뺍니다!).
 
 ![Adaptive Thresholding. From the Hypertext Image Processing Reference.](images/hipr-adaptive.jpg)
 
-The name for this technique is *adaptive thresholding*, and an excellent discussion can be found in the online [Hypertext Image Processing Reference](http://homepages.inf.ed.ac.uk/rbf/HIPR2/adpthrsh.htm). 
+이 기법을 *적응형 임계처리*라고 하며, [Hypertext Image Processing Reference](http://homepages.inf.ed.ac.uk/rbf/HIPR2/adpthrsh.htm)에서 더 자세한 내용을 찾으실 수 있습니다.
 
-#### ROI Processing 
+#### 관심영역(ROI) 처리
 
-Many image processing and computer vision operations can be sped up by performing calculations only within a sub-region of the main image, known as a *region of interest* or ROI. 
+많은 이미지 처리 및 컴퓨터 비전 계산에서는, 전체 이미지의 일부 영역에 한해 처리하는 경우가 있는데 이를 *관심영역(resion of interst)* 혹은 ROI라고 합니다.
 
-The relevant function is `ofxCvImage::setROI()`, which sets the ROI in the image. Region of Interest is a rectangular area in an image, to segment object for further processing. Once the ROI is defined, OpenCV functions will operate on the ROI, reducing the number of pixels that the operation will examine and modify.
+이 기능이 바로 `ofxCvImage::setROI()`인데, 이미지의 관심영역을 지정해줍니다. 관심영역은 추후 처리에 사용할 영역 오브젝트를 위한 이미지 내의 사각형 영역입니다. ROI가 한번 설정되면, OpenCV는 ROI에 한해 작업을 수행하므로, 처리하고 수정할 픽셀의 갯수를 줄일 수 있습니다.
 
-## Suggestions for Further Experimentation
+## 더 많은 실험을 위한 제안
 
-There's tons more to explore! We strongly recommend you try out all of the openCV examples that come with openFrameworks. (An audience favorite is the *opencvHaarFinderExample*, which implements the classic Viola-Jones face detector!) When you're done with those, check out the examples that come with Kyle McDonald's [ofxCv](https://github.com/kylemcdonald/ofxCv) addon. 
+살펴볼 내용이 정말 많습니다! 우선 오픈프레임웍스에 포함된 모든 openCV 예제들을 살펴보는것을 강력히 추천드립니다. (고전적인 Viola-Jones의 얼굴인식을 구현한 *opencvHaarFinderExample*예제가 제일 인기가 많더라구요!) 오픈프레임웍스의 예제들을 다 살펴보셨다면, Kyle McDonald의 [ofxCv](https://github.com/kylemcdonald/ofxCv)예제들도 살펴보시기 바랍니다.
 
 I sometimes assign my students the project of copying a well-known work of interactive new-media art. Reimplementing projects such as the ones below can be highly instructive, and test the limits of your attention to detail. Such copying provides insights which cannot be learned from any other source. *I recommend you build...*
 
-#### A Slit-Scanner.
-*Slit-scanning* — a type of spatiotemporal or "time-space imaging" — has been a common trope in interactive video art for more than twenty years. Interactive slit-scanners have been developed by some of the most revered pioneers of new media art (Toshio Iwai, Paul de Marinis, Steina Vasulka) as well as by [literally dozens](http://www.flong.com/texts/lists/slit_scan/) of other highly regarded practitioners. The premise remains an open-ended format for seemingly limitless experimentation, whose possibilities have yet to be exhausted. It is also a good exercise in managing image data, particularly in extracting and copying image subregions. 
+종종 저는 학생들에게 잘 알려진 인터랙티브 뉴미디어 프로젝트를 똑같이 구현해보는 과제를 내줍니다. 아래와 같이 절차적이면서, 디테일을 위해 관심의 한계를 테스트할 수 있는 프로젝트들을 재 구현해보는거죠. 다른 소스들에서 배울 수 없는, 직관성을 따라해보는겁니다. *이런것들을 한번 구현해보시길 바랍니다..*
 
-In digital slit-scanning, thin slices are extracted from a sequence of video frames, and concatenated into a new image. The result is an image which succinctly reveals the history of movements in a video or camera stream. In [*Time Scan Mirror*](http://www.smoothware.com/danny/timescan.html) (2004) by Danny Rozin, for example, a image is composed from thin vertical slices of pixels that have been extracted from the center of each frame of incoming video, and placed side-by-side. Such a slit-scanner can be built in fewer than 20 lines of code—try it!
+#### A Slit-Scanner.
+*Slit-scanning* 는, 시공간, 또는 "시-공간 이미징"의 종류로써, 인터랙티브 비디오 분야에서 20여년 이상 흔히 차용되어 왔습니다. 인터랙티브 slit-scanner는 다른 많은 실무자들에 의한 [literally dozens](http://www.flong.com/texts/lists/slit_scan/)뿐 만 아니라 존경받는 뉴미디어 아트분야의 선구자들(Toshio Iwai, paul de Marinis, Steina Vasulka)에 의해 개발되어왔습니다. 이는 끝없을 무한한 가능성을 가지는 실험을 위해 공개된 형태로 남아있습니다. 특히 이미지 데이터의 관리 및 이미지 하위영역의 추출 및 복사와 같은 내용을 연습하기에 좋습니다.
+
+디지털 slit-scanning에서, 얇은 슬라이스들은 미디오 프레임의 시퀀스에서 얻어지고, 이것들을 이어 새 이미지로 조합됩니다. 이 결과로 얻는 이미지는 비디오 혹은 카메라 스트림에서의 움직임의 기록을 간략하게 보여줍니다. Danny Rozin의 [*Time Scan Mirror*](http://www.smoothware.com/danny/timescan.html)(2004)에서는 입력받는 비디오의 매 프레임의 중앙에서 세로의 얇은 픽셀 슬라이스를 얻은뒤, 이를 서로 연결해 이미지로 조합합니다. 이러한 slit-scanner는 20줄도 안되는 코드로 구현할 수 있으니 한번 도전해보세요!
 
 ![Daniel Rozin, Time Scan Mirror (2004)](images/rozin_timescan.jpg)
 
-#### A cover of *Text Rain* by Utterback & Achituv (1999).
-
-*[Text Rain](http://camilleutterback.com/projects/text-rain/)* by Camille Utterback and Romy Achituv is a now-classic work of interactive art in which virtual letters appear to "fall" on the visitor's "silhouette". Utterback writes: "In the *Text Rain* installation, participants stand or move in front of a large projection screen. On the screen they see a mirrored video projection of themselves in black and white, combined with a color animation of falling letters. Like rain or snow, the letters appears to land on participants’ heads and arms. The letters respond to the participants’ motions and can be caught, lifted, and then let fall again. The falling text will 'land' on anything darker than a certain threshold, and 'fall' whenever that obstacle is removed."
+#### Utterback & Achituv의 *Text Rain* (1999) 커버
+Camille Utterbak과 Romy Achituv의 *[Text Rain](http://camilleutterback.com/projects/text-rain/)* 작업은 인터랙티브 아트 분야에서 고전적인 작업으로써, 가상의 문자들이 관객의 "실루엣"에 "떨어지는" 작업입니다. Utterback은 이렇게 설명합니다: "*Text Rain* 설치작품에서, 관객들은 거대한 프로젝트 스크린 앞에서 서있거나, 움직입니다. 관객들은 흑백의 좌우반전된 자신들과, 그 위에 컬러의 흘러내리는 글자들의 애니메이션이 조합된 화면을 볼 수 있습니다. 글자들은 비나 눈처럼, 관객들의 손과 팔에 얹혀집니다. 글자들은 관객들의 움직임에 의해 반응하여 잡히거나, 들리거나, 떨어트릴 수 있습니다. 이 낙하하는 텍스트들은 특정 임계값보다 어두운 영역에는 '착지'하고, 그 어두운 장애물이 제거되면 '낙하'합니다"
 
 ![Camille Utterback and Romy Achituv, Text Rain (1999)](images/text-rain.jpg)
 
-*Text Rain* can be implemented in about 30 lines of code, and involves many of the topics we've discussed in this chapter, such as fetching the brightness of a pixel at a given location. It can also be an ideal project for ensuring that you understand how to make objects (to store the positions and letters of the falling particles) and arrays of objects.
+*Text Rain*은 대략 30줄 정도의 코드로 구현할 수 있으며, 특정 위치의 픽셀의 밝기들을 얻는 등 이 챕터에서 다뤘던 주제들과 연관이 있습니다. 또한 어떻게 (낙하하는 파티클의 글자들과 그 위치를 저장하기 위한)오브젝트 및 이 오브젝트들을 담은 배열들을 이해하고 적용할 수 있는지를 확인하기에 이상적인 프로젝트입니다.
 
 ========================================================  
-## Bibliography
+## 관련 자료
 
-This chapter has introduced a few introductory image processing and computer vision techniques. But computer vision is a huge and constantly evolving field. For more information, we highly recommend the following books and online resources.
+본 챕터에서는 몇몇 입문용 이미지 처리 및 컴퓨터 비전의 기법에 대해 소개했습니다. 하지만 컴퓨터 비전은 정말 넙ㄹ고 계속해서 발전하는 영역입니다. 더 많은 정보를 위해, 아래의 서적과 온라인 자료를 살펴보시길 강력히 추천드립니다.
 
 - Bradski, Gary. [Learning OpenCV](http://cs.haifa.ac.il/~dkeren/ip/OReilly-LearningOpenCV.pdf) (PDF)
 - Cardoso, Jorge. [Computer vision techniques for interactive art](http://www.slideshare.net/jorgecardoso/computer-vision-techniques-for-interactive-art)
@@ -1341,8 +1374,3 @@ This chapter has introduced a few introductory image processing and computer vis
 - Szeliski & Zisserman. [20 techniques that every computer vision researcher should know](http://www.frontiersincomputervision.com/slides/FCV_Core_Szeliski_Zisserman.pdf) (PDF)
 - Szeliski, Richard. [Computer Vision: Algorithms and Applications](http://szeliski.org/Book/)
 - [The OpenCV Reference Manual](http://docs.opencv.org/opencv2refman.pdf) (PDF)
-
-
-
-
-
