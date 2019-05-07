@@ -1,9 +1,7 @@
-****# 이미지 처리와 컴퓨터 비전
+# 이미지 처리와 컴퓨터 비전
 
 [Golan Levin](http://www.flong.com/) 작성<br />
 [Brannon Dorsey](http://brannondorsey.com) 편집
-
-This chapter introduces some basic techniques for manipulating and analyzing images in openFrameworks. As it would be impossible to treat this field comprehensively, we limit ourselves to a discussion of how images relate to computer memory, and work through an example of background subtraction, a popular operation for detecting people in video. This chapter is not a comprehensive guide to computer vision; for that, we refer you to excellent resources such as Richard Szeliski's [*Computer Vision: Algorithms and Applications*](http://szeliski.org/Book/) or Gary Bradski's [*Learning OpenCV*](http://cs.haifa.ac.il/~dkeren/ip/OReilly-LearningOpenCV.pdf).
 
 이 챕터에서는 오픈프레임웍스에서의 이미지 조작과 분석을 위한 몇가지 기본적인 테크닉을 소개합니다. 이 분야를 포괄적으로 다루는것은 불가능하므로, 여기서 다루는 주제들은 비디오에서 사람을 인식하기 위한 대표적인 방법인 배경제거의 예제를 통해 이미지가 어떻게 컴퓨터 메모리와 연관이 있는지로 한정합니다. 이 챕터는 컴퓨터 비전을 다루는 가이드는 아닙니다만, 혹시 더 상세한 정보를 원하신다면 Richard Szeliski의 [*Computer Vision: Algorithms and Applications*](http://szeliski.org/Book/)와 Gary Bradski의 [*Learning OpenCV*](http://cs.haifa.ac.il/~dkeren/ip/OReilly-LearningOpenCV.pdf)를 읽어보시길 추천해 드립니다.
 
@@ -35,8 +33,6 @@ This book's [chapter on Game Design](https://github.com/openframeworks/ofBook/bl
 
 ### 디지털 이미지 포착, 및 데이터 구조
 
-This chapter introduces techniques for manipulating (and extracting certain kinds of information from) *raster images*. Such images are sometimes also known as *bitmap images* or *pixmap images*, though we'll just use the generic term **image** to refer to any array (or *buffer*) of numbers that represent the color values of a rectangular grid of *pixels* ("picture elements"). In openFrameworks, such buffers come in a variety of flavors, and are used within (and managed by) a wide variety of convenient container objects, as we shall see.
-
 이 챕터에서는 *래스터 이미지*를 다루는(그리고 래스터 이미지에서 특정 정보를 추출하는) 기법을 소개합니다. 비록 일반적인 용어로 **이미지**를 사용하지만, 이것은 종종 *비트맵 이미지* 혹은 *픽스맵 이미지*라고도 알려져 있는데, 각 사각 *픽셀* 그리드의 컬러값을 표현하는 숫자들의 배열(혹은 *버퍼*)입니다. 오픈프레임웍스에서, 버퍼는 앞으로 보게 되겠지만, 널리 사용되는 편리한 컨테이너 오브젝트입니다.
 
 #### 이미지를 불러와 보여주기
@@ -65,7 +61,6 @@ class ofApp : public ofBaseApp{
 };
 
 ```
-Below is our complete *ofApp.cpp* file. The Lincoln image is *loaded* from our hard drive (once) in the `setup()` function; then we *display* it (many times per second) in our `draw()` function. As you can see from the filepath provided to the `loadImage()` function, the program assumes that the image *lincoln.png* can be found in a directory called "data" alongside your executable: 
 
 아래는 최종 *ofApp.cpp* 파일내용입니다. 링컨 이미지는 `setup()`함수에 의해 하드드라이브에서 (한번) *불러와집니다*. 그리고 나서 이것을 `draw()`함수에서 (1초에 여러번) *그려냅니다*. `loadImage()`함수의 파일경로에서 볼 수 있읏이, 이 프로그램은 실행파일과 같은 경로에 있는 "data" 디렉토리에서 *lincoln.png*를 취합니다:
 
@@ -95,8 +90,6 @@ void ofApp::draw(){
 위의 프로그램을 컴파일하고 실행하면 캔버스에 이 (쪼만한) 이미지를 10배 키워서, 좌측상단의 위치를 (10, 10)로 하여 그려냅니다.  이미지의 위치지정과 크기조절은 `myImage.draw()` 명령에 의해 수행됩니다. 이미지는 "흐리게" 보여지는데, 오픈프레임웍스는 확대된 이미지를 그려낼 때에 기본적으로 [linear interpolation](http://en.wikipedia.org/wiki/Linear_interpolation)를 사용하기 떄문입니다.
 
 ![The small Lincoln image, scaled up large in an openFrameworks app](images/lincoln-displayed.jpg)
-
-If you're new to working with images in oF, it's worth pointing out that you should try to avoid loading images in the `draw()` or `update()` functions, if possible. Why? Well, reading data from disk is one of the slowest things you can ask a computer to do. In many circumstances, you can simply load all the images you'll need just once, when your program is first initialized, in `setup()`. By contrast, if you're repeatedly loading an image in your `draw()` loop — the same image, again and again, 60 times per second — you're hurting the performance of your app, and potentially even risking damage to your hard disk.  
 
 만약 오픈프레임웍스에서 이미지를 처음 다루는 분들이라면, 가능한 한 `draw()`나 `update()`함수에서 이미지를 불러오면 안된다라는 사실을 알고 계셔야 합니다. 왜냐구요? 디스크에서 데이터를 불러오는것은 가장 느린 작업이기 떄문입니다. 대부분 필요한 모든 이미지는 프로그램이 초기화되는 `setup()`함수에서 단 한번만에 불러오면 됩니다. 이와 반대로, 만약 `draw()` 루프에서 같은 이미지를 1초에 60번 반복하여 불러오면, 어플리케이션의 성능이 떨어질 뿐만 아니라, 심지어 하드디스크의 손상을 가져올 수도 있습니다.
 
@@ -245,7 +238,6 @@ void ofApp::draw(){
 	#endif
 	//...
 ```
-Uncommenting the `//#define _USE_LIVE_VIDEO` line in the .h file of the *opencvExample* forces the compiler to attempt to use a webcam instead of the pre-stored sample video. 
 
 *opencvExample* 예제의 .h파일 에서, `//#define _USE_LIVE_VIDEO` 부분을 주석해제하면, 컴파일러로 하여금 미리 저장된 샘플비디오 대신 웹캠을 사용하도록 해줍니다.
 
@@ -292,8 +284,6 @@ Observe how a one-dimensional list of values in memory can be arranged into succ
 
 자 어떻게 메모리 내의 1차원의 값 리스트가 픽셀의 2차원 그리드로, 혹은 그 반대로 변환되는지 살펴봅시다.
 
-It frequently happens that you'll need to determine the array-index of a given pixel *(x,y)* in an image that is stored in an `unsigned char*` buffer. This little task comes up often enough that it's worth committing the following pattern to memory:
-
 사실 `unsigned char*` 버퍼에 저장되어있는 이미지에서 *(x,y)* 좌표로 배열의 인덱스를 계산해야 하는 일은 자주 발생합니다. 메모리에서 아래의 패턴을 적용하면 됩니다:
 
 
@@ -312,7 +302,8 @@ unsigned char pixelValueAtXY = buffer[arrayIndex];
 // And you can also SET values at that location, e.g.:
 buffer[arrayIndex] = pixelValueAtXY;
 ```
-Likewise, you can also fetch the x and y locations of a pixel corresponding to a given array index:
+
+마찬가지로, 주어진 배열 인덱스에 대응하는 픽셀의 x, y위치를 얻어올 수도 있습니다:
 
 ```cpp
 // Given:
@@ -521,7 +512,7 @@ unsigned char greenValueAtXY = buffer[gArrayIndex];
 unsigned char blueValueAtXY  = buffer[bArrayIndex];
 ```
 
-이내용은 사실, 앞의 흑백 이미지에서 픽셀값을 얻어오는 방법인 `index = y*width = x` 패턴의 3-채널 "RGB 버전" 입니다.
+이 내용은 사실, 앞의 흑백 이미지에서 픽셀값을 얻어오는 방법인 `index = y*width = x` 패턴의 3-채널 "RGB 버전" 입니다.
 
 하지만 BGR과 같이 RGB 바이트가 다른 순서로 배치되는 외부 라이브러리나 이미지 하드웨어를 사용하는 상황이 발생할수도 있다는 점도 알아두시기 바랍니다.
 
@@ -573,26 +564,18 @@ unsigned char blueValueAtXY  = buffer[bArrayIndex];
 
 ![Simplified diagrams of ofImage (left) and ofxCvImage (right)](images/two-image-types.png)
 
-The diagram above shows a simplified representation of the two most common oF image formats you're likely to see. At left, we see an `ofImage`, which at its core contains an array of unsigned chars. An `ofPixels` object wraps up this array, along with some helpful metadata which describes it, such as its width, height, and format (RGB, RGBA, etc.). The `ofImage` then wraps this `ofPixels` object up together with an `ofTexture`, which provides functionality for rendering the image to the screen. The `ofxCvImage` at right is very similar, but stores the image data in IplImages. All of these classes provide a variety of methods for moving image data into and out of them.
-
 위의 다이어그램은 오픈프레임웍스에서 가장 많이 사용되는 두 종류의 이미지포맷을 간략하게 도식화한 것입니다. 좌측은, unsigned char의 배열을 갖고 있는 `ofImage` 핵심 컨테이너입니다. `ofPixels`오브젝트는 이 배열을 감싸고 있고, 이와 함께 이미지의 가로크기, 세로크기, 포맷(RGB, RGBA, 등등)과 같은 그것을 설명하는 메타데이터가 위치하고 있습니다. `ofImage`는 이 `ofPixels`오브젝트와 함께 이미지를 화면에 그려내는 기능을 제공하는 `ofTexture`를 함께 감싸고 있습니다. 우측의 `ofxCvImage`는 이와 아주 흡사하지만, 이미지 데이터를 IplImage에 저장합니다.이러한 모든 클래스들은 이미지 데이터를 불러오거나 내보내기 위한 다양한 메소드들을 제공합니다.
-
-It's important to point out that image data may be stored in very different parts of your computer's memory. Good old-fashioned unsigned chars, and image data in container classes like `ofPixels` and `ofxCvImage`, are maintained in your computer's main RAM; that's handy for image processing operations by the CPU. By contrast, the `ofTexture` class, as indicated above, stores its data in GPU memory, which is ideal for rendering it quickly to the screen. It may also be helpful to know that there's generally a performance penalty for moving image data back-and-forth between the CPU and GPU, such as the `ofImage::grabScreen()` method, which captures a portion of the screen from the GPU and stores it in an `ofImage`, or the `ofTexture::readToPixels()` and `ofFBO::readToPixels()` methods, which copy image data to an `ofPixels`.
 
 이미지데이터가 여러분의 컴퓨터 메모리 내에 아주 다른 부분들에 저장 될 수 있다는 점이 매우 중요합니다. 전통적인 unsigned chars와, `ofPixels`, `ofxCvImage` 컨테이너 내의 이미지 데이터들은 컴퓨터의 RAM에 저장되는데, 이는 CPU에 의해 이미지 연산을 하기에 편리합니다. 이와 반대로, `ofTexture`클래스는 앞에서 살펴봤듯이, CPU 메모리상에 데이터를 저장하는데, 이는 화면에 빠르게 렌더링하는데에 적합합니다. 또한 일반적으로 CPU와 GPU간에 이미지 데이터를 교환할 때 성능손실이 발생한다는 점도 알아두면 좋습니다, 가령 GPU에서 화면의 일부분을 캡쳐하는 `ofImage::grabScreen`메소드라든가, `ofPixels`에 이미지 데이터를 복사하는 `ofTexture::readToPixels()`와 `ofFBO::readToPixels`메소드가 바로 그렇습니다.
 
 #### RGB 에서 Grayscale로의 변환, 그리고 컴퓨터비젼에서의 이러한 변환의 역할
-Many computer vision algorithms (though not all) are commonly performed on one-channel (i.e. grayscale or monochrome) images. Whether or not your project uses color imagery at some point, you'll almost certainly still use grayscale pixel data to represent and store many of the intermediate results in your image processing chain. The simple fact is that working with one-channel image buffers (whenever possible) can significantly improve the speed of image processing routines, because it reduces both the number of calculations as well as the amount of memory required to process the data. 
 
 많은 컴퓨터 비전 알고리즘(비록 전부는 아니겠지만)들은 일반적으로 싱글채널(그레이스케일 혹은 흑백) 이미지 상에서 이루어집니다. 설령 여러분의 프로젝트가 컬러 이미지를 사용한다고 해도, 결국은  이미지 처리 체인의 여러 중간 결과물은 그레이스케일 픽셀데이터로 처리됩니다. 이유는 단순합니다. 싱글채널 이미지 버퍼를 사용해야 이미치 처리 루틴의 속도가 향상되기 때문입니다. 이는 데이터 처리를 위한 메모리 크기와 동시에 연산량도 줄어들기 때문이지요.
 
-For example, if you're calculating a "blob" to represent the location of a user's body, it's common to store that blob in a one-channel image; typically, pixels containing 255 (white) designate the foreground blob, while pixels containing 0 (black) are the background. Likewise, if you're using a special image to represent the amount of motion in different parts of the video frame, it's enough to store this information in a grayscale image (where 0 represents stillness and 255 represents lots of motion). We'll discuss these operations more in later sections; for now, it's sufficient to state this rule of thumb: if you're using a buffer of pixels to store and represent a one-dimensional quantity, do so in a one-channel image buffer. Thus, except where stated otherwise, *all of the examples in this chapter expect that you're working with monochrome images*. 
 
 
-예를들어, 만약 사용자의 바디 위치를 나타내기 위해 "blob"을 계산한다면, 이 blob을 싱글채널 이미지로 저장하는것이 일반적입니다; 보편적으로 이 이미지에서 255(흰색)이 담긴 픽셀은 전면 blob을 의미하고, 0(검정)이 담긴 픽셀은 배경을 의미합니다. 마찬가지로 비디오프레임의 차이를 이용해 움직임의 양을 표한하는 특별한 이미지를 사용한다면, 당연히 이 정보 또한 그레이스케일 이미지(0은 변화가 전혀없는, 255은 변화가 가장 큰)를 사용합니다. 이러한 연산에 대해서는 나중에 다른 섹션에서 다룰것입니다; 일단 이정도의 규칙만 알고 있다면 충분합니다: if you're using a buffer of pixels to store and represent a one-dimensional quantity, do so in a one-channel image buffer. Thus, except where stated otherwise, *all of the examples in this chapter expect that you're working with monochrome images*. 
-
-Let's suppose that your raw source data is color video (as is common with webcams). For many image processing and computer vision applications, your first step will involve *converting this to monochrome*. Depending on your application, you'll either clobber your color data to grayscale directly, or create a grayscale copy for subsequent processing. 
-
+예를들어, 만약 사용자의 바디 위치를 나타내기 위해 "blob"을 계산한다면, 이 blob을 싱글채널 이미지로 저장하는것이 일반적입니다; 보편적으로 이 이미지에서 255(흰색)이 담긴 픽셀은 전면 blob을 의미하고, 0(검정)이 담긴 픽셀은 배경을 의미합니다. 마찬가지로 비디오프레임의 차이를 이용해 움직임의 양을 표한하는 특별한 이미지를 사용한다면, 당연히 이 정보 또한 그레이스케일 이미지(0은 변화가 전혀없는, 255은 변화가 가장 큰)를 사용합니다. 이러한 연산에 대해서는 나중에 다른 섹션에서 다룰것입니다; 일단 이정도의 규칙만 알고 있다면 충분합니다: 만약 저장을 위해 버퍼를 사용하고, 그것을 1-차원의 수로 표현하려면, 1-차원 이미지 버퍼를 사용하면 됩니다. 따라서, *이 챕터에의 모든 예제에서는 여러분이 흑백 이미지를 가지고 작업한다고 가정합니다*
+ 
 여러분에게 가공되지 않은 컬러비디오(일반적으로 웹캠을 사용하죠)가 있다고 해봅시다. 많은 이미지 처리 및 컴퓨터 비전 응용사례에서, 여러분이 가장 먼저 해야할 일은 *이것을 흑백으로 변환* 하는 것입니다. 여러분의 어플리케이션에 따라, 그 컬러를 직접 그레이스케일로 변환해버리거나, 혹은 별도의 처리를 통해 그레이스케일의 사본을 만들어내야 합니다.
 
 컬러 이미지를 그레이스케일로 변환하는 아주 단순한 처리는, 오픈프레임웍스에서 해당 데이터를 `OF_IMAGE_GRAYSCALE` 이미지 타입으로 변경하는 것입니다. 이는 이미지를 재할당하고, ofTexture를 업데이트해줘야 하기 때문에, 자주 수행한다면 자칫 무거운 연산이 될 수도 있다는점을 명심하셔야 합니다. 또한, 원본의 컬러정보가 변환 과정에서 정보의 손실이 발생하므로 "손실 연산"이기도 합니다.
@@ -618,18 +601,11 @@ ofxCvGrayscaleImage kittenCvImgGray;
 kittenCvImgGray = kittenCvImgColor;
 ```
 
-Although oF provides the above utilities to convert color images to grayscale, it's worth taking a moment to understand the subtleties of the conversion process. There are three common techniques for performing the conversion: 
-
 비록 오픈프레임웍스가 위와같은 컬러이미지를 그레이스케일로 변환하는 기능들을 제공해주긴 하지만, 실제로 변환하는 과정의 디테일들을 이해하는것도 나쁘지 않을겁니다. 이러한 변환을 수행하는 방법은 대체로 세가지 방법이 있습니다:
 
-* **Extracting just one of the R,G, or B color channels,** as a proxy for the luminance of the image. For example, one might fetch only the green values as an approximation to an image's luminance, discarding its red and blue data. For a typical color image whose bytes are interleaved R-G-B, this can be done by fetching every 3rd byte. This method is computationally fast, but it's also perceptually inaccurate, and it tends to produce noisier results for images of natural scenes. 
 * **R, G, B 컬러 채널중 하나만 추출** : 이미지의 휘도를 대략적으로 추출하기 위한 방법입니다. 예를들자면 이미지의 휘도를 얻기위해, 빨강, 파랑 데이터는 무시하고 녹색 값들만 뽑아낼 수 있을것입니다. 일반적인 컬러이미지 byte 데이터는 R-G-B의 순서로 배치되어있으므로, 세번째 바이트만 뽑아내면 됩니다. 이 방법은 빠른 컴퓨터 연산이 가능하지만, 인간이 느끼기에 부정확하기도 하고, 자연 이미지들의 경우 노이즈가 많이 생기는 단점이 있습니다.
 
-* **Taking the average of the R,G, and B color channels.** A slower but more perceptually accurate method approximates luminance (often written *Y*) as a straight average of the red, green and blue values for every pixel: `Y = (R+G+B)/3;`. This not only produces a better representation of the image's luminance across the visible color spectrum, but it also diminishes the influence of noise in any one color channel.
-
 * **R, G, B 컬러 채널의 평균값 사용** : 느리지만 인지적으로 대체로 정확한 휘도(일반적으로 *Y*라고 표기하기도 합니다)을 얻기 위해 모픈 픽셀에 담긴 빨강, 녹색, 파란색 값의 평균을 구하는 것입니다: Y = (R+G+B)/3;`. 가시영역의 컬러 스펙트럼에서 보다 나은 휘도값을 얻을수 있으면서 동시에 모든 채널에서의 노이즈도 줄일 수 있는 방법이기도 합니다.
-
-* **Computing the luminance with colorimetric coefficients**. The most perceptually accurate methods for computing grayscale from color images employ a specially-weighted "colorimetric" average of the RGB color data. These methods are marginally more expensive to compute, as each color channel must be multiplied by its own perceptual weighting factor. The CCIR 601 imaging specification, which is used in the OpenCV [cvtColor](http://docs.opencv.org/modules/imgproc/doc/miscellaneous_transformations.html#cvtcolor) function, itself used in the ofxOpenCV addon, employs the formula `Y = 0.299*R + 0.587*G + 0.114*B` (with the further assumption that the RGB values have been gamma-corrected). According to [Wikipedia](http://en.wikipedia.org/wiki/Luma_(video)), "these coefficients represent the measured intensity perception of typical trichromat humans; in particular, human vision is most sensitive to green and least sensitive to blue."
 
 * **컬러 상수(colorimetric coefficient)를 이용하여 휘도값을 계산** : 인지적으로 가장 정확한 방법으로, RGB컬러데이터에서 그레이스케일값을 얻기위해 특별히 정의된 RGB컬러데이터의 평균 "표색(colormetric" 수치를 사용하여 계산하는 방법입니다. 이 방법은 대체로 비싼 연산이라고 할 수 있는데, 각 컬러채널별로 고유의 인지적 요소값을 곱하게 됩니다. ofxOpenCV애드온에서 사용되고 있는 OpenCV의 [cvtColor](http://docs.opencv.org/modules/imgproc/doc/miscellaneous_transformations.html#cvtcolor)함수에서 채택하고 있는 CCIR 601 이미징 스펙에 따르면, `Y = 0.299*R + 0.587*G + 0.114*B` 공식을 적용하고 있습니다.(추가적인 감마-수정을 적용한 RGB 값입니다). [위키피디아](http://en.wikipedia.org/wiki/Luma_(video))에 따르면, "이러한 상수는 인간의 삼중 인지강도를 바탕으로 하고 있는데, 일반적으로 인간의 시각은 파란색에 둔감하고 녹색에 더 민감하기 떄문이다" 라고 서술되어 있습니다.
 
@@ -673,11 +649,7 @@ for(int indexGray=0; indexGray<nBytesGrayscale; indexGray++){
 
 ## 이미지에서의 포인트 프로세싱 연산 (Point Processing Operation)
 
-In this section, we consider image processing operations that are precursors to a wide range of further analysis and decision-making. In particular, we will look at *point processing* operations, namely image arithmetic and thresholding.  
-
 이 섹션에서는, 부가적인 분석 및 의사결정을 위한 precursor을 하는 이미지 처리 연산을 살펴보겠습니다. 특히, 우리가 살펴볼 것은 *포인트 프로세싱(point processing")* 연산, 즉 이미지 산술 및 임계처리 입니다. 
-
-We begin with *image arithmetic*, a core part of the workflow of computer vision. These are the basic mathematical operations we all know—addition, subtraction, multiplication, and division—but as they are applied to images. Developers use such operations constantly, and for a wide range of reasons. 
 
 일단 *이미지 산술(arithmetic)*로 시작할텐데요, 이는 컴퓨터 비전 워크플로의 핵심입니다. 이것들은 우리가 일반적으로 알고 있는 기초적인 수학 연산자인 덧셈, 뺄셈, 곱셈, 나눗셈이지만, 이미지에 적용되는 것 뿐입니다. 개발자들은 여러가지 이유로, 지속적으로 이러한 연산들을 사용합니다.
 
@@ -763,8 +735,6 @@ void ofApp::draw(){
 
 이미지 산술은 단순합니다만, 픽셀에 저장된 값에 산술연산을 할때에 숨어있는 위험이 있습니다!: *[정수 오버플로우](http://en.wikipedia.org/wiki/Integer_overflow)*가 바로 그것입니다.
 
-Consider what happens when we add 10 to the specially-marked pixel in the bottom row of the illustration above. Its initial value is 251—but the largest number we can store in an unsigned char is 255! What should the resulting value be? More generally, what happens if we attempt to assign a pixel value that's too large to be represented by our pixel's data type?
-
 위의 그림에서 하단에 마킹된 픽셀에 10을 더하면 어떻게 될까요? 원래의 값은 251인데, 이 값은 unsigned char로 저장되므로 가능한 최대의 값은 255입니다! 그렇다면 결과는 어떻게 될까요? 좀 더 일반적으로 질문해본다면, 픽셀의 데이터타입에에 비해 너무 큰 픽셀값이 할당되면 어떤 일이 발생할까요?
 
 정답은 바로 : *어떤 라이브러리를 사용하는지에 따라, 혹은 여러분이 사용하는 프로그래밍 스킬에 따라 다르다* 입니다. 그리고 이건 아주아주 중요한 결과가 될수 있죠! OpenCV와 같은 어떤 이미지 처리 라이브러리의 경우라면, 모든 산술연산에 데이터형에 따라 값을 잘라내거나 제한해줄 것입니다.  그러금로 만약 251에 10을 더하면, 결과는 255이상을 넘지 않습니다(이러한 방법은 "saturation"이라고도 알려져있습니다). 이와 다르게 우리가 위에서 작성했던 코드와 같이 직접 unsigned char를 처리한다고 하면, 데이터의 "롤오버" 현상을 감수해야 합니다, 자동차의 주행적산메터가 표현할수 있는 값을 넘어가면 0이 되는것처럼요. 자리올림의 기능없이, 오직 sifnificant bit만이 남게 되는것이죠. 따라서 unsigned char 데이터 단위에서는, 251에 10을 더하면... 6이 됩니다!
@@ -772,8 +742,6 @@ Consider what happens when we add 10 to the specially-marked pixel in the bottom
 정수 오버플로우의 위험은 아래의 그림에서 살펴볼 수 있습니다. 위의 코드를 사용해, 모든 픽셀값에 상수값을 더해서 에이브라함 링컨의 초상화를 조금 밝게 적용해보았습니다. 에러(오버플로우)를 피하기위한 별도의 처리가 없다면, 밝은 픽셀들은 "오버플로우"에 의해 검게 바뀝니다.
 
 ![Numeric overflow in an image of Lincoln](images/numeric_overflow.png)
-
-In the example above, integer overflow can be avoided by promoting the added numbers to integers, and including a saturating constraint, before assigning the new pixel value:
 
 위의 예제에서, 새로운 픽셀값에 적용하기 전에, 정수값을 더하고, 그 결과를 값의 범위 제한(constraint)을 적용하는것으로 정수 오버플로우를 피할 수 있습니다:
 
@@ -854,13 +822,7 @@ void ofApp::draw(){
 <!-- ### Arithmetic with Two Images: Absolute Differencing -->
 ### 두 이미지를 사용한 연산 : 절대 비교
 
-Image arithmetic is especially useful when applied to two images. As you would expect, it is possible to add two images, multiply two images, subtract one image from another, and divide one image by another. When performing an arithmetic operation (such as addition) on two images, the operation is done "pixelwise": the first pixel of image *A* is added to the first pixel of image *B*, the second pixel of *A* is added to the second pixel of *B*, and so forth. For the purposes of this discussion, we'll assume that *A* and *B* are both monochromatic, and have the same dimensions. 
-
 이미지 연산은 두 이미지간에 적용하는 경우에 훨씬 유용합니다. 예상하셨겠지만, 두 이미지를 더해버리거나, 곱하거나, 한 이미지에서 다른 이미지를 뺼수도 있고, 나눠버릴수도 있습니다. 두 이미지간에 산술연산을 적용할 때(가령 덧셈),이러한 연산은 "픽셀별로" 적용됩니다: 이미지 *A*의 첫 픽셀이 이미지 *B*의 첫 픽셀에, 이미지 *A*의 두번째픽셀이 이미지 *B*의 픽셀에.. 이렇게 연속적으로 적용된다는 얘기입니다. 이 예시를 위해, 이미지 *A*, *B*는 모두 흑백이고, 같은 해상도를 가진다고 가정해봅시다.
-
-
-Many computer vision applications depend on being able to compare two images. At the basis of doing so is the arithmetic operation of *absolute differencing*, illustrated below. This operation is equivalent to taking the absolute value of the results when one image is subtracted from the other: *|A-B|*. As we shall see, absolute differencing is a key step in common workflows like *frame differencing* and *background subtraction*.  
-
 많은 컴퓨터 비전 어플리케이션은 두 이미지의 비교 가능성에 의존하고 있습니다. 일단 아래 그림에서 볼수 있는 *절대 비교* 연산부터 시작해보도록 합시다. 이 연산은 이 연산은 한 임지ㅣ에서 다른 이미지의 값을 뺀 절대값을 계산하는 것과 동일합니다: *|A-B|*. 보시는것과 같이, 절대 비교는 *프레임 비교*, *배경 제거*와 같은 과정의 아주 핵심 과정입니다.
 
 ![Diagram of absolute differencing. The image at right contains values which are the absolute difference of the corresponding pixels in the left and center images](images/absolute-difference.png)
@@ -881,19 +843,13 @@ myCvImageDiff.absDiff (myCvImageA, myCvImageB);
 
 ### 임계처리(Thresholding)
 
-In computer vision programs, we frequently have the task of determining which pixels represent something of interest, and which do not. Key to building such discriminators is the operation of *thresholding*. 
-
 컴퓨터 비전 프로그램에서는, 어떤 영역들이(픽셀들이) 을 가져야 하는 부분인지, 그리고 역으로 무시해야할 부분은 어떤 영역들인지를 결정하는 과정이 자주 필요합니다. 이러한 판별을 위한 연산이 바로 *임계처리(thresholding)* 입니다.
-
-Thresholding poses a *pixelwise conditional test*—that is, it asks "`if`" the value stored in each pixel *(x,y)* of a source image meets a certain criterion. In return, thresholding produces a destination image, which represents where and how the criterion is (or is not) met in the original's corresponding pixels. As we stated earlier, pixels which satisfy the criterion are conventionally assigned 255 (white), while those which don't are assigned 0 (black). And as we shall see, the white blobs which result from such thresholding are ideally suited for further analysis by *contour tracers*.
 
 임계처리는 *픽셀단위 조건 테스트*를 의미합니다- 즉, "만약" 원본 이미지의 각 *(x, y)*에 대항하는 픽셀에 담긴 값이 특정한 조건을 충족하는가 를 묻는것입니다. 임계처리는 그 결과로 원본 이미지의 해당 픽셀과 대응되는 픽셀에 조건이 충족하는지, 혹은 충족하지 않는지를 나타내는 대상 이미지를 리턴해줍니다. 앞서 우리가 잠깐 살펴봤듯이, 조건을 만족하는 픽셀은 255(흰색), 그렇지 않은경우 0(검정)이 됩니다. 그리고 앞으로 우리가 더 살펴보겠지만, 임계처리의 결과로 얻어낸 흰색 덩어리(blob)들은 *윤곽 추적(contour tracers)* 분석에 훨씬 더 적합합니다.
 
 아래의 예시에서, 좌측에는 밝은-색의 세포 현미경 사진이 있습니다. 여기서 어떤 픽셀들이 세포인지, 그리고 어떤 픽셀들이 세포가 아닌지를 알고 싶다고 해봅시다. 우리의 기준이라면, 어떤 픽셀들이 그레이스케일의 밝기가 어떤 기준값, 즉 *임계값* 보다 큰지를 테스트 하면 될것입니다. 아래의 그림에서는, 0-255 범위의 중간값인 127을 임계값으로 설정하여 테스트합니다.
 
 ![Thresholding, also called binarization](images/thresholded_cells.png)
-
-And below is the complete openFrameworks program for thresholding the image—although here, instead of using a constant (127), we instead use the `mouseX` as the threshold value. This has the effect of placing the thresholding operation under interactive user control. 
 
 아래의 코드는 이미지의 임계처리를 위한 오픈프레임웍스의 프로그램입니다만, 상수값 (127)을 사용하는 대신, 마우스의 x좌표인 `mouseX`를 임계값으로 사용했습니다. 이러한 방법을 사용해 사용자 컨트롤에 의한 상호작용으로 임계연산을 적용할 수 있습니다.
 
@@ -954,18 +910,12 @@ void ofApp::draw(){
 ## A Complete Workflow: Background Subtraction
 ## 최종 워크플로우 : 배경 제거 
 
-We now have all the pieces we need to understand and implement a popular and widely-used workflow in computer vision: *contour extraction and blob tracking from background subtraction*. This workflow produces a set of (x,y) points that represent the boundary of (for example) a person's body that has entered the camera's view. 
-
 자 이제 컴퓨터비젼에서 가장 많이 사용되는 *배경제거 후 윤곽 추출 및 덩어리 추적법* 에 대해 살펴보고 구현해보도록 하겠습니다. 이 과정을 거치면 (예를 들어) 카메라의 시야에 들어오는 인체의 몸의 경계를 표현하는 덩어리의 (x, y) 좌표들을 얻어올 수 있습니다.
 
 
 ![opencvExample의 스크린샷](images/opencvExample.png)
 
-In this section, we'll base our discussion around the standard openFrameworks *opencvExample*, which can be found in the `examples/addons/opencvExample` directory of your openFrameworks installation. When you compile and run this example, you'll see a video of a hand casting a shadow—and, at the bottom right of our window, the contour of this hand, rendered as a cyan polyline. This polyline is *our prize:* using it, we can obtain all sorts of information about our visitor. So how did we get here?
-
 이 섹션에서는, 오픈프레임웍스 디렉토리 내의 `examples/addons/opencvExample`에 위치한 *opencvExample* 예제를 중점으로 합니다. 이 프로젝트를 컴파일한 뒤 실행하면, 손의 그림자와 함께, 우측하단에 손의 윤곽이 cyan색의 polyline으로 그려지는 결과를 보실 수 있을겁니다. 이 polyline이 바로 *결과물*로써, 이것으로 관객들의 각종 정보들을 얻을수 있습니다. 자 그럼 어떻게 이것을 얻어올 수 있을까요?
-
-The code below is a slightly simplified version of the standard *opencvExample*; for example, we have here omitted some UI features, and we have omitted the `#define _USE_LIVE_VIDEO` (mentioned earlier) which allows for switching between a live video source and a stored video file.  
 
 아래의 코드는 *opencvExample*예제를 살짝 단순화하여 보여줍니다; 몇가지 UI요소들과, 실시간 비디오 스트림과 미리 저장된 비디오파일 전환을 위한 (앞에서 언급했던 전처리구문인) `#define _USE_LIVE_VIDEO`도 빠져있습니다.
 
@@ -1085,16 +1035,9 @@ void ofApp::keyPressed(int key){
 ```
 
 **단계 1. 비디오 얻기.** <br /> 
-In the upper-left of our screen display is the raw, unmodified video of a hand creating a shadow. Although it's not very obvious, this is actually a color video; it just happens to be showing a mostly black-and-white scene. 
-
 좌측 상단에는, 날것의, 처리되지 않은 손 비디오이 그려집니다. 그렇게 보이진 않겠지만, 이 비디오는 거의 흑백처럼 보일 뿐 사실 컬러 비디오입니다.
 
-In `setup()`, we initialize some global-scoped variables (declared in ofApp.h), and allocate the memory we'll need for a variety of globally-scoped `ofxCvImage` image buffers.  We also load the hand video from from its source file into `vidPlayer`, a globally-scoped instance of an `ofVideoPlayer`.
-
 `setup()`에서, (ofApp.h에서 선언된) 몇가지 `ofxCvImage` 이미지 버퍼 전역변수들을 초기화하고, 메모리를 할당합니다. 또한 `ofVideoPlayer`의 전역변수인 `vidPlayer`에 손 비디오를 불러옵니다.
-
-
-It's quite common in computer vision workflows to maintain a large number of image buffers, each of which stores an intermediate state in the image-processing chain. For optimal performance, it's best to `allocate()` these only once, in `setup()`; otherwise, the operation of reserving memory for these images can hurt your frame rate. 
 
 컴퓨터 비전 워크플로우에서는 복수의 이미지버퍼를 사용하는것이 일반적인데, 각 버퍼들은 이미지-처리 체인의 중간상태들을 저장하는데 사용됩니다. 최적의 성능을 위해, `allocate()`(역자 주:메모리 할당)은 `setup()`에서 한번만 해주는 것이 좋습니다; 그렇지 않다면, 매번 메모리를 할당해야 하므로 프레임이 떨어질 것입니다.
 
@@ -1104,17 +1047,12 @@ It's quite common in computer vision workflows to maintain a large number of ima
 colorImg.setFromPixels(vidPlayer.getPixels());
 ```
 
-In the full code of opencvExample (not shown here) a `#define` near the top of ofApp.h allows you to swap out the `ofVideoPlayer` for an `ofVideoGrabber`—a live webcam. 
-
 (여기서 보여지진 않지만) opencvExample의 전체코드 중, ofApp.h 의 상단부분에서 실사간 웹캠사용을 위해 `#define`구문을 이용해 `ofVideoplayer`를 `ofVideoGrabber`로 변경할 수 있습니다.
 
 **단계 2. 컬러를 그레이스케일로 변환.** <br />
 우측 상단의 비디오는 그레이스케일로 변환된 같은 비디오입니다. 이 비디오가 바로 `grayImage` 오브젝트에 저장되어있는, `ofxCvGrayscaleImage`의 인스턴스 입니다.
 
-It's easy to miss the grayscale conversion; it's done implicitly in the assignment `grayImage = colorImg;` using operator overloading of the `=` sign. All of the subsequent image processing in *opencvExample* is done with grayscale (rather than color) images. 
-
 그레이스케일로 변환되었다는 사실을 놓치기 쉽습니다; `=` 연산자 오버로딩을 사용해서 `grayImage = colorImg;` 한줄 코드에 의해서 변환되기 때문이죠.
-
 
 **단계 3. "배경 이미지" 저장하기".**<br />
 좌측 중간의 화면에는 *배경 이미지*가 보여집니다. 이 이미지는 비디오가 시작하는 순간, 손이 프레임 안에 들어오기전 장면이 캡쳐된 그레이스케일 이미지입니다.
@@ -1130,7 +1068,6 @@ It's easy to miss the grayscale conversion; it's done implicitly in the assignme
 
 임계처리의 결과는 *이진화*된 이미지입니다, 이말은 즉, 픽셀값이 검정(0) 또는 흰색(255)으로만 이루어졌다는 뜻입니다. 임계처리는 `grayDiff` 상에서 *in-place operation*에 의해 수행됩니다. 다시말해 `grayDiff`이미지자체가 임계처리된 결과 됩니다.
 
-The variable `thresholdValue` is set to 80, meaning that a pixel must be at least 80 gray-levels different than the background in order to be considered foreground. In the official example, a keypress permits the user to adjust this number. 
 `thresholdValue` 값은 80으로 세팅되어있는데, 배경 이미지와 비교했을 때, 픽셀값이 최소 80이상의 gray-level 차이가 있어야 한다는 의미입니다. 공식 예제에서는, 키를 눌러 이 값을 조정할 수 있습니다.
 
 ```cpp
@@ -1178,10 +1115,7 @@ for (int i=0; i<numBlobs; i++){
 * 배경 제거는 현재 프레임과 미리 저장된 배경이미지를 비교한다.
 * 프레임 비교는 비디오의현재 프레임과 직전 프레임을 비교한다.
 
-As with background subtraction, it's customary to threshold the difference image, in order to discriminate signals from noise. Using frame differencing, it's possible to quantify *how much motion* is happening in a scene. This can be done by counting up the white pixels in the thresholded difference image. 
 배경제거를 할때에는, 노이즈 제거를 위해 비교된 이미지를 임계처리하여 조정합니다. 프레임비교를 통하면, 씬에서 *얼마나 많은 움직임이 있었는지*의 정도를 측정할 수 있습니다. 이를 위해 비교된 이미지를 임계처리한 뒤, 흰 픽셀이 얼마나 되는지를 카운트하는 방법을 사용합니다.
-
-In practice, background subtraction and frame differencing are often used together. For example, background subtraction can tell us that someone is in the room, while frame differencing can tell us how much they are moving around. In a common solution that combines the best of both approaches, motion detection (from frame differencing) and presence detection (from background subtraction) can be combined to create a generalized detector. A simple trick for doing so is to take a weighted average of their results, and use that as the basis for further thresholding. 
 
 실제로, 배경제어와 프레임비교는 빈번히 함께 사용됩니다. 예를들어, 배경제거를 통해 누군가가 방에 들어왔는지를 알아내고, 프레임 비교를 통해 얼마나 그(그녀)가 움직이는지를 알아차리릴 수 있습니다. 이렇게 (프레임 비교를 통한)동작감지와, (배경 제거를 통한)등장감지를 조합하여 범용적인 감지장치를 만들어내는 것이 일반적인 솔루션입니다. 이렇게 얻은 결과로 가중평균(weighted everage)을 구하고, 그 평균을 추가적인 임계처리값으로 사용합니다.
 
@@ -1198,11 +1132,11 @@ In practice, background subtraction and frame differencing are often used togeth
 ![Screenshots of Philip Worthington's Shadow Monsters. Photo by Jef Rouner](images/shadowmonsters_jefrouner.jpg)
 
 The original masterwork of contour play was Myron Krueger’s landmark interactive artwork, [*Videoplace*](https://www.youtube.com/watch?v=dmmxVA5xhuo), which was developed continuously between 1970 and 1989, and which premiered publicly in 1974. The *Videoplace* project comprised at least two dozen profoundly inventive scenes which comprehensively explored the design space of full-body camera-based interactions with virtual graphics — including telepresence applications and (as pictured here, in the “Critter” scene) interactions with animated artificial creatures. 
-윤곽(컨투어)를 사용한 오리지널 명작은 Myron Krueger의 대표적인 인터랙티브 작품인 [*Videoplace*](https://www.youtube.com/watch?v=dmmxVA5xhuo)으로, 1970년부터 1089년까지 지속적으로 개발되왔었으며, 1974년 최초로 공개되었습니다. 이 *Videoplace*는 
+<!-- 
+윤곽(컨투어)를 사용한 오리지널 명작은 Myron Krueger의 대표적인 인터랙티브 작품인 [*Videoplace*](https://www.youtube.com/watch?v=dmmxVA5xhuo)으로, 1970년부터 1089년까지 지속적으로 개발되왔었으며, 1974년 최초로 공개되었습니다. 이 *Videoplace* 프로젝트는 최소 24개의 독창적인  -->
 
 ![Photographs of Myron Krueger's VideoPlace](images/krueger.jpg)
 
-Here's a quick list of some fun and powerful things you can do with contours extracted from blobs: 
 아래는 덩어리들로부터 추출된 윤곽들을 응용하여 만들어낼 수 있는 흥미로운 주제들입니다:
 
 * 덩어리의 윤곽은 `ofPolyline`으로 표현되며, `ofPolyline::getSmoothed()`를 통해 단순화할 수 있습니다. 극단적으로 단순화시켜 실험해보세요.
@@ -1214,7 +1148,6 @@ Here's a quick list of some fun and powerful things you can do with contours ext
 
 ## 정리
 
-In this section we briefly discuss several important refinements that can be made to improve the quality and performance of computer vision programs. 
 이번 섹션에서는, 컴퓨터비전 프로그램의 성능과 품질향상을 위해 중요한 몇가지 주요 정리사항에 대해 살펴보겠습니다.
 
 * 임계처리된 이미지 정리 : 침식(Erosion)과 팽창(Dilation)
@@ -1342,8 +1275,6 @@ int ofApp::getThresholdIsodata (int *imageHistogram){
 ## 더 많은 실험을 위한 제안
 
 살펴볼 내용이 정말 많습니다! 우선 오픈프레임웍스에 포함된 모든 openCV 예제들을 살펴보는것을 강력히 추천드립니다. (고전적인 Viola-Jones의 얼굴인식을 구현한 *opencvHaarFinderExample*예제가 제일 인기가 많더라구요!) 오픈프레임웍스의 예제들을 다 살펴보셨다면, Kyle McDonald의 [ofxCv](https://github.com/kylemcdonald/ofxCv)예제들도 살펴보시기 바랍니다.
-
-I sometimes assign my students the project of copying a well-known work of interactive new-media art. Reimplementing projects such as the ones below can be highly instructive, and test the limits of your attention to detail. Such copying provides insights which cannot be learned from any other source. *I recommend you build...*
 
 종종 저는 학생들에게 잘 알려진 인터랙티브 뉴미디어 프로젝트를 똑같이 구현해보는 과제를 내줍니다. 아래와 같이 절차적이면서, 디테일을 위해 관심의 한계를 테스트할 수 있는 프로젝트들을 재 구현해보는거죠. 다른 소스들에서 배울 수 없는, 직관성을 따라해보는겁니다. *이런것들을 한번 구현해보시길 바랍니다..*
 
