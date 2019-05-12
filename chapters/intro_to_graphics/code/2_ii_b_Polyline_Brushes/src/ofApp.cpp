@@ -61,7 +61,7 @@ void ofApp::draw(){
         // original polyline drawing on line 57, if you like.
 
         // Drawing evenly spaced points along the polyline
-//        vector<ofVec3f> vertices = polyline.getVertices();  // If you haven't seen a vector < >, before
+//        vector<glm::vec3> vertices = polyline.getVertices();  // If you haven't seen a vector < >, before
 //        for (int p=0; p<100; p+=10) {
 //            ofVec3f point = polyline.getPointAtPercent(p/100.0);  // Returns a point at a percentage along the polyline
 //            ofDrawCircle(point, 5);
