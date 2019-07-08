@@ -162,7 +162,7 @@ void ofApp::draw(){
 
 void ofApp::keyPressed(int key){
     imgLoaders.push_back(move(unique_ptr<ImageLoader>(new ImageLoader)));
-    imgLoaders.back().load("someimage.png");
+    imgLoaders.back()->load("someimage.png");
 }
 ```
 
