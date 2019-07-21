@@ -514,7 +514,7 @@ Let's add points to our polyline in `update()`:
 
 ```cpp
 if (leftMouseButtonPressed) {
-    ofPoint mousePos(ofGetMouseX(), ofGetMouseY());
+    ofPoint mousePos(ofGetMouseX(), ofGetMouseY()); // the "ofPoint" here is still being shown as "ofVec2f" on the website, for some reason
     if (lastPoint.distance(mousePos) >= minDistance) {
         // a.distance(b) calculates the Euclidean distance between point a and b.  It's
         // the length of the straight line distance between the points.
