@@ -158,7 +158,7 @@ Whic could be the method name to search elements in a map if not `find`?
 
 ```cpp
   if (cities.find("Berlin") != cities.end())
-    cout << it->first << " founded!" <<endl;
+    cout << it->first << " found!" <<endl;
   else
     cout << "city not found" << endl;
 ```
