@@ -105,7 +105,7 @@ void ofApp::setup() {
     mesh.addColor(ofFloatColor(0.0, 1.0, 0.0)); // Green
 
     mesh.addVertex(right);
-    mesh.addColor(ofFloatColor(1.0, 1.0, 0.0)); // Blue
+    mesh.addColor(ofFloatColor(1.0, 1.0, 0.0)); // Yellow
 }
 ```
 
@@ -552,7 +552,7 @@ If you want to swing that point around in a circle, then you just need to increa
 So for our meshy purposes, we need to:
 
 1. Define a center point for our vertices to rotate around
-2. Calculate the initial polar coordinates where are vertices are located
+2. Calculate the initial polar coordinates where our vertices are located
 3. Slowly increase the angle of the polar coordinates for each vertex over time
 
 Let's get some new variables in our header file:
