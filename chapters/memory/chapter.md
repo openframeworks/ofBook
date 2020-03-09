@@ -63,13 +63,13 @@ If you've used c++ for a while you've probably had crashes in your programs beca
 
 When you create variables in a program, even in c++, you can't really access all the memory in the computer, for security reasons. Imagine you had your bank account opened in your browser, if any program could access all the memory in the computer a malign application could just access the memory of the browser and get that information or even modify it. To avoid it the operating system assigns chunks of memory to every program. When your application starts it's assigned a `segment` of memory. Later on as you create variables if there's enough memory in that `segment` your variables will be created there. When there's no more memory available in that segment the operating system assigns the application a new one and the application starts using that. If you try to access a memory address that doesn't belong to a segment assigned to your application, the operating system just kills the application to avoid possible security risks.
 
-How does that happen usually? Well most of the time you just don't try to access memory addresses by their number, so how's it possible that sometimes you try to access a variable and you get a segmentation fault. Most of the time this happens because you try to access a variable that doesn't exist anymore, usually because you stored a pointer to a memory area and then freed or moved that memory somewhere else. We'll talk in more detail about this later.
+How does that happen usually? Well most of the time you just don't try to access memory addresses by their number, so how is it possible that sometimes you try to access a variable and you get a segmentation fault? Most of the time this happens because you try to access a variable that doesn't exist anymore, usually because you stored a pointer to a memory area and then freed or moved that memory somewhere else. We'll talk in more detail about this later.
 
 ## Stack variables, variables in functions vs variables in objects
 
 As we said at the beginning of the chapter there's two types of memory in c++ the stack and the heap. Let's talk first about the stack since that's the easiest type of memory to use and what you'll use more frequently in openFrameworks.
 
-The stack is the type of memory that you use when creating variables inside a function or in the .h of your class as long as you don't use pointers and the keyword new.
+The stack is the type of memory that you use when creating variables inside a function or in the .h of your class as long as you don't use pointers and the keyword `new`.
 
 It's called stack because it's organized like a [stack](http://en.wikipedia.org/wiki/Stack_%28abstract_data_type%29). When in our application we call a function, there's an area in memory assigned to that function **call**. That specific function **call**, and only it, during the time it lasts can create variables in that area.
 
@@ -199,7 +199,7 @@ now, if we try to use the pointer directly like;
 cout << p <<< endl;
 ```
 
-what we'll get is a memory address not the value 5. So how do we access the value pointed by a pointer, well we can use the opposite operator to `&`: as `&` gives us the address of a variable, `*` gives us the value pointed by a memory address, so we can do:
+what we'll get is a memory address not the value 5. So how do we access the value pointed by a pointer? Well, we can use the opposite operator to `&`: as `&` gives us the address of a variable, `*` gives us the value pointed by a memory address, so we can do:
 
 ```cpp
 cout << *p << endl;
