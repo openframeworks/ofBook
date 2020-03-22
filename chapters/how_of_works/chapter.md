@@ -101,9 +101,9 @@ will set the current frame to 100 both in player and player2 since actually both
 
 ### Data containers
 
-This classes contain data and can do some operations on the data they contain. Examples are classes like ofPixels or ofBuffer.
+These classes contain data and can do some operations on the data they contain. Examples are classes like ofPixels or ofBuffer.
 
-This classes follow an allocate/loadData pattern. Allocate reserves memory in the container to then put data in it using loadData. The names of these functions change depending on the class but the functionality is the same. Copying this classes makes a depth copy, that means that a copy is a whole new object with the same contents as the original so modifying the copy won't touch the original.
+These classes follow an allocate/loadData pattern. Allocate reserves memory in the container to then put data in it using loadData. The names of these functions change depending on the class but the functionality is the same. Copying these classes makes a depth copy, that means that a copy is a whole new object with the same contents as the original so modifying the copy won't touch the original.
 
 __ofApp.h__
 
@@ -139,7 +139,7 @@ will draw a completely black image in the left of the screen and a black image w
 
 GL data containers are a special case of data containers. The functionality is pretty similar to other data containers and they also follow the allocate/loadData pattern. These are classes like ofTexture, ofFbo, ofVbo or ofVboMesh. All of them are in the gl folder, although not everything in the gl folder is a data container, like ofShader or ofLight, which are GL utility classes and usually behave exactly the same as other utility classes.
 
-The main difference between GL data containers and other data containers is that GL data containers follow a shallow copy pattern. The main reason for this is performance, making a copy of resources in the GPU is usually slow so we don't copy them by default.
+The main difference between GL data containers and other data containers is that GL data containers follow a shallow copy pattern. The main reason for this is performance; making a copy of resources in the GPU is usually slow, so we don't copy them by default.
 
 For example:
 
@@ -177,4 +177,4 @@ These are classes that represent types in openFrameworks like `ofRectangle`, `of
 
 ## Functions
 
-Some functionality in openFrameworks is provided through plain C functions. This are usually utility functions like `ofToString()`, `ofRandom()`, `ofDrawBitmapString()` and simple draw functions like `ofDrawCircle()`, `ofDrawRectangle()`.
+Some functionality in openFrameworks is provided through plain C functions. These are usually utility functions like `ofToString()`, `ofRandom()`, `ofDrawBitmapString()` and simple draw functions like `ofDrawCircle()`, `ofDrawRectangle()`.
