@@ -32,7 +32,7 @@ nums.erase( nums.begin() ); // erase the first element in the vector
 cout << nums.size() << endl; // print the number of elements in the vector
 
 vector<float>:: iterator it = nums.begin(); // create an iterator for vector that points to first element
-cout << *it << end; // print out the value of the element pointed to by the iterator
+cout << *it << endl; // print out the value of the element pointed to by the iterator
 ```
 
 
@@ -139,7 +139,7 @@ particles.clear();
     
 
 ## Iterators
-An iterator is a class of objects designed to help traverse through a sequence of elements (such as a vector). An iterator for a vector points to an individual element in the vector, and can be incremented to point to the next. As some vector functions take int or return iterators, it is useful to understand how they work. 
+An iterator is a class of objects designed to help traverse through a sequence of elements (such as a vector). An iterator for a vector points to an individual element in the vector, and can be incremented to point to the next. As some vector functions take in or return iterators, it is useful to understand how they work. 
 
 Declaring an iterator for a vector:
 
@@ -153,7 +153,7 @@ vector<Particle>::iterator itp = partices.begin();
 
 To access the value of an element using an iterator, we have to dereference it as if it was a pointer. The iterator is pointing to the element in the array, but we want the value of element it is pointing to instead. 
 ```cpp
-vector<int>  nums;
+vector<int> nums;
 nums.push_back(10);
 vector<int>::iterator it = nums.begin();
 cout << *it << endl; // prints out 10
@@ -211,7 +211,7 @@ With vectors there is no speed difference between iterators or array-style [] in
 ### std::remove_if and ofRemove
 *remove_if* checks conditions defined in a boolean function to determine if each element of the vector should be deleted or not. It moves any that return true to the end of the vector and then returns the iterator to the first element that should be removed. It does not remove anything, but can be used together with *erase* to actually delete the undesired elements. This is useful when all elements in the vector need to be checked to see if they should be deleted or not (for example if a particle has gone off screen or its life timer has reached zero and so on).
 
-The first step is defining a  function that returns a bool and takes in as a parameter a reference to an element of the type the vector contains.
+The first step is defining a function that returns a bool and takes in as a parameter a reference to an element of the type the vector contains.
 ```cpp
 bool checkDead( Particle &p ){
 	return p.isDead;
