@@ -119,7 +119,7 @@ Try to move the mouse around, you should be able to draw something like this.
 
 
 ## Make a smooth line in movement in a 3D space
-Now that we know how to use `ofPolyline`, we can combine it togehter with `ofNode`, and draw a lines that moves smoothly on the screen. `ofNode` is a class that defines a point in a 3D space and can be chained to other nodes. If we make 2 nodes, A and B, and we difne the node A as a parent of B. moving the A node will also move the node B. Let's see how `ofNode` and `ofPolyline` can play together. First, edit your `App.h` file as follow:
+Now that we know how to use `ofPolyline`, we can combine it togehter with `ofNode`, and draw a lines that moves smoothly on the screen. `ofNode` is a class that defines a point in a 3D space and can be chained to other nodes. If we make 2 nodes, A and B, and we define the node A as a parent of B. moving the A node will also move the node B. Let's see how `ofNode` and `ofPolyline` can play together. First, edit your `App.h` file as follow:
 
 ```cpp
 ofNode baseNode;
@@ -169,6 +169,3 @@ You should see an image like this:
 ![line nodes](images/line-nodes.gif)
 
 Lets' go through the code. In the `setup` method we create a chain of 3 nodes and we assign them a position. Each node is parent to the previous one using `setParent`. In the `update` method we tell to the `baseNode` to rotate 1 degree on the y axis. This will have a percussion also on the 2 other nodes. We also tell to the `childNode` to rotate 3 degree on the x axis. These 2 rotation are enough to give to the last node of the chain, the `grandChildNode`, an elegant movement around the 2 nodes. In the following lines, we are capturing the points from this movement and we are puttin them in the `ofPolyline`. We keep only 200 points in the line, erasing the old ones as soon as new points are pushed in. Try to increase this value to see how the line change.
-
-
-
