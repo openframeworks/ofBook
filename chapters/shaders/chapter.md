@@ -89,6 +89,11 @@ The differences between the shaders aren't major but they exist, however it's mo
 
 Let's take a look at a very simple example to help you get going with it. First, we'll look at the OF side of things:
 
+In the ofApp.h file add this line
+```cpp
+ofShader shader;
+```
+Then in opApp.cpp, add
 ```cpp
 
 void ofApp::setup(){
