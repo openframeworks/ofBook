@@ -181,7 +181,7 @@ void ofApp::update(){
 	if(myVideoGrabber.isFrameNew()){
 
 		// Obtain a pointer to the grabber's image data.
-		unsigned char* pixelData = myVideoGrabber.getPixels();
+		unsigned char* pixelData = myVideoGrabber.getPixels().getData();
 		
 		// Reckon the total number of bytes to examine. 
 		// This is the image's width times its height,
