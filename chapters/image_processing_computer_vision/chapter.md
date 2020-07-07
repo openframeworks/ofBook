@@ -77,8 +77,8 @@ void ofApp::draw(){
 	ofSetColor(255);
 
 	// We fetch the ofImage's dimensions and display it 10x larger.  
-	int imgWidth = myImage.width;
-	int imgHeight = myImage.height;
+	int imgWidth = myImage.getWidth();
+	int imgHeight = myImage.getHeight();
 	myImage.draw(10, 10, imgWidth * 10, imgHeight * 10);
 }
 ```
