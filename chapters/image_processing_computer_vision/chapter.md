@@ -652,15 +652,15 @@ void ofApp::setup(){
 	
 	// Construct and allocate a new image with the same dimensions. 
 	// This will store our destination ("dst") image. 
-	int imgW = lincolnOfImageSrc.width;
-	int imgH = lincolnOfImageSrc.height;
+	int imgW = lincolnOfImageSrc.getWidth();
+	int imgH = lincolnOfImageSrc.getHeight();
 	lincolnOfImageDst.allocate(imgW, imgH, OF_IMAGE_GRAYSCALE);
 	
 	// Acquire pointers to the pixel buffers of both images. 
 	// These images use 8-bit unsigned chars to store gray values. 
 	// Note the convention 'src' and 'dst' -- this is very common.
-	unsigned char* srcArray = lincolnOfImageSrc.getPixels();
-	unsigned char* dstArray = lincolnOfImageDst.getPixels();
+	unsigned char* srcArray = lincolnOfImageSrc.getPixels().getData();
+	unsigned char* dstArray = lincolnOfImageDst.getPixels().getData();
 	
 	// Loop over all of the destination image's pixels. 
 	// Each destination pixel will be 10 gray-levels brighter
