@@ -303,7 +303,7 @@ Most of the time, you'll be working with image data that is stored in a higher-l
 
 ```cpp
 int arrayIndex = (y * imgWidth) + x;
-unsigned char* myImagePixelBuffer = myImage.getPixels();
+unsigned char* myImagePixelBuffer = myImage.getPixels().getData();
 unsigned char pixelValueAtXY = myImagePixelBuffer[arrayIndex];
 ```
 
@@ -577,7 +577,7 @@ ofImage myImage;
 myImage.load ("colorful.jpg");
 int imageWidth = myImage.getWidth();
 int imageHeight = myImage.getHeight();
-unsigned char* rgbPixelData = myImage.getPixels(); 
+unsigned char* rgbPixelData = myImage.getPixels().getData(); 
 
 // Allocate memory for storing a grayscale version.
 // Since there's only 1 channel of data, it's just w*h. 
