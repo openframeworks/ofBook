@@ -77,8 +77,8 @@ void ofApp::draw(){
 	ofSetColor(255);
 
 	// We fetch the ofImage's dimensions and display it 10x larger.  
-	int imgWidth = myImage.width;
-	int imgHeight = myImage.height;
+	int imgWidth = myImage.getWidth();
+	int imgHeight = myImage.getHeight();
 	myImage.draw(10, 10, imgWidth * 10, imgHeight * 10);
 }
 ```
@@ -303,7 +303,7 @@ Most of the time, you'll be working with image data that is stored in a higher-l
 
 ```cpp
 int arrayIndex = (y * imgWidth) + x;
-unsigned char* myImagePixelBuffer = myImage.getPixels();
+unsigned char* myImagePixelBuffer = myImage.getPixels().getData();
 unsigned char pixelValueAtXY = myImagePixelBuffer[arrayIndex];
 ```
 
@@ -577,7 +577,7 @@ ofImage myImage;
 myImage.load ("colorful.jpg");
 int imageWidth = myImage.getWidth();
 int imageHeight = myImage.getHeight();
-unsigned char* rgbPixelData = myImage.getPixels(); 
+unsigned char* rgbPixelData = myImage.getPixels().getData(); 
 
 // Allocate memory for storing a grayscale version.
 // Since there's only 1 channel of data, it's just w*h. 
@@ -652,15 +652,15 @@ void ofApp::setup(){
 	
 	// Construct and allocate a new image with the same dimensions. 
 	// This will store our destination ("dst") image. 
-	int imgW = lincolnOfImageSrc.width;
-	int imgH = lincolnOfImageSrc.height;
+	int imgW = lincolnOfImageSrc.getWidth();
+	int imgH = lincolnOfImageSrc.getHeight();
 	lincolnOfImageDst.allocate(imgW, imgH, OF_IMAGE_GRAYSCALE);
 	
 	// Acquire pointers to the pixel buffers of both images. 
 	// These images use 8-bit unsigned chars to store gray values. 
 	// Note the convention 'src' and 'dst' -- this is very common.
-	unsigned char* srcArray = lincolnOfImageSrc.getPixels();
-	unsigned char* dstArray = lincolnOfImageDst.getPixels();
+	unsigned char* srcArray = lincolnOfImageSrc.getPixels().getData();
+	unsigned char* dstArray = lincolnOfImageDst.getPixels().getData();
 	
 	// Loop over all of the destination image's pixels. 
 	// Each destination pixel will be 10 gray-levels brighter
