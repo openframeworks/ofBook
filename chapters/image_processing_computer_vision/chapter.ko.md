@@ -1295,7 +1295,7 @@ Camille Utterbak과 Romy Achituv의 *[Text Rain](http://camilleutterback.com/pro
 - Cardoso, Jorge. [Computer vision techniques for interactive art](http://www.slideshare.net/jorgecardoso/computer-vision-techniques-for-interactive-art)
 - Fisher, Robert, et. al. [HIPR2, The Hypertext Image Processing Reference](http://homepages.inf.ed.ac.uk/rbf/HIPR2/index.htm)
 - [Introduction to Video and Image Processing](http://what-when-how.com/category/introduction-to-video-and-image-processing/)
-- Levin, Golan. [Computer Vision for Artists and Designers](http://www.flong.com/texts/essays/essay_cvad/)
+- Levin, Golan. [Computer Vision for Artists and Designers](http://www.flong.com/archive/texts/essays/essay_cvad/index.html		)
 - Szeliski & Zisserman. [20 techniques that every computer vision researcher should know](http://www.frontiersincomputervision.com/slides/FCV_Core_Szeliski_Zisserman.pdf) (PDF)
 - Szeliski, Richard. [Computer Vision: Algorithms and Applications](http://szeliski.org/Book/)
 - [The OpenCV Reference Manual](http://docs.opencv.org/opencv2refman.pdf) (PDF)
