@@ -14,15 +14,25 @@
 
 ### Coordinate System
 
+### Domain Name System (DNS)
+
+### File Transfer Protocol (FTP)
+
 ### Function
 
 ### IDE
+
+### IP
 
 ### Library
 
 ### Linker
 
+### NAT
+
 ### OpenGL
+
+### OSC
 
 ### Parameter
 
@@ -32,6 +42,10 @@
 
 ### RGB color model
 
+### TCP
+
 ### Template
+
+### UDP
 
 ### UI
