@@ -10,7 +10,14 @@ nav {
   position: fixed;
   top: 70px;
   width: 230px;
+
+  max-height: 425px;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+  direction: rtl;
+
   ul#nav-parts {
+    direction: ltr;
     color: rgba(128,128,128,1);
     font-weight: 100;
     line-height: 140%;
