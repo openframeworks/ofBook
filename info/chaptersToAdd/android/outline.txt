@@ -1,7 +1,0 @@
-1. setup guide
-2. android specifics, java/c++
-3. OFActivity
-4. Android GUI (small intro + reference to android docs)
-5. jni
-6. ABIs
-7. packaging for release
