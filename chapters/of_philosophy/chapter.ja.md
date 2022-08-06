@@ -28,7 +28,7 @@ openFrameworks の開発は協働的なもので、議論に盛んに参加し�
 We use git, a distributed versioning system, which means that people can branch, experiment, and make suggestions. If you look at the network diagram on [GitHub](https://github.com/openframeworks/openFrameworks "link to the GitHub repository of openFrameworks"), it looks like some alien diagram, full of weaving branches, code pulling apart and coming together. There's a huge community all over the world working on the core code: fixing bugs, submitting pull requests, and shaping the tool the way they want to see it. It's a world wide project and it's common to wake up in the USA to an inbox full of pull requests and issues emails from coders in Asia and Europe. Over 70 people have contributed to the openFrameworks core directly, and hundreds of people have forked the code or contributed in other ways.
 -->
 
-私たちは git という分散型バージョン管理システムを用いています。これは人々がブランチを作り、実験し、提案が可能なことを意味します。[GitHub](https://github.com/openframeworks/openFrameworks "link to the GitHub repository of openFrameworks") のネットワーク図を見てみると、沢山の曲がりくねったブランチ、枝分かれしてまた合流するコードによるエイリアンのダイヤグラムのように見えます。コアのコードに対して作業する、世界中に広がる巨大なコミュニティが存在します。彼らはバグを修正し、プルリクエストを送り、必要な形のツールを具現化します。これは全世界的なプロジェクトであり、合衆国で目を覚ました時に、アジアやヨーロッパのプログラマからのプルリクエストやイシューで一杯の電子メールの受信箱を目にすることは日常茶飯事です。
+私たちは git という分散型バージョン管理システムを用いています。これは人々がブランチを作り、実験し、提案が可能なことを意味します。[GitHub](https://github.com/openframeworks/openFrameworks "link to the GitHub repository of openFrameworks") のネットワーク図を見てみると、沢山の曲がりくねったブランチ、枝分かれしてまた合流するコードによるエイリアンのダイヤグラムのように見えます。コアのコードに対して作業する、世界中に広がる巨大なコミュニティが存在します。彼らはバグを修正し、プルリクエストを送り、必要な形のツールを具現化します。これは世界的なプロジェクトであり、アメリカ合衆国住まいのプログラマーが目を覚ましたときに、昨晩中にアジアやヨーロッパから来た様々のプルリクエストやイシューを目にすることは日常茶飯事です。
 
 <!--
  ### Simplicity -->
