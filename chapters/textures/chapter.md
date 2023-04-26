@@ -4,7 +4,7 @@
 
 ## Intro
 
-In this chapter we will build the planet Earth from scratch. With a sphere and a texture is much more easier than what its sound. We will work with the `ofTexture` class, and after this chapter you will be able to apply any kind of texture to a 3d primitive. And you will be ready to dig further using shaders and textures [together](/ofBook/chapters/shaders.html#addingtextures).
+In this chapter we will build the planet Earth from scratch. With a sphere and a texture, this is much easier than it sounds. We will work with the `ofTexture` class, and after this chapter you will be able to apply any kind of texture to a 3d primitive. And you will be ready to dig further using shaders and textures [together](/ofBook/chapters/shaders.html#addingtextures).
 
 ## Basics: Adding a textures to a sphere
 
